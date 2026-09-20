@@ -182,8 +182,17 @@
   }
   .side-toc{ display: none; }
   @media (min-width: 1020px){
-    .page-shell{ display: grid; grid-template-columns: 200px minmax(0, 720px); justify-content: center; align-items: start; gap: 56px; }
+    .page-shell{
+      display: grid; grid-template-columns: 200px minmax(0, 720px); justify-content: center; align-items: start; gap: 56px;
+      max-width: 1180px;
+      border-left: 1px solid var(--line-strong); border-right: 1px solid var(--line-strong);
+      padding-inline: clamp(24px, 4vw, 64px);
+      background: var(--paper-2);
+    }
     .side-toc{ display: block; position: sticky; top: 40px; padding-top: 44px; }
+  }
+  @media (min-width: 1400px){
+    .page-shell{ max-width: 1360px; grid-template-columns: 230px minmax(0, 760px); gap: 72px; }
   }
   .toc-label{ font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 14px; }
   .side-toc-list{ display: flex; flex-direction: column; }
