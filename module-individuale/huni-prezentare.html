@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<title>Invazia din Stepe</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@500;700&display=swap');
+
+  :root{
+    --paper: #f7f3e9;
+    --paper-2: #f2ebd9;
+    --paper-3: #ece0c3;
+    --ink: #2b1e16;
+    --ink-dim: #5c4a38;
+    --line: rgba(60, 45, 32, 0.24);
+    --line-strong: rgba(60, 45, 32, 0.5);
+    --accent: #7a1c1c;
+    --accent-2: #b89242;
+    --accent-bg: #efd9d5;
+    --accent2-bg: #ece0bd;
+    --good-bg: #dfe6cf;
+    --shadow: rgba(43, 30, 22, 0.14);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #1c150e;
+      --paper-2: #241b12;
+      --paper-3: #2c2114;
+      --ink: #ecdfc7;
+      --ink-dim: #b3a17c;
+      --line: rgba(236, 223, 199, 0.18);
+      --line-strong: rgba(236, 223, 199, 0.38);
+      --accent: #d98a7c;
+      --accent-2: #d4af37;
+      --accent-bg: #3a1f1a;
+      --accent2-bg: #362c14;
+      --good-bg: #29301f;
+      --shadow: rgba(0, 0, 0, 0.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #1c150e;
+    --paper-2: #241b12;
+    --paper-3: #2c2114;
+    --ink: #ecdfc7;
+    --ink-dim: #b3a17c;
+    --line: rgba(236, 223, 199, 0.18);
+    --line-strong: rgba(236, 223, 199, 0.38);
+    --accent: #d98a7c;
+    --accent-2: #d4af37;
+    --accent-bg: #3a1f1a;
+    --accent2-bg: #362c14;
+    --good-bg: #29301f;
+    --shadow: rgba(0, 0, 0, 0.5);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior: auto; } }
+  body{
+    margin: 0;
+    background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.16 0 0 0 0 0.11 0 0 0 0 0.06 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E") repeat;
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    padding: 0 18px;
+  }
+  h1, h2, h3, .display{ font-family: 'Cormorant Garamond', Georgia, serif; text-wrap: balance; }
+  h1, h2, h3{ margin: 0; font-weight: 600; }
+  .mono{ font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  a{ color: var(--accent); }
+  ::selection{ background: var(--accent2-bg); }
+
+  .progress-bar{ position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: var(--accent); z-index: 100; transition: width 0.1s linear; }
+  @media (prefers-reduced-motion: reduce){ .progress-bar{ transition: none; } }
+
+  /* ---------- HERO / ACASĂ ---------- */
+  .hero{
+    position: relative;
+    max-width: 1180px;
+    margin: 40px auto 0;
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: clamp(24px, 5vw, 56px);
+    align-items: end;
+    padding-bottom: 34px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  @media (max-width: 820px){ .hero{ grid-template-columns: 1fr; } }
+  .hero-inner{ position: relative; z-index: 1; }
+  .kicker{
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin: 0 0 18px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  h1.title{ font-size: clamp(2.4rem, 6.6vw, 4rem); line-height: 1.04; margin-bottom: 20px; color: var(--ink); font-weight: 600; }
+  h1.title em{ font-style: italic; font-weight: 500; color: var(--accent); }
+  .dek{ font-size: 1.18rem; line-height: 1.6; color: var(--ink-dim); max-width: 54ch; margin: 0; font-family: 'Source Serif 4', serif; }
+
+  .hero-map{ position: relative; border: 1px solid var(--line-strong); background: var(--paper-2); }
+  .hero-map svg{ width: 100%; height: auto; display: block; }
+  .hero-route{ stroke-dasharray: 6 10; animation: route-drift 22s linear infinite; }
+  @keyframes route-drift{ to{ stroke-dashoffset: -320; } }
+  @media (prefers-reduced-motion: reduce){ .hero-route{ animation: none; } }
+  .hero-map figcaption{
+    font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--ink-dim);
+    padding: 8px 10px; border-top: 1px solid var(--line);
+  }
+
+  .byline{
+    grid-column: 1 / -1;
+    display: flex; flex-wrap: wrap; gap: 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--ink-dim);
+    border-top: 1px solid var(--line); margin-top: 26px;
+  }
+  .byline span{ padding: 10px 22px 0 0; border-right: 1px solid var(--line); margin-right: 22px; }
+  .byline span:last-child{ border-right: none; margin-right: 0; }
+  .byline b{ color: var(--ink); font-weight: 700; }
+
+  .page-shell{ max-width: 1180px; margin: 0 auto; padding-block: 0 60px; }
+  .main-col{
+    max-width: 720px; margin: 0 auto;
+    padding: clamp(0px, 0px, 0px) 0 0;
+  }
+  .side-toc{ display: none; }
+  @media (min-width: 1020px){
+    .page-shell{ display: grid; grid-template-columns: 200px minmax(0, 720px); justify-content: center; align-items: start; gap: 56px; }
+    .side-toc{ display: block; position: sticky; top: 40px; padding-top: 44px; }
+  }
+  .toc-label{ font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 14px; }
+  .side-toc-list{ display: flex; flex-direction: column; }
+  .side-toc-list a{
+    font-family: 'Source Serif 4', serif; font-size: 0.94rem; text-decoration: none; color: var(--ink-dim);
+    padding: 9px 0 9px 14px; border-left: 1px solid var(--line); line-height: 1.4;
+  }
+  .side-toc-list a:hover{ color: var(--ink); border-left-color: var(--line-strong); }
+  .side-toc-list a.active{ color: var(--accent); border-left: 1px solid var(--accent); font-weight: 600; }
+
+  .toc-wrap{ margin: 32px 0 0; padding-top: 20px; border-top: 1px solid var(--line); }
+  @media (min-width: 1020px){ .toc-wrap{ display: none; } }
+  .toc-row{ display: flex; gap: 0; flex-wrap: wrap; }
+  .toc-row a{
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-decoration: none; color: var(--ink-dim);
+    padding: 6px 14px 6px 0; margin-right: 14px; border-bottom: 1px solid transparent; white-space: nowrap;
+  }
+  .toc-row a.active{ color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ---------- ARTICLE ---------- */
+  article section, #biblio{ margin-top: 68px; scroll-margin-top: 20px; padding-top: 44px; border-top: 1px solid var(--line); }
+  article section:first-child{ margin-top: 44px; }
+  .chapter-mark{ display: flex; align-items: baseline; gap: 14px; margin: 0 0 6px; }
+  .chapter-num{ font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: clamp(2.6rem, 7vw, 3.6rem); line-height: 1; color: var(--accent-2); }
+  .chapter-slash{ font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--line-strong); }
+  .chapter-tag{ font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); }
+  h2.sec-title{ font-size: clamp(1.5rem, 4.5vw, 2rem); margin: 2px 0 8px; font-weight: 600; }
+  .sec-sub{ font-family: 'Source Serif 4', serif; font-style: italic; font-size: 1rem; color: var(--ink-dim); margin: 0 0 26px; }
+  h3.sub-title{ font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; margin: 38px 0 12px; color: var(--accent); }
+  article p{ line-height: 1.74; font-size: 1.06rem; margin: 0 0 18px; }
+  article p:last-child{ margin-bottom: 0; }
+  .lede{ font-size: 1.16rem; }
+  .lede::first-letter{ font-family: 'Cormorant Garamond', serif; font-size: 3.6em; font-weight: 600; float: left; line-height: 0.8; padding: 0.05em 0.08em 0 0; color: var(--accent); }
+
+  sup.fn{ font-family: 'JetBrains Mono', monospace; font-size: 0.7em; color: var(--accent-2); text-decoration: none; margin-left: 1px; cursor: pointer; }
+  sup.fn:hover{ text-decoration: underline; }
+  .fn-tip{
+    position: fixed; z-index: 40; max-width: 280px; background: var(--paper-2); border: 1px solid var(--accent-2);
+    padding: 10px 13px; font-family: 'Source Serif 4', serif; font-size: 0.86rem; line-height: 1.5;
+    color: var(--ink); display: none;
+  }
+  .fn-tip.show{ display: block; }
+  .fn-tip .fn-num{ font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent-2); margin-right: 5px; }
+
+  blockquote{
+    margin: 30px 0; padding: 2px 0 2px 22px; border-left: 1px solid var(--accent);
+    font-family: 'IM Fell English', 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; font-size: 1.3rem; line-height: 1.5; color: var(--ink);
+  }
+  blockquote cite{ display: block; margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 0.72rem; letter-spacing: 0.03em; color: var(--ink-dim); }
+
+  .callout{ border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); padding: 18px 0; margin: 26px 0; }
+  .callout .cal-label{ font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+  .callout p{ font-size: 0.98rem; margin: 0; color: var(--ink-dim); }
+  .callout p + p{ margin-top: 10px; }
+
+  .diagram{ margin: 32px 0; border: 1px solid var(--line-strong); padding: 16px 12px 0; }
+  .diagram svg{ width: 100%; height: auto; display: block; }
+  .diagram figcaption{ font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-dim); text-align: left; padding: 10px 4px 12px; border-top: 1px solid var(--line); margin-top: 12px; }
+
+  /* ---------- CRONOLOGIE: SLIDER INTERACTIV ---------- */
+  .cron-wrap{ margin: 28px 0 10px; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); padding: 26px 0 22px; }
+  .cron-slider{
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 2px; border-radius: 0;
+    background: linear-gradient(90deg, var(--accent-2) 0%, var(--accent-2) var(--fill, 0%), var(--line-strong) var(--fill, 0%), var(--line-strong) 100%);
+    outline: none; margin: 0 0 14px; touch-action: none;
+  }
+  .cron-slider::-webkit-slider-thumb{
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 1px; transform: rotate(45deg);
+    background: var(--accent); border: none; cursor: pointer;
+  }
+  .cron-slider::-moz-range-thumb{
+    width: 16px; height: 16px; border-radius: 1px; transform: rotate(45deg); background: var(--accent); border: none; cursor: pointer;
+  }
+  .cron-ticks{ display: flex; justify-content: space-between; margin: 0 0 22px; }
+  .cron-ticks span{
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--ink-dim); text-align: center; flex: 1;
+    cursor: pointer; padding: 8px 2px 0; border-top: 1px solid var(--line);
+  }
+  .cron-ticks span:first-child{ text-align: left; }
+  .cron-ticks span:last-child{ text-align: right; }
+  .cron-ticks span.active{ color: var(--accent); font-weight: 700; border-top-color: var(--accent); }
+  .cron-info{ padding-left: 16px; border-left: 1px solid var(--accent); }
+  .cron-info .ci-year{ font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; color: var(--accent-2); letter-spacing: 0.05em; text-transform: uppercase; margin: 0 0 6px; }
+  .cron-info h4{ font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; margin: 0 0 8px; }
+  .cron-info p{ font-size: 0.96rem; color: var(--ink-dim); margin: 0; line-height: 1.6; }
+
+  /* ---------- MAREA MIGRAȚIE: HARTĂ CU SĂGEȚI ---------- */
+  .migr-wrap{ margin: 26px 0 10px; }
+  .migr-map{ position: relative; border: 1px solid var(--line-strong); padding: 16px 12px 8px; }
+  .migr-map svg{ width: 100%; height: auto; display: block; }
+  .migr-arrow{ cursor: pointer; }
+  .migr-arrow path.hit{ fill: none; stroke: transparent; stroke-width: 16; }
+  .migr-arrow path.line{ fill: none; stroke: var(--accent-2); stroke-width: 2; transition: stroke 0.12s ease, stroke-width 0.12s ease; }
+  .migr-arrow:hover path.line, .migr-arrow.active path.line{ stroke: var(--accent); stroke-width: 3; }
+  .migr-label{ font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--ink-dim); pointer-events: none; }
+  .migr-arrow.active .migr-label{ fill: var(--ink); font-weight: 700; }
+  .migr-hub circle{ fill: var(--accent); }
+  .migr-hub text{ font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; fill: var(--paper); text-anchor: middle; }
+  .migr-legend{ display: flex; gap: 10px 18px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--ink-dim); padding: 12px 4px 4px; border-top: 1px solid var(--line); margin-top: 10px; }
+  .migr-info{ margin-top: 16px; padding-left: 16px; border-left: 1px solid var(--accent); }
+  .migr-info .mi-tag{ font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; color: var(--accent-2); letter-spacing: 0.05em; text-transform: uppercase; margin: 0 0 6px; }
+  .migr-info h4{ font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; margin: 0 0 8px; }
+  .migr-info p{ font-size: 0.96rem; color: var(--ink-dim); margin: 0; line-height: 1.6; }
+  .map-hint{ font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--ink-dim); text-align: left; margin: 10px 0 0; }
+
+  /* ---------- PERSONALITĂȚI: COMPARAȚIE ---------- */
+  .duel{ display: grid; grid-template-columns: 1.1fr 1fr; gap: 0; margin: 28px 0; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); }
+  @media (max-width: 620px){ .duel{ grid-template-columns: 1fr; } }
+  .duel-card{ padding: 22px 24px; }
+  .duel-card.attila{ border-right: 1px solid var(--line-strong); }
+  @media (max-width: 620px){ .duel-card.attila{ border-right: none; border-bottom: 1px solid var(--line-strong); } }
+  .duel-card .dc-role{ font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 4px; }
+  .duel-card h4{ font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; margin: 0 0 4px; }
+  .duel-card.attila h4{ color: var(--accent); }
+  .duel-card.aetius h4{ color: var(--accent-2); }
+  .duel-card .dc-epithet{ font-family: 'IM Fell English', serif; font-style: italic; color: var(--ink-dim); font-size: 1rem; margin: 0 0 16px; }
+  .duel-card ul{ margin: 0; padding-left: 16px; }
+  .duel-card li{ font-size: 0.92rem; line-height: 1.55; margin-bottom: 9px; color: var(--ink-dim); }
+  .duel-vs{ display: none; }
+
+  .impact-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 24px 0; border-top: 1px solid var(--line-strong); }
+  @media (max-width: 720px){ .impact-grid{ grid-template-columns: repeat(2, 1fr); } }
+  .impact-tile{ padding: 16px 16px 16px 0; border-right: 1px solid var(--line); }
+  .impact-tile:last-child{ border-right: none; }
+  @media (max-width: 720px){ .impact-tile:nth-child(2n){ border-right: none; } .impact-tile{ border-bottom: 1px solid var(--line); padding-right: 16px; } }
+  .impact-tile .it-year{ font-family: 'JetBrains Mono', monospace; font-size: 0.86rem; font-weight: 700; color: var(--accent); margin: 0 0 8px; }
+  .impact-tile p{ font-size: 0.9rem; color: var(--ink-dim); margin: 0; line-height: 1.55; }
+
+  /* ---------- BIBLIOGRAPHY ---------- */
+  .biblio{ list-style: none; margin: 0; padding: 0; counter-reset: bib; }
+  .biblio li{
+    counter-increment: bib; display: grid; grid-template-columns: 28px 1fr; gap: 10px; padding: 11px 0;
+    border-bottom: 1px solid var(--line); font-size: 0.94rem; line-height: 1.55; scroll-margin-top: 20px;
+  }
+  .biblio li:last-child{ border-bottom: none; }
+  .biblio li::before{ content: counter(bib); font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent-2); }
+  .biblio a.back{ font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; margin-left: 6px; text-decoration: none; }
+
+  .cta-card{ margin-top: 54px; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); padding: 30px 0; display: grid; grid-template-columns: 1.3fr 1fr; gap: 30px; align-items: center; }
+  @media (max-width: 620px){ .cta-card{ grid-template-columns: 1fr; } }
+  .cta-card .kicker{ color: var(--accent); margin-bottom: 10px; }
+  .cta-card h3{ font-size: 1.5rem; font-weight: 600; margin: 0 0 10px; }
+  .cta-card p{ color: var(--ink-dim); margin: 0; font-size: 0.98rem; }
+  .cta-btn{
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.84rem;
+    letter-spacing: 0.02em; color: var(--paper); background: var(--accent); text-decoration: none;
+    padding: 13px 24px; border: 1px solid var(--accent); text-align: center; transition: background 0.15s ease, color 0.15s ease;
+  }
+  .cta-btn:hover{ background: var(--paper); color: var(--accent); }
+
+  footer{ margin-top: 54px; padding-top: 20px; border-top: 1px solid var(--line); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-dim); text-align: left; line-height: 1.7; }
+
+  @media (max-width: 480px){ .byline{ font-size: 0.7rem; } }
+</style>
+
+<div class="progress-bar" id="progress-bar"></div>
+
+  <section id="acasa" class="hero">
+    <div class="hero-inner">
+      <p class="kicker">Concursul Național „Istorie și societate în dimensiune virtuală”</p>
+      <h1 class="title">Invazia din <em>Stepe</em>: Hunii și prăbușirea ordinii antice</h1>
+      <p class="dek">Din stepele de dincolo de Volga, un popor de călăreți a rupt echilibrul lumii antice în mai puțin de un secol — împingând vizigoți, ostrogoți și vandali în inima Imperiului Roman și grăbind sfârșitul Antichității.</p>
+    </div>
+    <figure class="hero-map" aria-hidden="true">
+      <svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="220" fill="var(--paper-2)"/>
+        <path d="M0,150 Q60,130 110,145 Q160,120 220,140 Q270,115 320,138 Q360,125 400,140" stroke="var(--line-strong)" stroke-width="1" fill="none"/>
+        <path class="hero-route" d="M20,165 Q120,100 220,120 Q290,135 380,60" stroke="var(--accent)" stroke-width="1.4" fill="none" stroke-dasharray="1 7"/>
+        <circle cx="20" cy="165" r="3" fill="var(--accent)"/>
+        <circle cx="220" cy="120" r="3" fill="var(--accent)"/>
+        <circle cx="380" cy="60" r="3.5" fill="var(--accent-2)"/>
+        <text x="20" y="182" class="mono" font-size="9" fill="var(--ink-dim)">Volga</text>
+        <text x="220" y="106" class="mono" font-size="9" fill="var(--ink-dim)">Pannonia</text>
+        <text x="365" y="46" class="mono" font-size="9" fill="var(--ink-dim)" text-anchor="end">Galia · 451</text>
+      </svg>
+      <figcaption>Ruta expansiunii hunice, 375–451 d.Hr.</figcaption>
+    </figure>
+    <div class="byline">
+      <span><b>Secțiune</b> — Istorie, Pagini Web</span>
+      <span><b>Interval</b> — 375–454 d.Hr.</span>
+      <span><b>Surse</b> — 16 autori antici și moderni</span>
+    </div>
+  </section>
+
+<div class="page-shell">
+
+  <nav class="side-toc" aria-label="Cuprins">
+    <p class="toc-label">Cuprins</p>
+    <div class="side-toc-list" id="side-toc-list">
+      <a href="#acasa" data-sec="acasa" class="toc-link">Acasă</a>
+      <a href="#sec-origini" data-sec="sec-origini" class="toc-link">Context Istoric &amp; Origini</a>
+      <a href="#sec-cronologie" data-sec="sec-cronologie" class="toc-link">Cronologie Interactivă</a>
+      <a href="#sec-migratie" data-sec="sec-migratie" class="toc-link">Marea Migrație</a>
+      <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități &amp; Impact</a>
+      <a href="#biblio" data-sec="biblio" class="toc-link">Bibliografie</a>
+    </div>
+  </nav>
+
+  <div class="main-col">
+
+  <div class="toc-wrap">
+    <p class="toc-label">Cuprins</p>
+    <div class="toc-row" id="toc-row">
+      <a href="#acasa" data-sec="acasa" class="toc-link">Acasă</a>
+      <a href="#sec-origini" data-sec="sec-origini" class="toc-link">Origini</a>
+      <a href="#sec-cronologie" data-sec="sec-cronologie" class="toc-link">Cronologie</a>
+      <a href="#sec-migratie" data-sec="sec-migratie" class="toc-link">Marea Migrație</a>
+      <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități</a>
+      <a href="#biblio" data-sec="biblio" class="toc-link">Bibliografie</a>
+    </div>
+  </div>
+
+  <article>
+
+    <section id="sec-origini">
+      <div class="chapter-mark"><span class="chapter-num">01</span><span class="chapter-slash">/</span><span class="chapter-tag">Context istoric &amp; origini</span></div>
+      <h2 class="sec-title">Context istoric &amp; origini</h2>
+      <p class="sec-sub">O origine disputată, un mod de viață construit în șa</p>
+
+      <p class="lede">În literatura antică, hunii sunt menționați pentru prima dată de geograful grec Ptolemeu, care atestă, la mijlocul secolului al II-lea d.Hr., o populație numită „Khounoi”<sup class="fn" data-n="1">1</sup>, lângă Marea Azov. Ammianus Marcellinus îi regăsește, aproape două secole mai târziu, în același loc<sup class="fn" data-n="2">2</sup> — o stabilitate neobișnuită pentru un popor ulterior definit exclusiv prin viteză și mișcare.</p>
+
+      <h3 class="sub-title">Teoria legăturii cu Xiongnu</h3>
+      <p>De la sfârșitul secolului al XVIII-lea<sup class="fn" data-n="3">3</sup>, hunii europeni au fost asociați cu Xiongnu (Hsiung-nu), confederația de călăreți care a terorizat China antică și împotriva căreia s-a ridicat Marele Zid. Asemănarea celor două nume a alimentat teoria, iar o scrisoare sogdiană din 311 d.Hr. care amintește de niște „Huni” ce ar fi distrus orașul Lo-yang pare, la prima vedere, să o confirme<sup class="fn" data-n="4">4</sup>.</p>
+      <p>Istoriografia riguroasă rămâne însă prudentă: nu există dovadă arheologică incontestabilă a unei migrații a Xiongnu nordici spre vest<sup class="fn" data-n="5">5</sup>, iar o legătură directă între elita Xiongnu și cea hunică este exclusă. Cel mult, unele grupuri dispersate ale lumii stepei ar fi putut ajunge, cu generații mai târziu, printre triburile hunice.</p>
+
+      <div class="callout">
+        <p class="cal-label">Ce spun sursele bizantine</p>
+        <p>Priscus, Procopius și Agathias converg asupra aceleiași idei: ținutul alanilor, dintre Marea Azov și Caucaz — nu Asia de Est — era considerat, în istoriografia bizantină, drept adevărata țară de origine a hunilor<sup class="fn" data-n="6">6</sup>.</p>
+      </div>
+
+      <h3 class="sub-title">Viața nomadă și arta războiului</h3>
+      <p>Ammianus Marcellinus lasă cea mai vie descriere a modului de viață hunic: un popor fără așezări fixe sau agricultură, care își petrece existența călare, se hrănește cu rădăcini sălbatice și carne înmuiată sub șa, și își poartă familiile în care acoperite<sup class="fn" data-n="7">7</sup>. Copiii huni erau puși pe cal înainte să meargă bine — o educație militară care avea să facă din ei cea mai temută cavalerie a Antichității târzii.</p>
+      <p>Superioritatea lor tactică venea din două elemente: <b>arcul recurbat compozit</b>, construit din lemn, os și tendoane, cu o rază de bătaie mult superioară arcurilor europene contemporane, și <b>tragerea partă</b> — capacitatea arcașului călare de a ochi și trage înapoi, în plină retragere. Combinate cu tactica retragerii false, care atrăgea inamicul într-o urmărire dezordonată, aceste elemente transformau fiecare ciocnire într-o ambuscadă potențială.</p>
+
+      <div class="diagram" role="img" aria-label="Diagramă a habitatului timpuriu al hunilor, lângă Don, Marea Azov și Marea Caspică">
+        <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 150 Q 160 130 300 145 T 620 120" stroke="var(--line)" stroke-width="1" fill="none" stroke-dasharray="3 5"/>
+          <circle cx="120" cy="140" r="4" fill="var(--accent)"/>
+          <text x="120" y="162" text-anchor="middle" class="mono" font-size="11" fill="var(--ink-dim)">Don</text>
+          <circle cx="330" cy="148" r="5" fill="var(--accent-2)"/>
+          <text x="330" y="170" text-anchor="middle" class="mono" font-size="12" fill="var(--ink)" font-weight="700">Khounoi</text>
+          <circle cx="300" cy="95" r="4" fill="var(--accent)"/>
+          <text x="300" y="80" text-anchor="middle" class="mono" font-size="11" fill="var(--ink-dim)">Marea Azov</text>
+          <circle cx="470" cy="110" r="4" fill="var(--accent)"/>
+          <text x="470" y="92" text-anchor="middle" class="mono" font-size="11" fill="var(--ink-dim)">Marea Caspică</text>
+          <circle cx="80" cy="60" r="4" fill="var(--ink-dim)"/>
+          <text x="80" y="45" text-anchor="middle" class="mono" font-size="10" fill="var(--ink-dim)">China / Xiongnu ↴</text>
+        </svg>
+        <figcaption>Habitatul timpuriu al hunilor (Ptolemeu, Geografia 3.5.10) și legătura, încă disputată, cu lumea Xiongnu din răsărit.</figcaption>
+      </div>
+    </section>
+
+    <section id="sec-cronologie">
+      <div class="chapter-mark"><span class="chapter-num">02</span><span class="chapter-slash">/</span><span class="chapter-tag">Cronologie interactivă</span></div>
+      <h2 class="sec-title">Cronologie interactivă</h2>
+      <p class="sec-sub">Trage cursorul sau apasă pe un an pentru a vedea evenimentul</p>
+
+      <div class="cron-wrap">
+        <input type="range" min="0" max="3" step="1" value="0" class="cron-slider" id="cron-slider" list="cron-marks" aria-label="Selectează un moment cheie din cronologia hunilor">
+        <div class="cron-ticks" id="cron-ticks">
+          <span data-i="0">375</span>
+          <span data-i="1">441–447</span>
+          <span data-i="2">451</span>
+          <span data-i="3">453</span>
+        </div>
+        <div class="cron-info" id="cron-info">
+          <p class="ci-year" id="ci-year">375 d.Hr.</p>
+          <h4 id="ci-title">Trecerea Volgăi</h4>
+          <p id="ci-desc">Hunii traversează Volga și îi înfrâng pe alani, apoi pe ostrogoți — al căror rege, Ermanaric, își ia viața în fața presiunii hunice. Vizigoții, îngroziți, cer azil în Imperiul Roman și trec Dunărea în 376.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-migratie">
+      <div class="chapter-mark"><span class="chapter-num">03</span><span class="chapter-slash">/</span><span class="chapter-tag">Marea Migrație</span></div>
+      <h2 class="sec-title">Marea Migrație</h2>
+      <p class="sec-sub">Harta dinamică — apasă pe o săgeată pentru a urmări presiunea hunică</p>
+      <p class="lede">Șocul de la 375 nu s-a oprit la alani și ostrogoți. Ca niște popice, popoarele împinse de huni s-au izbit unele de altele și, în cele din urmă, de granițele Romei — un efect de domino pe care istoriografia modernă îl numește Marea Migrație a Popoarelor.</p>
+
+      <div class="migr-wrap">
+        <div class="migr-map">
+          <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent-2)"/>
+              </marker>
+            </defs>
+            <path d="M0,260 Q120,235 240,250 Q360,225 480,245 Q560,230 640,250 L640,320 L0,320 Z" fill="var(--paper-3)" opacity="0.5"/>
+
+            <g class="migr-hub">
+              <circle cx="330" cy="140" r="16"/>
+              <text x="330" y="144">HUNI</text>
+            </g>
+
+            <g class="migr-arrow" data-i="0">
+              <path class="hit" d="M318,128 Q220,90 130,150"/>
+              <path class="line" d="M318,128 Q220,90 130,150" marker-end="url(#arrowhead)"/>
+              <text class="migr-label" x="150" y="180">Vizigoți → Balcani → Galia/Hispania</text>
+            </g>
+
+            <g class="migr-arrow" data-i="1">
+              <path class="hit" d="M340,124 Q400,70 470,95"/>
+              <path class="line" d="M340,124 Q400,70 470,95" marker-end="url(#arrowhead)"/>
+              <text class="migr-label" x="480" y="80">Ostrogoți → (vasali) → Italia</text>
+            </g>
+
+            <g class="migr-arrow" data-i="2">
+              <path class="hit" d="M316,152 Q220,220 110,255"/>
+              <path class="line" d="M316,152 Q220,220 110,255" marker-end="url(#arrowhead)"/>
+              <text class="migr-label" x="120" y="278">Vandali → Galia → Hispania → Africa</text>
+            </g>
+
+            <g class="migr-arrow" data-i="3">
+              <path class="hit" d="M346,150 Q450,210 540,240"/>
+              <path class="line" d="M346,150 Q450,210 540,240" marker-end="url(#arrowhead)"/>
+              <text class="migr-label" x="550" y="262">Către Constantinopol</text>
+            </g>
+          </svg>
+          <div class="migr-legend">
+            <span>● Nucleul de putere hunic</span>
+            <span>→ Direcție de presiune / migrație</span>
+          </div>
+        </div>
+        <div class="migr-info" id="migr-info">
+          <p class="mi-tag" id="mi-tag">375–410 d.Hr.</p>
+          <h4 id="mi-title">Vizigoții</h4>
+          <p id="mi-desc">Presați de huni, vizigoții trec Dunărea în 376 și cer azil roman. Tratați prost de administrația locală, se răscoală și zdrobesc o armată romană la Adrianopol (378), unde moare însuși împăratul Valens. În 410, sub Alaric, jefuiesc Roma — apoi se așază în Galia și Hispania.</p>
+        </div>
+        <p class="map-hint">4 săgeți pe hartă · click sau tab pentru detalii</p>
+      </div>
+    </section>
+
+    <section id="sec-personalitati">
+      <div class="chapter-mark"><span class="chapter-num">04</span><span class="chapter-slash">/</span><span class="chapter-tag">Personalități &amp; impact</span></div>
+      <h2 class="sec-title">Personalități &amp; impact</h2>
+      <p class="sec-sub">Attila și Aetius — două fețe ale aceluiași conflict</p>
+
+      <div class="duel">
+        <div class="duel-card attila">
+          <p class="dc-role">Regele hunilor</p>
+          <h4>Attila</h4>
+          <p class="dc-epithet">„Flagellum Dei” — Biciul lui Dumnezeu<sup class="fn" data-n="8">8</sup></p>
+          <ul>
+            <li>Conduce imperiul hunic singur din 445 d.Hr., după înlăturarea fratelui său, Bleda.</li>
+            <li>Devastează Balcanii (441–447) și obține tribut anual uriaș de la Constantinopol.</li>
+            <li>Invadează Galia (451) și Italia (452); moare în 453, în noaptea nunții cu Ildico.</li>
+          </ul>
+        </div>
+        <div class="duel-vs">vs</div>
+        <div class="duel-card aetius">
+          <p class="dc-role">Generalul roman</p>
+          <h4>Flavius Aetius</h4>
+          <p class="dc-epithet">„Ultimul roman adevărat”<sup class="fn" data-n="9">9</sup></p>
+          <ul>
+            <li>În tinerețe, ostatic la curtea hunilor — îi cunoștea limba și tacticile mai bine decât orice alt roman.</li>
+            <li>Formează, în 451, coaliția romano-vizigotă care îl oprește pe Attila la Câmpiile Catalaunice.</li>
+            <li>Este ucis chiar de împăratul Valentinian III, în 454 — la un an după victoria sa cea mai mare.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>Ironia istorică e completă: la Câmpiile Catalaunice, ostrogoții — vasali ai lui Attila — au luptat de partea hunilor, în timp ce vizigoții, cei dintâi fugari din calea acestora, s-au aliat cu Roma pentru a-i opri<sup class="fn" data-n="10">10</sup>. Un an mai târziu, moartea lui Attila (453) și bătălia de la Nedao (454) — în care popoarele subjugate se răscoală și distramă imperiul hun — pun capăt aventurii hunice în Europa la fel de brusc cum începuse<sup class="fn" data-n="11">11</sup>.</p>
+
+      <h3 class="sub-title">Consecințe de lungă durată</h3>
+      <div class="impact-grid">
+        <div class="impact-tile">
+          <p class="it-year">476 d.Hr.</p>
+          <p>La doar 23 de ani după moartea lui Attila, ultimul împărat al Romei de Apus este detronat — data convențională a căderii Imperiului Roman de Apus.</p>
+        </div>
+        <div class="impact-tile">
+          <p class="it-year">493 d.Hr.</p>
+          <p>Ostrogoții, eliberați de sub tutela hunică, întemeiază sub Theodoric cel Mare un regat propriu în Italia.</p>
+        </div>
+        <div class="impact-tile">
+          <p class="it-year">c. 500 d.Hr.</p>
+          <p>Vandalii în Africa de Nord, vizigoții în Hispania, francii în ascensiune în Galia — harta etnică a Europei occidentale e complet redesenată.</p>
+        </div>
+        <div class="impact-tile">
+          <p class="it-year">Peste secole</p>
+          <p>Marea Migrație marchează, pentru istoriografia modernă, tranziția simbolică de la Antichitate la Evul Mediu timpuriu.</p>
+        </div>
+      </div>
+    </section>
+
+  </article>
+
+  <section id="biblio">
+    <div class="chapter-mark"><span class="chapter-num">05</span><span class="chapter-slash">/</span><span class="chapter-tag">Bibliografie</span></div>
+    <h2 class="sec-title">Surse și note</h2>
+    <ol class="biblio">
+      <li id="note-1">Ptolemeu, <em>Geografia</em>, 3.5.10. <a class="back" href="#sec-origini">↩</a></li>
+      <li id="note-2">Ammianus Marcellinus, <em>Res Gestae</em>, 31.2.1. <a class="back" href="#sec-origini">↩</a></li>
+      <li id="note-3">De Guignes, I, 1756, p. 217; cf. Kiessling, col. 2584–85. <a class="back" href="#sec-origini">↩</a></li>
+      <li id="note-4">Bivar, 1983, p. 211 (scrisoarea sogdiană și distrugerea Lo-yangului). <a class="back" href="#sec-origini">↩</a></li>
+      <li id="note-5">Spuler, p. 262. <a class="back" href="#sec-origini">↩</a></li>
+      <li id="note-6">Priscus, frag. 1; Procopius, <em>Bella</em>, 4.5; Agathias, 5.11. <a class="back" href="#sec-origini">↩</a></li>
+      <li id="note-7">Ammianus Marcellinus, <em>Res Gestae</em>, 31.2.2–11 (descrierea etnografică a hunilor). <a class="back" href="#sec-origini">↩</a></li>
+      <li id="note-8">Epitetul „Flagellum Dei” nu apare la Priscus sau Jordanes; este o atribuire legendară, ulterioară, consacrată abia în cronici medievale târzii — cf. Maenchen-Helfen, <em>The World of the Huns</em>, 1973. <a class="back" href="#sec-personalitati">↩</a></li>
+      <li id="note-9">Caracterizare modernă, consacrată de Edward Gibbon, <em>The History of the Decline and Fall of the Roman Empire</em>. <a class="back" href="#sec-personalitati">↩</a></li>
+      <li id="note-10">Jordanes, <em>Getica</em>, 36 (componența celor două tabere la Câmpiile Catalaunice). <a class="back" href="#sec-personalitati">↩</a></li>
+      <li id="note-11">Jordanes, <em>Getica</em>, 260–263 (bătălia de la Nedao, 454 d.Hr.). <a class="back" href="#sec-personalitati">↩</a></li>
+      <li id="note-12">Jordanes, <em>Getica</em>, 24 (înfrângerea ostrogoților și moartea lui Ermanaric, c. 375 d.Hr.). <a class="back" href="#sec-cronologie">↩</a></li>
+      <li id="note-13">Ammianus Marcellinus, <em>Res Gestae</em>, 31.4 (trecerea Dunării de către vizigoți, 376 d.Hr.). <a class="back" href="#sec-migratie">↩</a></li>
+      <li id="note-14">Jordanes, <em>Getica</em>, 41–42 (bătălia Câmpiilor Catalaunice, 451 d.Hr.); Priscus, relatarea ambasadei la curtea lui Attila, 448 d.Hr. <a class="back" href="#sec-cronologie">↩</a></li>
+      <li id="note-15">Procopius, <em>Bellum Vandalicum</em> (traversarea Rinului de vandali, 406 d.Hr., și cucerirea Africii de Nord). <a class="back" href="#sec-migratie">↩</a></li>
+      <li id="note-16">Heather, P., <em>The Fall of the Roman Empire</em>, 2005 — sinteză modernă asupra Marii Migrații și a presiunii hunice asupra granițelor romane. <a class="back" href="#sec-migratie">↩</a></li>
+    </ol>
+  </section>
+
+  <div class="cta-card">
+    <div>
+      <p class="kicker">Componenta interactivă</p>
+      <h3>Testează aceste fapte în joc</h3>
+      <p>Aceleași surse și evenimente, sub forma unei campanii interactive cu hartă de cucerire, mize și insigne pe patru tărâmuri istorice.</p>
+    </div>
+    <a class="cta-btn" href="https://claude.ai/artifact/6BMhTxhCqp6WtcV1kkd5rZ" target="_blank" rel="noopener">Deschide Campania Hunilor →</a>
+  </div>
+
+  <footer>
+    Material realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală” — Secțiunea I, Istorie.<br>
+    Bazat pe izvoare antice (Ptolemeu, Ammianus Marcellinus, Priscus, Procopius, Agathias, Jordanes) și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather).
+  </footer>
+
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var bar = document.getElementById('progress-bar');
+  function onScroll(){
+    var h = document.documentElement;
+    var scrollTop = h.scrollTop || document.body.scrollTop;
+    var scrollHeight = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    bar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc-link'));
+  var sectionIds = [];
+  links.forEach(function(a){
+    var id = a.getAttribute('data-sec');
+    if (sectionIds.indexOf(id) === -1) sectionIds.push(id);
+  });
+  var sections = sectionIds.map(function(id){ return document.getElementById(id); }).filter(Boolean);
+
+  function onSpy(){
+    var pos = window.scrollY + 130;
+    var current = sections[0];
+    sections.forEach(function(sec){
+      if (sec.offsetTop <= pos) current = sec;
+    });
+    links.forEach(function(a){
+      a.classList.toggle('active', current && a.getAttribute('data-sec') === current.id);
+    });
+  }
+  window.addEventListener('scroll', onSpy, { passive: true });
+  window.addEventListener('resize', onSpy);
+  onSpy();
+
+  // ---------- Footnote tooltips ----------
+  var noteText = {};
+  document.querySelectorAll('.biblio li').forEach(function(li){
+    var idx = li.id.replace('note-', '');
+    var clone = li.cloneNode(true);
+    var back = clone.querySelector('a.back');
+    if (back) back.remove();
+    noteText[idx] = clone.textContent.trim();
+  });
+  var tip = document.createElement('div');
+  tip.className = 'fn-tip';
+  document.body.appendChild(tip);
+  function hideTip(){ tip.classList.remove('show'); }
+  document.querySelectorAll('sup.fn').forEach(function(sup){
+    sup.addEventListener('click', function(e){
+      e.stopPropagation();
+      var n = sup.getAttribute('data-n');
+      var alreadyOpen = tip.classList.contains('show') && tip.getAttribute('data-open') === n;
+      if (alreadyOpen) { hideTip(); return; }
+      tip.innerHTML = '<span class="fn-num">[' + n + ']</span>' + (noteText[n] || '');
+      tip.setAttribute('data-open', n);
+      var r = sup.getBoundingClientRect();
+      tip.classList.add('show');
+      var tr = tip.getBoundingClientRect();
+      var left = Math.min(r.left, window.innerWidth - tr.width - 16);
+      left = Math.max(16, left);
+      var top = r.bottom + 8;
+      if (top + tr.height > window.innerHeight - 12) top = r.top - tr.height - 8;
+      tip.style.left = left + 'px';
+      tip.style.top = top + 'px';
+    });
+  });
+  document.addEventListener('click', hideTip);
+  window.addEventListener('scroll', hideTip, { passive: true });
+
+  // ---------- Cronologie: slider interactiv ----------
+  var CRON = [
+    { year: '375–376 d.Hr.', title: 'Trecerea Volgăi', desc: 'Hunii traversează Volga și îi înfrâng pe alani, apoi pe ostrogoți — al căror rege, Ermanaric, își ia viața în fața presiunii hunice. Vizigoții, îngroziți, cer azil în Imperiul Roman și trec Dunărea în 376.' },
+    { year: '441–447 d.Hr.', title: 'Campaniile lui Attila în Răsărit', desc: 'Attila devastează Balcanii și Tracia, ajungând până la zidurile Constantinopolului. Imperiul Roman de Răsărit e forțat să plătească un tribut anual uriaș.' },
+    { year: '451 d.Hr.', title: 'Bătălia Câmpiilor Catalaunice', desc: 'În Galia, o coaliție romano-vizigotă condusă de generalul Aetius și regele Theodoric I îl oprește pe Attila — prima sa înfrângere majoră, deși nu decisivă.' },
+    { year: '453 d.Hr.', title: 'Moartea lui Attila', desc: 'Attila moare în noaptea nunții cu Ildico. Fiii săi nu reușesc să mențină coeziunea imperiului, care se destramă rapid după bătălia de la Nedao (454).' }
+  ];
+  var cronSlider = document.getElementById('cron-slider');
+  var cronTicks = Array.prototype.slice.call(document.querySelectorAll('#cron-ticks span'));
+  var ciYear = document.getElementById('ci-year');
+  var ciTitle = document.getElementById('ci-title');
+  var ciDesc = document.getElementById('ci-desc');
+
+  function setCron(i){
+    i = Math.max(0, Math.min(CRON.length - 1, i));
+    cronSlider.value = i;
+    var pct = (i / (CRON.length - 1)) * 100;
+    cronSlider.style.setProperty('--fill', pct + '%');
+    var c = CRON[i];
+    ciYear.textContent = c.year;
+    ciTitle.textContent = c.title;
+    ciDesc.textContent = c.desc;
+    cronTicks.forEach(function(t){ t.classList.toggle('active', parseInt(t.getAttribute('data-i'), 10) === i); });
+  }
+  cronSlider.addEventListener('input', function(){ setCron(parseInt(cronSlider.value, 10)); });
+  cronTicks.forEach(function(t){
+    t.addEventListener('click', function(){ setCron(parseInt(t.getAttribute('data-i'), 10)); });
+  });
+  setCron(0);
+
+  // ---------- Marea Migrație: hartă cu săgeți ----------
+  var MIGR = [
+    { tag: '375–410 d.Hr.', title: 'Vizigoții', desc: 'Presați de huni, vizigoții trec Dunărea în 376 și cer azil roman. Tratați prost de administrația locală, se răscoală și zdrobesc o armată romană la Adrianopol (378), unde moare însuși împăratul Valens. În 410, sub Alaric, jefuiesc Roma — apoi se așază în Galia și Hispania.' },
+    { tag: '375–493 d.Hr.', title: 'Ostrogoții', desc: 'Subjugați direct de huni după 375, ostrogoții rămân vasali și chiar luptă alături de Attila la Câmpiile Catalaunice (451). Abia după prăbușirea imperiului hun (454) devin independenți, întemeind mai târziu, sub Theodoric cel Mare, un regat propriu în Italia (493).' },
+    { tag: '406–455 d.Hr.', title: 'Vandalii', desc: 'Împinși de efectul de domino al presiunii hunice, vandalii traversează Rinul înghețat în noaptea de 31 decembrie 406, trec prin Galia în Hispania (409), apoi în Africa de Nord (429) sub Genseric, unde cuceresc Cartagina și, în 455, jefuiesc la rândul lor Roma.' },
+    { tag: '441–447 d.Hr.', title: 'Spre Constantinopol', desc: 'Nu doar popoarele vecine sunt împinse de huni — hunii înșiși lovesc direct Imperiul Roman de Răsărit, devastând Balcanii și forțând Constantinopolul să plătească tribut pentru a evita asediul.' }
+  ];
+  var migrArrows = Array.prototype.slice.call(document.querySelectorAll('.migr-arrow'));
+  var miTag = document.getElementById('mi-tag');
+  var miTitle = document.getElementById('mi-title');
+  var miDesc = document.getElementById('mi-desc');
+  function showMigr(i){
+    var m = MIGR[i];
+    if (!m) return;
+    miTag.textContent = m.tag;
+    miTitle.textContent = m.title;
+    miDesc.textContent = m.desc;
+    migrArrows.forEach(function(a, idx){ a.classList.toggle('active', idx === i); });
+  }
+  migrArrows.forEach(function(a){
+    var i = parseInt(a.getAttribute('data-i'), 10);
+    a.addEventListener('click', function(){ showMigr(i); });
+    a.setAttribute('tabindex', '0');
+    a.setAttribute('role', 'button');
+    a.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showMigr(i); }
+    });
+  });
+  showMigr(0);
+})();
+</script>

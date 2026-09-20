@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<title>Campania Hunilor</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+  :root{
+    --bg: #100b07;
+    --bg-2: #1a1109;
+    --surface: #1f150c;
+    --surface-2: #2a1d10;
+    --surface-3: #352513;
+    --ink: #f1e6d3;
+    --ink-dim: #a4927460;
+    --ink-dim2: #a89474;
+    --line: #3c2c17;
+    --line-bright: #55401f;
+    --ember: #ff6a35;
+    --ember-dim: #b8461f;
+    --gold: #e9b94a;
+    --gold-dim: #a67f2a;
+    --good: #5cc17f;
+    --good-bg: #16281c;
+    --bad: #e5473d;
+    --bad-bg: #2c1512;
+    --shadow: rgba(0, 0, 0, 0.55);
+    --z1: #d4a13c;
+    --z1-bg: #2c220f;
+    --z2: #e5473d;
+    --z2-bg: #2c1512;
+    --z3: #9b7ae0;
+    --z3-bg: #201730;
+    --z4: #4fb07a;
+    --z4-bg: #12271b;
+  }
+
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, #2a1a0c 0%, transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    color: var(--ink);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    padding: 0 18px;
+  }
+  h1, h2, h3, .display{ font-family: 'Cinzel', Georgia, serif; text-wrap: balance; letter-spacing: 0.01em; }
+  h1, h2, h3{ margin: 0; }
+  .mono{ font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  .wrap{ max-width: 720px; margin: 0 auto; padding-block: 44px 70px; }
+
+  /* ---------- HERO ---------- */
+  .hero{ position: relative; text-align: center; padding-block: 6px 4px; overflow: hidden; }
+  .hero-riders{ position: absolute; inset: -10px 0; pointer-events: none; z-index: 0; }
+  .rider-ghost{
+    position: absolute;
+    left: -10%;
+    font-size: 1.3rem;
+    opacity: 0.16;
+    transform: scaleX(-1);
+    filter: drop-shadow(0 0 5px var(--ember));
+    animation: gallop linear infinite;
+  }
+  .rider-ghost.r1{ top: 14%; font-size: 1rem; opacity: 0.1; animation-duration: 23s; animation-delay: -4s; }
+  .rider-ghost.r2{ top: 38%; font-size: 1.55rem; opacity: 0.2; animation-duration: 15s; animation-delay: -9s; }
+  .rider-ghost.r3{ top: 4%; font-size: 0.85rem; opacity: 0.09; animation-duration: 29s; animation-delay: -1s; }
+  @keyframes gallop{ from{ left: -10%; } to{ left: 110%; } }
+  .hero-content{ position: relative; z-index: 1; }
+  .eyebrow{
+    font-family: 'JetBrains Mono', monospace;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin: 0 0 16px;
+  }
+  .eyebrow::before, .eyebrow::after{ content: ''; width: 22px; height: 1px; background: var(--line-bright); }
+  .hero h1{
+    font-size: clamp(2.2rem, 6.5vw, 3.4rem);
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.06;
+    margin-bottom: 10px;
+  }
+  .hero h1 span{ color: var(--ember); }
+  .hero p.sub{
+    font-size: 1.04rem;
+    color: var(--ink-dim2);
+    max-width: 46ch;
+    margin: 0 auto 26px;
+    line-height: 1.55;
+  }
+
+  /* ---------- CARD SHELL ---------- */
+  .panel{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 20px 44px -26px var(--shadow);
+  }
+
+  .start-panel{ padding: 28px clamp(20px, 5vw, 40px) 32px; text-align: center; }
+  .stats-row{ display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 4px 0 24px; }
+  .stat{ text-align: center; background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 12px 20px; min-width: 96px; }
+  .stat b{ display: block; font-family: 'Cinzel', serif; font-size: 1.35rem; font-weight: 700; color: var(--gold); }
+  .stat span{ font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim2); }
+
+  button.cta{
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+    color: #1a0f05;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dim) 100%);
+    border: none;
+    padding: 14px 36px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 10px 24px -10px rgba(233, 185, 74, 0.35);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  button.cta:hover{ transform: translateY(-2px); box-shadow: 0 14px 28px -10px rgba(233, 185, 74, 0.45); }
+  button.cta:active{ transform: translateY(0); }
+  button.cta:focus-visible, .opt:focus-visible, .again-btn:focus-visible{ outline: 2px solid var(--ember); outline-offset: 2px; }
+  .sources{ margin-top: 20px; font-size: 0.8rem; color: var(--ink-dim2); line-height: 1.6; }
+  .sources b{ color: var(--ink); }
+
+  /* ---------- CAMPAIGN MAP ---------- */
+  #campaign-map{ margin: 26px 0 6px; }
+  #campaign-map[hidden]{ display: none; }
+  .cmap-inner{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 800 / 220;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--line);
+  }
+  .cmap-svg{ position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #route-progress{ transition: stroke-dashoffset 0.6s cubic-bezier(.3,1,.4,1); }
+  .cmap-rider{
+    position: absolute;
+    font-size: clamp(1.05rem, 3.6vw, 1.5rem);
+    transform: translate(-50%, -68%);
+    transition: left 0.6s cubic-bezier(.3,1,.4,1), top 0.6s cubic-bezier(.3,1,.4,1), opacity 0.4s ease;
+    z-index: 3;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6));
+  }
+  .stop{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    z-index: 2;
+  }
+  .stop .keep{
+    width: clamp(30px, 7vw, 40px); height: clamp(30px, 7vw, 40px);
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 2px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: clamp(0.9rem, 3vw, 1.15rem);
+    opacity: 0.5;
+    filter: grayscale(1);
+  }
+  .stop.active .keep{
+    border-color: var(--ember);
+    box-shadow: 0 0 0 1px var(--ember) inset, 0 0 16px -3px var(--ember);
+    opacity: 1; filter: none;
+    animation: keep-pulse 1.7s ease-in-out infinite;
+  }
+  @keyframes keep-pulse{ 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.08); } }
+  .stop.done .keep{ border-color: var(--gold); background: var(--surface-3); opacity: 1; filter: none; }
+  .stop .pips{ display: flex; gap: 2px; min-height: 6px; }
+  .stop .pip{ width: 5px; height: 5px; border-radius: 50%; background: var(--line-bright); flex-shrink: 0; }
+  .stop .pip.good{ background: var(--good); box-shadow: 0 0 3px var(--good); }
+  .stop .pip.bad{ background: var(--bad); }
+  .stop .label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.52rem, 1.6vw, 0.62rem);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+    color: var(--ink-dim2);
+    background: var(--surface);
+    padding: 1px 5px;
+    border-radius: 4px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .stop.active .label{ color: var(--ember); }
+  .stop.done .label{ color: var(--gold); }
+  @media (prefers-reduced-motion: reduce){ .stop.active .keep{ animation: none; } #route-progress, .cmap-rider{ transition: none; } }
+
+  /* ---------- LEVEL INTRO ---------- */
+  #level-intro{ padding: clamp(24px, 6vw, 40px); margin-top: 10px; }
+  #level-intro[hidden]{ display: none; }
+  .li-head{ display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .level-badge-icon{
+    font-size: 2rem;
+    width: 60px; height: 60px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface-2);
+    border: 1px solid var(--line-bright);
+    clip-path: polygon(50% 0%, 100% 22%, 100% 78%, 50% 100%, 0% 78%, 0% 22%);
+  }
+  .level-kicker{ font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ember); margin: 0 0 6px; }
+  .level-title{ font-size: clamp(1.4rem, 4vw, 1.9rem); font-weight: 700; }
+  .level-lore{
+    font-size: 1.02rem;
+    line-height: 1.68;
+    color: var(--ink-dim2);
+    border-left: 2px solid var(--gold-dim);
+    padding-left: 18px;
+    margin: 0 0 22px;
+  }
+  .level-meta{ font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--ink-dim2); margin-bottom: 24px; }
+
+  /* ---------- QUIZ ---------- */
+  #quiz[hidden]{ display: none; }
+  #quiz{ margin-top: 10px; }
+  .hud-row{ display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+  .hud-left{ font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--ink-dim2); font-weight: 600; }
+  .hud-right{ display: flex; gap: 8px; align-items: center; }
+  .pill{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--gold);
+    border: 1px solid var(--line-bright);
+    background: var(--surface-2);
+    padding: 5px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .pill.combo{
+    color: var(--ember);
+    border-color: var(--ember-dim);
+    display: none;
+  }
+  .pill.combo.show{ display: inline-block; animation: pulse-combo 0.4s ease; }
+  @keyframes pulse-combo{ 0%{ transform: scale(0.85); } 60%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+  .pill.coin{ color: var(--gold); }
+  .pill.timer{ color: var(--ember); border-color: var(--ember-dim); display: none; }
+  .pill.timer.show{ display: inline-block; }
+  .pill.timer.low{ animation: pulse-combo 0.5s ease infinite; }
+
+  .wager-row{
+    display: flex; align-items: center; gap: 8px;
+    margin: 0 0 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--ink-dim2);
+  }
+  .wager-btn{
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 1px solid var(--line-bright);
+    background: var(--surface-2);
+    color: var(--gold);
+    font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+  .wager-btn:hover:not(:disabled){ background: var(--surface-3); }
+  .wager-btn:disabled{ opacity: 0.35; cursor: default; }
+  .wager-amt{ min-width: 22px; text-align: center; color: var(--gold); font-weight: 700; }
+  .wager-note{ font-size: 0.72rem; color: var(--ink-dim2); }
+
+  #quiz.flash-good{ animation: flash-good 0.5s ease; }
+  @keyframes flash-good{
+    0%{ box-shadow: 0 0 0 0 rgba(92,193,127,0.55), 0 20px 44px -26px var(--shadow); }
+    100%{ box-shadow: 0 0 0 34px rgba(92,193,127,0), 0 20px 44px -26px var(--shadow); }
+  }
+  #quiz.flash-bad{ animation: flash-bad 0.4s ease; }
+  @keyframes flash-bad{
+    0%{ box-shadow: 0 0 0 0 rgba(229,71,61,0.5), 0 20px 44px -26px var(--shadow); }
+    100%{ box-shadow: 0 0 0 26px rgba(229,71,61,0), 0 20px 44px -26px var(--shadow); }
+  }
+  .q-card{ padding: clamp(22px, 5vw, 34px); }
+  .q-era{ font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-dim); margin: 14px 0 10px; }
+  .q-text{ font-size: 1.22rem; line-height: 1.45; margin: 0 0 22px; font-weight: 600; }
+
+  /* ---------- ANSWER MECHANIC: AIM & RELEASE ---------- */
+  .mech-label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.76rem; font-weight: 600;
+    color: var(--ink-dim2);
+    letter-spacing: 0.01em;
+    margin: 0 0 10px;
+  }
+  .range{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: radial-gradient(ellipse 500px 260px at 8% 90%, var(--surface-3) 0%, var(--surface-2) 55%, var(--surface) 100%);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    touch-action: none;
+    user-select: none;
+    cursor: crosshair;
+    margin: 0 0 6px;
+  }
+  .range-weapon{
+    position: absolute;
+    left: 10%; top: 84%;
+    font-size: clamp(1.7rem, 6vw, 2.3rem);
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.55));
+  }
+  /* The nocked projectile: a custom-drawn shaft+arrowhead, always the true source and
+     direction of the shot — the dashed aim-line picks up exactly where its tip ends. */
+  .nock{
+    position: absolute;
+    left: 10%; top: 84%;
+    width: 32px; height: 9px;
+    background: var(--gold);
+    clip-path: polygon(0 38%, 74% 38%, 74% 8%, 100% 50%, 74% 92%, 74% 62%, 0 62%);
+    transform-origin: 0 50%;
+    transform: translateY(-50%) rotate(0deg);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 4;
+    pointer-events: none;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+  }
+  .nock.show{ opacity: 1; }
+  .aim-line{
+    position: absolute;
+    left: 10%; top: 84%;
+    height: 2px;
+    width: 0;
+    background: repeating-linear-gradient(90deg, var(--gold-dim) 0 6px, transparent 6px 12px);
+    transform-origin: 0 50%;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+  .range-targets{ position: absolute; inset: 0; z-index: 2; }
+  .target{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    width: clamp(70px, 24vw, 118px);
+    text-align: center;
+    pointer-events: none;
+  }
+  .target .ring{
+    width: clamp(34px, 9vw, 44px); height: clamp(34px, 9vw, 44px);
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 2px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700; font-size: 0.72rem;
+    color: var(--gold-dim);
+    margin: 0 auto;
+  }
+  .target .txt{
+    font-size: 0.7rem; font-weight: 600;
+    color: var(--ink-dim2);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 4px;
+    line-height: 1.25;
+  }
+  .target.correct .ring{ border-color: var(--good); background: var(--good-bg); color: var(--good); }
+  .target.wrong .ring{ border-color: var(--bad); background: var(--bad-bg); color: var(--bad); }
+  .target.dim{ opacity: 0.4; }
+  .target.hit .ring{ animation: target-hit 0.3s ease; }
+  @keyframes target-hit{ 0%{ transform: scale(1); } 50%{ transform: scale(1.22); } 100%{ transform: scale(1); } }
+
+  /* Nivel 2 — Catapultă: ținte ca metereze */
+  .range.mech-stone .target .ring{ border-radius: 3px; clip-path: polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%); }
+  /* Nivel 3 — Lupa: ținte ca sigilii */
+  .range.mech-lens .target .ring{ border-style: dashed; font-family: 'JetBrains Mono', monospace; }
+  /* Nivel 4 — Șarjă: ținte ca stindarde */
+  .range.mech-charge .target .ring{ clip-path: polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%); }
+
+  .projectile{ position: fixed; z-index: 70; pointer-events: none; will-change: left, top; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.55)); }
+  .projectile.proj-arrow{ font-size: 1.25rem; }
+  .projectile.proj-stone{ width: 13px; height: 13px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #b6ad9c, #675e51); animation: proj-spin 0.4s linear infinite; }
+  @keyframes proj-spin{ to{ transform: rotate(360deg); } }
+  .projectile.proj-lens{ font-size: 1.3rem; animation: proj-pulse 0.35s ease-in-out infinite; }
+  @keyframes proj-pulse{ 50%{ transform: scale(1.3); } }
+  .projectile.proj-charge{ font-size: 1.4rem; animation: proj-gallop 0.28s ease-in-out infinite; }
+  @keyframes proj-gallop{ 50%{ transform: translateY(-5px); } }
+  @media (prefers-reduced-motion: reduce){ .range-weapon{ transition: none; } }
+
+  .feedback{
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    font-size: 0.94rem;
+    line-height: 1.55;
+    color: var(--ink-dim2);
+    display: none;
+  }
+  .feedback.show{ display: block; }
+  .feedback .tag{ font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.76rem; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+  .feedback.good .tag{ color: var(--good); }
+  .feedback.bad .tag{ color: var(--bad); }
+
+  .next-row{ margin-top: 20px; display: flex; justify-content: flex-end; }
+  .next-btn{
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    background: var(--surface-2);
+    border: 1px solid var(--gold-dim);
+    padding: 10px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: none;
+  }
+  .next-btn.show{ display: inline-block; }
+  .next-btn:hover{ background: var(--surface-3); }
+
+  /* ---------- SOLIA IMPERIALĂ (envelope modifier) ---------- */
+  #envelope-panel{ padding: clamp(24px, 6vw, 40px); text-align: center; margin-top: 10px; }
+  #envelope-panel[hidden]{ display: none; }
+  .env-intro{ font-size: 1rem; color: var(--ink-dim2); max-width: 46ch; margin: 0 auto 22px; line-height: 1.6; }
+  .env-row{ display: flex; justify-content: center; gap: 16px; margin: 0 0 6px; flex-wrap: wrap; }
+  .envelope{
+    width: 88px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    background: none; border: none; padding: 0; font-family: 'Inter', sans-serif;
+  }
+  .envelope .seal2{
+    width: 72px; height: 54px;
+    background: linear-gradient(180deg, var(--surface-3), var(--surface-2));
+    border: 1px solid var(--line-bright);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .envelope:hover:not(:disabled) .seal2{ transform: translateY(-3px); border-color: var(--gold-dim); }
+  .envelope:disabled{ cursor: default; }
+  .envelope.picked .seal2{ border-color: var(--gold); box-shadow: 0 0 16px -4px var(--gold); }
+  .envelope.other .seal2{ opacity: 0.4; }
+  .envelope .env-name{ font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; color: var(--ink-dim2); text-align: center; min-height: 2.2em; }
+  .env-reveal{
+    margin-top: 20px; padding: 16px; text-align: left;
+    border: 1px solid var(--gold-dim);
+    background: var(--surface-2);
+    border-radius: 8px;
+    display: none;
+  }
+  .env-reveal.show{ display: block; animation: badge-pop 0.4s cubic-bezier(.2,1.3,.4,1) both; }
+  .env-reveal .er-title{ font-family: 'Cinzel', serif; font-weight: 700; color: var(--gold); font-size: 1.05rem; margin: 0 0 6px; }
+  .env-reveal .er-desc{ font-size: 0.9rem; color: var(--ink-dim2); line-height: 1.5; margin: 0; }
+
+  /* ---------- LINIA TIMPULUI (bonus round) ---------- */
+  #year-panel{ padding: clamp(24px, 6vw, 40px); margin-top: 10px; }
+  #year-panel[hidden]{ display: none; }
+  .yr-intro{ font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); margin: 0 0 8px; }
+  .yr-q{ font-size: 1.1rem; font-weight: 600; line-height: 1.4; margin: 0 0 8px; }
+  .yr-hint{ font-size: 0.84rem; color: var(--ink-dim2); margin: 0 0 30px; }
+  .yr-track{ position: relative; height: 4px; background: var(--line-bright); border-radius: 2px; margin: 50px 16px 46px; touch-action: none; user-select: none; }
+  .yr-end{ position: absolute; top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-dim2); }
+  .yr-end.lo{ left: 0; } .yr-end.hi{ right: 0; }
+  .yr-pin{
+    position: absolute; top: 50%; left: 50%;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--surface);
+    transform: translate(-50%, -50%);
+    cursor: grab; touch-action: none; z-index: 2;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.45);
+  }
+  .yr-pin:active{ cursor: grabbing; }
+  .yr-pin-label{
+    position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.78rem; color: var(--gold);
+    white-space: nowrap;
+  }
+  .yr-answer{
+    position: absolute; top: 50%; left: 50%;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--good);
+    border: 2px solid var(--surface);
+    transform: translate(-50%, -50%);
+    display: none; z-index: 1;
+  }
+  .yr-answer.show{ display: block; }
+  .yr-answer-label{
+    position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.72rem; color: var(--good);
+    white-space: nowrap;
+  }
+  .yr-lock-row{ display: flex; justify-content: center; margin-top: 10px; }
+  .yr-result{
+    margin-top: 20px; padding: 14px 16px; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--surface-2);
+    font-size: 0.92rem; color: var(--ink-dim2); line-height: 1.55;
+    display: none; text-align: center;
+  }
+  .yr-result.show{ display: block; }
+  .yr-result .tag{ font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; display: block; margin-bottom: 6px; color: var(--gold); }
+
+  /* ---------- LEVEL COMPLETE ---------- */
+  #level-complete{ display: none; padding: clamp(28px, 6vw, 44px); text-align: center; margin-top: 10px; }
+  #level-complete.show{ display: block; }
+  .badge-unlock{
+    width: 92px; height: 92px;
+    margin: 4px auto 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.6rem;
+    background: linear-gradient(180deg, var(--surface-3), var(--surface-2));
+    border: 1px solid var(--gold-dim);
+    clip-path: polygon(50% 0%, 100% 22%, 100% 78%, 50% 100%, 0% 78%, 0% 22%);
+    box-shadow: 0 0 30px -8px var(--gold);
+    animation: badge-pop 0.5s cubic-bezier(.2,1.3,.4,1) both;
+  }
+  @keyframes badge-pop{ 0%{ transform: scale(0.4); opacity: 0; } 60%{ transform: scale(1.08); opacity: 1; } 100%{ transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce){ .badge-unlock{ animation: none; } .pill.combo.show{ animation: none; } }
+  .lc-kicker{ font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--good); margin: 0 0 8px; }
+  .lc-badge-name{ font-size: clamp(1.35rem, 4vw, 1.7rem); font-weight: 700; margin: 0 0 10px; color: var(--gold); }
+  .lc-score{ font-family: 'JetBrains Mono', monospace; font-size: 0.94rem; color: var(--ink-dim2); margin: 0 0 26px; }
+  .lc-score b{ color: var(--ink); }
+
+  /* ---------- RESULTS ---------- */
+  #results{ display: none; padding: clamp(24px, 6vw, 42px); text-align: center; margin-top: 10px; }
+  #results.show{ display: block; }
+  .seal{
+    width: 84px; height: 84px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.1rem;
+    background: radial-gradient(circle at 35% 30%, var(--surface-3), var(--surface-2));
+    border: 3px double var(--gold);
+    box-shadow: 0 0 30px -6px var(--gold);
+    animation: seal-stamp 0.55s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  @keyframes seal-stamp{
+    0%{ transform: scale(2.2) rotate(-10deg); opacity: 0; }
+    60%{ transform: scale(0.92) rotate(3deg); opacity: 1; }
+    100%{ transform: scale(1) rotate(0deg); }
+  }
+  @media (prefers-reduced-motion: reduce){ .seal{ animation: none; } }
+  .rank-title{ font-size: clamp(1.5rem, 4vw, 2rem); color: var(--gold); margin: 6px 0 8px; }
+  .score-big{ font-family: 'JetBrains Mono', monospace; font-size: clamp(2.5rem, 8vw, 3.4rem); font-weight: 700; color: var(--ember); margin: 8px 0; }
+  .score-big span{ font-size: 0.4em; color: var(--ink-dim2); }
+  .rank-desc{ max-width: 48ch; margin: 0 auto 22px; color: var(--ink-dim2); }
+  .combo-note{ font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: var(--ember); margin: 0 0 20px; }
+  .badge-row{ display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 0 0 24px; }
+  .earned-badge{ display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100px; }
+  .earned-badge .icon{
+    width: 56px; height: 56px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    background: linear-gradient(180deg, var(--surface-3), var(--surface-2));
+    border: 1px solid var(--gold-dim);
+    clip-path: polygon(50% 0%, 100% 22%, 100% 78%, 50% 100%, 0% 78%, 0% 22%);
+  }
+  .earned-badge .name{ font-size: 0.7rem; color: var(--ink-dim2); text-align: center; line-height: 1.3; }
+  .best-note{ font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--ink-dim2); margin-bottom: 24px; }
+  .again-btn{
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1a0f05;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dim) 100%);
+    border: none;
+    padding: 13px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .timeline{ margin-top: 34px; text-align: left; border-top: 1px solid var(--line); padding-top: 22px; }
+  .timeline h3{ font-size: 1rem; margin: 0 0 14px; color: var(--ink); }
+  .tl-item{ display: grid; grid-template-columns: 80px 1fr; gap: 14px; padding: 9px 0; border-bottom: 1px dashed var(--line); font-size: 0.88rem; }
+  .tl-item:last-child{ border-bottom: none; }
+  .tl-date{ font-family: 'JetBrains Mono', monospace; color: var(--gold); font-weight: 700; }
+  .tl-text{ color: var(--ink-dim2); }
+
+  /* ---------- SPARKS ---------- */
+  .spark-layer{ position: fixed; inset: 0; pointer-events: none; z-index: 50; overflow: hidden; }
+  .spark{ position: absolute; top: -10px; border-radius: 50%; animation: spark-fall linear forwards; }
+  @keyframes spark-fall{ to{ transform: translateY(105vh) translateX(var(--drift, 0px)); opacity: 0; } }
+
+  /* ---------- CONQUEST BANNER ---------- */
+  .conquest-banner{
+    position: fixed; inset: 0; z-index: 60;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .conquest-banner .band{
+    background: linear-gradient(90deg, transparent, var(--surface-3) 14%, var(--surface-3) 86%, transparent);
+    border-top: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    padding: 16px 0;
+    width: 145%;
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    animation: band-sweep 1.15s cubic-bezier(.22,.8,.3,1) forwards;
+  }
+  .conquest-banner .band .ic{ font-size: 1.7rem; }
+  .conquest-banner .band .txt{
+    font-family: 'Cinzel', serif; font-weight: 800; font-size: clamp(1.1rem, 4vw, 1.5rem);
+    color: var(--gold); letter-spacing: 0.05em; white-space: nowrap;
+  }
+  @keyframes band-sweep{
+    0%{ transform: translateX(-100%) skewX(-6deg); opacity: 0; }
+    12%{ opacity: 1; }
+    45%, 68%{ transform: translateX(0%) skewX(-6deg); opacity: 1; }
+    100%{ transform: translateX(100%) skewX(-6deg); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .conquest-banner .band{ animation: none; opacity: 0; }
+    #quiz.flash-good, #quiz.flash-bad{ animation: none; }
+  }
+
+  footer{ text-align: center; margin-top: 40px; font-size: 0.76rem; color: var(--ink-dim2); }
+
+  @media (max-width: 480px){
+    .li-head{ flex-direction: column; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .rider-ghost{ display: none; }
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-riders" aria-hidden="true">
+      <span class="rider-ghost r1">🐎</span>
+      <span class="rider-ghost r2">🐎</span>
+      <span class="rider-ghost r3">🐎</span>
+    </div>
+    <div class="hero-content">
+      <p class="eyebrow">Simulare istorică interactivă</p>
+      <h1>Campania <span>Hunilor</span></h1>
+      <p class="sub">370 d.Hr. Un popor de călăreți iese brusc din stepă și schimbă harta Europei. Parcurge 4 campanii istorice, răspunde corect și cucerește fiecare teritoriu.</p>
+    </div>
+  </div>
+
+  <div class="panel start-panel" id="start-panel">
+    <div class="stats-row">
+      <div class="stat"><b>4</b><span>Campanii</span></div>
+      <div class="stat"><b id="qcount">14</b><span>Întrebări</span></div>
+      <div class="stat"><b>20 🪙</b><span>Solidi de pornire</span></div>
+    </div>
+    <button class="cta" id="start-btn">Pornește campania</button>
+    <p class="sources"><b>Surse:</b> Ptolemeu (Geografia, 3.5.10), Ammianus Marcellinus (Res Gestae, 31.2.1), Priscus, Procopius, Agathias, cronici chineze despre Hsiung-nu, o scrisoare sogdiană din 311 d.Hr.</p>
+  </div>
+
+  <div id="campaign-map" hidden>
+    <div class="cmap-inner">
+      <svg class="cmap-svg" viewBox="0 0 800 220" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <path d="M0,190 Q100,174 200,188 T400,180 T600,190 T800,177 L800,220 L0,220 Z" fill="var(--surface-2)" opacity="0.55"/>
+        <ellipse cx="300" cy="128" rx="24" ry="8" fill="var(--z3-bg)" opacity="0.6"/>
+        <text x="300" y="113" text-anchor="middle" font-size="9" fill="var(--ink-dim2)" font-family="'JetBrains Mono', monospace">Caspică</text>
+        <ellipse cx="505" cy="168" rx="30" ry="9" fill="var(--z3-bg)" opacity="0.6"/>
+        <text x="505" y="187" text-anchor="middle" font-size="9" fill="var(--ink-dim2)" font-family="'JetBrains Mono', monospace">Azov</text>
+        <path d="M36,114 L54,100 L72,114 L90,100 L108,114" stroke="var(--ink-dim2)" stroke-width="2" fill="none" opacity="0.55" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="72" y="130" text-anchor="middle" font-size="9" fill="var(--ink-dim2)" font-family="'JetBrains Mono', monospace">Marele Zid</text>
+        <path id="route-base" d="M430,150 Q275,80 120,95 Q275,25 430,55 Q565,35 700,115" fill="none" stroke="var(--line-bright)" stroke-width="2" stroke-dasharray="1 8" stroke-linecap="round"/>
+        <path id="route-progress" d="M430,150 Q275,80 120,95 Q275,25 430,55 Q565,35 700,115" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <div class="cmap-rider" id="cmap-rider">🐎</div>
+      <div class="cmap-stops" id="cmap-stops"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="level-intro" hidden>
+    <div class="li-head">
+      <div class="level-badge-icon" id="li-icon">—</div>
+      <div>
+        <p class="level-kicker" id="li-kicker">—</p>
+        <h2 class="level-title" id="li-title">—</h2>
+      </div>
+    </div>
+    <p class="level-lore" id="li-lore">—</p>
+    <p class="level-meta" id="li-meta">—</p>
+    <button class="cta" id="li-continue">Angajează campania →</button>
+  </div>
+
+  <div class="panel" id="envelope-panel" hidden>
+    <p class="level-kicker">Solia Imperială</p>
+    <h2 class="level-title">Alege un plic sigilat</h2>
+    <p class="env-intro">Trei scrisori diplomatice circulă între Roma, Constantinopol și tabăra lui Attila. Una dintre ele îți va schimba norocul pe toată durata acestei campanii.</p>
+    <div class="env-row" id="env-row"></div>
+    <div class="env-reveal" id="env-reveal">
+      <p class="er-title" id="er-title">—</p>
+      <p class="er-desc" id="er-desc">—</p>
+    </div>
+    <div class="next-row" style="justify-content:center; margin-top:20px;">
+      <button class="cta" id="env-continue" hidden>Începe tărâmul →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="quiz" hidden>
+    <div class="q-card">
+      <div class="hud-row">
+        <span class="hud-left" id="hud-left">Campania 1 · Întrebarea 1/3</span>
+        <div class="hud-right">
+          <span class="pill timer" id="timer-pill">⏱ 15</span>
+          <span class="pill combo" id="combo-pill">🔥 Combo x2</span>
+          <span class="pill coin" id="coin-pill">🪙 20</span>
+          <span class="pill" id="score-pill">Scor 0/14</span>
+        </div>
+      </div>
+      <p class="q-era" id="q-era">—</p>
+      <p class="q-text" id="q-text">—</p>
+      <div class="wager-row">
+        <span>Miză:</span>
+        <button class="wager-btn" id="wager-minus" type="button">−</button>
+        <span class="wager-amt" id="wager-amt">3</span>
+        <button class="wager-btn" id="wager-plus" type="button">+</button>
+        <span>🪙</span>
+        <span class="wager-note">(corect → dublezi miza · greșit → o pierzi în Tezaurul lui Attila)</span>
+      </div>
+      <p class="mech-label" id="mech-label">—</p>
+      <div class="range" id="range">
+        <div class="range-weapon" id="range-weapon">🏹</div>
+        <div class="aim-line" id="aim-line"></div>
+        <div class="nock" id="nock"></div>
+        <div class="range-targets" id="range-targets"></div>
+      </div>
+      <div class="feedback" id="feedback">
+        <span class="tag" id="fb-tag"></span>
+        <span id="fb-text"></span>
+      </div>
+      <div class="next-row">
+        <button class="next-btn" id="next-btn">Următoarea →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="year-panel" hidden>
+    <p class="yr-intro">Lupta cu pionii pe linia timpului</p>
+    <p class="yr-q" id="yr-q">—</p>
+    <p class="yr-hint">Trage pionul auriu pe anul potrivit, apoi fixează-l. Cu cât ești mai aproape, cu atât câștigi mai mulți solidi.</p>
+    <div class="yr-track" id="yr-track">
+      <span class="yr-end lo" id="yr-lo">100</span>
+      <span class="yr-end hi" id="yr-hi">250</span>
+      <div class="yr-answer" id="yr-answer"><span class="yr-answer-label" id="yr-answer-label"></span></div>
+      <div class="yr-pin" id="yr-pin"><span class="yr-pin-label" id="yr-pin-label">150</span></div>
+    </div>
+    <div class="yr-lock-row">
+      <button class="cta" id="yr-lock">Fixează anul</button>
+    </div>
+    <div class="yr-result" id="yr-result">
+      <span class="tag" id="yr-tag">—</span>
+      <span id="yr-fb"></span>
+    </div>
+    <div class="next-row" style="justify-content:center; margin-top:16px;">
+      <button class="next-btn" id="yr-next" style="display:none;">Continuă →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="level-complete">
+    <p class="lc-kicker">Teritoriu cucerit</p>
+    <div class="badge-unlock" id="lc-icon">—</div>
+    <h2 class="lc-badge-name" id="lc-badge-name">—</h2>
+    <p class="lc-score">Scor la această campanie: <b id="lc-score-text">0/0</b></p>
+    <p class="lc-score" id="lc-treasury" style="display:none;">—</p>
+    <button class="cta" id="lc-next">Campania următoare →</button>
+  </div>
+
+  <div class="panel" id="results">
+    <p class="eyebrow" style="justify-content:center">Campanie încheiată</p>
+    <div class="seal" id="seal">🏆</div>
+    <div class="score-big" id="score-big"><span id="score-num">0</span><span id="score-den">/14</span></div>
+    <h2 class="rank-title" id="rank-title">—</h2>
+    <p class="rank-desc" id="rank-desc">—</p>
+    <p class="combo-note" id="combo-note"></p>
+    <p class="combo-note" id="coin-note"></p>
+    <div class="badge-row" id="badge-row"></div>
+    <p class="best-note" id="best-note"></p>
+    <button class="again-btn" id="again-btn">Reia campania</button>
+
+    <div class="timeline">
+      <h3>Cronologia campaniei</h3>
+      <div class="tl-item"><span class="tl-date">c. 150</span><span class="tl-text">Ptolemeu menționează pentru prima dată „Khounoi”, între Don și Marea Azov.</span></div>
+      <div class="tl-item"><span class="tl-date">221 î.Hr.</span><span class="tl-text">Qin Shi Huangdi unește zidurile de graniță ale Chinei împotriva Hsiung-nu.</span></div>
+      <div class="tl-item"><span class="tl-date">48</span><span class="tl-text">Hsiung-nu se despart în ramura nordică și cea sudică, aliată cu China.</span></div>
+      <div class="tl-item"><span class="tl-date">89</span><span class="tl-text">Hsiung-nu nordici sunt învinși; dispar din cronicile chineze.</span></div>
+      <div class="tl-item"><span class="tl-date">311</span><span class="tl-text">O scrisoare sogdiană atribuie unor „Huni” distrugerea orașului Lo-yang.</span></div>
+      <div class="tl-item"><span class="tl-date">370–375</span><span class="tl-text">Hunii îi supun pe alani și pornesc brusc spre Europa.</span></div>
+    </div>
+  </div>
+
+  <footer>Bazat pe surse antice și cercetări moderne asupra originii hunilor (Kiessling, Altheim, Werner, Sinor, Haussig, Bivar, Spuler).</footer>
+</div>
+
+<script>
+(function(){
+  var LEVELS = [
+    {
+      zone: "z1",
+      short: "Stepa",
+      kicker: "Campania I · Izvoare grecești și romane",
+      title: "Primele urme",
+      icon: "🗺️",
+      badgeName: "Cronicarul Stepei",
+      mechanic: "arrow",
+      mechIcon: "🏹",
+      mechLabel: "Ochește și trage spre răspunsul corect",
+      timelineQ: {
+        q: "În ce an, aproximativ, l-a menționat Ptolemeu pentru prima dată pe poporul „Khounoi”?",
+        min: 100, max: 250, correct: 150, tolerance: 25, unit: "d.Hr.",
+        fb: "Ptolemeu și-a scris Geografia pe la mijlocul secolului al II-lea d.Hr. — anul convențional folosit de istorici este c. 150 d.Hr."
+      },
+      lore: "Prin mijlocul secolului al II-lea d.Hr., geograful grec Ptolemeu așază pe hartă un popor de care puțini auziseră: „Khounoi”, undeva între Don și Marea Azov. Două veacuri mai târziu, istoricul roman Ammianus Marcellinus îi găsește exact în același loc — semn că acest popor al stepei nu se clintise de generații întregi.",
+      meta: "3 întrebări · Ptolemeu, Ammianus Marcellinus",
+      questions: [
+        {
+          era: "Izvor grecesc · sec. II d.Hr.",
+          q: "Cine i-a menționat primul, în literatura antică, pe „Khounoi” — strămoșii numelui hunilor?",
+          opts: ["Herodot", "Ptolemeu", "Strabon", "Tacitus"],
+          correct: 1,
+          fb: "Ptolemeu (Geografia, 3.5.10) atestă, în prima jumătate sau mijlocul secolului II d.Hr., un popor „Khounoi” alături de alte șase triburi numite, în zonele de stepă și pădure ale Ucrainei."
+        },
+        {
+          era: "Geografie · habitat inițial",
+          q: "Între ce repere geografice se aflau, conform reconstituirii istorice, locuințele timpurii ale Khounoi?",
+          opts: ["Între Rin și Dunăre", "Între Don și Manâci, cu Marea Azov la vest", "Între Nil și Marea Roșie", "Între Tigru și Eufrat"],
+          correct: 1,
+          fb: "Trăiau între Don și Manâci la nord, cursul superior al Kubanului la sud și Marea Azov la vest — posibil extinzându-se spre est până la Marea Caspică și gura Volgăi."
+        },
+        {
+          era: "Izvor roman · sec. IV d.Hr.",
+          q: "Ce istoric roman, două secole mai târziu, îi plasează tot lângă „mlaștinile Meotide” (Azov)?",
+          opts: ["Ammianus Marcellinus", "Tit Liviu", "Suetoniu", "Cassius Dio"],
+          correct: 0,
+          fb: "Ammianus Marcellinus (Res Gestae, 31.2.1) confirmă aceeași vecinătate, aproape 200 de ani mai târziu — semn că hunii nu se mutaseră semnificativ în acest interval."
+        }
+      ]
+    },
+    {
+      zone: "z2",
+      short: "China",
+      kicker: "Campania II · China antică",
+      title: "Furtuna din răsărit",
+      icon: "🧱",
+      badgeName: "Păzitorul Zidului",
+      mechanic: "stone",
+      mechIcon: "🪨",
+      mechLabel: "Lovește cu catapulta turnul cu răspunsul corect",
+      timelineQ: {
+        q: "În ce an s-au despărțit Hsiung-nu în ramura nordică și cea sudică?",
+        min: 0, max: 100, correct: 48, tolerance: 10, unit: "d.Hr.",
+        fb: "Ruptura definitivă a avut loc în anul 48 d.Hr., după ce Hsiung-nu se alăturaseră deja sistemului chinez de tribut în 52 î.Hr."
+      },
+      lore: "Cu mult înainte ca hunii să tulbure Europa, un alt popor de călăreți — Hsiung-nu — amenința un alt imperiu. Împotriva lor s-a ridicat Marele Zid, s-au plătit tributuri în mătase și s-au purtat războaie de secole, până când confederația s-a rupt în două, iar o ramură a dispărut fără urmă din cronici.",
+      meta: "5 întrebări · cronici chineze despre Hsiung-nu",
+      questions: [
+        {
+          era: "China antică · sec. III î.Hr.",
+          q: "Cine a unificat vechile ziduri de graniță chineze într-un singur Mare Zid, ca apărare împotriva Hsiung-nu?",
+          opts: ["Wudi", "Maodun", "Qin Shi Huangdi", "Confucius"],
+          correct: 2,
+          fb: "Qin Shi Huangdi (221–210 î.Hr.), unificatorul imperiului chinez, a dispus unirea fortificațiilor existente într-un „mare zid” ca răspuns la presiunea Hsiung-nu."
+        },
+        {
+          era: "China antică · dinastia Han",
+          q: "Cine a organizat, la începutul dinastiei Han, o confederație tribală Hsiung-nu suficient de puternică încât să impună tribut Chinei?",
+          opts: ["Regele Maodun", "Regele Attila", "Împăratul Wudi", "Generalul Lo-yang"],
+          correct: 0,
+          fb: "Regele Maodun (m. 174 î.Hr.) a construit o confederație Hsiung-nu puternică, forțând China să plătească tribut — în special mătase."
+        },
+        {
+          era: "China antică · confruntări majore",
+          q: "Sub domnia cărui împărat chinez au fost, în sfârșit, învinși Hsiung-nu, cu costuri umane uriașe?",
+          opts: ["Wudi (141–87 î.Hr.)", "Qin Shi Huangdi", "Maodun", "Gaozu"],
+          correct: 0,
+          fb: "Abia sub Wudi (141–87 î.Hr.) China a reușit înfrângeri decisive asupra Hsiung-nu, după decenii de tribut și presiune constantă."
+        },
+        {
+          era: "China antică · fragmentare",
+          q: "În ce an s-au despărțit Hsiung-nu în ramura nordică și cea sudică (aliată cu China)?",
+          opts: ["89 d.Hr.", "311 d.Hr.", "48 d.Hr.", "174 î.Hr."],
+          correct: 2,
+          fb: "După ce s-au alăturat sistemului chinez de tribut în 52 î.Hr., Hsiung-nu s-au scindat definitiv în 48 d.Hr. în două ramuri rivale."
+        },
+        {
+          era: "China antică · destinul nordicilor",
+          q: "Ce s-a întâmplat cu Hsiung-nu nordici după înfrângerea lor de către chinezi în 89 d.Hr.?",
+          opts: ["Au cucerit Roma", "S-au convertit la budism și au rămas în China", "Au dispărut din sursele chineze în secolul II", "S-au unit definitiv cu alanii"],
+          correct: 2,
+          fb: "Hsiung-nu nordici dispar treptat din cronicile chineze pe parcursul secolului II — traseul lor ulterior spre vest rămâne nedovedit arheologic."
+        }
+      ]
+    },
+    {
+      zone: "z3",
+      short: "Mister",
+      kicker: "Campania III · Istoriografie",
+      title: "Firul disputat",
+      icon: "🔎",
+      badgeName: "Analistul Surselor",
+      mechanic: "lens",
+      mechIcon: "🔎",
+      mechLabel: "Cercetează sigiliul cu răspunsul corect",
+      timelineQ: {
+        q: "În ce an a fost distrus orașul chinez Lo-yang, conform scrisorii sogdiene care amintește de „Huni”?",
+        min: 250, max: 350, correct: 311, tolerance: 15, unit: "d.Hr.",
+        fb: "Scrisoarea sogdiană datează evenimentul în anul 311 d.Hr. — cu mult înainte ca hunii să ajungă vreodată în Europa."
+      },
+      lore: "De aici pornește cea mai veche dezbatere din istoriografia hunilor: sunt Hsiung-nu și hunii unul și același popor? Asemănarea numelor a sedus istorici încă din secolul al XVIII-lea — dar dovezile arheologice refuză, până azi, să confirme legătura directă.",
+      meta: "3 întrebări · o dezbatere veche de 250 de ani",
+      questions: [
+        {
+          era: "Legătura disputată",
+          q: "Ce eveniment din 311 d.Hr., menționat într-o scrisoare sogdiană, este uneori invocat drept „dovadă” a legăturii Hsiung-nu–huni?",
+          opts: ["Semnarea unui tratat de pace cu Roma", "Distrugerea capitalei chineze Lo-yang de către „Huni” (xvn)", "Fondarea orașului Attila", "Migrația alanilor spre Caucaz"],
+          correct: 1,
+          fb: "Scrisoarea sogdiană descrie distrugerea orașului Lo-yang de niște „Huni” (xvn) — de fapt Hsiung-nu sudici, un episod separat de cel care i-a înfruntat pe goți decenii mai târziu."
+        },
+        {
+          era: "Istoriografia modernă",
+          q: "Cine a sugerat pentru prima dată, în secolul XVIII, o legătură între Hsiung-nu și hunii europeni?",
+          opts: ["Edward Gibbon", "De Guignes (1756)", "Otto Maenchen-Helfen", "Denis Sinor"],
+          correct: 1,
+          fb: "De Guignes a propus această derivare în 1756, bazându-se în principal pe asemănarea numelor — ipoteză care a popularizat eticheta „hunii est-asiatici”."
+        },
+        {
+          era: "Concluzia cercetării actuale",
+          q: "Este identificarea directă a elitei Hsiung-nu cu hunii europeni general acceptată astăzi?",
+          opts: ["Da, e confirmată arheologic fără dubiu", "Nu — nu există dovezi arheologice clare, iar o asociere istorică directă e exclusă", "Da, dar doar pentru ramura sudică", "Subiectul nu a fost niciodată dezbătut"],
+          correct: 1,
+          fb: "Nu există dovadă arheologică incontestabilă a migrației spre vest a Hsiung-nu nordici; chiar dacă unele populații dispersate ar fi ajuns printre triburile hunice, o legătură istorică directă cu elita Hsiung-nu rămâne exclusă."
+        }
+      ]
+    },
+    {
+      zone: "z4",
+      short: "Europa",
+      kicker: "Campania IV · Marea Migrație",
+      title: "Spre Europa",
+      icon: "⚔️",
+      badgeName: "Strategul Migrației",
+      mechanic: "charge",
+      mechIcon: "🐎",
+      mechLabel: "Șarjează spre stindardul cu răspunsul corect",
+      timelineQ: {
+        q: "În ce an au pornit hunii expansiunea bruscă asupra alanilor, spre Europa?",
+        min: 340, max: 400, correct: 372, tolerance: 6, unit: "d.Hr.",
+        fb: "Sursele plasează debutul expansiunii bruște undeva între 370 și 375 d.Hr. — anul de referință folosit aici este 372 d.Hr."
+      },
+      lore: "Indiferent de origine, un lucru e sigur: între 370 și 375 d.Hr., hunii au izbucnit dinspre stepă ca o forță imprevizibilă. Alanii au fost primii loviți, iar valul avea să împingă, în lanț, popoare întregi spre granițele Romei — declanșând Marea Migrație a Popoarelor.",
+      meta: "3 întrebări · Ammianus Marcellinus, Priscus, Procopius, Agathias",
+      questions: [
+        {
+          era: "Vecini și primele victime",
+          q: "Ce popor iranian-sarmatic, vecin al hunilor, a fost prima lor victimă în expansiunea bruscă din 370–375 d.Hr.?",
+          opts: ["Goții", "Vandalii", "Alanii", "Sarmații roxolani"],
+          correct: 2,
+          fb: "Alanii, așezați între Azov și Caucaz, au fost primii supuși de huni și obligați apoi să participe la expedițiile militare ulterioare ale acestora."
+        },
+        {
+          era: "Exagerări antice",
+          q: "Ammianus Marcellinus afirmă — greu de crezut — că teritoriul hunilor se întindea până la:",
+          opts: ["Oceanul Arctic", "Oceanul Atlantic", "Marea Mediterană", "Golful Persic"],
+          correct: 0,
+          fb: "Afirmația despre extinderea până la Oceanul Arctic e considerată puțin credibilă și a stârnit numeroase încercări de interpretare (Kiessling, Sinor, Haussig)."
+        },
+        {
+          era: "Sinteză finală",
+          q: "Ce au în comun sursele bizantine (Priscus, Procopius, Agathias) în privința originii hunilor?",
+          opts: ["Toate îi plasează în Scandinavia", "Toate consideră ținutul alanilor, între Azov și Caucaz, drept „țara de origine” a hunilor", "Toate neagă existența hunilor", "Toate îi leagă direct de Egipt"],
+          correct: 1,
+          fb: "Priscus, Procopius și Agathias converg: teritoriul alanilor dintre Marea Azov și Caucaz era considerat, în istoriografia bizantină, drept țara de origine a hunilor."
+        }
+      ]
+    }
+  ];
+
+  var TOTAL_Q = LEVELS.reduce(function(sum, lv){ return sum + lv.questions.length; }, 0);
+
+  var startPanel = document.getElementById('start-panel');
+  var campaignMap = document.getElementById('campaign-map');
+  var cmapStops = document.getElementById('cmap-stops');
+  var cmapRider = document.getElementById('cmap-rider');
+  var introPanel = document.getElementById('level-intro');
+  var envelopePanel = document.getElementById('envelope-panel');
+  var yearPanel = document.getElementById('year-panel');
+  var quizPanel = document.getElementById('quiz');
+  var lcPanel = document.getElementById('level-complete');
+  var resultsPanel = document.getElementById('results');
+
+  var startBtn = document.getElementById('start-btn');
+  var liContinue = document.getElementById('li-continue');
+  var envRow = document.getElementById('env-row');
+  var envReveal = document.getElementById('env-reveal');
+  var erTitle = document.getElementById('er-title');
+  var erDesc = document.getElementById('er-desc');
+  var envContinue = document.getElementById('env-continue');
+  var lcNext = document.getElementById('lc-next');
+  var againBtn = document.getElementById('again-btn');
+  var nextBtn = document.getElementById('next-btn');
+
+  var liKicker = document.getElementById('li-kicker');
+  var liIcon = document.getElementById('li-icon');
+  var liTitle = document.getElementById('li-title');
+  var liLore = document.getElementById('li-lore');
+  var liMeta = document.getElementById('li-meta');
+
+  var qTextEl = document.getElementById('q-text');
+  var qEraEl = document.getElementById('q-era');
+  var mechLabelEl = document.getElementById('mech-label');
+  var wagerMinus = document.getElementById('wager-minus');
+  var wagerPlus = document.getElementById('wager-plus');
+  var wagerAmtEl = document.getElementById('wager-amt');
+  var coinPill = document.getElementById('coin-pill');
+  var timerPill = document.getElementById('timer-pill');
+  var rangeEl = document.getElementById('range');
+  var weaponEl = document.getElementById('range-weapon');
+  var aimLineEl = document.getElementById('aim-line');
+  var nockEl = document.getElementById('nock');
+  var targetsEl = document.getElementById('range-targets');
+  var NOCK_LEN = 32;
+  var hudLeft = document.getElementById('hud-left');
+  var scorePill = document.getElementById('score-pill');
+  var comboPill = document.getElementById('combo-pill');
+  var feedbackEl = document.getElementById('feedback');
+  var fbTag = document.getElementById('fb-tag');
+  var fbText = document.getElementById('fb-text');
+
+  var lcIcon = document.getElementById('lc-icon');
+  var lcBadgeName = document.getElementById('lc-badge-name');
+  var lcScoreText = document.getElementById('lc-score-text');
+
+  var scoreBig = document.getElementById('score-big');
+  var rankTitle = document.getElementById('rank-title');
+  var rankDesc = document.getElementById('rank-desc');
+  var comboNote = document.getElementById('combo-note');
+  var coinNote = document.getElementById('coin-note');
+  var badgeRowEl = document.getElementById('badge-row');
+  var bestNote = document.getElementById('best-note');
+  var lcTreasury = document.getElementById('lc-treasury');
+
+  document.getElementById('qcount').textContent = TOTAL_Q;
+
+  var MODIFIERS = [
+    { id: 'timer', icon: '⏱️', name: 'Solie Grăbită', desc: 'Ai doar 15 secunde la fiecare întrebare din această campanie. Dacă timpul expiră, răspunsul se pierde automat.' },
+    { id: 'double', icon: '💰', name: 'Tribut Dublu', desc: 'Mizele tale sunt duble în această campanie — orice câștig sau pierdere de solidi se dublează.' },
+    { id: 'bonus', icon: '👑', name: 'Recompensă Imperială', desc: 'Primești 2 solidi în plus la fiecare răspuns corect din această campanie, indiferent de miză.' }
+  ];
+  var TIMER_SECONDS = 15;
+
+  var state = {
+    levelIndex: 0, qIndex: 0, levelScore: 0, totalScore: 0, answered: false,
+    badges: [], combo: 0, maxCombo: 0,
+    coins: 20, treasury: 0, wager: 3,
+    levelModifier: null, timerHandle: null, timerLeft: 0
+  };
+
+  function getBest(){
+    try { return parseInt(localStorage.getItem('huni-best-score') || '0', 10); }
+    catch(e){ return 0; }
+  }
+  function setBest(v){
+    try { localStorage.setItem('huni-best-score', String(v)); } catch(e){}
+  }
+
+  function hideAllPanels(){
+    startPanel.hidden = true;
+    introPanel.hidden = true;
+    envelopePanel.hidden = true;
+    yearPanel.hidden = true;
+    quizPanel.hidden = true;
+    lcPanel.classList.remove('show');
+    resultsPanel.classList.remove('show');
+  }
+
+  function clampWager(){
+    var maxW = Math.min(8, state.coins);
+    if (state.wager > maxW) state.wager = maxW;
+    if (state.wager < 0) state.wager = 0;
+  }
+
+  function renderWagerUI(){
+    clampWager();
+    wagerAmtEl.textContent = state.wager;
+    coinPill.textContent = '🪙 ' + state.coins;
+    wagerMinus.disabled = state.wager <= 0;
+    wagerPlus.disabled = state.wager >= Math.min(8, state.coins);
+  }
+
+  wagerMinus.addEventListener('click', function(){
+    if (state.wager > 0) { state.wager--; renderWagerUI(); }
+  });
+  wagerPlus.addEventListener('click', function(){
+    if (state.wager < Math.min(8, state.coins)) { state.wager++; renderWagerUI(); }
+  });
+
+  // Waypoints as [left%, top%] within the 800x220 viewBox, matching the route path's M/Q endpoints.
+  var WAYPOINTS_PCT = [
+    [430 / 800 * 100, 150 / 220 * 100],
+    [120 / 800 * 100, 95 / 220 * 100],
+    [430 / 800 * 100, 55 / 220 * 100],
+    [700 / 800 * 100, 115 / 220 * 100]
+  ];
+
+  function buildCampaignMap(){
+    cmapStops.innerHTML = '';
+    LEVELS.forEach(function(lv, i){
+      var stop = document.createElement('div');
+      stop.className = 'stop';
+      stop.id = 'stop-' + i;
+      stop.style.left = WAYPOINTS_PCT[i][0] + '%';
+      stop.style.top = WAYPOINTS_PCT[i][1] + '%';
+      var pipsHtml = lv.questions.map(function(_, qi){
+        return '<span class="pip" id="pip-' + i + '-' + qi + '"></span>';
+      }).join('');
+      stop.innerHTML =
+        '<div class="keep">' + lv.icon + '</div>' +
+        '<div class="pips">' + pipsHtml + '</div>' +
+        '<div class="label">' + lv.short + '</div>';
+      cmapStops.appendChild(stop);
+    });
+  }
+
+  function getRouteFrac(){
+    var n = LEVELS.length;
+    var segFrac = state.levelIndex / (n - 1);
+    var nextFrac = Math.min(state.levelIndex + 1, n - 1) / (n - 1);
+    var lv = LEVELS[state.levelIndex];
+    var t = lv ? state.qIndex / lv.questions.length : 0;
+    return segFrac + (nextFrac - segFrac) * t;
+  }
+
+  function updateRoute(){
+    var pathEl = document.getElementById('route-progress');
+    if (!pathEl) return;
+    var total = pathEl.getTotalLength();
+    var frac = getRouteFrac();
+    pathEl.style.strokeDasharray = total;
+    pathEl.style.strokeDashoffset = total * (1 - frac);
+    var pt = pathEl.getPointAtLength(total * frac);
+    if (cmapRider) {
+      cmapRider.style.opacity = '1';
+      cmapRider.style.left = (pt.x / 800 * 100) + '%';
+      cmapRider.style.top = (pt.y / 220 * 100) + '%';
+    }
+  }
+
+  function updateCampaignMap(){
+    LEVELS.forEach(function(lv, i){
+      var el = document.getElementById('stop-' + i);
+      if (!el) return;
+      el.classList.toggle('done', i < state.levelIndex);
+      el.classList.toggle('active', i === state.levelIndex);
+    });
+    updateRoute();
+  }
+
+  function finalizeCampaignMap(){
+    LEVELS.forEach(function(lv, i){
+      var el = document.getElementById('stop-' + i);
+      if (el) { el.classList.add('done'); el.classList.remove('active'); }
+    });
+    var pathEl = document.getElementById('route-progress');
+    if (pathEl) {
+      var total = pathEl.getTotalLength();
+      pathEl.style.strokeDasharray = total;
+      pathEl.style.strokeDashoffset = 0;
+    }
+    if (cmapRider) { cmapRider.style.opacity = '0'; }
+  }
+
+  function showConquestBanner(text, icon){
+    var wrap = document.createElement('div');
+    wrap.className = 'conquest-banner';
+    wrap.innerHTML = '<div class="band"><span class="ic">' + icon + '</span><span class="txt">' + text + '</span></div>';
+    document.body.appendChild(wrap);
+    setTimeout(function(){ wrap.remove(); }, 1300);
+  }
+
+  function renderLevelIntro(){
+    var lv = LEVELS[state.levelIndex];
+    liKicker.textContent = lv.kicker;
+    liIcon.textContent = lv.icon;
+    liIcon.style.background = 'var(--' + lv.zone + '-bg)';
+    liTitle.textContent = lv.title;
+    liLore.textContent = lv.lore;
+    liMeta.textContent = lv.meta;
+    liContinue.textContent = 'Angajează campania →';
+    hideAllPanels();
+    campaignMap.hidden = false;
+    updateCampaignMap();
+    introPanel.hidden = false;
+  }
+
+  function renderEnvelopes(){
+    var shuffled = MODIFIERS.slice().sort(function(){ return Math.random() - 0.5; });
+    envRow.innerHTML = '';
+    envReveal.classList.remove('show');
+    envContinue.hidden = true;
+    shuffled.forEach(function(mod, i){
+      var btn = document.createElement('button');
+      btn.className = 'envelope';
+      btn.type = 'button';
+      btn.innerHTML = '<div class="seal2">✉️</div><div class="env-name">Solie ' + (i + 1) + '</div>';
+      btn.addEventListener('click', function(){ pickEnvelope(shuffled, i, btn); });
+      envRow.appendChild(btn);
+    });
+    hideAllPanels();
+    campaignMap.hidden = false;
+    envelopePanel.hidden = false;
+  }
+
+  function pickEnvelope(pool, i, chosenBtn){
+    var buttons = envRow.querySelectorAll('.envelope');
+    buttons.forEach(function(b, idx){
+      b.disabled = true;
+      if (idx === i) { b.classList.add('picked'); }
+      else { b.classList.add('other'); }
+    });
+    var mod = pool[i];
+    state.levelModifier = mod;
+    erTitle.textContent = mod.icon + ' ' + mod.name;
+    erDesc.textContent = mod.desc;
+    envReveal.classList.add('show');
+    envContinue.hidden = false;
+  }
+
+  // [left%, top%] positions for the 4 targets, fanned out from the weapon anchor (bottom-left).
+  var TARGET_POS = [[34, 14], [70, 20], [82, 58], [56, 86]];
+  var WEAPON_ANCHOR_PCT = [10, 84];
+  var letters = ['A', 'B', 'C', 'D'];
+
+  function buildTargets(){
+    targetsEl.innerHTML = '';
+    var lv = LEVELS[state.levelIndex];
+    var q = lv.questions[state.qIndex];
+    q.opts.forEach(function(optText, i){
+      var t = document.createElement('div');
+      t.className = 'target';
+      t.id = 'target-' + i;
+      t.style.left = TARGET_POS[i][0] + '%';
+      t.style.top = TARGET_POS[i][1] + '%';
+      t.innerHTML = '<div class="ring">' + letters[i] + '</div><div class="txt">' + optText + '</div>';
+      targetsEl.appendChild(t);
+    });
+  }
+
+  function stopTimer(){
+    if (state.timerHandle) { clearInterval(state.timerHandle); state.timerHandle = null; }
+    timerPill.classList.remove('show', 'low');
+  }
+
+  function startTimerIfNeeded(){
+    stopTimer();
+    if (!state.levelModifier || state.levelModifier.id !== 'timer') return;
+    state.timerLeft = TIMER_SECONDS;
+    timerPill.textContent = '⏱ ' + state.timerLeft;
+    timerPill.classList.add('show');
+    state.timerHandle = setInterval(function(){
+      state.timerLeft--;
+      timerPill.textContent = '⏱ ' + state.timerLeft;
+      timerPill.classList.toggle('low', state.timerLeft <= 5);
+      if (state.timerLeft <= 0) {
+        stopTimer();
+        if (!state.answered) forceTimeout();
+      }
+    }, 1000);
+  }
+
+  function forceTimeout(){
+    state.answered = true;
+    drag.active = false;
+    aimLineEl.style.width = '0';
+    nockEl.classList.remove('show');
+    var lv = LEVELS[state.levelIndex];
+    var q = lv.questions[state.qIndex];
+    var wrongIdx = (q.correct + 1) % 4;
+    revealAnswer(wrongIdx, true);
+  }
+
+  function renderQuestion(){
+    state.answered = false;
+    drag.active = false;
+    aimLineEl.style.width = '0';
+    nockEl.classList.remove('show');
+    var lv = LEVELS[state.levelIndex];
+    var q = lv.questions[state.qIndex];
+    qEraEl.textContent = q.era;
+    qTextEl.textContent = q.q;
+    mechLabelEl.textContent = lv.mechLabel;
+    weaponEl.textContent = lv.mechIcon;
+    rangeEl.className = 'range mech-' + lv.mechanic;
+    buildTargets();
+    feedbackEl.className = 'feedback';
+    nextBtn.className = 'next-btn';
+    hudLeft.textContent = lv.title + ' · Întrebarea ' + (state.qIndex + 1) + '/' + lv.questions.length;
+    scorePill.textContent = 'Scor ' + state.totalScore + '/' + TOTAL_Q;
+    comboPill.classList.remove('show');
+    renderWagerUI();
+    startTimerIfNeeded();
+
+    hideAllPanels();
+    campaignMap.hidden = false;
+    updateCampaignMap();
+    quizPanel.hidden = false;
+  }
+
+  function spawnSparks(count){
+    var layer = document.createElement('div');
+    layer.className = 'spark-layer';
+    document.body.appendChild(layer);
+    var colors = ['var(--ember)', 'var(--gold)'];
+    for (var i = 0; i < count; i++) {
+      var s = document.createElement('div');
+      s.className = 'spark';
+      var size = 4 + Math.random() * 4;
+      var left = Math.random() * 100;
+      var dur = 1 + Math.random() * 1;
+      var delay = Math.random() * 0.25;
+      var drift = (Math.random() * 60 - 30) + 'px';
+      s.style.left = left + 'vw';
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.background = colors[Math.floor(Math.random() * colors.length)];
+      s.style.boxShadow = '0 0 6px 1px ' + colors[Math.floor(Math.random() * colors.length)];
+      s.style.animationDuration = dur + 's';
+      s.style.animationDelay = delay + 's';
+      s.style.setProperty('--drift', drift);
+      layer.appendChild(s);
+    }
+    setTimeout(function(){ layer.remove(); }, 2400);
+  }
+
+  var drag = { active: false, pointerId: null, lastAngle: 0 };
+
+  function rangeAnchorPx(){
+    var r = rangeEl.getBoundingClientRect();
+    return {
+      x: r.left + r.width * WEAPON_ANCHOR_PCT[0] / 100,
+      y: r.top + r.height * WEAPON_ANCHOR_PCT[1] / 100
+    };
+  }
+
+  function updateAim(px, py){
+    var anchor = rangeAnchorPx();
+    var dx = px - anchor.x, dy = py - anchor.y;
+    var rawDist = Math.hypot(dx, dy);
+    var dist = Math.min(rawDist, 160);
+    var angleRad = Math.atan2(dy, dx);
+    var angleDeg = angleRad * 180 / Math.PI;
+    var r = rangeEl.getBoundingClientRect();
+    var localX = anchor.x - r.left, localY = anchor.y - r.top;
+
+    // The nock (shaft + arrowhead) pivots at the anchor and points exactly at the pointer.
+    nockEl.classList.add('show');
+    nockEl.style.left = localX + 'px';
+    nockEl.style.top = localY + 'px';
+    nockEl.style.transform = 'translateY(-50%) rotate(' + angleDeg + 'deg)';
+
+    // The dashed line continues from the arrow's tip onward, along the same ray.
+    var remaining = Math.max(0, dist - NOCK_LEN);
+    var tipLocalX = localX + NOCK_LEN * Math.cos(angleRad);
+    var tipLocalY = localY + NOCK_LEN * Math.sin(angleRad);
+    aimLineEl.style.left = tipLocalX + 'px';
+    aimLineEl.style.top = tipLocalY + 'px';
+    aimLineEl.style.width = remaining + 'px';
+    aimLineEl.style.transform = 'rotate(' + angleDeg + 'deg)';
+  }
+
+  function tipPoint(anchor, angleRad){
+    return { x: anchor.x + NOCK_LEN * Math.cos(angleRad), y: anchor.y + NOCK_LEN * Math.sin(angleRad) };
+  }
+
+  function onRangeDown(e){
+    if (state.answered) return;
+    drag.active = true;
+    drag.pointerId = e.pointerId;
+    if (rangeEl.setPointerCapture) { try { rangeEl.setPointerCapture(e.pointerId); } catch(err){} }
+    updateAim(e.clientX, e.clientY);
+    e.preventDefault();
+  }
+  function onRangeMove(e){
+    if (!drag.active) return;
+    updateAim(e.clientX, e.clientY);
+  }
+  function onRangeUp(e){
+    if (!drag.active) return;
+    drag.active = false;
+    var anchor = rangeAnchorPx();
+    var dx = e.clientX - anchor.x, dy = e.clientY - anchor.y;
+    var dist = Math.hypot(dx, dy);
+    if (dist < 22) {
+      aimLineEl.style.width = '0';
+      nockEl.classList.remove('show');
+      return;
+    }
+    var shootAngle = Math.atan2(dy, dx);
+    drag.lastAngle = shootAngle;
+    var best = -1, bestDiff = Infinity;
+    for (var i = 0; i < 4; i++) {
+      var te = document.getElementById('target-' + i);
+      if (!te) continue;
+      var tr = te.getBoundingClientRect();
+      var tx = tr.left + tr.width / 2, ty = tr.top + tr.height / 2;
+      var ta = Math.atan2(ty - anchor.y, tx - anchor.x);
+      var diff = Math.abs(Math.atan2(Math.sin(ta - shootAngle), Math.cos(ta - shootAngle)));
+      if (diff < bestDiff) { bestDiff = diff; best = i; }
+    }
+    if (best < 0) { aimLineEl.style.width = '0'; nockEl.classList.remove('show'); return; }
+    aimLineEl.style.width = '0';
+    fireAt(best);
+  }
+
+  rangeEl.addEventListener('pointerdown', onRangeDown);
+  rangeEl.addEventListener('pointermove', onRangeMove);
+  rangeEl.addEventListener('pointerup', onRangeUp);
+  rangeEl.addEventListener('pointercancel', onRangeUp);
+
+  function fireAt(i){
+    state.answered = true;
+    stopTimer();
+    var lv = LEVELS[state.levelIndex];
+    var anchor = rangeAnchorPx();
+    var startPt = tipPoint(anchor, drag.lastAngle);
+    var te = document.getElementById('target-' + i);
+    var tr = te.getBoundingClientRect();
+    var endX = tr.left + tr.width / 2, endY = tr.top + tr.height / 2;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) { nockEl.classList.remove('show'); revealAnswer(i); return; }
+    var proj = document.createElement('div');
+    proj.className = 'projectile proj-' + lv.mechanic;
+    var icons = { arrow: '➤', stone: '', lens: '🔎', charge: '🐎' };
+    proj.textContent = icons[lv.mechanic] || '';
+    proj.style.left = startPt.x + 'px';
+    proj.style.top = startPt.y + 'px';
+    var angle = Math.atan2(endY - startPt.y, endX - startPt.x) * 180 / Math.PI;
+    proj.style.transform = 'translate(-50%,-50%) rotate(' + (lv.mechanic === 'arrow' ? angle : 0) + 'deg)';
+    document.body.appendChild(proj);
+    requestAnimationFrame(function(){
+      proj.style.transition = 'left 0.32s cubic-bezier(.25,.6,.3,1), top 0.32s cubic-bezier(.25,.6,.3,1)';
+      proj.style.left = endX + 'px';
+      proj.style.top = endY + 'px';
+    });
+    setTimeout(function(){
+      proj.remove();
+      nockEl.classList.remove('show');
+      te.classList.add('hit');
+      revealAnswer(i);
+    }, 340);
+  }
+
+  function revealAnswer(i, isTimeout){
+    var lv = LEVELS[state.levelIndex];
+    var q = lv.questions[state.qIndex];
+    for (var idx = 0; idx < 4; idx++) {
+      var te = document.getElementById('target-' + idx);
+      if (!te) continue;
+      if (idx === q.correct) te.classList.add('correct');
+      else if (idx === i && !isTimeout) te.classList.add('wrong');
+      else te.classList.add('dim');
+    }
+    var correct = (!isTimeout && i === q.correct);
+    var pip = document.getElementById('pip-' + state.levelIndex + '-' + state.qIndex);
+    if (pip) pip.classList.add(correct ? 'good' : 'bad');
+    quizPanel.classList.remove('flash-good', 'flash-bad');
+    void quizPanel.offsetWidth;
+    quizPanel.classList.add(correct ? 'flash-good' : 'flash-bad');
+
+    var mult = (state.levelModifier && state.levelModifier.id === 'double') ? 2 : 1;
+    var wagerUsed = state.wager;
+    var coinMsg = '';
+    if (correct) {
+      var gain = wagerUsed * mult;
+      var bonus = (state.levelModifier && state.levelModifier.id === 'bonus') ? 2 : 0;
+      state.coins += gain + bonus;
+      if (gain > 0 || bonus > 0) {
+        coinMsg = ' (+' + gain + ' 🪙' + (bonus ? ' și +' + bonus + ' 🪙 din Recompensa Imperială' : '') + ')';
+      }
+    } else {
+      var loss = Math.min(wagerUsed * mult, state.coins);
+      state.coins -= loss;
+      state.treasury += loss;
+      if (loss > 0) coinMsg = ' (−' + loss + ' 🪙 → Tezaurul lui Attila)';
+    }
+    coinPill.textContent = '🪙 ' + state.coins;
+
+    if (correct) {
+      state.levelScore++; state.totalScore++;
+      state.combo++;
+      if (state.combo > state.maxCombo) state.maxCombo = state.combo;
+      feedbackEl.classList.add('show', 'good');
+      fbTag.textContent = 'Corect';
+      if (state.combo >= 2) {
+        comboPill.textContent = '🔥 Combo x' + state.combo;
+        comboPill.classList.add('show');
+        spawnSparks(14);
+      }
+    } else {
+      state.combo = 0;
+      comboPill.classList.remove('show');
+      feedbackEl.classList.add('show', 'bad');
+      fbTag.textContent = isTimeout ? 'Timp expirat' : 'Incorect';
+    }
+    fbText.textContent = q.fb + coinMsg;
+    scorePill.textContent = 'Scor ' + state.totalScore + '/' + TOTAL_Q;
+    updateRoute();
+    nextBtn.classList.add('show');
+    var isLastInLevel = (state.qIndex === lv.questions.length - 1);
+    nextBtn.textContent = isLastInLevel ? 'Continuă →' : 'Următoarea →';
+  }
+
+  function nextQuestion(){
+    var lv = LEVELS[state.levelIndex];
+    state.qIndex++;
+    if (state.qIndex >= lv.questions.length) {
+      renderYearPanel();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  var yrTrack = document.getElementById('yr-track');
+  var yrPin = document.getElementById('yr-pin');
+  var yrPinLabel = document.getElementById('yr-pin-label');
+  var yrAnswerEl = document.getElementById('yr-answer');
+  var yrAnswerLabel = document.getElementById('yr-answer-label');
+  var yrLo = document.getElementById('yr-lo');
+  var yrHi = document.getElementById('yr-hi');
+  var yrQ = document.getElementById('yr-q');
+  var yrLock = document.getElementById('yr-lock');
+  var yrResult = document.getElementById('yr-result');
+  var yrTag = document.getElementById('yr-tag');
+  var yrFb = document.getElementById('yr-fb');
+  var yrNext = document.getElementById('yr-next');
+  var yrState = { min: 0, max: 1, value: 0, locked: false, dragging: false };
+
+  function yrValueToPct(v){ return (v - yrState.min) / (yrState.max - yrState.min) * 100; }
+  function yrSetPin(v){
+    v = Math.max(yrState.min, Math.min(yrState.max, Math.round(v)));
+    yrState.value = v;
+    yrPin.style.left = yrValueToPct(v) + '%';
+    yrPinLabel.textContent = v;
+  }
+  function yrPointerToValue(clientX){
+    var r = yrTrack.getBoundingClientRect();
+    var pct = (clientX - r.left) / r.width;
+    pct = Math.max(0, Math.min(1, pct));
+    return yrState.min + pct * (yrState.max - yrState.min);
+  }
+  function onYrDown(e){
+    if (yrState.locked) return;
+    yrState.dragging = true;
+    if (yrPin.setPointerCapture) { try { yrPin.setPointerCapture(e.pointerId); } catch(err){} }
+    yrSetPin(yrPointerToValue(e.clientX));
+    e.preventDefault();
+  }
+  function onYrMove(e){
+    if (!yrState.dragging) return;
+    yrSetPin(yrPointerToValue(e.clientX));
+  }
+  function onYrUp(){ yrState.dragging = false; }
+  yrPin.addEventListener('pointerdown', onYrDown);
+  yrPin.addEventListener('pointermove', onYrMove);
+  yrPin.addEventListener('pointerup', onYrUp);
+  yrPin.addEventListener('pointercancel', onYrUp);
+  yrTrack.addEventListener('pointerdown', function(e){
+    if (yrState.locked || e.target === yrPin) return;
+    yrSetPin(yrPointerToValue(e.clientX));
+  });
+
+  function renderYearPanel(){
+    var lv = LEVELS[state.levelIndex];
+    var tq = lv.timelineQ;
+    yrState.min = tq.min; yrState.max = tq.max; yrState.locked = false;
+    yrQ.textContent = tq.q;
+    yrLo.textContent = tq.min + ' ' + tq.unit;
+    yrHi.textContent = tq.max + ' ' + tq.unit;
+    yrSetPin((tq.min + tq.max) / 2);
+    yrAnswerEl.classList.remove('show');
+    yrResult.classList.remove('show');
+    yrLock.hidden = false;
+    yrNext.style.display = 'none';
+
+    hideAllPanels();
+    campaignMap.hidden = false;
+    yearPanel.hidden = false;
+  }
+
+  yrLock.addEventListener('click', function(){
+    if (yrState.locked) return;
+    yrState.locked = true;
+    yrLock.hidden = true;
+    var lv = LEVELS[state.levelIndex];
+    var tq = lv.timelineQ;
+    var diff = Math.abs(yrState.value - tq.correct);
+    yrAnswerEl.style.left = yrValueToPct(tq.correct) + '%';
+    yrAnswerLabel.textContent = tq.correct + ' ' + tq.unit;
+    yrAnswerEl.classList.add('show');
+
+    var reward = 0, tag = '';
+    if (diff <= tq.tolerance) { reward = 5; tag = 'Lovitură exactă'; }
+    else if (diff <= tq.tolerance * 2.5) { reward = 2; tag = 'Aproape'; }
+    else { reward = 0; tag = 'Pe alături'; }
+    state.coins += reward;
+    coinPill.textContent = '🪙 ' + state.coins;
+
+    yrTag.textContent = tag + (reward > 0 ? ' (+' + reward + ' 🪙)' : '');
+    yrFb.textContent = 'Ai fixat anul ' + yrState.value + '; anul corect este ' + tq.correct + ' ' + tq.unit + '. ' + tq.fb;
+    yrResult.classList.add('show');
+    yrNext.style.display = 'inline-block';
+  });
+
+  yrNext.addEventListener('click', showLevelComplete);
+
+  function showLevelComplete(){
+    var lv = LEVELS[state.levelIndex];
+    state.badges.push({ icon: lv.icon, name: lv.badgeName, zone: lv.zone });
+    lcIcon.textContent = lv.icon;
+    lcIcon.style.background = 'var(--' + lv.zone + '-bg)';
+    lcBadgeName.textContent = lv.badgeName;
+    lcScoreText.textContent = state.levelScore + '/' + lv.questions.length;
+
+    if (state.levelIndex === 2) {
+      var steal = Math.min(state.treasury, 4);
+      state.treasury -= steal;
+      state.coins += steal;
+      coinPill.textContent = '🪙 ' + state.coins;
+      lcTreasury.style.display = 'block';
+      lcTreasury.textContent = steal > 0
+        ? '🕵️ Manieră hunică: ai furat ' + steal + ' 🪙 din Tezaurul lui Attila!'
+        : '🕵️ Ai încercat să furi din Tezaurul lui Attila — dar era gol.';
+    } else {
+      lcTreasury.style.display = 'none';
+    }
+
+    var isLastLevel = (state.levelIndex === LEVELS.length - 1);
+    lcNext.textContent = isLastLevel ? 'Vezi rezultatul final →' : 'Campania următoare →';
+
+    hideAllPanels();
+    campaignMap.hidden = false;
+    updateCampaignMap();
+    lcPanel.classList.add('show');
+    showConquestBanner('TERITORIU CUCERIT', lv.icon);
+    spawnSparks(26);
+  }
+
+  function advanceLevel(){
+    stopTimer();
+    var isLastLevel = (state.levelIndex === LEVELS.length - 1);
+    if (isLastLevel) {
+      showResults();
+    } else {
+      state.levelIndex++;
+      state.qIndex = 0;
+      state.levelScore = 0;
+      state.levelModifier = null;
+      renderLevelIntro();
+    }
+  }
+
+  function rankFor(score, total){
+    var pct = score / total;
+    if (pct === 1) return { title: 'Strateg Desăvârșit', seal: '👑', desc: 'Stăpânești fiecare fir al poveștii — de la Ptolemeu la Marea Migrație. Performanță de comandant.' };
+    if (pct >= 0.75) return { title: 'Comandant al Migrației', seal: '🏆', desc: 'Ai cucerit aproape toate teritoriile — cunoști traseul principal al hunilor, cu majoritatea detaliilor.' };
+    if (pct >= 0.5) return { title: 'Cercetaș Disciplinat', seal: '🎖️', desc: 'Cunoști conturul campaniei, dar câteva repere cronologice îți mai scapă.' };
+    return { title: 'Recrut al Stepei', seal: '🧭', desc: 'Un început solid. Reia campania ca să fixezi reperele și să urci în rang.' };
+  }
+
+  function countUpScore(target){
+    var el = document.getElementById('score-num');
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !el) { if (el) el.textContent = target; return; }
+    var start = null;
+    var dur = 700;
+    function step(ts){
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      el.textContent = Math.round(target * p);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function showResults(){
+    document.getElementById('score-den').textContent = '/' + TOTAL_Q;
+    countUpScore(state.totalScore);
+    var r = rankFor(state.totalScore, TOTAL_Q);
+    document.getElementById('seal').textContent = r.seal;
+    rankTitle.textContent = r.title;
+    rankDesc.textContent = r.desc;
+    comboNote.textContent = state.maxCombo >= 2 ? 'Cel mai lung combo: ' + state.maxCombo + ' răspunsuri corecte la rând' : '';
+    coinNote.textContent = 'Trezorerie finală: ' + state.coins + ' 🪙 solidi' + (state.treasury > 0 ? ' · Tezaurul lui Attila reține ' + state.treasury + ' 🪙' : '');
+
+    badgeRowEl.innerHTML = '';
+    state.badges.forEach(function(b){
+      var el = document.createElement('div');
+      el.className = 'earned-badge';
+      el.innerHTML = '<div class="icon">' + b.icon + '</div><div class="name">' + b.name + '</div>';
+      badgeRowEl.appendChild(el);
+    });
+
+    var best = getBest();
+    if (state.totalScore > best) {
+      setBest(state.totalScore);
+      best = state.totalScore;
+      bestNote.textContent = 'Scor nou, cel mai bun de până acum: ' + best + '/' + TOTAL_Q;
+    } else {
+      bestNote.textContent = 'Cel mai bun scor pe acest dispozitiv: ' + best + '/' + TOTAL_Q;
+    }
+
+    hideAllPanels();
+    campaignMap.hidden = false;
+    finalizeCampaignMap();
+    resultsPanel.classList.add('show');
+    showConquestBanner('CAMPANIE ÎNCHEIATĂ', r.seal);
+    spawnSparks(40);
+  }
+
+  function startQuiz(){
+    stopTimer();
+    state.levelIndex = 0;
+    state.qIndex = 0;
+    state.levelScore = 0;
+    state.totalScore = 0;
+    state.badges = [];
+    state.combo = 0;
+    state.maxCombo = 0;
+    state.coins = 20;
+    state.treasury = 0;
+    state.wager = 3;
+    state.levelModifier = null;
+    buildCampaignMap();
+    renderLevelIntro();
+  }
+
+  startBtn.addEventListener('click', startQuiz);
+  liContinue.addEventListener('click', renderEnvelopes);
+  envContinue.addEventListener('click', renderQuestion);
+  nextBtn.addEventListener('click', nextQuestion);
+  lcNext.addEventListener('click', advanceLevel);
+  againBtn.addEventListener('click', startQuiz);
+})();
+</script>
