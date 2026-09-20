@@ -2,9 +2,11 @@
 
 Proiect pentru concursul național „Istorie și societate în dimensiune virtuală".
 
+🔗 **Site live:** https://cojocariuemilian73.github.io/atelierul-hunilor/
+
 ## Ce deschizi
 
-**`atelierul-hunilor.html`** — pagina finală, completă, cu toate cele 6 module combinate într-un singur site. Deschide direct în browser (dublu-click).
+**`atelierul-hunilor.html`** (= `index.html`, identice) — pagina finală, completă, cu toate cele 6 module combinate într-un singur site. Deschide direct în browser (dublu-click) sau accesează link-ul de mai sus.
 
 ## Structura folderului
 
@@ -21,7 +23,7 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
   - `scope-css.js` — izolează CSS-ul fiecărui modul sub o clasă unică, ca stilurile să nu se ciocnească
   - `assemble.js` — combină toate modulele într-un singur `FINAL.html`
   - `deglow.js` / `extract.js` — scripturi folosite punctual în etapele de curățare a designului
-- `imagini/` — pune aici imaginile generate (ex. harta de fundal Flux/Midjourney) — spune-mi când sunt acolo și le integrez.
+- `imagini/` — imaginile generate (Flux/Midjourney) folosite ca fundaluri, deja integrate în pagini (încorporate direct ca `base64` în HTML).
 
 ## Cum reconstruiesc pagina după o modificare
 
@@ -30,4 +32,13 @@ Dacă modific un fișier din `build/` (ex. `build/atlas.css`), rulez din acest f
 node scripturi-build/scope-css.js build/atlas.css build/atlas.scoped.css m-atlas
 node scripturi-build/assemble.js build
 ```
-apoi copiez `build/FINAL.html` peste `atelierul-hunilor.html`.
+apoi copiez `build/FINAL.html` peste `atelierul-hunilor.html` **și** peste `index.html`.
+
+## Cum public modificările pe site-ul live
+
+```
+git add -A
+git commit -m "descriere modificare"
+git push
+```
+GitHub Pages redeployează automat din `index.html`, în ~1 minut.
