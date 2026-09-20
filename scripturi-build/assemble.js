@@ -203,7 +203,9 @@ const navScrollspy = `
     pages.forEach(function(p, i){ if (p) p.classList.toggle('active', i === index); });
     navLinks.forEach(function(a, i){ a.classList.toggle('current', i === index); });
     prevBtn.disabled = index === 0;
+    prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
     nextBtn.disabled = index === pages.length - 1;
+    nextBtn.style.visibility = index === pages.length - 1 ? 'hidden' : 'visible';
     countEl.textContent = (index + 1) + ' / ' + pages.length;
     window.scrollTo(0, 0);
   }
