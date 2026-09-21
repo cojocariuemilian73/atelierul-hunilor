@@ -207,7 +207,7 @@ ${storyBodyPatched}
 <footer class="site-final-footer">
   Proiect realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală” — Secțiunea I, Istorie.<br>
   Cinci module: articol cu note și bibliografie, două jocuri interactive, o hartă istorică și un laborator/muzeu virtual.<br>
-  Surse: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Jordanes — și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Neparáczki, Maróti).
+  Surse: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Jordanes, Olympiodorus, Claudian, Merobaudes, Sidonius Apollinaris, Zosimus, Ioannes Malalas — și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Neparáczki, Maróti).
 </footer>
 </div>
 
