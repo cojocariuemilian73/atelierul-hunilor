@@ -6,18 +6,17 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
 
 ## Ce deschizi
 
-**`atelierul-hunilor.html`** (= `index.html`, identice) — pagina finală, completă, cu toate cele 6 module combinate într-un singur site. Deschide direct în browser (dublu-click) sau accesează link-ul de mai sus.
+**`atelierul-hunilor.html`** (= `index.html`, identice) — pagina finală, completă, cu toate cele 5 module combinate într-un singur site. Deschide direct în browser (dublu-click) sau accesează link-ul de mai sus.
 
 ## Structura folderului
 
 - `atelierul-hunilor.html` — pagina combinată finală (aceasta e livrarea)
-- `module-individuale/` — cele 6 module ca fișiere separate, de sine stătătoare (utile pentru testare izolată sau dacă vrei să lucrezi pe un singur modul):
+- `module-individuale/` — cele 5 module ca fișiere separate, de sine stătătoare (utile pentru testare izolată sau dacă vrei să lucrezi pe un singur modul):
   - `huni-prezentare.html` — articolul academic (Acasă / Context / Cronologie / Marea Migrație / Personalități)
   - `huni-migratia.html` — jocul „Campania Hunilor"
   - `solia-la-attila.html` — jocul „Solia la Attila"
   - `atlas-hunic.html` — harta interactivă (D3.js + date geografice reale)
-  - `laborator-muzeu.html` — Laborator și Muzeu Virtual (artefacte 3D, certificat PDF)
-  - `cinema-hunic.html` — Cinema Hunic (scrollytelling)
+  - `laborator-muzeu.html` — Laborator și Muzeu Virtual (artefacte 3D, mit vs. adevăr paleogenetic)
 - `build/` — piesele intermediare din care e asamblată pagina combinată (CSS/JS/HTML separate pe modul + `FINAL.html`, rezultatul brut al asamblării)
 - `scripturi-build/` — scripturile Node.js folosite ca să reconstruiesc pagina combinată după orice modificare:
   - `scope-css.js` — izolează CSS-ul fiecărui modul sub o clasă unică, ca stilurile să nu se ciocnească

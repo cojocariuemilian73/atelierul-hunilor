@@ -10,21 +10,18 @@ const gameCss = stripImport(read('game.scoped.css'));
 const embassyCss = stripImport(read('embassy.scoped.css'));
 const atlasCss = stripImport(read('atlas.scoped.css'));
 const labCss = stripImport(read('lab.scoped.css'));
-const cinemaCss = stripImport(read('cinema.scoped.css'));
 
 const storyBody = read('story.body.html');
 const gameBody = read('game.body.html');
 const embassyBody = read('embassy.body.html');
 const atlasBody = read('atlas.body.html');
 const labBody = read('lab.body.html');
-const cinemaBody = read('cinema.body.html');
 
 const storyJs = read('story.js');
 const gameJs = read('game.js');
 const embassyJs = read('embassy.js');
 const atlasJs = read('atlas.js');
 const labJs = read('lab.js');
-const cinemaJs = read('cinema.js');
 
 const FONT_IMPORT = `@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Cinzel:wght@600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IM+Fell+English:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');`;
 
@@ -45,7 +42,6 @@ const NAV_CSS = `
   .site-nav a:hover{ color: #f0e6cf; }
   .site-nav a.current{ color: #e8c25f; border-bottom-color: #e8c25f; }
   #mod-game, #mod-embassy, #mod-atlas, #mod-lab{ padding-block: 28px; }
-  #mod-cinema{ padding: 0; }
 
   /* only the active page is shown — others are fully removed from flow/scroll */
   .site-page{ display: none; }
@@ -137,8 +133,7 @@ const ABOUT_HTML = `
       <li><strong>Campania Hunilor</strong> — joc de strategie/decizie despre expansiunea hunică.</li>
       <li><strong>Solia la Attila</strong> — joc narativ bazat pe relatarea lui Priscus din Panium.</li>
       <li><strong>Atlasul Migrației</strong> — hartă interactivă cu rutele Marii Migrații.</li>
-      <li><strong>Laborator &amp; Muzeu</strong> — artefacte hunice explorabile și certificat PDF descărcabil.</li>
-      <li><strong>Cinema Hunic</strong> — experiență narativă tip film, parcursă „cadru cu cadru”.</li>
+      <li><strong>Laborator &amp; Muzeu</strong> — artefacte hunice explorabile și dezbaterea mit vs. adevăr paleogenetic.</li>
     </ul>
     <p>Navighezi cu meniul de sus sau cu butoanele „Pagina anterioară / următoare” de jos.</p>
 
@@ -146,8 +141,6 @@ const ABOUT_HTML = `
     <ul>
       <li>HTML5, CSS3, JavaScript vanilla (fără framework-uri externe)</li>
       <li>SVG pentru hărți, diagrame și hotspot-uri interactive</li>
-      <li>Web Audio API pentru fundalul sonor ambiental (Cinema Hunic)</li>
-      <li>jsPDF pentru generarea certificatului descărcabil (Laborator)</li>
       <li>Imagini generate AI (Flux/Midjourney), încorporate direct în pagină</li>
     </ul>
 
@@ -176,7 +169,6 @@ const NAV_HTML = `
   <a href="#mod-embassy">Solia la Attila</a>
   <a href="#mod-atlas">Atlasul Migrației</a>
   <a href="#mod-lab">Laborator &amp; Muzeu</a>
-  <a href="#mod-cinema">Cinema Hunic</a>
   <button class="about-trigger" id="about-trigger" type="button">ℹ Despre proiect</button>
 </nav>
 `;
@@ -204,12 +196,9 @@ ${embassyCss}
 ${atlasCss}
   /* ============ MODULE: LABORATOR ȘI MUZEU VIRTUAL (.m-lab) ============ */
 ${labCss}
-  /* ============ MODULE: CINEMA HUNIC (.m-cinema) ============ */
-${cinemaCss}
 </style>`;
 
 const combinedBody = `
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 ${NAV_HTML}
 ${ABOUT_HTML}
 
@@ -217,7 +206,7 @@ ${ABOUT_HTML}
 ${storyBodyPatched}
 <footer class="site-final-footer">
   Proiect realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală” — Secțiunea I, Istorie.<br>
-  Șase module: articol cu note și bibliografie, două jocuri interactive, o hartă istorică, un laborator/muzeu virtual și o experiență cinematică.<br>
+  Cinci module: articol cu note și bibliografie, două jocuri interactive, o hartă istorică și un laborator/muzeu virtual.<br>
   Surse: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Jordanes — și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Neparáczki, Maróti).
 </footer>
 </div>
@@ -238,13 +227,9 @@ ${atlasBody}
 ${labBody}
 </section>
 
-<section id="mod-cinema" class="m-cinema site-page">
-${cinemaBody}
-</section>
-
 <div class="site-pager">
   <button class="site-pager-btn" id="site-prev" type="button">← Pagina anterioară</button>
-  <span class="site-pager-count mono" id="site-page-count">1 / 6</span>
+  <span class="site-pager-count mono" id="site-page-count">1 / 5</span>
   <button class="site-pager-btn" id="site-next" type="button">Pagina următoare →</button>
 </div>
 `;
@@ -264,9 +249,6 @@ ${atlasJs}
 <script>
 ${labJs}
 </script>
-<script>
-${cinemaJs}
-</script>
 `;
 
 const navScrollspy = `
@@ -276,7 +258,7 @@ const navScrollspy = `
   // The site is now page-by-page (one module visible at a time), not one
   // long scroll: exactly one .site-page has .active at any time. The old
   // per-module <section id="mod-X"> ids double as page ids.
-  var PAGE_IDS = ['page-acasa', 'mod-game', 'mod-embassy', 'mod-atlas', 'mod-lab', 'mod-cinema'];
+  var PAGE_IDS = ['page-acasa', 'mod-game', 'mod-embassy', 'mod-atlas', 'mod-lab'];
   var pages = PAGE_IDS.map(function(id){ return document.getElementById(id); });
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.site-nav a'));
   var prevBtn = document.getElementById('site-prev');
