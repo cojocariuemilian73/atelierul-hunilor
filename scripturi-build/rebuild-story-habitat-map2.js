@@ -23,7 +23,7 @@ let body = fs.readFileSync(BODY_PATH, 'utf8');
 const oldBlockRe = /<div class="diagram"[\s\S]*?<\/div>\n/;
 if (!oldBlockRe.test(body)) { console.error('OLD diagram block not found'); process.exit(1); }
 
-const VB = { x: 260, y: 145, w: 560, h: 175 };
+const VB = { x: 0, y: 0, w: 925, h: 533 }; // full source image, not a cropped strip
 const POINTS = [
   { x: 318, y: 183, r: 4, fill: 'var(--accent)', label: 'Don', labelDy: -12, bold: false },
   { x: 365, y: 200, r: 6, fill: 'var(--accent-2)', label: 'Khounoi', labelDy: 24, bold: true },
