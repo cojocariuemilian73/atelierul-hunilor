@@ -146,9 +146,10 @@ const ABOUT_HTML = `
 
     <h3>Standarde respectate</h3>
     <ul>
-      <li>HTML5/CSS3 valid, fără dependințe de build extern — pagina rulează local, offline, din orice browser</li>
-      <li>Layout responsive (mobil, tabletă, desktop)</li>
-      <li>Atribute alt/aria pentru accesibilitate și navigare cu cititor de ecran</li>
+      <li>HTML5 cu <code>lang="ro"</code>, <code>charset</code> și <code>viewport</code> declarate; CSS3 fără preprocesor</li>
+      <li>Layout responsive (mobil, tabletă, desktop), testat pe lățimi de la 375px în sus</li>
+      <li>Reper <code>&lt;main&gt;</code>, atribute <code>aria-label</code> pe hărțile SVG și hotspot-uri activabile de la tastatură (Enter/Space)</li>
+      <li>Pagina rulează dintr-un singur fișier, fără server sau pas de build; singura resursă externă este fontul de pe Google Fonts (fără el, textul se afișează cu fonturi de rezervă)</li>
     </ul>
 
     <h3>Valoare educațională</h3>
@@ -180,11 +181,13 @@ const storyBodyPatched = storyBody.replace(
   '<a class="cta-btn" href="#mod-game">Deschide Campania Hunilor →</a>'
 );
 
+// @import must be the FIRST thing inside <style> — any rule before it makes the
+// browser drop it silently, and every custom font falls back to a system face.
 const combinedCss = `<style>
+${FONT_IMPORT}
   *{ box-sizing: border-box; }
   html{ scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce){ html{ scroll-behavior: auto; } }
-  ${FONT_IMPORT}
 ${NAV_CSS}
   /* ============ MODULE: ACASĂ / ARTICOL (poveste, bază de pagină) ============ */
 ${storyCss}
@@ -202,6 +205,7 @@ const combinedBody = `
 ${NAV_HTML}
 ${ABOUT_HTML}
 
+<main id="site-main">
 <div id="page-acasa" class="site-page">
 ${storyBodyPatched}
 <footer class="site-final-footer">
@@ -226,6 +230,7 @@ ${atlasBody}
 <section id="mod-lab" class="m-lab site-page">
 ${labBody}
 </section>
+</main>
 
 <div class="site-pager">
   <button class="site-pager-btn" id="site-prev" type="button">← Pagina anterioară</button>
@@ -316,12 +321,54 @@ const navScrollspy = `
 </script>
 `;
 
+// The antique map is used by two different modules (Atlasul Migrației and the
+// story's Marea Migrație diagram). Embedding the same ~800KB base64 payload
+// twice is pure waste, so hoist any repeated <image> into one shared <defs>
+// and point every occurrence at it with <use>.
+function dedupeInlineImages(body){
+  const uriCount = new Map();
+  (body.match(/<image[^>]*>/g) || []).forEach(function(tag){
+    const m = tag.match(/href="(data:image\/[a-z]+;base64,[A-Za-z0-9+/=]+)"/);
+    if (m) uriCount.set(m[1], (uriCount.get(m[1]) || 0) + 1);
+  });
+  const shared = Array.from(uriCount.entries()).filter(function(e){ return e[1] > 1; });
+  if (!shared.length) return { body: body, defsBlock: '' };
+
+  const defs = [];
+  shared.forEach(function(entry, i){
+    const uri = entry[0];
+    const id = 'shared-img-' + i;
+    let hoisted = false;
+    body = body.replace(/<image[^>]*>/g, function(tag){
+      if (tag.indexOf(uri) === -1) return tag;
+      if (!hoisted) { hoisted = true; defs.push(tag.replace('<image', '<image id="' + id + '"')); }
+      return '<use href="#' + id + '"/>';
+    });
+  });
+  console.log('deduped', defs.length, 'shared image(s)');
+  return {
+    body: body,
+    defsBlock: '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' + defs.join('') + '</defs></svg>\n'
+  };
+}
+
+const deduped = dedupeInlineImages(combinedBody);
+
 const finalHtml = `<!DOCTYPE html>
-<title>Atelierul Hunilor</title>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelierul Hunilor — Hunii și Marea Migrație a Popoarelor</title>
+<meta name="description" content="Proiect interactiv de istorie despre hunii lui Attila și Marea Migrație a Popoarelor: articol cu note și bibliografie, două jocuri de decizie bazate pe izvoare, atlas istoric și laborator virtual.">
 ${combinedCss}
-${combinedBody}
+</head>
+<body>
+${deduped.defsBlock}${deduped.body}
 ${combinedJs}
 ${navScrollspy}
+</body>
+</html>
 `;
 
 fs.writeFileSync(path.join(BUILD, 'FINAL.html'), finalHtml);
