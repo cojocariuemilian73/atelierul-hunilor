@@ -280,6 +280,7 @@
   sup.fn{ font-family: 'JetBrains Mono', monospace; font-size: 0.7em; color: var(--accent-2); text-decoration: none; margin-left: 1px; cursor: pointer; }
   sup.fn:hover{ text-decoration: underline; }
   sup.fn:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; border-radius: 2px; }
+  .section-sources{ font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-dim); margin: 14px 0 0; line-height: 1.6; }
   .fn-tip{
     position: fixed; z-index: 40; max-width: 280px; background: var(--paper-2); border: 1px solid var(--accent-2);
     padding: 10px 13px; font-family: 'Source Serif 4', serif; font-size: 0.86rem; line-height: 1.5;
@@ -1235,6 +1236,7 @@
           <h4 id="ci-title">Trecerea Volgăi</h4>
           <p id="ci-desc">Hunii traversează Volga și îi înfrâng pe alani, apoi pe ostrogoți — al căror rege, Ermanaric, își ia viața în fața presiunii hunice. Vizigoții, îngroziți, cer azil în Imperiul Roman și trec Dunărea în 376.</p>
         </div>
+        <p class="section-sources">Surse pentru evenimentele din cronologie: moartea lui Ermanaric<sup class="fn" data-n="12">12</sup>, trecerea Dunării de către vizigoți<sup class="fn" data-n="13">13</sup>, Câmpiile Catalaunice și solia la curtea lui Attila<sup class="fn" data-n="14">14</sup>.</p>
       </div>
     </section>
 
@@ -1258,6 +1260,7 @@
           <p id="mi-desc">Presați de huni, vizigoții trec Dunărea în 376 și cer azil roman. Tratați prost de administrația locală, se răscoală și zdrobesc o armată romană la Adrianopol (378), unde moare însuși împăratul Valens. În 410, sub Alaric, jefuiesc Roma — apoi se așază în Galia și Hispania.</p>
         </div>
         <p class="map-hint">4 săgeți pe hartă · click sau tab pentru detalii</p>
+        <p class="section-sources">Surse pentru traseele de pe hartă: trecerea Dunării de către vizigoți<sup class="fn" data-n="13">13</sup> și traversarea Rinului de către vandali, alani și suebi<sup class="fn" data-n="15">15</sup>.</p>
       </div>
     </section>
 
@@ -1969,9 +1972,9 @@
   /** @typedef {{year:string, title:string, desc:string}} TimelineEvent */
   /** @type {TimelineEvent[]} */
   var CRON = [
-    { year: '375–376 d.Hr.', title: 'Trecerea Volgăi', desc: 'Hunii traversează Volga și îi înfrâng pe alani, apoi pe ostrogoți — al căror rege, Ermanaric, își ia viața în fața presiunii hunice. Vizigoții, îngroziți, cer azil în Imperiul Roman și trec Dunărea în 376.' },
+    { year: '375–376 d.Hr.', title: 'Trecerea Volgăi', desc: 'Hunii traversează Volga și îi înfrâng pe alani, apoi pe ostrogoți — al căror rege, Ermanaric, își ia viața în fața presiunii hunice, după versiunea lui Ammianus (Iordanes dă alta). Vizigoții, îngroziți, cer azil în Imperiul Roman și trec Dunărea în 376.' },
     { year: '441–447 d.Hr.', title: 'Campaniile lui Attila în Răsărit', desc: 'Attila devastează Balcanii și Tracia, ajungând până la zidurile Constantinopolului. Imperiul Roman de Răsărit e forțat să plătească un tribut anual uriaș.' },
-    { year: '451 d.Hr.', title: 'Bătălia Câmpiilor Catalaunice', desc: 'În Galia, o coaliție romano-vizigotă condusă de generalul Aetius și regele Theodoric I îl oprește pe Attila — prima sa înfrângere majoră, deși nu decisivă.' },
+    { year: '451 d.Hr.', title: 'Bătălia Câmpiilor Catalaunice', desc: 'În Galia, o coaliție condusă de generalul Aetius și de regele vizigot Teodoric I — incluzând și franci, burgunzi și alani — îl oprește pe Attila. Rezultatul e mai degrabă nedecis: Attila se retrage, dar armata sa nu e distrusă.' },
     { year: '453 d.Hr.', title: 'Moartea lui Attila', desc: 'Attila moare în noaptea nunții cu Ildico. Fiii săi nu reușesc să mențină coeziunea imperiului, care se destramă rapid după bătălia de la Nedao (454).' }
   ];
 
@@ -2009,8 +2012,8 @@
   /** @type {MigrationEntry[]} */
   var MIGR = [
     { tag: '375–410 d.Hr.', title: 'Vizigoții', desc: 'Presați de huni, vizigoții trec Dunărea în 376 și cer azil roman. Tratați prost de administrația locală, se răscoală și zdrobesc o armată romană la Adrianopol (378), unde moare însuși împăratul Valens. În 410, sub Alaric, jefuiesc Roma — apoi se așază în Galia și Hispania.' },
-    { tag: '375–493 d.Hr.', title: 'Ostrogoții', desc: 'Subjugați direct de huni după 375, ostrogoții rămân vasali și chiar luptă alături de Attila la Câmpiile Catalaunice (451). Abia după prăbușirea imperiului hun (454) devin independenți, întemeind mai târziu, sub Theodoric cel Mare, un regat propriu în Italia (493).' },
-    { tag: '406–455 d.Hr.', title: 'Vandalii', desc: 'Împinși de efectul de domino al presiunii hunice, vandalii traversează Rinul înghețat în noaptea de 31 decembrie 406, trec prin Galia în Hispania (409), apoi în Africa de Nord (429) sub Genseric, unde cuceresc Cartagina și, în 455, jefuiesc la rândul lor Roma.' },
+    { tag: '375–493 d.Hr.', title: 'Ostrogoții', desc: 'Subjugați direct de huni după 375, ostrogoții rămân vasali și chiar luptă alături de Attila la Câmpiile Catalaunice (451). Abia după prăbușirea imperiului hun (454) devin independenți, întemeind mai târziu, sub Teodoric cel Mare, un regat propriu în Italia (493).' },
+    { tag: '406–455 d.Hr.', title: 'Vandalii', desc: 'Împinși de efectul de domino al presiunii hunice, vandalii, împreună cu alanii și suebii, trec Rinul în noaptea de 31 decembrie 406, trec prin Galia în Hispania (409), apoi în Africa de Nord (429) sub Genseric, unde cuceresc Cartagina și, în 455, jefuiesc la rândul lor Roma.' },
     { tag: '441–447 d.Hr.', title: 'Spre Constantinopol', desc: 'Nu doar popoarele vecine sunt împinse de huni — hunii înșiși lovesc direct Imperiul Roman de Răsărit, devastând Balcanii și forțând Constantinopolul să plătească tribut pentru a evita asediul.' }
   ];
 
