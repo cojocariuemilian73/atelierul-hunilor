@@ -60,6 +60,47 @@
     color: var(--gold, var(--accent-2, var(--gold-dim, #b89242)));
   }
 
+  /* ---------- ABOUT MODAL (Despre proiect / Fișă tehnică) ---------- */
+  .about-trigger{
+    margin-left: auto; flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    color: #1c150e; background: #e8c25f; border: none; cursor: pointer;
+    padding: 8px 14px; align-self: center; margin-right: 4px; border-radius: 2px;
+  }
+  .about-trigger:hover{ background: #f0d27a; }
+  .about-overlay{
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(10,7,4,0.78); padding: 24px; overflow-y: auto;
+  }
+  .about-overlay.active{ display: flex; align-items: flex-start; justify-content: center; }
+  .about-modal{
+    background: #1c150e; color: #e8dcc4; max-width: 720px; width: 100%;
+    margin-top: clamp(16px, 4vh, 60px); border: 1px solid rgba(236,223,199,0.22);
+    border-radius: 4px; padding: clamp(20px, 4vw, 40px);
+    font-family: 'Source Serif 4', serif; line-height: 1.65;
+  }
+  .about-modal h2{
+    font-family: 'Cinzel', serif; font-size: 1.4rem; color: #e8c25f;
+    margin: 0 0 18px; letter-spacing: 0.02em;
+  }
+  .about-modal h3{
+    font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #b89242; margin: 26px 0 10px;
+  }
+  .about-modal h3:first-of-type{ margin-top: 0; }
+  .about-modal p{ margin: 0 0 10px; font-size: 0.96rem; color: #d9cbae; }
+  .about-modal ul{ margin: 0 0 10px; padding-left: 20px; font-size: 0.96rem; color: #d9cbae; }
+  .about-modal li{ margin-bottom: 6px; }
+  .about-modal .placeholder{ color: #8a7860; font-style: italic; }
+  .about-close{
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; color: #c2ab84; font-size: 1.3rem; cursor: pointer;
+    line-height: 1; padding: 4px 8px;
+  }
+  .about-close:hover{ color: #f0e6cf; }
+  .about-modal{ position: relative; }
+
   /* ============ MODULE: ACASĂ / ARTICOL (poveste, bază de pagină) ============ */
 
   
@@ -1133,7 +1174,51 @@
   <a href="#mod-atlas">Atlasul Migrației</a>
   <a href="#mod-lab">Laborator &amp; Muzeu</a>
   <a href="#mod-cinema">Cinema Hunic</a>
+  <button class="about-trigger" id="about-trigger" type="button">ℹ Despre proiect</button>
 </nav>
+
+
+<div class="about-overlay" id="about-overlay">
+  <div class="about-modal" role="dialog" aria-modal="true" aria-labelledby="about-title">
+    <button class="about-close" id="about-close" type="button" aria-label="Închide">✕</button>
+    <h2 id="about-title">Despre proiect / Fișă tehnică</h2>
+
+    <h3>Ghid rapid de navigare</h3>
+    <ul>
+      <li><strong>Acasă / Articol</strong> — studiu academic cu note de subsol, cronologie și bibliografie.</li>
+      <li><strong>Campania Hunilor</strong> — joc de strategie/decizie despre expansiunea hunică.</li>
+      <li><strong>Solia la Attila</strong> — joc narativ bazat pe relatarea lui Priscus din Panium.</li>
+      <li><strong>Atlasul Migrației</strong> — hartă interactivă cu rutele Marii Migrații.</li>
+      <li><strong>Laborator &amp; Muzeu</strong> — artefacte hunice explorabile și certificat PDF descărcabil.</li>
+      <li><strong>Cinema Hunic</strong> — experiență narativă tip film, parcursă „cadru cu cadru”.</li>
+    </ul>
+    <p>Navighezi cu meniul de sus sau cu butoanele „Pagina anterioară / următoare” de jos.</p>
+
+    <h3>Tehnologii utilizate</h3>
+    <ul>
+      <li>HTML5, CSS3, JavaScript vanilla (fără framework-uri externe)</li>
+      <li>SVG pentru hărți, diagrame și hotspot-uri interactive</li>
+      <li>Web Audio API pentru fundalul sonor ambiental (Cinema Hunic)</li>
+      <li>jsPDF pentru generarea certificatului descărcabil (Laborator)</li>
+      <li>Imagini generate AI (Flux/Midjourney), încorporate direct în pagină</li>
+    </ul>
+
+    <h3>Standarde respectate</h3>
+    <ul>
+      <li>HTML5/CSS3 valid, fără dependințe de build extern — pagina rulează local, offline, din orice browser</li>
+      <li>Layout responsive (mobil, tabletă, desktop)</li>
+      <li>Atribute alt/aria pentru accesibilitate și navigare cu cititor de ecran</li>
+    </ul>
+
+    <h3>Valoare educațională</h3>
+    <p>Proiectul poate fi folosit la orele de istorie de gimnaziu/liceu ca material interactiv: jocurile de decizie (Campania Hunilor, Solia la Attila) funcționează ca fișe de lucru/teste de verificare a înțelegerii contextului istoric, iar Atlasul și Laboratorul susțin localizarea geografică și analiza de sursă istorică.</p>
+
+    <h3>Echipă &amp; coordonare</h3>
+    <p class="placeholder">[Numele elevului/elevilor autori]</p>
+    <p class="placeholder">[Profesor îndrumător]</p>
+    <p class="placeholder">[Unitatea de învățământ]</p>
+  </div>
+</div>
 
 
 <div id="page-acasa" class="site-page">
@@ -4397,6 +4482,21 @@
 
   prevBtn.addEventListener('click', function(){ showPage(current - 1); });
   nextBtn.addEventListener('click', function(){ showPage(current + 1); });
+
+  // ---------- about / fișă tehnică modal ----------
+  var aboutTrigger = document.getElementById('about-trigger');
+  var aboutOverlay = document.getElementById('about-overlay');
+  var aboutClose = document.getElementById('about-close');
+  function openAbout(){ aboutOverlay.classList.add('active'); }
+  function closeAbout(){ aboutOverlay.classList.remove('active'); }
+  if (aboutTrigger) aboutTrigger.addEventListener('click', openAbout);
+  if (aboutClose) aboutClose.addEventListener('click', closeAbout);
+  if (aboutOverlay) aboutOverlay.addEventListener('click', function(e){
+    if (e.target === aboutOverlay) closeAbout();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && aboutOverlay && aboutOverlay.classList.contains('active')) closeAbout();
+  });
 
   // Any link whose href points straight at one of the 6 page ids — the nav
   // bar itself, plus in-page links like the story module's "Deschide
