@@ -971,7 +971,7 @@
   }.m-atlas .zoom-controls{ position: absolute; right: 10px; top: 10px; display: flex; flex-direction: column; gap: 4px; z-index: 5; }.m-atlas .zoom-btn{
     width: 30px; height: 30px; border-radius: 2px; border: 1px solid var(--land-edge); background: var(--land);
     color: var(--ink); font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center;
-  }.m-atlas .zoom-btn:hover{ background: var(--gold); }.m-atlas .river{ fill: none; stroke: var(--gold); stroke-width: 1.2; stroke-dasharray: 1 5; opacity: 0.55; }.m-atlas .river-label{ font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: var(--gold); font-style: italic; paint-order: stroke; stroke: rgba(10,6,4,0.55); stroke-width: 3; }.m-atlas .paper-grain{ opacity: 0.35; mix-blend-mode: multiply; pointer-events: none; }.m-atlas .zone-hun{ transition: opacity 0.6s ease; mix-blend-mode: multiply; }html[data-theme="dark"] .m-atlas .zone-hun{ mix-blend-mode: screen; }.m-atlas .zone-max-outline{ transition: opacity 0.4s ease; opacity: 0; pointer-events: none; }.m-atlas .zone-max-outline.show{ opacity: 1; }.m-atlas .route{ fill: none; stroke-width: 3.2; stroke-linecap: round; }.m-atlas .route-huni{ stroke: url(#gradHuni); }.m-atlas .route-visi{ stroke: var(--route-visi); }.m-atlas .route-ostro{ stroke: var(--route-ostro); }.m-atlas .route-vand{ stroke: var(--route-vand); }.m-atlas .route-label{ font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; }.m-atlas .marker{ cursor: pointer; opacity: 0.25; transition: opacity 0.4s ease, transform 0.15s ease; transform-box: fill-box; transform-origin: center; }.m-atlas .marker.visible{ opacity: 1; }.m-atlas .marker:hover, .m-atlas .marker.active{ transform: scale(1.25); }.m-atlas .marker.active .m-badge{ stroke: var(--imperial); stroke-width: 2.5; }.m-atlas .m-badge{ fill: #f4e9d3; stroke: #4a3520; stroke-width: 1.6; }.m-atlas .marker.battle .m-badge{ fill: #e8c9c3; }.m-atlas .marker.camp .m-badge{ fill: var(--gold); }.m-atlas .m-label{ font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; fill: #2b1d0c; pointer-events: none; paint-order: stroke; stroke: #f4e9d3; stroke-width: 3.5; stroke-linejoin: round; }.m-atlas .marker.active .m-label{ fill: var(--imperial); }.m-atlas .pulse{ animation: pulse-ring 1.8s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+  }.m-atlas .zoom-btn:hover{ background: var(--gold); }.m-atlas .river{ fill: none; stroke: var(--gold); stroke-width: 1.2; stroke-dasharray: 1 5; opacity: 0.55; }.m-atlas .river-label{ font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: var(--gold); font-style: italic; paint-order: stroke; stroke: rgba(10,6,4,0.55); stroke-width: 3; }.m-atlas .paper-grain{ opacity: 0.35; mix-blend-mode: multiply; pointer-events: none; }.m-atlas .zone-hun{ transition: opacity 0.6s ease; mix-blend-mode: multiply; }html[data-theme="dark"] .m-atlas .zone-hun{ mix-blend-mode: screen; }.m-atlas .zone-max-outline{ transition: opacity 0.4s ease; opacity: 0; pointer-events: none; }.m-atlas .zone-max-outline.show{ opacity: 1; }.m-atlas .route{ fill: none; stroke-width: 3.2; stroke-linecap: round; }.m-atlas .route-huni{ stroke: url(#gradHuni); }.m-atlas .route-huni-main{ stroke: url(#gradHuni); stroke-width: 4.4; filter: drop-shadow(0 0 2px rgba(0,0,0,0.35)); }.m-atlas .route-visi{ stroke: var(--route-visi); }.m-atlas .route-ostro{ stroke: var(--route-ostro); }.m-atlas .route-vand{ stroke: var(--route-vand); }.m-atlas .route-label{ font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; }.m-atlas .marker{ cursor: pointer; opacity: 0.25; transition: opacity 0.4s ease, transform 0.15s ease; transform-box: fill-box; transform-origin: center; }.m-atlas .marker.visible{ opacity: 1; }.m-atlas .marker:hover, .m-atlas .marker.active{ transform: scale(1.25); }.m-atlas .marker.active .m-badge{ stroke: var(--imperial); stroke-width: 2.5; }.m-atlas .m-badge{ fill: #f4e9d3; stroke: #4a3520; stroke-width: 1.6; }.m-atlas .marker.battle .m-badge{ fill: #e8c9c3; }.m-atlas .marker.camp .m-badge{ fill: var(--gold); }.m-atlas .m-label{ font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; fill: #2b1d0c; pointer-events: none; paint-order: stroke; stroke: #f4e9d3; stroke-width: 3.5; stroke-linejoin: round; }.m-atlas .marker.active .m-label{ fill: var(--imperial); }.m-atlas .pulse{ animation: pulse-ring 1.8s ease-out infinite; transform-box: fill-box; transform-origin: center; }
   @keyframes pulse-ring{ 0%{ opacity: 0.6; transform: scale(0.8); } 100%{ opacity: 0; transform: scale(2.1); } }
   @media (prefers-reduced-motion: reduce){.m-atlas .pulse{ animation: none; display: none; } }.m-atlas /* ---------- SLIDER ---------- */
   .timebar{ margin-top: 10px; padding: 14px 16px 8px; }.m-atlas .timebar-row{ display: flex; align-items: center; gap: 12px; }.m-atlas .year-badge{ font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.95rem; color: var(--land); background: var(--imperial); padding: 6px 12px; border-radius: 4px; min-width: 92px; text-align: center; flex-shrink: 0; }.m-atlas .time-slider{
@@ -1781,8 +1781,15 @@
             <text class="route-label" x="400" y="335" fill="var(--route-ostro)">Ostrogoți</text>
             <path id="route-vand" class="route route-vand" data-year="406" d="M293,220 Q260,280 220,340 Q185,400 185,460" marker-end="url(#arrVand)"/>
             <text class="route-label" x="200" y="400" fill="var(--route-vand)">Vandali</text>
-            <path id="route-huni" class="route route-huni" data-year="441" d="M420,400 Q460,440 490,470 Q505,485 518,500" marker-end="url(#arrHuni)"/>
-            <text class="route-label" x="460" y="460" fill="var(--route-huni)">Către Constant.</text>
+            <g id="layer-huni-route">
+            <path id="route-huni-0" class="route route-huni-main" data-year="370" data-year-end="378" d="M650,385 Q580,350 500,355"/>
+            <path id="route-huni-1" class="route route-huni-main" data-year="378" data-year-end="410" d="M500,355 Q450,345 400,362"/>
+            <path id="route-huni-2" class="route route-huni-main" data-year="410" data-year-end="441" d="M400,362 Q430,410 478,444" marker-end="url(#arrHuni)"/>
+            <path id="route-huni-3" class="route route-huni-main" data-year="441" data-year-end="447" d="M478,444 Q484,475 490,500" marker-end="url(#arrHuni)"/>
+            <path id="route-huni-4" class="route route-huni-main" data-year="447" data-year-end="451" d="M490,500 Q380,420 267,309" marker-end="url(#arrHuni)"/>
+            <path id="route-huni-5" class="route route-huni-main" data-year="451" data-year-end="452" d="M267,309 Q340,350 420,387" marker-end="url(#arrHuni)"/>
+            <text class="route-label" x="660" y="405" fill="var(--route-huni)">Ruta hunilor</text>
+            </g>
             </g>
             <g id="layer-markers">
             <g class="marker city" data-i="0" data-year="0" transform="translate(331,444)"><circle class="m-badge" cx="0" cy="0" r="11"/><path d="M-6,-4 h12 v10 h-3 v-4 h-2 v4 h-2 v-4 h-2 v4 h-3 z" fill="var(--land-edge)" transform="translate(0,-5)"/><text class="m-label" x="0" y="-16" text-anchor="middle">Roma</text></g>
@@ -3715,11 +3722,12 @@
 
       routes.forEach(function(r){
         var ry = parseInt(r.getAttribute('data-year'), 10);
+        var ryEnd = r.hasAttribute('data-year-end') ? parseInt(r.getAttribute('data-year-end'), 10) : ry + 25;
         var len = parseFloat(r.dataset.len);
         if (!layers.routes) { r.style.opacity = 0; return; }
         if (year < ry) { r.style.opacity = 0; r.style.strokeDashoffset = len; return; }
         r.style.opacity = 1;
-        var span = 25;
+        var span = Math.max(1, ryEnd - ry);
         var t = Math.min(1, (year - ry) / span);
         r.style.strokeDashoffset = len * (1 - t);
       });
