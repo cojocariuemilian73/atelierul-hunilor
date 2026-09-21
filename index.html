@@ -279,6 +279,7 @@
 
   sup.fn{ font-family: 'JetBrains Mono', monospace; font-size: 0.7em; color: var(--accent-2); text-decoration: none; margin-left: 1px; cursor: pointer; }
   sup.fn:hover{ text-decoration: underline; }
+  sup.fn:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; border-radius: 2px; }
   .fn-tip{
     position: fixed; z-index: 40; max-width: 280px; background: var(--paper-2); border: 1px solid var(--accent-2);
     padding: 10px 13px; font-family: 'Source Serif 4', serif; font-size: 0.86rem; line-height: 1.5;
@@ -1109,7 +1110,14 @@
     <ul>
       <li>HTML5, CSS3, JavaScript vanilla (fără framework-uri externe)</li>
       <li>SVG pentru hărți, diagrame și hotspot-uri interactive</li>
-      <li>Imagini generate AI (Flux/Midjourney), încorporate direct în pagină</li>
+      <li>Pipeline propriu de asamblare în Node.js: fiecare modul e scris separat (CSS/JS/HTML), CSS-ul e izolat automat sub o clasă proprie, iar totul e combinat într-un singur fișier</li>
+    </ul>
+
+    <h3>Despre imagini — ce e document și ce e ilustrație</h3>
+    <ul>
+      <li><strong>Fotografiile de artefact</strong> din Laborator sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, licențe CC BY-SA).</li>
+      <li><strong>Fundalul cartografic</strong> al diagramei despre habitatul timpuriu este o hartă istorică publicată, reprodusă cu indicarea sursei.</li>
+      <li><strong>Imaginile de atmosferă</strong> — peisaje și scene din antetele modulelor — sunt generate cu instrumente AI și au rol pur decorativ. Ele nu sunt și nu trebuie citite ca surse istorice.</li>
     </ul>
 
     <h3>Standarde respectate</h3>
@@ -1292,7 +1300,7 @@
         </div>
         <div class="impact-tile">
           <p class="it-year">493 d.Hr.</p>
-          <p>Ostrogoții, eliberați de sub tutela hunică, întemeiază sub Theodoric cel Mare un regat propriu în Italia.</p>
+          <p>Ostrogoții, eliberați de sub tutela hunică, întemeiază sub Teodoric cel Mare un regat propriu în Italia.</p>
         </div>
         <div class="impact-tile">
           <p class="it-year">c. 500 d.Hr.</p>
@@ -1303,6 +1311,11 @@
           <p>Marea Migrație marchează, pentru istoriografia modernă, tranziția simbolică de la Antichitate la Evul Mediu timpuriu.</p>
         </div>
       </div>
+
+      <h3 class="sub-title">Ecoul în spațiul carpato-danubiano-pontic</h3>
+      <p>Pentru teritoriul de azi al României, secolul al V-lea nu e o notă de subsol a istoriei hunice, ci chiar scena ei. Dunărea era granița Imperiului, iar Dacia Ripensis și Moesia se aflau exact pe direcția campaniilor hunice: în 408, hunii aliați cu scirii lui Uldin cuceresc <em>Castra Martis</em>, iar campaniile din 441–447 lovesc orașele dunărene, de la Viminacium la Naissus.</p>
+      <p>Urmele materiale sunt la fel de concrete. Monede romane de aur ajunse dincolo de graniță au fost descoperite la <b>Dolhești</b> (Moldova) și la <b>Șimleul Silvaniei</b> (Transilvania), iar cazane hunice de bronz au apărut pe teritoriul României, între altele în Oltenia — aceleași obiecte de cult și prestigiu ca în Bazinul Carpatic. Cea mai celebră piesă a epocii, <b>tezaurul de la Pietroasa</b> („Cloșca cu puii de aur”), este un tezaur gotic, nu hunic: tocmai de aceea e relevant aici, fiindcă a fost probabil îngropat de o elită germanică în fuga sau sub presiunea evenimentelor declanșate de sosirea hunilor.</p>
+      <p class="source-caution"><b>O precizare necesară.</b> Prezența unor obiecte „hunice” într-un mormânt nu dovedește că cel îngropat era hun. În secolul al V-lea, stilul policrom cu granate, cazanele de bronz și chiar deformarea craniană circulau între popoare ca modă a elitelor. Ele arată apartenența la o lume politică dominată de huni, nu neapărat originea etnică a purtătorului.</p>
     </section>
 
   </article>
@@ -1327,13 +1340,13 @@
       <li id="note-5">Spuler, B., <em>Geschichte Mittelasiens</em>, p. 262; cf. Maenchen-Helfen, O., <em>The World of the Huns</em>, University of California Press, 1973, cap. 1. <a class="back" href="#sec-origini">↩</a></li>
       <li id="note-6">Priscus, frag. 1; Procopius, <em>Bella</em>, 4.5; Agathias, 5.11. <a class="back" href="#sec-origini">↩</a></li>
       <li id="note-7">Ammianus Marcellinus, <em>Res Gestae</em>, 31.2.2–11 (descrierea etnografică a hunilor). <a class="back" href="#sec-origini">↩</a></li>
-      <li id="note-8">Epitetul „Flagellum Dei” nu apare la Priscus sau Jordanes; este o atribuire legendară, ulterioară, consacrată abia în cronici medievale târzii — cf. Maenchen-Helfen, <em>The World of the Huns</em>, 1973. <a class="back" href="#sec-personalitati">↩</a></li>
+      <li id="note-8">Epitetul „Flagellum Dei” nu apare la Priscus sau Iordanes; este o atribuire legendară, ulterioară, consacrată abia în cronici medievale târzii — cf. Maenchen-Helfen, <em>The World of the Huns</em>, 1973. <a class="back" href="#sec-personalitati">↩</a></li>
       <li id="note-9">Procopius, <em>Bellum Vandalicum</em>, 1.3.15 — expresia „ultimul dintre romani” este folosită acolo despre Aetius <em>și</em> Bonifacius, nu despre Aetius singur; ea a fost popularizată ulterior de Edward Gibbon. <a class="back" href="#sec-personalitati">↩</a></li>
-      <li id="note-10">Jordanes, <em>Getica</em>, 36 (componența celor două tabere la Câmpiile Catalaunice). <a class="back" href="#sec-personalitati">↩</a></li>
-      <li id="note-11">Jordanes, <em>Getica</em>, 260–263 (bătălia de la Nedao, 454 d.Hr.). <a class="back" href="#sec-personalitati">↩</a></li>
-      <li id="note-12">Sursele se contrazic asupra morții lui Ermanaric: Ammianus Marcellinus, <em>Res Gestae</em>, 31.3.2, spune că regele ostrogot s-a sinucis în fața presiunii hunice, în timp ce Jordanes, <em>Getica</em>, 24, povestește că fusese rănit de frații Rosomoni și a murit la 110 ani. Versiunea folosită în cronologie este a lui Ammianus. <a class="back" href="#sec-cronologie">↩</a></li>
+      <li id="note-10">Iordanes, <em>Getica</em>, 36 (componența celor două tabere la Câmpiile Catalaunice). <a class="back" href="#sec-personalitati">↩</a></li>
+      <li id="note-11">Iordanes, <em>Getica</em>, 260–263 (bătălia de la Nedao, 454 d.Hr.). <a class="back" href="#sec-personalitati">↩</a></li>
+      <li id="note-12">Sursele se contrazic asupra morții lui Ermanaric: Ammianus Marcellinus, <em>Res Gestae</em>, 31.3.2, spune că regele ostrogot s-a sinucis în fața presiunii hunice, în timp ce Iordanes, <em>Getica</em>, 24, povestește că fusese rănit de frații Rosomoni și a murit la 110 ani. Versiunea folosită în cronologie este a lui Ammianus. <a class="back" href="#sec-cronologie">↩</a></li>
       <li id="note-13">Ammianus Marcellinus, <em>Res Gestae</em>, 31.4 (trecerea Dunării de către vizigoți, 376 d.Hr.). <a class="back" href="#sec-migratie">↩</a></li>
-      <li id="note-14">Jordanes, <em>Getica</em>, 41–42 (bătălia Câmpiilor Catalaunice, 451 d.Hr.); Priscus, relatarea ambasadei la curtea lui Attila, 449 d.Hr. <a class="back" href="#sec-cronologie">↩</a></li>
+      <li id="note-14">Iordanes, <em>Getica</em>, 41–42 (bătălia Câmpiilor Catalaunice, 451 d.Hr.); Priscus, relatarea ambasadei la curtea lui Attila, 449 d.Hr. <a class="back" href="#sec-cronologie">↩</a></li>
       <li id="note-15">Prosper Tiro, <em>Epitoma chronicon</em>, an. 406, și Ieronim, <em>Epistula</em> 123.15 (traversarea Rinului de către vandali, alani și suebi, 31 decembrie 406). Detaliul „Rinului înghețat”, foarte răspândit, nu apare în izvoarele antice — este o reconstituire modernă, consacrată de Gibbon. <a class="back" href="#sec-migratie">↩</a></li>
       <li id="note-16">Heather, P., <em>The Fall of the Roman Empire</em>, 2005 — teza „efectului de domino” declanșat de presiunea hunică; pentru poziția critică, vezi Halsall, G., <em>Barbarian Migrations and the Roman West</em>, 2007, și Goffart, W., <em>Barbarian Tides</em>, 2006. <a class="back" href="#sec-migratie">↩</a></li>
       <li id="note-17">Maróti, Z. et al., „Analysis of whole genome sequences of Hun, Avar and conquering Hungarian period nomadic people”, 2022; cf. Neparáczki, E. et al., 2019. <a class="back" href="#sec-origini">↩</a></li>
@@ -1342,7 +1355,7 @@
 
   <footer>
     Material realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală” — Secțiunea I, Istorie.<br>
-    Bazat pe izvoare antice (Ptolemeu, Ammianus Marcellinus, Priscus, Procopius, Agathias, Jordanes) și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather).
+    Bazat pe izvoare antice (Ptolemeu, Ammianus Marcellinus, Priscus, Procopius, Agathias, Iordanes) și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather).
   </footer>
 
   </div>
@@ -1353,7 +1366,7 @@
 <footer class="site-final-footer">
   Proiect realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală” — Secțiunea I, Istorie.<br>
   Cinci module: articol cu note și bibliografie, două jocuri interactive, o hartă istorică și un laborator/muzeu virtual.<br>
-  Surse: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Jordanes, Olympiodorus, Claudian, Merobaudes, Sidonius Apollinaris, Zosimus, Ioannes Malalas — și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Neparáczki, Maróti).
+  Surse: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Iordanes, Olympiodorus, Claudian, Merobaudes, Sidonius Apollinaris, Zosimus, Ioannes Malalas — și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Neparáczki, Maróti).
 </footer>
 </div>
 
@@ -1380,7 +1393,7 @@
       <div class="stat"><b>20</b><span>Solidi de pornire</span></div>
     </div>
     <button class="cta" id="start-btn">Pornește campania</button>
-    <p class="sources"><b>Surse:</b> Ptolemeu (Geografia, 3.5.10), Ammianus Marcellinus (Res Gestae, 31.2.1), Priscus, Procopius, Agathias, Iordanes (Getica), cronici chineze despre Hsiung-nu, o scrisoare sogdiană din 311 d.Hr.</p>
+    <p class="sources"><b>Surse:</b> Ptolemeu (Geografia, 3.5.10), Ammianus Marcellinus (Res Gestae, 31.2.1), Priscus, Procopius, Agathias, Iordanes (Getica), cronici chineze despre Xiongnu, o scrisoare sogdiană din 311 d.Hr.</p>
   </div>
 
   <div id="campaign-map" hidden>
@@ -1512,9 +1525,9 @@
     <div class="timeline">
       <h3>Cronologia campaniei</h3>
       <div class="tl-item"><span class="tl-date">c. 150</span><span class="tl-text">Ptolemeu menționează pentru prima dată „Khounoi”, între Don și Marea Azov.</span></div>
-      <div class="tl-item"><span class="tl-date">221 î.Hr.</span><span class="tl-text">Qin Shi Huangdi unește zidurile de graniță ale Chinei împotriva Hsiung-nu.</span></div>
-      <div class="tl-item"><span class="tl-date">48</span><span class="tl-text">Hsiung-nu se despart în ramura nordică și cea sudică, aliată cu China.</span></div>
-      <div class="tl-item"><span class="tl-date">89</span><span class="tl-text">Hsiung-nu nordici sunt învinși; dispar din cronicile chineze.</span></div>
+      <div class="tl-item"><span class="tl-date">221 î.Hr.</span><span class="tl-text">Qin Shi Huangdi unește zidurile de graniță ale Chinei împotriva Xiongnu.</span></div>
+      <div class="tl-item"><span class="tl-date">48</span><span class="tl-text">Xiongnu se despart în ramura nordică și cea sudică, aliată cu China.</span></div>
+      <div class="tl-item"><span class="tl-date">89</span><span class="tl-text">Xiongnu nordici sunt învinși; dispar din cronicile chineze.</span></div>
       <div class="tl-item"><span class="tl-date">311</span><span class="tl-text">O scrisoare sogdiană atribuie unor „Huni” distrugerea orașului Lo-yang.</span></div>
       <div class="tl-item"><span class="tl-date">370–375</span><span class="tl-text">Hunii îi supun pe alani și pornesc brusc spre Europa.</span></div>
     </div>
@@ -1625,7 +1638,7 @@
     </div>
   </div>
 
-  <footer>Surse: Priscus din Panium (Fragmenta), Ammianus Marcellinus (Res Gestae), Jordanes (Getica) · realizat pentru concursul „Istorie și societate în dimensiune virtuală”</footer>
+  <footer>Surse: Priscus din Panium (Fragmenta), Ammianus Marcellinus (Res Gestae), Iordanes (Getica) · realizat pentru concursul „Istorie și societate în dimensiune virtuală”</footer>
 </div>
 
 
@@ -1755,7 +1768,7 @@
     </div>
   </div>
 
-  <footer>Componentă de hartă istorică · surse: Priscus din Panium, Ammianus Marcellinus, Jordanes · realizată pentru concursul „Istorie și societate în dimensiune virtuală”</footer>
+  <footer>Componentă de hartă istorică · surse: Priscus din Panium, Ammianus Marcellinus, Iordanes · realizată pentru concursul „Istorie și societate în dimensiune virtuală”</footer>
 </div>
 
 <div class="modal-overlay" id="modal-overlay">
@@ -1918,6 +1931,16 @@
     function hideTip(){ tip.classList.remove('show'); }
 
     document.querySelectorAll('sup.fn').forEach(function(sup){
+      // A bare <sup> is not focusable, so the notes were unreachable without a
+      // mouse. Expose them as buttons and let Enter/Space open the same tooltip.
+      sup.setAttribute('role', 'button');
+      sup.setAttribute('tabindex', '0');
+      sup.setAttribute('aria-label', 'Nota ' + sup.getAttribute('data-n'));
+      sup.addEventListener('keydown', function(e){
+        if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+        e.preventDefault();
+        sup.click();
+      });
       sup.addEventListener('click', function(e){
         e.stopPropagation();
         var n = sup.getAttribute('data-n');
@@ -2117,47 +2140,47 @@
       mechIcon: "PIATRĂ",
       mechLabel: "Lovește cu catapulta turnul cu răspunsul corect",
       timelineQ: {
-        q: "În ce an s-au despărțit Hsiung-nu în ramura nordică și cea sudică?",
+        q: "În ce an s-au despărțit Xiongnu în ramura nordică și cea sudică?",
         min: 0, max: 100, correct: 48, tolerance: 10, unit: "d.Hr.",
-        fb: "Ruptura definitivă a avut loc în anul 48 d.Hr., după ce Hsiung-nu se alăturaseră deja sistemului chinez de tribut în 52 î.Hr."
+        fb: "Ruptura definitivă a avut loc în anul 48 d.Hr., după ce Xiongnu se alăturaseră deja sistemului chinez de tribut în 52 î.Hr."
       },
-      lore: "Cu mult înainte ca hunii să tulbure Europa, un alt popor de călăreți — Hsiung-nu — amenința un alt imperiu. Împotriva lor s-a ridicat Marele Zid, s-au plătit tributuri în mătase și s-au purtat războaie de secole, până când confederația s-a rupt în două, iar o ramură a dispărut fără urmă din cronici.",
-      meta: "5 întrebări · cronici chineze despre Hsiung-nu",
+      lore: "Cu mult înainte ca hunii să tulbure Europa, un alt popor de călăreți — Xiongnu — amenința un alt imperiu. Împotriva lor s-a ridicat Marele Zid, s-au plătit tributuri în mătase și s-au purtat războaie de secole, până când confederația s-a rupt în două, iar o ramură a dispărut fără urmă din cronici.",
+      meta: "5 întrebări · cronici chineze despre Xiongnu",
       questions: [
         {
           era: "China antică · sec. III î.Hr.",
-          q: "Cine a unificat vechile ziduri de graniță chineze într-un singur Mare Zid, ca apărare împotriva Hsiung-nu?",
+          q: "Cine a unificat vechile ziduri de graniță chineze într-un singur Mare Zid, ca apărare împotriva Xiongnu?",
           opts: ["Wudi", "Maodun", "Qin Shi Huangdi", "Confucius"],
           correct: 2,
-          fb: "Qin Shi Huangdi (221–210 î.Hr.), unificatorul imperiului chinez, a dispus unirea fortificațiilor existente într-un „mare zid” ca răspuns la presiunea Hsiung-nu."
+          fb: "Qin Shi Huangdi (221–210 î.Hr.), unificatorul imperiului chinez, a dispus unirea fortificațiilor existente într-un „mare zid” ca răspuns la presiunea Xiongnu."
         },
         {
           era: "China antică · dinastia Han",
-          q: "Cine a organizat, la începutul dinastiei Han, o confederație tribală Hsiung-nu suficient de puternică încât să impună tribut Chinei?",
+          q: "Cine a organizat, la începutul dinastiei Han, o confederație tribală Xiongnu suficient de puternică încât să impună tribut Chinei?",
           opts: ["Maodun (Modu Chanyu)", "Touman, tatăl său", "Împăratul Wudi", "Împăratul Gaozu"],
           correct: 0,
-          fb: "Regele Maodun (m. 174 î.Hr.) a construit o confederație Hsiung-nu puternică, forțând China să plătească tribut — în special mătase."
+          fb: "Regele Maodun (m. 174 î.Hr.) a construit o confederație Xiongnu puternică, forțând China să plătească tribut — în special mătase."
         },
         {
           era: "China antică · confruntări majore",
-          q: "Sub domnia cărui împărat chinez au fost, în sfârșit, învinși Hsiung-nu, cu costuri umane uriașe?",
+          q: "Sub domnia cărui împărat chinez au fost, în sfârșit, învinși Xiongnu, cu costuri umane uriașe?",
           opts: ["Wudi (141–87 î.Hr.)", "Qin Shi Huangdi", "Maodun", "Gaozu"],
           correct: 0,
-          fb: "Abia sub Wudi (141–87 î.Hr.) China a reușit înfrângeri decisive asupra Hsiung-nu, după decenii de tribut și presiune constantă."
+          fb: "Abia sub Wudi (141–87 î.Hr.) China a reușit înfrângeri decisive asupra Xiongnu, după decenii de tribut și presiune constantă."
         },
         {
           era: "China antică · fragmentare",
-          q: "În ce an s-au despărțit Hsiung-nu în ramura nordică și cea sudică (aliată cu China)?",
+          q: "În ce an s-au despărțit Xiongnu în ramura nordică și cea sudică (aliată cu China)?",
           opts: ["89 d.Hr.", "311 d.Hr.", "48 d.Hr.", "174 î.Hr."],
           correct: 2,
-          fb: "După ce s-au alăturat sistemului chinez de tribut în 52 î.Hr., Hsiung-nu s-au scindat definitiv în 48 d.Hr. în două ramuri rivale."
+          fb: "După ce s-au alăturat sistemului chinez de tribut în 52 î.Hr., Xiongnu s-au scindat definitiv în 48 d.Hr. în două ramuri rivale."
         },
         {
           era: "China antică · destinul nordicilor",
-          q: "Ce s-a întâmplat cu Hsiung-nu nordici după înfrângerea lor de către chinezi în 89 d.Hr.?",
+          q: "Ce s-a întâmplat cu Xiongnu nordici după înfrângerea lor de către chinezi în 89 d.Hr.?",
           opts: ["Au fost integrați ca federați în nordul Chinei", "S-au retras spre Manciuria, sub protecția xianbei", "Au dispărut treptat din sursele chineze în secolul II", "Au fondat un stat propriu în bazinul Tarim"],
           correct: 2,
-          fb: "Hsiung-nu nordici dispar treptat din cronicile chineze pe parcursul secolului II — traseul lor ulterior spre vest rămâne nedovedit arheologic."
+          fb: "Xiongnu nordici dispar treptat din cronicile chineze pe parcursul secolului II — traseul lor ulterior spre vest rămâne nedovedit arheologic."
         }
       ]
     },
@@ -2176,19 +2199,19 @@
         min: 250, max: 350, correct: 311, tolerance: 15, unit: "d.Hr.",
         fb: "Scrisoarea descrie distrugerea Luoyangului din 311 d.Hr., dar a fost redactată în jurul anului 313 — cu mult înainte ca hunii să ajungă vreodată în Europa."
       },
-      lore: "De aici pornește cea mai veche dezbatere din istoriografia hunilor: sunt Hsiung-nu și hunii unul și același popor? Asemănarea numelor a sedus istorici încă din secolul al XVIII-lea — dar dovezile arheologice refuză, până azi, să confirme legătura directă.",
+      lore: "De aici pornește cea mai veche dezbatere din istoriografia hunilor: sunt Xiongnu și hunii unul și același popor? Asemănarea numelor a sedus istorici încă din secolul al XVIII-lea — dar dovezile arheologice refuză, până azi, să confirme legătura directă.",
       meta: "3 întrebări · o dezbatere veche de 250 de ani",
       questions: [
         {
           era: "Legătura disputată",
-          q: "Ce eveniment din 311 d.Hr., menționat într-o scrisoare sogdiană, este uneori invocat drept „dovadă” a legăturii Hsiung-nu–huni?",
+          q: "Ce eveniment din 311 d.Hr., menționat într-o scrisoare sogdiană, este uneori invocat drept „dovadă” a legăturii Xiongnu–huni?",
           opts: ["Semnarea unui tratat de pace cu Roma", "Distrugerea capitalei chineze Lo-yang de către „Huni” (xvn)", "Fondarea orașului Attila", "Migrația alanilor spre Caucaz"],
           correct: 1,
-          fb: "Scrisoarea sogdiană descrie distrugerea orașului Lo-yang de niște „Huni” (xvn) — de fapt Hsiung-nu sudici, un episod separat de cel care i-a înfruntat pe goți decenii mai târziu."
+          fb: "Scrisoarea sogdiană descrie distrugerea orașului Lo-yang de niște „Huni” (xvn) — de fapt Xiongnu sudici, un episod separat de cel care i-a înfruntat pe goți decenii mai târziu."
         },
         {
           era: "Istoriografia modernă",
-          q: "Cine a sugerat pentru prima dată, în secolul XVIII, o legătură între Hsiung-nu și hunii europeni?",
+          q: "Cine a sugerat pentru prima dată, în secolul XVIII, o legătură între Xiongnu și hunii europeni?",
           opts: ["Edward Gibbon", "De Guignes (1756)", "Otto Maenchen-Helfen", "Denis Sinor"],
           correct: 1,
           fb: "De Guignes a propus această derivare în 1756, bazându-se în principal pe asemănarea numelor — ipoteză care a popularizat eticheta „hunii est-asiatici”."
@@ -3539,12 +3562,12 @@
   var DATA = [
     { type: 'city', year: 0,   tag: 'Capitală simbolică a Imperiului de Apus', title: 'Roma', desc: 'Reședința imperială se mutase la Mediolanum (Milano) încă din 286, iar din 402 la Ravenna — Roma nu mai era capitală de facto. Rămâne însă premiul simbolic suprem: jefuită de vizigoți în 410, nu este niciodată atacată direct de Attila.', quote: null },
     { type: 'city', year: 402, tag: 'Noua reședință imperială · din 402 d.Hr.', title: 'Ravenna', desc: 'Împăratul Honorius mută reședința imperială de la Mediolanum la Ravenna în 402 d.Hr., oraș greu accesibil, apărat de mlaștini și cu ieșire la mare.', quote: null },
-    { type: 'city', year: 452, tag: 'Distrusă de Attila · 452 d.Hr.', title: 'Aquileia', desc: 'Attila asediază și distruge Aquileia în timpul invaziei Italiei (452 d.Hr.), deschizând drumul spre câmpia Padului.', quote: { text: 'atât de temeinic distrusă încât abia mai putea fi găsită urma ei', author: 'Jordanes (tradiție ulterioară)', src: 'Getica' } },
+    { type: 'city', year: 452, tag: 'Distrusă de Attila · 452 d.Hr.', title: 'Aquileia', desc: 'Attila asediază și distruge Aquileia în timpul invaziei Italiei (452 d.Hr.), deschizând drumul spre câmpia Padului.', quote: { text: 'atât de temeinic distrusă încât abia mai putea fi găsită urma ei', author: 'Iordanes (tradiție ulterioară)', src: 'Getica' } },
     { type: 'city', year: 441, tag: 'Devastat de huni · 441 d.Hr.', title: 'Naissus (Niš)', desc: 'Ambasada romană din 449, condusă de Maximinus și descrisă de însoțitorul său Priscus, găsește orașul aproape pustiit, la ani după campania hunică.', quote: { text: 'malul râului era plin de oasele celor uciși în luptă, iar orașul era pustiit, cu excepția câtorva bolnavi adăpostiți într-o biserică', author: 'Priscus din Panium', src: 'Fragmenta' } },
     { type: 'city', year: 0,   tag: 'Capitala Imperiului de Răsărit', title: 'Constantinopol', desc: 'Ținta finală a campaniilor lui Attila din 441–447: orașul nu este niciodată cucerit, dar Imperiul de Răsărit acceptă un tribut anual uriaș.', quote: { text: 'solii cereau, în numele lui Attila, predarea dezertorilor și plata tributului restant', author: 'Priscus din Panium', src: 'Fragmenta' } },
     { type: 'camp', year: 434, tag: 'Reședința lui Attila · localizare incertă', title: 'Reședința lui Attila', desc: 'Priscus descrie o mare așezare de lemn, undeva în Câmpia Panonică, la nord de Dunăre. Localizarea exactă nu este cunoscută: poziția de pe hartă e o estimare convențională, nu un sit identificat arheologic.', quote: { text: 'în timp ce oaspeților li se serveau bucate pe farfurii de argint, lui Attila i se aducea carne pe o tavă de lemn', author: 'Priscus din Panium', src: 'frag. 13 (ed. Blockley)' } },
     { type: 'battle', year: 378, tag: 'Dezastru roman · 9 august 378 d.Hr.', title: 'Bătălia de la Adrianopol', desc: 'Vizigoții, împinși de huni peste Dunăre, zdrobesc armata romană de răsărit; împăratul Valens moare pe câmpul de luptă.', quote: { text: 'un asemenea măcel al romanilor nu s-a mai văzut de la dezastrul de la Cannae', author: 'Ammianus Marcellinus', src: 'Res Gestae, 31.13' } },
-    { type: 'battle', year: 451, tag: 'Apogeul confruntării · 451 d.Hr.', title: 'Câmpiile Catalaunice', desc: 'O coaliție condusă de Aetius și de regele vizigot Theodoric I — incluzând și franci, burgunzi și alani — îl oprește pe Attila. Rezultatul e mai degrabă nedecis: Attila se retrage, dar armata sa nu e distrusă.', quote: { text: 'atrox, multiplex, immane, pertinax', author: 'Iordanes', src: 'Getica, 41 — „o bătălie cruntă, complexă, monstruoasă, încrâncenată”' } }
+    { type: 'battle', year: 451, tag: 'Apogeul confruntării · 451 d.Hr.', title: 'Câmpiile Catalaunice', desc: 'O coaliție condusă de Aetius și de regele vizigot Teodoric I — incluzând și franci, burgunzi și alani — îl oprește pe Attila. Rezultatul e mai degrabă nedecis: Attila se retrage, dar armata sa nu e distrusă.', quote: { text: 'atrox, multiplex, immane, pertinax', author: 'Iordanes', src: 'Getica, 41 — „o bătălie cruntă, complexă, monstruoasă, încrâncenată”' } }
   ];
 
   var markers = Array.prototype.slice.call(document.querySelectorAll('.marker'));
@@ -3866,7 +3889,7 @@
     },
     {
       myth: 'Se cunoaște exact locul unde a fost înmormântat Attila.',
-      truth: 'Jordanes (Getica) povestește că Attila a fost așezat într-un sicriu triplu — aur, argint și fier — iar un râu a fost deviat temporar pentru ca mormântul să fie săpat chiar în albia lui. Sclavii care au făcut săpăturile ar fi fost uciși ca locul să rămână secret — motiv pentru care mormântul lui Attila nu a fost identificat până azi.'
+      truth: 'Iordanes (Getica) povestește că Attila a fost așezat într-un sicriu triplu — aur, argint și fier — iar un râu a fost deviat temporar pentru ca mormântul să fie săpat chiar în albia lui. Sclavii care au făcut săpăturile ar fi fost uciși ca locul să rămână secret — motiv pentru care mormântul lui Attila nu a fost identificat până azi.'
     },
     {
       myth: 'Attila s-a oprit înaintea Romei, în 452, exclusiv din respect pentru intervenția Papei Leon I.',
@@ -4030,7 +4053,9 @@
   var countEl = document.getElementById('site-page-count');
   var current = 0;
 
-  function showPage(index){
+  // record is false when the change came from the URL itself (first load or
+  // Back/Forward), so we don't push a duplicate history entry for it.
+  function showPage(index, record){
     index = Math.max(0, Math.min(pages.length - 1, index));
     current = index;
     pages.forEach(function(p, i){ if (p) p.classList.toggle('active', i === index); });
@@ -4041,7 +4066,23 @@
     nextBtn.style.visibility = index === pages.length - 1 ? 'hidden' : 'visible';
     countEl.textContent = (index + 1) + ' / ' + pages.length;
     window.scrollTo(0, 0);
+
+    if (record !== false && window.history && window.history.pushState) {
+      window.history.pushState({ page: index }, '', '#' + PAGE_IDS[index]);
+    }
   }
+
+  // Each page gets its own URL, so Back and Forward step through the modules,
+  // a refresh stays where you were, and a single module can be linked directly.
+  function pageFromUrl(){
+    var idx = PAGE_IDS.indexOf((location.hash || '').slice(1));
+    return idx === -1 ? 0 : idx;
+  }
+
+  window.addEventListener('popstate', function(e){
+    var idx = (e.state && typeof e.state.page === 'number') ? e.state.page : pageFromUrl();
+    showPage(idx, false);
+  });
 
   prevBtn.addEventListener('click', function(){ showPage(current - 1); });
   nextBtn.addEventListener('click', function(){ showPage(current + 1); });
@@ -4075,7 +4116,13 @@
     showPage(idx);
   });
 
-  showPage(0);
+  // Honour a #mod-… in the address bar on first load, and seed a history entry
+  // so the very first Back press has somewhere sensible to go.
+  var startIndex = pageFromUrl();
+  showPage(startIndex, false);
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState({ page: startIndex }, '', '#' + PAGE_IDS[startIndex]);
+  }
 })();
 </script>
 

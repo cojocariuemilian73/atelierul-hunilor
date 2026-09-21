@@ -141,7 +141,14 @@ const ABOUT_HTML = `
     <ul>
       <li>HTML5, CSS3, JavaScript vanilla (fără framework-uri externe)</li>
       <li>SVG pentru hărți, diagrame și hotspot-uri interactive</li>
-      <li>Imagini generate AI (Flux/Midjourney), încorporate direct în pagină</li>
+      <li>Pipeline propriu de asamblare în Node.js: fiecare modul e scris separat (CSS/JS/HTML), CSS-ul e izolat automat sub o clasă proprie, iar totul e combinat într-un singur fișier</li>
+    </ul>
+
+    <h3>Despre imagini — ce e document și ce e ilustrație</h3>
+    <ul>
+      <li><strong>Fotografiile de artefact</strong> din Laborator sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, licențe CC BY-SA).</li>
+      <li><strong>Fundalul cartografic</strong> al diagramei despre habitatul timpuriu este o hartă istorică publicată, reprodusă cu indicarea sursei.</li>
+      <li><strong>Imaginile de atmosferă</strong> — peisaje și scene din antetele modulelor — sunt generate cu instrumente AI și au rol pur decorativ. Ele nu sunt și nu trebuie citite ca surse istorice.</li>
     </ul>
 
     <h3>Standarde respectate</h3>
@@ -211,7 +218,7 @@ ${storyBodyPatched}
 <footer class="site-final-footer">
   Proiect realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală” — Secțiunea I, Istorie.<br>
   Cinci module: articol cu note și bibliografie, două jocuri interactive, o hartă istorică și un laborator/muzeu virtual.<br>
-  Surse: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Jordanes, Olympiodorus, Claudian, Merobaudes, Sidonius Apollinaris, Zosimus, Ioannes Malalas — și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Neparáczki, Maróti).
+  Surse: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Iordanes, Olympiodorus, Claudian, Merobaudes, Sidonius Apollinaris, Zosimus, Ioannes Malalas — și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Neparáczki, Maróti).
 </footer>
 </div>
 
@@ -271,7 +278,9 @@ const navScrollspy = `
   var countEl = document.getElementById('site-page-count');
   var current = 0;
 
-  function showPage(index){
+  // record is false when the change came from the URL itself (first load or
+  // Back/Forward), so we don't push a duplicate history entry for it.
+  function showPage(index, record){
     index = Math.max(0, Math.min(pages.length - 1, index));
     current = index;
     pages.forEach(function(p, i){ if (p) p.classList.toggle('active', i === index); });
@@ -282,7 +291,23 @@ const navScrollspy = `
     nextBtn.style.visibility = index === pages.length - 1 ? 'hidden' : 'visible';
     countEl.textContent = (index + 1) + ' / ' + pages.length;
     window.scrollTo(0, 0);
+
+    if (record !== false && window.history && window.history.pushState) {
+      window.history.pushState({ page: index }, '', '#' + PAGE_IDS[index]);
+    }
   }
+
+  // Each page gets its own URL, so Back and Forward step through the modules,
+  // a refresh stays where you were, and a single module can be linked directly.
+  function pageFromUrl(){
+    var idx = PAGE_IDS.indexOf((location.hash || '').slice(1));
+    return idx === -1 ? 0 : idx;
+  }
+
+  window.addEventListener('popstate', function(e){
+    var idx = (e.state && typeof e.state.page === 'number') ? e.state.page : pageFromUrl();
+    showPage(idx, false);
+  });
 
   prevBtn.addEventListener('click', function(){ showPage(current - 1); });
   nextBtn.addEventListener('click', function(){ showPage(current + 1); });
@@ -316,7 +341,13 @@ const navScrollspy = `
     showPage(idx);
   });
 
-  showPage(0);
+  // Honour a #mod-… in the address bar on first load, and seed a history entry
+  // so the very first Back press has somewhere sensible to go.
+  var startIndex = pageFromUrl();
+  showPage(startIndex, false);
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState({ page: startIndex }, '', '#' + PAGE_IDS[startIndex]);
+  }
 })();
 </script>
 `;
