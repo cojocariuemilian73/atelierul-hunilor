@@ -427,6 +427,8 @@
     --z3-bg: #201730;
     --z4: #4fb07a;
     --z4-bg: #12271b;
+    --z5: #c94f4f;
+    --z5-bg: #2a1414;
   }.m-game *{ box-sizing: border-box; }.m-game{
     margin: 0;
     background:
@@ -1456,18 +1458,18 @@
       <p class="eyebrow">Simulare istorică interactivă</p>
       <div class="mod-chapter"><span class="n">02</span><span class="t">Joc &middot; Campania Hunilor</span></div>
       <h1>Campania <span>Hunilor</span></h1>
-      <p class="sub">370 d.Hr. Un popor de călăreți iese brusc din stepă și schimbă harta Europei. Parcurge 4 campanii istorice, răspunde corect și cucerește fiecare teritoriu.</p>
+      <p class="sub">370 d.Hr. Un popor de călăreți iese brusc din stepă și schimbă harta Europei. Parcurge 5 campanii istorice, răspunde corect și cucerește fiecare teritoriu.</p>
     </div>
   </div>
 
   <div class="panel start-panel" id="start-panel">
     <div class="stats-row">
-      <div class="stat"><b>4</b><span>Campanii</span></div>
+      <div class="stat"><b>5</b><span>Campanii</span></div>
       <div class="stat"><b id="qcount">14</b><span>Întrebări</span></div>
       <div class="stat"><b>20</b><span>Solidi de pornire</span></div>
     </div>
     <button class="cta" id="start-btn">Pornește campania</button>
-    <p class="sources"><b>Surse:</b> Ptolemeu (Geografia, 3.5.10), Ammianus Marcellinus (Res Gestae, 31.2.1), Priscus, Procopius, Agathias, cronici chineze despre Hsiung-nu, o scrisoare sogdiană din 311 d.Hr.</p>
+    <p class="sources"><b>Surse:</b> Ptolemeu (Geografia, 3.5.10), Ammianus Marcellinus (Res Gestae, 31.2.1), Priscus, Procopius, Agathias, Iordanes (Getica), cronici chineze despre Hsiung-nu, o scrisoare sogdiană din 311 d.Hr.</p>
   </div>
 
   <div id="campaign-map" hidden>
@@ -1480,8 +1482,8 @@
         <text x="505" y="187" text-anchor="middle" font-size="9" fill="var(--ink-dim2)" font-family="'JetBrains Mono', monospace">Azov</text>
         <path d="M36,114 L54,100 L72,114 L90,100 L108,114" stroke="var(--ink-dim2)" stroke-width="2" fill="none" opacity="0.55" stroke-linecap="round" stroke-linejoin="round"/>
         <text x="72" y="130" text-anchor="middle" font-size="9" fill="var(--ink-dim2)" font-family="'JetBrains Mono', monospace">Marele Zid</text>
-        <path id="route-base" d="M430,150 Q275,80 120,95 Q275,25 430,55 Q565,35 700,115" fill="none" stroke="var(--line-bright)" stroke-width="2" stroke-dasharray="1 8" stroke-linecap="round"/>
-        <path id="route-progress" d="M430,150 Q275,80 120,95 Q275,25 430,55 Q565,35 700,115" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round"/>
+        <path id="route-base" d="M430,150 Q275,80 120,95 Q275,25 430,55 Q565,35 700,115 Q745,155 780,100" fill="none" stroke="var(--line-bright)" stroke-width="2" stroke-dasharray="1 8" stroke-linecap="round"/>
+        <path id="route-progress" d="M430,150 Q275,80 120,95 Q275,25 430,55 Q565,35 700,115 Q745,155 780,100" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round"/>
       </svg>
       <div class="cmap-rider" id="cmap-rider">●</div>
       <div class="cmap-stops" id="cmap-stops"></div>
@@ -2428,6 +2430,54 @@
           fb: "Priscus, Procopius și Agathias converg: teritoriul alanilor dintre Marea Azov și Caucaz era considerat, în istoriografia bizantină, drept țara de origine a hunilor."
         }
       ]
+    },
+    {
+      zone: "z5",
+      short: "Apogeu",
+      kicker: "Campania V · Attila și Aetius",
+      title: "Apogeul și declinul",
+      icon: "V",
+      badgeName: "Judecătorul Bătăliilor",
+      mechanic: "charge",
+      mechIcon: "ȘARJĂ",
+      mechLabel: "Șarjează spre stindardul cu răspunsul corect",
+      timelineQ: {
+        q: "În ce an a avut loc bătălia de la Câmpiile Catalaunice, care oprește avansul lui Attila spre vest?",
+        min: 430, max: 460, correct: 451, tolerance: 4, unit: "d.Hr.",
+        fb: "Bătălia de la Câmpiile Catalaunice a avut loc în 451 d.Hr. — ultima mare confruntare a lui Attila pe teritoriul Imperiului de Apus înainte de invazia Italiei, din anul următor."
+      },
+      lore: "Sub Attila, imperiul hunic atinge apogeul: tributul bizantin urcă de la 350 la 2.100 de livre de aur, iar generalul roman Aetius — cândva aliat cu mercenari huni — devine, în 451, adversarul care îl oprește la Câmpiile Catalaunice. Fără să fie distrus însă: Attila se retrage, invadează Italia în 452, iar la moartea sa (453) și la Nedao (454) imperiul hunic se prăbușește la fel de brusc cum apăruse.",
+      meta: "4 întrebări · Priscus, Iordanes, Prosper de Aquitania",
+      questions: [
+        {
+          era: "Economie · tribut bizantin",
+          q: "Cât ajunsese tributul anual plătit de Constantinopol lui Attila, conform Păcii lui Anatolius (447 d.Hr.)?",
+          opts: ["700 de livre de aur", "2.100 de livre de aur, plus 6.000 de livre restanțe", "350 de livre de aur", "Niciun tribut — doar daruri protocolare"],
+          correct: 1,
+          fb: "Tributul a crescut constant: 350 de livre de aur în 431, 700 după Tratatul de la Margus (434) și 2.100 de livre — plus 6.000 restanțe — prin Pacea lui Anatolius (447), obligând Constantinopolul să mărească drastic taxele."
+        },
+        {
+          era: "Relația cu Roma de Apus",
+          q: "Cum s-a folosit generalul roman Flavius Aetius de huni, în anii 430, înainte de a le deveni adversar?",
+          opts: ["I-a angajat ca mercenari împotriva uzurpatorului Ioannes, a răsculaților bagauzi și a burgunzilor", "I-a atacat imediat ce a preluat comanda armatei romane", "A refuzat orice contact diplomatic sau militar cu ei", "I-a convertit la creștinism prin misionari romani"],
+          correct: 0,
+          fb: "Aetius, ostatic la huni în tinerețe, le cunoștea limba și tacticile — i-a folosit ca „as din mânecă”: mercenari împotriva uzurpatorului Ioannes, a bagauzilor din Armorica și a burgunzilor. Abia invazia Galiei (451) îi transformă în dușmani."
+        },
+        {
+          era: "Câmpiile Catalaunice · 451 d.Hr.",
+          q: "Care a fost rezultatul real al bătăliei de la Câmpiile Catalaunice?",
+          opts: ["O victorie zdrobitoare a lui Attila, urmată de cucerirea Galiei", "Un rezultat nedecis — coaliția romano-vizigotă oprește avansul lui Attila, dar nu îl distruge, iar el se retrage teafăr", "O înfrângere totală a hunilor, cu capturarea lui Attila", "O pace semnată imediat pe câmpul de luptă"],
+          correct: 1,
+          fb: "Aetius și regele vizigot Teodoric I (mort în luptă) opresc expansiunea hunică spre vest — dar Aetius nu îl urmărește pe Attila, care se retrage intact și invadează Italia în 452. Nu a fost o victorie zdrobitoare romană, ci o remiză tactică cu retragere hunică."
+        },
+        {
+          era: "Structura militară · moralul trupelor",
+          q: "Ce arată moartea regelui hunic Uptar, într-o campanie împotriva burgunzilor, despre structura armatei hunice?",
+          opts: ["Că hunii aveau o structură de comandă solidă, independentă de orice lider", "Că moartea liderului putea demoraliza complet o armată hunică — cei 10.000 de oameni ai lui Uptar au fost nimiciți de doar 3.000 de inamici, imediat după", "Că burgunzii erau aliați tradiționali, nu adversari, ai hunilor", "Că Attila l-a răzbunat personal pe Uptar la scurt timp"],
+          correct: 1,
+          fb: "Unitățile hunice de cavalerie erau construite pe legături de rudenie de sânge, cu liderul drept liant absolut — la moartea lui Uptar, cei 10.000 de soldați ai săi s-au demoralizat atât de tare încât au fost nimiciți de o armată de doar 3.000 de oameni."
+        }
+      ]
     }
   ];
 
@@ -2570,7 +2620,8 @@
     [430 / 800 * 100, 150 / 220 * 100],
     [120 / 800 * 100, 95 / 220 * 100],
     [430 / 800 * 100, 55 / 220 * 100],
-    [700 / 800 * 100, 115 / 220 * 100]
+    [700 / 800 * 100, 115 / 220 * 100],
+    [780 / 800 * 100, 100 / 220 * 100]
   ];
 
   function buildCampaignMap(){
@@ -3274,7 +3325,7 @@
       choices: [
         { letter: 'A', label: 'Pregătești o solie somptuoasă, cu mătăsuri fine și vase de aur pentru Attila și curtenii săi.', verdict: 'correct',
           quote: { text: 'Attila, deși trăia el însuși cu modestie, aștepta de la romani daruri pe măsura rangului lor imperial.', author: 'sinteză după relatarea lui Priscus', src: 'Fragmenta' },
-          explain: 'Corect. Ambasadele romane către curțile „barbare” respectau o etichetă strictă a darurilor — Priscus însuși descrie schimburile de daruri ca parte esențială a protocolului diplomatic hunic.',
+          explain: 'Corect. Ambasadele romane către curțile „barbare” respectau o etichetă strictă a darurilor — Priscus însuși descrie schimburile de daruri ca parte esențială a protocolului diplomatic hunic. Miza e uriașă: tributul anual către Attila urcase deja de la 350 de livre de aur (431 d.Hr.) la 700 (Tratatul de la Margus, 434) și apoi la 2.100 de livre, plus 6.000 restanțe (Pacea lui Anatolius, 447) — o livră romană cântărea cca. 328g.',
           effects: { incredere: 12, prestigiu: 8, tezaur: -60 }, item: 'Ladă cu daruri imperiale' },
         { letter: 'B', label: 'Trimiți o solie modestă, păstrând aurul pentru negocierea finală a tratatului.', verdict: 'partial',
           quote: { text: 'economia darurilor de deschidere, în schimbul unei rezerve mai mari la tratat', author: 'strategie diplomatică plauzibilă, neatestată direct', src: '' },
@@ -3383,8 +3434,8 @@
       ],
       choices: [
         { letter: 'A', label: 'Accepți integral condițiile lui Attila, pentru a asigura pacea imediată a Răsăritului.', verdict: 'correct',
-          quote: { text: 'romanii au fost nevoiți să predea dezertorii ceruți și să plătească tributul stabilit, pentru a evita o nouă invazie', author: 'sinteză după relatarea lui Priscus', src: 'Fragmenta' },
-          explain: 'Corect din perspectiva realpolitik-ului bizantin al anului 448: Teodosie al II-lea a acceptat exact aceste condiții, evitând un nou război pe care Imperiul de Răsărit nu și-l putea permite atunci.',
+          quote: { text: 'Theodosius a ajuns sclavul meu, obligat să-mi plătească solda!', author: 'Attila, redat de solul roman Constantiolus', src: 'sinteză după Priscus, Fragmenta' },
+          explain: 'Corect din perspectiva realpolitik-ului bizantin al anului 448: Teodosie al II-lea a acceptat exact aceste condiții (tributul anual de 2.100 de livre de aur, fixat prin Pacea lui Anatolius din 447), evitând un nou război pe care Imperiul de Răsărit nu și-l putea permite atunci. Pentru Attila, aurul însemna supunerea romanilor; pentru romani, era mai degrabă plata unui „general” subvenționat — o percepție care îl scotea din sărite pe Attila, dornic de titlu regal, nu de statut de mercenar.',
           effects: { incredere: 12, prestigiu: -4, tezaur: -150 }, item: 'Tratatul semnat cu Attila' },
         { letter: 'B', label: 'Negociezi o reducere parțială a tributului, asumându-ți riscul tensionării relațiilor.', verdict: 'partial',
           quote: { text: 'o negociere dură putea aduce economii — cu prețul unei relații mai fragile cu tabăra hunică', author: 'interpretare istorico-didactică', src: '' },
@@ -3864,7 +3915,8 @@
       hotspots: [
         { x: 9, y: 31, title: 'Vârfurile întărite cu os', desc: 'Capetele arcului (siyah) erau întărite cu plăcuțe de os sau corn, rigide, care măreau brusc tensiunea în ultima parte a tragerii — sursa vitezei mari a săgeții.' },
         { x: 49, y: 58, title: 'Mânerul asimetric', desc: 'Brațul inferior era adesea mai scurt decât cel superior, pentru a permite tragerea comodă de pe cal, fără ca arcul să lovească gâtul animalului.' },
-        { x: 61, y: 57, title: 'Legăturile din tendon', desc: 'Fâșiile de tendon animal răsucit, vizibile ca înfășurări la îmbinările arcului, întăreau structura compozită și îi ofereau elasticitatea necesară unei eliberări rapide, esențială pentru tragerea din șa, în plină mișcare.' }
+        { x: 61, y: 57, title: 'Legăturile din tendon', desc: 'Fâșiile de tendon animal răsucit, vizibile ca înfășurări la îmbinările arcului, întăreau structura compozită și îi ofereau elasticitatea necesară unei eliberări rapide, esențială pentru tragerea din șa, în plină mișcare.' },
+        { x: 20, y: 65, title: 'Arcuri placate cu aur — simbol de rang', desc: 'Nu toate arcurile compozite erau identice: exemplare descoperite la Jakuszowice (Polonia) și Bátaszék (Ungaria) au foiță de aur pe siyah, semn că arma nu era doar armă, ci și marcă de statut politic al purtătorului, în elita hunică și a popoarelor sub influența ei.' }
       ]
     },
     {
@@ -3915,6 +3967,22 @@
     {
       myth: 'Sosirea hunilor a însemnat o înlocuire totală a populației din Bazinul Carpatic.',
       truth: 'Multe eșantioane genetice din perioada hunică arată ascendență predominant locală/europeană. Datele sugerează o elită conducătoare relativ redusă numeric, care domina politic populații majoritar autohtone — nu o înlocuire demografică completă.'
+    },
+    {
+      myth: 'Hunii foloseau un singur tip de sabie, simplă și fără valoare simbolică.',
+      truth: 'Surse precum poemul medieval Waltharius atestă două tipuri de săbii hunice: ensis (sabie lungă, cu două tăișuri) și semispata (sabie scurtă, cu un singur tăiș). Ca și arcul compozit, sabia avea și valoare de obiect sacru/de rang, nu doar utilitară.'
+    },
+    {
+      myth: 'Sursele romane vorbesc doar despre războinici — femeile hunice nu apar în istorie.',
+      truth: 'Priscus din Panium o menționează explicit pe Kreka (Hereca), soția principală a lui Attila: avea propria ei curte, primea soli în nume propriu și administra proprietăți extinse — un statut diplomatic și economic ridicat pentru femeile din elita hunică.'
+    },
+    {
+      myth: 'Se cunoaște exact locul unde a fost înmormântat Attila.',
+      truth: 'Jordanes (Getica) povestește că Attila a fost așezat într-un sicriu triplu — aur, argint și fier — iar un râu a fost deviat temporar pentru ca mormântul să fie săpat chiar în albia lui. Sclavii care au făcut săpăturile ar fi fost uciși ca locul să rămână secret — motiv pentru care mormântul lui Attila nu a fost identificat până azi.'
+    },
+    {
+      myth: 'Attila s-a oprit înaintea Romei, în 452, exclusiv din respect pentru intervenția Papei Leon I.',
+      truth: 'Întâlnirea cu Leon I a contat, dar istoricii moderni subliniază și o cauză materială decisivă: o epidemie de ciumă/dizenterie și lipsa de provizii au decimat armata hunică în nordul Italiei — factori care, alături de diplomația papală, au grăbit retragerea lui Attila.'
     }
   ];
 
