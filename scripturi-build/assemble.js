@@ -143,6 +143,7 @@ const ABOUT_HTML = `
       <li>SVG pentru hărți, diagrame și hotspot-uri interactive</li>
       <li>Pipeline propriu de asamblare în Node.js: fiecare modul e scris separat (CSS/JS/HTML), CSS-ul e izolat automat sub o clasă proprie, iar totul e combinat într-un singur fișier</li>
     </ul>
+    <p><strong>Precizare:</strong> proiectul are un pas de build la <em>sursă</em> — scripturile Node.js care izolează CSS-ul și asamblează modulele. Livrabilul, în schimb, este un singur fișier HTML static, care se deschide direct în browser, fără server și fără instalare. Codul sursă, cu modulele separate și scripturile de asamblare, este public: <a href="https://github.com/cojocariuemilian73/atelierul-hunilor" target="_blank" rel="noopener">github.com/cojocariuemilian73/atelierul-hunilor</a>.</p>
 
     <h3>Despre imagini — ce e document și ce e ilustrație</h3>
     <ul>
@@ -161,9 +162,10 @@ const ABOUT_HTML = `
 
     <h3>Valoare educațională</h3>
     <p>Proiectul poate fi folosit la orele de istorie de gimnaziu/liceu ca material interactiv: jocurile de decizie (Campania Hunilor, Solia la Attila) funcționează ca fișe de lucru/teste de verificare a înțelegerii contextului istoric, iar Atlasul și Laboratorul susțin localizarea geografică și analiza de sursă istorică.</p>
+    <p><strong>Despre mecanica de mize.</strong> Solidii pariați înainte de fiecare întrebare nu recompensează viteza, ci <em>calibrarea încrederii</em>: elevul e pus să estimeze cât de sigur este pe propriul răspuns înainte de a-l afla pe cel corect. E un exercițiu de metacogniție, folosit și în evaluarea formativă sub numele de confidence-based marking. Limita de timp este opțională și poate fi oprită, iar explicația istorică apare integral după fiecare răspuns, indiferent de miză sau de rezultat.</p>
 
-    <h3>Echipă &amp; coordonare</h3>
-    <p class="placeholder">[Numele elevului/elevilor autori]</p>
+    <h3>Autor &amp; coordonare</h3>
+    <p class="placeholder">[Numele elevului autor]</p>
     <p class="placeholder">[Profesor îndrumător]</p>
     <p class="placeholder">[Unitatea de învățământ]</p>
   </div>
