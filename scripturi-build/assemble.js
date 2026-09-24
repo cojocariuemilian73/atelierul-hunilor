@@ -30,17 +30,17 @@ const NAV_CSS = `
   .site-nav{
     position: sticky; top: 0; z-index: 200;
     display: flex; gap: 2px; overflow-x: auto;
-    background: #1c150e; border-bottom: 1px solid rgba(236,223,199,0.18);
+    background: #121214; border-bottom: 1px solid rgba(230, 215, 195,0.18);
     padding: 0 12px;
   }
   .site-nav a{
     flex-shrink: 0;
     font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700;
     letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none;
-    color: #c2ab84; padding: 13px 14px; border-bottom: 2px solid transparent; white-space: nowrap;
+    color: #a89a85; padding: 13px 14px; border-bottom: 2px solid transparent; white-space: nowrap;
   }
-  .site-nav a:hover{ color: #f0e6cf; }
-  .site-nav a.current{ color: #e8c25f; border-bottom-color: #e8c25f; }
+  .site-nav a:hover{ color: #f0e6d6; }
+  .site-nav a.current{ color: #e5c158; border-bottom-color: #e5c158; }
   #mod-game, #mod-embassy, #mod-atlas, #mod-lab{ padding-block: 28px; }
 
   /* only the active page is shown — others are fully removed from flow/scroll */
@@ -50,19 +50,19 @@ const NAV_CSS = `
   .site-pager{
     position: sticky; bottom: 0; z-index: 150;
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    background: #14100a; border-top: 1px solid rgba(236,223,199,0.18);
+    background: #121214; border-top: 1px solid rgba(230, 215, 195,0.18);
     padding: 10px clamp(14px, 4vw, 28px);
   }
   .site-pager-btn{
     font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em;
-    background: #e8c25f; color: #1c150e; border: none; padding: 10px 18px; border-radius: 2px; cursor: pointer;
+    background: #e5c158; color: #121214; border: none; padding: 10px 18px; border-radius: 2px; cursor: pointer;
   }
-  .site-pager-btn:disabled{ background: rgba(236,223,199,0.18); color: #8a7860; cursor: default; }
-  .site-pager-count{ font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #8a7860; letter-spacing: 0.05em; white-space: nowrap; }
+  .site-pager-btn:disabled{ background: rgba(230, 215, 195,0.18); color: #a89a85; cursor: default; }
+  .site-pager-count{ font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #a89a85; letter-spacing: 0.05em; white-space: nowrap; }
 
   .site-final-footer{
     text-align: center; padding: 30px 16px 40px; font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem; color: #8a7860; background: #14100a; line-height: 1.7;
+    font-size: 0.72rem; color: #a89a85; background: #121214; line-height: 1.7;
   }
   .mod-chapter{
     display: flex; align-items: baseline; gap: 14px; margin: 0 0 4px;
@@ -71,12 +71,12 @@ const NAV_CSS = `
   .mod-chapter .n{
     font-family: 'Cormorant Garamond', serif; font-weight: 600;
     font-size: clamp(2.2rem, 6vw, 3rem); line-height: 1;
-    color: var(--imperial, var(--ember, var(--accent, #7a1c1c)));
+    color: var(--imperial, var(--ember, var(--accent, #8b0000)));
   }
   .mod-chapter .t{
     font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700;
     letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--gold, var(--accent-2, var(--gold-dim, #b89242)));
+    color: var(--gold, var(--accent-2, var(--gold-dim, #d4af37)));
   }
 
   /* ---------- ABOUT MODAL (Despre proiect / Fișă tehnică) ---------- */
@@ -84,40 +84,40 @@ const NAV_CSS = `
     margin-left: auto; flex-shrink: 0;
     font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700;
     letter-spacing: 0.04em; text-transform: uppercase;
-    color: #1c150e; background: #e8c25f; border: none; cursor: pointer;
+    color: #121214; background: #e5c158; border: none; cursor: pointer;
     padding: 8px 14px; align-self: center; margin-right: 4px; border-radius: 2px;
   }
-  .about-trigger:hover{ background: #f0d27a; }
+  .about-trigger:hover{ background: #edcb77; }
   .about-overlay{
     display: none; position: fixed; inset: 0; z-index: 500;
     background: rgba(10,7,4,0.78); padding: 24px; overflow-y: auto;
   }
   .about-overlay.active{ display: flex; align-items: flex-start; justify-content: center; }
   .about-modal{
-    background: #1c150e; color: #e8dcc4; max-width: 720px; width: 100%;
-    margin-top: clamp(16px, 4vh, 60px); border: 1px solid rgba(236,223,199,0.22);
+    background: #121214; color: #e6d7c3; max-width: 720px; width: 100%;
+    margin-top: clamp(16px, 4vh, 60px); border: 1px solid rgba(230, 215, 195,0.22);
     border-radius: 4px; padding: clamp(20px, 4vw, 40px);
     font-family: 'Source Serif 4', serif; line-height: 1.65;
   }
   .about-modal h2{
-    font-family: 'Cinzel', serif; font-size: 1.4rem; color: #e8c25f;
+    font-family: 'Cinzel', serif; font-size: 1.4rem; color: #e5c158;
     margin: 0 0 18px; letter-spacing: 0.02em;
   }
   .about-modal h3{
     font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; text-transform: uppercase;
-    letter-spacing: 0.08em; color: #b89242; margin: 26px 0 10px;
+    letter-spacing: 0.08em; color: #d4af37; margin: 26px 0 10px;
   }
   .about-modal h3:first-of-type{ margin-top: 0; }
-  .about-modal p{ margin: 0 0 10px; font-size: 0.96rem; color: #d9cbae; }
-  .about-modal ul{ margin: 0 0 10px; padding-left: 20px; font-size: 0.96rem; color: #d9cbae; }
+  .about-modal p{ margin: 0 0 10px; font-size: 0.96rem; color: #e6d7c3; }
+  .about-modal ul{ margin: 0 0 10px; padding-left: 20px; font-size: 0.96rem; color: #e6d7c3; }
   .about-modal li{ margin-bottom: 6px; }
-  .about-modal .placeholder{ color: #8a7860; font-style: italic; }
+  .about-modal .placeholder{ color: #a89a85; font-style: italic; }
   .about-close{
     position: absolute; top: 14px; right: 16px;
-    background: none; border: none; color: #c2ab84; font-size: 1.3rem; cursor: pointer;
+    background: none; border: none; color: #a89a85; font-size: 1.3rem; cursor: pointer;
     line-height: 1; padding: 4px 8px;
   }
-  .about-close:hover{ color: #f0e6cf; }
+  .about-close:hover{ color: #f0e6d6; }
   .about-modal{ position: relative; }
 `;
 
@@ -388,7 +388,7 @@ function dedupeInlineImages(body){
 const deduped = dedupeInlineImages(combinedBody);
 
 const finalHtml = `<!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
