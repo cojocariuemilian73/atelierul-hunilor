@@ -211,6 +211,17 @@
   h1.title em{ font-style: italic; font-weight: 500; color: #e8c25f; }
   .dek{ font-size: 1.18rem; line-height: 1.6; color: #d9cbae; max-width: 54ch; margin: 0; font-family: 'Source Serif 4', serif; }
 
+  .hero-cta{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .hero-btn{
+    font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none;
+    color: #f4ead4; border: 1px solid rgba(236,223,199,0.4);
+    padding: 11px 18px; border-radius: 2px; transition: background 0.15s ease, color 0.15s ease;
+  }
+  .hero-btn:hover{ background: rgba(236,223,199,0.12); }
+  .hero-btn.primary{ background: #e8c25f; color: #1c150e; border-color: #e8c25f; }
+  .hero-btn.primary:hover{ background: #f0d27a; }
+  .hero-btn:focus-visible{ outline: 3px solid #e8c25f; outline-offset: 3px; }
   .byline{
     display: flex; flex-wrap: wrap; gap: 0;
     font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: #b3a17c;
@@ -1153,10 +1164,15 @@
       <p class="kicker">Concursul Național „Istorie și societate în dimensiune virtuală”</p>
       <h1 class="title">Invazia din <em>Stepe</em>: Hunii și prăbușirea ordinii antice</h1>
       <p class="dek">Din stepele de dincolo de Volga, un popor de călăreți a rupt echilibrul lumii antice în mai puțin de un secol — împingând vizigoți, ostrogoți și vandali în inima Imperiului Roman și grăbind sfârșitul Antichității.</p>
+      <div class="hero-cta">
+        <a class="hero-btn primary" href="#mod-game">Începe Campania Hunilor</a>
+        <a class="hero-btn" href="#mod-embassy">Solia la Attila</a>
+        <a class="hero-btn" href="#mod-lab">Muzeul virtual</a>
+      </div>
       <div class="byline">
         <span><b>Secțiune</b> — Secțiunea I, Istorie</span>
-        <span><b>Interval</b> — 375–454 d.Hr.</span>
-        <span><b>Surse</b> — 16 autori antici și moderni</span>
+        <span><b>Interval</b> — c. 370–454 d.Hr.</span>
+        <span><b>Surse</b> — 17 note, izvoare antice și cercetare modernă</span>
       </div>
     </div>
   </section>
@@ -1224,16 +1240,19 @@
       <p class="sec-sub">Trage cursorul sau apasă pe un an pentru a vedea evenimentul</p>
 
       <div class="cron-wrap">
-        <input type="range" min="0" max="3" step="1" value="0" class="cron-slider" id="cron-slider" list="cron-marks" aria-label="Selectează un moment cheie din cronologia hunilor">
+        <input type="range" min="0" max="6" step="1" value="0" class="cron-slider" id="cron-slider" list="cron-marks" aria-label="Selectează un moment cheie din cronologia hunilor">
         <div class="cron-ticks" id="cron-ticks">
-          <span data-i="0">375</span>
-          <span data-i="1">441–447</span>
-          <span data-i="2">451</span>
-          <span data-i="3">453</span>
+          <span data-i="0">370</span>
+          <span data-i="1">375</span>
+          <span data-i="2">434</span>
+          <span data-i="3">441</span>
+          <span data-i="4">447</span>
+          <span data-i="5">451</span>
+          <span data-i="6">454</span>
         </div>
         <div class="cron-info" id="cron-info">
-          <p class="ci-year" id="ci-year">375 d.Hr.</p>
-          <h4 id="ci-title">Trecerea Volgăi</h4>
+          <p class="ci-year" id="ci-year">c. 370 d.Hr.</p>
+          <h4 id="ci-title">Supunerea alanilor</h4>
           <p id="ci-desc">Hunii traversează Volga și îi înfrâng pe alani, apoi pe ostrogoți — al căror rege, Ermanaric, își ia viața în fața presiunii hunice. Vizigoții, îngroziți, cer azil în Imperiul Roman și trec Dunărea în 376.</p>
         </div>
         <p class="section-sources">Surse pentru evenimentele din cronologie: moartea lui Ermanaric<sup class="fn" data-n="12">12</sup>, trecerea Dunării de către vizigoți<sup class="fn" data-n="13">13</sup>, Câmpiile Catalaunice și solia la curtea lui Attila<sup class="fn" data-n="14">14</sup>.</p>
@@ -1318,7 +1337,8 @@
       <h3 class="sub-title">Ecoul în spațiul carpato-danubiano-pontic</h3>
       <p>Pentru teritoriul de azi al României, secolul al V-lea nu e o notă de subsol a istoriei hunice, ci chiar scena ei. Dunărea era granița Imperiului, iar Dacia Ripensis și Moesia se aflau exact pe direcția campaniilor hunice: în 408, hunii aliați cu scirii lui Uldin cuceresc <em>Castra Martis</em>, iar campaniile din 441–447 lovesc orașele dunărene, de la Viminacium la Naissus.</p>
       <p>Urmele materiale sunt la fel de concrete. Monede romane de aur ajunse dincolo de graniță au fost descoperite la <b>Dolhești</b> (Moldova) și la <b>Șimleul Silvaniei</b> (Transilvania), iar cazane hunice de bronz au apărut pe teritoriul României, între altele în Oltenia — aceleași obiecte de cult și prestigiu ca în Bazinul Carpatic. Cea mai celebră piesă a epocii, <b>tezaurul de la Pietroasa</b> („Cloșca cu puii de aur”), este un tezaur gotic, nu hunic: tocmai de aceea e relevant aici, fiindcă a fost probabil îngropat de o elită germanică în fuga sau sub presiunea evenimentelor declanșate de sosirea hunilor.</p>
-      <p class="source-caution"><b>O precizare necesară.</b> Prezența unor obiecte „hunice” într-un mormânt nu dovedește că cel îngropat era hun. În secolul al V-lea, stilul policrom cu granate, cazanele de bronz și chiar deformarea craniană circulau între popoare ca modă a elitelor. Ele arată apartenența la o lume politică dominată de huni, nu neapărat originea etnică a purtătorului.</p>
+      <p>Cea mai grăitoare piesă descoperită pe teritoriul României este însă <b>diadema de la Gherăseni</b> (județul Buzău), găsită în 1965 la Grindul Cremenea, într-un mormânt de înhumație din prima jumătate a secolului al V-lea. E lucrată pe un miez de bronz acoperit cu foiță de aur și împodobită cu almandine montate <em>à cabochon</em>, în stilul policrom al epocii. Analiza antropologică a arătat că scheletul aparținea unei femei cu <b>craniul deformat artificial</b> — aceeași practică de elită despre care vorbesc izvoarele. Piesa face parte din patrimoniul Muzeului Județean Buzău și se înscrie într-o serie de circa 25 de diademe asemănătoare, descoperite pe un areal imens, din Kazahstanul de azi până în Europa Centrală.</p>
+      <p class="source-caution"><b>O precizare necesară.</b> Prezența unor obiecte „hunice” într-un mormânt nu dovedește că cel îngropat era hun. În secolul al V-lea, stilul policrom cu granate, cazanele de bronz și chiar deformarea craniană circulau între popoare ca modă a elitelor. Ele arată apartenența la o lume politică dominată de huni, nu neapărat originea etnică a purtătorului — iar „prințesa” de la Gherăseni e un exemplu bun tocmai fiindcă originea ei etnică rămâne deschisă.</p>
     </section>
 
   </article>
@@ -1595,13 +1615,15 @@
       <div class="frame mini-map">
         <svg viewBox="0 0 500 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <line x1="30" y1="45" x2="470" y2="45" stroke="var(--border-nomad)" stroke-width="2" opacity="0.4"/>
-          <g class="mm-stop" id="mm-0"><circle cx="40" cy="45" r="8"/><text x="40" y="70" text-anchor="middle">Constant.</text></g>
-          <g class="mm-stop" id="mm-1"><circle cx="140" cy="45" r="8"/><text x="140" y="70" text-anchor="middle">Naissus</text></g>
-          <g class="mm-stop" id="mm-2"><circle cx="240" cy="45" r="8"/><text x="240" y="70" text-anchor="middle">Tabăra Tisei</text></g>
-          <g class="mm-stop" id="mm-3"><circle cx="310" cy="45" r="8"/><text x="310" y="70" text-anchor="middle">Complot</text></g>
-          <g class="mm-stop" id="mm-4"><circle cx="370" cy="45" r="8"/><text x="370" y="70" text-anchor="middle">Ospăț</text></g>
-          <g class="mm-stop" id="mm-5"><circle cx="425" cy="45" r="8"/><text x="425" y="70" text-anchor="middle">Tratat</text></g>
-          <g class="mm-stop" id="mm-6"><circle cx="470" cy="45" r="8"/><text x="465" y="26" text-anchor="middle">Catalaunice</text></g>
+          <g class="mm-stop" id="mm-0"><circle cx="32" cy="45" r="8"/><text x="32" y="70" text-anchor="middle">Constant.</text></g>
+          <g class="mm-stop" id="mm-1"><circle cx="110" cy="45" r="8"/><text x="110" y="70" text-anchor="middle">Naissus</text></g>
+          <g class="mm-stop" id="mm-2"><circle cx="188" cy="45" r="8"/><text x="188" y="70" text-anchor="middle">Curtea</text></g>
+          <g class="mm-stop" id="mm-3"><circle cx="250" cy="45" r="8"/><text x="250" y="70" text-anchor="middle">Complot</text></g>
+          <g class="mm-stop" id="mm-4"><circle cx="305" cy="45" r="8"/><text x="305" y="70" text-anchor="middle">Ospăț</text></g>
+          <g class="mm-stop" id="mm-5"><circle cx="358" cy="45" r="8"/><text x="358" y="70" text-anchor="middle">Titlul</text></g>
+          <g class="mm-stop" id="mm-6"><circle cx="410" cy="45" r="8"/><text x="410" y="70" text-anchor="middle">Răscump.</text></g>
+          <g class="mm-stop" id="mm-7"><circle cx="455" cy="45" r="8"/><text x="455" y="70" text-anchor="middle">Tratat</text></g>
+          <g class="mm-stop" id="mm-8"><circle cx="495" cy="45" r="8"/><text x="490" y="26" text-anchor="middle">După solie</text></g>
         </svg>
       </div>
       <div class="frame inventory">
@@ -1972,10 +1994,13 @@
   /** @typedef {{year:string, title:string, desc:string}} TimelineEvent */
   /** @type {TimelineEvent[]} */
   var CRON = [
-    { year: '375–376 d.Hr.', title: 'Trecerea Volgăi', desc: 'Hunii traversează Volga și îi înfrâng pe alani, apoi pe ostrogoți — al căror rege, Ermanaric, își ia viața în fața presiunii hunice, după versiunea lui Ammianus (Iordanes dă alta). Vizigoții, îngroziți, cer azil în Imperiul Roman și trec Dunărea în 376.' },
-    { year: '441–447 d.Hr.', title: 'Campaniile lui Attila în Răsărit', desc: 'Attila devastează Balcanii și Tracia, ajungând până la zidurile Constantinopolului. Imperiul Roman de Răsărit e forțat să plătească un tribut anual uriaș.' },
+    { year: 'c. 370 d.Hr.', title: 'Supunerea alanilor', desc: 'Hunii traversează Volga și îi înfrâng pe alani, între Marea Azov și Caucaz. Alanii supuși sunt integrați în expedițiile hunice ulterioare — primul val al efectului care va împinge, în lanț, popoare întregi spre granițele Romei.' },
+    { year: '375–376 d.Hr.', title: 'Ostrogoții și trecerea Dunării', desc: 'Presiunea hunică îi zdrobește pe ostrogoți — al căror rege, Ermanaric, își ia viața, după versiunea lui Ammianus (Iordanes dă alta). Vizigoții, îngroziți, cer azil în Imperiul Roman și trec Dunărea în 376.' },
+    { year: '434 d.Hr.', title: 'Tratatul de la Margus', desc: 'Sub Attila și Bleda, tributul anual plătit de Constantinopol se dublează: de la 350 de livre de aur, cât era în 431, la 700. Aurul devine principalul instrument prin care Imperiul de Răsărit își cumpără liniștea la Dunăre.' },
+    { year: '441–447 d.Hr.', title: 'Campaniile lui Attila în Răsărit', desc: 'Attila devastează Balcanii și Tracia, cucerind orașe dunărene precum Viminacium și Naissus și ajungând până la zidurile Constantinopolului.' },
+    { year: '447 d.Hr.', title: 'Pacea lui Anatolius', desc: 'Tributul anual urcă la 2.100 de livre de aur, plus o restanță de 6.000 de livre. Pentru a plăti, Teodosie al II-lea e nevoit să mărească drastic impozitele — o povară resimțită în tot Imperiul de Răsărit.' },
     { year: '451 d.Hr.', title: 'Bătălia Câmpiilor Catalaunice', desc: 'În Galia, o coaliție condusă de generalul Aetius și de regele vizigot Teodoric I — incluzând și franci, burgunzi și alani — îl oprește pe Attila. Rezultatul e mai degrabă nedecis: Attila se retrage, dar armata sa nu e distrusă.' },
-    { year: '453 d.Hr.', title: 'Moartea lui Attila', desc: 'Attila moare în noaptea nunții cu Ildico. Fiii săi nu reușesc să mențină coeziunea imperiului, care se destramă rapid după bătălia de la Nedao (454).' }
+    { year: '453–454 d.Hr.', title: 'Moartea lui Attila și Nedao', desc: 'Attila moare în noaptea nunții cu Ildico. Un an mai târziu, la Nedao, popoarele supuse se răscoală: fiul său Ellac luptă până la moarte, iar hegemonia hunică în Europa se destramă la fel de brusc cum apăruse.' }
   ];
 
   function initTimelineSlider(){
@@ -3138,7 +3163,7 @@
   'use strict';
 
   // ============================================================
-  // DATE — cele 7 etape ale soliei (conținut istoric real)
+  // DATE — cele 9 etape ale soliei (conținut istoric real)
   // ============================================================
 
   /**
@@ -3279,7 +3304,51 @@
     },
     {
       year: '449 d.Hr.',
-      title: 'Etapa 6 — Negocierea tratatului de pace',
+      title: 'Etapa 6 — Cum i te adresezi lui Attila',
+      text: [
+        'În timpul tratativelor apare o problemă de protocol care pare măruntă, dar nu este. Diplomații occidentali îl trataseră pe Attila ca pe un general plătit de Imperiu — negociatorul apusean Constantiolus îl considera un fel de comandant în solda Romei, care își primea leafa ca orice general. Attila cerea însă să fie recunoscut ca rege suveran.',
+        'Ce titlu folosești în fața lui?'
+      ],
+      choices: [
+        { letter: 'A', label: 'Îl numești rege și te adresezi soliei ca între doi suverani, deși Constantinopolul preferă formula de „general”.', verdict: 'correct',
+          quote: { text: 'Theodosius a ajuns sclavul meu, obligat să-mi plătească solda!', author: 'Attila, redat de solul roman Constantiolus', src: 'sinteză după Priscus, Fragmenta' },
+          explain: 'Corect. Pentru Attila, aurul primit nu era soldă, ci dovada supunerii romanilor — de aceea îl înfuria formula de „general plătit”. Recunoașterea rangului regal nu costa nimic material și dezamorsa exact punctul cel mai sensibil al relației.',
+          effects: { incredere: 10, prestigiu: 4, tezaur: 0 }, item: null },
+        { letter: 'B', label: 'Eviți orice titlu și te adresezi impersonal, ca să nu angajezi Imperiul.', verdict: 'partial',
+          quote: null,
+          explain: 'Parțial corect. Ambiguitatea e o unealtă diplomatică reală, dar într-o curte unde rangul se citea în fiecare gest, ocolirea titlului putea fi interpretată ca refuz tacit de a-l recunoaște.',
+          effects: { incredere: 3, prestigiu: 2, tezaur: 0 }, item: null },
+        { letter: 'C', label: 'Insiști pe formula oficială occidentală și îl tratezi ca pe un comandant în serviciul Imperiului.', verdict: 'wrong',
+          quote: null,
+          explain: 'Greșit. Exact această încadrare îl scotea din sărite pe Attila. Cele două părți citeau aurul complet diferit: romanii ca patronaj asupra unui general subvenționat, Attila ca tribut plătit de un supus.',
+          effects: { incredere: -16, prestigiu: -6, tezaur: 0 }, item: null }
+      ]
+    },
+    {
+      year: '449 d.Hr.',
+      title: 'Etapa 7 — Răscumpărarea prizonierilor',
+      text: [
+        'Onegesius, unul dintre cei mai de încredere oameni ai lui Attila, îți cere 500 de solidi de aur pentru eliberarea soției și copiilor unui singur cetățean roman capturat în campaniile dunărene. Suma e enormă pentru o familie, iar solia are fonduri limitate.',
+        'Ce faci?'
+      ],
+      choices: [
+        { letter: 'A', label: 'Plătești suma cerută, tratând răscumpărarea ca parte firească a negocierii.', verdict: 'correct',
+          quote: null,
+          explain: 'Corect. Priscus arată că hunii se îmbogățeau nu doar din tribut, ci și din răscumpărări, iar 500 de solidi pentru o familie e chiar ordinul de mărime atestat. Refuzul ar fi fost citit ca dispreț față de propriii captivi romani.',
+          effects: { incredere: 8, prestigiu: 6, tezaur: -90 }, item: 'Act de răscumpărare' },
+        { letter: 'B', label: 'Negociezi o sumă mai mică, invocând sărăcirea visteriei imperiale.', verdict: 'partial',
+          quote: null,
+          explain: 'Parțial corect. Târguiala era practicată, dar invocarea sărăciei Imperiului în fața unei curți care tocmai obținuse 2.100 de livre de aur pe an sună neconvingător și slăbește poziția soliei.',
+          effects: { incredere: 2, prestigiu: 0, tezaur: -50 }, item: null },
+        { letter: 'C', label: 'Refuzi plata, pe motiv că Imperiul nu răscumpără captivi de la barbari.', verdict: 'wrong',
+          quote: null,
+          explain: 'Greșit — și fals istoric. Răscumpărarea prizonierilor era o practică romană curentă, iar refuzul ar fi lăsat familii de cetățeni romani în captivitate, cu un cost de imagine mult mai mare decât cei 500 de solidi.',
+          effects: { incredere: -12, prestigiu: -14, tezaur: 0 }, item: null }
+      ]
+    },
+    {
+      year: '449 d.Hr.',
+      title: 'Etapa 8 — Negocierea tratatului de pace',
       text: [
         'Attila își prezintă condițiile finale: predarea dezertorilor huni refugiați la romani și un tribut anual sporit. De răspunsul tău depinde dacă solia se încheie cu un tratat sau cu un nou război.',
         'Ce recomanzi lui Maximin?'
@@ -3301,7 +3370,7 @@
     },
     {
       year: '450–451 d.Hr.',
-      title: 'Etapa 7 — Ce urmează după solie',
+      title: 'Etapa 9 — Ce urmează după solie',
       text: [
         'Solia s-a încheiat. Anul următor, Teodosie al II-lea moare, iar noul împărat, Marcian, trebuie să decidă politica față de Attila. Ești chemat să sfătuiești curtea imperială.',
         'Ce recomanzi pentru Răsărit?'
@@ -3872,7 +3941,7 @@
     },
     {
       myth: 'Craniile deformate artificial găsite în morminte din epocă dovedesc, prin ele însele, apartenența etnică hunică.',
-      truth: 'Deformarea craniană intenționată (prin bandaje aplicate în copilărie) era practicată de mai multe populații ale stepei și Europei Centrale din acea vreme, inclusiv de unii germanici — e un marker cultural, transmis și împrumutat, nu un indicator etnic exclusiv.'
+      truth: 'Deformarea craniană intenționată (prin bandaje aplicate în copilărie) era practicată de mai multe populații ale stepei și Europei Centrale din acea vreme, inclusiv de unii germanici — e un marker cultural, transmis și împrumutat, nu un indicator etnic exclusiv. Un exemplu chiar din România: femeia înmormântată cu diadema de la Gherăseni (Buzău, sec. V) avea craniul puternic deformat, dar originea ei etnică rămâne deschisă.'
     },
     {
       myth: 'Legătura dintre huni și Xiongnu din China antică e doar o coincidență de nume, fără nicio bază reală.',
