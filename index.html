@@ -459,8 +459,6 @@
     --z3-bg: #201730;
     --z4: #4fb07a;
     --z4-bg: #12271b;
-    --z5: #c94f4f;
-    --z5-bg: #2a1414;
   }.m-game *{ box-sizing: border-box; }.m-game{
     margin: 0;
     background:
@@ -1383,7 +1381,7 @@
     <div>
       <p class="kicker">Componenta interactivă</p>
       <h3>Testează aceste fapte în joc</h3>
-      <p>Aceleași surse și evenimente, sub forma unei campanii interactive cu hartă de cucerire, mize și insigne pe cinci tărâmuri istorice.</p>
+      <p>Aceleași surse și evenimente, sub forma unei campanii interactive cu hartă de cucerire, mize și insigne pe patru tărâmuri istorice.</p>
     </div>
     <a class="cta-btn" href="#mod-game">Deschide Campania Hunilor →</a>
   </div>
@@ -1453,7 +1451,7 @@
 
   <div class="panel start-panel" id="start-panel">
     <div class="stats-row">
-      <div class="stat"><b>5</b><span>Campanii</span></div>
+      <div class="stat"><b>4</b><span>Campanii</span></div>
       <div class="stat"><b id="qcount">—</b><span>Întrebări</span></div>
       <div class="stat"><b>20</b><span>Solidi de pornire</span></div>
     </div>
@@ -1472,8 +1470,8 @@
         <text x="505" y="187" text-anchor="middle" font-size="9" fill="var(--ink-dim2)" font-family="'JetBrains Mono', monospace">Azov</text>
         <path d="M36,114 L54,100 L72,114 L90,100 L108,114" stroke="var(--ink-dim2)" stroke-width="2" fill="none" opacity="0.55" stroke-linecap="round" stroke-linejoin="round"/>
         <text x="72" y="130" text-anchor="middle" font-size="9" fill="var(--ink-dim2)" font-family="'JetBrains Mono', monospace">Marele Zid</text>
-        <path id="route-base" d="M430,150 Q275,80 120,95 Q275,25 430,55 Q565,35 700,115 Q745,155 780,100" fill="none" stroke="var(--line-bright)" stroke-width="2" stroke-dasharray="1 8" stroke-linecap="round"/>
-        <path id="route-progress" d="M430,150 Q275,80 120,95 Q275,25 430,55 Q565,35 700,115 Q745,155 780,100" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round"/>
+        <path id="route-base" d="M430,150 Q300,100 430,55 Q565,35 700,115 Q745,155 780,100" fill="none" stroke="var(--line-bright)" stroke-width="2" stroke-dasharray="1 8" stroke-linecap="round"/>
+        <path id="route-progress" d="M430,150 Q300,100 430,55 Q565,35 700,115 Q745,155 780,100" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round"/>
       </svg>
       <div class="cmap-rider" id="cmap-rider">●</div>
       <div class="cmap-stops" id="cmap-stops"></div>
@@ -2202,65 +2200,10 @@
     },
     {
       zone: "z2",
-      short: "China",
-      kicker: "Campania II · China antică",
-      title: "Furtuna din răsărit",
-      icon: "II",
-      badgeName: "Păzitorul Zidului",
-      mechanic: "stone",
-      mechIcon: "PIATRĂ",
-      mechLabel: "Lovește cu catapulta turnul cu răspunsul corect",
-      timelineQ: {
-        q: "În ce an s-au despărțit Xiongnu în ramura nordică și cea sudică?",
-        min: 0, max: 100, correct: 48, tolerance: 10, unit: "d.Hr.",
-        fb: "Ruptura definitivă a avut loc în anul 48 d.Hr., după ce Xiongnu se alăturaseră deja sistemului chinez de tribut în 52 î.Hr."
-      },
-      lore: "Cu mult înainte ca hunii să tulbure Europa, un alt popor de călăreți — Xiongnu — amenința un alt imperiu. Împotriva lor s-a ridicat Marele Zid, s-au plătit tributuri în mătase și s-au purtat războaie de secole, până când confederația s-a rupt în două, iar o ramură a dispărut fără urmă din cronici.",
-      meta: "5 întrebări · cronici chineze despre Xiongnu",
-      questions: [
-        {
-          era: "China antică · sec. III î.Hr.",
-          q: "Cine a unificat vechile ziduri de graniță chineze într-un singur Mare Zid, ca apărare împotriva Xiongnu?",
-          opts: ["Wudi", "Maodun", "Qin Shi Huangdi", "Confucius"],
-          correct: 2,
-          fb: "Qin Shi Huangdi (221–210 î.Hr.), unificatorul imperiului chinez, a dispus unirea fortificațiilor existente într-un „mare zid” ca răspuns la presiunea Xiongnu."
-        },
-        {
-          era: "China antică · dinastia Han",
-          q: "Cine a organizat, la începutul dinastiei Han, o confederație tribală Xiongnu suficient de puternică încât să impună tribut Chinei?",
-          opts: ["Maodun (Modu Chanyu)", "Touman, tatăl său", "Împăratul Wudi", "Împăratul Gaozu"],
-          correct: 0,
-          fb: "Regele Maodun (m. 174 î.Hr.) a construit o confederație Xiongnu puternică, forțând China să plătească tribut — în special mătase."
-        },
-        {
-          era: "China antică · confruntări majore",
-          q: "Sub domnia cărui împărat chinez au fost, în sfârșit, învinși Xiongnu, cu costuri umane uriașe?",
-          opts: ["Wudi (141–87 î.Hr.)", "Qin Shi Huangdi", "Maodun", "Gaozu"],
-          correct: 0,
-          fb: "Abia sub Wudi (141–87 î.Hr.) China a reușit înfrângeri decisive asupra Xiongnu, după decenii de tribut și presiune constantă."
-        },
-        {
-          era: "China antică · fragmentare",
-          q: "În ce an s-au despărțit Xiongnu în ramura nordică și cea sudică (aliată cu China)?",
-          opts: ["89 d.Hr.", "311 d.Hr.", "48 d.Hr.", "174 î.Hr."],
-          correct: 2,
-          fb: "După ce s-au alăturat sistemului chinez de tribut în 52 î.Hr., Xiongnu s-au scindat definitiv în 48 d.Hr. în două ramuri rivale."
-        },
-        {
-          era: "China antică · destinul nordicilor",
-          q: "Ce s-a întâmplat cu Xiongnu nordici după înfrângerea lor de către chinezi în 89 d.Hr.?",
-          opts: ["Au fost integrați ca federați în nordul Chinei", "S-au retras spre Manciuria, sub protecția xianbei", "Au dispărut treptat din sursele chineze în secolul II", "Au fondat un stat propriu în bazinul Tarim"],
-          correct: 2,
-          fb: "Xiongnu nordici dispar treptat din cronicile chineze pe parcursul secolului II — traseul lor ulterior spre vest rămâne nedovedit arheologic."
-        }
-      ]
-    },
-    {
-      zone: "z3",
       short: "Mister",
-      kicker: "Campania III · Istoriografie",
+      kicker: "Campania II · Istoriografie",
       title: "Firul disputat",
-      icon: "III",
+      icon: "II",
       badgeName: "Analistul Surselor",
       mechanic: "lens",
       mechIcon: "LUPĂ",
@@ -2297,11 +2240,11 @@
       ]
     },
     {
-      zone: "z4",
+      zone: "z3",
       short: "Europa",
-      kicker: "Campania IV · Marea Migrație",
+      kicker: "Campania III · Marea Migrație",
       title: "Spre Europa",
-      icon: "IV",
+      icon: "III",
       badgeName: "Strategul Migrației",
       mechanic: "charge",
       mechIcon: "ȘARJĂ",
@@ -2338,11 +2281,11 @@
       ]
     },
     {
-      zone: "z5",
+      zone: "z4",
       short: "Apogeu",
-      kicker: "Campania V · Attila și Aetius",
+      kicker: "Campania IV · Attila și Aetius",
       title: "Apogeul și declinul",
-      icon: "V",
+      icon: "IV",
       badgeName: "Judecătorul Bătăliilor",
       mechanic: "charge",
       mechIcon: "ȘARJĂ",
@@ -2555,7 +2498,6 @@
   // Waypoints as [left%, top%] within the 800x220 viewBox, matching the route path's M/Q endpoints.
   var WAYPOINTS_PCT = [
     [430 / 800 * 100, 150 / 220 * 100],
-    [120 / 800 * 100, 95 / 220 * 100],
     [430 / 800 * 100, 55 / 220 * 100],
     [700 / 800 * 100, 115 / 220 * 100],
     [780 / 800 * 100, 100 / 220 * 100]
