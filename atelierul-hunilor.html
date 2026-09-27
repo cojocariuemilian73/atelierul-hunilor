@@ -329,32 +329,98 @@
   }
 
   /* ---------- CRONOLOGIE: SLIDER INTERACTIV ---------- */
-  .cron-wrap{ margin: 28px 0 10px; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); padding: 26px 0 22px; }
-  .cron-slider{
-    -webkit-appearance: none; appearance: none;
-    width: 100%; height: 2px; border-radius: 0;
-    background: linear-gradient(90deg, var(--accent-2) 0%, var(--accent-2) var(--fill, 0%), var(--line-strong) var(--fill, 0%), var(--line-strong) 100%);
-    outline: none; margin: 0 0 14px; touch-action: none;
+  .cron-wrap{ margin: 28px 0 10px; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); padding: 22px 0 22px; }
+  /* ---------- Cronologie: pistă proprie, noduri aliniate exact ---------- */
+  .cron-track{
+    position: relative; height: 64px; margin: 6px 12px 4px;
+    cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none;
   }
-  .cron-slider::-webkit-slider-thumb{
-    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 1px; transform: rotate(45deg);
-    background: var(--accent); border: none; cursor: pointer;
+  .cron-rail{
+    position: absolute; left: 0; right: 0; top: 18px; height: 3px; border-radius: 3px;
+    background: var(--line-strong); overflow: hidden;
   }
-  .cron-slider::-moz-range-thumb{
-    width: 16px; height: 16px; border-radius: 1px; transform: rotate(45deg); background: var(--accent); border: none; cursor: pointer;
+  .cron-fill{
+    position: absolute; inset: 0 auto 0 0; width: 0%;
+    background: linear-gradient(90deg, var(--accent-2) 0%, #e5c158 100%);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.55);
+    transition: width 0.55s cubic-bezier(.22,.8,.25,1);
   }
-  .cron-ticks{ display: flex; justify-content: space-between; margin: 0 0 22px; }
-  .cron-ticks span{
-    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--ink-dim); text-align: center; flex: 1;
-    cursor: pointer; padding: 8px 2px 0; border-top: 1px solid var(--line);
+  .cron-nodes{ position: absolute; inset: 0; }
+  .cron-node{
+    position: absolute; left: var(--x); top: 0; transform: translateX(-50%);
+    width: 44px; height: 64px; padding: 0; border: none; background: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; color: var(--ink-dim);
   }
-  .cron-ticks span:first-child{ text-align: left; }
-  .cron-ticks span:last-child{ text-align: right; }
-  .cron-ticks span.active{ color: var(--accent); font-weight: 700; border-top-color: var(--accent); }
-  .cron-info{ padding-left: 16px; border-left: 1px solid var(--accent); }
+  .cron-dot{
+    margin-top: 13px; width: 13px; height: 13px; border-radius: 50%;
+    background: var(--paper); border: 2px solid var(--line-strong);
+    transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .cron-label{
+    margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.02em; transition: color 0.3s ease, transform 0.3s ease;
+  }
+  .cron-node:hover .cron-dot{ border-color: var(--accent-2); transform: scale(1.2); }
+  .cron-node:hover .cron-label{ color: var(--ink); }
+  .cron-node:focus-visible{ outline: none; }
+  .cron-node:focus-visible .cron-dot{ box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--accent-2); }
+  .cron-node.is-past .cron-dot{ background: var(--accent-2); border-color: var(--accent-2); }
+  .cron-node.is-current .cron-label{ color: var(--accent-2); font-weight: 700; transform: translateY(2px) scale(1.12); }
+
+  .cron-handle{
+    position: absolute; top: 11px; left: 0; width: 17px; height: 17px; margin-left: -8.5px;
+    transform: rotate(45deg); background: var(--accent); border: 2px solid #e5c158; border-radius: 2px;
+    box-shadow: 0 0 0 5px rgba(167, 29, 42, 0.18), 0 0 18px rgba(167, 29, 42, 0.55);
+    transition: left 0.55s cubic-bezier(.22,.8,.25,1);
+    pointer-events: none; z-index: 2;
+  }
+  .cron-handle::after{
+    content: ''; position: absolute; inset: -9px; border-radius: 3px;
+    border: 1px solid rgba(229, 193, 88, 0.55);
+    animation: cron-pulse 2.2s ease-out infinite;
+  }
+  @keyframes cron-pulse{ 0%{ opacity: 0.9; transform: scale(0.7); } 100%{ opacity: 0; transform: scale(1.5); } }
+  .cron-track.is-dragging{ cursor: grabbing; }
+  .cron-track.is-dragging .cron-handle,
+  .cron-track.is-dragging .cron-fill{ transition: none; }
+
+  .cron-controls{ display: flex; align-items: center; gap: 8px; margin: 10px 0 22px; flex-wrap: wrap; }
+  .cron-btn{
+    font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; font-weight: 700;
+    background: transparent; color: var(--ink); border: 1px solid var(--line-strong);
+    border-radius: 2px; padding: 7px 12px; cursor: pointer; line-height: 1;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+  .cron-btn:hover:not(:disabled){ border-color: var(--accent-2); color: var(--accent-2); }
+  .cron-btn:disabled{ opacity: 0.35; cursor: default; }
+  .cron-btn:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; }
+  .cron-play{ margin-left: auto; }
+  .cron-play[aria-pressed="true"]{ background: var(--accent-2); color: var(--paper); border-color: var(--accent-2); }
+  .cron-count{ font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-dim); min-width: 44px; text-align: center; }
+
+  .cron-info{
+    position: relative; overflow: hidden; min-height: 168px;
+    padding: 4px 0 4px 18px; border-left: 2px solid var(--accent);
+  }
+  .ci-ghost{
+    position: absolute; right: -4px; top: 50%; transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: clamp(4.5rem, 14vw, 7.5rem);
+    line-height: 1; color: var(--accent-2); opacity: 0.09; pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.45s cubic-bezier(.22,.8,.25,1);
+  }
+  .ci-body{ position: relative; transition: opacity 0.26s ease, transform 0.32s cubic-bezier(.22,.8,.25,1); }
+  .cron-info.is-out-next .ci-body{ opacity: 0; transform: translateX(-18px); }
+  .cron-info.is-out-prev .ci-body{ opacity: 0; transform: translateX(18px); }
+  .cron-info.is-in-next .ci-body{ opacity: 0; transform: translateX(18px); transition: none; }
+  .cron-info.is-in-prev .ci-body{ opacity: 0; transform: translateX(-18px); transition: none; }
+  .cron-info.is-out-next .ci-ghost, .cron-info.is-out-prev .ci-ghost{ opacity: 0; transform: translateY(-50%) scale(0.92); }
   .cron-info .ci-year{ font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; color: var(--accent-2); letter-spacing: 0.05em; text-transform: uppercase; margin: 0 0 6px; }
-  .cron-info h4{ font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; margin: 0 0 8px; }
-  .cron-info p{ font-size: 0.96rem; color: var(--ink-dim); margin: 0; line-height: 1.6; }
+  .cron-info h4{ font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 600; margin: 0 0 8px; }
+  .cron-info p{ font-size: 0.96rem; color: var(--ink-dim); margin: 0; line-height: 1.6; max-width: 58ch; }
+  @media (prefers-reduced-motion: reduce){
+    .cron-fill, .cron-handle, .ci-body, .ci-ghost, .cron-dot, .cron-label{ transition: none; }
+    .cron-handle::after{ animation: none; display: none; }
+  }
 
   /* ---------- MAREA MIGRAȚIE: HARTĂ CU SĂGEȚI ---------- */
   .migr-wrap{ margin: 26px 0 10px; }
@@ -1253,23 +1319,35 @@
     <section id="sec-cronologie">
       <div class="chapter-mark"><span class="chapter-num">02</span><span class="chapter-slash">/</span><span class="chapter-tag">Cronologie interactivă</span></div>
       <h2 class="sec-title">Cronologie interactivă</h2>
-      <p class="sec-sub">Trage cursorul sau apasă pe un an pentru a vedea evenimentul</p>
+      <p class="sec-sub">Trage marcajul, apasă pe un an, folosește săgețile — sau lasă cronologia să se deruleze singură</p>
 
       <div class="cron-wrap">
-        <input type="range" min="0" max="6" step="1" value="0" class="cron-slider" id="cron-slider" list="cron-marks" aria-label="Selectează un moment cheie din cronologia hunilor">
-        <div class="cron-ticks" id="cron-ticks">
-          <span data-i="0">370</span>
-          <span data-i="1">375</span>
-          <span data-i="2">434</span>
-          <span data-i="3">441</span>
-          <span data-i="4">447</span>
-          <span data-i="5">451</span>
-          <span data-i="6">454</span>
+        <div class="cron-track" id="cron-track" role="group" aria-label="Momente din cronologia hunilor — folosește săgețile stânga/dreapta">
+          <div class="cron-rail"><div class="cron-fill" id="cron-fill"></div></div>
+          <div class="cron-nodes">
+            <button type="button" class="cron-node" data-i="0" style="--x:0%" aria-label="Anul 370"><span class="cron-dot"></span><span class="cron-label">370</span></button>
+            <button type="button" class="cron-node" data-i="1" style="--x:16.6667%" aria-label="Anul 375"><span class="cron-dot"></span><span class="cron-label">375</span></button>
+            <button type="button" class="cron-node" data-i="2" style="--x:33.3333%" aria-label="Anul 434"><span class="cron-dot"></span><span class="cron-label">434</span></button>
+            <button type="button" class="cron-node" data-i="3" style="--x:50%" aria-label="Anul 441"><span class="cron-dot"></span><span class="cron-label">441</span></button>
+            <button type="button" class="cron-node" data-i="4" style="--x:66.6667%" aria-label="Anul 447"><span class="cron-dot"></span><span class="cron-label">447</span></button>
+            <button type="button" class="cron-node" data-i="5" style="--x:83.3333%" aria-label="Anul 451"><span class="cron-dot"></span><span class="cron-label">451</span></button>
+            <button type="button" class="cron-node" data-i="6" style="--x:100%" aria-label="Anul 454"><span class="cron-dot"></span><span class="cron-label">454</span></button>
+          </div>
+          <div class="cron-handle" id="cron-handle" aria-hidden="true"></div>
         </div>
-        <div class="cron-info" id="cron-info">
-          <p class="ci-year" id="ci-year">c. 370 d.Hr.</p>
-          <h4 id="ci-title">Supunerea alanilor</h4>
-          <p id="ci-desc">Hunii traversează Volga și îi înfrâng pe alani, apoi pe ostrogoți — al căror rege, Ermanaric, își ia viața în fața presiunii hunice. Vizigoții, îngroziți, cer azil în Imperiul Roman și trec Dunărea în 376.</p>
+        <div class="cron-controls">
+          <button type="button" class="cron-btn" id="cron-prev" aria-label="Momentul anterior">←</button>
+          <span class="cron-count" id="cron-count" aria-hidden="true">1 / 7</span>
+          <button type="button" class="cron-btn" id="cron-next" aria-label="Momentul următor">→</button>
+          <button type="button" class="cron-btn cron-play" id="cron-play" aria-pressed="false">▶ Parcurge automat</button>
+        </div>
+        <div class="cron-info" id="cron-info" aria-live="polite">
+          <span class="ci-ghost" id="ci-ghost" aria-hidden="true">370</span>
+          <div class="ci-body" id="ci-body">
+            <p class="ci-year" id="ci-year">c. 370 d.Hr.</p>
+            <h4 id="ci-title">Supunerea alanilor</h4>
+            <p id="ci-desc">Hunii traversează Volga și îi înfrâng pe alani, între Marea Azov și Caucaz. Alanii supuși sunt integrați în expedițiile hunice ulterioare — primul val al efectului care va împinge, în lanț, popoare întregi spre granițele Romei.</p>
+          </div>
         </div>
         <p class="section-sources">Surse pentru evenimentele din cronologie: moartea lui Ermanaric<sup class="fn" data-n="12">12</sup>, trecerea Dunării de către vizigoți<sup class="fn" data-n="13">13</sup>, Câmpiile Catalaunice și solia la curtea lui Attila<sup class="fn" data-n="14">14</sup>.</p>
       </div>
@@ -2045,29 +2123,156 @@
   ];
 
   function initTimelineSlider(){
-    var cronSlider = document.getElementById('cron-slider');
-    var cronTicks = Array.prototype.slice.call(document.querySelectorAll('#cron-ticks span'));
+    var track = document.getElementById('cron-track');
+    if (!track) return;
+    var nodes = Array.prototype.slice.call(track.querySelectorAll('.cron-node'));
+    var handle = document.getElementById('cron-handle');
+    var fill = document.getElementById('cron-fill');
+    var info = document.getElementById('cron-info');
+    var ghost = document.getElementById('ci-ghost');
     var ciYear = document.getElementById('ci-year');
     var ciTitle = document.getElementById('ci-title');
     var ciDesc = document.getElementById('ci-desc');
+    var prevBtn = document.getElementById('cron-prev');
+    var nextBtn = document.getElementById('cron-next');
+    var playBtn = document.getElementById('cron-play');
+    var countEl = document.getElementById('cron-count');
+    var last = CRON.length - 1;
+    var current = 0;
+    var swapTimer = null, playTimer = null;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function setCron(i){
-      i = Math.max(0, Math.min(CRON.length - 1, i));
-      cronSlider.value = i;
-      var pct = (i / (CRON.length - 1)) * 100;
-      cronSlider.style.setProperty('--fill', pct + '%');
-      var c = CRON[i];
-      ciYear.textContent = c.year;
-      ciTitle.textContent = c.title;
-      ciDesc.textContent = c.desc;
-      cronTicks.forEach(function(t){ t.classList.toggle('active', parseInt(t.getAttribute('data-i'), 10) === i); });
+    function pctOf(i){ return i / last * 100; }
+
+    function placeMarker(pct){
+      handle.style.left = pct + '%';
+      fill.style.width = pct + '%';
     }
 
-    cronSlider.addEventListener('input', function(){ setCron(parseInt(cronSlider.value, 10)); });
-    cronTicks.forEach(function(t){
-      t.addEventListener('click', function(){ setCron(parseInt(t.getAttribute('data-i'), 10)); });
+    function paintNodes(i){
+      nodes.forEach(function(n, k){
+        n.classList.toggle('is-past', k < i);
+        n.classList.toggle('is-current', k === i);
+        if (k === i) n.setAttribute('aria-current', 'step'); else n.removeAttribute('aria-current');
+      });
+      prevBtn.disabled = i === 0;
+      nextBtn.disabled = i === last;
+      countEl.textContent = (i + 1) + ' / ' + CRON.length;
+    }
+
+    // Slide the reading panel out in the direction of travel, swap the text,
+    // then slide the new text in from the opposite side.
+    function showText(i, dir){
+      var c = CRON[i];
+      var label = nodes[i] ? nodes[i].querySelector('.cron-label').textContent : '';
+      if (reduced) {
+        ciYear.textContent = c.year; ciTitle.textContent = c.title; ciDesc.textContent = c.desc;
+        ghost.textContent = label;
+        return;
+      }
+      clearTimeout(swapTimer);
+      info.classList.remove('is-in-next', 'is-in-prev');
+      info.classList.add(dir > 0 ? 'is-out-next' : 'is-out-prev');
+      swapTimer = setTimeout(function(){
+        ciYear.textContent = c.year; ciTitle.textContent = c.title; ciDesc.textContent = c.desc;
+        ghost.textContent = label;
+        info.classList.remove('is-out-next', 'is-out-prev');
+        info.classList.add(dir > 0 ? 'is-in-next' : 'is-in-prev');
+        void info.offsetWidth;
+        info.classList.remove('is-in-next', 'is-in-prev');
+      }, 200);
+    }
+
+    function go(i, opts){
+      if (typeof i !== 'number' || isNaN(i)) return;
+      i = Math.max(0, Math.min(last, i));
+      var changed = i !== current;
+      var dir = i >= current ? 1 : -1;
+      current = i;
+      if (!opts || !opts.keepMarker) placeMarker(pctOf(i));
+      paintNodes(i);
+      if (changed || (opts && opts.force)) showText(i, dir);
+    }
+
+    // ---------- pointer: click anywhere on the track, or drag the marker ----------
+    var dragging = false;
+    function fractionAt(clientX){
+      var r = track.getBoundingClientRect();
+      if (!r.width) return current / last;
+      return Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+    }
+    track.addEventListener('pointerdown', function(e){
+      if (e.button !== undefined && e.button !== 0) return;
+      stopPlay();
+      dragging = true;
+      track.classList.add('is-dragging');
+      if (track.setPointerCapture) { try { track.setPointerCapture(e.pointerId); } catch(err){} }
+      var f = fractionAt(e.clientX);
+      placeMarker(f * 100);
+      go(Math.round(f * last), { keepMarker: true });
+      e.preventDefault();
     });
-    setCron(0);
+    track.addEventListener('pointermove', function(e){
+      if (!dragging) return;
+      var f = fractionAt(e.clientX);
+      placeMarker(f * 100);
+      go(Math.round(f * last), { keepMarker: true });
+    });
+    function endDrag(){
+      if (!dragging) return;
+      dragging = false;
+      track.classList.remove('is-dragging');
+      void track.offsetWidth;
+      placeMarker(pctOf(current));
+    }
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+
+    // Nodes are real buttons, so Tab reaches them and Enter/Space selects.
+    nodes.forEach(function(n){
+      n.addEventListener('click', function(){ stopPlay(); go(parseInt(n.getAttribute('data-i'), 10)); });
+    });
+    track.addEventListener('keydown', function(e){
+      var k = e.key, i = current;
+      if (k === 'ArrowRight' || k === 'ArrowDown') i = current + 1;
+      else if (k === 'ArrowLeft' || k === 'ArrowUp') i = current - 1;
+      else if (k === 'Home') i = 0;
+      else if (k === 'End') i = last;
+      else return;
+      e.preventDefault();
+      stopPlay();
+      go(i);
+      if (nodes[current]) nodes[current].focus();
+    });
+
+    prevBtn.addEventListener('click', function(){ stopPlay(); go(current - 1); });
+    nextBtn.addEventListener('click', function(){ stopPlay(); go(current + 1); });
+
+    // ---------- autoplay walk-through ----------
+    function stopPlay(){
+      if (!playTimer) return;
+      clearInterval(playTimer); playTimer = null;
+      playBtn.setAttribute('aria-pressed', 'false');
+      playBtn.textContent = '▶ Parcurge automat';
+    }
+    function startPlay(){
+      if (current === last) go(0);
+      playBtn.setAttribute('aria-pressed', 'true');
+      playBtn.textContent = '❚❚ Pauză';
+      playTimer = setInterval(function(){
+        if (current >= last) { stopPlay(); return; }
+        go(current + 1);
+      }, 4200);
+    }
+    playBtn.addEventListener('click', function(){ if (playTimer) stopPlay(); else startPlay(); });
+
+    // Leaving the page (router hides the section) should not keep a timer running.
+    document.addEventListener('visibilitychange', function(){ if (document.hidden) stopPlay(); });
+
+    placeMarker(0);
+    paintNodes(0);
+    ciYear.textContent = CRON[0].year; ciTitle.textContent = CRON[0].title; ciDesc.textContent = CRON[0].desc;
+    ghost.textContent = nodes[0] ? nodes[0].querySelector('.cron-label').textContent : '';
   }
 
   // ============================================================
