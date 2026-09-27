@@ -426,17 +426,45 @@
   .migr-wrap{ margin: 26px 0 10px; }
   .migr-map{ position: relative; border: 1px solid var(--line-strong); padding: 0; overflow: hidden; }
   .migr-map svg{ width: 100%; height: auto; display: block; }
-  .migr-arrow{ cursor: pointer; }
-  .migr-arrow path.hit{ fill: none; stroke: transparent; stroke-width: 16; }
-  .migr-arrow path.line{ fill: none; stroke: var(--accent-2); stroke-width: 2.4; transition: stroke 0.12s ease, stroke-width 0.12s ease; }
-  .migr-arrow:hover path.line, .migr-arrow.active path.line{ stroke: var(--accent); stroke-width: 3.4; }
+  .migr-veil{ fill: rgba(18, 18, 20, 0.10); pointer-events: none; }
+  .migr-arrow{ cursor: pointer; outline: none; }
+  .migr-arrow path{ fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .migr-arrow path.hit{ stroke: transparent; stroke-width: 14; }
+  .migr-arrow path.case, .migr-inflow path.case{ fill: none; stroke: rgba(18, 18, 20, 0.55); stroke-width: 5.2; stroke-linecap: round; }
+  .migr-arrow path.line, .migr-inflow path.line{ fill: none; stroke-width: 2.6; stroke-linecap: round; transition: stroke-width 0.2s ease, opacity 0.25s ease; }
+  .migr-arrow.visi path.line{ stroke: #b389d9; }
+  .migr-arrow.ostro path.line{ stroke: #f0a25c; }
+  .migr-arrow.vand path.line{ stroke: #7ab0e8; }
+  .migr-arrow.huni path.line, .migr-inflow path.line{ stroke: #a71d2a; }
+  .migr-inflow path.line{ stroke-width: 3.4; stroke-dasharray: 7 5; }
+  .migr-arrow:hover path.line, .migr-arrow:focus-visible path.line, .migr-arrow.active path.line{ stroke-width: 4; }
+  .migr-arrow.active path.case{ stroke-width: 7.5; stroke: rgba(18, 18, 20, 0.7); }
+  .migr-map.has-active .migr-arrow:not(.active){ opacity: 0.45; }
+  .migr-map.has-active .migr-arrow:not(.active):hover{ opacity: 0.85; }
+  .migr-arrow{ transition: opacity 0.25s ease; }
   .migr-label{
-    font-family: 'JetBrains Mono', monospace; font-size: 13px; fill: #2b1d0c; pointer-events: none;
-    paint-order: stroke; stroke: #f0e6d6; stroke-width: 3.5; stroke-linejoin: round;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; fill: #f0e6d6;
+    paint-order: stroke; stroke: rgba(18, 18, 20, 0.85); stroke-width: 3.2px; stroke-linejoin: round;
+    pointer-events: none;
   }
-  .migr-arrow.active .migr-label{ fill: var(--accent); font-weight: 700; }
-  .migr-hub circle{ fill: var(--accent); stroke: #f0e6d6; stroke-width: 2; }
-  .migr-hub text{ font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; fill: var(--paper); text-anchor: middle; }
+  .migr-arrow.visi .migr-label{ fill: #d6bdf0; }
+  .migr-arrow.ostro .migr-label{ fill: #f7c48f; }
+  .migr-arrow.vand .migr-label{ fill: #b3d3f4; }
+  .migr-arrow.huni .migr-label, .migr-label-huni{ fill: #f0b3b8; }
+  .migr-arrow.active .migr-label{ font-size: 11px; }
+  .migr-arrow:focus-visible .migr-label{ text-decoration: underline; }
+  .migr-hub circle{ fill: #a71d2a; stroke: #e5c158; stroke-width: 2; }
+  .migr-hub text{ font-family: 'JetBrains Mono', monospace; font-size: 7px; font-weight: 700; fill: #f0e6d6; text-anchor: middle; letter-spacing: 0.04em; }
+  .migr-place{
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 9px; fill: #2b1d0c; text-anchor: middle;
+    paint-order: stroke; stroke: rgba(240, 230, 214, 0.8); stroke-width: 2.5px; pointer-events: none;
+  }
+  .migr-legend .sw{ display: inline-block; width: 16px; height: 3px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  .migr-legend .sw-huni{ background: #a71d2a; }
+  .migr-legend .sw-visi{ background: #b389d9; }
+  .migr-legend .sw-ostro{ background: #f0a25c; }
+  .migr-legend .sw-vand{ background: #7ab0e8; }
+  .migr-legend-hint{ margin-left: auto; font-style: italic; }
   .migr-legend{ display: flex; gap: 10px 18px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--ink-dim); padding: 12px 4px 4px; border-top: 1px solid var(--line); margin-top: 10px; }
   .migr-info{ margin-top: 16px; padding-left: 16px; border-left: 1px solid var(--accent); }
   .migr-info .mi-tag{ font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; color: var(--accent-2); letter-spacing: 0.05em; text-transform: uppercase; margin: 0 0 6px; }
@@ -1004,7 +1032,7 @@
     text-align: left; background: var(--parchment-2); border: 1px solid var(--border-nomad); border-radius: 2px;
     padding: 14px 16px; cursor: pointer; color: var(--ink); font-size: 0.98rem; line-height: 1.5;
     display: flex; gap: 12px; align-items: flex-start;
-  }.m-embassy .choice-btn:hover:not(:disabled){ background: var(--gold-glow); border-color: var(--gold); }.m-embassy .choice-btn:disabled{ cursor: default; opacity: 0.55; }.m-embassy .choice-letter{ font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--gold); flex-shrink: 0; }.m-embassy /* ---------- SOURCE ANALYSIS ---------- */
+  }.m-embassy .choice-btn{ transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease; }.m-embassy .choice-btn:hover:not(:disabled){ background: rgba(212, 175, 55, 0.12); border-color: var(--gold); color: var(--ink); transform: translateX(3px); }.m-embassy .choice-btn:hover:not(:disabled) .choice-letter{ color: var(--gold-bright); }.m-embassy .choice-btn:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }.m-embassy .choice-btn:disabled{ cursor: default; opacity: 0.55; }.m-embassy .choice-letter{ font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--gold); flex-shrink: 0; }.m-embassy /* ---------- SOURCE ANALYSIS ---------- */
   .analysis{
     margin-top: 22px; background: var(--parchment-2); border: 2px solid var(--gold); border-radius: 2px;
     padding: 18px 20px; animation: fade-in 0.3s ease both;
@@ -1016,7 +1044,7 @@
     background: var(--imperial); border: none; padding: 11px 24px; border-radius: 2px; cursor: pointer;
   }.m-embassy /* ---------- SIDE: MAP + INVENTORY ---------- */
   .below-grid{ display: grid; grid-template-columns: 1fr 220px; gap: 14px; margin-top: 14px; }
-  @media (max-width: 780px){.m-embassy .below-grid{ grid-template-columns: 1fr; } }.m-embassy .mini-map{ padding: 12px; }.m-embassy .mini-map svg{ width: 100%; height: auto; display: block; }.m-embassy .mm-stop{ transition: opacity 0.3s ease; }.m-embassy .mm-stop circle{ fill: var(--parchment); stroke: var(--border-nomad); stroke-width: 2; }.m-embassy .mm-stop.done circle{ fill: var(--gold-glow); stroke: var(--gold); }.m-embassy .mm-stop.active circle{ stroke: var(--imperial); stroke-width: 3; }.m-embassy .mm-stop text{ font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--ink-dim); }.m-embassy .mm-stop.active text{ fill: var(--ink); font-weight: 700; }.m-embassy .inventory{ padding: 12px 14px; }.m-embassy .panel-label{ font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--imperial); margin: 0 0 10px; }.m-embassy .inv-list{ display: flex; flex-direction: column; gap: 6px; min-height: 20px; }.m-embassy .inv-item{ font-size: 0.84rem; display: flex; gap: 6px; align-items: baseline; color: var(--ink); }.m-embassy .inv-empty{ font-size: 0.82rem; color: var(--ink-dim); font-style: italic; }.m-embassy /* ---------- FINAL REPORT ---------- */
+  @media (max-width: 780px){.m-embassy .below-grid{ grid-template-columns: 1fr; } }.m-embassy .mini-map{ padding: 12px; }.m-embassy .mini-map svg{ width: 100%; height: auto; display: block; }.m-embassy .mm-stop{ transition: opacity 0.3s ease; }.m-embassy .mm-stop circle{ fill: var(--parchment); stroke: var(--border-nomad); stroke-width: 2; }.m-embassy .mm-stop.done circle{ fill: var(--gold-glow); stroke: var(--gold); }.m-embassy .mm-stop.active circle{ stroke: var(--imperial); stroke-width: 3; }.m-embassy .mm-stop text{ font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--ink-dim); }.m-embassy .mm-stop.active text{ fill: var(--ink); font-weight: 700; }.m-embassy .inventory{ padding: 12px 14px; }.m-embassy .panel-label{ font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--imperial); margin: 0 0 10px; }.m-embassy .inv-list{ display: flex; flex-direction: column; gap: 6px; min-height: 20px; }.m-embassy .inv-item{ font-size: 0.84rem; display: flex; gap: 6px; align-items: baseline; color: var(--ink); }.m-embassy .inv-empty{ font-size: 0.82rem; color: var(--ink-dim); font-style: italic; }.m-embassy /* ---------- FINAL REPORT ---------- */
   #report-view{ display: none; }.m-embassy #report-view.show{ display: block; }.m-embassy .report-seal{
     width: 88px; height: 88px; margin: 0 auto 14px; border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, var(--gold-glow), var(--gold));
@@ -1374,10 +1402,13 @@
 
       <div class="migr-wrap">
         <div class="migr-map">
-          <svg viewBox="100 260 480 280" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--accent-2)"/></marker></defs><use href="#shared-img-0"/><g class="migr-hub"><circle cx="390" cy="360" r="16"/><text x="390" y="364">HUNI</text></g><g class="migr-arrow" data-i="0"><path class="hit" d="M390,360 Q350,460 150,420"/><path class="line" d="M390,360 Q350,460 150,420" marker-end="url(#arrowhead)"/><text class="migr-label" x="175" y="400">Vizigoți → Balcani → Galia/Hispania</text></g><g class="migr-arrow" data-i="1"><path class="hit" d="M390,360 Q378,385 364,403"/><path class="line" d="M390,360 Q378,385 364,403" marker-end="url(#arrowhead)"/><text class="migr-label" x="400" y="395">Ostrogoți → (vasali) → Italia</text></g><g class="migr-arrow" data-i="2"><path class="hit" d="M390,360 Q280,390 150,500"/><path class="line" d="M390,360 Q280,390 150,500" marker-end="url(#arrowhead)"/><text class="migr-label" x="155" y="520">Vandali → Galia → Hispania → Africa</text></g><g class="migr-arrow" data-i="3"><path class="hit" d="M390,360 Q450,430 490,500"/><path class="line" d="M390,360 Q450,430 490,500" marker-end="url(#arrowhead)"/><text class="migr-label" x="500" y="480">Către Constantinopol</text></g></svg>
+          <svg viewBox="115 320 500 245" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Harta Marii Migrații: sosirea hunilor dinspre răsărit și traseele vizigoților, ostrogoților și vandalilor spre Imperiul Roman"><defs><marker id="mh-visi" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3.5 L0,7 Z" fill="#b389d9"/></marker><marker id="mh-ostro" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3.5 L0,7 Z" fill="#f0a25c"/></marker><marker id="mh-vand" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3.5 L0,7 Z" fill="#7ab0e8"/></marker><marker id="mh-huni" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3.5 L0,7 Z" fill="#a71d2a"/></marker></defs><use href="#shared-img-0"/><rect class="migr-veil" x="115" y="320" width="500" height="245"/><g class="migr-inflow" aria-hidden="true"><path class="case" d="M612,386 Q520,366 432,408"/><path class="line" d="M612,386 Q520,366 432,408" marker-end="url(#mh-huni)"/><text class="migr-label migr-label-huni" x="548" y="360">Hunii · din 370</text></g><g class="migr-arrow visi" data-i="0" aria-label="Vizigoții: peste Dunăre, Adrianopol, Italia, Galia, Hispania"><path class="hit" d="M497,414 C488,452 482,472 476,488 C440,478 385,462 336,484 C300,470 250,444 212,448 C192,462 178,476 168,490"/><path class="case" d="M497,414 C488,452 482,472 476,488 C440,478 385,462 336,484 C300,470 250,444 212,448 C192,462 178,476 168,490"/><path class="line" d="M497,414 C488,452 482,472 476,488 C440,478 385,462 336,484 C300,470 250,444 212,448 C192,462 178,476 168,490" marker-end="url(#mh-visi)"/><text class="migr-label" x="236" y="478">Vizigoți</text></g><g class="migr-arrow ostro" data-i="1" aria-label="Ostrogoții: din stepa pontică, vasali în Panonia, apoi în Italia"><path class="hit" d="M538,400 Q482,402 426,420 Q372,428 320,446"/><path class="case" d="M538,400 Q482,402 426,420 Q372,428 320,446"/><path class="line" d="M538,400 Q482,402 426,420 Q372,428 320,446" marker-end="url(#mh-ostro)"/><text class="migr-label" x="470" y="422">Ostrogoți</text></g><g class="migr-arrow vand" data-i="2" aria-label="Vandalii: peste Rin, prin Galia și Hispania, până în Africa"><path class="hit" d="M388,350 Q330,340 280,356 Q232,386 206,428 Q176,462 166,500 Q150,534 196,544 Q250,552 294,545"/><path class="case" d="M388,350 Q330,340 280,356 Q232,386 206,428 Q176,462 166,500 Q150,534 196,544 Q250,552 294,545"/><path class="line" d="M388,350 Q330,340 280,356 Q232,386 206,428 Q176,462 166,500 Q150,534 196,544 Q250,552 294,545" marker-end="url(#mh-vand)"/><text class="migr-label" x="214" y="533">Vandali</text></g><g class="migr-arrow huni" data-i="3" aria-label="Hunii spre Constantinopol, prin Balcani"><path class="hit" d="M424,426 Q434,450 432,463 Q462,482 488,494"/><path class="case" d="M424,426 Q434,450 432,463 Q462,482 488,494"/><path class="line" d="M424,426 Q434,450 432,463 Q462,482 488,494" marker-end="url(#mh-huni)"/><text class="migr-label" x="430" y="522">Spre Constantinopol</text></g><g class="migr-hub" aria-hidden="true"><circle cx="420" cy="416" r="11"/><text x="420" y="419.5">HUNI</text></g><text class="migr-place" x="420" y="440">Câmpia Panonică</text></svg>
           <div class="migr-legend">
-            <span>● Nucleul de putere hunic</span>
-            <span>→ Direcție de presiune / migrație</span>
+            <span><i class="sw sw-huni"></i>Hunii</span>
+            <span><i class="sw sw-visi"></i>Vizigoți</span>
+            <span><i class="sw sw-ostro"></i>Ostrogoți</span>
+            <span><i class="sw sw-vand"></i>Vandali</span>
+            <span class="migr-legend-hint">Apasă pe un traseu pentru detalii</span>
           </div>
         </div>
         <div class="migr-info" id="migr-info">
@@ -1385,7 +1416,7 @@
           <h4 id="mi-title">Vizigoții</h4>
           <p id="mi-desc">Presați de huni, vizigoții trec Dunărea în 376 și cer azil roman. Tratați prost de administrația locală, se răscoală și zdrobesc o armată romană la Adrianopol (378), unde moare însuși împăratul Valens. În 410, sub Alaric, jefuiesc Roma — apoi se așază în Galia și Hispania.</p>
         </div>
-        <p class="map-hint">4 săgeți pe hartă · click sau tab pentru detalii</p>
+        <p class="map-hint">4 trasee pe hartă · click, atingere sau Tab + Enter pentru detalii</p>
         <p class="section-sources">Surse pentru traseele de pe hartă: trecerea Dunării de către vizigoți<sup class="fn" data-n="13">13</sup> și traversarea Rinului de către vandali, alani și suebi<sup class="fn" data-n="15">15</sup>.</p>
       </div>
     </section>
@@ -1732,17 +1763,17 @@
 
     <div class="below-grid">
       <div class="frame mini-map">
-        <svg viewBox="0 0 500 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <line x1="30" y1="45" x2="470" y2="45" stroke="var(--border-nomad)" stroke-width="2" opacity="0.4"/>
-          <g class="mm-stop" id="mm-0"><circle cx="32" cy="45" r="8"/><text x="32" y="70" text-anchor="middle">Constant.</text></g>
-          <g class="mm-stop" id="mm-1"><circle cx="110" cy="45" r="8"/><text x="110" y="70" text-anchor="middle">Naissus</text></g>
-          <g class="mm-stop" id="mm-2"><circle cx="188" cy="45" r="8"/><text x="188" y="70" text-anchor="middle">Curtea</text></g>
-          <g class="mm-stop" id="mm-3"><circle cx="250" cy="45" r="8"/><text x="250" y="70" text-anchor="middle">Complot</text></g>
-          <g class="mm-stop" id="mm-4"><circle cx="305" cy="45" r="8"/><text x="305" y="70" text-anchor="middle">Ospăț</text></g>
-          <g class="mm-stop" id="mm-5"><circle cx="358" cy="45" r="8"/><text x="358" y="70" text-anchor="middle">Titlul</text></g>
-          <g class="mm-stop" id="mm-6"><circle cx="410" cy="45" r="8"/><text x="410" y="70" text-anchor="middle">Răscump.</text></g>
-          <g class="mm-stop" id="mm-7"><circle cx="455" cy="45" r="8"/><text x="455" y="70" text-anchor="middle">Tratat</text></g>
-          <g class="mm-stop" id="mm-8"><circle cx="495" cy="45" r="8"/><text x="490" y="26" text-anchor="middle">După solie</text></g>
+        <svg viewBox="0 0 540 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line x1="36" y1="32" x2="504" y2="32" stroke="var(--border-nomad)" stroke-width="2" opacity="0.5"/>
+          <g class="mm-stop" id="mm-0"><circle cx="36" cy="32" r="8"/><text x="36" y="60" text-anchor="middle">Constant.</text></g>
+          <g class="mm-stop" id="mm-1"><circle cx="95" cy="32" r="8"/><text x="95" y="60" text-anchor="middle">Naissus</text></g>
+          <g class="mm-stop" id="mm-2"><circle cx="153" cy="32" r="8"/><text x="153" y="60" text-anchor="middle">Curtea</text></g>
+          <g class="mm-stop" id="mm-3"><circle cx="212" cy="32" r="8"/><text x="212" y="60" text-anchor="middle">Complot</text></g>
+          <g class="mm-stop" id="mm-4"><circle cx="270" cy="32" r="8"/><text x="270" y="60" text-anchor="middle">Ospăț</text></g>
+          <g class="mm-stop" id="mm-5"><circle cx="329" cy="32" r="8"/><text x="329" y="60" text-anchor="middle">Titlul</text></g>
+          <g class="mm-stop" id="mm-6"><circle cx="387" cy="32" r="8"/><text x="387" y="60" text-anchor="middle">Răscump.</text></g>
+          <g class="mm-stop" id="mm-7"><circle cx="446" cy="32" r="8"/><text x="446" y="60" text-anchor="middle">Tratat</text></g>
+          <g class="mm-stop" id="mm-8"><circle cx="504" cy="32" r="8"/><text x="504" y="60" text-anchor="middle">Urmări</text></g>
         </svg>
       </div>
       <div class="frame inventory">
@@ -2301,6 +2332,8 @@
       miTitle.textContent = m.title;
       miDesc.textContent = m.desc;
       migrArrows.forEach(function(a, idx){ a.classList.toggle('active', idx === i); });
+      var map = document.querySelector('.migr-map');
+      if (map) map.classList.add('has-active');
     }
 
     migrArrows.forEach(function(a){
