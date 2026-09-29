@@ -133,7 +133,7 @@ const ABOUT_HTML = `
       <li><strong>Campania Hunilor</strong> — joc de strategie/decizie despre expansiunea hunică.</li>
       <li><strong>Solia la Attila</strong> — joc narativ bazat pe relatarea lui Priscus din Panium.</li>
       <li><strong>Atlasul Migrației</strong> — hartă interactivă cu rutele Marii Migrații.</li>
-      <li><strong>Laborator &amp; Muzeu</strong> — artefacte hunice explorabile și dezbaterea mit vs. adevăr paleogenetic.</li>
+      <li><strong>Muzeu</strong> — artefacte hunice reale, explorabile pe fotografie, și dezbaterea mit vs. adevăr paleogenetic.</li>
     </ul>
     <p>Navighezi cu meniul de sus sau cu butoanele „Pagina anterioară / următoare” de jos.</p>
 
@@ -147,7 +147,7 @@ const ABOUT_HTML = `
 
     <h3>Despre imagini — ce e document și ce e ilustrație</h3>
     <ul>
-      <li><strong>Fotografiile de artefact</strong> din Laborator sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, licențe CC BY-SA).</li>
+      <li><strong>Fotografiile de artefact</strong> din Muzeu sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, licențe CC BY-SA).</li>
       <li><strong>Fundalul cartografic</strong> al diagramei despre habitatul timpuriu este o hartă istorică publicată, reprodusă cu indicarea sursei.</li>
       <li><strong>Imaginile de atmosferă</strong> — peisaje și scene din antetele modulelor — sunt generate cu instrumente AI și au rol pur decorativ. Ele nu sunt și nu trebuie citite ca surse istorice.</li>
     </ul>
@@ -178,7 +178,7 @@ const NAV_HTML = `
   <a href="#mod-game">Campania Hunilor</a>
   <a href="#mod-embassy">Solia la Attila</a>
   <a href="#mod-atlas">Atlasul Migrației</a>
-  <a href="#mod-lab">Laborator &amp; Muzeu</a>
+  <a href="#mod-lab">Muzeu</a>
   <button class="about-trigger" id="about-trigger" type="button">ℹ Despre proiect</button>
 </nav>
 `;
@@ -206,7 +206,7 @@ ${gameCss}
 ${embassyCss}
   /* ============ MODULE: ATLASUL MIGRAȚIEI (.m-atlas) ============ */
 ${atlasCss}
-  /* ============ MODULE: LABORATOR ȘI MUZEU VIRTUAL (.m-lab) ============ */
+  /* ============ MODULE: MUZEU (.m-lab) ============ */
 ${labCss}
 </style>`;
 
@@ -219,7 +219,7 @@ ${ABOUT_HTML}
 ${storyBodyPatched}
 <footer class="site-final-footer">
   Proiect realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală” — Secțiunea I, Istorie.<br>
-  Cinci module: articol cu note și bibliografie, două jocuri interactive, o hartă istorică și un laborator/muzeu virtual.<br>
+  Cinci module: articol cu note și bibliografie, două jocuri interactive, o hartă istorică și un muzeu virtual.<br>
   Surse: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Iordanes, Olympiodorus, Claudian, Merobaudes, Sidonius Apollinaris, Zosimus, Ioannes Malalas — și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Neparáczki, Maróti).
 </footer>
 </div>

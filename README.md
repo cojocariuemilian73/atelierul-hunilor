@@ -16,7 +16,7 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
   - `huni-migratia.html` — jocul „Campania Hunilor"
   - `solia-la-attila.html` — jocul „Solia la Attila"
   - `atlas-hunic.html` — harta interactivă (D3.js + date geografice reale)
-  - `laborator-muzeu.html` — Laborator și Muzeu Virtual (artefacte 3D, mit vs. adevăr paleogenetic)
+  - `laborator-muzeu.html` — Muzeul Hunilor (artefacte reale fotografiate în muzee, mit vs. adevăr paleogenetic)
 - `build/` — piesele intermediare din care e asamblată pagina combinată (CSS/JS/HTML separate pe modul + `FINAL.html`, rezultatul brut al asamblării)
 - `scripturi-build/` — scripturile Node.js folosite ca să reconstruiesc pagina combinată după orice modificare:
   - `scope-css.js` — izolează CSS-ul fiecărui modul sub o clasă unică, ca stilurile să nu se ciocnească

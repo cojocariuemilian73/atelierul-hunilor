@@ -727,84 +727,165 @@
   }.m-game .range{
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
-    background: radial-gradient(ellipse 500px 260px at 8% 90%, var(--surface-3) 0%, var(--surface-2) 55%, var(--surface) 100%);
-    border: 1px solid var(--line);
-    border-radius: 2px;
+    aspect-ratio: 16 / 8;
+    border: 1px solid var(--line-bright);
+    border-radius: 3px;
     overflow: hidden;
     touch-action: none;
     user-select: none;
+    -webkit-user-select: none;
     cursor: crosshair;
-    margin: 0 0 6px;
-  }.m-game .range-weapon{
+    margin: 0 0 14px;
+    background: #16141a;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.6), 0 10px 30px rgba(0,0,0,0.35);
+  }.m-game .range-sky{
+    position: absolute; inset: 0 0 38% 0;
+    background:
+      radial-gradient(ellipse 22% 38% at 80% 100%, rgba(230, 126, 34, 0.55), rgba(230, 126, 34, 0) 70%),
+      radial-gradient(ellipse 60% 70% at 78% 105%, rgba(167, 29, 42, 0.35), rgba(167, 29, 42, 0) 70%),
+      linear-gradient(180deg, #121214 0%, #1c1822 45%, #3a2630 78%, #6b3b26 100%);
+  }.m-game .range-sky::after{ /* a few stars */
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(230,215,195,0.7), transparent 60%),
+      radial-gradient(1px 1px at 27% 34%, rgba(230,215,195,0.45), transparent 60%),
+      radial-gradient(1.2px 1.2px at 46% 12%, rgba(230,215,195,0.6), transparent 60%),
+      radial-gradient(1px 1px at 63% 28%, rgba(230,215,195,0.4), transparent 60%),
+      radial-gradient(1px 1px at 88% 14%, rgba(230,215,195,0.55), transparent 60%),
+      radial-gradient(1px 1px at 94% 40%, rgba(230,215,195,0.35), transparent 60%);
+  }.m-game .range-hills{
+    position: absolute; left: 0; right: 0; top: 50%; height: 14%;
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201600%20120%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2C80%20C120%2C52%20220%2C70%20330%2C58%20C450%2C44%20540%2C72%20660%2C60%20C790%2C46%20880%2C30%201000%2C48%20C1120%2C66%201230%2C40%201350%2C50%20C1450%2C58%201530%2C46%201600%2C52%20L1600%2C120%20L0%2C120%20Z%22%20fill%3D%22%232a2230%22%2F%3E%3Cpath%20d%3D%22M0%2C96%20C160%2C80%20280%2C94%20420%2C86%20C560%2C78%20700%2C98%20860%2C88%20C1010%2C78%201150%2C92%201290%2C84%20C1420%2C76%201520%2C90%201600%2C86%20L1600%2C120%20L0%2C120%20Z%22%20fill%3D%22%23221c20%22%2F%3E%3C%2Fsvg%3E") center bottom / 100% 100% no-repeat;
+  }.m-game .range-ground{
+    position: absolute; left: 0; right: 0; bottom: 0; top: 62%;
+    background:
+      linear-gradient(180deg, rgba(18,18,20,0) 0%, rgba(18,18,20,0.55) 100%),
+      linear-gradient(180deg, #2b2418 0%, #221c14 55%, #1a1610 100%);
+    overflow: hidden;
+  }.m-game .range-ground::before{ /* distance lines receding to the horizon */
+    content: ''; position: absolute; left: -40%; right: -40%; top: 0; bottom: -60%;
+    background:
+      repeating-linear-gradient(90deg, rgba(212,175,55,0.10) 0 1px, transparent 1px 9%),
+      repeating-linear-gradient(180deg, rgba(212,175,55,0.08) 0 1px, transparent 1px 18%);
+    transform: perspective(260px) rotateX(58deg);
+    transform-origin: 50% 0;
+  }.m-game .range-hint{
+    position: absolute; left: 50%; top: 5%; transform: translateX(-50%); margin: 0; z-index: 5; white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.04em;
+    color: var(--gold); background: rgba(18,18,20,0.72); border: 1px solid rgba(212,175,55,0.35);
+    padding: 4px 8px; border-radius: 2px; pointer-events: none;
+    transition: opacity 0.25s ease;
+  }.m-game .range.is-aiming .range-hint, .m-game .range.is-done .range-hint{ opacity: 0; }.m-game /* ---- weapon (drawn per mechanic, .m-game turns with the aim) ---- */
+  .range-weapon{
     position: absolute;
-    left: 10%; top: 84%;
-    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700;
-    letter-spacing: 0.06em; color: var(--gold);
-    background: rgba(10,6,4,0.7); border: 1px solid var(--line-bright); border-radius: 2px;
-    padding: 3px 6px; white-space: nowrap;
-    transform: translate(-50%, -50%);
-    z-index: 3;
-    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.55));
-  }.m-game /* The nocked projectile: a custom-drawn shaft+arrowhead, .m-game always the true source and
-     direction of the shot — the dashed aim-line picks up exactly where its tip ends. */
+    left: 9%; top: 80%;
+    width: clamp(54px, 9vw, 84px); height: clamp(54px, 9vw, 84px);
+    transform: translate(-50%, -50%) rotate(var(--aim, -24deg));
+    z-index: 4;
+    pointer-events: none;
+    filter: drop-shadow(0 3px 4px rgba(0,0,0,0.6));
+    transition: transform 0.08s linear;
+  }.m-game .range-weapon svg{ width: 100%; height: 100%; overflow: visible; display: block; }.m-game .range-weapon .string-drawn{ opacity: 0; }.m-game .range.is-aiming .range-weapon .string-rest{ opacity: 0; }.m-game .range.is-aiming .range-weapon .string-drawn{ opacity: 1; }.m-game .range-weapon::before{ /* archer's mark on the ground */
+    content: ''; position: absolute; left: 50%; top: 50%; width: 140%; height: 34%;
+    transform: translate(-50%, 70%) rotate(calc(-1 * var(--aim, -24deg)));
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.5), rgba(0,0,0,0) 70%);
+    z-index: -1;
+  }.m-game /* The nocked arrow: shaft + head + fletching, .m-game pivoting at the weapon. */
   .nock{
     position: absolute;
-    left: 10%; top: 84%;
-    width: 32px; height: 9px;
-    background: var(--gold);
-    clip-path: polygon(0 38%, 74% 38%, 74% 8%, 100% 50%, 74% 92%, 74% 62%, 0 62%);
+    left: 9%; top: 80%;
+    width: 38px; height: 10px;
     transform-origin: 0 50%;
     transform: translateY(-50%) rotate(0deg);
     opacity: 0;
     transition: opacity 0.15s ease;
-    z-index: 4;
+    z-index: 5;
     pointer-events: none;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+    background:
+      linear-gradient(90deg, transparent 0 74%, #e5c158 74% 100%) center / 100% 100% no-repeat,
+      linear-gradient(180deg, transparent 0 42%, #c9a36a 42% 58%, transparent 58%) 0 0 / 76% 100% no-repeat,
+      linear-gradient(160deg, transparent 0 30%, #a71d2a 30% 70%, transparent 70%) 0 0 / 22% 50% no-repeat,
+      linear-gradient(20deg, transparent 0 30%, #a71d2a 30% 70%, transparent 70%) 0 100% / 22% 50% no-repeat;
+    clip-path: polygon(0 0, 22% 30%, 74% 42%, 74% 8%, 100% 50%, 74% 92%, 74% 58%, 22% 70%, 0 100%);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
   }.m-game .nock.show{ opacity: 1; }.m-game .aim-line{
     position: absolute;
-    left: 10%; top: 84%;
+    left: 9%; top: 80%;
     height: 2px;
     width: 0;
-    background: repeating-linear-gradient(90deg, var(--gold-dim) 0 6px, transparent 6px 12px);
+    background: repeating-linear-gradient(90deg, rgba(229,193,88,0.85) 0 7px, transparent 7px 13px);
     transform-origin: 0 50%;
-    z-index: 2;
+    z-index: 3;
     pointer-events: none;
-    opacity: 0.85;
-  }.m-game .range-targets{ position: absolute; inset: 0; z-index: 2; }.m-game .target{
+  }.m-game /* ---- targets: painted straw butts on stands ---- */
+  .range-targets{ position: absolute; inset: 0; z-index: 2; }.m-game .target{
     position: absolute;
+    width: calc(var(--s, 1) * clamp(46px, 8.4vw, 78px));
     transform: translate(-50%, -50%);
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    width: clamp(70px, 24vw, 118px);
-    text-align: center;
     pointer-events: none;
-  }.m-game .target .ring{
-    width: clamp(34px, 9vw, 44px); height: clamp(34px, 9vw, 44px);
-    border-radius: 50%;
-    background: var(--surface-2);
-    border: 2px solid var(--line);
+    transition: opacity 0.3s ease, filter 0.3s ease;
+  }.m-game .target .butt{
+    position: relative; z-index: 1;
+    width: 100%; aspect-ratio: 1; border-radius: 50%;
+    background: radial-gradient(circle,
+      #a71d2a 0 17%, #7a1520 17% 19%,
+      #e6d7c3 19% 36%, #1a1a1e 36% 39%,
+      #e6d7c3 39% 56%, #8b0000 56% 60%,
+      #d9c39a 60% 86%, #b69866 86% 100%);
+    border: 3px solid #6b4a2a;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.55), inset 0 -4px 8px rgba(0,0,0,0.3), 0 6px 10px rgba(0,0,0,0.45);
     display: flex; align-items: center; justify-content: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700; font-size: 0.72rem;
-    color: var(--gold-dim);
-    margin: 0 auto;
-  }.m-game .target .txt{
-    font-size: 0.7rem; font-weight: 600;
-    color: var(--ink-dim2);
-    background: var(--surface);
-    border: 1px solid var(--line);
-    padding: 2px 6px;
-    border-radius: 4px;
-    line-height: 1.25;
-  }.m-game .target.correct .ring{ border-color: var(--good); background: var(--good-bg); color: var(--good); }.m-game .target.wrong .ring{ border-color: var(--bad); background: var(--bad-bg); color: var(--bad); }.m-game .target.dim{ opacity: 0.4; }.m-game .target.hit .ring{ animation: target-hit 0.3s ease; }
-  @keyframes target-hit{ 0%{ transform: scale(1); } 50%{ transform: scale(1.22); } 100%{ transform: scale(1); } }.m-game /* Nivel 2 — Catapultă: ținte ca metereze */
-  .range.mech-stone .target .ring{ border-radius: 3px; clip-path: polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%); }.m-game /* Nivel 3 — Lupa: ținte ca sigilii */
-  .range.mech-lens .target .ring{ border-style: dashed; font-family: 'JetBrains Mono', monospace; }.m-game /* Nivel 4 — Șarjă: ținte ca stindarde */
-  .range.mech-charge .target .ring{ clip-path: polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%); }.m-game .projectile{ position: fixed; z-index: 70; pointer-events: none; will-change: left, top; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.55)); }.m-game .projectile.proj-arrow{ font-size: 1.25rem; }.m-game .projectile.proj-stone{ width: 13px; height: 13px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #b6ad9c, #675e51); animation: proj-spin 0.4s linear infinite; }
-  @keyframes proj-spin{ to{ transform: rotate(360deg); } }.m-game .projectile.proj-lens{ font-size: 1.3rem; animation: proj-pulse 0.35s ease-in-out infinite; }
-  @keyframes proj-pulse{ 50%{ transform: scale(1.3); } }.m-game .projectile.proj-charge{ font-size: 1.4rem; animation: proj-gallop 0.28s ease-in-out infinite; }
-  @keyframes proj-gallop{ 50%{ transform: translateY(-5px); } }
-  @media (prefers-reduced-motion: reduce){.m-game .range-weapon{ transition: none; } }.m-game .feedback{
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }.m-game .target .butt b{
+    font-family: 'Cinzel', serif; font-weight: 800;
+    font-size: calc(var(--s, 1) * clamp(0.72rem, 1.4vw, 1.05rem));
+    color: #f6ecd9; text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    line-height: 1;
+  }.m-game .target .stand{
+    position: relative; z-index: 0;
+    width: 70%; height: calc(var(--s, 1) * clamp(16px, 2.6vw, 26px)); margin: -6% auto 0;
+    background:
+      linear-gradient(72deg, transparent 0 44%, #4a3520 44% 52%, transparent 52%),
+      linear-gradient(-72deg, transparent 0 44%, #4a3520 44% 52%, transparent 52%);
+  }.m-game .target .stand::after{ /* shadow on the ground */
+    content: ''; position: absolute; left: -10%; right: -10%; bottom: -4px; height: 8px;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.55), rgba(0,0,0,0) 70%);
+  }.m-game .target.aimed .butt{ box-shadow: 0 0 0 3px var(--gold-bright, #e5c158), 0 0 18px 4px rgba(229,193,88,0.55), 0 6px 10px rgba(0,0,0,0.45); transform: scale(1.06); }.m-game .target.correct .butt{ box-shadow: 0 0 0 3px var(--good), 0 0 22px 6px rgba(92,193,127,0.5), 0 6px 10px rgba(0,0,0,0.45); }.m-game .target.wrong .butt{ box-shadow: 0 0 0 3px var(--bad), 0 0 18px 4px rgba(167,29,42,0.55), 0 6px 10px rgba(0,0,0,0.45); }.m-game .target.dim{ opacity: 0.45; filter: grayscale(0.6); }.m-game .target.hit .butt{ animation: target-hit 0.35s ease; }.m-game .target .stuck{ /* the arrow left in the target */
+    position: absolute; left: 50%; top: 50%; width: 60%; height: 4px; z-index: 2;
+    background: linear-gradient(90deg, #a71d2a 0 22%, #c9a36a 22% 100%);
+    transform-origin: 100% 50%; transform: translate(-100%, -50%) rotate(var(--hit-angle, 0deg));
+    border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  }
+  @keyframes target-hit{ 0%{ transform: scale(1); } 40%{ transform: scale(1.14) rotate(-3deg); } 100%{ transform: scale(1); } }.m-game /* ---- answers: readable list under the scene ---- */
+  .answer-list{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 6px; }.m-game .ans{
+    display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: var(--surface-2); border: 1px solid var(--surface-3); border-radius: 3px;
+    color: var(--ink, #e6d7c3); font: inherit; font-size: 0.92rem; line-height: 1.45;
+    padding: 12px 14px; cursor: pointer;
+    transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+  }.m-game .ans:hover:not(:disabled), .m-game .ans.aimed{ border-color: var(--gold); background: rgba(212,175,55,0.10); }.m-game .ans:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }.m-game .ans:disabled{ cursor: default; }.m-game .ans-letter{
+    flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif; font-weight: 800; font-size: 0.85rem;
+    color: #f6ecd9; background: #8b0000; border: 2px solid #d9c39a;
+  }.m-game .ans-txt{ padding-top: 3px; }.m-game .ans.correct{ border-color: var(--good); background: var(--good-bg); }.m-game .ans.correct .ans-letter{ background: var(--good); border-color: var(--good); color: #0f1a12; }.m-game .ans.wrong{ border-color: var(--bad); background: rgba(167,29,42,0.14); }.m-game .ans.dim{ opacity: 0.5; }
+  @media (max-width: 640px){.m-game .range{ aspect-ratio: 4 / 3; }.m-game .answer-list{ grid-template-columns: 1fr; }.m-game .ans{ font-size: 0.9rem; }
+  }.m-game /* Campania II — Lupa: sigilii în loc de ținte pictate */
+  .range.mech-lens .target .butt{
+    background: radial-gradient(circle at 40% 35%, #c4323f 0 40%, #8b0000 70%, #5e0a12 100%);
+    border: 3px double #e5c158;
+  }.m-game /* Campaniile III–IV — Șarjă: stindarde */
+  .range.mech-charge .target .butt{
+    border-radius: 3px 3px 50% 50% / 3px 3px 22% 22%;
+    background: linear-gradient(180deg, #8b0000 0 70%, #6d0000 100%);
+    border: 3px solid #d4af37;
+  }.m-game .range.mech-charge .target .stand{
+    width: 8%; height: calc(var(--s, 1) * clamp(22px, 3.4vw, 34px));
+    background: #4a3520;
+  }.m-game .projectile{ position: fixed; z-index: 70; pointer-events: none; will-change: left, top; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.55)); }.m-game .projectile.proj-arrow{ width: 34px; height: 8px; background: linear-gradient(90deg, #a71d2a 0 20%, #c9a36a 20% 76%, #e5c158 76%); clip-path: polygon(0 0, 20% 30%, 76% 38%, 76% 0, 100% 50%, 76% 100%, 76% 62%, 20% 70%, 0 100%); }.m-game .projectile.proj-stone{ width: 13px; height: 13px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #b6ad9c, #675e51); animation: proj-spin 0.4s linear infinite; }
+  @keyframes proj-spin{ to{ transform: rotate(360deg); } }.m-game .projectile.proj-lens{ width: 16px; height: 16px; border-radius: 50%; border: 3px solid #e5c158; box-shadow: 0 0 10px rgba(229,193,88,0.7); animation: proj-pulse 0.35s ease-in-out infinite; }
+  @keyframes proj-pulse{ 50%{ transform: scale(1.3); } }.m-game .projectile.proj-charge{ width: 30px; height: 6px; background: linear-gradient(90deg, #6b4a2a 0 78%, #d9d9d9 78%); clip-path: polygon(0 30%, 78% 30%, 78% 0, 100% 50%, 78% 100%, 78% 70%, 0 70%); }
+  @media (prefers-reduced-motion: reduce){.m-game .range-weapon, .m-game .target, .m-game .target .butt, .m-game .ans{ transition: none; }.m-game .target.hit .butt{ animation: none; } }.m-game .feedback{
     margin-top: 18px;
     padding: 14px 16px;
     border-radius: 2px;
@@ -1127,7 +1208,7 @@
   @media (max-width: 640px){.m-atlas .stage, .m-atlas .stage > *, .m-atlas .frame, .m-atlas .map-area{ min-width: 0; }.m-atlas .map-area{ overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }.m-atlas .map-svg{ width: 680px; max-width: none; }.m-atlas .zoom-controls, .m-atlas .map-vignette{ display: none; }.m-atlas .map-swipe-hint{ display: block; margin: 6px 0 0; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-dim); letter-spacing: 0.08em; }
   }
 
-  /* ============ MODULE: LABORATOR ȘI MUZEU VIRTUAL (.m-lab) ============ */
+  /* ============ MODULE: MUZEU (.m-lab) ============ */
 
   .m-lab{
     --parchment: #f4e4bc;
@@ -1208,7 +1289,7 @@
   <a href="#mod-game">Campania Hunilor</a>
   <a href="#mod-embassy">Solia la Attila</a>
   <a href="#mod-atlas">Atlasul Migrației</a>
-  <a href="#mod-lab">Laborator &amp; Muzeu</a>
+  <a href="#mod-lab">Muzeu</a>
   <button class="about-trigger" id="about-trigger" type="button">ℹ Despre proiect</button>
 </nav>
 
@@ -1224,7 +1305,7 @@
       <li><strong>Campania Hunilor</strong> — joc de strategie/decizie despre expansiunea hunică.</li>
       <li><strong>Solia la Attila</strong> — joc narativ bazat pe relatarea lui Priscus din Panium.</li>
       <li><strong>Atlasul Migrației</strong> — hartă interactivă cu rutele Marii Migrații.</li>
-      <li><strong>Laborator &amp; Muzeu</strong> — artefacte hunice explorabile și dezbaterea mit vs. adevăr paleogenetic.</li>
+      <li><strong>Muzeu</strong> — artefacte hunice reale, explorabile pe fotografie, și dezbaterea mit vs. adevăr paleogenetic.</li>
     </ul>
     <p>Navighezi cu meniul de sus sau cu butoanele „Pagina anterioară / următoare” de jos.</p>
 
@@ -1238,7 +1319,7 @@
 
     <h3>Despre imagini — ce e document și ce e ilustrație</h3>
     <ul>
-      <li><strong>Fotografiile de artefact</strong> din Laborator sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, licențe CC BY-SA).</li>
+      <li><strong>Fotografiile de artefact</strong> din Muzeu sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, licențe CC BY-SA).</li>
       <li><strong>Fundalul cartografic</strong> al diagramei despre habitatul timpuriu este o hartă istorică publicată, reprodusă cu indicarea sursei.</li>
       <li><strong>Imaginile de atmosferă</strong> — peisaje și scene din antetele modulelor — sunt generate cu instrumente AI și au rol pur decorativ. Ele nu sunt și nu trebuie citite ca surse istorice.</li>
     </ul>
@@ -1482,7 +1563,7 @@
       <h3 class="sub-title">Ecoul în spațiul carpato-danubiano-pontic</h3>
       <p>Pentru teritoriul de azi al României, secolul al V-lea nu e o notă de subsol a istoriei hunice, ci chiar scena ei. Dunărea era granița Imperiului, iar Dacia Ripensis și Moesia se aflau exact pe direcția campaniilor hunice: în 408, hunii conduși de Uldin cuceresc <em>Castra Martis</em>, în Dacia Ripensis<sup class="fn" data-n="20">20</sup>, iar campaniile din 441–447 lovesc Viminacium, pe Dunăre, și Naissus, în interior.</p>
       <p>Urmele materiale sunt la fel de concrete. Aur roman ajuns dincolo de graniță a fost descoperit la <b>Dolhești</b> (Moldova), iar la <b>Șimleul Silvaniei</b> (Transilvania) au apărut două tezaure spectaculoase, alcătuite în principal din medalioane imperiale de aur și podoabe, atribuite de obicei unei elite germanice — probabil gepide — din secolele IV–V<sup class="fn" data-n="18">18</sup>. Cazane hunice de bronz au fost semnalate și pe teritoriul României<sup class="fn" data-n="19">19</sup> — aceleași obiecte de cult și prestigiu ca în Bazinul Carpatic. Cea mai celebră piesă a epocii, <b>tezaurul de la Pietroasa</b> („Cloșca cu puii de aur”), este un tezaur gotic, nu hunic<sup class="fn" data-n="22">22</sup>: tocmai de aceea e relevant aici, fiindcă a fost probabil îngropat de o elită germanică sub presiunea evenimentelor declanșate de sosirea hunilor.</p>
-      <p>Cea mai grăitoare piesă descoperită pe teritoriul României este însă <b>diadema de la Gherăseni</b> (județul Buzău) — expusă și explorabilă în detaliu în modulul <a href="#mod-lab">Laborator &amp; Muzeu</a> al acestui site. Găsită în 1965 la Grindul Cremenea, într-un mormânt de înhumație din prima jumătate a secolului al V-lea, e lucrată pe un miez de bronz acoperit cu foiță de aur și împodobită cu almandine montate <em>à cabochon</em>, în stilul policrom al epocii. Analiza antropologică a arătat că scheletul aparținea unei femei cu <b>craniul deformat artificial</b> — aceeași practică de elită despre care vorbesc izvoarele. Piesa face parte din patrimoniul Muzeului Județean Buzău și se înscrie într-o serie de circa 25 de diademe asemănătoare, descoperite pe un areal imens, din Kazahstanul de azi până în Europa Centrală<sup class="fn" data-n="21">21</sup>.</p>
+      <p>Cea mai grăitoare piesă descoperită pe teritoriul României este însă <b>diadema de la Gherăseni</b> (județul Buzău) — expusă și explorabilă în detaliu în modulul <a href="#mod-lab">Muzeu</a> al acestui site. Găsită în 1965 la Grindul Cremenea, într-un mormânt de înhumație din prima jumătate a secolului al V-lea, e lucrată pe un miez de bronz acoperit cu foiță de aur și împodobită cu almandine montate <em>à cabochon</em>, în stilul policrom al epocii. Analiza antropologică a arătat că scheletul aparținea unei femei cu <b>craniul deformat artificial</b> — aceeași practică de elită despre care vorbesc izvoarele. Piesa face parte din patrimoniul Muzeului Județean Buzău și se înscrie într-o serie de circa 25 de diademe asemănătoare, descoperite pe un areal imens, din Kazahstanul de azi până în Europa Centrală<sup class="fn" data-n="21">21</sup>.</p>
       <p class="source-caution"><b>O precizare necesară.</b> Prezența unor obiecte „hunice” într-un mormânt nu dovedește că cel îngropat era hun. În secolul al V-lea, stilul policrom cu granate, cazanele de bronz și chiar deformarea craniană circulau între popoare ca modă a elitelor. Ele arată apartenența la o lume politică dominată de huni, nu neapărat originea etnică a purtătorului — iar „prințesa” de la Gherăseni e un exemplu bun tocmai fiindcă originea ei etnică rămâne deschisă.</p>
     </section>
 
@@ -1539,7 +1620,7 @@
 
 <footer class="site-final-footer">
   Proiect realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală” — Secțiunea I, Istorie.<br>
-  Cinci module: articol cu note și bibliografie, două jocuri interactive, o hartă istorică și un laborator/muzeu virtual.<br>
+  Cinci module: articol cu note și bibliografie, două jocuri interactive, o hartă istorică și un muzeu virtual.<br>
   Surse: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Iordanes, Olympiodorus, Claudian, Merobaudes, Sidonius Apollinaris, Zosimus, Ioannes Malalas — și cercetări moderne (Kiessling, Altheim, Werner, Sinor, Haussig, De Guignes, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Neparáczki, Maróti).
 </footer>
 </div>
@@ -1639,11 +1720,16 @@
       </div>
       <p class="mech-label" id="mech-label">—</p>
       <div class="range" id="range">
-        <div class="range-weapon" id="range-weapon">ARC</div>
+        <div class="range-sky" aria-hidden="true"></div>
+        <div class="range-hills" aria-hidden="true"></div>
+        <div class="range-ground" aria-hidden="true"></div>
+        <div class="range-targets" id="range-targets"></div>
         <div class="aim-line" id="aim-line"></div>
         <div class="nock" id="nock"></div>
-        <div class="range-targets" id="range-targets"></div>
+        <div class="range-weapon" id="range-weapon" aria-hidden="true"></div>
+        <p class="range-hint" id="range-hint" aria-hidden="true">Trage înapoi din armă, țintește și eliberează</p>
       </div>
+      <div class="answer-list" id="answer-list" role="group" aria-label="Variante de răspuns"></div>
       <div class="feedback" id="feedback">
         <span class="tag" id="fb-tag"></span>
         <span id="fb-text"></span>
@@ -1986,10 +2072,10 @@
 
 <div class="wrap">
   <div class="masthead">
-    <p class="eyebrow">Modul avansat · concurs de istorie</p>
-    <div class="mod-chapter"><span class="n">05</span><span class="t">Laborator &amp; Muzeu</span></div>
-    <h1 class="title">Laborator și Muzeu Virtual</h1>
-    <p class="sub">Patru artefacte hunice fotografiate în muzee și dezbaterea dintre cronici și genetica modernă.</p>
+    <p class="eyebrow">Colecție virtuală · piese reale din muzee</p>
+    <div class="mod-chapter"><span class="n">05</span><span class="t">Muzeu</span></div>
+    <h1 class="title">Muzeul Hunilor</h1>
+    <p class="sub">Patru artefacte hunice, în fotografii reale din colecții muzeale: apasă pe punctele numerotate pentru detalii. La final, mituri și adevăruri despre huni, verificate cu izvoarele și cu genetica modernă.</p>
   </div>
 
   <!-- ============ MODULE 1 ============ -->
@@ -2648,6 +2734,7 @@
   var aimLineEl = document.getElementById('aim-line');
   var nockEl = document.getElementById('nock');
   var targetsEl = document.getElementById('range-targets');
+  var answerListEl = document.getElementById('answer-list');
   var NOCK_LEN = 32;
   var hudLeft = document.getElementById('hud-left');
   var scorePill = document.getElementById('score-pill');
@@ -2887,24 +2974,104 @@
   // MECANICA DE ȚINTIRE (trage cu degetul/mouse-ul spre răspuns)
   // ============================================================
 
-  // [left%, top%] positions for the 4 targets, fanned out from the weapon anchor (bottom-left).
-  var TARGET_POS = [[34, 14], [70, 20], [82, 58], [56, 86]];
-  var WEAPON_ANCHOR_PCT = [10, 84];
+  // [left%, top%, scale] for the 4 targets: farther ones sit higher and look smaller.
+  var TARGET_POS = [[36, 52, 0.78], [57, 50, 0.68], [78, 56, 0.86], [62, 78, 0.98]];
+  var WEAPON_ANCHOR_PCT = [9, 80];
   var letters = ['A', 'B', 'C', 'D'];
+
+  // Armele desenate — toate îndreptate spre +x (direcția de țintire).
+  // Arcul e cel compozit asimetric, specific hunilor: brațul de sus e mai lung.
+  var WEAPON_SVG = {
+    arrow: '<svg viewBox="-40 -40 80 80" xmlns="http://www.w3.org/2000/svg">' +
+      '<path class="string-rest" d="M-6,-31 L-6,24" stroke="#e6d7c3" stroke-width="1.2"/>' +
+      '<path class="string-drawn" d="M-6,-31 L-18,0 L-6,24" stroke="#e6d7c3" stroke-width="1.2" fill="none"/>' +
+      '<path d="M-6,-31 C0,-33 2,-30 3,-26 C8,-16 10,-6 7,0 C10,6 8,14 3,20 C2,24 0,26 -6,24" fill="none" stroke="#5a3a1c" stroke-width="5" stroke-linecap="round"/>' +
+      '<path d="M-6,-31 C0,-33 2,-30 3,-26 C8,-16 10,-6 7,0 C10,6 8,14 3,20 C2,24 0,26 -6,24" fill="none" stroke="#b07a3a" stroke-width="2.6" stroke-linecap="round"/>' +
+      '<path d="M-7,-33 L-2,-29 M-7,26 L-2,23" stroke="#e6d7c3" stroke-width="2" stroke-linecap="round"/>' +
+      '<rect x="4" y="-4" width="6" height="8" rx="1.5" fill="#8b0000"/>' +
+      '</svg>',
+    lens: '<svg viewBox="-40 -40 80 80" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="M-26,0 L-4,0" stroke="#5a3a1c" stroke-width="6" stroke-linecap="round"/>' +
+      '<circle cx="10" cy="0" r="13" fill="rgba(230,215,195,0.18)" stroke="#d4af37" stroke-width="4"/>' +
+      '<path d="M4,-6 A8,8 0 0 1 12,-8" stroke="#f6ecd9" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+      '</svg>',
+    charge: '<svg viewBox="-40 -40 80 80" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="M-30,0 L22,0" stroke="#5a3a1c" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M20,-5 L34,0 L20,5 Z" fill="#d9d9d9" stroke="#6b6b6b" stroke-width="1"/>' +
+      '<path d="M-14,-1 L-14,-16 L4,-11 L-4,-8 L4,-4 L-14,-1 Z" fill="#8b0000" stroke="#d4af37" stroke-width="1"/>' +
+      '</svg>'
+  };
+
+  function targetCenter(i){
+    var te = document.getElementById('target-' + i);
+    if (!te) return null;
+    var tr = te.querySelector('.butt').getBoundingClientRect();
+    return { x: tr.left + tr.width / 2, y: tr.top + tr.height / 2 };
+  }
+
+  function setAimed(i){
+    for (var k = 0; k < 4; k++) {
+      var te = document.getElementById('target-' + k), ae = document.getElementById('ans-' + k);
+      if (te) te.classList.toggle('aimed', k === i);
+      if (ae) ae.classList.toggle('aimed', k === i);
+    }
+  }
+
+  function nearestTarget(angle){
+    var anchor = rangeAnchorPx();
+    var best = -1, bestDiff = Infinity;
+    for (var i = 0; i < 4; i++) {
+      var c = targetCenter(i);
+      if (!c) continue;
+      var ta = Math.atan2(c.y - anchor.y, c.x - anchor.x);
+      var diff = Math.abs(Math.atan2(Math.sin(ta - angle), Math.cos(ta - angle)));
+      if (diff < bestDiff) { bestDiff = diff; best = i; }
+    }
+    return best;
+  }
 
   function buildTargets(){
     targetsEl.innerHTML = '';
+    answerListEl.innerHTML = '';
     var lv = LEVELS[state.levelIndex];
     var q = lv.questions[state.qIndex];
+    weaponEl.innerHTML = WEAPON_SVG[lv.mechanic] || WEAPON_SVG.arrow;
+    weaponEl.style.setProperty('--aim', '-24deg');
     q.opts.forEach(function(optText, i){
       var t = document.createElement('div');
       t.className = 'target';
       t.id = 'target-' + i;
       t.style.left = TARGET_POS[i][0] + '%';
       t.style.top = TARGET_POS[i][1] + '%';
-      t.innerHTML = '<div class="ring">' + letters[i] + '</div><div class="txt">' + optText + '</div>';
+      t.style.setProperty('--s', TARGET_POS[i][2]);
+      t.innerHTML = '<div class="butt"><b>' + letters[i] + '</b></div><div class="stand"></div>';
       targetsEl.appendChild(t);
+
+      var a = document.createElement('button');
+      a.type = 'button';
+      a.className = 'ans';
+      a.id = 'ans-' + i;
+      a.innerHTML = '<span class="ans-letter" aria-hidden="true">' + letters[i] + '</span><span class="ans-txt"></span>';
+      a.querySelector('.ans-txt').textContent = optText;
+      a.setAttribute('aria-label', 'Varianta ' + letters[i] + ': ' + optText);
+      a.addEventListener('mouseenter', function(){ if (!state.answered && !drag.active) setAimed(i); });
+      a.addEventListener('mouseleave', function(){ if (!state.answered && !drag.active) setAimed(-1); });
+      a.addEventListener('click', function(){ shootAtTarget(i); });
+      answerListEl.appendChild(a);
     });
+  }
+
+  // Answering from the list (or keyboard): turn the weapon toward that target and loose.
+  function shootAtTarget(i){
+    if (state.answered) return;
+    var anchor = rangeAnchorPx();
+    var c = targetCenter(i);
+    if (!c) return;
+    var ang = Math.atan2(c.y - anchor.y, c.x - anchor.x);
+    drag.lastAngle = ang;
+    weaponEl.style.setProperty('--aim', (ang * 180 / Math.PI) + 'deg');
+    setAimed(i);
+    fireAt(i);
   }
 
   function stopTimer(){
@@ -2951,7 +3118,6 @@
     qEraEl.textContent = q.era;
     qTextEl.textContent = q.q;
     mechLabelEl.textContent = lv.mechLabel;
-    weaponEl.textContent = lv.mechIcon;
     rangeEl.className = 'range mech-' + lv.mechanic;
     buildTargets();
     feedbackEl.className = 'feedback';
@@ -3019,6 +3185,9 @@
     nockEl.style.left = localX + 'px';
     nockEl.style.top = localY + 'px';
     nockEl.style.transform = 'translateY(-50%) rotate(' + angleDeg + 'deg)';
+    weaponEl.style.setProperty('--aim', angleDeg + 'deg');
+    rangeEl.classList.add('is-aiming');
+    if (rawDist >= 22) setAimed(nearestTarget(angleRad)); else setAimed(-1);
 
     // The dashed line continues from the arrow's tip onward, along the same ray.
     var remaining = Math.max(0, dist - NOCK_LEN);
@@ -3052,24 +3221,17 @@
     var anchor = rangeAnchorPx();
     var dx = e.clientX - anchor.x, dy = e.clientY - anchor.y;
     var dist = Math.hypot(dx, dy);
+    rangeEl.classList.remove('is-aiming');
     if (dist < 22) {
       aimLineEl.style.width = '0';
       nockEl.classList.remove('show');
+      setAimed(-1);
       return;
     }
     var shootAngle = Math.atan2(dy, dx);
     drag.lastAngle = shootAngle;
-    var best = -1, bestDiff = Infinity;
-    for (var i = 0; i < 4; i++) {
-      var te = document.getElementById('target-' + i);
-      if (!te) continue;
-      var tr = te.getBoundingClientRect();
-      var tx = tr.left + tr.width / 2, ty = tr.top + tr.height / 2;
-      var ta = Math.atan2(ty - anchor.y, tx - anchor.x);
-      var diff = Math.abs(Math.atan2(Math.sin(ta - shootAngle), Math.cos(ta - shootAngle)));
-      if (diff < bestDiff) { bestDiff = diff; best = i; }
-    }
-    if (best < 0) { aimLineEl.style.width = '0'; nockEl.classList.remove('show'); return; }
+    var best = nearestTarget(shootAngle);
+    if (best < 0) { aimLineEl.style.width = '0'; nockEl.classList.remove('show'); setAimed(-1); return; }
     aimLineEl.style.width = '0';
     fireAt(best);
   }
@@ -3086,18 +3248,19 @@
     var anchor = rangeAnchorPx();
     var startPt = tipPoint(anchor, drag.lastAngle);
     var te = document.getElementById('target-' + i);
-    var tr = te.getBoundingClientRect();
-    var endX = tr.left + tr.width / 2, endY = tr.top + tr.height / 2;
+    var c = targetCenter(i);
+    var endX = c.x, endY = c.y;
+    var angle = Math.atan2(endY - startPt.y, endX - startPt.x) * 180 / Math.PI;
+    rangeEl.classList.remove('is-aiming');
+    rangeEl.classList.add('is-done');
+    answerListEl.querySelectorAll('.ans').forEach(function(b){ b.disabled = true; });
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) { nockEl.classList.remove('show'); revealAnswer(i); return; }
+    if (reduced) { nockEl.classList.remove('show'); stickArrow(te, angle, lv.mechanic); revealAnswer(i); return; }
     var proj = document.createElement('div');
     proj.className = 'projectile proj-' + lv.mechanic;
-    var icons = { arrow: '➤', stone: '', lens: '◎', charge: '▲' };
-    proj.textContent = icons[lv.mechanic] || '';
     proj.style.left = startPt.x + 'px';
     proj.style.top = startPt.y + 'px';
-    var angle = Math.atan2(endY - startPt.y, endX - startPt.x) * 180 / Math.PI;
-    proj.style.transform = 'translate(-50%,-50%) rotate(' + (lv.mechanic === 'arrow' ? angle : 0) + 'deg)';
+    proj.style.transform = 'translate(-50%,-50%) rotate(' + (lv.mechanic === 'lens' ? 0 : angle) + 'deg)';
     document.body.appendChild(proj);
     requestAnimationFrame(function(){
       proj.style.transition = 'left 0.32s cubic-bezier(.25,.6,.3,1), top 0.32s cubic-bezier(.25,.6,.3,1)';
@@ -3108,8 +3271,17 @@
       proj.remove();
       nockEl.classList.remove('show');
       te.classList.add('hit');
+      stickArrow(te, angle, lv.mechanic);
       revealAnswer(i);
     }, 340);
+  }
+
+  function stickArrow(te, angle, mechanic){
+    if (mechanic === 'lens' || !te) return;
+    var s = document.createElement('span');
+    s.className = 'stuck';
+    s.style.setProperty('--hit-angle', angle + 'deg');
+    te.querySelector('.butt').appendChild(s);
   }
 
   function revealAnswer(i, isTimeout){
@@ -3118,10 +3290,15 @@
     for (var idx = 0; idx < 4; idx++) {
       var te = document.getElementById('target-' + idx);
       if (!te) continue;
-      if (idx === q.correct) te.classList.add('correct');
-      else if (idx === i && !isTimeout) te.classList.add('wrong');
-      else te.classList.add('dim');
+      var ae = document.getElementById('ans-' + idx);
+      te.classList.remove('aimed');
+      if (ae) { ae.classList.remove('aimed'); ae.disabled = true; }
+      if (idx === q.correct) { te.classList.add('correct'); if (ae) ae.classList.add('correct'); }
+      else if (idx === i && !isTimeout) { te.classList.add('wrong'); if (ae) ae.classList.add('wrong'); }
+      else { te.classList.add('dim'); if (ae) ae.classList.add('dim'); }
     }
+    rangeEl.classList.remove('is-aiming');
+    rangeEl.classList.add('is-done');
     var correct = (!isTimeout && i === q.correct);
     var pip = document.getElementById('pip-' + state.levelIndex + '-' + state.qIndex);
     if (pip) pip.classList.add(correct ? 'good' : 'bad');
