@@ -133,7 +133,7 @@ const ABOUT_HTML = `
       <li><strong>Campania Hunilor</strong> — joc de strategie/decizie despre expansiunea hunică.</li>
       <li><strong>Solia la Attila</strong> — joc narativ bazat pe relatarea lui Priscus din Panium.</li>
       <li><strong>Atlasul Migrației</strong> — hartă interactivă cu rutele Marii Migrații.</li>
-      <li><strong>Muzeu</strong> — artefacte hunice reale, explorabile pe fotografie, și dezbaterea mit vs. adevăr paleogenetic.</li>
+      <li><strong>Muzeu</strong> — artefacte hunice reale, explorabile pe fotografie, și mituri despre huni verificate cu izvoarele și genetica.</li>
     </ul>
     <p>Navighezi cu meniul de sus sau cu butoanele „Pagina anterioară / următoare” de jos.</p>
 
@@ -147,8 +147,9 @@ const ABOUT_HTML = `
 
     <h3>Despre imagini — ce e document și ce e ilustrație</h3>
     <ul>
-      <li><strong>Fotografiile de artefact</strong> din Muzeu sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, licențe CC BY-SA).</li>
-      <li><strong>Fundalul cartografic</strong> al diagramei despre habitatul timpuriu este o hartă istorică publicată, reprodusă cu indicarea sursei.</li>
+      <li><strong>Fotografiile de artefact</strong> din Muzeu sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, licențe libere CC BY-SA sau CC0).</li>
+      <li><strong>Fundalul cartografic</strong> al diagramei despre habitatul timpuriu este o hartă istorică publicată, reprodusă cu indicarea sursei. Tot documente publicate sunt și cele două hărți istorice din articol (Wikimedia Commons, cu licența afișată).</li>
+      <li><strong>Fondul de hartă în stil antic</strong> din Atlas și din harta interactivă a Marii Migrații este o ilustrație generată cu AI, fără nicio inscripție. Tot ce se află peste el — orașe, bătălii, râuri, zone și trasee — a fost poziționat manual, pe coordonatele geografice reale, și se sprijină pe sursele citate.</li>
       <li><strong>Imaginile de atmosferă</strong> — peisaje și scene din antetele modulelor — sunt generate cu instrumente AI și au rol pur decorativ. Ele nu sunt și nu trebuie citite ca surse istorice.</li>
     </ul>
 
@@ -157,11 +158,11 @@ const ABOUT_HTML = `
       <li>HTML5 cu <code>lang="ro"</code>, <code>charset</code> și <code>viewport</code> declarate; CSS3 fără preprocesor</li>
       <li>Layout responsive (mobil, tabletă, desktop), testat pe lățimi de la 375px în sus</li>
       <li>Reper <code>&lt;main&gt;</code>, atribute <code>aria-label</code> pe hărțile SVG și hotspot-uri activabile de la tastatură (Enter/Space)</li>
-      <li>Pagina rulează dintr-un singur fișier, fără server sau pas de build; singura resursă externă este fontul de pe Google Fonts (fără el, textul se afișează cu fonturi de rezervă)</li>
+      <li>Pagina rulează dintr-un singur fișier, fără server și fără instalare; singura resursă externă este fontul de pe Google Fonts (fără el, textul se afișează cu fonturi de rezervă)</li>
     </ul>
 
     <h3>Valoare educațională</h3>
-    <p>Proiectul poate fi folosit la orele de istorie de gimnaziu/liceu ca material interactiv: jocurile de decizie (Campania Hunilor, Solia la Attila) funcționează ca fișe de lucru/teste de verificare a înțelegerii contextului istoric, iar Atlasul și Laboratorul susțin localizarea geografică și analiza de sursă istorică.</p>
+    <p>Proiectul poate fi folosit la orele de istorie de gimnaziu/liceu ca material interactiv: jocurile de decizie (Campania Hunilor, Solia la Attila) funcționează ca fișe de lucru/teste de verificare a înțelegerii contextului istoric, iar Atlasul și Muzeul susțin localizarea geografică și analiza de sursă istorică.</p>
     <p><strong>Despre mecanica de mize.</strong> Solidii pariați înainte de fiecare întrebare nu recompensează viteza, ci <em>calibrarea încrederii</em>: elevul e pus să estimeze cât de sigur este pe propriul răspuns înainte de a-l afla pe cel corect. E un exercițiu de metacogniție, folosit și în evaluarea formativă sub numele de confidence-based marking. Limita de timp este opțională și poate fi oprită, iar explicația istorică apare integral după fiecare răspuns, indiferent de miză sau de rezultat.</p>
 
     <h3>Autor &amp; coordonare</h3>

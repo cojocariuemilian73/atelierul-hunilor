@@ -11,18 +11,18 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
 ## Structura folderului
 
 - `atelierul-hunilor.html` — pagina combinată finală (aceasta e livrarea)
-- `module-individuale/` — cele 5 module ca fișiere separate, de sine stătătoare (utile pentru testare izolată sau dacă vrei să lucrezi pe un singur modul):
+- `module-individuale/` — cele 5 module ca fișiere separate, de sine stătătoare (regenerate automat din aceleași surse ca pagina combinată, cu `scripturi-build/build-standalone.js`):
   - `huni-prezentare.html` — articolul academic (Acasă / Context / Cronologie / Marea Migrație / Personalități)
   - `huni-migratia.html` — jocul „Campania Hunilor"
   - `solia-la-attila.html` — jocul „Solia la Attila"
-  - `atlas-hunic.html` — harta interactivă (D3.js + date geografice reale)
+  - `atlas-hunic.html` — harta interactivă (orașe, bătălii și trasee poziționate pe coordonate geografice reale)
   - `laborator-muzeu.html` — Muzeul Hunilor (artefacte reale fotografiate în muzee, mit vs. adevăr paleogenetic)
 - `build/` — piesele intermediare din care e asamblată pagina combinată (CSS/JS/HTML separate pe modul + `FINAL.html`, rezultatul brut al asamblării)
 - `scripturi-build/` — scripturile Node.js folosite ca să reconstruiesc pagina combinată după orice modificare:
   - `scope-css.js` — izolează CSS-ul fiecărui modul sub o clasă unică, ca stilurile să nu se ciocnească
   - `assemble.js` — combină toate modulele într-un singur `FINAL.html`
   - `deglow.js` / `extract.js` — scripturi folosite punctual în etapele de curățare a designului
-- `imagini/` — imaginile generate (Flux/Midjourney) folosite ca fundaluri, deja integrate în pagini (încorporate direct ca `base64` în HTML).
+- `imagini/` — imaginile folosite: fotografii de artefacte și hărți istorice de pe Wikimedia Commons (cu licența afișată în pagină) și ilustrații de atmosferă generate cu AI, pur decorative; toate sunt încorporate direct ca `base64` în HTML.
 
 ## Cum reconstruiesc pagina după o modificare
 
