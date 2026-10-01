@@ -41,7 +41,12 @@ const NAV_CSS = `
   }
   .site-nav a:hover{ color: #f0e6d6; }
   .site-nav a.current{ color: #e5c158; border-bottom-color: #e5c158; }
-  #mod-game, #mod-embassy, #mod-atlas, #mod-lab{ padding-block: 28px; }
+  #mod-game, #mod-embassy, #mod-lab{ padding-block: 28px; }
+  .atlas-in-article{ margin-top: 8px; }
+  .atlas-in-article > .wrap{ padding: 0; max-width: none; }
+  .m-atlas.atlas-in-article .stage{ grid-template-columns: 1fr; margin-top: 14px; }
+  .m-atlas.atlas-in-article .sidebar{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px){ .m-atlas.atlas-in-article .sidebar{ grid-template-columns: 1fr; } }
 
   /* only the active page is shown — others are fully removed from flow/scroll */
   .site-page{ display: none; }
@@ -132,7 +137,7 @@ const ABOUT_HTML = `
       <li><strong>Acasă / Articol</strong> — studiu academic cu note de subsol, cronologie și bibliografie.</li>
       <li><strong>Campania Hunilor</strong> — joc de strategie/decizie despre expansiunea hunică.</li>
       <li><strong>Solia la Attila</strong> — joc narativ bazat pe relatarea lui Priscus din Panium.</li>
-      <li><strong>Atlasul Migrației</strong> — hartă interactivă cu rutele Marii Migrații.</li>
+      <li><strong>Atlasul Migrației</strong> — hartă interactivă cu rutele Marii Migrații, în pagina Acasă (capitolul 04 al articolului).</li>
       <li><strong>Muzeu</strong> — artefacte hunice reale, explorabile pe fotografie, și mituri despre huni verificate cu izvoarele și genetica.</li>
     </ul>
     <p>Navighezi cu meniul de sus sau cu butoanele „Pagina anterioară / următoare” de jos.</p>
@@ -179,7 +184,6 @@ const NAV_HTML = `
   <a href="#page-acasa">Acasă / Articol</a>
   <a href="#mod-game">Campania Hunilor</a>
   <a href="#mod-embassy">Solia la Attila</a>
-  <a href="#mod-atlas">Atlasul Migrației</a>
   <a href="#mod-lab">Muzeu</a>
   <button class="about-trigger" id="about-trigger" type="button">ℹ Despre proiect</button>
 </nav>
@@ -191,6 +195,35 @@ const storyBodyPatched = storyBody.replace(
   /<a class="cta-btn" href="https:\/\/claude\.ai\/artifact\/[^"]*" target="_blank" rel="noopener">Deschide Campania Hunilor →<\/a>/,
   '<a class="cta-btn" href="#mod-game">Deschide Campania Hunilor →</a>'
 );
+
+// The Atlas is part of the Acasă article (chapter 04), not a page of its own.
+// Its masthead is replaced by the article's own chapter heading.
+const atlasMastStart = atlasBody.indexOf('<div class="masthead">');
+const atlasMastEnd = atlasBody.indexOf('<div class="stage">');
+if (atlasMastStart === -1 || atlasMastEnd === -1) throw new Error('atlas masthead not found');
+const atlasSub = (atlasBody.slice(atlasMastStart, atlasMastEnd).match(/<p class="sub">([\s\S]*?)<\/p>/) || [, ''])[1];
+const atlasSection =
+  '\n    <section id="sec-atlas" class="m-atlas atlas-in-article">\n' +
+  '      <div class="chapter-mark"><span class="chapter-num">04</span><span class="chapter-slash">/</span><span class="chapter-tag">Atlasul migrației</span></div>\n' +
+  '      <h2 class="sec-title">Atlasul migrației hunice</h2>\n' +
+  '      <p class="sec-sub">' + atlasSub + '</p>\n' +
+  atlasBody.slice(0, atlasMastStart) + atlasBody.slice(atlasMastEnd) +
+  '\n    </section>\n';
+function withAtlas(body){
+  const migr = body.indexOf('<section id="sec-migratie">');
+  const end = body.indexOf('</section>', migr) + '</section>'.length;
+  if (migr === -1) throw new Error('sec-migratie not found');
+  body = body.slice(0, end) + '\n' + atlasSection + body.slice(end);
+  body = body
+    .replace('<span class="chapter-num">04</span><span class="chapter-slash">/</span><span class="chapter-tag">Personalități', '<span class="chapter-num">05</span><span class="chapter-slash">/</span><span class="chapter-tag">Personalități')
+    .replace('<span class="chapter-num">05</span><span class="chapter-slash">/</span><span class="chapter-tag">Bibliografie', '<span class="chapter-num">06</span><span class="chapter-slash">/</span><span class="chapter-tag">Bibliografie')
+    .replace('<a href="#sec-migratie" data-sec="sec-migratie" class="toc-link">Marea Migrație</a>\n      <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități &amp; Impact</a>',
+             '<a href="#sec-migratie" data-sec="sec-migratie" class="toc-link">Marea Migrație</a>\n      <a href="#sec-atlas" data-sec="sec-atlas" class="toc-link">Atlasul Migrației</a>\n      <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități &amp; Impact</a>')
+    .replace('<a href="#sec-migratie" data-sec="sec-migratie" class="toc-link">Marea Migrație</a>\n      <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități</a>',
+             '<a href="#sec-migratie" data-sec="sec-migratie" class="toc-link">Marea Migrație</a>\n      <a href="#sec-atlas" data-sec="sec-atlas" class="toc-link">Atlas</a>\n      <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități</a>');
+  if (body.indexOf('data-sec="sec-atlas"') === -1) throw new Error('TOC not updated');
+  return body;
+}
 
 // @import must be the FIRST thing inside <style> — any rule before it makes the
 // browser drop it silently, and every custom font falls back to a system face.
@@ -218,7 +251,7 @@ ${ABOUT_HTML}
 
 <main id="site-main">
 <div id="page-acasa" class="site-page">
-${storyBodyPatched}
+${withAtlas(storyBodyPatched)}
 <footer class="site-final-footer">
   Proiect realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală” — Secțiunea I, Istorie.<br>
   Cinci module: articol cu note și bibliografie, două jocuri interactive, o hartă istorică și un muzeu virtual.<br>
@@ -234,9 +267,6 @@ ${gameBody}
 ${embassyBody}
 </section>
 
-<section id="mod-atlas" class="m-atlas site-page">
-${atlasBody}
-</section>
 
 <section id="mod-lab" class="m-lab site-page">
 ${labBody}
@@ -245,7 +275,7 @@ ${labBody}
 
 <div class="site-pager">
   <button class="site-pager-btn" id="site-prev" type="button">← Pagina anterioară</button>
-  <span class="site-pager-count mono" id="site-page-count">1 / 5</span>
+  <span class="site-pager-count mono" id="site-page-count">1 / 4</span>
   <button class="site-pager-btn" id="site-next" type="button">Pagina următoare →</button>
 </div>
 `;
@@ -274,7 +304,7 @@ const navScrollspy = `
   // The site is now page-by-page (one module visible at a time), not one
   // long scroll: exactly one .site-page has .active at any time. The old
   // per-module <section id="mod-X"> ids double as page ids.
-  var PAGE_IDS = ['page-acasa', 'mod-game', 'mod-embassy', 'mod-atlas', 'mod-lab'];
+  var PAGE_IDS = ['page-acasa', 'mod-game', 'mod-embassy', 'mod-lab'];
   var pages = PAGE_IDS.map(function(id){ return document.getElementById(id); });
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.site-nav a'));
   var prevBtn = document.getElementById('site-prev');
