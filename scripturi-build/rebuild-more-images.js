@@ -190,7 +190,7 @@ edit(path.join(B, 'game.js'), [
   if (!s.includes('.li-fig')) s += `
   .li-fig{ margin: 4px 0 20px; }
   .li-fig[hidden]{ display: none; }
-  .li-fig img{ width: 100%; max-height: 300px; object-fit: cover; display: block; border: 1px solid var(--line-bright); border-radius: 2px; }
+  .li-fig img{ width: 100%; height: 300px; object-fit: contain; background: #0e0e10; display: block; border: 1px solid var(--line-bright); border-radius: 2px; }
   .li-fig figcaption{ margin-top: 7px; font-size: 0.76rem; line-height: 1.5; color: var(--ink-dim2); }
 `;
   fs.writeFileSync(file, s);
