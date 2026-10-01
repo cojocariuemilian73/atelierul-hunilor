@@ -185,6 +185,11 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   .base-map{ filter: sepia(0.35) saturate(0.85) brightness(0.92) contrast(1.02); }
   .map-credit{ margin: 6px 2px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--ink-dim); line-height: 1.5; }
 
+  .mt-fig{ margin: 6px 0 14px; }
+  .mt-fig[hidden]{ display: none; }
+  .mt-fig img{ width: 100%; max-height: 220px; object-fit: cover; display: block; border-radius: 2px; border: 1px solid var(--land-edge); }
+  .mt-fig figcaption{ margin-top: 6px; font-size: 0.74rem; line-height: 1.45; color: var(--ink-dim); }
+
 </style>
 </head>
 <body>
@@ -329,6 +334,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     <button class="modal-close" id="modal-close" type="button" aria-label="Închide">✕</button>
     <p class="modal-tag" id="mt-tag">—</p>
     <h3 id="mt-title">—</h3>
+    <figure class="mt-fig" id="mt-fig" hidden><img id="mt-img" alt=""><figcaption id="mt-cap"></figcaption></figure>
     <p id="mt-desc">—</p>
     <div class="quote-block" id="mt-quote-wrap">
       <p id="mt-quote">—</p>
@@ -498,6 +504,23 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   // MODAL de detaliu pentru fiecare marker
   // ============================================================
 
+  // Images for some places, reused from the rest of the site when it is on the page.
+  var MARKER_ART = {
+    0: { bg: '#acasa .hero-bg', alt: 'Fresca lui Rafael: papa Leon cel Mare și Attila, cu Roma în fundal.', cap: 'Rafael, <i>Întâlnirea lui Leon cel Mare cu Attila</i> (1514). Pictorul plasează scena sub zidurile Romei; în realitate, întâlnirea a avut loc în nordul Italiei, pe Mincio. Domeniu public.' },
+    2: { id: 'img-aquileia', cap: 'Attila asediază Aquileia, în <i>Cronica pictată de la Viena</i> (c. 1360). Domeniu public.' },
+    4: { id: 'img-ziduri', cap: 'Zidurile Theodosiene ale Constantinopolului. Foto: Carole Raddato, CC BY-SA 2.0.' },
+    5: { bg: '#mod-embassy .masthead-bg', alt: 'Pictura lui Mór Than: Attila pe tron, la ospăț, înconjurat de oaspeți.', cap: 'Mór Than, <i>Ospățul lui Attila</i> (1870), după descrierea lui Priscus. Domeniu public.' },
+    7: { id: 'img-catalaunice', cap: 'Bătălia de la Câmpiile Catalaunice în <i>Spieghel Historiael</i> (c. 1330). Domeniu public.' }
+  };
+  function markerArt(i){
+    var a = MARKER_ART[i];
+    if (!a) return null;
+    if (a.id) { var img = document.getElementById(a.id); return img ? { src: img.src, alt: img.alt, cap: a.cap } : null; }
+    var el = document.querySelector(a.bg);
+    var m = el && (el.style.backgroundImage || '').match(/url\(["']?(.*?)["']?\)$/);
+    return m ? { src: m[1], alt: a.alt, cap: a.cap } : null;
+  }
+
   function initMarkerModal(){
     var overlay = document.getElementById('modal-overlay');
 
@@ -508,6 +531,9 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
       document.getElementById('mt-tag').textContent = d.tag;
       document.getElementById('mt-title').textContent = d.title;
       document.getElementById('mt-desc').textContent = d.desc;
+      var art = markerArt(i), mtFig = document.getElementById('mt-fig');
+      if (art) { document.getElementById('mt-img').src = art.src; document.getElementById('mt-img').alt = art.alt; document.getElementById('mt-cap').innerHTML = art.cap; mtFig.hidden = false; }
+      else { mtFig.hidden = true; }
       if (d.quote && d.quote.text) {
         document.getElementById('mt-quote-wrap').style.display = 'block';
         document.getElementById('mt-quote').textContent = '“' + d.quote.text + '”';
