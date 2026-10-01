@@ -2098,7 +2098,6 @@
     <div class="stage-recap" id="stage-recap"></div>
 
     <div class="report-actions">
-      <button class="print-btn" id="print-btn" type="button">Printează raportul (sau salvează ca PDF)</button>
       <button class="again-btn" id="e-again-btn" type="button">Reia solia</button>
     </div>
   </div>
@@ -4187,7 +4186,6 @@
     }
 
     document.getElementById('e-again-btn').addEventListener('click', handleRestart);
-    document.getElementById('print-btn').addEventListener('click', function(){ window.print(); });
 
     renderResources(state);
     renderStage(state, handleChoose);
