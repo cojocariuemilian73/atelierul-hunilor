@@ -22,7 +22,8 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
   - `scope-css.js` — izolează CSS-ul fiecărui modul sub o clasă unică, ca stilurile să nu se ciocnească
   - `assemble.js` — combină toate modulele într-un singur `FINAL.html`
   - `deglow.js` / `extract.js` — scripturi folosite punctual în etapele de curățare a designului
-- `imagini/` — imaginile folosite: fotografii de artefacte și hărți istorice de pe Wikimedia Commons (cu licența afișată în pagină) și ilustrații de atmosferă generate cu AI, pur decorative; toate sunt încorporate direct ca `base64` în HTML.
+- `imagini/reale/` — imaginile folosite acum pe site, toate de pe Wikimedia Commons: fresca lui Rafael, gravura lui Geiger și pictura lui Mór Than (domeniu public) pentru antete și harta fizică a Europei (Alexrk2, CC BY-SA 3.0) pentru hărțile interactive. Fotografiile de artefact și hărțile istorice din articol sunt în `imagini/muzeu/`. Toate sunt încorporate direct ca `base64` în HTML. Restul fișierelor din `imagini/` sunt versiuni vechi, care nu mai sunt folosite.
+- `scripturi-build/geo.js` — proiecția hărții fizice: transformă latitudinea și longitudinea în poziția exactă pe imagine (aceleași formule pe care le folosește Wikipedia pentru această hartă).
 
 ## Cum reconstruiesc pagina după o modificare
 

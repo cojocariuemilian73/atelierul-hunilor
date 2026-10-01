@@ -145,12 +145,12 @@ const ABOUT_HTML = `
     </ul>
     <p><strong>Precizare:</strong> proiectul are un pas de build la <em>sursă</em> — scripturile Node.js care izolează CSS-ul și asamblează modulele. Livrabilul, în schimb, este un singur fișier HTML static, care se deschide direct în browser, fără server și fără instalare. Codul sursă, cu modulele separate și scripturile de asamblare, este public: <a href="https://github.com/cojocariuemilian73/atelierul-hunilor" target="_blank" rel="noopener">github.com/cojocariuemilian73/atelierul-hunilor</a>.</p>
 
-    <h3>Despre imagini — ce e document și ce e ilustrație</h3>
+    <h3>Despre imagini</h3>
     <ul>
-      <li><strong>Fotografiile de artefact</strong> din Muzeu sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, licențe libere CC BY-SA sau CC0).</li>
-      <li><strong>Fundalul cartografic</strong> al diagramei despre habitatul timpuriu este o hartă istorică publicată, reprodusă cu indicarea sursei. Tot documente publicate sunt și cele două hărți istorice din articol (Wikimedia Commons, cu licența afișată).</li>
-      <li><strong>Fondul de hartă în stil antic</strong> din Atlas și din harta interactivă a Marii Migrații este o ilustrație generată cu AI, fără nicio inscripție. Tot ce se află peste el — orașe, bătălii, râuri, zone și trasee — a fost poziționat pe coordonatele geografice reale, verificate pe grile de calibrare suprapuse peste hartă, și se sprijină pe sursele citate.</li>
-      <li><strong>Imaginile de atmosferă</strong> — peisaje și scene din antetele modulelor — sunt generate cu instrumente AI și au rol pur decorativ. Ele nu sunt și nu trebuie citite ca surse istorice.</li>
+      <li><strong>Fotografiile de artefact</strong> din Muzeu sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, CC BY-SA sau CC0).</li>
+      <li><strong>Imaginile din antetele modulelor</strong> sunt opere de artă reale, în domeniul public: fresca lui Rafael <em>Întâlnirea lui Leon cel Mare cu Attila</em> (1514), gravura lui J. N. Geiger <em>Hunii în luptă cu alanii</em> (c. 1873) și pictura lui Mór Than <em>Ospățul lui Attila</em> (1870). Sunt interpretări artistice târzii, nu surse despre secolul al V-lea.</li>
+      <li><strong>Hărțile istorice din articol</strong> (Ptolemeu–Porro, 1596; invaziile Imperiului Roman; campania lui Attila în Galia) sunt reproduse de pe Wikimedia Commons, cu licența afișată.</li>
+      <li><strong>Fondul hărților interactive</strong> (Atlas, Marea Migrație, harta campaniilor) este o hartă fizică reală a Europei (Alexrk2, Wikimedia Commons, CC BY-SA 3.0). Orașele, zonele și traseele sunt calculate din latitudine și longitudine, cu proiecția hărții.</li>
     </ul>
 
     <h3>Standarde respectate</h3>
