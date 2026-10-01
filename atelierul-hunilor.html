@@ -25,6 +25,8 @@
     color: #a89a85; padding: 13px 14px; border-bottom: 2px solid transparent; white-space: nowrap;
   }
   .site-nav a:hover{ color: #f0e6d6; }
+  .site-nav > a:first-of-type{ margin-left: auto; }
+  .site-nav > a:last-of-type{ margin-right: auto; }
   .site-nav a.current{ color: #e5c158; border-bottom-color: #e5c158; }
   #mod-game, #mod-embassy, #mod-lab{ padding-block: 28px; }
   .atlas-in-article{ margin-top: 8px; }
@@ -71,13 +73,14 @@
 
   /* ---------- ABOUT MODAL (Despre proiect / Fișă tehnică) ---------- */
   .about-trigger{
-    margin-left: auto; flex-shrink: 0;
+    margin-left: 8px; flex-shrink: 0;
     font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700;
     letter-spacing: 0.04em; text-transform: uppercase;
     color: #121214; background: #e5c158; border: none; cursor: pointer;
     padding: 8px 14px; align-self: center; margin-right: 4px; border-radius: 2px;
   }
   .about-trigger:hover{ background: #edcb77; }
+  @media (min-width: 900px){ .about-trigger{ position: absolute; right: 16px; top: 50%; transform: translateY(-50%); margin: 0; } }
   .about-overlay{
     display: none; position: fixed; inset: 0; z-index: 500;
     background: rgba(10,7,4,0.78); padding: 24px; overflow-y: auto;
