@@ -52,6 +52,33 @@ const PIECES = {
     ] }; },
 };
 
+PIECES.diadema = () => { const w = web('diadema-ermitaj.jpg', 'muzeu-diadema-ermitaj.jpg', 900); return {
+  name: 'Diadema de la Verhne-Pogromnoe',
+  kind: 'Piesă originală · sf. sec. IV – sec. V',
+  desc: 'Diademă hunică din argint și bronz, cu granate, descoperită în cimitirul de la Verhne-Pogromnoe (regiunea Volgograd), pe drumul hunilor spre Europa. Ermitajul de Stat, Sankt Petersburg, inv. 1953-30.',
+  credit: 'Ermitajul de Stat, Sankt Petersburg · foto Netelo, CC BY-SA 4.0, Wikimedia Commons',
+  alt: 'Diademă ovală cu granate roșii montate în celule, decor de triunghiuri din granule și zeci de tuburi metalice dispuse ca niște raze.',
+  ratio: w.ratio, img: w.uri,
+  hotspots: [
+    { x: 50, y: 23, title: 'Granatele în celule', desc: 'Pietrele roșii sunt granate (almandine), tăiate și montate fiecare în celula ei de metal. E același stil policrom ca la diadema de la Gherăseni — dovada unei mode comune elitei din tot spațiul dominat de huni.' },
+    { x: 42, y: 45, title: 'Triunghiurile din granule', desc: 'Câmpul dintre pietre e acoperit cu triunghiuri formate din bobițe minuscule de metal, lipite una câte una — tehnica granulației, care cerea o mare îndemânare.' },
+    { x: 86, y: 45, title: 'Tuburile ca niște raze', desc: 'Zecile de tuburi și pandantive dispuse în jur dădeau diademei aspectul unui soare. Mișcându-se odată cu purtătoarea, ele străluceau și sunau ușor.' },
+    { x: 33, y: 86, title: 'O piesă din răsărit', desc: 'Diademe asemănătoare (circa 25 cunoscute) au fost găsite de la Kazahstan până în Europa Centrală. Cea de la Volga și cea de la Gherăseni marchează două capete ale aceluiași drum.' },
+  ] }; };
+PIECES.apahida = () => { const w = web('apahida-sa.jpg', 'muzeu-apahida.jpg', 600, [40, 40, 640, 1290]); return {
+  name: 'Vulturul de la Apahida',
+  kind: 'Piesă originală · descoperire din România · a doua jumătate a sec. V',
+  desc: 'Garnitură de șa în formă de vultur, din tezaurul unui principe gepid descoperit la Apahida (jud. Cluj). Gepizii fuseseră supuși lui Attila; după moartea lui, regele lor Ardaric a condus răscoala de la Nedao (c. 454).',
+  credit: 'Muzeul Național de Istorie a României · foto CC BY-SA 4.0, Wikimedia Commons',
+  alt: 'Ornament în formă de vultur, cu aripile strânse, acoperit cu plăcuțe de granat roșu montate în celule de aur.',
+  ratio: w.ratio, img: w.uri,
+  hotspots: [
+    { x: 58, y: 12, title: 'Capul de vultur', desc: 'Ciocul curbat și ochiul rotund fac din piesă un vultur — pasăre a puterii, frecventă în arta elitelor germanice și stepice ale epocii.' },
+    { x: 45, y: 45, title: 'Pieptul cu solzi', desc: 'Pieptul e lucrat în tehnica cloisonné: sute de plăcuțe de granat tăiate exact pe forma celulelor de aur. Stilul policrom s-a răspândit în Europa tocmai prin lumea dominată de huni.' },
+    { x: 18, y: 45, title: 'Aripile', desc: 'Aripile au celule în formă de săgeată, umplute tot cu granate. Pe șa, perechea de vulturi strălucea în soare și arăta de departe rangul călărețului.' },
+    { x: 46, y: 90, title: 'Ghearele', desc: 'Picioarele se termină în granate mari, șlefuite. Piesa arată bogăția unui principe gepid după prăbușirea imperiului hunic — o elită care moștenea gustul și tehnicile epocii lui Attila.' },
+  ] }; };
+
 const keys = process.argv.slice(2);
 if (!keys.length) { console.error('usage: node rebuild-museum-more.js <key> ...'); process.exit(1); }
 let js = fs.readFileSync(JS, 'utf8');
