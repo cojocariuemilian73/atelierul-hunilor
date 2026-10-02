@@ -23,7 +23,6 @@ for (const m of MODULES) {
   const js = fs.readFileSync(path.join(B, m.mod + '.js'), 'utf8');
   body = body.replace(/\s*<div class="mod-chapter">.*?<\/div>\n/, '\n').replace(/^\s*\n+/, '');
   for (const [from, to] of Object.entries(LINKS)) body = body.split('href="' + from + '"').join('href="' + to + '"');
-  body = body.split('data-src="video/').join('data-src="../video/');
   const imports = (css.match(/@import url\([^)]*\);/g) || []).join('\n');
   css = css.replace(/@import url\([^)]*\);/g, '');
   const out = `<!DOCTYPE html>

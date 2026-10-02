@@ -46,9 +46,8 @@ const NAV_CSS = `
   #mod-game, #mod-embassy, #mod-lab{ padding-block: 28px; }
   .atlas-in-article{ margin-top: 8px; }
   .atlas-in-article > .wrap{ padding: 0; max-width: none; }
-  .m-atlas.atlas-in-article .stage{ grid-template-columns: 1fr; margin-top: 14px; }
-  .m-atlas.atlas-in-article .sidebar{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 640px){ .m-atlas.atlas-in-article .sidebar{ grid-template-columns: 1fr; } }
+  .m-atlas.atlas-in-article .stage{ grid-template-columns: 220px minmax(0, 1fr); margin-top: 14px; }
+  @media (max-width: 900px){ .m-atlas.atlas-in-article .stage{ grid-template-columns: 1fr; } }
 
   /* only the active page is shown — others are fully removed from flow/scroll */
   .site-page{ display: none; }
@@ -158,7 +157,6 @@ const ABOUT_HTML = `
       <li><strong>Fotografiile de artefact</strong> din Muzeu sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, CC BY-SA sau CC0).</li>
       <li><strong>Imaginile din antetele modulelor</strong> sunt opere de artă reale, în domeniul public: fresca lui Rafael <em>Întâlnirea lui Leon cel Mare cu Attila</em> (1514), gravura lui J. N. Geiger <em>Hunii în luptă cu alanii</em> (c. 1873) și pictura lui Mór Than <em>Ospățul lui Attila</em> (1870). Sunt interpretări artistice târzii, nu surse despre secolul al V-lea.</li>
       <li><strong>Ilustrațiile din articol, joc, solie și atlas</strong> sunt tot documente reale, fiecare cu autorul, data și licența în legendă: miniaturi medievale (<em>Cronica pictată de la Viena</em>, c. 1360; <em>Spieghel Historiael</em>, c. 1330), picturi și gravuri din secolul al XIX-lea (Delacroix, Paczka, de Neuville, Trenk) și fotografii (Zidurile Theodosiene, un solid al lui Teodosie al II-lea, craniul deformat de la Mözs). Picturile sunt interpretări artistice târzii, nu surse despre secolul al V-lea.</li>
-      <li><strong>Secvențele video</strong> (fundalul antetului din Acasă, introducerile celor patru campanii din joc și scena de la începutul Soliei) sunt <em>reconstituiri generate cu AI (Higgsfield)</em>, nu documente istorice: fiecare are pe ecran mențiunea „Reconstituire generată cu AI (Higgsfield)”. Sunt fișiere separate, în folderul <code>video/</code>; pagina funcționează și fără ele.</li>
       <li><strong>Hărțile istorice din articol</strong> (Ptolemeu–Porro, 1596; invaziile Imperiului Roman; campania lui Attila în Galia) sunt reproduse de pe Wikimedia Commons, cu licența afișată.</li>
       <li><strong>Fondul hărților interactive</strong> (Atlas, Marea Migrație, harta campaniilor) este o hartă fizică reală a Europei (Alexrk2, Wikimedia Commons, CC BY-SA 3.0). Orașele, zonele și traseele sunt calculate din latitudine și longitudine, cu proiecția hărții.</li>
     </ul>
