@@ -595,6 +595,9 @@
     .js-sr .sr-reveal, .js-sr .sr-row.sr-reveal .sr-media{ opacity: 1; transform: none; transition: none; }
   }
 
+  /* ecrane late */
+  @media (min-width: 1700px){ .page-shell{ max-width: 1680px; grid-template-columns: 240px minmax(0, 1240px); } .main-col{ max-width: 1240px; } .hero-inner{ max-width: 1480px; } }
+
   /* ============ MODULE: CAMPANIA HUNILOR (.m-game) ============ */
 
   .m-game{
@@ -1148,6 +1151,18 @@
   .m-game .bn-orow.correct .bn-ctl, .m-game .bn-orow.wrong .bn-ctl { display: none; }
   @media (max-width: 640px){ .m-game .bn-match { grid-template-columns: 1fr; } }
 
+  .m-game .sp-camps { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 10px; text-align: left; }
+  .m-game .sp-camp { display: flex; gap: 14px; align-items: center; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line-bright); border-radius: 2px; }
+  .m-game .sp-icon { flex: 0 0 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.05rem; color: var(--gold); clip-path: polygon(50% 0%, 100% 22%, 100% 78%, 50% 100%, 0% 78%, 0% 22%); }
+  .m-game .sp-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .m-game .sp-kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ember); }
+  .m-game .sp-title { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.02rem; color: var(--ink); }
+  .m-game .sp-meta { font-size: 0.8rem; color: var(--ink-dim2); }
+  @media (min-width: 1200px){ .m-game .wrap { max-width: 1160px; } .m-game .start-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; } .m-game .sp-camps { margin-top: 0; } .m-game .sp-main { text-align: center; } }
+  @media (min-width: 1200px){ .m-game #level-intro:has(> .li-fig:not([hidden])) { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 36px; align-items: start; } .m-game #level-intro:has(> .li-fig:not([hidden])) > * { grid-column: 1; } .m-game #level-intro:has(> .li-fig:not([hidden])) > .li-fig { grid-column: 2; grid-row: 1 / span 6; margin: 0; } .m-game .li-fig img { height: 380px; } }
+  @media (min-width: 1200px){ .m-game .range { aspect-ratio: 3 / 1; } }
+  @media (min-width: 1200px){ .m-game .bn-sort { display: grid; grid-template-columns: 1fr 1fr; } .m-game .bn-list { max-width: 860px; margin: 0 auto; } }
+
   /* ============ MODULE: SOLIA LA ATTILA (.m-embassy) ============ */
 
   .m-embassy{
@@ -1249,6 +1264,8 @@
     font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; line-height: 1.4; color: rgba(230, 215, 195, 0.78);
     text-shadow: 0 1px 2px rgba(0,0,0,0.9); pointer-events: none; }
   @media (max-width: 640px){.m-embassy .hero-credit{ font-size: 0.56rem; right: 8px; bottom: 6px; } }.m-embassy .masthead{ padding-bottom: clamp(40px, 6vw, 52px); }.m-embassy .stage-fig{ margin: 4px 0 20px; }.m-embassy .stage-fig img{ width: 100%; max-height: 260px; object-fit: cover; display: block; border: 1px solid var(--line, #3a3a45); border-radius: 2px; }.m-embassy .stage-fig figcaption{ margin-top: 7px; font-size: 0.76rem; line-height: 1.5; color: var(--ink-dim, #a89a85); }
+
+  @media (min-width: 1200px){ .m-embassy .wrap { max-width: 1240px; } .m-embassy #stage-view:has(> .stage-fig) { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 36px; align-items: start; } .m-embassy #stage-view:has(> .stage-fig) > * { grid-column: 2; } .m-embassy #stage-view:has(> .stage-fig) > .stage-fig { grid-column: 1; grid-row: 1 / span 8; margin: 0; position: sticky; top: 80px; } .m-embassy #stage-view .stage-fig img { max-height: 520px; } }
 
   /* ============ MODULE: ATLASUL MIGRAȚIEI (.m-atlas) ============ */
 
@@ -1422,6 +1439,10 @@
   @media (prefers-reduced-motion: reduce){.m-lab .flip-inner, .m-lab .flip-card, .m-lab .fc-arrow{ transition: none !important; }.m-lab .fc-anim .flip-card{ opacity: 1; transform: none; }
   }
   @media (max-width: 520px){.m-lab .flip-card{ height: 400px; }.m-lab .flip-front h4{ font-size: 1.22rem; } }.m-lab footer{ text-align: center; margin-top: 40px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-dim); }
+
+  @media (min-width: 1200px){ .m-lab .wrap { max-width: 1440px; } }
+  @media (min-width: 1300px){ .m-lab .artifact-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1400px){ .m-lab .flip-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; } }
 
 </style>
 </head>
@@ -1978,6 +1999,7 @@
   </div>
 
   <div class="panel start-panel" id="start-panel">
+    <div class="sp-main">
     <div class="stats-row">
       <div class="stat"><b>4</b><span>Campanii</span></div>
       <div class="stat"><b id="qcount">—</b><span>Întrebări</span></div>
@@ -1986,6 +2008,8 @@
     <button class="cta" id="start-btn">Pornește campania</button>
     <button class="timer-toggle" id="timer-toggle" type="button" aria-pressed="false">Limită de timp: pornită</button>
     <p class="sources"><b>Surse:</b> Ptolemeu (Geografia, 3.5.10), Ammianus Marcellinus (Res Gestae, 31.2.1), Priscus, Procopius, Agathias, Iordanes (Getica), cronici chineze despre Xiongnu, o scrisoare sogdiană din 311 d.Hr.</p>
+    </div>
+    <ol class="sp-camps" id="sp-camps" aria-label="Cele patru campanii"></ol>
   </div>
 
   <div id="campaign-map" hidden>
@@ -4017,6 +4041,24 @@
   });
 
   bnNext.addEventListener('click', showLevelComplete);
+
+  // Pe ecranul de start: cele patru campanii, cu tema și minijocul fiecăreia.
+  (function(){
+    var list = document.getElementById('sp-camps');
+    if (!list) return;
+    LEVELS.forEach(function(lv, i){
+      var li = el('li', 'sp-camp');
+      var ic = el('span', 'sp-icon', lv.icon);
+      ic.style.background = 'var(--' + lv.zone + '-bg)';
+      li.appendChild(ic);
+      var tx = el('span', 'sp-text');
+      tx.appendChild(el('span', 'sp-kicker', lv.kicker));
+      tx.appendChild(el('span', 'sp-title', lv.title));
+      tx.appendChild(el('span', 'sp-meta', lv.questions.length + ' întrebări · minijoc: ' + (BONUS[i] ? BONUS[i].name : 'Linia timpului')));
+      li.appendChild(tx);
+      list.appendChild(li);
+    });
+  })();
 
   function showLevelComplete(){
     var lv = LEVELS[state.levelIndex];
