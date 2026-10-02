@@ -1,8 +1,8 @@
 // Recreates build/ (which is in .gitignore, so a fresh clone does not have it)
 // from the five standalone pages in module-individuale/ plus the combined page.
-// It undoes exactly what build-standalone.js does (un-rewrites the links and
-// the video paths, puts back each module's "mod-chapter" heading and the blank
-// lines it trims) and copies the scoped CSS out of the combined page.
+// It undoes exactly what build-standalone.js does (un-rewrites the links, puts
+// back each module's "mod-chapter" heading and the blank lines it trims) and
+// copies the scoped CSS out of the combined page.
 // Then it runs assemble.js and checks that FINAL.html equals index.html byte
 // for byte, so the restored sources are known to be the real ones.
 //   node scripturi-build/restore-build.js
@@ -62,7 +62,6 @@ for (const m of MODULES) {
   let body = src.slice(src.indexOf('<main>\n') + 7, src.lastIndexOf('\n</main>'));
   body = leadingBlank(m.mod) + body;
   for (const [from, to] of Object.entries(LINKS)) body = body.split('href="' + to + '"').join('href="' + from + '"');
-  body = body.split('data-src="../video/').join('data-src="video/');
   for (const ch of chapters) {
     const at = body.indexOf('\n' + ch.next + '\n');
     if (at !== -1 && body.indexOf(ch.block) === -1) { body = body.slice(0, at) + ch.block + body.slice(at + 1); break; }
