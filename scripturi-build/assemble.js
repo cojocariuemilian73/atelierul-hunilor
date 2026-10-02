@@ -46,9 +46,8 @@ const NAV_CSS = `
   #mod-game, #mod-embassy, #mod-lab{ padding-block: 28px; }
   .atlas-in-article{ margin-top: 8px; }
   .atlas-in-article > .wrap{ padding: 0; max-width: none; }
-  .m-atlas.atlas-in-article .stage{ grid-template-columns: 1fr; margin-top: 14px; }
-  .m-atlas.atlas-in-article .sidebar{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 640px){ .m-atlas.atlas-in-article .sidebar{ grid-template-columns: 1fr; } }
+  .m-atlas.atlas-in-article .stage{ grid-template-columns: 220px minmax(0, 1fr); margin-top: 14px; }
+  @media (max-width: 900px){ .m-atlas.atlas-in-article .stage{ grid-template-columns: 1fr; } }
 
   /* only the active page is shown — others are fully removed from flow/scroll */
   .site-page{ display: none; }
