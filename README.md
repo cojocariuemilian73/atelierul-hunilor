@@ -11,6 +11,7 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
 ## Structura folderului
 
 - `atelierul-hunilor.html` — pagina combinată finală (aceasta e livrarea)
+- `qr-joc.html` — pagină de tipărit sau de proiectat, cu codul QR care deschide jocul pe telefon (generat cu `python scripturi-build/make-qr.py`, are nevoie de `pip install segno`).
 - `module-individuale/` — cele 5 module ca fișiere separate, de sine stătătoare (regenerate automat din aceleași surse ca pagina combinată, cu `scripturi-build/build-standalone.js`):
   - `huni-prezentare.html` — articolul academic (Acasă / Context / Cronologie / Marea Migrație / Personalități)
   - `huni-migratia.html` — jocul „Campania Hunilor"

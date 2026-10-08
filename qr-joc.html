@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joacă pe telefon — Campania Hunilor</title>
+<style>
+  :root{ --gold:#D4AF37; --night:#121214; --ink:#e6d7c3; }
+  *{ box-sizing: border-box; }
+  body{ margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--night); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; padding: 24px 16px; }
+  main{ width: min(100%, 560px); text-align: center; border: 1px solid rgba(212,175,55,0.45); padding: clamp(24px, 6vw, 44px); position: relative; }
+  main::before, main::after{ content: ''; position: absolute; width: 34px; height: 34px; border: 2px solid var(--gold); }
+  main::before{ top: -6px; left: -6px; border-right: 0; border-bottom: 0; }
+  main::after{ bottom: -6px; right: -6px; border-left: 0; border-top: 0; }
+  .eyebrow{ font: 700 0.72rem 'JetBrains Mono', ui-monospace, monospace; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 12px; }
+  h1{ font-family: 'Cinzel', Georgia, serif; font-size: clamp(1.8rem, 7vw, 2.6rem); margin: 0 0 8px; color: #f6eddc; line-height: 1.1; }
+  h1 span{ color: var(--gold); }
+  .sub{ margin: 0 auto 26px; max-width: 34ch; color: #cbbca4; line-height: 1.55; }
+  .qr{ width: min(100%, 340px); margin: 0 auto 20px; padding: 16px; background: #fff; border-radius: 4px; }
+  .qr svg{ display: block; width: 100%; height: auto; }
+  .url{ font: 0.78rem 'JetBrains Mono', ui-monospace, monospace; color: var(--gold); word-break: break-all; margin: 0 0 6px; }
+  .how{ font-size: 0.92rem; color: #a89a85; margin: 0; }
+  @media print{
+    body{ background: #fff; color: #222; }
+    main{ border-color: #8a6d12; }
+    h1{ color: #222; } h1 span, .eyebrow, .url{ color: #8a6d12; } .sub, .how{ color: #333; }
+    .qr{ border: 1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Atelierul Hunilor · Secțiunea I, Istorie</p>
+  <h1>Campania <span>Hunilor</span></h1>
+  <p class="sub">Un joc de istorie despre huni. Scanează codul și joacă pe telefon.</p>
+  <div class="qr" role="img" aria-label="Cod QR care deschide jocul Campania Hunilor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno"><path class="qrline" stroke="#000" d="M0 0.5h7m2 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m3 0h7m-37 1h1m5 0h1m1 0h1m1 0h5m2 0h1m1 0h1m1 0h2m5 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m2 0h2m2 0h2m2 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m5 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h2m1 0h4m4 0h1m1 0h1m1 0h1m3 0h1m-28 1h1m5 0h1m1 0h2m2 0h1m2 0h1m2 0h1m1 0h6m1 0h1m1 0h2m2 0h3m-36 1h1m3 0h2m3 0h1m1 0h4m2 0h1m2 0h1m1 0h1m3 0h2m3 0h5m-36 1h5m1 0h1m1 0h2m8 0h1m1 0h1m2 0h2m1 0h3m1 0h2m3 0h2m-37 1h4m3 0h1m2 0h1m1 0h1m1 0h3m5 0h2m2 0h1m1 0h2m2 0h2m2 0h1m-37 1h2m2 0h4m2 0h1m2 0h1m2 0h1m2 0h2m1 0h1m1 0h1m5 0h2m1 0h1m2 0h1m-37 1h1m1 0h1m1 0h1m4 0h3m1 0h1m1 0h6m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m-35 1h4m1 0h2m3 0h2m2 0h1m1 0h1m2 0h2m4 0h4m1 0h3m1 0h2m-37 1h1m1 0h1m2 0h1m3 0h1m2 0h2m3 0h2m5 0h1m3 0h1m1 0h2m1 0h2m-35 1h4m1 0h4m1 0h1m1 0h2m2 0h1m4 0h1m2 0h4m1 0h2m1 0h1m1 0h1m1 0h1m-37 1h2m1 0h3m1 0h2m4 0h2m2 0h2m1 0h3m1 0h1m2 0h2m2 0h1m1 0h3m-32 1h9m2 0h1m4 0h1m2 0h3m1 0h1m3 0h1m1 0h2m1 0h1m-36 1h1m3 0h1m1 0h1m1 0h2m1 0h3m4 0h2m3 0h1m1 0h2m1 0h1m1 0h2m3 0h1m-36 1h3m1 0h5m1 0h5m1 0h4m1 0h1m1 0h4m1 0h2m1 0h3m-31 1h2m2 0h6m1 0h1m2 0h2m1 0h3m2 0h2m4 0h1m1 0h2m-36 1h1m2 0h4m2 0h1m1 0h6m1 0h1m3 0h1m2 0h5m1 0h3m1 0h2m-37 1h1m2 0h1m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1m4 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h2m-36 1h1m4 0h1m2 0h2m1 0h7m2 0h1m2 0h1m2 0h2m1 0h2m4 0h1m-37 1h3m2 0h1m3 0h1m3 0h2m1 0h2m6 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-35 1h1m2 0h1m2 0h1m2 0h1m2 0h2m3 0h1m2 0h1m1 0h1m3 0h3m2 0h1m3 0h2m-37 1h1m1 0h2m1 0h1m1 0h1m1 0h4m2 0h1m4 0h1m6 0h1m3 0h4m1 0h1m-37 1h1m5 0h4m1 0h1m1 0h1m3 0h1m4 0h1m1 0h3m1 0h7m1 0h1m-29 1h5m1 0h7m2 0h1m4 0h1m3 0h1m-33 1h7m2 0h2m4 0h2m2 0h8m1 0h1m1 0h1m1 0h1m3 0h1m-37 1h1m5 0h1m2 0h1m2 0h3m1 0h3m1 0h1m1 0h1m3 0h3m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m2 0h2m4 0h2m4 0h1m1 0h10m1 0h1m-35 1h1m1 0h3m1 0h1m3 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h2m5 0h1m-37 1h1m1 0h3m1 0h1m8 0h2m1 0h2m1 0h1m6 0h1m4 0h1m1 0h2m-37 1h1m5 0h1m2 0h4m6 0h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m2 0h1m-37 1h7m1 0h1m5 0h2m8 0h1m2 0h3m1 0h1m4 0h1"/></svg></div>
+  <p class="url">cojocariuemilian73.github.io/atelierul-hunilor</p>
+  <p class="how">Deschide camera telefonului, îndreaptă-o spre cod și apasă linkul care apare.</p>
+</main>
+</body>
+</html>

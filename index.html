@@ -634,6 +634,19 @@
   .lab-in-article .wrap{ max-width: none; padding: 0; margin: 0; }
   .lab-in-article .module{ margin-top: 18px; }
 
+
+  /* cod QR pentru joc: doar pe ecrane late, unde nu ești deja pe telefon */
+  .m-game .qr-card{ display: none; }
+  @media (min-width: 900px) and (hover: hover){
+    .m-game .qr-card{ display: flex; align-items: center; gap: 18px; margin-top: 22px; padding: 14px 16px; border: 1px dashed rgba(212,175,55,0.5); background: rgba(212,175,55,0.05); }
+    .m-game .qr-code{ flex: none; width: 112px; padding: 7px; background: #fff; border-radius: 3px; }
+    .m-game .qr-code svg{ display: block; width: 100%; height: auto; }
+    .m-game .qr-title{ font-family: 'Cinzel', Georgia, serif; font-weight: 700; font-size: 1rem; color: #e5c158; margin: 0 0 4px; }
+    .m-game .qr-text p{ margin: 0 0 6px; font-size: 0.86rem; line-height: 1.5; color: #cbbca4; }
+    .m-game .qr-text a{ font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #e5c158; text-decoration: none; letter-spacing: 0.04em; }
+    .m-game .qr-text a:hover{ text-decoration: underline; }
+  }
+
   /* ============ MODULE: CAMPANIA HUNILOR (.m-game) ============ */
 
   .m-game{
@@ -1198,6 +1211,15 @@
   @media (min-width: 1200px){ .m-game #level-intro:has(> .li-fig:not([hidden])) { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 36px; align-items: start; } .m-game #level-intro:has(> .li-fig:not([hidden])) > * { grid-column: 1; } .m-game #level-intro:has(> .li-fig:not([hidden])) > .li-fig { grid-column: 2; grid-row: 1 / span 6; margin: 0; } .m-game .li-fig img { height: 380px; } }
   @media (min-width: 1200px){ .m-game .range { aspect-ratio: 3 / 1; } }
   @media (min-width: 1200px){ .m-game .bn-sort { display: grid; grid-template-columns: 1fr 1fr; } .m-game .bn-list { max-width: 860px; margin: 0 auto; } }
+
+
+  /* joc pe telefon: zone de atingere mari, notă de miză pe rând propriu */
+  @media (max-width: 640px), (pointer: coarse){
+    .m-game .wager-row{ flex-wrap: wrap; row-gap: 8px; }
+    .m-game .wager-btn{ width: 44px; height: 44px; font-size: 1.3rem; }
+    .m-game .wager-note{ flex: 1 1 100%; }
+    .m-game .timer-toggle, .m-game .next-btn, .m-game .cta{ min-height: 44px; }
+  }
 
   /* ============ MODULE: SOLIA LA ATTILA (.m-embassy) ============ */
 
@@ -2092,6 +2114,14 @@
     <button class="cta" id="start-btn">Pornește campania</button>
     <button class="timer-toggle" id="timer-toggle" type="button" aria-pressed="false">Limită de timp: pornită</button>
     <p class="sources"><b>Surse:</b> Ptolemeu (Geografia, 3.5.10), Ammianus Marcellinus (Res Gestae, 31.2.1), Priscus, Procopius, Agathias, Iordanes (Getica), cronici chineze despre Xiongnu, o scrisoare sogdiană din 311 d.Hr.</p>
+    <aside class="qr-card" aria-label="Joacă pe telefon">
+      <div class="qr-code" role="img" aria-label="Cod QR care deschide jocul pe telefon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno"><path class="qrline" stroke="#121214" d="M0 0.5h7m2 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m3 0h7m-37 1h1m5 0h1m1 0h1m1 0h5m2 0h1m1 0h1m1 0h2m5 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m2 0h2m2 0h2m2 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m5 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h2m1 0h4m4 0h1m1 0h1m1 0h1m3 0h1m-28 1h1m5 0h1m1 0h2m2 0h1m2 0h1m2 0h1m1 0h6m1 0h1m1 0h2m2 0h3m-36 1h1m3 0h2m3 0h1m1 0h4m2 0h1m2 0h1m1 0h1m3 0h2m3 0h5m-36 1h5m1 0h1m1 0h2m8 0h1m1 0h1m2 0h2m1 0h3m1 0h2m3 0h2m-37 1h4m3 0h1m2 0h1m1 0h1m1 0h3m5 0h2m2 0h1m1 0h2m2 0h2m2 0h1m-37 1h2m2 0h4m2 0h1m2 0h1m2 0h1m2 0h2m1 0h1m1 0h1m5 0h2m1 0h1m2 0h1m-37 1h1m1 0h1m1 0h1m4 0h3m1 0h1m1 0h6m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m-35 1h4m1 0h2m3 0h2m2 0h1m1 0h1m2 0h2m4 0h4m1 0h3m1 0h2m-37 1h1m1 0h1m2 0h1m3 0h1m2 0h2m3 0h2m5 0h1m3 0h1m1 0h2m1 0h2m-35 1h4m1 0h4m1 0h1m1 0h2m2 0h1m4 0h1m2 0h4m1 0h2m1 0h1m1 0h1m1 0h1m-37 1h2m1 0h3m1 0h2m4 0h2m2 0h2m1 0h3m1 0h1m2 0h2m2 0h1m1 0h3m-32 1h9m2 0h1m4 0h1m2 0h3m1 0h1m3 0h1m1 0h2m1 0h1m-36 1h1m3 0h1m1 0h1m1 0h2m1 0h3m4 0h2m3 0h1m1 0h2m1 0h1m1 0h2m3 0h1m-36 1h3m1 0h5m1 0h5m1 0h4m1 0h1m1 0h4m1 0h2m1 0h3m-31 1h2m2 0h6m1 0h1m2 0h2m1 0h3m2 0h2m4 0h1m1 0h2m-36 1h1m2 0h4m2 0h1m1 0h6m1 0h1m3 0h1m2 0h5m1 0h3m1 0h2m-37 1h1m2 0h1m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1m4 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h2m-36 1h1m4 0h1m2 0h2m1 0h7m2 0h1m2 0h1m2 0h2m1 0h2m4 0h1m-37 1h3m2 0h1m3 0h1m3 0h2m1 0h2m6 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-35 1h1m2 0h1m2 0h1m2 0h1m2 0h2m3 0h1m2 0h1m1 0h1m3 0h3m2 0h1m3 0h2m-37 1h1m1 0h2m1 0h1m1 0h1m1 0h4m2 0h1m4 0h1m6 0h1m3 0h4m1 0h1m-37 1h1m5 0h4m1 0h1m1 0h1m3 0h1m4 0h1m1 0h3m1 0h7m1 0h1m-29 1h5m1 0h7m2 0h1m4 0h1m3 0h1m-33 1h7m2 0h2m4 0h2m2 0h8m1 0h1m1 0h1m1 0h1m3 0h1m-37 1h1m5 0h1m2 0h1m2 0h3m1 0h3m1 0h1m1 0h1m3 0h3m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m2 0h2m4 0h2m4 0h1m1 0h10m1 0h1m-35 1h1m1 0h3m1 0h1m3 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h2m5 0h1m-37 1h1m1 0h3m1 0h1m8 0h2m1 0h2m1 0h1m6 0h1m4 0h1m1 0h2m-37 1h1m5 0h1m2 0h4m6 0h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m2 0h1m-37 1h7m1 0h1m5 0h2m8 0h1m2 0h3m1 0h1m4 0h1"/></svg></div>
+      <div class="qr-text">
+        <p class="qr-title">Joacă pe telefon</p>
+        <p>Scanează codul cu camera telefonului și jocul se deschide direct în browser. Nu instalezi nimic.</p>
+        <a href="qr-joc.html" target="_blank" rel="noopener">Pagină de tipărit cu codul →</a>
+      </div>
+    </aside>
     </div>
     <ol class="sp-camps" id="sp-camps" aria-label="Cele patru campanii"></ol>
   </div>
