@@ -28,7 +28,7 @@
   .site-nav > a:first-of-type{ margin-left: auto; }
   .site-nav > a:last-of-type{ margin-right: auto; }
   .site-nav a.current{ color: #e5c158; border-bottom-color: #e5c158; }
-  #mod-game, #mod-embassy, #mod-lab{ padding-block: 28px; }
+  #mod-game, #mod-embassy{ padding-block: 28px; }
   .atlas-in-article{ margin-top: 8px; }
   .atlas-in-article > .wrap{ padding: 0; max-width: none; }
   .m-atlas.atlas-in-article .stage{ grid-template-columns: 220px minmax(0, 1fr); margin-top: 14px; }
@@ -600,6 +600,26 @@
 
   /* ecrane late */
   @media (min-width: 1700px){ .page-shell{ max-width: 1680px; grid-template-columns: 240px minmax(0, 1240px); } .main-col{ max-width: 1240px; } .hero-inner{ max-width: 1480px; } }
+
+
+  /* Acasă: cuprins orizontal, lipit sub meniul de sus */
+  .chap-bar{ position: sticky; top: var(--nav-h, 41px); z-index: 150; background: rgba(18,18,20,0.94); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line-strong); }
+  .chap-bar-row{ display: flex; gap: 4px; overflow-x: auto; max-width: 1240px; margin: 0 auto; padding: 0 14px; scrollbar-width: none; }
+  .chap-bar-row::-webkit-scrollbar{ display: none; }
+  .chap-bar a{ flex: none; display: inline-flex; align-items: baseline; gap: 7px; padding: 12px 12px 11px; text-decoration: none; white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim);
+    border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+  .chap-bar a i{ font-style: normal; color: var(--accent-2); opacity: 0.8; }
+  .chap-bar a:hover{ color: var(--ink); }
+  .chap-bar a.active{ color: #f2d474; border-bottom-color: #e5c158; }
+  .page-shell, .page-shell:not(#x){ display: block; max-width: 1240px; grid-template-columns: none; gap: 0; padding-inline: clamp(18px, 4vw, 56px); }
+  .page-shell .main-col{ max-width: none; }
+  article section{ scroll-margin-top: 100px; }
+  @media (min-width: 1700px){ .page-shell{ max-width: 1520px; } .chap-bar-row{ max-width: 1520px; } }
+  /* Muzeul și mitul ca capitole în articol */
+  .m-lab.lab-in-article{ background: transparent; padding: 0; color: inherit; }
+  .lab-in-article .wrap{ max-width: none; padding: 0; margin: 0; }
+  .lab-in-article .module{ margin-top: 18px; }
 
   /* ============ MODULE: CAMPANIA HUNILOR (.m-game) ============ */
 
@@ -1457,7 +1477,6 @@
   <a href="#page-acasa">Acasă / Articol</a>
   <a href="#mod-game">Campania Hunilor</a>
   <a href="#mod-embassy">Solia la Attila</a>
-  <a href="#mod-lab">Muzeu</a>
   <button class="about-trigger" id="about-trigger" type="button">ℹ Despre proiect</button>
 </nav>
 
@@ -1473,7 +1492,7 @@
       <li><strong>Campania Hunilor</strong> — joc de strategie/decizie despre expansiunea hunică.</li>
       <li><strong>Solia la Attila</strong> — joc narativ bazat pe relatarea lui Priscus din Panium.</li>
       <li><strong>Atlasul Migrației</strong> — hartă interactivă cu rutele Marii Migrații, în pagina Acasă (capitolul 04 al articolului).</li>
-      <li><strong>Muzeu</strong> — artefacte hunice reale, explorabile pe fotografie, și mituri despre huni verificate cu izvoarele și genetica.</li>
+      <li><strong>Muzeul virtual și Mit vs. adevăr</strong> — artefacte hunice reale, explorabile pe fotografie, și mituri despre huni verificate cu izvoarele și genetica; capitolele 06 și 07 din pagina Acasă.</li>
     </ul>
     <p>Navighezi cu meniul de sus sau cu butoanele „Pagina anterioară / următoare” de jos.</p>
 
@@ -1531,7 +1550,7 @@
       <div class="hero-cta">
         <a class="hero-btn primary" href="#mod-game">Începe Campania Hunilor</a>
         <a class="hero-btn" href="#mod-embassy">Solia la Attila</a>
-        <a class="hero-btn" href="#mod-lab">Muzeul virtual</a>
+        <a class="hero-btn" href="#sec-muzeu">Muzeul virtual</a>
       </div>
       <div class="byline">
         <span><b>Secțiune</b> — Secțiunea I, Istorie</span>
@@ -1541,35 +1560,25 @@
     </div>
   </section>
 
-<div class="page-shell">
+<nav class="chap-bar" aria-label="Cuprins">
+  <div class="chap-bar-row" id="toc-row">
+    <a href="#acasa" data-sec="acasa" class="toc-link">Acasă</a>
+    <a href="#sec-origini" data-sec="sec-origini" class="toc-link"><i>01</i>Origini</a>
+    <a href="#sec-cronologie" data-sec="sec-cronologie" class="toc-link"><i>02</i>Cronologie</a>
+    <a href="#sec-migratie" data-sec="sec-migratie" class="toc-link"><i>03</i>Marea Migrație</a>
+    <a href="#sec-atlas" data-sec="sec-atlas" class="toc-link"><i>04</i>Atlas</a>
+    <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link"><i>05</i>Personalități</a>
+    <a href="#sec-muzeu" data-sec="sec-muzeu" class="toc-link"><i>06</i>Muzeu</a>
+    <a href="#sec-mituri" data-sec="sec-mituri" class="toc-link"><i>07</i>Mit vs. adevăr</a>
+    <a href="#biblio" data-sec="biblio" class="toc-link"><i>08</i>Bibliografie</a>
+  </div>
+</nav>
 
-  <nav class="side-toc" aria-label="Cuprins">
-    <p class="toc-label">Cuprins</p>
-    <div class="side-toc-list" id="side-toc-list">
-      <a href="#acasa" data-sec="acasa" class="toc-link">Acasă</a>
-      <a href="#sec-origini" data-sec="sec-origini" class="toc-link">Context Istoric &amp; Origini</a>
-      <a href="#sec-cronologie" data-sec="sec-cronologie" class="toc-link">Cronologie Interactivă</a>
-      <a href="#sec-migratie" data-sec="sec-migratie" class="toc-link">Marea Migrație</a>
-      <a href="#sec-atlas" data-sec="sec-atlas" class="toc-link">Atlasul Migrației</a>
-      <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități &amp; Impact</a>
-      <a href="#biblio" data-sec="biblio" class="toc-link">Bibliografie</a>
-    </div>
-  </nav>
+<div class="page-shell">
 
   <div class="main-col">
 
-  <div class="toc-wrap" aria-hidden="true">
-    <p class="toc-label">Cuprins</p>
-    <div class="toc-row" id="toc-row">
-      <a href="#acasa" data-sec="acasa" class="toc-link">Acasă</a>
-      <a href="#sec-origini" data-sec="sec-origini" class="toc-link">Origini</a>
-      <a href="#sec-cronologie" data-sec="sec-cronologie" class="toc-link">Cronologie</a>
-      <a href="#sec-migratie" data-sec="sec-migratie" class="toc-link">Marea Migrație</a>
-      <a href="#sec-atlas" data-sec="sec-atlas" class="toc-link">Atlas</a>
-      <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități</a>
-      <a href="#biblio" data-sec="biblio" class="toc-link">Bibliografie</a>
-    </div>
-  </div>
+
 
   <article>
 
@@ -1920,11 +1929,37 @@
       <h3 class="sub-title">Ecoul în spațiul carpato-danubiano-pontic</h3>
       <p>Pentru teritoriul de azi al României, secolul al V-lea nu e o notă de subsol a istoriei hunice, ci chiar scena ei. Dunărea era granița Imperiului, iar Dacia Ripensis și Moesia se aflau exact pe direcția campaniilor hunice: în 408, hunii conduși de Uldin cuceresc <em>Castra Martis</em>, în Dacia Ripensis<sup class="fn" data-n="20">20</sup>, iar campaniile din 441–447 lovesc Viminacium, pe Dunăre, și Naissus, în interior.</p>
       <p>Urmele materiale sunt la fel de concrete. Aur roman ajuns dincolo de graniță a fost descoperit la <b>Dolhești</b> (Moldova), iar la <b>Șimleul Silvaniei</b> (Transilvania) au apărut două tezaure spectaculoase, alcătuite în principal din medalioane imperiale de aur și podoabe, atribuite de obicei unei elite germanice — probabil gepide — din secolele IV–V<sup class="fn" data-n="18">18</sup>. Cazane hunice de bronz au fost semnalate și pe teritoriul României<sup class="fn" data-n="19">19</sup> — aceleași obiecte de cult și prestigiu ca în Bazinul Carpatic. Cea mai celebră piesă a epocii, <b>tezaurul de la Pietroasa</b> („Cloșca cu puii de aur”), este un tezaur gotic, nu hunic<sup class="fn" data-n="22">22</sup>: tocmai de aceea e relevant aici, fiindcă a fost probabil îngropat de o elită germanică sub presiunea evenimentelor declanșate de sosirea hunilor.</p>
-      <p>Cea mai grăitoare piesă descoperită pe teritoriul României este însă <b>diadema de la Gherăseni</b> (județul Buzău) — expusă și explorabilă în detaliu în modulul <a href="#mod-lab">Muzeu</a> al acestui site. Găsită în 1965 la Grindul Cremenea, într-un mormânt de înhumație din prima jumătate a secolului al V-lea, e lucrată pe un miez de bronz acoperit cu foiță de aur și împodobită cu almandine montate <em>à cabochon</em>, în stilul policrom al epocii. Analiza antropologică a arătat că scheletul aparținea unei femei cu <b>craniul deformat artificial</b> — aceeași practică de elită despre care vorbesc izvoarele. Piesa face parte din patrimoniul Muzeului Județean Buzău și se înscrie într-o serie de circa 25 de diademe asemănătoare, descoperite pe un areal imens, din Kazahstanul de azi până în Europa Centrală<sup class="fn" data-n="21">21</sup>.</p>
+      <p>Cea mai grăitoare piesă descoperită pe teritoriul României este însă <b>diadema de la Gherăseni</b> (județul Buzău) — expusă și explorabilă în detaliu în modulul <a href="#sec-muzeu">Muzeul virtual</a> al acestui site. Găsită în 1965 la Grindul Cremenea, într-un mormânt de înhumație din prima jumătate a secolului al V-lea, e lucrată pe un miez de bronz acoperit cu foiță de aur și împodobită cu almandine montate <em>à cabochon</em>, în stilul policrom al epocii. Analiza antropologică a arătat că scheletul aparținea unei femei cu <b>craniul deformat artificial</b> — aceeași practică de elită despre care vorbesc izvoarele. Piesa face parte din patrimoniul Muzeului Județean Buzău și se înscrie într-o serie de circa 25 de diademe asemănătoare, descoperite pe un areal imens, din Kazahstanul de azi până în Europa Centrală<sup class="fn" data-n="21">21</sup>.</p>
         </div>
       </div>
       <p class="source-caution"><b>O precizare necesară.</b> Prezența unor obiecte „hunice” într-un mormânt nu dovedește că cel îngropat era hun. În secolul al V-lea, stilul policrom cu granate, cazanele de bronz și chiar deformarea craniană circulau între popoare ca modă a elitelor. Ele arată apartenența la o lume politică dominată de huni, nu neapărat originea etnică a purtătorului — iar „prințesa” de la Gherăseni e un exemplu bun tocmai fiindcă originea ei etnică rămâne deschisă.</p>
     </section>
+
+    <section id="sec-muzeu" class="m-lab lab-in-article">
+      <div class="chapter-mark"><span class="chapter-num">06</span><span class="chapter-slash">/</span><span class="chapter-tag">Muzeul virtual</span></div>
+      <h2 class="sec-title">Muzeul Hunilor</h2>
+      <p class="sec-sub">Opt artefacte din epoca hunilor, în fotografii reale din colecții muzeale: apasă pe punctele numerotate pentru detalii.</p>
+      <div class="wrap">
+        <div class="frame">
+      <div class="artifact-grid" id="artifact-grid"></div>
+    </div>
+      </div>
+      <div class="hs-popover" id="hs-popover">
+  <p class="hp-title" id="hp-title">—</p>
+  <p id="hp-desc">—</p>
+</div>
+    </section>
+
+    <section id="sec-mituri" class="m-lab lab-in-article">
+      <div class="chapter-mark"><span class="chapter-num">07</span><span class="chapter-slash">/</span><span class="chapter-tag">Mit vs. adevăr</span></div>
+      <h2 class="sec-title">Mit vs. adevăr</h2>
+      <p class="sec-sub">Apasă pe fiecare card pentru a compara o idee răspândită despre huni cu ce arată izvoarele antice, arheologia și ADN-ul antic.</p>
+      <div class="wrap">
+        <div class="flip-grid" id="flip-grid"></div>
+      </div>
+      <p class="section-sources">Componentă educațională · surse genetice: Neparáczki et al. (2019), Maróti et al. (2022)</p>
+    </section>
+
 
   </article>
 
@@ -1938,7 +1973,7 @@
   </div>
 
   <section id="biblio">
-    <div class="chapter-mark"><span class="chapter-num">06</span><span class="chapter-slash">/</span><span class="chapter-tag">Bibliografie</span></div>
+    <div class="chapter-mark"><span class="chapter-num">08</span><span class="chapter-slash">/</span><span class="chapter-tag">Bibliografie</span></div>
     <h2 class="sec-title">Surse și note</h2>
     <ol class="biblio">
       <li id="note-1">Ptolemeu, <em>Geografia</em>, 3.5.10. <a class="back" href="#sec-origini">↩</a></li>
@@ -2278,55 +2313,12 @@
 </section>
 
 
-<section id="mod-lab" class="m-lab site-page">
 
-
-<div class="wrap">
-  <div class="masthead">
-    <p class="eyebrow">Colecție virtuală · piese reale din muzee</p>
-    <div class="mod-chapter"><span class="n">05</span><span class="t">Muzeu</span></div>
-    <h1 class="title">Muzeul Hunilor</h1>
-    <p class="sub">Opt artefacte din epoca hunilor, în fotografii reale din colecții muzeale: apasă pe punctele numerotate pentru detalii. La final, mituri și adevăruri despre huni, verificate cu izvoarele și cu genetica modernă.</p>
-  </div>
-
-  <!-- ============ MODULE 1 ============ -->
-  <div class="module">
-    <div class="module-head">
-      <p class="module-num">Modul I</p>
-      <h2 class="module-title">Artefacte hunice, fotografiate în muzeu</h2>
-      <p class="module-sub">Fotografii reale de piese din colecții publice, nu reconstituiri grafice. Apasă pe punctele roșii — sau navighează cu Tab și apasă Enter — pentru explicații. Sub fiecare imagine găsești muzeul, autorul fotografiei și licența.</p>
-    </div>
-
-    <div class="frame">
-      <div class="artifact-grid" id="artifact-grid"></div>
-    </div>
-  </div>
-
-  <!-- ============ MODULE 2 ============ -->
-  <div class="module">
-    <div class="module-head">
-      <p class="module-num">Modul II</p>
-      <h2 class="module-title">Mit vs. adevăr</h2>
-      <p class="module-sub">Apasă pe fiecare card pentru a compara o idee răspândită despre huni cu ce arată izvoarele antice, arheologia și ADN-ul antic.</p>
-    </div>
-    <div class="flip-grid" id="flip-grid"></div>
-  </div>
-
-  <footer>Componentă educațională · surse genetice: Neparáczki et al. (2019), Maróti et al. (2022) · realizat pentru concursul „Istorie și societate în dimensiune virtuală”</footer>
-</div>
-
-<div class="hs-popover" id="hs-popover">
-  <p class="hp-title" id="hp-title">—</p>
-  <p id="hp-desc">—</p>
-</div>
-
-
-</section>
 </main>
 
 <div class="site-pager">
   <button class="site-pager-btn" id="site-prev" type="button">← Pagina anterioară</button>
-  <span class="site-pager-count mono" id="site-page-count">1 / 4</span>
+  <span class="site-pager-count mono" id="site-page-count">1 / 3</span>
   <button class="site-pager-btn" id="site-next" type="button">Pagina următoare →</button>
 </div>
 
@@ -5438,7 +5430,9 @@
   // The site is now page-by-page (one module visible at a time), not one
   // long scroll: exactly one .site-page has .active at any time. The old
   // per-module <section id="mod-X"> ids double as page ids.
-  var PAGE_IDS = ['page-acasa', 'mod-game', 'mod-embassy', 'mod-lab'];
+  function syncNavH(){ var n = document.querySelector('.site-nav'); if (n) document.documentElement.style.setProperty('--nav-h', n.offsetHeight + 'px'); }
+  syncNavH(); window.addEventListener('resize', syncNavH);
+  var PAGE_IDS = ['page-acasa', 'mod-game', 'mod-embassy'];
   var pages = PAGE_IDS.map(function(id){ return document.getElementById(id); });
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.site-nav a'));
   var prevBtn = document.getElementById('site-prev');
@@ -5519,5 +5513,13 @@
 })();
 </script>
 
+<script>
+/* hs-popover-scroll */
+(function(){
+  var pop = document.getElementById('hs-popover');
+  if (!pop) return;
+  document.addEventListener('scroll', function(){ if (pop.classList.contains('show')) pop.classList.remove('show'); }, { passive: true, capture: true });
+})();
+</script>
 </body>
 </html>
