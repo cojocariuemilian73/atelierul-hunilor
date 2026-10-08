@@ -813,6 +813,19 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   .bn-orow.correct .bn-ctl, .bn-orow.wrong .bn-ctl{ display: none; }
   @media (max-width: 640px){ .bn-match{ grid-template-columns: 1fr; } }
 
+  /* ecrane late */
+  .sp-camps{ list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 10px; text-align: left; }
+  .sp-camp{ display: flex; gap: 14px; align-items: center; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line-bright); border-radius: 2px; }
+  .sp-icon{ flex: 0 0 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.05rem; color: var(--gold); clip-path: polygon(50% 0%, 100% 22%, 100% 78%, 50% 100%, 0% 78%, 0% 22%); }
+  .sp-text{ display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .sp-kicker{ font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ember); }
+  .sp-title{ font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.02rem; color: var(--ink); }
+  .sp-meta{ font-size: 0.8rem; color: var(--ink-dim2); }
+  @media (min-width: 1200px){ .wrap{ max-width: 1160px; } .start-panel{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; } .sp-camps{ margin-top: 0; } .sp-main{ text-align: center; } }
+  @media (min-width: 1200px){ #level-intro:has(> .li-fig:not([hidden])){ display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 36px; align-items: start; } #level-intro:has(> .li-fig:not([hidden])) > *{ grid-column: 1; } #level-intro:has(> .li-fig:not([hidden])) > .li-fig{ grid-column: 2; grid-row: 1 / span 6; margin: 0; } .li-fig img{ height: 380px; } }
+  @media (min-width: 1200px){ .range{ aspect-ratio: 3 / 1; } }
+  @media (min-width: 1200px){ .bn-sort{ display: grid; grid-template-columns: 1fr 1fr; } .bn-list{ max-width: 860px; margin: 0 auto; } }
+
 </style>
 </head>
 <body>
@@ -831,6 +844,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   </div>
 
   <div class="panel start-panel" id="start-panel">
+    <div class="sp-main">
     <div class="stats-row">
       <div class="stat"><b>4</b><span>Campanii</span></div>
       <div class="stat"><b id="qcount">—</b><span>Întrebări</span></div>
@@ -839,6 +853,8 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     <button class="cta" id="start-btn">Pornește campania</button>
     <button class="timer-toggle" id="timer-toggle" type="button" aria-pressed="false">Limită de timp: pornită</button>
     <p class="sources"><b>Surse:</b> Ptolemeu (Geografia, 3.5.10), Ammianus Marcellinus (Res Gestae, 31.2.1), Priscus, Procopius, Agathias, Iordanes (Getica), cronici chineze despre Xiongnu, o scrisoare sogdiană din 311 d.Hr.</p>
+    </div>
+    <ol class="sp-camps" id="sp-camps" aria-label="Cele patru campanii"></ol>
   </div>
 
   <div id="campaign-map" hidden>
@@ -2316,6 +2332,24 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   });
 
   bnNext.addEventListener('click', showLevelComplete);
+
+  // Pe ecranul de start: cele patru campanii, cu tema și minijocul fiecăreia.
+  (function(){
+    var list = document.getElementById('sp-camps');
+    if (!list) return;
+    LEVELS.forEach(function(lv, i){
+      var li = el('li', 'sp-camp');
+      var ic = el('span', 'sp-icon', lv.icon);
+      ic.style.background = 'var(--' + lv.zone + '-bg)';
+      li.appendChild(ic);
+      var tx = el('span', 'sp-text');
+      tx.appendChild(el('span', 'sp-kicker', lv.kicker));
+      tx.appendChild(el('span', 'sp-title', lv.title));
+      tx.appendChild(el('span', 'sp-meta', lv.questions.length + ' întrebări · minijoc: ' + (BONUS[i] ? BONUS[i].name : 'Linia timpului')));
+      li.appendChild(tx);
+      list.appendChild(li);
+    });
+  })();
 
   function showLevelComplete(){
     var lv = LEVELS[state.levelIndex];

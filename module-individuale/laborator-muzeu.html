@@ -200,6 +200,11 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
 
   footer{ text-align: center; margin-top: 40px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-dim); }
 
+  /* ecrane late */
+  @media (min-width: 1200px){ .wrap{ max-width: 1440px; } }
+  @media (min-width: 1300px){ .artifact-grid{ grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1400px){ .flip-grid{ grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; } }
+
 </style>
 </head>
 <body>

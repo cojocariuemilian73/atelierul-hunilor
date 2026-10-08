@@ -1,0 +1,163 @@
+  /* ============ MODULE: ATELIERUL ISTORICULUI (.m-atelier) ============ */
+  #mod-atelier{ padding-block: 28px; }
+  .m-atelier{
+    --at-s1: #1a1a1e; --at-s2: #23232a; --at-s3: #2e2e37; --at-line: rgba(230, 215, 195, 0.16);
+    --at-ink: #e6d7c3; --at-dim: #a89a85; --at-gold: #d4af37; --at-gold2: #e5c158;
+    --at-red: #a71d2a; --at-red2: #e0626c; --at-good: #8fbd82; --at-warn: #e0b84a; --at-orange: #f0a25c; --at-blue: #7ab0e8;
+    color: var(--at-ink); font-family: 'Source Serif 4', Georgia, serif;
+  }
+  .m-atelier *{ box-sizing: border-box; }
+  .m-atelier button{ font-family: inherit; color: inherit; }
+  .m-atelier .wrap{ max-width: 1100px; margin: 0 auto; padding: 0 16px 56px; }
+  .m-atelier [hidden]{ display: none !important; }
+
+  .at-mast{ text-align: center; padding: 14px 0 6px; }
+  .at-eyebrow{ font: 700 0.72rem 'JetBrains Mono', monospace; letter-spacing: 0.16em; text-transform: uppercase; color: var(--at-gold2); margin: 0 0 12px; }
+  .at-title{ font-family: 'Cinzel', Georgia, serif; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.05; margin: 0 0 12px; color: #f6eddc; font-weight: 700; }
+  .at-title span{ color: var(--at-gold2); }
+  .at-sub{ max-width: 62ch; margin: 0 auto; color: #cbbca4; line-height: 1.6; font-size: 1.04rem; }
+
+  .at-tabs{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 26px 0 18px; }
+  .at-tab{ display: grid; grid-template-columns: auto 1fr; column-gap: 12px; align-items: center; text-align: left; padding: 12px 14px; min-height: 56px; background: var(--at-s1); border: 1px solid var(--at-line); cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.2s; }
+  .at-tab i{ grid-row: span 2; font: normal 700 1.5rem 'Cinzel', serif; color: var(--at-gold); width: 30px; text-align: center; }
+  .at-tab b{ font: 700 0.9rem 'Cinzel', serif; color: #f0e6d6; line-height: 1.2; }
+  .at-tab span{ font: 0.7rem 'JetBrains Mono', monospace; color: var(--at-dim); letter-spacing: 0.04em; }
+  .at-tab:hover{ border-color: rgba(212, 175, 55, 0.6); transform: translateY(-2px); }
+  .at-tab.active{ background: linear-gradient(160deg, rgba(212, 175, 55, 0.16), var(--at-s1)); border-color: var(--at-gold); }
+  .at-tab:focus-visible, .at-btn:focus-visible, .at-verdict button:focus-visible{ outline: 2px solid var(--at-gold2); outline-offset: 2px; }
+  @media (max-width: 760px){
+    .at-tabs{ grid-template-columns: 1fr; }
+    .at-tab span{ display: none; }
+  }
+
+  .at-panel{ position: relative; background: var(--at-s1); border: 1px solid rgba(212, 175, 55, 0.3); padding: clamp(16px, 3vw, 30px); }
+  .at-panel::before, .at-panel::after{ content: ''; position: absolute; width: 26px; height: 26px; border: 2px solid var(--at-gold); pointer-events: none; }
+  .at-panel::before{ top: -5px; left: -5px; border-right: 0; border-bottom: 0; }
+  .at-panel::after{ bottom: -5px; right: -5px; border-left: 0; border-top: 0; }
+
+  .at-head{ display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 14px; }
+  .at-h2{ font: 700 1.25rem 'Cinzel', serif; color: #f0e6d6; margin: 0; }
+  .at-lead{ margin: 0 0 18px; color: #cbbca4; line-height: 1.6; max-width: 70ch; }
+  .at-pill{ font: 700 0.72rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--at-gold2); border: 1px solid rgba(212, 175, 55, 0.4); padding: 5px 10px; border-radius: 999px; background: rgba(212, 175, 55, 0.06); white-space: nowrap; }
+  .at-progress{ height: 4px; background: var(--at-s3); margin: 0 0 22px; overflow: hidden; border-radius: 2px; }
+  .at-progress i{ display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--at-red), var(--at-gold2)); transition: width 0.4s ease; }
+
+  .at-btn{ min-height: 46px; padding: 10px 22px; background: var(--at-gold); color: #1a1405 !important; border: 0; font: 700 0.92rem 'Cinzel', serif; letter-spacing: 0.03em; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+  .at-btn:hover{ background: var(--at-gold2); transform: translateY(-1px); }
+  .at-btn.ghost{ background: transparent; color: var(--at-gold2) !important; border: 1px solid var(--at-gold); }
+  .at-btn.ghost:hover{ background: rgba(212, 175, 55, 0.12); }
+  .at-btn:disabled{ opacity: 0.4; cursor: default; transform: none; }
+
+  /* ---------- Joc 1: Dosarul sursei ---------- */
+  .at-claim{ font: 600 clamp(1.4rem, 3.6vw, 2.1rem)/1.25 'Cormorant Garamond', Georgia, serif; color: #f6eddc; margin: 0 0 16px; padding-left: 18px; border-left: 3px solid var(--at-gold); }
+  .at-file{ display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 6px; }
+  .at-chip{ display: inline-flex; gap: 8px; align-items: baseline; padding: 6px 11px; background: var(--at-s2); border: 1px solid var(--at-line); font-size: 0.86rem; line-height: 1.35; }
+  .at-chip small{ font: 700 0.6rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--at-gold2); }
+  .at-tl{ position: relative; height: 122px; margin: 22px 12px 6px; }
+  .at-tl-track{ position: absolute; left: 0; right: 0; top: 48px; height: 2px; background: var(--at-line); }
+  .at-tl-tick{ position: absolute; top: 42px; width: 1px; height: 14px; background: rgba(230, 215, 195, 0.3); }
+  .at-tl-tick em{ position: absolute; top: 44px; left: 50%; transform: translateX(-50%); font: normal 0.62rem 'JetBrains Mono', monospace; color: var(--at-dim); }
+  .at-tl-gap{ position: absolute; top: 46px; height: 6px; background: linear-gradient(90deg, rgba(212, 175, 55, 0.7), rgba(224, 98, 108, 0.8)); border-radius: 3px; }
+  .at-tl-mark{ position: absolute; top: 40px; transform: translateX(-50%); text-align: center; }
+  .at-tl-mark i{ display: block; width: 14px; height: 14px; margin: 0 auto 0; transform: rotate(45deg); background: var(--at-gold2); border: 2px solid #1a1a1e; }
+  .at-tl-mark.src i{ background: var(--at-red2); }
+  .at-tl-mark b{ position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; color: var(--at-gold2); }
+  .at-tl-mark.src b{ color: var(--at-red2); top: 22px; }
+  .at-tl-note{ position: absolute; left: 0; right: 0; top: 104px; text-align: center; font: 0.72rem 'JetBrains Mono', monospace; color: var(--at-dim); }
+
+  .at-ask{ margin: 20px 0 10px; font: 700 0.74rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--at-dim); }
+  .at-verdict{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .at-verdict button{ display: grid; justify-items: center; gap: 8px; padding: 14px 8px 12px; min-height: 76px; background: var(--at-s2); border: 1px solid var(--at-line); cursor: pointer; font: 700 0.95rem 'Cinzel', serif; transition: transform 0.2s, border-color 0.2s, background 0.2s; }
+  .at-verdict button:hover:not(:disabled){ transform: translateY(-3px); border-color: var(--at-gold); background: var(--at-s3); }
+  .at-verdict button:disabled{ cursor: default; opacity: 0.55; }
+  .at-verdict button.picked{ opacity: 1; border-color: var(--at-gold2); background: rgba(212, 175, 55, 0.14); }
+  .at-gauge{ display: inline-flex; gap: 4px; }
+  .at-gauge s{ display: block; width: 18px; height: 8px; border-radius: 2px; background: var(--at-s3); text-decoration: none; border: 1px solid rgba(230, 215, 195, 0.25); }
+  .at-gauge s.on{ background: var(--c, var(--at-gold)); border-color: var(--c, var(--at-gold)); }
+
+  .at-reveal{ margin: 20px 0 0; padding: 16px 18px; background: var(--at-s2); border-left: 4px solid var(--c, var(--at-gold)); animation: at-in 0.4s ease both; }
+  .at-reveal h3{ margin: 0 0 6px; font: 700 1.02rem 'Cinzel', serif; color: var(--c, var(--at-gold2)); }
+  .at-reveal p{ margin: 0 0 12px; line-height: 1.6; color: #e0d3bd; }
+  .at-reveal .at-pts{ font: 700 0.74rem 'JetBrains Mono', monospace; color: var(--at-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-right: 14px; }
+  @keyframes at-in{ from{ opacity: 0; transform: translateY(10px); } to{ opacity: 1; transform: none; } }
+
+  .at-end{ text-align: center; padding: 10px 0 4px; }
+  .at-end .at-big{ font: 700 clamp(2.6rem, 9vw, 4rem) 'Cinzel', serif; color: var(--at-gold2); margin: 0; line-height: 1; }
+  .at-end .at-rank{ font: 700 1.05rem 'Cinzel', serif; margin: 6px 0 16px; color: #f0e6d6; }
+  .at-end ul{ list-style: none; padding: 0; margin: 0 auto 22px; max-width: 60ch; text-align: left; }
+  .at-end li{ position: relative; padding: 0 0 10px 22px; line-height: 1.55; color: #dccfb8; }
+  .at-end li::before{ content: ''; position: absolute; left: 2px; top: 0.62em; width: 8px; height: 8px; transform: rotate(45deg); background: var(--at-gold); }
+
+  /* ---------- Joc 2: Efectul de domino ---------- */
+  .at-dom{ display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+  @media (max-width: 880px){ .at-dom{ grid-template-columns: 1fr; } }
+  .at-map{ position: relative; border: 1px solid var(--at-line); background: #0e0e10; }
+  .at-map svg{ display: block; width: 100%; height: auto; }
+  .at-map-credit{ position: absolute; right: 8px; bottom: 5px; font: 0.56rem 'JetBrains Mono', monospace; color: rgba(230, 215, 195, 0.7); text-shadow: 0 1px 2px #000; }
+  .at-edge{ fill: none; stroke: rgba(240, 230, 214, 0.32); stroke-width: 1.4; stroke-dasharray: 3 4; transition: stroke 0.3s; }
+  .at-edge.on{ stroke: var(--at-orange); stroke-width: 2.4; stroke-dasharray: 6 5; animation: at-dash 1s linear infinite; }
+  .at-edge.cross.on{ stroke: var(--at-red2); }
+  @keyframes at-dash{ to{ stroke-dashoffset: -22; } }
+  .at-node circle{ fill: #26262d; stroke: rgba(240, 230, 214, 0.7); stroke-width: 1.6; transition: fill 0.3s, stroke 0.3s; }
+  .at-node text{ font: 700 8.5px 'JetBrains Mono', monospace; fill: #f6eddc; stroke: #101012; stroke-width: 2.6px; paint-order: stroke; text-anchor: middle; letter-spacing: 0.04em; }
+  .at-node.huni circle{ fill: var(--at-red); stroke: #f0a0a6; }
+  .at-node.rome circle{ fill: #3a3550; stroke: #b9a8e8; }
+  .at-node.pushed circle{ fill: #6b4318; stroke: var(--at-orange); stroke-width: 2.6; }
+  .at-node.crossed circle, .at-node.rome.breached circle{ fill: #6d1a24; stroke: var(--at-red2); stroke-width: 2.8; }
+  .at-node.crossed .pulse, .at-node.rome.breached .pulse{ animation: at-pulse 1.4s ease-out infinite; }
+  .at-node .pulse{ fill: none; stroke: var(--at-red2); stroke-width: 2; opacity: 0; }
+  @keyframes at-pulse{ 0%{ opacity: 0.9; r: 11; } 100%{ opacity: 0; r: 26; } }
+
+  .at-ctl{ display: grid; gap: 16px; }
+  .at-slider label{ display: flex; justify-content: space-between; align-items: baseline; font: 700 0.72rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--at-dim); margin: 0 0 8px; }
+  .at-slider label b{ color: var(--at-gold2); font-size: 0.95rem; }
+  .at-slider input[type=range]{ width: 100%; height: 44px; accent-color: var(--at-gold); cursor: pointer; background: transparent; }
+  .at-presets{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .at-presets button{ flex: 1 1 auto; min-height: 44px; padding: 8px 12px; background: var(--at-s2); border: 1px solid var(--at-line); cursor: pointer; font: 0.82rem 'Source Serif 4', serif; line-height: 1.25; transition: border-color 0.2s, background 0.2s; }
+  .at-presets button:hover{ border-color: var(--at-gold); background: var(--at-s3); }
+  .at-theses{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .at-thesis{ text-align: left; padding: 12px; background: var(--at-s2); border: 1px solid var(--at-line); cursor: pointer; display: grid; gap: 6px; min-height: 110px; align-content: start; transition: border-color 0.2s, background 0.2s; }
+  .at-thesis:hover{ border-color: rgba(212, 175, 55, 0.6); }
+  .at-thesis.sel{ border-color: var(--at-gold2); background: linear-gradient(160deg, rgba(212, 175, 55, 0.14), var(--at-s2)); }
+  .at-thesis small{ font: 700 0.6rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--at-gold2); }
+  .at-thesis b{ font: 700 0.86rem 'Cinzel', serif; line-height: 1.2; color: #f0e6d6; }
+  .at-thesis em{ font: normal 0.72rem 'JetBrains Mono', monospace; color: var(--at-dim); line-height: 1.5; }
+  .at-thesis em span{ display: block; }
+  .at-thesis em span.y{ color: var(--at-red2); }
+  .at-thesis em span.n{ color: var(--at-good); }
+  .at-verdict-box{ padding: 12px 14px; background: var(--at-s2); border-left: 4px solid var(--at-gold); line-height: 1.55; font-size: 0.94rem; color: #e0d3bd; min-height: 76px; }
+  .at-verdict-box.diff{ border-left-color: var(--at-red2); background: rgba(167, 29, 42, 0.14); }
+  .at-found{ display: flex; align-items: center; gap: 10px; font: 700 0.72rem 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--at-dim); }
+  .at-found .dots{ display: inline-flex; gap: 6px; }
+  .at-found .dots s{ width: 14px; height: 14px; transform: rotate(45deg); border: 2px solid var(--at-gold); background: transparent; text-decoration: none; display: block; }
+  .at-found .dots s.on{ background: var(--at-gold2); box-shadow: 0 0 10px rgba(229, 193, 88, 0.6); }
+  .at-note{ margin: 12px 0 0; font: 0.68rem/1.6 'JetBrains Mono', monospace; color: var(--at-dim); }
+  .at-win{ margin-top: 8px; padding: 12px 14px; border: 1px solid var(--at-gold); background: rgba(212, 175, 55, 0.1); font-size: 0.94rem; line-height: 1.55; animation: at-in 0.4s ease both; }
+
+  /* ---------- Joc 3: Document sau ilustrație? ---------- */
+  .at-g3{ display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+  @media (max-width: 880px){ .at-g3{ grid-template-columns: 1fr; } }
+  .at-frame{ margin: 0; padding: 10px; background: #0e0e10; border: 1px solid rgba(212, 175, 55, 0.35); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45); }
+  .at-frame img{ display: block; width: 100%; max-height: 440px; object-fit: contain; background: #0b0b0c; }
+  .at-frame figcaption{ margin: 8px 2px 0; font: 0.62rem 'JetBrains Mono', monospace; color: var(--at-dim); letter-spacing: 0.04em; min-height: 1.2em; }
+  .at-q{ font: 700 1.1rem 'Cinzel', serif; color: #f0e6d6; margin: 0 0 14px; line-height: 1.3; }
+  .at-two{ display: grid; gap: 10px; }
+  .at-two button{ min-height: 58px; padding: 10px 14px; text-align: left; background: var(--at-s2); border: 1px solid var(--at-line); cursor: pointer; display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 12px; font: 700 0.95rem 'Cinzel', serif; transition: transform 0.2s, border-color 0.2s, background 0.2s; }
+  .at-two button i{ font: normal 1.4rem serif; }
+  .at-two button:hover:not(:disabled){ border-color: var(--at-gold); background: var(--at-s3); transform: translateX(3px); }
+  .at-two button:disabled{ cursor: default; opacity: 0.5; }
+  .at-two button.picked{ opacity: 1; border-color: var(--at-gold2); }
+  .at-year{ margin: 18px 0 0; }
+  .at-year-val{ display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 6px; font: 700 0.72rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--at-dim); }
+  .at-year-val b{ font: 700 1.5rem 'Cinzel', serif; color: var(--at-gold2); letter-spacing: 0; }
+  .at-year input[type=range]{ width: 100%; height: 44px; accent-color: var(--at-gold); cursor: pointer; background: transparent; }
+  .at-year-scale{ position: relative; height: 22px; margin: 0 8px 12px; font: 0.6rem 'JetBrains Mono', monospace; color: var(--at-dim); }
+  .at-year-scale span{ position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+  .at-year-scale span.att{ color: var(--at-red2); font-weight: 700; transform: none; }
+  .at-strip{ display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 10px; margin: 0 0 22px; text-align: left; }
+  .at-strip figure{ margin: 0; background: #0e0e10; border: 1px solid var(--at-line); padding: 5px; }
+  .at-strip figure.doc{ border-color: var(--at-good); }
+  .at-strip img{ display: block; width: 100%; height: 76px; object-fit: cover; }
+  .at-strip figcaption{ font: 700 0.62rem 'JetBrains Mono', monospace; padding: 5px 2px 1px; color: var(--at-dim); }
+  .at-strip figure.doc figcaption{ color: var(--at-good); }
+  @media (prefers-reduced-motion: reduce){ .m-atelier *{ animation: none !important; transition: none !important; } }
