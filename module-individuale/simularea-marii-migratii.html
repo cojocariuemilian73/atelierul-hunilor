@@ -11,8 +11,8 @@
 <style>
   :root{ --nav-h: 0px; }
   body{ margin: 0; background: #121214; }
-  /* ============ MODULE: JOCURILE (Imperiul lui Attila, Tabăra lui Attila) (.jg) ============ */
-  #mod-game, #mod-embassy{ padding-block: 0 28px; }
+  /* ============ MODULE: JOCURILE (Imperiul lui Attila, Marea Migrație) (.jg) ============ */
+  #mod-game, #mod-migratie{ padding-block: 0 28px; }
   .jg{
     --s1: #1a1a1e; --s2: #23232a; --s3: #2e2e37; --line: rgba(230, 215, 195, 0.16);
     --ink: #e6d7c3; --dim: #a89a85; --gold: #d4af37; --gold2: #e5c158; --red: #a71d2a; --red2: #e0626c;
@@ -61,7 +61,7 @@
   .jg-choice.picked{ opacity: 1; border-color: var(--gold2); background: rgba(212, 175, 55, 0.12); }
   .jg-choice.good{ border-color: var(--good); }
   .jg-choice.bad{ border-color: var(--red2); }
-  .jg-reveal{ margin: 16px 0 0; padding: 14px 16px; background: var(--s2); border-left: 4px solid var(--c, var(--gold)); animation: jg-in 0.45s ease both; }
+  .jg-reveal{ margin: 16px 0 0; padding: 14px 16px; background: var(--s2); border: 1px solid var(--c, var(--gold)); animation: jg-in 0.45s ease both; }
   .jg-reveal h3{ margin: 0 0 6px; font: 700 1rem 'Cinzel', serif; color: var(--c, var(--gold2)); }
   .jg-reveal p{ margin: 0 0 10px; line-height: 1.6; color: #e0d3bd; }
   .jg-next{ margin-top: 12px; }
@@ -121,63 +121,6 @@
   .imp-lessons li{ position: relative; padding: 10px 12px 10px 34px; background: var(--s2); border: 1px solid var(--line); line-height: 1.55; }
   .imp-lessons li::before{ content: ''; position: absolute; left: 13px; top: 1.05em; width: 8px; height: 8px; transform: rotate(45deg); background: var(--gold); }
 
-  /* ---------- Tabăra lui Attila ---------- */
-  .tab-hub{ display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 22px; align-items: start; }
-  @media (max-width: 900px){ .tab-hub{ grid-template-columns: 1fr; } }
-  .tab-camp{ position: relative; border: 1px solid rgba(212, 175, 55, 0.35); background: #1b1712; }
-  .tab-camp svg{ display: block; width: 100%; height: auto; }
-  .tab-camp .ground, .tab-vignette .ground{ fill: #2c2619; }
-  .tab-camp .river, .tab-vignette .river{ fill: none; stroke: #3d5a6b; stroke-width: 16; stroke-linecap: round; opacity: 0.9; }
-  .tab-camp .river2, .tab-vignette .river2{ fill: none; stroke: #6f93a8; stroke-width: 2; stroke-dasharray: 6 8; opacity: 0.6; }
-  .tab-camp .yurt, .tab-vignette .yurt{ fill: #4a3f2c; stroke: #776447; stroke-width: 1; }
-  .tab-camp .fence, .tab-vignette .fence{ fill: none; stroke: #9a7a45; stroke-width: 3; stroke-dasharray: 2 2.5; }
-  .tab-camp .wood, .tab-vignette .wood{ fill: #6b4a24; stroke: #c19a55; stroke-width: 1.2; }
-  .tab-camp .stone, .tab-vignette .stone{ fill: #8a8478; stroke: #cfc7b6; stroke-width: 1.2; }
-  .tab-camp .tower, .tab-vignette .tower{ fill: #7a5528; stroke: #c19a55; stroke-width: 1; }
-  .tab-camp .fire, .tab-vignette .fire{ fill: #e5a54a; }
-  .tab-camp .road, .tab-vignette .road{ fill: none; stroke: #8a7650; stroke-width: 5; stroke-dasharray: 1 7; stroke-linecap: round; opacity: 0.7; }
-  .tab-camp .smoke, .tab-vignette .smoke{ fill: none; stroke: rgba(220, 210, 190, 0.35); stroke-width: 2.4; stroke-linecap: round; }
-  .tab-camp .cartouche rect{ fill: rgba(21, 18, 13, 0.85); stroke: #c19a55; stroke-width: 1.2; }
-  .tab-camp .cartouche text{ font: 700 13px 'Cinzel', serif; fill: #f2d474; text-anchor: middle; }
-  .tab-camp .cartouche text.small{ font: italic 10px 'Cormorant Garamond', serif; fill: #e8d9b8; }
-  .tab-vignette .cartouche{ display: none; }
-  .tab-vignette .here{ fill: rgba(229, 193, 88, 0.22); stroke: #f2d474; stroke-width: 2.4; }
-  .tab-vignette .here-ring{ fill: none; stroke: #f2d474; stroke-width: 1.6; opacity: 0.6; animation: tab-here 1.8s ease-out infinite; transform-box: fill-box; transform-origin: center; }
-  @keyframes tab-here{ 0%{ transform: scale(0.92); opacity: 0.8; } 100%{ transform: scale(1.25); opacity: 0; } }
-  .tab-vignette.paint{ background: #0e0e10; }
-  .tab-paint{ margin: 0; }
-  .tab-paint img{ display: block; width: 100%; height: auto; }
-  .tab-paint figcaption{ padding: 8px 10px; font: 0.68rem/1.5 'JetBrains Mono', monospace; color: var(--dim); }
-  .tab-camp .lbl{ font: 700 12px 'JetBrains Mono', monospace; fill: #f6eddc; paint-order: stroke; stroke: #15120d; stroke-width: 3px; letter-spacing: 0.04em; text-anchor: middle; pointer-events: none; }
-  .tab-camp .sub{ font: italic 11px 'Cormorant Garamond', serif; fill: #e8d9b8; paint-order: stroke; stroke: #15120d; stroke-width: 2.6px; text-anchor: middle; pointer-events: none; }
-  .jg-spot{ cursor: pointer; outline: none; }
-  .jg-spot .halo{ fill: rgba(229, 193, 88, 0.12); stroke: var(--gold2); stroke-width: 1.6; stroke-dasharray: 4 3; transition: fill 0.2s; }
-  .jg-spot:hover .halo, .jg-spot:focus-visible .halo{ fill: rgba(229, 193, 88, 0.3); }
-  .jg-spot.done .halo{ stroke: var(--good); stroke-dasharray: none; fill: rgba(143, 189, 130, 0.14); }
-  .jg-spot.locked{ cursor: default; opacity: 0.45; }
-  .jg-spot .check{ font: 700 13px sans-serif; fill: var(--good); text-anchor: middle; }
-  .tab-side .jg-day{ display: flex; gap: 6px; margin: 0 0 14px; }
-  .tab-side .jg-day i{ flex: 1; height: 6px; border-radius: 3px; background: var(--s3); }
-  .tab-side .jg-day i.used{ background: var(--gold); }
-  .tab-stat{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 14px; }
-  .tab-stat div{ background: var(--s2); border: 1px solid var(--line); padding: 10px 12px; }
-  .tab-stat small{ display: block; font: 700 0.6rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
-  .tab-stat b{ font: 700 1.3rem 'Cinzel', serif; color: var(--gold2); }
-  .tab-journal{ list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-  .tab-journal li{ padding: 9px 12px; background: var(--s2); border-left: 3px solid var(--gold); font-size: 0.88rem; line-height: 1.45; animation: jg-in 0.4s ease both; }
-  .tab-journal li b{ display: block; font: 700 0.78rem 'Cinzel', serif; color: var(--gold2); margin-bottom: 2px; }
-  .tab-journal .empty{ border-left-color: var(--line); color: var(--dim); font-style: italic; }
-  .tab-scene{ display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 22px; align-items: start; }
-  @media (max-width: 900px){ .tab-scene{ grid-template-columns: 1fr; } }
-  .tab-vignette{ border: 1px solid rgba(212, 175, 55, 0.35); background: #1b1712; }
-  .tab-vignette svg{ display: block; width: 100%; height: auto; }
-  .tab-place{ font: 700 clamp(1.3rem, 3.2vw, 1.8rem)/1.15 'Cinzel', serif; color: #f6eddc; margin: 0 0 10px; }
-  .tab-narr{ line-height: 1.7; color: #e0d3bd; margin: 0 0 10px; }
-  .tab-say{ margin: 14px 0 6px; padding: 12px 16px; background: var(--s2); border-left: 3px solid var(--red2); font-style: italic; line-height: 1.6; color: #f0e2c6; }
-  .tab-say b{ display: block; font: normal 700 0.66rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red2); margin-bottom: 4px; font-style: normal; }
-  .tab-debate{ display: flex; gap: 6px; margin: 0 0 12px; }
-  .tab-debate i{ flex: 1; height: 6px; border-radius: 3px; background: var(--s3); }
-  .tab-debate i.win{ background: var(--good); } .tab-debate i.lose{ background: var(--red2); }
   @media (prefers-reduced-motion: reduce){ .jg *{ animation: none !important; transition: none !important; } }
 
   /* cod QR pentru joc: doar pe ecrane late */
@@ -211,7 +154,7 @@
   .mig-stage canvas{ display: block; width: 100%; height: auto; }
   .mig-credit{ position: absolute; right: 6px; bottom: 4px; font: 0.55rem 'JetBrains Mono', monospace; color: rgba(230, 215, 195, 0.7); text-shadow: 0 1px 2px #000; pointer-events: none; }
   .mig-toast{ position: absolute; left: 10px; top: 10px; display: grid; gap: 6px; max-width: min(520px, 75%); pointer-events: none; }
-  .mig-t{ padding: 8px 12px; background: rgba(14, 14, 16, 0.9); border-left: 3px solid var(--gold); font-size: 0.86rem; line-height: 1.4; animation: jg-in 0.4s ease both; transition: opacity 0.7s; }
+  .mig-t{ padding: 8px 12px; background: rgba(14, 14, 16, 0.9); border: 1px solid rgba(212,175,55,0.45); font-size: 0.86rem; line-height: 1.4; animation: jg-in 0.4s ease both; transition: opacity 0.7s; }
   .mig-t b{ display: block; font-weight: 600; color: #f6eddc; }
   .mig-t small{ display: block; margin-top: 2px; font: 0.64rem 'JetBrains Mono', monospace; color: var(--gold2); }
   .mig-t.out{ opacity: 0; }
@@ -227,7 +170,7 @@
   .mig-table th, .mig-table td{ text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); }
   .mig-table th{ font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold2); }
   .mig-table td i{ display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 7px; vertical-align: middle; }
-  .mig-lesson{ padding: 10px 12px; border-left: 3px solid var(--gold); background: var(--s2); }
+  .mig-lesson{ padding: 10px 12px; border: 1px solid var(--line); background: var(--s2); }
   .mig-side{ display: grid; gap: 8px; align-content: start; padding: 14px; background: var(--s1); border: 1px solid var(--line); }
   .mig-side .jg-eyebrow{ margin: 4px 0 2px; }
   .mig-legend{ list-style: none; padding: 0; margin: 0; display: grid; gap: 5px; font-size: 0.86rem; }
@@ -256,6 +199,7 @@
   /* simularea: cronologie, informații, butoane cu iconițe, ecranul final */
   .mig-ctl .jg-btn svg{ width: 14px; height: 14px; flex: none; }
   .mig-tl{ position: relative; height: 46px; margin: 0; padding: 0 16px; background: #141210; border-top: 1px solid rgba(212,175,55,0.3); }
+  .mig-over.dock{ bottom: 46px; }
   .mig-tl-track{ position: absolute; left: 16px; right: 16px; top: 14px; height: 4px; background: rgba(230,215,195,0.14); border-radius: 2px; overflow: hidden; }
   .mig-tl-fill{ display: block; height: 100%; width: 0; background: linear-gradient(90deg, #a71d2a, #e5c158); }
   .mig-tl > span{ position: absolute; transform: translateX(-50%); }
@@ -271,12 +215,15 @@
   .mig-legend small{ display: block; font-size: 0.72rem; color: var(--dim); }
   .mig-dec h3 .mig-yr{ display: inline-block; margin-right: 10px; padding: 1px 8px; background: #e5c158; color: #1a1405; font: 700 0.95rem 'JetBrains Mono', monospace; vertical-align: 3px; }
   .mig-who{ color: var(--gold2) !important; font-style: italic; margin-top: -2px !important; }
-  .mig-t{ border-left: 0; border: 1px solid rgba(212,175,55,0.45); }
-  .mig-lesson{ border-left: 0; border: 1px solid var(--line); }
   .mig-table td.num{ font-variant-numeric: tabular-nums; white-space: nowrap; }
   .mig-over.dock{ align-items: flex-end; justify-content: flex-start; background: transparent; backdrop-filter: none; pointer-events: none; }
   .mig-over.dock .mig-dec{ pointer-events: auto; width: min(460px, 100%); max-height: calc(100% - 8px); padding: 14px 16px; }
   .mig-end.min > :not(.mig-end-btns):not(h3){ display: none; }
+  .mig-end-btns .jg-btn{ display: inline-flex; align-items: center; gap: 7px; }
+  .mig-end-btns .jg-btn svg{ width: 14px; height: 14px; flex: none; }
+  .mig-over.dock .mig-end-btns .jg-btn{ padding: 8px 12px; font-size: 0.8rem; white-space: nowrap; }
+  .mig-over.dock .mig-end.min{ width: auto; max-width: 100%; }
+  .mig-end.min h3{ margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -798,7 +745,7 @@
     pause: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor"/></svg>',
     reset: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   };
-  function setPlayLabel(){ var b = document.getElementById('mig-play'); b.innerHTML = running ? ICON.pause + 'Pauză' : ICON.play + (t > T0 + 0.01 ? 'Continuă' : 'Pornește'); b.setAttribute('aria-pressed', running ? 'true' : 'false'); }
+  function setPlayLabel(){ var b = document.getElementById('mig-play'); b.innerHTML = running ? ICON.pause + 'Pauză' : ICON.play + (finished ? 'Final' : t > T0 + 0.01 ? 'Continuă' : 'Pornește'); b.setAttribute('aria-pressed', running ? 'true' : 'false'); }
   function play(){ if (finished) return; running = true; last = 0; setPlayLabel(); requestAnimationFrame(loop); }
   function pause(){ running = false; setPlayLabel(); if (!idleRaf) idleRaf = requestAnimationFrame(idle); }
 
@@ -940,7 +887,7 @@
     over.innerHTML = '<div class="mig-dec mig-intro" role="dialog" aria-labelledby="mig-it"><h3 id="mig-it">Marea Migrație, în timp real</h3>' +
       '<p class="mig-who">370–476 · patru decizii · o hartă reală</p>' +
       '<p>Peste ' + (Math.floor(N / 100) * 100).toLocaleString('ro-RO') + ' de puncte sunt popoare în mișcare. Hunii vin din răsărit; goții, vandalii și ceilalți sunt împinși spre granițele Imperiului. De patru ori, istoria se oprește și decizi tu: ești Valens, Stilicho, Teodosie al II-lea și Aetius.</p>' +
-      '<p>Cercurile punctate arată mereu <b>unde erau popoarele în realitate</b>. Treci cu mouse-ul peste un popor ca să vezi unde a ajuns.</p>' +
+      '<p>Cercurile punctate arată mereu <b>unde erau popoarele în realitate</b>. Treci cu mouse-ul peste un popor (pe telefon, atinge-l) ca să vezi unde a ajuns.</p>' +
       '<div class="mig-end-btns"><button class="jg-btn" id="mig-go" type="button">' + ICON.play + 'Pornește simularea</button><button class="jg-btn ghost" id="mig-auto" type="button">Arată istoria reală</button></div></div>';
     document.getElementById('mig-go').addEventListener('click', function(){ auto = false; restart(); play(); });
     document.getElementById('mig-auto').addEventListener('click', function(){ auto = true; restart(); play(); });

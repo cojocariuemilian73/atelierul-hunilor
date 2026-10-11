@@ -500,7 +500,7 @@
     pause: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor"/></svg>',
     reset: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   };
-  function setPlayLabel(){ var b = document.getElementById('mig-play'); b.innerHTML = running ? ICON.pause + 'Pauză' : ICON.play + (t > T0 + 0.01 ? 'Continuă' : 'Pornește'); b.setAttribute('aria-pressed', running ? 'true' : 'false'); }
+  function setPlayLabel(){ var b = document.getElementById('mig-play'); b.innerHTML = running ? ICON.pause + 'Pauză' : ICON.play + (finished ? 'Final' : t > T0 + 0.01 ? 'Continuă' : 'Pornește'); b.setAttribute('aria-pressed', running ? 'true' : 'false'); }
   function play(){ if (finished) return; running = true; last = 0; setPlayLabel(); requestAnimationFrame(loop); }
   function pause(){ running = false; setPlayLabel(); if (!idleRaf) idleRaf = requestAnimationFrame(idle); }
 
@@ -642,7 +642,7 @@
     over.innerHTML = '<div class="mig-dec mig-intro" role="dialog" aria-labelledby="mig-it"><h3 id="mig-it">Marea Migrație, în timp real</h3>' +
       '<p class="mig-who">370–476 · patru decizii · o hartă reală</p>' +
       '<p>Peste ' + (Math.floor(N / 100) * 100).toLocaleString('ro-RO') + ' de puncte sunt popoare în mișcare. Hunii vin din răsărit; goții, vandalii și ceilalți sunt împinși spre granițele Imperiului. De patru ori, istoria se oprește și decizi tu: ești Valens, Stilicho, Teodosie al II-lea și Aetius.</p>' +
-      '<p>Cercurile punctate arată mereu <b>unde erau popoarele în realitate</b>. Treci cu mouse-ul peste un popor ca să vezi unde a ajuns.</p>' +
+      '<p>Cercurile punctate arată mereu <b>unde erau popoarele în realitate</b>. Treci cu mouse-ul peste un popor (pe telefon, atinge-l) ca să vezi unde a ajuns.</p>' +
       '<div class="mig-end-btns"><button class="jg-btn" id="mig-go" type="button">' + ICON.play + 'Pornește simularea</button><button class="jg-btn ghost" id="mig-auto" type="button">Arată istoria reală</button></div></div>';
     document.getElementById('mig-go').addEventListener('click', function(){ auto = false; restart(); play(); });
     document.getElementById('mig-auto').addEventListener('click', function(){ auto = true; restart(); play(); });
