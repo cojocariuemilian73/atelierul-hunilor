@@ -288,6 +288,43 @@
   h2.sec-title{ font-size: clamp(1.5rem, 4.5vw, 2rem); margin: 2px 0 8px; font-weight: 600; }
   .lab-how{ display: inline-flex; align-items: center; gap: 10px; margin: -10px 0 26px; padding: 8px 14px; border: 1px solid var(--line-strong); font-size: 0.95rem; color: var(--ink); }
   .lab-dot{ flex: none; width: 16px; height: 16px; border-radius: 50%; background: #a71d2a; box-shadow: 0 0 0 2px #f0cf6a; }
+  /* mx: mituri în capitole */
+  .mx{ margin: 34px 0 8px; border-top: 1px solid var(--line-strong); }
+  .mx-head{ display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; padding: 18px 0 6px; }
+  .mx-title{ margin: 0; font: 600 1.45rem/1.2 'Cormorant Garamond', serif; color: var(--ink); }
+  .mx-count{ margin: 0; font: 0.74rem 'JetBrains Mono', monospace; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+  .mx-count b{ color: var(--accent-2); }
+  .mx-head.all .mx-count{ color: var(--accent-2); }
+  .mx-all{ margin-left: auto; min-height: 36px; padding: 7px 14px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink); font: 700 0.74rem 'JetBrains Mono', monospace; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+  .mx-all:hover{ border-color: var(--accent-2); color: var(--accent-2); }
+  .mx-item{ --c: #c08a4a; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .mx-item.theme-gen{ --c: #6fb0ba; } .mx-item.theme-izv{ --c: #d39a58; } .mx-item.theme-arh{ --c: #ad8fcb; } .mx-item.theme-ori{ --c: #d4b03c; }
+  .mx-item.theme-arm{ --c: #e0707a; } .mx-item.theme-att{ --c: #e5c158; } .mx-item.theme-aur{ --c: #e5c158; }
+  .mx-meta{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 8px; font: 700 0.68rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+  .mx-mit{ padding: 2px 8px; border: 1px solid #e0626c; color: #f0a0a6; transition: border-color 0.3s, color 0.3s; }
+  .mx-item.open .mx-mit{ border-color: var(--line-strong); color: var(--ink-dim); }
+  .mx-cat{ display: inline-flex; align-items: center; gap: 6px; color: var(--c); }
+  .mx-cat svg{ width: 15px; height: 15px; }
+  .mx-myth{ margin: 0; font: italic 1.22rem/1.45 'Source Serif 4', Georgia, serif; color: var(--ink); max-width: 68ch; }
+  .mx-myth span{ background: linear-gradient(#e0626c, #e0626c) no-repeat 0 58% / 0 2px; transition: background-size 0.6s cubic-bezier(.16,1,.3,1), color 0.4s; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .mx-item.open .mx-myth span{ background-size: 100% 2px; color: var(--ink-dim); }
+  .mx-btn{ min-width: 112px; min-height: 42px; padding: 10px 18px; border: 1px solid var(--accent-2); background: var(--accent-2); color: var(--paper); font: 700 0.86rem 'Cinzel', serif; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .mx-btn:hover{ background: #f2d474; }
+  .mx-item.open .mx-btn{ background: transparent; color: var(--accent-2); }
+  .mx-btn:focus-visible, .mx-all:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 3px; }
+  .mx-a{ grid-column: 1 / -1; display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s cubic-bezier(.16,1,.3,1); }
+  .mx-a > div{ overflow: hidden; }
+  .mx-item.open .mx-a{ grid-template-rows: 1fr; }
+  .mx-lab{ margin: 14px 0 6px; font: 700 0.68rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: #8fbd82; }
+  .mx-truth{ margin: 0; padding: 0 0 4px; line-height: 1.7; color: var(--ink); max-width: 72ch; }
+  @media (max-width: 640px){
+    .mx-item{ grid-template-columns: 1fr; row-gap: 12px; }
+    .mx-btn{ justify-self: start; }
+    .mx-myth{ font-size: 1.08rem; }
+    .mx-all{ margin-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce){ .mx-myth span, .mx-a, .mx-mit{ transition: none; } }
+  /* /mx */
   .sec-sub{ font-family: 'Source Serif 4', serif; font-style: italic; font-size: 1rem; color: var(--ink-dim); margin: 0 0 26px; }
   h3.sub-title{ font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; margin: 38px 0 12px; color: var(--accent); }
   article p{ line-height: 1.74; font-size: 1.06rem; margin: 0 0 18px; }
@@ -1323,7 +1360,7 @@
       <li><strong>Marea Migrație, în timp real</strong>: simulare cu peste 1.600 de agenți pe harta reală (370–476): terenul e citit din hartă, drumurile sunt calculate cu algoritmul lui Dijkstra, iar jucătorul ia patru decizii istorice (Valens, Stilicho, Teodosie al II-lea, Aetius) și își compară lumea cu cea reală.</li>
       <li><strong>Masa istoricului</strong>: douăsprezece surse despre huni (obiecte, izvoare scrise, picturi) de așezat pe axa timpului: cât de multe sunt cu adevărat din epoca lui Attila.</li>
       <li><strong>Atlasul Migrației</strong>: hartă interactivă cu rutele Marii Migrații, în pagina Acasă (capitolul 04 al articolului).</li>
-      <li><strong>Muzeul virtual și Mit vs. adevăr</strong>: artefacte hunice reale, explorabile pe fotografie, și mituri despre huni verificate cu izvoarele și genetica; capitolele 06 și 07 din pagina Acasă.</li>
+      <li><strong>Muzeul virtual și miturile</strong>: artefacte hunice reale, explorabile pe fotografie (capitolul 06), și cincisprezece mituri despre huni, verificate cu izvoarele și genetica la sfârșitul capitolelor de care țin.</li>
     </ul>
     <p>Navighezi cu meniul de sus sau cu butoanele „Pagina anterioară / următoare” de jos.</p>
 
@@ -1399,8 +1436,7 @@
     <a href="#sec-atlas" data-sec="sec-atlas" class="toc-link"><i>04</i>Atlas</a>
     <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link"><i>05</i>Personalități</a>
     <a href="#sec-muzeu" data-sec="sec-muzeu" class="toc-link"><i>06</i>Muzeu</a>
-    <a href="#sec-mituri" data-sec="sec-mituri" class="toc-link"><i>07</i>Mit vs. adevăr</a>
-    <a href="#biblio" data-sec="biblio" class="toc-link"><i>08</i>Bibliografie</a>
+    <a href="#biblio" data-sec="biblio" class="toc-link"><i>07</i>Bibliografie</a>
   </div>
 </nav>
 
@@ -1459,6 +1495,7 @@
         <div class="sc-grid"><article class="sc-card sc-text"><header><b>Ammianus Marcellinus</b><small>Res Gestae, cartea 31 · c. 390</small></header><span class="sc-gap"><i style="width:15%"></i>~15 de ani după</span><p class="sc-w sc-w-no"><span aria-hidden="true">○</span>Contemporan, dar nu i-a văzut pe huni</p><p class="sc-row"><em>Ce aflăm</em>Cea mai veche descriere amănunțită a hunilor și a șocului din 375–378.</p><p class="sc-row"><em>Limite</em>Folosește tipare vechi despre „barbari”: imaginea e literară, nu observație de teren.</p></article><article class="sc-card sc-text"><header><b>Priscus din Panium</b><small>Istorie, păstrată în fragmente · după 450</small></header><span class="sc-gap zero">din epocă</span><p class="sc-w sc-w-yes"><span aria-hidden="true">●</span>Martor ocular: în solia din 449</p><p class="sc-row"><em>Ce aflăm</em>Curtea lui Attila văzută din interior: ospățul, diplomația, tributul.</p><p class="sc-row"><em>Limite</em>Avem doar fragmente copiate de alții; privește lumea hunică cu ochi de diplomat bizantin.</p></article><article class="sc-card sc-text"><header><b>Iordanes</b><small>Getica · 551</small></header><span class="sc-gap"><i style="width:100%"></i>~100 de ani după</span><p class="sc-w sc-w-no"><span aria-hidden="true">○</span>Nu a fost martor; rezumă autori mai vechi</p><p class="sc-row"><em>Ce aflăm</em>Câmpiile Catalaunice, moartea lui Attila, bătălia de la Nedao.</p><p class="sc-row"><em>Limite</em>Scrie o istorie a goților, la un secol distanță, și are interesul să-i pună în lumină.</p></article><article class="sc-card sc-obj"><header><b>Arheologia</b><small>morminte, cazane, diademe, arcuri · sec. IV–V</small></header><span class="sc-gap zero">din epocă</span><p class="sc-w sc-w-obj"><span aria-hidden="true">◆</span>Obiecte din epocă</p><p class="sc-row"><em>Ce aflăm</em>Ce purtau, ce foloseau și cât de departe ajungea moda elitelor din lumea hunică.</p><p class="sc-row"><em>Limite</em>Obiectele nu spun etnia: aceeași diademă putea fi purtată de un hun, un got sau un alan.</p></article><article class="sc-card sc-dna"><header><b>Genetica (ADN antic)</b><small>Neparáczki 2019, Maróti 2022 · 2019–2022</small></header><span class="sc-gap modern">cercetare modernă</span><p class="sc-w sc-w-obj"><span aria-hidden="true">◆</span>Analiză modernă pe schelete din epocă</p><p class="sc-row"><em>Ce aflăm</em>O populație amestecată: câteva linii est-asiatice într-o masă majoritar locală.</p><p class="sc-row"><em>Limite</em>Eșantioane mici, mai ales din morminte de elită; ADN-ul nu arată identitatea asumată.</p></article></div>
         <p class="section-sources">Distanța e socotită față de evenimentele descrise (375–378 pentru Ammianus, 451–454 pentru Iordanes). Edițiile și studiile sunt în bibliografia de la final.</p>
       </div>
+      <div class="mx" data-myths="0,1,3,13" data-title="Mituri despre originea hunilor"></div>
     </section>
 
     <section id="sec-cronologie">
@@ -1593,6 +1630,7 @@
         <a class="sim-link" href="#mod-migratie">▶ Vezi Marea Migrație în timp real: simulare în care decizi tu</a>
         <p class="section-sources">Surse pentru traseele de pe hartă: trecerea Dunării de către vizigoți<sup class="fn" data-n="13">13</sup> și traversarea Rinului de către vandali, alani și suebi<sup class="fn" data-n="14">14</sup>.</p>
       </div>
+      <div class="mx" data-myths="4,10,11,14" data-title="Mituri despre migrație și aur"></div>
     </section>
 
     <section id="sec-atlas" class="m-atlas atlas-in-article">
@@ -1817,6 +1855,7 @@
         </div>
       </div>
       <p class="source-caution"><b>O precizare necesară.</b> Prezența unor obiecte „hunice” într-un mormânt nu dovedește că cel îngropat era hun. În secolul al V-lea, stilul policrom cu granate, cazanele de bronz și chiar deformarea craniană circulau între popoare ca modă a elitelor. Ele arată apartenența la o lume politică dominată de huni, nu neapărat originea etnică a purtătorului, iar „prințesa” de la Gherăseni e un exemplu bun tocmai fiindcă originea ei etnică rămâne deschisă.</p>
+      <div class="mx" data-myths="7,8" data-title="Mituri despre Attila"></div>
     </section>
 
     <section id="sec-muzeu" class="m-lab lab-in-article">
@@ -1833,17 +1872,9 @@
   <p class="hp-title" id="hp-title"></p>
   <p id="hp-desc"></p>
 </div>
+      <div class="mx" data-myths="2,5,6,9,12" data-title="Mituri despre arme și morminte"></div>
     </section>
 
-    <section id="sec-mituri" class="m-lab lab-in-article">
-      <div class="chapter-mark"><span class="chapter-num">07</span><span class="chapter-slash">/</span><span class="chapter-tag">Mit vs. adevăr</span></div>
-      <h2 class="sec-title">Mit vs. adevăr</h2>
-      <p class="sec-sub">Apasă pe fiecare card pentru a compara o idee răspândită despre huni cu ce arată izvoarele antice, arheologia și ADN-ul antic.</p>
-      <div class="wrap">
-        <div class="flip-grid" id="flip-grid"></div>
-      </div>
-      <p class="section-sources">Componentă educațională · surse genetice: Neparáczki et al. (2019), Maróti et al. (2022)</p>
-    </section>
 
 
   </article>
@@ -1858,7 +1889,7 @@
   </div>
 
   <section id="biblio">
-    <div class="chapter-mark"><span class="chapter-num">08</span><span class="chapter-slash">/</span><span class="chapter-tag">Bibliografie</span></div>
+    <div class="chapter-mark"><span class="chapter-num">07</span><span class="chapter-slash">/</span><span class="chapter-tag">Bibliografie</span></div>
     <h2 class="sec-title">Surse și note</h2>
     <h3 class="sub-title">Note de subsol</h3>
     <ol class="biblio">
@@ -3226,77 +3257,45 @@
 
   function svgIcon(d){ return '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>'; }
 
-  function renderFlipCard(m, i, onTurn){
-    var th = THEME[MYTH_THEMES[i]] || THEME.izv;
-    var num = 'Nº ' + (i < 9 ? '0' : '') + (i + 1);
-    var card = document.createElement('div');
-    card.className = 'flip-card theme-' + (MYTH_THEMES[i] || 'izv');
-    card.style.setProperty('--d', (i % 3) * 90 + 'ms');
-    card.innerHTML =
-      '<div class="flip-inner">' +
-        '<div class="flip-face flip-front">' +
-          '<div class="fc-top"><span class="fc-num">' + num + '</span><span class="fc-cat">' + svgIcon(th.icon) + th.label + '</span></div>' +
-          '<span class="fc-quote" aria-hidden="true">„</span>' +
-          '<p class="flip-tag">Mitul cronicilor</p><h4>' + m.myth + '</h4>' +
-          '<div class="fc-foot"><span class="fc-seal" aria-hidden="true">?</span><span class="flip-hint">Întoarce cardul</span><span class="fc-arrow" aria-hidden="true">↻</span></div>' +
-        '</div>' +
-        '<div class="flip-face flip-back">' +
-          '<div class="fc-top"><span class="fc-num">' + num + '</span><span class="fc-stamp">Mit demontat</span></div>' +
-          '<p class="flip-tag">Ce arată sursele și cercetarea</p><p class="fc-truth">' + m.truth + '</p>' +
-        '</div>' +
-      '</div>';
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-pressed', 'false');
-    card.setAttribute('aria-label', num + ', ' + th.label + ': ' + m.myth);
-    var seen = false;
-    function turn(){
-      var on = card.classList.toggle('flipped');
-      card.setAttribute('aria-pressed', on ? 'true' : 'false');
-      if (on && !seen) { seen = true; card.classList.add('seen'); onTurn(); }
-    }
-    card.addEventListener('click', function(e){
-      if (e.target.closest('.fc-truth') && card.classList.contains('flipped') && window.getSelection && String(window.getSelection()).length) return;
-      turn();
+  // mx: miturile, puse în capitolele de care țin
+  function renderMythGroup(host){
+    var ids = host.getAttribute('data-myths').split(',').map(Number), done = 0;
+    var head = document.createElement('div');
+    head.className = 'mx-head';
+    head.innerHTML = '<h3 class="mx-title">' + host.getAttribute('data-title') + '</h3>' +
+      '<p class="mx-count"><b>0</b> din ' + ids.length + ' verificate</p>' +
+      '<button type="button" class="mx-all">Verifică toate</button>';
+    host.appendChild(head);
+    var countEl = head.querySelector('b'), allBtn = head.querySelector('.mx-all');
+    var items = ids.map(function(i){
+      var m = MYTHS[i], key = MYTH_THEMES[i] || 'izv', th = THEME[key] || THEME.izv, id = 'mx-a-' + i;
+      var it = document.createElement('article');
+      it.className = 'mx-item theme-' + key;
+      it.innerHTML =
+        '<div class="mx-q"><p class="mx-meta"><span class="mx-mit">Mit</span><span class="mx-cat">' + svgIcon(th.icon) + th.label + '</span></p>' +
+        '<p class="mx-myth"><span>' + m.myth + '</span></p></div>' +
+        '<button type="button" class="mx-btn" aria-expanded="false" aria-controls="' + id + '">Verifică</button>' +
+        '<div class="mx-a" id="' + id + '" role="region" aria-label="Ce arată sursele"><div><p class="mx-lab">Ce arată sursele</p><p class="mx-truth">' + m.truth + '</p></div></div>';
+      var btn = it.querySelector('.mx-btn'), seen = false;
+      it._set = function(on){
+        it.classList.toggle('open', on);
+        btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+        btn.textContent = on ? 'Ascunde' : 'Verifică';
+        if (on && !seen) { seen = true; done++; countEl.textContent = done; head.classList.toggle('all', done === ids.length); }
+      };
+      btn.addEventListener('click', function(){ it._set(!it.classList.contains('open')); });
+      host.appendChild(it);
+      return it;
     });
-    card.addEventListener('keydown', function(e){
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); turn(); }
+    allBtn.addEventListener('click', function(){
+      var any = items.some(function(x){ return !x.classList.contains('open'); });
+      items.forEach(function(x, k){ setTimeout(function(){ x._set(any); }, any ? k * 90 : 0); });
+      allBtn.textContent = any ? 'Ascunde toate' : 'Verifică toate';
     });
-    card._turn = turn;
-    return card;
   }
 
   function initMythModule(){
-    var flipGrid = document.getElementById('flip-grid');
-    var bar = document.createElement('div');
-    bar.className = 'myth-progress';
-    bar.innerHTML =
-      '<p class="mp-text"><b id="mp-count">0</b> din ' + MYTHS.length + ' mituri demontate</p>' +
-      '<div class="mp-track" aria-hidden="true"><i id="mp-fill"></i></div>' +
-      '<button type="button" class="mp-all" id="mp-all">Întoarce toate</button>';
-    flipGrid.parentNode.insertBefore(bar, flipGrid);
-    var countEl = bar.querySelector('#mp-count'), fillEl = bar.querySelector('#mp-fill'), allBtn = bar.querySelector('#mp-all');
-    function onTurn(){
-      mythTurned++;
-      countEl.textContent = mythTurned;
-      fillEl.style.width = (mythTurned / MYTHS.length * 100) + '%';
-      if (mythTurned === MYTHS.length) bar.classList.add('done');
-    }
-    var cards = MYTHS.map(function(m, i){ var c = renderFlipCard(m, i, onTurn); flipGrid.appendChild(c); return c; });
-    allBtn.addEventListener('click', function(){
-      var anyFront = cards.some(function(c){ return !c.classList.contains('flipped'); });
-      cards.forEach(function(c, i){
-        if (c.classList.contains('flipped') !== anyFront) setTimeout(c._turn, i * 45);
-      });
-      allBtn.textContent = anyFront ? 'Arată miturile' : 'Întoarce toate';
-    });
-    if ('IntersectionObserver' in window) {
-      flipGrid.classList.add('fc-anim');
-      var io = new IntersectionObserver(function(es){
-        es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('fc-in'); io.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      cards.forEach(function(c){ io.observe(c); });
-    }
+    Array.prototype.forEach.call(document.querySelectorAll('.mx[data-myths]'), renderMythGroup);
   }
 
   // ============================================================
