@@ -1,0 +1,52 @@
+  /* ---------- AURUL HUNILOR: GRAFIC CARE SE CONSTRUIEȘTE LA DERULARE ---------- */
+  .gs{ display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(20px, 3vw, 44px); margin: 30px 0 44px; }
+  .gs-chart{ grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--nav-h, 0px) + 24px); align-self: start; padding: 14px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
+  .gs-chart svg{ display: block; width: 100%; height: auto; }
+  .gs-steps{ grid-column: 1; grid-row: 1; }
+  .gs-step{ min-height: 62vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.32; transition: opacity 0.5s ease; }
+  .gs-step:first-child{ min-height: 46vh; }
+  .gs-step.on{ opacity: 1; }
+  .gs-step h3{ margin: 0 0 10px; font: 600 clamp(1.5rem, 2.6vw, 2rem)/1.15 'Cormorant Garamond', serif; text-wrap: balance; }
+  .gs-step p{ margin: 0; line-height: 1.65; color: var(--ink-dim); max-width: 46ch; }
+  .gs-yr{ margin: 0 0 6px !important; font: 700 0.74rem 'JetBrains Mono', monospace; color: var(--accent-2) !important; letter-spacing: 0.06em; text-transform: uppercase; }
+  .gs-src{ margin: 10px 0 0; font-size: 0.8rem; color: var(--ink-dim); line-height: 1.5; }
+
+  .gs-grid line{ stroke: color-mix(in srgb, var(--ink) 14%, transparent); stroke-width: 1; }
+  .gs-grid text{ font: 12px 'JetBrains Mono', monospace; fill: var(--ink-dim); text-anchor: end; }
+  .gs-grid .gs-unit{ text-anchor: start; fill: var(--accent-2); font-weight: 700; }
+  .gs-x text{ text-anchor: middle; }
+  .gs-bar{ transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); transition: transform 1s cubic-bezier(.16,1,.3,1), opacity 0.5s; }
+  .gs-lab{ font: 700 13px 'JetBrains Mono', monospace; fill: var(--ink); text-anchor: middle; opacity: 0; transition: opacity 0.4s 0.5s; }
+  .gs-lump, .gs-stop{ opacity: 0; transition: opacity 0.6s 0.4s; }
+  .gs-lump text, .gs-stop text{ font: 700 12px 'JetBrains Mono', monospace; fill: #f2d474; }
+  .gs-stop line{ stroke: #e0626c; stroke-width: 2; stroke-dasharray: 5 4; }
+  .gs-stop text{ fill: #f4a0a6; }
+  .gs[data-s="1"] .b1, .gs[data-s="2"] .b1, .gs[data-s="2"] .b2,
+  .gs[data-s="3"] .b1, .gs[data-s="3"] .b2, .gs[data-s="3"] .b3,
+  .gs[data-s="4"] .gs-bar, .gs[data-s="5"] .gs-bar{ transform: scaleY(1); opacity: 1; }
+  .gs[data-s="1"] .gs-lab.b1, .gs[data-s="2"] .gs-lab.b1, .gs[data-s="2"] .gs-lab.b2,
+  .gs[data-s="3"] .gs-lab, .gs[data-s="5"] .gs-lab{ opacity: 1; }
+  .gs[data-s="3"] .gs-lump, .gs[data-s="5"] .gs-lump, .gs[data-s="5"] .gs-stop{ opacity: 1; }
+  .gs[data-s="4"] .gs-bars{ opacity: 0.12; }
+  .gs-bars, .gs-grid{ transition: opacity 0.6s; }
+  .gs[data-s="4"] .gs-grid{ opacity: 0.2; }
+  .gs-coins circle{ opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.2); transition: opacity 0.35s, transform 0.5s cubic-bezier(.16,1,.3,1); }
+  .gs[data-s="4"] .gs-coins circle{ opacity: 1; transform: none; }
+  .gs-coins-lab{ font: 700 12px 'JetBrains Mono', monospace; fill: #f2d474; opacity: 0; transition: opacity 0.5s 0.6s; }
+  .gs[data-s="4"] .gs-coins-lab{ opacity: 1; }
+  @media (max-width: 860px){
+    .gs{ grid-template-columns: 1fr; }
+    .gs-chart{ grid-column: 1; top: calc(var(--nav-h, 0px) + 8px); z-index: 2; background: var(--paper); padding: 8px; }
+    .gs-steps{ grid-row: 2; position: relative; z-index: 3; }
+    .gs-step{ min-height: 70vh; justify-content: flex-end; padding-bottom: 12vh; opacity: 1; }
+    .gs-step > *{ background: var(--paper); }
+    .gs-step h3, .gs-step p{ padding: 0 12px; }
+    .gs-step .gs-yr{ padding-top: 10px; }
+    .gs-step p:last-child{ padding-bottom: 12px; }
+    .gs-step{ pointer-events: none; }
+    .gs-step:first-child{ min-height: 50vh; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .gs-bar, .gs-lab, .gs-lump, .gs-stop, .gs-coins circle, .gs-coins-lab, .gs-step, .gs-bars{ transition: none; }
+  }
+

@@ -12,6 +12,7 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
 
 - `atelierul-hunilor.html` — pagina combinată finală (aceasta e livrarea)
 - Pagina „Masa istoricului” (sursele de așezat pe axa timpului) are sursele în `scripturi-build/atelier/` (HTML, CSS, JS) și se pune la zi în paginile construite cu `node scripturi-build/splice-atelier.js`. Stilurile jocurilor și simularea (`scripturi-build/jocuri/`) se pun la zi cu `node scripturi-build/splice-jocuri.js`.
+- Cronologia de pe pagina Acasă (axă cu zoom și filtre) e în `scripturi-build/cronologie/`, graficul „Aurul hunilor” în `scripturi-build/aur/`; se pun la zi cu `node scripturi-build/splice-cronologie.js` și `node scripturi-build/splice-aur.js`. Zoom-ul pe imagini și butonul „Înapoi sus” vin din `node scripturi-build/patch-lightbox-zoom.js`.
 - `ghid-profesor.html` — Ghidul profesorului: corespondența cu programa de istorie de clasa a IX-a (cele 4 competențe generale), trei scenarii de lecție și o fișă de lucru cu barem, gata de tipărit.
 - Jocul „Imperiul lui Attila” și simularea „Marea Migrație, în timp real” au sursele în `scripturi-build/jocuri/` (imperiu.*, migratie.*, jocuri.css). Simularea e pusă în pagini cu `scripturi-build/rebuild-migratie-sim.js`, care generează și pagina ei separată. `build-standalone.js` nu mai trebuie rulat pentru ele.
 - `qr-joc.html` — pagină de tipărit sau de proiectat, cu codul QR care deschide jocul pe telefon (generat cu `python scripturi-build/make-qr.py`, are nevoie de `pip install segno`).
