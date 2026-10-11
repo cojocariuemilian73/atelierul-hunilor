@@ -177,3 +177,66 @@
     .jg .qr-text p{ margin: 0 0 6px; font-size: 0.86rem; line-height: 1.5; color: #cbbca4; }
     .jg .qr-text a{ font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #e5c158; text-decoration: none; }
   }
+
+  /* ---------- Marea Migrație, simularea ---------- */
+  .mig-hero{ min-height: clamp(240px, 34vh, 340px); background: radial-gradient(120% 90% at 80% 20%, rgba(167, 29, 42, 0.35), transparent 60%), linear-gradient(160deg, #1d1a14, #121214 70%); }
+  .mig-bar{ display: grid; grid-template-columns: auto 1fr minmax(180px, 240px); gap: 16px; align-items: center; margin: 0 0 12px; padding: 10px 14px; background: var(--s1); border: 1px solid var(--line); }
+  .mig-year small{ display: block; font: 700 0.6rem 'JetBrains Mono', monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
+  .mig-year b{ font: 700 2.2rem/1 'Cinzel', serif; color: #f2d474; font-variant-numeric: tabular-nums; }
+  .mig-ctl{ display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .mig-ctl .jg-btn{ min-height: 44px; padding: 8px 16px; font-size: 0.85rem; }
+  .mig-speed{ display: inline-flex; border: 1px solid var(--gold); }
+  .mig-speed button{ min-width: 44px; min-height: 42px; background: transparent; border: 0; font: 700 0.8rem 'JetBrains Mono', monospace; color: var(--gold2); cursor: pointer; }
+  .mig-speed button.on{ background: var(--gold); color: #1a1405; }
+  .mig-stab label{ display: flex; justify-content: space-between; font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
+  .mig-stab label b{ color: #f0e6d6; }
+  .mig-stab .jg-bar i{ transition: width 0.4s ease, background 0.4s; }
+  @media (max-width: 760px){ .mig-bar{ grid-template-columns: 1fr; } }
+  .mig-main{ display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 14px; align-items: start; }
+  @media (max-width: 980px){ .mig-main{ grid-template-columns: 1fr; } }
+  .mig-stage{ position: relative; border: 1px solid rgba(212, 175, 55, 0.4); background: #0e0e10; overflow: hidden; }
+  .mig-stage canvas{ display: block; width: 100%; height: auto; }
+  .mig-credit{ position: absolute; right: 6px; bottom: 4px; font: 0.55rem 'JetBrains Mono', monospace; color: rgba(230, 215, 195, 0.7); text-shadow: 0 1px 2px #000; pointer-events: none; }
+  .mig-toast{ position: absolute; left: 10px; top: 10px; display: grid; gap: 6px; max-width: min(520px, 75%); pointer-events: none; }
+  .mig-t{ padding: 8px 12px; background: rgba(14, 14, 16, 0.9); border-left: 3px solid var(--gold); font-size: 0.86rem; line-height: 1.4; animation: jg-in 0.4s ease both; transition: opacity 0.7s; }
+  .mig-t b{ display: block; font-weight: 600; color: #f6eddc; }
+  .mig-t small{ display: block; margin-top: 2px; font: 0.64rem 'JetBrains Mono', monospace; color: var(--gold2); }
+  .mig-t.out{ opacity: 0; }
+  .mig-over{ position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 14px; background: rgba(10, 10, 12, 0.55); backdrop-filter: blur(2px); }
+  .mig-over.show{ display: flex; }
+  .mig-dec{ width: min(560px, 100%); max-height: 100%; overflow: auto; padding: 18px 20px; background: rgba(26, 26, 30, 0.97); border: 1px solid var(--gold); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); animation: jg-in 0.35s ease both; }
+  .mig-dec h3{ font: 700 1.35rem/1.2 'Cinzel', serif; color: #f6eddc; margin: 0 0 8px; }
+  .mig-dec p{ margin: 0 0 10px; line-height: 1.6; color: #e0d3bd; }
+  .mig-dec .jg-choices{ margin-top: 10px; }
+  .mig-end{ width: min(720px, 100%); }
+  .mig-end-btns{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+  .mig-table{ width: 100%; border-collapse: collapse; margin: 6px 0 12px; font-size: 0.88rem; }
+  .mig-table th, .mig-table td{ text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); }
+  .mig-table th{ font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold2); }
+  .mig-table td i{ display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 7px; vertical-align: middle; }
+  .mig-lesson{ padding: 10px 12px; border-left: 3px solid var(--gold); background: var(--s2); }
+  .mig-side{ display: grid; gap: 8px; align-content: start; padding: 14px; background: var(--s1); border: 1px solid var(--line); }
+  .mig-side .jg-eyebrow{ margin: 4px 0 2px; }
+  .mig-legend{ list-style: none; padding: 0; margin: 0; display: grid; gap: 5px; font-size: 0.86rem; }
+  .mig-legend i{ display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .mig-legend i.ghost{ background: transparent; border: 2px dashed #f0e6d6; }
+  .mig-layers{ display: grid; gap: 4px; font-size: 0.86rem; }
+  .mig-layers label{ display: flex; gap: 8px; align-items: center; min-height: 32px; cursor: pointer; }
+  .mig-layers input{ width: 18px; height: 18px; accent-color: var(--gold); }
+  .mig-flowg{ min-height: 36px; padding: 6px 10px; background: var(--s2); border: 1px solid var(--line); font: 0.74rem 'JetBrains Mono', monospace; color: var(--gold2) !important; cursor: pointer; text-align: left; }
+  .mig-cross{ display: flex; gap: 14px; font: 0.8rem 'JetBrains Mono', monospace; color: var(--dim); }
+  .mig-cross b{ color: #f2d474; font-size: 1rem; }
+  .mig-log{ margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 0.82rem; line-height: 1.4; }
+  .mig-log b{ display: block; color: var(--gold2); font: 700 0.72rem 'Cinzel', serif; }
+  .mig-log em{ font-style: normal; color: var(--good); font-size: 0.74rem; } .mig-log em.alt{ color: var(--orange); }
+  .mig-log .empty{ list-style: none; margin-left: -18px; color: var(--dim); font-style: italic; }
+  .mig-how{ margin-top: 14px; padding: 12px 16px; background: var(--s1); border: 1px solid var(--line); }
+  .mig-how summary{ cursor: pointer; font: 700 0.95rem 'Cinzel', serif; color: var(--gold2); min-height: 32px; }
+  .mig-how ul{ margin: 10px 0 0; padding-left: 20px; display: grid; gap: 6px; line-height: 1.55; color: #dccfb8; }
+  @media (max-width: 760px){
+    .mig-over{ position: fixed; inset: 0; z-index: 400; background: rgba(10, 10, 12, 0.82); }
+    .mig-dec{ max-height: calc(100vh - 28px); }
+    .mig-toast{ max-width: 92%; }
+    .mig-t{ font-size: 0.74rem; padding: 6px 9px; }
+    .mig-t small{ display: none; }
+  }

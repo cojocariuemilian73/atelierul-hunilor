@@ -236,7 +236,7 @@
         '<h3 class="jg-h2" style="font-size:1.1rem">De ce s-a prăbușit, de fapt, imperiul hunilor?</h3>' +
         '<ul class="imp-lessons">' + LESSONS.map(function(l){ return '<li>' + l + '</li>'; }).join('') + '</ul>' +
         '<p class="jg-src">Surse: Priscus din Panium; Iordanes, Getica; Prosper Tiro; Hydatius. Valorile indicatorilor sunt ilustrative: jocul compară decizii, nu măsoară trecutul.</p>' +
-        '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><button class="jg-btn" id="imp-again" type="button">Joacă din nou</button><a class="jg-btn ghost" href="#mod-embassy">Mergi în tabăra lui Attila →</a></div>' +
+        '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><button class="jg-btn" id="imp-again" type="button">Joacă din nou</button><a class="jg-btn ghost" href="#mod-migratie">Vezi Marea Migrație în timp real →</a></div>' +
       '</div>';
     updateMeters();
     document.getElementById('imp-again').addEventListener('click', start);
