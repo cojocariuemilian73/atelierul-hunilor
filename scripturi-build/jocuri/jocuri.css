@@ -1,0 +1,179 @@
+  /* ============ MODULE: JOCURILE (Imperiul lui Attila, Tabăra lui Attila) (.jg) ============ */
+  #mod-game, #mod-embassy{ padding-block: 0 28px; }
+  .jg{
+    --s1: #1a1a1e; --s2: #23232a; --s3: #2e2e37; --line: rgba(230, 215, 195, 0.16);
+    --ink: #e6d7c3; --dim: #a89a85; --gold: #d4af37; --gold2: #e5c158; --red: #a71d2a; --red2: #e0626c;
+    --good: #8fbd82; --blue: #7ab0e8; --orange: #f0a25c;
+    color: var(--ink); font-family: 'Source Serif 4', Georgia, serif;
+  }
+  .jg *{ box-sizing: border-box; }
+  .jg button{ font-family: inherit; color: inherit; }
+  .jg [hidden]{ display: none !important; }
+  .jg .jg-wrap{ max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+
+  /* antet */
+  .jg-hero{ position: relative; min-height: clamp(300px, 46vh, 440px); display: flex; align-items: flex-end; background: #121214 center 40% / cover no-repeat; border-bottom: 1px solid rgba(212, 175, 55, 0.35); }
+  .jg-hero::before{ content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(12, 9, 6, 0.86) 0%, rgba(12, 9, 6, 0.55) 55%, rgba(12, 9, 6, 0.2) 100%), linear-gradient(180deg, rgba(12, 9, 6, 0.2), rgba(12, 9, 6, 0.92)); }
+  .jg-hero-in{ position: relative; z-index: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 16px 34px; }
+  .jg-kicker{ font: 700 0.72rem 'JetBrains Mono', monospace; letter-spacing: 0.16em; text-transform: uppercase; color: #f2d474; margin: 0 0 12px; text-shadow: 0 1px 3px #000; }
+  .jg-hero h1{ font: 700 clamp(2.2rem, 7vw, 4rem)/1.02 'Cinzel', Georgia, serif; margin: 0 0 12px; color: #f6eddc; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7); }
+  .jg-hero h1 span{ color: #f2d474; }
+  .jg-hero p.jg-sub{ max-width: 60ch; margin: 0; font-size: 1.08rem; line-height: 1.6; color: #eadfc6; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8); }
+  .jg-credit{ position: absolute; right: 12px; bottom: 8px; z-index: 1; margin: 0; font: 0.6rem 'JetBrains Mono', monospace; color: rgba(230, 215, 195, 0.75); text-shadow: 0 1px 2px #000; }
+  @media (max-width: 640px){ .jg-credit{ position: static; padding: 6px 16px 0; text-align: right; } }
+
+  .jg-stage{ margin-top: 26px; }
+  .jg-panel{ position: relative; background: var(--s1); border: 1px solid rgba(212, 175, 55, 0.3); padding: clamp(16px, 3vw, 28px); }
+  .jg-panel::before, .jg-panel::after{ content: ''; position: absolute; width: 24px; height: 24px; border: 2px solid var(--gold); pointer-events: none; }
+  .jg-panel::before{ top: -5px; left: -5px; border-right: 0; border-bottom: 0; }
+  .jg-panel::after{ bottom: -5px; right: -5px; border-left: 0; border-top: 0; }
+  .jg-h2{ font: 700 1.35rem/1.2 'Cinzel', serif; color: #f0e6d6; margin: 0 0 10px; }
+  .jg-lead{ color: #cbbca4; line-height: 1.65; margin: 0 0 14px; max-width: 70ch; }
+  .jg-eyebrow{ font: 700 0.7rem 'JetBrains Mono', monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold2); margin: 0 0 8px; }
+  .jg-btn{ display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 10px 24px; background: var(--gold); color: #1a1405 !important; border: 0; font: 700 0.95rem 'Cinzel', serif; letter-spacing: 0.03em; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+  .jg-btn:hover{ background: var(--gold2); transform: translateY(-1px); }
+  .jg-btn.ghost{ background: transparent; color: var(--gold2) !important; border: 1px solid var(--gold); }
+  .jg-btn:focus-visible, .jg-choice:focus-visible, .jg-spot:focus-visible{ outline: 2px solid var(--gold2); outline-offset: 3px; }
+  .jg-src{ margin: 10px 0 0; padding-top: 8px; border-top: 1px dashed rgba(212, 175, 55, 0.35); font: 0.72rem/1.55 'JetBrains Mono', monospace; color: var(--gold2); }
+  .jg-how{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 18px 0 22px; padding: 0; list-style: none; }
+  .jg-how li{ background: var(--s2); border: 1px solid var(--line); padding: 12px 14px; font-size: 0.92rem; line-height: 1.5; color: #dccfb8; }
+  .jg-how li b{ display: block; font: 700 0.8rem 'Cinzel', serif; color: var(--gold2); margin-bottom: 4px; }
+
+  /* alegeri */
+  .jg-choices{ display: grid; gap: 10px; margin: 16px 0 0; }
+  .jg-choice{ display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: center; text-align: left; width: 100%; min-height: 56px; padding: 12px 14px; background: var(--s2); border: 1px solid var(--line); cursor: pointer; font-size: 0.98rem; line-height: 1.45; transition: border-color 0.2s, background 0.2s, transform 0.2s; }
+  .jg-choice i{ display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--gold); font: normal 700 0.9rem 'Cinzel', serif; color: var(--gold2); }
+  .jg-choice:hover:not(:disabled){ border-color: var(--gold); background: var(--s3); transform: translateX(3px); }
+  .jg-choice:disabled{ cursor: default; opacity: 0.5; }
+  .jg-choice.picked{ opacity: 1; border-color: var(--gold2); background: rgba(212, 175, 55, 0.12); }
+  .jg-choice.good{ border-color: var(--good); }
+  .jg-choice.bad{ border-color: var(--red2); }
+  .jg-reveal{ margin: 16px 0 0; padding: 14px 16px; background: var(--s2); border-left: 4px solid var(--c, var(--gold)); animation: jg-in 0.45s ease both; }
+  .jg-reveal h3{ margin: 0 0 6px; font: 700 1rem 'Cinzel', serif; color: var(--c, var(--gold2)); }
+  .jg-reveal p{ margin: 0 0 10px; line-height: 1.6; color: #e0d3bd; }
+  .jg-next{ margin-top: 12px; }
+  @keyframes jg-in{ from{ opacity: 0; transform: translateY(10px); } to{ opacity: 1; transform: none; } }
+
+  /* indicatori */
+  .jg-meters{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0 0 16px; position: sticky; top: var(--nav-h, 44px); z-index: 20; padding: 10px; background: rgba(18, 18, 20, 0.94); border: 1px solid var(--line); backdrop-filter: blur(6px); }
+  .jg-meter{ position: relative; }
+  .jg-meter label{ display: flex; justify-content: space-between; align-items: baseline; font: 700 0.64rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
+  .jg-meter label b{ color: #f0e6d6; font-size: 0.82rem; }
+  .jg-bar{ height: 8px; background: var(--s3); border-radius: 4px; overflow: hidden; }
+  .jg-bar i{ display: block; height: 100%; width: 50%; border-radius: 4px; background: var(--c); transition: width 0.7s cubic-bezier(.2,.7,.2,1); }
+  .jg-meter.low .jg-bar i{ background: var(--red2); }
+  .jg-delta{ position: absolute; right: 0; top: -14px; font: 700 0.8rem 'JetBrains Mono', monospace; opacity: 0; pointer-events: none; }
+  .jg-delta.show{ animation: jg-delta 1.6s ease forwards; }
+  .jg-delta.up{ color: var(--good); } .jg-delta.down{ color: var(--red2); }
+  @keyframes jg-delta{ 0%{ opacity: 0; transform: translateY(6px); } 20%{ opacity: 1; transform: none; } 80%{ opacity: 1; } 100%{ opacity: 0; transform: translateY(-8px); } }
+  @media (max-width: 640px){ .jg-meters{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  /* ---------- Imperiul lui Attila ---------- */
+  .imp-round{ display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+  @media (max-width: 900px){ .imp-round{ grid-template-columns: 1fr; } }
+  .imp-map{ position: relative; border: 1px solid var(--line); background: #0e0e10; }
+  .imp-map svg{ display: block; width: 100%; height: auto; }
+  .imp-map .credit{ position: absolute; right: 6px; bottom: 4px; font: 0.52rem 'JetBrains Mono', monospace; color: rgba(230, 215, 195, 0.7); text-shadow: 0 1px 2px #000; }
+  .imp-realm{ fill: rgba(167, 29, 42, 0.22); stroke: rgba(224, 98, 108, 0.75); stroke-width: 1.2; stroke-dasharray: 4 3; }
+  .imp-realm-label{ font: 700 7px 'JetBrains Mono', monospace; fill: #f4c4c8; paint-order: stroke; stroke: #121214; stroke-width: 2.4px; letter-spacing: 0.06em; }
+  .imp-trail{ fill: none; stroke: rgba(240, 230, 214, 0.55); stroke-width: 1.3; stroke-dasharray: 2 3; }
+  .imp-pin circle.dot{ fill: #f0e6d6; stroke: #121214; stroke-width: 1.2; }
+  .imp-pin text{ font: 700 7px 'JetBrains Mono', monospace; fill: #f6eddc; paint-order: stroke; stroke: #121214; stroke-width: 2.4px; }
+  .imp-pin.now circle.dot{ fill: var(--gold2); r: 4.2; }
+  .imp-pin.now circle.ring{ fill: none; stroke: var(--gold2); stroke-width: 1.6; animation: imp-ring 1.6s ease-out infinite; }
+  .imp-pin.now text{ fill: #f2d474; font-size: 8.5px; }
+  @keyframes imp-ring{ 0%{ r: 4; opacity: 0.9; } 100%{ r: 16; opacity: 0; } }
+  .imp-year{ display: inline-block; font: 700 0.8rem 'JetBrains Mono', monospace; color: #1a1405; background: var(--gold2); padding: 3px 10px; margin: 0 0 10px; }
+  .imp-title{ font: 700 clamp(1.4rem, 3.4vw, 1.9rem)/1.15 'Cinzel', serif; color: #f6eddc; margin: 0 0 10px; }
+  .imp-text{ line-height: 1.65; margin: 0 0 6px; color: #e0d3bd; }
+  .imp-fx{ display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+  .imp-fx span{ font: 700 0.7rem 'JetBrains Mono', monospace; padding: 3px 8px; border: 1px solid var(--line); background: var(--s1); }
+  .imp-fx span.up{ color: var(--good); border-color: rgba(143, 189, 130, 0.45); }
+  .imp-fx span.down{ color: var(--red2); border-color: rgba(224, 98, 108, 0.45); }
+  .imp-steps{ display: flex; gap: 5px; margin: 0 0 14px; }
+  .imp-steps i{ flex: 1; height: 4px; background: var(--s3); border-radius: 2px; }
+  .imp-steps i.done{ background: var(--gold); } .imp-steps i.now{ background: var(--gold2); box-shadow: 0 0 8px rgba(229, 193, 88, 0.7); }
+  .imp-compare{ display: grid; gap: 12px; margin: 18px 0; }
+  .imp-cmp{ display: grid; grid-template-columns: 110px 1fr; gap: 6px 12px; align-items: center; }
+  .imp-cmp > b{ font: 700 0.7rem 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); }
+  .imp-cmp .bars{ display: grid; gap: 4px; }
+  .imp-cmp .bars div{ display: grid; grid-template-columns: 1fr 34px; gap: 8px; align-items: center; font: 0.7rem 'JetBrains Mono', monospace; color: var(--dim); }
+  .imp-cmp .bars s{ display: block; height: 8px; border-radius: 4px; text-decoration: none; background: var(--s3); position: relative; overflow: hidden; }
+  .imp-cmp .bars s i{ position: absolute; inset: 0 auto 0 0; border-radius: 4px; }
+  .imp-cmp .you i{ background: var(--gold2); } .imp-cmp .hist i{ background: rgba(230, 215, 195, 0.45); }
+  .imp-legend{ display: flex; gap: 16px; font: 0.7rem 'JetBrains Mono', monospace; color: var(--dim); }
+  .imp-legend i{ display: inline-block; width: 14px; height: 6px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+  .imp-verdict{ font: 700 clamp(1.3rem, 3.6vw, 1.8rem)/1.25 'Cinzel', serif; color: #f2d474; margin: 4px 0 10px; }
+  .imp-lessons{ list-style: none; padding: 0; margin: 14px 0 20px; display: grid; gap: 10px; }
+  .imp-lessons li{ position: relative; padding: 10px 12px 10px 34px; background: var(--s2); border: 1px solid var(--line); line-height: 1.55; }
+  .imp-lessons li::before{ content: ''; position: absolute; left: 13px; top: 1.05em; width: 8px; height: 8px; transform: rotate(45deg); background: var(--gold); }
+
+  /* ---------- Tabăra lui Attila ---------- */
+  .tab-hub{ display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+  @media (max-width: 900px){ .tab-hub{ grid-template-columns: 1fr; } }
+  .tab-camp{ position: relative; border: 1px solid rgba(212, 175, 55, 0.35); background: #1b1712; }
+  .tab-camp svg{ display: block; width: 100%; height: auto; }
+  .tab-camp .ground, .tab-vignette .ground{ fill: #2c2619; }
+  .tab-camp .river, .tab-vignette .river{ fill: none; stroke: #3d5a6b; stroke-width: 16; stroke-linecap: round; opacity: 0.9; }
+  .tab-camp .river2, .tab-vignette .river2{ fill: none; stroke: #6f93a8; stroke-width: 2; stroke-dasharray: 6 8; opacity: 0.6; }
+  .tab-camp .yurt, .tab-vignette .yurt{ fill: #4a3f2c; stroke: #776447; stroke-width: 1; }
+  .tab-camp .fence, .tab-vignette .fence{ fill: none; stroke: #9a7a45; stroke-width: 3; stroke-dasharray: 2 2.5; }
+  .tab-camp .wood, .tab-vignette .wood{ fill: #6b4a24; stroke: #c19a55; stroke-width: 1.2; }
+  .tab-camp .stone, .tab-vignette .stone{ fill: #8a8478; stroke: #cfc7b6; stroke-width: 1.2; }
+  .tab-camp .tower, .tab-vignette .tower{ fill: #7a5528; stroke: #c19a55; stroke-width: 1; }
+  .tab-camp .fire, .tab-vignette .fire{ fill: #e5a54a; }
+  .tab-camp .road, .tab-vignette .road{ fill: none; stroke: #8a7650; stroke-width: 5; stroke-dasharray: 1 7; stroke-linecap: round; opacity: 0.7; }
+  .tab-camp .smoke, .tab-vignette .smoke{ fill: none; stroke: rgba(220, 210, 190, 0.35); stroke-width: 2.4; stroke-linecap: round; }
+  .tab-camp .cartouche rect{ fill: rgba(21, 18, 13, 0.85); stroke: #c19a55; stroke-width: 1.2; }
+  .tab-camp .cartouche text{ font: 700 13px 'Cinzel', serif; fill: #f2d474; text-anchor: middle; }
+  .tab-camp .cartouche text.small{ font: italic 10px 'Cormorant Garamond', serif; fill: #e8d9b8; }
+  .tab-vignette .cartouche{ display: none; }
+  .tab-vignette .here{ fill: rgba(229, 193, 88, 0.22); stroke: #f2d474; stroke-width: 2.4; }
+  .tab-vignette .here-ring{ fill: none; stroke: #f2d474; stroke-width: 1.6; opacity: 0.6; animation: tab-here 1.8s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes tab-here{ 0%{ transform: scale(0.92); opacity: 0.8; } 100%{ transform: scale(1.25); opacity: 0; } }
+  .tab-vignette.paint{ background: #0e0e10; }
+  .tab-paint{ margin: 0; }
+  .tab-paint img{ display: block; width: 100%; height: auto; }
+  .tab-paint figcaption{ padding: 8px 10px; font: 0.68rem/1.5 'JetBrains Mono', monospace; color: var(--dim); }
+  .tab-camp .lbl{ font: 700 12px 'JetBrains Mono', monospace; fill: #f6eddc; paint-order: stroke; stroke: #15120d; stroke-width: 3px; letter-spacing: 0.04em; text-anchor: middle; pointer-events: none; }
+  .tab-camp .sub{ font: italic 11px 'Cormorant Garamond', serif; fill: #e8d9b8; paint-order: stroke; stroke: #15120d; stroke-width: 2.6px; text-anchor: middle; pointer-events: none; }
+  .jg-spot{ cursor: pointer; outline: none; }
+  .jg-spot .halo{ fill: rgba(229, 193, 88, 0.12); stroke: var(--gold2); stroke-width: 1.6; stroke-dasharray: 4 3; transition: fill 0.2s; }
+  .jg-spot:hover .halo, .jg-spot:focus-visible .halo{ fill: rgba(229, 193, 88, 0.3); }
+  .jg-spot.done .halo{ stroke: var(--good); stroke-dasharray: none; fill: rgba(143, 189, 130, 0.14); }
+  .jg-spot.locked{ cursor: default; opacity: 0.45; }
+  .jg-spot .check{ font: 700 13px sans-serif; fill: var(--good); text-anchor: middle; }
+  .tab-side .jg-day{ display: flex; gap: 6px; margin: 0 0 14px; }
+  .tab-side .jg-day i{ flex: 1; height: 6px; border-radius: 3px; background: var(--s3); }
+  .tab-side .jg-day i.used{ background: var(--gold); }
+  .tab-stat{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 14px; }
+  .tab-stat div{ background: var(--s2); border: 1px solid var(--line); padding: 10px 12px; }
+  .tab-stat small{ display: block; font: 700 0.6rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+  .tab-stat b{ font: 700 1.3rem 'Cinzel', serif; color: var(--gold2); }
+  .tab-journal{ list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .tab-journal li{ padding: 9px 12px; background: var(--s2); border-left: 3px solid var(--gold); font-size: 0.88rem; line-height: 1.45; animation: jg-in 0.4s ease both; }
+  .tab-journal li b{ display: block; font: 700 0.78rem 'Cinzel', serif; color: var(--gold2); margin-bottom: 2px; }
+  .tab-journal .empty{ border-left-color: var(--line); color: var(--dim); font-style: italic; }
+  .tab-scene{ display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 22px; align-items: start; }
+  @media (max-width: 900px){ .tab-scene{ grid-template-columns: 1fr; } }
+  .tab-vignette{ border: 1px solid rgba(212, 175, 55, 0.35); background: #1b1712; }
+  .tab-vignette svg{ display: block; width: 100%; height: auto; }
+  .tab-place{ font: 700 clamp(1.3rem, 3.2vw, 1.8rem)/1.15 'Cinzel', serif; color: #f6eddc; margin: 0 0 10px; }
+  .tab-narr{ line-height: 1.7; color: #e0d3bd; margin: 0 0 10px; }
+  .tab-say{ margin: 14px 0 6px; padding: 12px 16px; background: var(--s2); border-left: 3px solid var(--red2); font-style: italic; line-height: 1.6; color: #f0e2c6; }
+  .tab-say b{ display: block; font: normal 700 0.66rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red2); margin-bottom: 4px; font-style: normal; }
+  .tab-debate{ display: flex; gap: 6px; margin: 0 0 12px; }
+  .tab-debate i{ flex: 1; height: 6px; border-radius: 3px; background: var(--s3); }
+  .tab-debate i.win{ background: var(--good); } .tab-debate i.lose{ background: var(--red2); }
+  @media (prefers-reduced-motion: reduce){ .jg *{ animation: none !important; transition: none !important; } }
+
+  /* cod QR pentru joc: doar pe ecrane late */
+  .jg .qr-card{ display: none; }
+  @media (min-width: 900px) and (hover: hover){
+    .jg .qr-card{ display: flex; align-items: center; gap: 18px; margin-top: 22px; padding: 14px 16px; border: 1px dashed rgba(212,175,55,0.5); background: rgba(212,175,55,0.05); }
+    .jg .qr-code{ flex: none; width: 104px; padding: 7px; background: #fff; border-radius: 3px; }
+    .jg .qr-code svg{ display: block; width: 100%; height: auto; }
+    .jg .qr-title{ font-family: 'Cinzel', Georgia, serif; font-weight: 700; font-size: 1rem; color: #e5c158; margin: 0 0 4px; }
+    .jg .qr-text p{ margin: 0 0 6px; font-size: 0.86rem; line-height: 1.5; color: #cbbca4; }
+    .jg .qr-text a{ font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #e5c158; text-decoration: none; }
+  }

@@ -13,11 +13,12 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
 - `atelierul-hunilor.html` — pagina combinată finală (aceasta e livrarea)
 - Pagina „Atelierul istoricului” (trei jocuri de gândire istorică) are sursele în `scripturi-build/atelier/` (HTML, CSS, JS) și e inserată în paginile construite cu `scripturi-build/rebuild-atelier.js`.
 - `ghid-profesor.html` — Ghidul profesorului: corespondența cu programa de istorie de clasa a IX-a (cele 4 competențe generale), trei scenarii de lecție și o fișă de lucru cu barem, gata de tipărit.
+- Jocurile „Imperiul lui Attila” și „Tabăra lui Attila” au sursele în `scripturi-build/jocuri/` și sunt puse în pagini cu `scripturi-build/rebuild-jocuri-noi.js` (care generează și paginile separate). `build-standalone.js` nu mai trebuie rulat pentru ele.
 - `qr-joc.html` — pagină de tipărit sau de proiectat, cu codul QR care deschide jocul pe telefon (generat cu `python scripturi-build/make-qr.py`, are nevoie de `pip install segno`).
 - `module-individuale/` — cele 5 module ca fișiere separate, de sine stătătoare (regenerate automat din aceleași surse ca pagina combinată, cu `scripturi-build/build-standalone.js`):
   - `huni-prezentare.html` — articolul academic (Acasă / Context / Cronologie / Marea Migrație / Personalități)
-  - `huni-migratia.html` — jocul „Campania Hunilor"
-  - `solia-la-attila.html` — jocul „Solia la Attila"
+  - `imperiul-lui-attila.html` — jocul „Imperiul lui Attila” (strategie, 435–453)
+  - `tabara-lui-attila.html` — jocul „Tabăra lui Attila” (explorare după Priscus, 449)
   - `atlas-hunic.html` — harta interactivă (orașe, bătălii și trasee poziționate pe coordonate geografice reale)
   - `laborator-muzeu.html` — Muzeul Hunilor (artefacte reale fotografiate în muzee, mit vs. adevăr paleogenetic)
 - `build/` — piesele intermediare din care e asamblată pagina combinată (CSS/JS/HTML separate pe modul + `FINAL.html`, rezultatul brut al asamblării)
