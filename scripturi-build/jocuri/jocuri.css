@@ -223,3 +223,5 @@
   .imp-reflect h3{ margin: 0 0 6px; font: 700 1rem 'Cinzel', serif; color: var(--gold2); }
   .imp-reflect p{ margin: 0; line-height: 1.6; }
   .imp-reflect a{ color: var(--gold2); }
+  .mig-prep{ margin: 10px 0 0; font: 0.74rem/1.5 "JetBrains Mono", monospace; color: var(--gold2); }
+  .mig-prep:empty{ display: none; }
