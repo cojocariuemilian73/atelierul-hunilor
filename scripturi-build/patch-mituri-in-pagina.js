@@ -14,9 +14,10 @@ const GROUPS = [
   { sec: 'sec-muzeu', ids: [2, 5, 6, 9, 12], title: 'Mituri despre arme și morminte' }
 ];
 
-const JS = `  // mx: miturile, puse în capitolele de care țin
+const JS = `  // mx: miturile, puse în capitolele de care țin; faptele puțin cunoscute apar ca „Știai că…?”
   function renderMythGroup(host){
-    var ids = host.getAttribute('data-myths').split(',').map(Number), done = 0;
+    var all = host.getAttribute('data-myths').split(',').map(Number), done = 0;
+    var ids = all.filter(function(i){ return !MYTHS[i].fact; }), facts = all.filter(function(i){ return MYTHS[i].fact; });
     var head = document.createElement('div');
     head.className = 'mx-head';
     head.innerHTML = '<h3 class="mx-title">' + host.getAttribute('data-title') + '</h3>' +
@@ -24,6 +25,7 @@ const JS = `  // mx: miturile, puse în capitolele de care țin
       '<button type="button" class="mx-all">Verifică toate</button>';
     host.appendChild(head);
     var countEl = head.querySelector('b'), allBtn = head.querySelector('.mx-all');
+    function src(m){ return m.src ? '<p class="mx-src">Sursa: ' + m.src + '</p>' : ''; }
     var items = ids.map(function(i){
       var m = MYTHS[i], key = MYTH_THEMES[i] || 'izv', th = THEME[key] || THEME.izv, id = 'mx-a-' + i;
       var it = document.createElement('article');
@@ -32,7 +34,7 @@ const JS = `  // mx: miturile, puse în capitolele de care țin
         '<div class="mx-q"><p class="mx-meta"><span class="mx-mit">Mit</span><span class="mx-cat">' + svgIcon(th.icon) + th.label + '</span></p>' +
         '<p class="mx-myth"><span>' + m.myth + '</span></p></div>' +
         '<button type="button" class="mx-btn" aria-expanded="false" aria-controls="' + id + '">Verifică</button>' +
-        '<div class="mx-a" id="' + id + '" role="region" aria-label="Ce arată sursele"><div><p class="mx-lab">Ce arată sursele</p><p class="mx-truth">' + m.truth + '</p></div></div>';
+        '<div class="mx-a" id="' + id + '" role="region" aria-label="Ce arată sursele"><div><p class="mx-lab">Ce arată sursele</p><p class="mx-truth">' + m.truth + '</p>' + src(m) + '</div></div>';
       var btn = it.querySelector('.mx-btn'), seen = false;
       it._set = function(on){
         it.classList.toggle('open', on);
@@ -44,6 +46,16 @@ const JS = `  // mx: miturile, puse în capitolele de care țin
       host.appendChild(it);
       return it;
     });
+    if (facts.length) {
+      var box = document.createElement('div');
+      box.className = 'mx-facts';
+      box.innerHTML = facts.map(function(i){
+        var m = MYTHS[i], key = MYTH_THEMES[i] || 'izv', th = THEME[key] || THEME.izv;
+        return '<article class="mx-fact theme-' + key + '"><p class="mx-meta"><span class="mx-stiai">Știai că…?</span><span class="mx-cat">' + svgIcon(th.icon) + th.label + '</span></p>' +
+          '<h4>' + m.fact.replace(/^Știai că /, '').replace(/^./, function(c){ return c.toUpperCase(); }) + '</h4><p class="mx-truth">' + m.truth + '</p>' + src(m) + '</article>';
+      }).join('');
+      host.appendChild(box);
+    }
     allBtn.addEventListener('click', function(){
       var any = items.some(function(x){ return !x.classList.contains('open'); });
       items.forEach(function(x, k){ setTimeout(function(){ x._set(any); }, any ? k * 90 : 0); });
@@ -86,6 +98,13 @@ const CSS = `  /* mx: mituri în capitole */
   .mx-item.open .mx-a{ grid-template-rows: 1fr; }
   .mx-lab{ margin: 14px 0 6px; font: 700 0.68rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: #8fbd82; }
   .mx-truth{ margin: 0; padding: 0 0 4px; line-height: 1.7; color: var(--ink); max-width: 72ch; }
+  .mx-src{ margin: 8px 0 0; font: 0.72rem/1.5 'JetBrains Mono', monospace; color: var(--ink-dim); }
+  .mx-facts{ display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px; margin: 18px 0 0; }
+  .mx-fact{ --c: #c08a4a; padding: 14px 16px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
+  .mx-fact.theme-gen{ --c: #6fb0ba; } .mx-fact.theme-izv{ --c: #d39a58; } .mx-fact.theme-arh{ --c: #ad8fcb; } .mx-fact.theme-ori{ --c: #d4b03c; } .mx-fact.theme-arm{ --c: #e0707a; } .mx-fact.theme-att, .mx-fact.theme-aur{ --c: #e5c158; }
+  .mx-fact h4{ margin: 0 0 6px; font: 600 1.2rem/1.3 'Cormorant Garamond', serif; color: var(--ink); text-wrap: balance; }
+  .mx-fact .mx-truth{ color: var(--ink-dim); font-size: 0.95rem; line-height: 1.6; }
+  .mx-stiai{ padding: 2px 8px; border: 1px solid #8fbd82; color: #a9d39c; }
   @media (max-width: 640px){
     .mx-item{ grid-template-columns: 1fr; row-gap: 12px; }
     .mx-btn{ justify-self: start; }
