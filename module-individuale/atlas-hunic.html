@@ -309,7 +309,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           <span class="year-badge mono" id="year-badge">370 d.Hr.</span>
           <input type="range" min="370" max="455" step="1" value="370" class="time-slider" id="time-slider" aria-label="Selectează anul pe cronologie">
         </div>
-        <p class="era-label" id="era-label">Înaintea expansiunii hunice — stepa pontică sub alte popoare</p>
+        <p class="era-label" id="era-label">Înaintea expansiunii hunice: stepa pontică sub alte popoare</p>
       </div>
     </div>
 
@@ -336,13 +336,13 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal-card">
     <button class="modal-close" id="modal-close" type="button" aria-label="Închide">✕</button>
-    <p class="modal-tag" id="mt-tag">—</p>
-    <h3 id="mt-title">—</h3>
+    <p class="modal-tag" id="mt-tag"></p>
+    <h3 id="mt-title"></h3>
     <figure class="mt-fig" id="mt-fig" hidden><img id="mt-img" alt=""><figcaption id="mt-cap"></figcaption></figure>
-    <p id="mt-desc">—</p>
+    <p id="mt-desc"></p>
     <div class="quote-block" id="mt-quote-wrap">
-      <p id="mt-quote">—</p>
-      <cite id="mt-cite">—</cite>
+      <p id="mt-quote"></p>
+      <cite id="mt-cite"></cite>
     </div>
   </div>
 </div>
@@ -355,7 +355,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   'use strict';
 
   // ============================================================
-  // DATE — locurile marcate pe hartă (conținut istoric real)
+  // DATE: locurile marcate pe hartă (conținut istoric real)
   // ============================================================
 
   /**
@@ -369,14 +369,14 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
    */
   /** @type {MapMarkerData[]} */
   var DATA = [
-    { type: 'city', year: 0,   tag: 'Capitală simbolică a Imperiului de Apus', title: 'Roma', desc: 'Reședința imperială se mutase la Mediolanum (Milano) încă din 286, iar din 402 la Ravenna — Roma nu mai era capitală de facto. Rămâne însă premiul simbolic suprem: jefuită de vizigoți în 410, nu este niciodată atacată direct de Attila.', quote: null },
+    { type: 'city', year: 0,   tag: 'Capitală simbolică a Imperiului de Apus', title: 'Roma', desc: 'Reședința imperială se mutase la Mediolanum (Milano) încă din 286, iar din 402 la Ravenna; Roma nu mai era capitală de facto. Rămâne însă premiul simbolic suprem: jefuită de vizigoți în 410, nu este niciodată atacată direct de Attila.', quote: null },
     { type: 'city', year: 402, tag: 'Noua reședință imperială · din 402 d.Hr.', title: 'Ravenna', desc: 'Împăratul Honorius mută reședința imperială de la Mediolanum la Ravenna în 402 d.Hr., oraș greu accesibil, apărat de mlaștini și cu ieșire la mare.', quote: null },
     { type: 'city', year: 452, tag: 'Distrusă de Attila · 452 d.Hr.', title: 'Aquileia', desc: 'Attila asediază și distruge Aquileia în timpul invaziei Italiei (452 d.Hr.), deschizând drumul spre câmpia Padului.', quote: { text: 'atât de temeinic distrusă încât abia mai putea fi găsită urma ei', author: 'Iordanes (tradiție ulterioară)', src: 'Getica' } },
     { type: 'city', year: 441, tag: 'Devastat de huni · 441 d.Hr.', title: 'Naissus (Niš)', desc: 'Ambasada romană din 449, condusă de Maximinus și descrisă de însoțitorul său Priscus, găsește orașul aproape pustiit, la ani după campania hunică.', quote: { text: 'malul râului era plin de oasele celor uciși în luptă, iar orașul era pustiit, cu excepția câtorva bolnavi adăpostiți într-o biserică', author: 'Priscus din Panium', src: 'Fragmenta' } },
     { type: 'city', year: 0,   tag: 'Capitala Imperiului de Răsărit', title: 'Constantinopol', desc: 'Ținta finală a campaniilor lui Attila din 441–447: orașul nu este niciodată cucerit, dar Imperiul de Răsărit acceptă un tribut anual uriaș.', quote: { text: 'solii cereau, în numele lui Attila, predarea dezertorilor și plata tributului restant', author: 'Priscus din Panium', src: 'Fragmenta' } },
     { type: 'camp', year: 434, tag: 'Reședința lui Attila · localizare incertă', title: 'Reședința lui Attila', desc: 'Priscus descrie o mare așezare de lemn, undeva în Câmpia Panonică, la nord de Dunăre. Localizarea exactă nu este cunoscută: poziția de pe hartă e o estimare convențională, nu un sit identificat arheologic.', quote: { text: 'în timp ce oaspeților li se serveau bucate pe farfurii de argint, lui Attila i se aducea carne pe o tavă de lemn', author: 'Priscus din Panium', src: 'frag. 13 (ed. Blockley)' } },
     { type: 'battle', year: 378, tag: 'Dezastru roman · 9 august 378 d.Hr.', title: 'Bătălia de la Adrianopol', desc: 'Vizigoții, împinși de huni peste Dunăre, zdrobesc armata romană de răsărit; împăratul Valens moare pe câmpul de luptă.', quote: { text: 'un asemenea măcel al romanilor nu s-a mai văzut de la dezastrul de la Cannae', author: 'Ammianus Marcellinus', src: 'Res Gestae, 31.13' } },
-    { type: 'battle', year: 451, tag: 'Apogeul confruntării · 451 d.Hr.', title: 'Câmpiile Catalaunice', desc: 'O coaliție condusă de Aetius și de regele vizigot Teodoric I — incluzând și franci, burgunzi și alani — îl oprește pe Attila. Rezultatul e mai degrabă nedecis: Attila se retrage, dar armata sa nu e distrusă.', quote: { text: 'atrox, multiplex, immane, pertinax', author: 'Iordanes', src: 'Getica, 41 — „o bătălie cruntă, complexă, monstruoasă, încrâncenată”' } }
+    { type: 'battle', year: 451, tag: 'Apogeul confruntării · 451 d.Hr.', title: 'Câmpiile Catalaunice', desc: 'O coaliție condusă de Aetius și de regele vizigot Teodoric I, incluzând și franci, burgunzi și alani, îl oprește pe Attila. Rezultatul e mai degrabă nedecis: Attila se retrage, dar armata sa nu e distrusă.', quote: { text: 'atrox, multiplex, immane, pertinax', author: 'Iordanes', src: 'Getica, 41: „o bătălie cruntă, complexă, monstruoasă, încrâncenată”' } }
   ];
 
   var markers = Array.prototype.slice.call(document.querySelectorAll('.marker'));
@@ -384,7 +384,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   var routeLabels = Array.prototype.slice.call(document.querySelectorAll('.route-label'));
 
   // ============================================================
-  // CRONOLOGIE — sliderul de ani controlează ce e vizibil pe hartă
+  // CRONOLOGIE: sliderul de ani controlează ce e vizibil pe hartă
   // ============================================================
 
   function initTimeline(){
@@ -412,7 +412,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     }
 
     function eraText(year){
-      if (year < 375) return 'Înaintea expansiunii hunice — stepa pontică sub alte popoare.';
+      if (year < 375) return 'Înaintea expansiunii hunice: stepa pontică sub alte popoare.';
       if (year < 434) return 'Expansiunea: alanii și greutungii (viitorii ostrogoți) sunt supuși; tervingii (viitorii vizigoți) trec Dunărea în 376, iar hunii se așază treptat în Câmpia Panonică.';
       if (year < 441) return 'Rua, apoi Bleda și Attila (din 434): tratatul de la Margus și tributul plătit de Constantinopol.';
       if (year < 450) return 'Campaniile din Balcani (441–447): Naissus cade, iar armata hunică ajunge până aproape de zidurile Constantinopolului. Attila conduce singur din c. 445.';
@@ -541,7 +541,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
       if (d.quote && d.quote.text) {
         document.getElementById('mt-quote-wrap').style.display = 'block';
         document.getElementById('mt-quote').textContent = '“' + d.quote.text + '”';
-        document.getElementById('mt-cite').textContent = d.quote.author + (d.quote.src ? ' — ' + d.quote.src : '');
+        document.getElementById('mt-cite').textContent = d.quote.author + (d.quote.src ? ', ' + d.quote.src : '');
       } else {
         document.getElementById('mt-quote-wrap').style.display = 'none';
       }

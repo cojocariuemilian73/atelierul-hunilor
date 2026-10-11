@@ -127,7 +127,7 @@
         '<div class="mig-tl" id="mig-tl" aria-label="Cronologia simulării: deciziile și evenimentele"></div>' +
       '</div>' +
       '<aside class="mig-side">' +
-        '<p class="jg-eyebrow">Popoarele</p><ul class="mig-legend" id="mig-legend">' + GROUPS.map(function(g){ return '<li><i style="background:' + g.color + '"></i><span>' + g.name + '<small id="mig-where-' + g.id + '">—</small></span></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
+        '<p class="jg-eyebrow">Popoarele</p><ul class="mig-legend" id="mig-legend">' + GROUPS.map(function(g){ return '<li><i style="background:' + g.color + '"></i><span>' + g.name + '<small id="mig-where-' + g.id + '"></small></span></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
         '<p class="jg-eyebrow">Straturi</p><div class="mig-layers">' +
           '<label><input type="checkbox" data-l="real" checked> Lumea reală (reper)</label>' +
           '<label><input type="checkbox" data-l="terrain"> Terenul calculat din hartă</label>' +

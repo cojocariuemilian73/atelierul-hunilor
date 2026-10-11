@@ -33,7 +33,9 @@ for (const rel of ['index.html', 'atelierul-hunilor.html', 'module-individuale/h
 
   // CSS
   const c0 = s.indexOf('  /* ---------- CRONOLOGIE:');
-  const c1 = s.indexOf('  /* ---------- MAREA MIGRAȚIE: HARTĂ CU SĂGEȚI ---------- */');
+  // se oprește la primul bloc care urmează: „Aurul hunilor” (dacă există) sau harta Marii Migrații
+  const ends = ['  /* ---------- AURUL HUNILOR', '  /* ---------- MAREA MIGRAȚIE: HARTĂ CU SĂGEȚI ---------- */'].map(m => s.indexOf(m, c0 + 10)).filter(i => i > 0);
+  const c1 = Math.min.apply(null, ends);
   if (c0 < 0 || c1 < c0) fail('marcaje CSS');
   s = s.slice(0, c0) + CSS + s.slice(c1);
 
@@ -41,7 +43,7 @@ for (const rel of ['index.html', 'atelierul-hunilor.html', 'module-individuale/h
   const j = s.indexOf('// Cronologie interactivă');
   if (j < 0) fail('marcaj JS');
   const j0 = s.indexOf('\n', s.indexOf('  // =====', j)) + 1;
-  const j1 = s.indexOf('  // ============================================================\n  // Marea Migrație — hartă cu săgeți interactive');
+  const j1 = s.indexOf('  // ============================================================\n  // Marea Migrație: hartă cu săgeți interactive');
   if (j1 < j0) fail('sfârșit JS');
   s = s.slice(0, j0) + '\n' + JS + s.slice(j1);
 
