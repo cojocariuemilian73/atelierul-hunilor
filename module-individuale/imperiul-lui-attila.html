@@ -68,7 +68,7 @@
   @keyframes jg-in{ from{ opacity: 0; transform: translateY(10px); } to{ opacity: 1; transform: none; } }
 
   /* indicatori */
-  .jg-meters{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0 0 16px; position: sticky; top: var(--nav-h, 44px); z-index: 20; padding: 10px; background: rgba(18, 18, 20, 0.94); border: 1px solid var(--line); backdrop-filter: blur(6px); }
+  .jg-meters{ display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 0 0 16px; position: sticky; top: var(--nav-h, 44px); z-index: 20; padding: 10px; background: rgba(18, 18, 20, 0.94); border: 1px solid var(--line); backdrop-filter: blur(6px); }
   .jg-meter{ position: relative; }
   .jg-meter label{ display: flex; justify-content: space-between; align-items: baseline; font: 700 0.64rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
   .jg-meter label b{ color: #f0e6d6; font-size: 0.82rem; }
@@ -79,7 +79,7 @@
   .jg-delta.show{ animation: jg-delta 1.6s ease forwards; }
   .jg-delta.up{ color: var(--good); } .jg-delta.down{ color: var(--red2); }
   @keyframes jg-delta{ 0%{ opacity: 0; transform: translateY(6px); } 20%{ opacity: 1; transform: none; } 80%{ opacity: 1; } 100%{ opacity: 0; transform: translateY(-8px); } }
-  @media (max-width: 640px){ .jg-meters{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px){ .jg-meters{ grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
   /* ---------- Imperiul lui Attila ---------- */
   .imp-round{ display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 22px; align-items: start; }
@@ -226,6 +226,16 @@
   .mig-end.min h3{ margin-bottom: 0; }
   .mig-lite{ text-align: left; line-height: 1.4; }
   .mig-lite.hint{ border-color: #f2d474; color: #f2d474; box-shadow: 0 0 0 3px rgba(242, 212, 116, 0.18); }
+  /* Imperiul: alegerea lui Attila (neutru, nu „corect”), izvorul, reflecția */
+  .jg-choice.attila{ border-color: rgba(201, 180, 138, 0.8); border-style: dashed; }
+  .imp-tag{ display: block; margin-top: 6px; font: normal 700 0.66rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: #c9b48a; }
+  .imp-q{ margin: 12px 0 0; padding: 12px 16px; background: rgba(230, 215, 195, 0.05); border: 1px solid rgba(230, 215, 195, 0.14); }
+  .imp-q p{ margin: 0; font: italic 1.02rem/1.6 'Source Serif 4', Georgia, serif; color: #f0e2c6; }
+  .imp-q cite{ display: block; margin-top: 6px; font: normal 0.7rem 'JetBrains Mono', monospace; color: var(--dim); }
+  .imp-reflect{ margin-top: 18px; padding: 14px 16px; border: 1px solid rgba(212, 175, 55, 0.35); }
+  .imp-reflect h3{ margin: 0 0 6px; font: 700 1rem 'Cinzel', serif; color: var(--gold2); }
+  .imp-reflect p{ margin: 0; line-height: 1.6; }
+  .imp-reflect a{ color: var(--gold2); }
 </style>
 </head>
 <body>
@@ -264,21 +274,23 @@
     { k: 'aur', label: 'Aur', c: '#e5c158', hint: 'tributul și prada din care Attila își răsplătește războinicii' },
     { k: 'prestigiu', label: 'Renume', c: '#e0626c', hint: 'teama și respectul pe care le inspiră' },
     { k: 'loial', label: 'Loialitate', c: '#8fbd82', hint: 'neamurile supuse: ostrogoți, gepizi, alani…' },
-    { k: 'cai', label: 'Cavalerie', c: '#7ab0e8', hint: 'caii au nevoie de pășuni; departe de stepă, cavaleria slăbește' }
+    { k: 'cai', label: 'Cavalerie', c: '#7ab0e8', hint: 'caii au nevoie de pășuni; departe de stepă, cavaleria slăbește' },
+    { k: 'stab', label: 'Moștenire', c: '#b98ae6', hint: 'ce rămâne în picioare după tine: putere împărțită și legături care nu depind doar de persoana ta. De la 50 în sus, imperiul poate să-ți supraviețuiască' }
   ];
   var START = { aur: 30, prestigiu: 40, loial: 60, cai: 80, stab: 0 };
   var UPKEEP = 8;
 
   var ROUNDS = [
-    { year: 'c. 435', title: 'Tratatul de la Margus', at: [376.9, 431.1], place: 'Margus',
+    { year: '435 (sau 439)', title: 'Tratatul de la Margus', at: [376.9, 431.1], place: 'Margus',
       text: 'Regele Rua a murit. Tu și fratele tău Bleda moșteniți conducerea hunilor. La Margus, pe Dunăre, vă întâlniți cu solii Constantinopolului. Hunii negociază călare, iar romanii, ca să nu pară mai prejos, rămân și ei în șa.',
       choices: [
         { t: 'Ceri dublarea tributului, predarea fugarilor și piețe deschise la Dunăre', fx: { aur: 20, prestigiu: 10, loial: 5 }, real: true },
-        { t: 'Ceri doar piețe deschise: comerțul îi leagă pe negustori de tine', fx: { aur: 8, loial: 8, stab: 1 } },
+        { t: 'Ceri doar piețe deschise: comerțul îi leagă pe negustori de tine', fx: { aur: 8, loial: 8, stab: 25 } },
         { t: 'Refuzi negocierea și treci Dunărea după pradă', fx: { aur: 12, prestigiu: 5, cai: -8, loial: 3 } }
       ],
-      real: 'Tratatul de la Margus dublează tributul la 700 de livre de aur pe an. Romanii promit să predea fugarii și să nu se alieze cu dușmanii hunilor.',
-      src: 'Priscus din Panium, fragmentul despre tratatul de la Margus' },
+      real: 'Tratatul de la Margus dublează tributul la 700 de livre de aur pe an. Romanii promit să predea fugarii și să nu se alieze cu dușmanii hunilor. Data e discutată: cei mai mulți istorici o pun în 435, alții în 439.',
+      src: 'Priscus din Panium, fragmentul despre tratatul de la Margus',
+      q: 'Socotind că nu se cuvine să coboare de pe cai, barbarii au ținut sfatul călare; iar romanii, ca să nu se arate mai prejos, au vorbit și ei tot din șa.', qs: 'Priscus, fr. 2' },
     { year: '441', title: 'Episcopul din Margus', at: [388, 451.4], place: 'Viminacium · Naissus',
       text: 'Romanii întârzie plata. Mai mult, episcopul din Margus a trecut Dunărea și a jefuit morminte regale hunice. Ceri predarea lui, iar Constantinopolul refuză.',
       choices: [
@@ -287,16 +299,18 @@
         { t: 'Îți trimiți călăreții ca mercenari în slujba Romei de Apus', fx: { aur: 10, loial: -3, prestigiu: 2 } }
       ],
       real: 'Hunii atacă. Temându-se că va fi predat, episcopul le deschide chiar el porțile orașului Margus. Cad Viminacium, apoi Naissus; campaniile pustiesc Balcanii.',
-      src: 'Priscus din Panium, fragmentul despre episcopul din Margus' },
+      src: 'Priscus din Panium, fragmentul despre episcopul din Margus',
+      q: 'Hunii spuneau că episcopul din Margus trecuse în țara lor și, scotocind prin mormintele regilor, furase comorile îngropate acolo.', qs: 'Priscus, fragmentul despre episcop' },
     { year: 'c. 445', title: 'Doi regi, un singur imperiu', at: [361, 396.6], place: 'Câmpia Panonică',
       text: 'Bleda, fratele tău, conduce o parte din neamuri. Doi regi înseamnă două curți, două rânduri de daruri și două voințe care nu se potrivesc mereu.',
       choices: [
         { t: 'Rămâi singur la conducere', fx: { prestigiu: 12, loial: -8, aur: 5 }, real: true },
-        { t: 'Păstrezi domnia comună și împarți darurile', fx: { loial: 10, prestigiu: -6, aur: -6, stab: 1 } },
-        { t: 'Împarți puterea cu sfetnici de încredere, ca Onegesius', fx: { loial: 5, prestigiu: 2, stab: 2 } }
+        { t: 'Păstrezi domnia comună și împarți darurile', fx: { loial: 10, prestigiu: -6, aur: -6, stab: 25 } },
+        { t: 'Împarți puterea cu sfetnici de încredere, ca Onegesius', fx: { loial: 5, prestigiu: 2, stab: 50 } }
       ],
       real: 'Bleda moare în jurul anului 445; cronicarul Prosper Tiro scrie că a fost ucis de Attila. De acum, Attila conduce singur un imperiu ținut laolaltă de loialitatea față de persoana lui.',
-      src: 'Prosper Tiro, Epitoma chronicon' },
+      src: 'Prosper Tiro, Epitoma chronicon',
+      q: 'Bleda, regele hunilor, a fost ucis prin uneltirile fratelui său, Attila.', qs: 'Marcellinus Comes, Chronicon, anul 445' },
     { year: '447', title: 'Zidurile au căzut', at: [476.6, 470.3], place: 'Constantinopol',
       text: 'Un cutremur dărâmă o parte din zidurile Constantinopolului. Armata ta coboară prin Balcani spre capitala Răsăritului.',
       choices: [
@@ -305,7 +319,8 @@
         { t: 'Negociezi fără luptă, ca să-ți păstrezi caii', fx: { aur: 12, cai: 5 } }
       ],
       real: 'Prefectul Constantinus reface zidurile în circa două luni. Attila nu asediază capitala, dar prin Pacea lui Anatolius primește 6.000 de livre de aur restanțe, un tribut de 2.100 de livre pe an și o fâșie pustie la sud de Dunăre.',
-      src: 'Priscus din Panium, fragmentul despre Pacea lui Anatolius; inscripțiile de pe zidurile Theodosiene' },
+      src: 'Priscus din Panium, fragmentul despre Pacea lui Anatolius; inscripțiile de pe zidurile Theodosiene',
+      q: 'Un cutremur puternic a dărâmat cea mai mare parte a zidurilor orașului imperial, împreună cu 57 de turnuri.', qs: 'Marcellinus Comes, Chronicon, anul 447' },
     { year: '449', title: 'Complotul', at: [366.2, 402.3], place: 'Curtea lui Attila',
       text: 'O solie romană sosește la curte, cu interpretul Vigilas. Edeco, unul dintre oamenii tăi, îți dezvăluie că la Constantinopol i s-a promis aur ca să te ucidă.',
       choices: [
@@ -314,16 +329,18 @@
         { t: 'Taci, ca să nu pierzi tributul', fx: { prestigiu: -12, loial: -5 } }
       ],
       real: 'Vigilas se întoarce cu 50 de livre de aur și e prins. Își scapă fiul plătind încă 50 de livre, iar Attila trimite soli la Constantinopol să-i reproșeze împăratului complotul.',
-      src: 'Priscus din Panium, relatarea soliei din 449' },
+      src: 'Priscus din Panium, relatarea soliei din 449',
+      q: 'Când Vigilas s-a întors la curte, oamenii lui Attila l-au prins și i-au găsit în bagaje aurul pe care îl adusese pentru Edeco.', qs: 'Priscus, relatarea soliei din 449' },
     { year: '450', title: 'Inelul Honoriei', at: [276, 444.6], place: 'Ravenna',
       text: 'Noul împărat al Răsăritului, Marcian, refuză să mai plătească tributul. În Apus, Honoria, sora împăratului Valentinian al III-lea, îți trimite un inel și îți cere ajutorul.',
       choices: [
         { t: 'Spre Apus: ceri mâna Honoriei și jumătate din Imperiul de Apus ca zestre', fx: { prestigiu: 10, aur: 8, cai: -12, loial: 5 }, real: true },
         { t: 'Spre Răsărit: îl forțezi pe Marcian să plătească', fx: { aur: 5, cai: -8, prestigiu: -2 } },
-        { t: 'Aștepți și refaci caii și rezervele', fx: { cai: 10, aur: -10, loial: -10, stab: 1 } }
+        { t: 'Aștepți și refaci caii și rezervele', fx: { cai: 10, aur: -10, loial: -10, stab: 25 } }
       ],
       real: 'Attila alege Apusul. În 451 trece Rinul cu o armată în care luptă ostrogoți, gepizi și alte neamuri supuse. Departe de stepă, caii găsesc greu pășune.',
-      src: 'Priscus din Panium, fragmentul despre Honoria; Iordanes, Getica' },
+      src: 'Priscus din Panium, fragmentul despre Honoria; Iordanes, Getica',
+      q: 'Honoria l-a trimis la Attila pe eunucul Hyacinthus, cu bani și cu inelul ei, rugându-l să o scape de căsătoria la care era silită.', qs: 'Priscus, fragmentul despre Honoria, păstrat de Ioan din Antiohia' },
     { year: '451', title: 'Câmpiile Catalaunice', at: [192.4, 371.1], place: 'Câmpiile Catalaunice',
       text: 'Generalul Aetius a strâns o coaliție: romani, vizigoți, franci, burgunzi, alani. Bătălia începe după-amiaza târziu și ține până noaptea.',
       choices: [
@@ -332,16 +349,18 @@
         { t: 'Eviți bătălia și pleci cu prada', fx: { prestigiu: -14, aur: 8, cai: -4 } }
       ],
       real: 'Iordanes scrie că Attila, închis în tabăra de căruțe, pregătise un rug din șei, ca să nu cadă viu în mâinile dușmanilor. Coaliția nu atacă tabăra, iar hunii se retrag peste Rin.',
-      src: 'Iordanes, Getica' },
+      src: 'Iordanes, Getica',
+      q: 'O luptă cumplită, schimbătoare, crudă și îndârjită, cum n-a mai povestit nimeni din vechime.', qs: 'Iordanes, Getica, 207' },
     { year: '452', title: 'Italia', at: [288.4, 422.8], place: 'Aquileia',
       text: 'Treci Alpii. Aquileia cade după un asediu lung. Dar în armată bântuie foametea și boala, iar Marcian trimite trupe peste Dunăre, în ținuturile tale.',
       choices: [
         { t: 'Mergi spre Roma', fx: { prestigiu: 8, cai: -18, loial: -8 } },
         { t: 'Primești solia papei Leon și te retragi cu prada', fx: { aur: 12, prestigiu: 3, cai: -4 }, real: true },
-        { t: 'Te întorci imediat să-ți aperi casa', fx: { loial: 5, prestigiu: -6, stab: 1 } }
+        { t: 'Te întorci imediat să-ți aperi casa', fx: { loial: 5, prestigiu: -6, stab: 25 } }
       ],
       real: 'Attila se retrage. Tradiția pune retragerea pe seama papei Leon; cronicarul Hydatius vorbește despre foamete, boală și atacul trupelor lui Marcian.',
-      src: 'Prosper Tiro, Epitoma chronicon; Hydatius, Chronicon' }
+      src: 'Prosper Tiro, Epitoma chronicon; Hydatius, Chronicon',
+      q: 'Regele a primit cu cinste întreaga solie și, după ce a promis pacea, s-a retras dincolo de Dunăre.', qs: 'Prosper Tiro, Epitoma chronicon, anul 452' }
   ];
   var LESSONS = [
     '<b>Aurul tributului ținea imperiul în viață.</b> Din el primeau căpeteniile daruri. Când Marcian a oprit plata, Attila a trebuit să caute aur tot mai departe.',
@@ -350,7 +369,7 @@
   ];
 
   // ---------------- stare ----------------
-  var st, hist, round, trail;
+  var st, hist, round, trail, picks;
   function clamp(v){ return Math.max(0, Math.min(100, v)); }
   function apply(state, fx){ Object.keys(fx).forEach(function(k){ state[k] = clamp(state[k] + fx[k]); }); }
   function upkeep(state){
@@ -411,7 +430,7 @@
   }
 
   function start(){
-    st = Object.assign({}, START); round = 0; trail = [];
+    st = Object.assign({}, START); round = 0; trail = []; picks = [];
     hist = historicPath();
     show();
   }
@@ -445,8 +464,9 @@
     Array.prototype.forEach.call(root.querySelectorAll('#imp-ch .jg-choice'), function(b, k){
       b.disabled = true;
       if (k === i) b.classList.add('picked');
-      if (r.choices[k].real) b.classList.add('good');
+      if (r.choices[k].real) { b.classList.add('attila'); b.insertAdjacentHTML('beforeend', '<em class="imp-tag">Alegerea lui Attila</em>'); }
     });
+    picks.push({ r: r, c: c });
     var before = Object.assign({}, st);
     apply(st, c.fx);
     var notes = upkeep(st);
@@ -455,11 +475,13 @@
     updateMeters(total);
     var last = round === ROUNDS.length - 1, revolt = st.loial <= 10;
     document.getElementById('imp-out').innerHTML =
-      '<div class="jg-reveal" style="--c:' + (c.real ? '#8fbd82' : '#e5c158') + '">' +
+      '<div class="jg-reveal" style="--c:#c9b48a">' +
         '<h3>' + (c.real ? 'Ai ales ce a ales și Attila' : 'Ce s-a întâmplat în realitate') + '</h3>' +
         fxHtml(total) +
         (notes.length ? '<p><i>' + notes.join(' ') + '</i></p>' : '<p><i>Războinicii au primit darurile lor: aur −' + UPKEEP + '.</i></p>') +
-        '<p>' + r.real + '</p><p class="jg-src">Sursa: ' + r.src + '</p>' +
+        '<p>' + r.real + '</p>' +
+        (r.q ? '<blockquote class="imp-q"><p>„' + r.q + '”</p><cite>' + r.qs + ' · traducere adaptată</cite></blockquote>' : '') +
+        '<p class="jg-src">Sursa: ' + r.src + '</p>' +
         '<button class="jg-btn jg-next" id="imp-next" type="button">' + (revolt ? 'Neamurile se răscoală →' : last ? 'Anul 453 →' : 'Runda următoare →') + '</button>' +
       '</div>';
     var nx = document.getElementById('imp-next');
@@ -471,7 +493,7 @@
   // doar dacă a fost construit ceva dincolo de persoana lui (stab = putere împărțită, legături).
   function verdict(){
     var score = st.loial * 0.4 + st.aur * 0.3 + st.prestigiu * 0.2 + st.cai * 0.1;
-    if (st.stab >= 2 && st.loial >= 50 && st.aur >= 20) return ['Imperiul tău îți supraviețuiește (scenariu ipotetic)', 'Ai împărțit puterea și ai legat neamurile prin altceva decât prin persoana ta. Așa, moartea ta nu mai înseamnă sfârșitul. Attila nu a făcut acest lucru.'];
+    if (st.stab >= 50 && st.loial >= 50 && st.aur >= 20) return ['Imperiul tău îți supraviețuiește (scenariu ipotetic)', 'Ai împărțit puterea și ai legat neamurile prin altceva decât prin persoana ta. Așa, moartea ta nu mai înseamnă sfârșitul. Attila nu a făcut acest lucru.'];
     if (score >= 50) return ['Un imperiu puternic, care se destramă la moartea ta', 'Ai lăsat aur, renume și neamuri loiale, ca Attila. Dar loialitatea era față de tine, nu față de un stat: fiii tăi își împart neamurile, iar acestea se răscoală. Exact asta s-a întâmplat după 453.'];
     return ['Imperiul se prăbușește chiar după moartea ta', 'Aurul s-a terminat, caii sunt sleiți, iar neamurile supuse nu mai au motive să-ți urmeze fiii.'];
   }
@@ -487,16 +509,26 @@
       '<div class="jg-panel">' +
         '<p class="jg-eyebrow">' + (revolt ? 'Sfârșit înainte de vreme' : '453 · Attila moare în noaptea nunții cu Ildico') + '</p>' +
         '<p class="imp-verdict">' + v[0] + '</p><p class="jg-lead">' + v[1] + '</p>' +
-        '<p class="jg-lead"><b>Ai construit ceva care să-ți supraviețuiască?</b> ' + (st.stab >= 2 ? 'Da: ai împărțit puterea sau ai creat legături care nu depind doar de tine.' : st.stab === 1 ? 'Doar puțin: o singură decizie a mers în această direcție.' : 'Nu: totul a depins de tine, ca la Attila.') + '</p>' +
+        '<p class="jg-lead"><b>Ai construit ceva care să-ți supraviețuiască?</b> ' + (st.stab >= 50 ? 'Da: ai împărțit puterea sau ai creat legături care nu depind doar de tine.' : st.stab > 0 ? 'Doar puțin: o singură decizie a mers în această direcție.' : 'Nu: totul a depins de tine, ca la Attila.') + '</p>' +
         '<div class="imp-legend"><span><i style="background:#e5c158"></i>Drumul tău</span><span><i style="background:rgba(230,215,195,0.45)"></i>Drumul lui Attila, după izvoare</span></div>' +
         '<div class="imp-compare">' + rows + '</div>' +
         '<h3 class="jg-h2" style="font-size:1.1rem">De ce s-a prăbușit, de fapt, imperiul hunilor?</h3>' +
         '<ul class="imp-lessons">' + LESSONS.map(function(l){ return '<li>' + l + '</li>'; }).join('') + '</ul>' +
         '<p class="jg-src">Surse: Priscus din Panium; Iordanes, Getica; Prosper Tiro; Hydatius. Valorile indicatorilor sunt ilustrative: jocul compară decizii, nu măsoară trecutul.</p>' +
-        '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><button class="jg-btn" id="imp-again" type="button">Joacă din nou</button><a class="jg-btn ghost" href="simularea-marii-migratii.html">Vezi Marea Migrație în timp real →</a></div>' +
+        '<div class="imp-reflect"><h3>Întrebare de reflecție</h3><p>Care decizie ți-a schimbat cel mai mult drumul față de cel al lui Attila? Explică în trei-patru rânduri, folosind un izvor din joc.</p><p class="jg-src">Pentru profesori: întrebarea se leagă de <a href="ghid-profesor.html#fisa" target="_blank" rel="noopener">fișa de lucru din Ghidul profesorului</a>.</p></div>' +
+        '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><button class="jg-btn" id="imp-again" type="button">Joacă din nou</button><button class="jg-btn ghost" id="imp-copy" type="button">Copiază rezultatul</button><a class="jg-btn ghost" href="#mod-migratie">Vezi Marea Migrație în timp real →</a></div>' +
       '</div>';
     updateMeters();
     document.getElementById('imp-again').addEventListener('click', start);
+    document.getElementById('imp-copy').addEventListener('click', function(){
+      var txt = 'Imperiul lui Attila: rezultat\n' + v[0] + '\n\n' +
+        METERS.map(function(m){ return m.label + ': ' + st[m.k] + ' (Attila: ' + hist[m.k] + ')'; }).join('\n') + '\n\nDeciziile mele:\n' +
+        picks.map(function(x){ return x.r.year + ', ' + x.r.title + ': ' + x.c.t + (x.c.real ? ' (alegerea lui Attila)' : ''); }).join('\n');
+      var b = this;
+      function done(){ b.textContent = 'Copiat'; setTimeout(function(){ b.textContent = 'Copiază rezultatul'; }, 2000); }
+      function fallback(){ var ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} ta.remove(); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, fallback); else fallback();
+    });
     root.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 

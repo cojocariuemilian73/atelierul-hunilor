@@ -27,15 +27,19 @@
     { id: 'iordanes', kind: 'txt', year: 551, ev: 453, label: '551', name: 'Iordanes', work: 'Getica',
       about: 'Povestește moartea lui Attila, din 453.',
       clue: 'Scrie la un secol după, dar rezumă cartea lui Priscus: un izvor târziu care păstrează unul timpuriu.' },
+    { id: 'codex', kind: 'txt', year: 780, ev: 551, label: 'sec. VIII', name: 'Getica, manuscrisul de la Heidelberg', work: 'copie medievală a cărții lui Iordanes',
+      about: 'Iordanes și-a scris cartea în 551. Noi o citim din copii făcute de mână, mult mai târziu.',
+      after: 'după scrierea cărții', q: 'Cartea e din 551. Când a fost făcută copia aceasta, cea mai veche cunoscută?', hq: 'în ce secol a fost copiată cartea?',
+      clue: 'Cea mai veche copie cunoscută a Geticii, păstrată la Heidelberg, era din secolul al VIII-lea. A ars în 1880, în incendiul din casa istoricului Theodor Mommsen, care o împrumutase pentru ediția sa. Textul e din 551, dar orice izvor antic ajunge la noi prin copii: fiecare copist putea greși sau schimba ceva.' },
     { id: 'catal', kind: 'img', sel: '#img-catalaunice', year: 1330, label: 'c. 1330', name: 'Bătălia de la Câmpiile Catalaunice',
       clue: 'Miniatură dintr-o cronică flamandă: hunii apar drept cavaleri medievali, la aproape 900 de ani de bătălie.' },
     { id: 'aquileia', kind: 'img', sel: '#img-aquileia', year: 1360, label: 'c. 1360', name: 'Attila asediază Aquileia',
       clue: 'Cronica pictată de la Viena: pictorul îi îmbracă pe huni în armurile secolului său.' },
     { id: 'delacroix', kind: 'img', sel: '#img-delacroix', year: 1842, label: '1838–1847', name: 'Attila și hoardele sale, de Delacroix',
       clue: 'Imaginea romantică a „biciului lui Dumnezeu”, pictată cu aproape 1.400 de ani mai târziu.' },
-    { id: 'neuville', kind: 'img', sel: 'img[alt^="Ilustrație: călăreți huni"]', year: 1869, label: '1869', name: 'Hunii la Châlons, de Neuville',
+    { id: 'neuville', kind: 'img', sel: '#img-neuville', year: 1869, label: '1869', name: 'Hunii la Châlons, de Neuville',
       clue: 'Gravură dintr-o istorie a Franței: arcașii călare, așa cum și-i imagina secolul al XIX-lea.' },
-    { id: 'geiger', kind: 'img', sel: 'img[alt^="Gravură: călăreți huni"]', year: 1873, label: 'c. 1873', name: 'Hunii în luptă cu alanii, de Geiger',
+    { id: 'geiger', kind: 'img', sel: '#img-geiger', year: 1873, label: 'c. 1873', name: 'Hunii în luptă cu alanii, de Geiger',
       clue: 'O scenă imaginată la peste 1.400 de ani după evenimente.' },
     { id: 'moartea', kind: 'img', sel: '#img-moartea', year: 1884, label: '1884', name: 'Moartea lui Attila, de Paczka',
       clue: 'Iordanes povestește moartea din noaptea nunții; pictura e imaginea unei scene pe care pictorul n-a văzut-o.' }
@@ -87,7 +91,7 @@
 
   function renderTray(){
     tray.innerHTML = items.map(function(it){
-      var p = placed[it.id], k = KIND[it.kind];
+      var p = placed[it.id] && placed[it.id].cls ? placed[it.id] : null, k = KIND[it.kind];
       return '<button type="button" role="listitem" class="md-card' + (it.kind === 'txt' ? ' txt' : '') + (p ? ' done' : '') + (sel === it.id ? ' sel' : '') + '" data-id="' + it.id + '" aria-pressed="' + (sel === it.id) + '" aria-label="' + esc(p ? it.name + ', așezată' : (it.kind === 'txt' ? it.name + ', ' + it.work : 'Sursă fără titlu')) + '">' +
         cardFace(it) + (p ? '<span class="md-stamp" style="--c:' + k.c + '">' + k.stamp + '</span>' : '') + '</button>';
     }).join('');
@@ -105,13 +109,20 @@
       : '<div class="md-zoom" id="md-zoom"><img src="' + it.src + '" alt="' + esc(p ? it.name : 'Sursa selectată, încă fără titlu') + '" draggable="false"><span class="md-lens" id="md-lens" hidden></span></div>';
     var body;
     if (!p) {
-      body = '<p class="md-q">' + (it.kind === 'txt' ? 'Evenimentul e din ' + it.ev + '. Când a fost scrisă cartea?' : 'Când a fost făcută?') + '</p>' +
+      body = '<p class="md-q">' + (it.q || (it.kind === 'txt' ? 'Evenimentul e din ' + it.ev + '. Când a fost scrisă cartea?' : 'Când a fost făcută?')) + '</p>' +
         '<p class="md-how">Trage sursa pe axă sau atinge axa în anul ales.<span class="md-kbd"> Cu tastatura: Tab până la axă, săgețile, apoi Enter.</span></p>';
+    } else if (!p.cls) {
+      body = '<p class="md-q">Ai așezat-o în ' + p.guess + '. Ce fel de sursă e?</p>' +
+        '<div class="md-cls" role="group" aria-label="Tipul sursei">' +
+          '<button type="button" data-k="obj" style="--c:' + KIND.obj.c + '"><b>Din epocă</b><span>obiect din vremea hunilor</span></button>' +
+          '<button type="button" data-k="txt" style="--c:' + KIND.txt.c + '"><b>Izvor scris</b><span>text dintr-o carte veche</span></button>' +
+          '<button type="button" data-k="img" style="--c:' + KIND.img.c + '"><b>Mult mai târziu</b><span>imagine făcută după Antichitate</span></button>' +
+        '</div><p class="md-how">Un punct în plus dacă alegi corect. Abia apoi afli anul real.</p>';
     } else {
       var off = p.guess - it.year, offTxt = Math.abs(off) <= 10 ? 'aproape exact' : (off > 0 ? 'cu ' + ani(Math.abs(off)) + ' prea târziu' : 'cu ' + ani(Math.abs(off)) + ' prea devreme');
-      var gapTxt = it.kind === 'img' ? ' La ' + ani(Math.round((it.year - 453) / 10) * 10) + ' după Attila.' : it.kind === 'txt' ? ' La ' + ani(it.year - it.ev) + ' după eveniment.' : '';
+      var gapTxt = it.kind === 'img' ? ' La ' + ani(Math.round((it.year - 453) / 10) * 10) + ' după Attila.' : it.kind === 'txt' ? ' La ' + ani(it.year - it.ev) + ' ' + (it.after || 'după eveniment') + '.' : '';
       body = '<h3 class="md-name">' + esc(it.name) + ' <span>' + esc(it.label) + '</span></h3>' +
-        '<p class="md-verdict" style="--c:' + k.c + '"><b>' + k.stamp + '</b> · ai ales ' + p.guess + ', ' + offTxt + ' · <b>+' + p.pts + '</b></p>' +
+        '<p class="md-verdict" style="--c:' + k.c + '"><b>' + k.stamp + '</b>' + (p.cls === it.kind ? ' · tip ghicit +1' : ' · tu ai spus: ' + KIND[p.cls].stamp.toLowerCase()) + ' · ai ales ' + p.guess + ', ' + offTxt + ' · <b>+' + (p.pts + (p.cls === it.kind ? 1 : 0)) + '</b></p>' +
         '<p class="md-clue">' + esc(it.clue) + esc(gapTxt) + '</p>';
       var next = nextFree(it.id);
       if (next) body += '<button class="md-btn" type="button" id="md-next">Următoarea sursă</button>';
@@ -119,6 +130,10 @@
     insp.innerHTML = media + '<div class="md-insp-body">' + body + '</div>';
     if (it.kind !== 'txt') lens();
     var nb = $('md-next'); if (nb) nb.addEventListener('click', function(){ select(nextFree(it.id)); });
+    Array.prototype.forEach.call(insp.querySelectorAll('.md-cls button'), function(b){
+      b.addEventListener('click', function(){ classify(it.id, b.getAttribute('data-k')); });
+    });
+    var first = insp.querySelector('.md-cls button'); if (first) first.focus({ preventScroll: true });
   }
 
   function nextFree(from){
@@ -155,7 +170,7 @@
     tl.tabIndex = armed ? 0 : -1;
     tl.setAttribute('aria-disabled', armed ? 'false' : 'true');
     if (it) inspect(it); else inspectEmpty();
-    $('md-hint').textContent = armed ? (it.kind === 'txt' ? it.name + ': în ce an a fost scrisă cartea?' : 'Unde o așezi pe axă?') : 'Alege o sursă de pe masă, apoi trage-o (sau atinge axa) în anul potrivit.';
+    $('md-hint').textContent = armed ? (it.kind === 'txt' ? it.name + ': ' + (it.hq || 'în ce an a fost scrisă cartea?') : 'Unde o așezi pe axă?') : 'Alege o sursă de pe masă, apoi trage-o (sau atinge axa) în anul potrivit.';
   }
 
   // ---------------- așezarea pe axă ----------------
@@ -167,19 +182,24 @@
     var it = byId(id); if (!it || placed[id]) return;
     guess = snap(guess);
     var pts = points(guess, it.year);
-    placed[id] = { guess: guess, pts: pts };
-    score += pts;
+    placed[id] = { guess: guess, pts: pts, cls: null };
     cursor.hidden = true;
+    select(id);
+  }
+  function classify(id, k){
+    var it = byId(id), pl = placed[id]; if (!it || !pl || pl.cls) return;
+    pl.cls = k;
+    score += pl.pts + (k === it.kind ? 1 : 0);
     renderPins(id);
     updateScore();
     select(id);
-    var t = tray.querySelector('[data-id="' + id + '"]'); if (t) t.focus({ preventScroll: true });
-    if (Object.keys(placed).length === items.length) setTimeout(finale, 900);
+    var nb = $('md-next'); if (nb) nb.focus({ preventScroll: true });
+    if (items.every(function(x){ return placed[x.id] && placed[x.id].cls; })) setTimeout(finale, 900);
   }
 
   function renderPins(fresh){
     var w = tl.clientWidth || 800, size = 40, lanes = [];
-    var list = items.filter(function(it){ return placed[it.id]; }).sort(function(a, b){ return a.year - b.year; });
+    var list = items.filter(function(it){ return placed[it.id] && placed[it.id].cls; }).sort(function(a, b){ return a.year - b.year; });
     pins.innerHTML = list.map(function(it){
       var p = placed[it.id], x = f(it.year) * w, lane = 0;
       while (lanes[lane] !== undefined && x - lanes[lane] < size + 4) lane++;
@@ -198,7 +218,7 @@
   }
 
   function updateScore(){
-    var n = Object.keys(placed).length;
+    var n = items.filter(function(x){ return placed[x.id] && placed[x.id].cls; }).length;
     $('md-score').textContent = n + ' / ' + items.length + ' așezate · ' + score + (score === 1 ? ' punct' : ' puncte');
   }
 
@@ -284,9 +304,9 @@
     gap.innerHTML = '<span>' + ani(firstImg - 453) + ' fără nicio imagine a hunilor</span>';
     gap.hidden = false;
     tl.classList.add('done');
-    var max = items.length * MAXP;
+    var max = items.length * (MAXP + 1);
     var rank = score >= max * 0.8 ? 'Ochi de istoric' : score >= max * 0.6 ? 'Cercetător atent' : score >= max * 0.38 ? 'Ucenic de arhivă' : 'La început de drum';
-    var objs = items.filter(function(it){ return it.kind === 'obj'; }).length, txts = items.filter(function(it){ return it.kind === 'txt'; }).length;
+    var objs = items.filter(function(it){ return it.kind === 'obj'; }).length, txts = items.filter(function(it){ return it.kind === 'txt' && it.year <= 600; }).length;
     sel = null; renderTray(); tl.classList.remove('armed'); tl.tabIndex = -1;
     insp.innerHTML = '<div class="md-end"><p class="md-big">' + score + ' <span>/ ' + max + '</span></p><p class="md-rank">' + rank + '</p>' +
       '<p class="md-sum">Din ' + items.length + ' surse, doar ' + objs + ' obiecte și ' + txts + ' cărți sunt din Antichitate. Toate cele ' + late.length + ' imagini sunt făcute la peste ' + ani(Math.floor((firstImg - 453) / 100) * 100) + ' după Attila.</p>' +
