@@ -286,6 +286,8 @@
   .chapter-slash{ font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--line-strong); }
   .chapter-tag{ font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); }
   h2.sec-title{ font-size: clamp(1.5rem, 4.5vw, 2rem); margin: 2px 0 8px; font-weight: 600; }
+  .lab-how{ display: inline-flex; align-items: center; gap: 10px; margin: -10px 0 26px; padding: 8px 14px; border: 1px solid var(--line-strong); font-size: 0.95rem; color: var(--ink); }
+  .lab-dot{ flex: none; width: 16px; height: 16px; border-radius: 50%; background: #a71d2a; box-shadow: 0 0 0 2px #f0cf6a; }
   .sec-sub{ font-family: 'Source Serif 4', serif; font-style: italic; font-size: 1rem; color: var(--ink-dim); margin: 0 0 26px; }
   h3.sub-title{ font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; margin: 38px 0 12px; color: var(--accent); }
   article p{ line-height: 1.74; font-size: 1.06rem; margin: 0 0 18px; }
@@ -1817,7 +1819,8 @@
     <section id="sec-muzeu" class="m-lab lab-in-article">
       <div class="chapter-mark"><span class="chapter-num">06</span><span class="chapter-slash">/</span><span class="chapter-tag">Muzeul virtual</span></div>
       <h2 class="sec-title">Muzeul Hunilor</h2>
-      <p class="sec-sub">Opt artefacte din epoca hunilor, în fotografii reale din colecții muzeale: apasă pe punctele numerotate pentru detalii.</p>
+      <p class="sec-sub">Opt artefacte din epoca hunilor, în fotografii reale din colecții muzeale.</p>
+      <p class="lab-how"><span class="lab-dot" aria-hidden="true"></span>Apasă pe punctele roșii de pe fotografii ca să afli detaliile fiecărei piese.</p>
       <div class="wrap">
         <div class="frame">
       <div class="artifact-grid" id="artifact-grid"></div>
@@ -3139,7 +3142,6 @@
       '<p class="artifact-kind">' + art.kind + '</p>' +
       '<h3>' + art.name + '</h3>' +
       '<p class="artifact-desc">' + art.desc + '</p>' +
-      '<p class="viewer-hint">apasă pe punctele roșii pentru detalii</p>' +
       '<p class="artifact-credit">' + art.credit + '</p>';
     return card;
   }
