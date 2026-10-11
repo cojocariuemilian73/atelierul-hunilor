@@ -160,4 +160,6 @@
   .at-strip img{ display: block; width: 100%; height: 76px; object-fit: cover; }
   .at-strip figcaption{ font: 700 0.62rem 'JetBrains Mono', monospace; padding: 5px 2px 1px; color: var(--at-dim); }
   .at-strip figure.doc figcaption{ color: var(--at-good); }
+  .at-guide{ margin: 22px 0 0; text-align: center; font: 0.78rem 'JetBrains Mono', monospace; color: var(--at-dim); }
+  .at-guide a{ color: var(--at-gold2); }
   @media (prefers-reduced-motion: reduce){ .m-atelier *{ animation: none !important; transition: none !important; } }

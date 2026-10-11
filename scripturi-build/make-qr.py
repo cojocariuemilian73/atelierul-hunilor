@@ -15,7 +15,8 @@ else:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Joacă pe telefon — Campania Hunilor</title>
+<meta name="description" content="Cod QR care deschide pe telefon jocul Imperiul lui Attila, din site-ul Atelierul Hunilor.">
+<title>Joacă pe telefon — Imperiul lui Attila</title>
 <style>
   :root{ --gold:#D4AF37; --night:#121214; --ink:#e6d7c3; }
   *{ box-sizing: border-box; }
@@ -43,9 +44,9 @@ else:
 <body>
 <main>
   <p class="eyebrow">Atelierul Hunilor · Secțiunea I, Istorie</p>
-  <h1>Campania <span>Hunilor</span></h1>
-  <p class="sub">Un joc de istorie despre huni. Scanează codul și joacă pe telefon.</p>
-  <div class="qr" role="img" aria-label="Cod QR care deschide jocul Campania Hunilor">''' + svg('#000000') + '''</div>
+  <h1>Imperiul <span>lui Attila</span></h1>
+  <p class="sub">Fii tu Attila: un joc de strategie despre huni. Scanează codul și joacă pe telefon.</p>
+  <div class="qr" role="img" aria-label="Cod QR care deschide jocul Imperiul lui Attila">''' + svg('#000000') + '''</div>
   <p class="url">cojocariuemilian73.github.io/atelierul-hunilor</p>
   <p class="how">Deschide camera telefonului, îndreaptă-o spre cod și apasă linkul care apare.</p>
 </main>
