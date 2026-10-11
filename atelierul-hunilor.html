@@ -1290,7 +1290,10 @@
   @media (max-width: 520px){.m-lab .flip-card{ height: 400px; }.m-lab .flip-front h4{ font-size: 1.22rem; } }.m-lab footer{ text-align: center; margin-top: 40px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-dim); }
 
   @media (min-width: 1200px){ .m-lab .wrap { max-width: 1440px; } }
-  @media (min-width: 1300px){ .m-lab .artifact-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1300px){ .m-lab .artifact-grid { grid-template-columns: repeat(2, 1fr); } }
+  .m-lab .artifact-grid{ align-items: stretch; }
+  .m-lab .artifact-card{ display: flex; flex-direction: column; }
+  .m-lab .artifact-card .artifact-credit{ margin-top: auto; }
   @media (min-width: 1400px){ .m-lab .flip-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; } }
 
 </style>
