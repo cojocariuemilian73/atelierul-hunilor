@@ -82,7 +82,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   .artifact-desc{ font-size: 0.84rem; color: var(--ink-dim); text-align: center; margin: 0 0 12px; }
 
   /* The stage takes the photo's own aspect ratio, so the picture fills it
-     edge to edge with no letterboxing — which is what lets the hotspots be
+     edge to edge with no letterboxing, which is what lets the hotspots be
      positioned in plain percentages and still land on the object. */
   .viewer-stage{
     position: relative; width: min(100%, calc(460px * (var(--ar, 4 / 3)))); margin: 0 auto; aspect-ratio: var(--ar, 4 / 3);
@@ -94,7 +94,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     display: flex; align-items: center; justify-content: center;
   }
   /* The face box takes the photo's own aspect ratio and is capped by the stage,
-     so it ends up exactly the size of the rendered picture — which is what makes
+     so it ends up exactly the size of the rendered picture, which is what makes
      the percentage-positioned hotspots line up with the object. */
   .viewer-face{ position: absolute; inset: 0; }
   .viewer-face svg{ width: 100%; height: 100%; }
@@ -221,7 +221,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     <div class="module-head">
       <p class="module-num">Modul I</p>
       <h2 class="module-title">Artefacte hunice, fotografiate în muzeu</h2>
-      <p class="module-sub">Fotografii reale de piese din colecții publice, nu reconstituiri grafice. Apasă pe punctele roșii — sau navighează cu Tab și apasă Enter — pentru explicații. Sub fiecare imagine găsești muzeul, autorul fotografiei și licența.</p>
+      <p class="module-sub">Fotografii reale de piese din colecții publice, nu reconstituiri grafice. Apasă pe punctele roșii (sau navighează cu Tab și apasă Enter) pentru explicații. Sub fiecare imagine găsești muzeul, autorul fotografiei și licența.</p>
     </div>
 
     <div class="frame">
@@ -243,8 +243,8 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
 </div>
 
 <div class="hs-popover" id="hs-popover">
-  <p class="hp-title" id="hp-title">—</p>
-  <p id="hp-desc">—</p>
+  <p class="hp-title" id="hp-title"></p>
+  <p id="hp-desc"></p>
 </div>
 
 
@@ -255,7 +255,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   'use strict';
 
   // ============================================================
-  // DATE (conținut static — nu e "mock", e conținutul real al paginii)
+  // DATE (conținut static: nu e "mock", e conținutul real al paginii)
   // ============================================================
 
   /**
@@ -277,7 +277,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     {
       "name": "Arcul compozit hunic",
       "kind": "Reconstituire de muzeu",
-      "desc": "Reconstituirea arcului reflex din mormântul princiar de la Jakuszowice (Polonia), cu brațele placate cu foiță de aur — arma care a definit cavaleria hunică.",
+      "desc": "Reconstituirea arcului reflex din mormântul princiar de la Jakuszowice (Polonia), cu brațele placate cu foiță de aur: arma care a definit cavaleria hunică.",
       "credit": "Muzeul Arheologic din Cracovia · foto Silar, CC BY-SA 4.0, Wikimedia Commons",
       "alt": "Reconstituirea unui arc compozit hunic, expusă într-o vitrină de muzeu: arc asimetric, cu dublă curbură, având brațul superior placat cu foiță de aur.",
       "ratio": "1126 / 1200",
@@ -286,7 +286,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
         {
           "x": 50,
           "y": 31,
-          "title": "Placarea cu aur — simbol de rang",
+          "title": "Placarea cu aur, simbol de rang",
           "desc": "Porțiunea aurită de pe brațul superior nu are rol tehnic: arcurile placate cu foiță de aur, descoperite la Jakuszowice (Polonia) și Bátaszék (Ungaria), marcau statutul politic al purtătorului. Arma era și însemn de putere, nu doar unealtă de luptă."
         },
         {
@@ -299,7 +299,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           "x": 21,
           "y": 60,
           "title": "Brațe asimetrice",
-          "desc": "Brațul inferior este mai scurt decât cel superior — o soluție care permitea tragerea comodă de pe cal, fără ca arcul să lovească gâtul animalului la coborârea mâinii."
+          "desc": "Brațul inferior este mai scurt decât cel superior, o soluție care permitea tragerea comodă de pe cal, fără ca arcul să lovească gâtul animalului la coborârea mâinii."
         }
       ]
     },
@@ -328,13 +328,13 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           "x": 69,
           "y": 69,
           "title": "Fragment de la Úvalno",
-          "desc": "Bucată mică, împrumutată de la Muzeul Municipal din Krnov. Cazanele hunice apar rareori întregi: cele mai multe au fost găsite fragmentar sau îngropate izolat, adesea lângă râuri — posibil ca depuneri rituale."
+          "desc": "Bucată mică, împrumutată de la Muzeul Municipal din Krnov. Cazanele hunice apar rareori întregi: cele mai multe au fost găsite fragmentar sau îngropate izolat, adesea lângă râuri, posibil ca depuneri rituale."
         },
         {
           "x": 16,
           "y": 84,
           "title": "Eticheta expoziției",
-          "desc": "Eticheta originală a vitrinei: „Nálezy z doby stěhování národů / Zlomky hunského kotle” — Descoperiri din epoca migrațiilor / Fragmente de cazan hunic, cu proveniența fiecărei piese. Lăsată intenționat vizibilă, ca dovadă a contextului muzeal."
+          "desc": "Eticheta originală a vitrinei: „Nálezy z doby stěhování národů / Zlomky hunského kotle”: Descoperiri din epoca migrațiilor / Fragmente de cazan hunic, cu proveniența fiecărei piese. Lăsată intenționat vizibilă, ca dovadă a contextului muzeal."
         }
       ]
     },
@@ -351,13 +351,13 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           "x": 49,
           "y": 35,
           "title": "Piatra centrală (cabochon)",
-          "desc": "O piatră rotundă, șlefuită în cabochon (fără fațete), marchează axul diademei — singurul element necolțuros din tot ansamblul, probabil un reper de simetrie pentru meșter la montarea celulelor."
+          "desc": "O piatră rotundă, șlefuită în cabochon (fără fațete), marchează axul diademei, singurul element necolțuros din tot ansamblul, probabil un reper de simetrie pentru meșter la montarea celulelor."
         },
         {
           "x": 27,
           "y": 48,
           "title": "Incrustațiile cloisonné",
-          "desc": "Celule de aur umplute cu plăcuțe de granat șlefuit, în tehnica „cloisonné” — stilul policrom răspândit în Bazinul Carpatic în perioada hunică. Analiza antropologică a scheletului din mormânt a arătat un craniu deformat artificial."
+          "desc": "Celule de aur umplute cu plăcuțe de granat șlefuit, în tehnica „cloisonné”: stilul policrom răspândit în Bazinul Carpatic în perioada hunică. Analiza antropologică a scheletului din mormânt a arătat un craniu deformat artificial."
         },
         {
           "x": 66,
@@ -370,7 +370,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     {
       "name": "Spatha hunică",
       "kind": "Piesă originală · mormânt princiar",
-      "desc": "Sabie lungă de fier, cu două tăișuri (spatha), cu garda și mânerul placate cu aur și incrustate cu granate — din același mormânt princiar de la Jakuszowice (Polonia) ca arcul compozit expus alături.",
+      "desc": "Sabie lungă de fier, cu două tăișuri (spatha), cu garda și mânerul placate cu aur și incrustate cu granate, din același mormânt princiar de la Jakuszowice (Polonia) ca arcul compozit expus alături.",
       "credit": "Muzeul Arheologic din Cracovia · foto Silar, CC BY-SA 4.0, Wikimedia Commons",
       "alt": "Sabie lungă de fier, cu lama dreaptă și gardă scurtă, având mânerul acoperit cu o piesă de aur decorată cu granate montate în celule.",
       "ratio": "3347 / 2211",
@@ -380,13 +380,13 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           "x": 77,
           "y": 38,
           "title": "Mânerul placat cu aur și granate",
-          "desc": "Ca și arcurile poleite, mânerele de sabie placate cu aur și pietre semiprețioase marcau rangul purtătorului — sabia era, alături de arc, celălalt obiect cu valoare aproape sacră a elitei hunice."
+          "desc": "Ca și arcurile poleite, mânerele de sabie placate cu aur și pietre semiprețioase marcau rangul purtătorului: sabia era, alături de arc, celălalt obiect cu valoare aproape sacră a elitei hunice."
         },
         {
           "x": 36,
           "y": 41,
           "title": "Lama de fier, cu două tăișuri",
-          "desc": "Lama dreaptă, lungă, cu două tăișuri, e cea a spathei — arma de rang a întregii Europe a epocii, nu doar a hunilor. Ce o face „princiară” nu e forma lamei, ci garnitura de aur și granate a mânerului."
+          "desc": "Lama dreaptă, lungă, cu două tăișuri, e cea a spathei, arma de rang a întregii Europe a epocii, nu doar a hunilor. Ce o face „princiară” nu e forma lamei, ci garnitura de aur și granate a mânerului."
         },
         {
           "x": 75,
@@ -415,7 +415,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           "x": 50,
           "y": 31,
           "title": "Fruntea înaltă și îngustă",
-          "desc": "Presiunea bandajelor pe frunte și pe ceafă împingea creșterea spre creștet. Rezultatul era vizibil toată viața — un semn de apartenență la elită, care nu putea fi ascuns sau imitat la maturitate."
+          "desc": "Presiunea bandajelor pe frunte și pe ceafă împingea creșterea spre creștet. Rezultatul era vizibil toată viața: un semn de apartenență la elită, care nu putea fi ascuns sau imitat la maturitate."
         },
         {
           "x": 36,
@@ -438,19 +438,19 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           "x": 50,
           "y": 40,
           "title": "Bustul împăratului",
-          "desc": "Teodosie al II-lea e înfățișat din față, cu coif și diademă de perle, ținând o lance pe umăr — imaginea unui împărat-războinic, deși el nu a condus niciodată personal o campanie."
+          "desc": "Teodosie al II-lea e înfățișat din față, cu coif și diademă de perle, ținând o lance pe umăr: imaginea unui împărat-războinic, deși el nu a condus niciodată personal o campanie."
         },
         {
           "x": 27,
           "y": 38,
           "title": "Inscripția",
-          "desc": "De jur împrejur se citește D N THEODOSIVS P F AVG — „Stăpânul nostru Teodosie, pios și fericit, Augustus”. Formula e aceeași pe toate monedele imperiale ale epocii."
+          "desc": "De jur împrejur se citește D N THEODOSIVS P F AVG: „Stăpânul nostru Teodosie, pios și fericit, Augustus”. Formula e aceeași pe toate monedele imperiale ale epocii."
         },
         {
           "x": 50,
           "y": 73,
           "title": "Scutul",
-          "desc": "Împăratul ține un scut decorat cu un călăreț care își străpunge dușmanul — un mesaj de victorie, plătit, ironic, chiar dușmanilor pe care Imperiul nu-i putea învinge."
+          "desc": "Împăratul ține un scut decorat cu un călăreț care își străpunge dușmanul: un mesaj de victorie, plătit, ironic, chiar dușmanilor pe care Imperiul nu-i putea învinge."
         },
         {
           "x": 89,
@@ -462,7 +462,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     },
     {
       "name": "Diadema de la Verhne-Pogromnoe",
-      "kind": "Piesă originală · sf. sec. IV – sec. V",
+      "kind": "Piesă originală · sf. sec. IV–V",
       "desc": "Diademă hunică din argint și bronz, cu granate, descoperită în cimitirul de la Verhne-Pogromnoe (regiunea Volgograd), pe drumul hunilor spre Europa. Ermitajul de Stat, Sankt Petersburg, inv. 1953-30.",
       "credit": "Ermitajul de Stat, Sankt Petersburg · foto Netelo, CC BY-SA 4.0, Wikimedia Commons",
       "alt": "Diademă ovală cu granate roșii montate în celule, decor de triunghiuri din granule și zeci de tuburi metalice dispuse ca niște raze.",
@@ -473,13 +473,13 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           "x": 50,
           "y": 23,
           "title": "Granatele în celule",
-          "desc": "Pietrele roșii sunt granate (almandine), tăiate și montate fiecare în celula ei de metal. E același stil policrom ca la diadema de la Gherăseni — dovada unei mode comune elitei din tot spațiul dominat de huni."
+          "desc": "Pietrele roșii sunt granate (almandine), tăiate și montate fiecare în celula ei de metal. E același stil policrom ca la diadema de la Gherăseni, dovada unei mode comune elitei din tot spațiul dominat de huni."
         },
         {
           "x": 42,
           "y": 45,
           "title": "Triunghiurile din granule",
-          "desc": "Câmpul dintre pietre e acoperit cu triunghiuri formate din bobițe minuscule de metal, lipite una câte una — tehnica granulației, care cerea o mare îndemânare."
+          "desc": "Câmpul dintre pietre e acoperit cu triunghiuri formate din bobițe minuscule de metal, lipite una câte una: tehnica granulației, care cerea o mare îndemânare."
         },
         {
           "x": 86,
@@ -508,7 +508,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           "x": 58,
           "y": 12,
           "title": "Capul de vultur",
-          "desc": "Ciocul curbat și ochiul rotund fac din piesă un vultur — pasăre a puterii, frecventă în arta elitelor germanice și stepice ale epocii."
+          "desc": "Ciocul curbat și ochiul rotund fac din piesă un vultur, pasăre a puterii, frecventă în arta elitelor germanice și stepice ale epocii."
         },
         {
           "x": 45,
@@ -526,7 +526,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           "x": 46,
           "y": 90,
           "title": "Ghearele",
-          "desc": "Picioarele se termină în granate mari, șlefuite. Piesa arată bogăția unui principe gepid după prăbușirea imperiului hunic — o elită care moștenea gustul și tehnicile epocii lui Attila."
+          "desc": "Picioarele se termină în granate mari, șlefuite. Piesa arată bogăția unui principe gepid după prăbușirea imperiului hunic: o elită care moștenea gustul și tehnicile epocii lui Attila."
         }
       ]
     }
@@ -541,70 +541,70 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   var MYTHS = [
     {
       myth: 'Hunii erau un popor unitar, de origine exclusiv est-asiatică, sosit dintr-o singură migrație.',
-      truth: 'Analizele de ADN antic pe schelete din perioada hunică a Bazinului Carpatic (Neparáczki et al. 2019; Maróti et al. 2022) arată o eterogenitate genetică mare — amestec de ascendență est-asiatică și europeană/locală — nu un popor genetic omogen.'
+      truth: 'Analizele de ADN antic pe schelete din perioada hunică a Bazinului Carpatic (Neparáczki et al. 2019; Maróti et al. 2022) arată o eterogenitate genetică mare: amestec de ascendență est-asiatică și europeană/locală, nu un popor genetic omogen.'
     },
     {
-      myth: 'Ammianus Marcellinus descrie hunii ca fiind aproape non-umani la înfățișare — o relatare obiectivă a unui popor „monstruos”.',
-      truth: 'Istoricii moderni citesc pasajul lui Ammianus ca retorică etnografică romană — un topos literar folosit pentru a marca „barbaria”, nu o descriere antropologică fidelă. Nu există dovezi osteologice care să confirme trăsăturile exagerate descrise.'
+      myth: 'Ammianus Marcellinus descrie hunii ca fiind aproape non-umani la înfățișare, o relatare obiectivă a unui popor „monstruos”.',
+      truth: 'Istoricii moderni citesc pasajul lui Ammianus ca retorică etnografică romană, un topos literar folosit pentru a marca „barbaria”, nu o descriere antropologică fidelă. Nu există dovezi osteologice care să confirme trăsăturile exagerate descrise.'
     },
     {
       myth: 'Craniile deformate artificial găsite în morminte din epocă dovedesc, prin ele însele, apartenența etnică hunică.',
-      truth: 'Deformarea craniană intenționată (prin bandaje aplicate în copilărie) era practicată de mai multe populații ale stepei și Europei Centrale din acea vreme, inclusiv de unii germanici — e un marker cultural, transmis și împrumutat, nu un indicator etnic exclusiv. Un exemplu chiar din România: femeia înmormântată cu diadema de la Gherăseni (Buzău, sec. V) avea craniul puternic deformat, dar originea ei etnică rămâne deschisă.'
+      truth: 'Deformarea craniană intenționată (prin bandaje aplicate în copilărie) era practicată de mai multe populații ale stepei și Europei Centrale din acea vreme, inclusiv de unii germanici; e un marker cultural, transmis și împrumutat, nu un indicator etnic exclusiv. Un exemplu chiar din România: femeia înmormântată cu diadema de la Gherăseni (Buzău, sec. V) avea craniul puternic deformat, dar originea ei etnică rămâne deschisă.'
     },
     {
       myth: 'Legătura dintre huni și Xiongnu din China antică e doar o coincidență de nume, fără nicio bază reală.',
-      truth: 'Maróti et al. (2022) și Neparáczki et al. (2019) arată că nucleul de imigranți al hunilor avea ascendență est-asiatică ce poate fi urmărită până în spațiul Xiongnu — deci nu e doar o coincidență de nume. Ce rămâne nedovedit este continuitatea directă a elitei conducătoare și o migrație compactă spre vest. Legătură de populație: probabilă. Descendență dinastică: nedemonstrată.'
+      truth: 'Maróti et al. (2022) și Neparáczki et al. (2019) arată că nucleul de imigranți al hunilor avea ascendență est-asiatică ce poate fi urmărită până în spațiul Xiongnu, deci nu e doar o coincidență de nume. Ce rămâne nedovedit este continuitatea directă a elitei conducătoare și o migrație compactă spre vest. Legătură de populație: probabilă. Descendență dinastică: nedemonstrată.'
     },
     {
       myth: 'Sosirea hunilor a însemnat o înlocuire totală a populației din Bazinul Carpatic.',
-      truth: 'Multe eșantioane genetice din perioada hunică arată ascendență predominant locală/europeană. Datele sugerează o elită conducătoare relativ redusă numeric, care domina politic populații majoritar autohtone — nu o înlocuire demografică completă.'
+      truth: 'Multe eșantioane genetice din perioada hunică arată ascendență predominant locală/europeană. Datele sugerează o elită conducătoare relativ redusă numeric, care domina politic populații majoritar autohtone, nu o înlocuire demografică completă.'
     },
     {
       myth: 'Hunii foloseau un singur tip de sabie, simplă și fără valoare simbolică.',
-      truth: 'Mormintele princiare, ca cel de la Jakuszowice, păstrează săbii lungi cu mânerul placat cu aur și granate — adevărate însemne de rang. Iar Iordanes (Getica, 183, după Priscus) povestește că Attila își sprijinea autoritatea pe „sabia lui Marte”, găsită de un păstor: sabia era și simbol al puterii, nu doar armă.'
+      truth: 'Mormintele princiare, ca cel de la Jakuszowice, păstrează săbii lungi cu mânerul placat cu aur și granate, adevărate însemne de rang. Iar Iordanes (Getica, 183, după Priscus) povestește că Attila își sprijinea autoritatea pe „sabia lui Marte”, găsită de un păstor: sabia era și simbol al puterii, nu doar armă.'
     },
     {
-      myth: 'Sursele romane vorbesc doar despre războinici — femeile hunice nu apar în istorie.',
+      myth: 'Sursele romane vorbesc doar despre războinici; femeile hunice nu apar în istorie.',
       truth: 'Priscus din Panium o descrie pe Kreka (Hereca), soția principală a lui Attila, în propria ei casă, înconjurată de slujnice, primind darurile soliei romane; tot el povestește cum văduva lui Bleda, stăpâna unui sat, a găzduit și ospătat solia. Femeile din elita hunică aveau un rol social și chiar diplomatic vizibil.'
     },
     {
       myth: 'Se cunoaște exact locul unde a fost înmormântat Attila.',
-      truth: 'Iordanes (Getica, 256–258) povestește că Attila a fost îngropat noaptea, într-un sicriu triplu — aur, argint și fier —, iar cei care au săpat mormântul au fost uciși, ca locul să rămână secret. Mormântul nu a fost identificat nici azi. Povestea cu râul deviat, atribuită adesea lui Attila, e de fapt a înmormântării lui Alaric (Getica, 158).'
+      truth: 'Iordanes (Getica, 256–258) povestește că Attila a fost îngropat noaptea, într-un sicriu triplu (aur, argint și fier), iar cei care au săpat mormântul au fost uciși, ca locul să rămână secret. Mormântul nu a fost identificat nici azi. Povestea cu râul deviat, atribuită adesea lui Attila, e de fapt a înmormântării lui Alaric (Getica, 158).'
     },
     {
       myth: 'Attila s-a oprit înaintea Romei, în 452, exclusiv din respect pentru intervenția Papei Leon I.',
-      truth: 'Întâlnirea cu Leon I a contat, dar istoricii moderni subliniază și o cauză materială decisivă: o epidemie de ciumă/dizenterie și lipsa de provizii au decimat armata hunică în nordul Italiei — factori care, alături de diplomația papală, au grăbit retragerea lui Attila.'
+      truth: 'Întâlnirea cu Leon I a contat, dar istoricii moderni subliniază și o cauză materială decisivă: o epidemie de ciumă/dizenterie și lipsa de provizii au decimat armata hunică în nordul Italiei, factori care, alături de diplomația papală, au grăbit retragerea lui Attila.'
     },
     {
       myth: 'Toate vârfurile de săgeți hunice erau din fier, ca la majoritatea popoarelor stepei.',
-      truth: 'Ammianus Marcellinus notează, ca mare curiozitate, că hunii foloseau și vârfuri de săgeți sculptate din os, pe lângă cele din fier — un detaliu tehnic care i s-a părut demn de menționat unui observator roman obișnuit cu armamentul metalic.'
+      truth: 'Ammianus Marcellinus notează, ca mare curiozitate, că hunii foloseau și vârfuri de săgeți sculptate din os, pe lângă cele din fier, un detaliu tehnic care i s-a părut demn de menționat unui observator roman obișnuit cu armamentul metalic.'
     },
     {
       myth: 'Aurul cerut de huni era doar tribut de stat, plătit exclusiv între Attila și împărat.',
-      truth: 'Prețul se negocia și la nivel individual: Onegesius, unul dintre cei mai de încredere oameni ai lui Attila, a cerut 500 de solidi de aur doar pentru răscumpărarea soției și copiilor unui singur cetățean roman capturat — o sumă uriașă pentru o singură familie.'
+      truth: 'Prețul se negocia și la nivel individual: Onegesius, unul dintre cei mai de încredere oameni ai lui Attila, a cerut 500 de solidi de aur doar pentru răscumpărarea soției și copiilor unui singur cetățean roman capturat: o sumă uriașă pentru o singură familie.'
     },
     {
-      myth: 'Aurul de tribut rămânea la Attila și la curtea sa restrânsă — restul hunilor nu vedeau nimic din el.',
-      truth: 'Descoperiri arheologice arată o circulație mult mai largă a aurului în societatea hunică: tezaurul de la Szikáncs, lângă Tisa, cuprinde cca. 1.440 de solidi, majoritatea ai lui Teodosie al II-lea — exact 20 de livre romane (72 de solidi la livră), probabil o plată rotundă, ajunsă direct din tribut în mâinile unui membru al elitei, nu în vistieria lui Attila.'
+      myth: 'Aurul de tribut rămânea la Attila și la curtea sa restrânsă; restul hunilor nu vedeau nimic din el.',
+      truth: 'Descoperiri arheologice arată o circulație mult mai largă a aurului în societatea hunică: tezaurul de la Szikáncs, lângă Tisa, cuprinde cca. 1.440 de solidi, majoritatea ai lui Teodosie al II-lea, adică exact 20 de livre romane (72 de solidi la livră), probabil o plată rotundă, ajunsă direct din tribut în mâinile unui membru al elitei, nu în vistieria lui Attila.'
     },
     {
       myth: 'Hunii purtau mereu armuri grele, ca orice cavalerie „serioasă” a Antichității târzii.',
-      truth: 'Dimpotrivă: mobilitatea era prioritatea absolută, iar armura grea era evitată aproape complet, fiindcă tactica de bază era atacul de la distanță cu arcul, nu lupta corp la corp. Doar aristocrația hunică purta, ocazional, echipament mai scump și mai elaborat — vizibil influențat de moda romană.'
+      truth: 'Dimpotrivă: mobilitatea era prioritatea absolută, iar armura grea era evitată aproape complet, fiindcă tactica de bază era atacul de la distanță cu arcul, nu lupta corp la corp. Doar aristocrația hunică purta, ocazional, echipament mai scump și mai elaborat, vizibil influențat de moda romană.'
     },
     {
       myth: 'Descrierile antice ale hunilor călare sunt doar o figură de stil fără substanță.',
-      truth: 'Ammianus și Zosimus scriu că hunii luptau, se sfătuiau, mâncau și chiar dormeau în șa — o simbioză om-cal atât de strânsă încât retorul Sidonius Apollinaris îi compară direct cu centaurii din mitologie, creaturi jumătate om, jumătate cal.'
+      truth: 'Ammianus și Zosimus scriu că hunii luptau, se sfătuiau, mâncau și chiar dormeau în șa: o simbioză om-cal atât de strânsă încât retorul Sidonius Apollinaris îi compară direct cu centaurii din mitologie, creaturi jumătate om, jumătate cal.'
     },
     {
       myth: 'Controlul aurului în Imperiul Roman era descentralizat, oricine putea bate sau distribui monedă de aur.',
-      truth: 'Dimpotrivă — aurul era prin excelență bunul împăratului. Solidul, introdus de Constantin cel Mare, avea greutate fixă (1/72 dintr-o livră), iar Valentinian I și Valens au impus, după 366, ca aurul strâns din taxe să fie topit în lingouri de puritate garantată, sub controlul lui comes sacrarum largitionum. Tributul cerut de Attila lovea deci direct autoritatea și prestigiul imperial, nu doar vistieria.'
+      truth: 'Dimpotrivă: aurul era prin excelență bunul împăratului. Solidul, introdus de Constantin cel Mare, avea greutate fixă (1/72 dintr-o livră), iar Valentinian I și Valens au impus, după 366, ca aurul strâns din taxe să fie topit în lingouri de puritate garantată, sub controlul lui comes sacrarum largitionum. Tributul cerut de Attila lovea deci direct autoritatea și prestigiul imperial, nu doar vistieria.'
     }
   ];
 
   // ============================================================
 
   // ============================================================
-  // MODULE 1 — Fotografii de artefact adnotate: randare DOM
+  // MODULE 1: Fotografii de artefact adnotate: randare DOM
   // ============================================================
 
   function renderArtifactCard(art, index){
@@ -683,7 +683,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   }
 
   // ============================================================
-  // MODULE 2 — Mit vs. Adevăr: randare DOM
+  // MODULE 2: Mit vs. Adevăr: randare DOM
   // ============================================================
 
   // Theme of each myth, in the order of MYTHS.
