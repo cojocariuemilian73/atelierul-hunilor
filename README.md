@@ -12,6 +12,7 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
 
 - `atelierul-hunilor.html` — pagina combinată finală (aceasta e livrarea)
 - Pagina „Atelierul istoricului” (trei jocuri de gândire istorică) are sursele în `scripturi-build/atelier/` (HTML, CSS, JS) și e inserată în paginile construite cu `scripturi-build/rebuild-atelier.js`.
+- `ghid-profesor.html` — Ghidul profesorului: corespondența cu programa de istorie de clasa a IX-a (cele 4 competențe generale), trei scenarii de lecție și o fișă de lucru cu barem, gata de tipărit.
 - `qr-joc.html` — pagină de tipărit sau de proiectat, cu codul QR care deschide jocul pe telefon (generat cu `python scripturi-build/make-qr.py`, are nevoie de `pip install segno`).
 - `module-individuale/` — cele 5 module ca fișiere separate, de sine stătătoare (regenerate automat din aceleași surse ca pagina combinată, cu `scripturi-build/build-standalone.js`):
   - `huni-prezentare.html` — articolul academic (Acasă / Context / Cronologie / Marea Migrație / Personalități)
@@ -24,7 +25,7 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
   - `scope-css.js` — izolează CSS-ul fiecărui modul sub o clasă unică, ca stilurile să nu se ciocnească
   - `assemble.js` — combină toate modulele într-un singur `FINAL.html`
   - `deglow.js` / `extract.js` — scripturi folosite punctual în etapele de curățare a designului
-- `imagini/reale/` — imaginile folosite acum pe site, toate de pe Wikimedia Commons: fresca lui Rafael, gravura lui Geiger și pictura lui Mór Than (domeniu public) pentru antete și harta fizică a Europei (Alexrk2, CC BY-SA 3.0) pentru hărțile interactive. Fotografiile de artefact și hărțile istorice din articol sunt în `imagini/muzeu/`. Toate sunt încorporate direct ca `base64` în HTML. Cele trei fișiere rămase direct în `imagini/` (harta militară 370–406, harta campaniei lui Attila în Galia și harta invaziilor) sunt hărți istorice reale, păstrate ca originale. Imaginile mai vechi, generate cu AI, au fost șterse.
+- `imagini/reale/` — imaginile folosite acum pe site, toate de pe Wikimedia Commons: fresca lui Rafael, gravura lui Geiger și pictura lui Mór Than (domeniu public) pentru antete și harta fizică a Europei (Alexrk2, CC BY-SA 3.0) pentru hărțile interactive. Fotografiile de artefact și hărțile istorice din articol sunt în `imagini/muzeu/`. Toate sunt încorporate direct ca `base64` în HTML, recodate în WebP cu `python scripturi-build/to-webp.py fisier.html` (pagina a scăzut de la 5,6 la 4,4 MB). Cele trei fișiere rămase direct în `imagini/` (harta militară 370–406, harta campaniei lui Attila în Galia și harta invaziilor) sunt hărți istorice reale, păstrate ca originale. Imaginile mai vechi, generate cu AI, au fost șterse.
 - `scripturi-build/geo.js` — proiecția hărții fizice: transformă latitudinea și longitudinea în poziția exactă pe imagine (aceleași formule pe care le folosește Wikipedia pentru această hartă).
 
 ## Cum reconstruiesc pagina după o modificare
