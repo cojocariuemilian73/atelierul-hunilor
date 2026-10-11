@@ -1,0 +1,15 @@
+  /* gl: glosar */
+  .gl{ display: inline; padding: 0; margin: 0; border: 0; background: none; font: inherit; color: inherit; cursor: help; text-decoration: underline dotted color-mix(in srgb, var(--accent-2) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px; border-radius: 2px; transition: background 0.2s, color 0.2s; }
+  .gl:hover, .gl:focus-visible{ color: var(--accent-2); outline: none; background: color-mix(in srgb, var(--accent-2) 12%, transparent); }
+  .gl.flash{ animation: gl-flash 1.6s ease-out; }
+  @keyframes gl-flash{ 0%, 30%{ background: color-mix(in srgb, var(--accent-2) 40%, transparent); } 100%{ background: transparent; } }
+  .gl-tip{ position: fixed; z-index: 500; padding: 12px 14px; background: #1d1b18; border: 1px solid color-mix(in srgb, var(--accent-2) 55%, transparent); color: #e6d7c3; font: 0.9rem/1.55 'Source Serif 4', Georgia, serif; box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5); pointer-events: none; }
+  .gl-tip b{ display: block; margin-bottom: 4px; font: 700 0.95rem 'Cinzel', serif; color: #f2d474; }
+  .gl-list{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; margin: 0; }
+  .gl-row{ padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .gl-row dt{ margin: 0 0 6px; font: 600 1.25rem/1.2 'Cormorant Garamond', serif; color: var(--ink); }
+  .gl-row dd{ margin: 0; color: var(--ink-dim); line-height: 1.6; }
+  .gl-back{ white-space: nowrap; font: 0.72rem 'JetBrains Mono', monospace; color: var(--accent-2); text-underline-offset: 3px; }
+  @media (max-width: 760px){ .gl-list{ grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce){ .gl, .gl.flash{ transition: none; animation: none; } }
+  /* /gl */

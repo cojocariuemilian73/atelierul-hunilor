@@ -98,6 +98,14 @@
   // 3. Stare
   // =====================================================================
   var T0 = 370, T1 = 476, DT = 0.02;
+  // mod ușor: 40% din agenți, pentru calculatoare lente; se alege din buton, din adresă (?usor)
+  // sau automat, prima dată, pe procesoare cu cel mult două nuclee
+  var FULL_N = GROUPS.reduce(function(s, g){ return s + g.n; }, 0), LITE = false, litePref = null;
+  try { litePref = localStorage.getItem('mig-lite'); } catch (e) {}
+  if (/[?&]usor/.test(location.search)) LITE = true;
+  else if (litePref !== null) LITE = litePref === '1';
+  else LITE = (navigator.hardwareConcurrency || 8) <= 2;
+  if (LITE) GROUPS.forEach(function(g){ g.n = Math.round(g.n * 0.4); });
   var N = GROUPS.reduce(function(s, g){ return s + g.n; }, 0);
   var crossed = new Uint8Array(N), ax = new Float32Array(N), ay = new Float32Array(N), avx = new Float32Array(N), avy = new Float32Array(N), ag = new Uint8Array(N), aw = new Float32Array(N);
   var terrain = new Float32Array(GW * GH), frontMask = new Uint8Array(GW * GH), frontSeg = [];
@@ -135,6 +143,7 @@
           '<label><input type="checkbox" data-l="press"> Presiunea hunilor</label>' +
           '<button type="button" class="mig-flowg" id="mig-flowg">Drumuri pentru: Vizigoții</button>' +
         '</div>' +
+        '<p class="jg-eyebrow">Calculatorul tău</p><button type="button" class="mig-flowg mig-lite" id="mig-lite" aria-pressed="' + LITE + '">' + (LITE ? 'Mod ușor activ: ' + N.toLocaleString('ro-RO') + ' de agenți. Treci la modul complet' : 'Merge greu? Mod ușor: ' + Math.round(FULL_N * 0.4).toLocaleString('ro-RO') + ' de agenți') + '</button>' +
         '<p class="jg-eyebrow">Grupuri care au trecut granița</p><div class="mig-cross"><span>Dunărea <b id="mig-cd">0</b></span><span>Rinul <b id="mig-cr">0</b></span></div>' +
         '<p class="jg-eyebrow">Deciziile tale</p><ol class="mig-log" id="mig-log"></ol>' +
       '</aside>' +
@@ -480,8 +489,10 @@
   // 10. Bucla, evenimente, decizii, final
   // =====================================================================
   var last = 0, acc = 0, YPS = 1.1, idleRaf = 0;
+  var slowEma = 0, slowN = 0, slowWarned = false;
   function loop(ts){
     if (!running) return;
+    var c0 = performance.now();
     var dt = Math.min(0.1, (ts - (last || ts)) / 1000); last = ts;
     acc += dt * YPS * speed;
     var steps = 0;
@@ -491,6 +502,9 @@
       if (t >= T1) { finish(); break; }
     }
     draw(); updateHud();
+    // calculator lent: după ~2 secunde cu cadre de peste 35 ms, propune modul ușor
+    slowEma = slowEma * 0.9 + (performance.now() - c0) * 0.1; slowN++;
+    if (!LITE && !slowWarned && slowN > 90 && slowEma > 35) { slowWarned = true; toast('Simularea merge greu pe acest calculator', 'Apasă „Mod ușor” din dreapta: mai puțini agenți, aceeași istorie.'); document.getElementById('mig-lite').classList.add('hint'); }
     if (running) requestAnimationFrame(loop);
   }
   // pe pauză, harta continuă să fie desenată cât timp mai „pulsează” un moment istoric
@@ -663,6 +677,12 @@
   });
   Array.prototype.forEach.call(root.querySelectorAll('.mig-layers input'), function(cb){
     cb.addEventListener('change', function(){ layers[cb.getAttribute('data-l')] = cb.checked; if (!running) draw(); });
+  });
+  document.getElementById('mig-lite').addEventListener('click', function(){
+    var next = !LITE;
+    try { localStorage.setItem('mig-lite', next ? '1' : '0'); } catch (e) {}
+    // agenții se alocă la încărcare, deci pagina se reîncarcă, pe aceeași simulare
+    location.href = location.pathname + (next ? '?usor' : '') + '#mod-migratie';
   });
   document.getElementById('mig-flowg').addEventListener('click', function(){
     flowGroup = (flowGroup + 1) % GROUPS.length;

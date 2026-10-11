@@ -211,3 +211,5 @@
   .mig-over.dock .mig-end-btns .jg-btn{ padding: 8px 12px; font-size: 0.8rem; white-space: nowrap; }
   .mig-over.dock .mig-end.min{ width: auto; max-width: 100%; }
   .mig-end.min h3{ margin-bottom: 0; }
+  .mig-lite{ text-align: left; line-height: 1.4; }
+  .mig-lite.hint{ border-color: #f2d474; color: #f2d474; box-shadow: 0 0 0 3px rgba(242, 212, 116, 0.18); }
