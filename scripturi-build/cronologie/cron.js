@@ -54,16 +54,19 @@
     var a = A0, b = B0, on = { militar: true, politic: true, aur: true, izvoare: true }, cur = -1;
     function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
 
-    // filtre și perioade
-    document.getElementById('hx-filters').innerHTML = Object.keys(HX_CATS).map(function(k){
+    // benzile: câte una pentru fiecare tip de eveniment; numele benzii o ascunde sau o arată
+    var CATS = Object.keys(HX_CATS), rowEl = {};
+    document.getElementById('hx-names').innerHTML = CATS.map(function(k){
       var n = CRON.filter(function(e){ return e.cat === k; }).length;
-      return '<button type="button" class="hx-chip" data-cat="' + k + '" aria-pressed="true" style="--c:' + HX_CATS[k].c + '"><i></i>' + HX_CATS[k].name + ' <span>' + n + '</span></button>';
+      return '<button type="button" class="hx-lname" data-cat="' + k + '" aria-pressed="true" title="' + HX_CATS[k].name + ': arată sau ascunde" style="--c:' + HX_CATS[k].c + '"><i></i><b>' + HX_CATS[k].name + '</b><span>' + n + '</span></button>';
     }).join('');
+    dotsEl.innerHTML = CATS.map(function(k){ return '<div class="hx-row" data-cat="' + k + '" style="--c:' + HX_CATS[k].c + '"></div>'; }).join('');
+    CATS.forEach(function(k){ rowEl[k] = dotsEl.querySelector('.hx-row[data-cat="' + k + '"]'); });
     document.getElementById('hx-periods').innerHTML = HX_PERIODS.map(function(p, i){
-      return '<button type="button" class="hx-per' + (i === 0 ? ' on' : '') + '" data-i="' + i + '">' + p.name + '</button>';
+      return '<button type="button" class="hx-per' + (i === 0 ? ' on' : '') + '" data-i="' + i + '" aria-pressed="' + (i === 0) + '">' + p.name + '</button>';
     }).join('');
 
-    // punctele mari (create o singură dată, apoi doar mutate)
+    // punctele (create o singură dată, apoi doar mutate)
     var dots = CRON.map(function(e, i){
       var d = document.createElement('button');
       d.type = 'button'; d.className = 'hx-dot'; d.setAttribute('role', 'listitem');
@@ -79,7 +82,7 @@
         var vis = visible(), k = vis.indexOf(i), n = vis[k + dir];
         if (n !== undefined) { select(n, true); dots[n].focus(); }
       });
-      dotsEl.appendChild(d);
+      rowEl[e.cat].appendChild(d);
       return d;
     });
     // punctele mici, pe toată perioada
@@ -94,15 +97,17 @@
       return CRON.map(function(e, i){ return i; }).filter(function(i){ var e = CRON[i]; return on[e.cat] && e.y >= a && e.y <= b; });
     }
 
+    // fiecare eveniment stă pe banda lui, la anul lui; numele apare doar unde încape,
+    // celelalte se citesc la trecerea mouse-ului sau în fișa de dedesubt
     function layout(){
-      var w = stage.clientWidth || 800, lanes = [], maxLane = 0, compact = w < 560;
-      stage.classList.toggle('compact', compact);
-      var span = b - a, step = span > 70 ? 10 : span > 30 ? 5 : span > 14 ? 2 : 1;
-      var h = '';
+      var w = stage.clientWidth || 800, span = b - a, compact = w < 420;
+      var step = span > 70 ? 10 : span > 30 ? 5 : span > 14 ? 2 : 1, h = '';
       for (var y = Math.ceil(a / step) * step; y <= b; y += step) {
-        h += '<span class="' + (y % (step * 2) === 0 || step >= 10 ? 'maj' : '') + '" style="left:' + ((y - a) / span * 100).toFixed(3) + '%"><em>' + y + '</em></span>';
+        h += '<span style="left:' + ((y - a) / span * 100).toFixed(3) + '%"><em>' + y + '</em></span>';
       }
       grid.innerHTML = h;
+      var perCat = {};
+      CATS.forEach(function(k){ perCat[k] = []; rowEl[k].classList.toggle('off', !on[k]); });
       CRON.forEach(function(e, i){
         var d = dots[i], show = on[e.cat] && e.y >= a - 0.01 && e.y <= b + 0.01;
         var x = (e.y - a) / span;
@@ -110,16 +115,23 @@
         d.classList.toggle('off', !show);
         d.tabIndex = show ? 0 : -1;
         d.setAttribute('aria-hidden', show ? 'false' : 'true');
-        if (!show) return;
-        var px = x * w, need = compact ? 20 : 18 + e.short.length * 7.2, flip = !compact && px + need > w - 4, lane = 0;
-        var st = flip ? px - need : px, en = flip ? px + 10 : px + need;
-        while (lanes[lane] !== undefined && st < lanes[lane]) lane++;
-        lanes[lane] = en + 8;
-        d.style.setProperty('--lane', lane);
-        d.classList.toggle('flip', compact ? px > w * 0.62 : flip);
-        maxLane = Math.max(maxLane, lane);
+        if (show) perCat[e.cat].push({ i: i, px: x * w, need: 16 + e.short.length * 7.4 });
       });
-      stage.style.setProperty('--lanes', maxLane + 1);
+      // pe fiecare bandă: o etichetă apare doar dacă nu atinge nici eticheta dinainte, nici punctul următor
+      CATS.forEach(function(k){
+        var list = perCat[k].sort(function(p, q){ return p.px - q.px; }), lastEnd = -1e9;
+        list.forEach(function(it, n){
+          var d = dots[it.i], next = list[n + 1], prev = list[n - 1];
+          var flip = it.px + it.need > w;
+          var st = flip ? it.px - it.need : it.px - 8, en = flip ? it.px + 8 : it.px + it.need;
+          var clearNext = flip || !next || next.px - 10 > en;
+          var clearPrev = !flip || !prev || prev.px + 10 < st;
+          var fits = !compact && st > lastEnd + 6 && clearNext && clearPrev;
+          d.classList.toggle('nolab', !fits);
+          d.classList.toggle('flip', flip);
+          lastEnd = fits ? en : Math.max(lastEnd, it.px + 8);
+        });
+      });
       win.style.left = ((a - A0) / (B0 - A0) * 100).toFixed(3) + '%';
       win.style.width = ((b - a) / (B0 - A0) * 100).toFixed(3) + '%';
       win.setAttribute('aria-valuenow', Math.round(a));
@@ -153,12 +165,12 @@
       var span = Math.max(MIN, Math.min(B0 - A0, nb - na));
       na = Math.max(A0, Math.min(B0 - span, na));
       a = na; b = na + span;
-      if (!keepPeriod) Array.prototype.forEach.call(document.querySelectorAll('.hx-per'), function(p){ p.classList.remove('on'); });
+      if (!keepPeriod) Array.prototype.forEach.call(document.querySelectorAll('.hx-per'), function(p){ p.classList.remove('on'); p.setAttribute('aria-pressed', 'false'); });
       layout();
     }
 
     root.addEventListener('click', function(ev){
-      var chip = ev.target.closest('.hx-chip');
+      var chip = ev.target.closest('.hx-lname');
       if (chip) {
         var c = chip.getAttribute('data-cat');
         on[c] = !on[c];
@@ -170,7 +182,7 @@
       var per = ev.target.closest('.hx-per');
       if (per) {
         var p = HX_PERIODS[+per.getAttribute('data-i')];
-        Array.prototype.forEach.call(document.querySelectorAll('.hx-per'), function(x){ x.classList.toggle('on', x === per); });
+        Array.prototype.forEach.call(document.querySelectorAll('.hx-per'), function(x){ x.classList.toggle('on', x === per); x.setAttribute('aria-pressed', x === per ? 'true' : 'false'); });
         setRange(p.a, p.b, true);
         var v = visible(); if (v.length) select(v[0], false);
       }
