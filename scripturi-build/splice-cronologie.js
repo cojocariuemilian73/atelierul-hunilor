@@ -9,7 +9,7 @@ const rd = f => fs.readFileSync(path.join(C, f), 'utf8').split('\r\n').join('\n'
 const HTML = rd('cron.html').replace(/\n+$/, '\n');
 const CSS = rd('cron.css').replace(/\n+$/, '\n') + '\n';
 const JS = rd('cron.js').replace(/\n+$/, '\n') + '\n';
-const SUB = 'Apasă pe un punct ca să afli ce s-a întâmplat. Alege o perioadă sau trage fereastra de jos ca să mărești un interval; filtrele ascund tipuri de evenimente.';
+const SUB = 'Trage de-a lungul liniei sau apasă pe o epocă: dedesubt apare fila fiecărui eveniment. Săgețile te duc la cel dinainte sau la cel de după.';
 
 for (const rel of ['index.html', 'atelierul-hunilor.html', 'module-individuale/huni-prezentare.html']) {
   const f = path.join(root, rel);
