@@ -665,18 +665,22 @@
 
   function finish(){
     pause(); finished = true; t = T1; showCompare = true; updateHud(); draw(); setPlayLabel();
+    toastEl.innerHTML = '';
     document.getElementById('mig-play').disabled = true;
     var allReal = log.length === DECISIONS.length && log.every(function(l){ return l.real; });
+    var far = [];
     var rows = GROUPS.map(function(g){
       var c = centroid(g.id), h = HIST[g.id][HIST[g.id].length - 1], hp = proj(h[1], h[2]);
       var km = Math.round(Math.hypot(c[0] - hp[0], c[1] - hp[1]) * KM / 50) * 50;
+      if (km > 300) far.push(g.name.split(',')[0].toLowerCase() + ' au ajuns la ~' + km.toLocaleString('ro-RO') + ' km');
       return '<tr><td><i style="background:' + g.color + '"></i>' + g.name + '</td><td>' + regionOf(c) + '</td><td>' + regionOf(hp) + '</td><td class="num">' + (km <= 150 ? 'același loc' : '~' + km.toLocaleString('ro-RO') + ' km') + '</td></tr>';
     }).join('');
     over.className = 'mig-over show dock';
-    over.innerHTML = '<div class="mig-dec mig-end" role="dialog" aria-labelledby="mig-et"><h3 id="mig-et"><span class="mig-yr">476</span>' + (allReal ? 'Ai refăcut drumul istoric' : 'Ai scris o altă istorie') + '</h3>' +
+    over.innerHTML = '<div class="mig-dec mig-end" role="dialog" aria-labelledby="mig-et"><h3 id="mig-et"><span class="mig-yr">476</span>' + (allReal ? 'Ai luat deciziile din istorie' : 'Ai scris o altă istorie') + '</h3>' +
       '<p class="mig-who">Sfârșitul Imperiului Roman de Apus. Pe hartă, fiecare linie unește lumea ta de lumea reală.</p>' +
       '<table class="mig-table"><thead><tr><th>Popor</th><th>Lumea ta</th><th>Lumea reală</th><th>Distanța</th></tr></thead><tbody>' + rows + '</tbody></table>' +
       '<p class="mig-stats">Stabilitatea Imperiului: <b>' + Math.round(stab) + '</b> · grupuri care au trecut Dunărea: <b>' + crossings.dunare + '</b>, Rinul: <b>' + crossings.rin + '</b> (din ' + N.toLocaleString('ro-RO') + ')</p>' +
+      (allReal && far.length ? '<p class="mig-stats">Cu aceleași decizii, modelul nu reproduce perfect toate drumurile: ' + far.join(', iar ') + ' de locul real. E o simplificare, nu o reconstituire.</p>' : '') +
       '<p class="mig-lesson">' + (allReal ? 'Aceleași decizii, aceeași istorie: presiunea hunilor și slăbirea granițelor au împins popoarele, unele după altele, în Imperiu.' : 'Ce s-a schimbat prin deciziile tale? Istoricii pun aceeași întrebare când discută dacă hunii au provocat căderea Romei sau doar au grăbit-o.') + '</p>' +
       '<div class="mig-end-btns"><button class="jg-btn" id="mig-again" type="button">' + ICON.reset + 'Joacă din nou</button><button class="jg-btn ghost" id="mig-hist" type="button">Arată istoria reală</button><button class="jg-btn ghost" id="mig-hide" type="button">Ascunde tabelul</button></div></div>';
     document.getElementById('mig-again').addEventListener('click', function(){ auto = false; restart(); intro(); });
