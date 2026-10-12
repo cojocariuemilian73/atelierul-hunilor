@@ -24,17 +24,17 @@ const JS = `  // Click (or Enter) on an article image opens it larger, with its 
       '<p class="lb-hint">Rotița sau dublu-clic pentru zoom, apoi trage imaginea. Pe telefon: ciupește cu două degete.</p>';
     document.body.appendChild(box);
     var view = box.querySelector('.lb-view'), bImg = box.querySelector('img'), bCap = box.querySelector('figcaption'), pct = box.querySelector('.lb-pct'), lastFocus = null;
-    var s = 1, tx = 0, ty = 0, MAX = 6, ptrs = {}, pan = null, pinch = null;
+    var s = 1, tx = 0, ty = 0, MAX = 6, ptrs = {}, pan = null, pinch = null, tgt = bImg, svgCopy = null;
     function clamp(){
       var w = view.clientWidth, h = view.clientHeight;
-      var mx = Math.max(0, (bImg.offsetWidth * s - w) / 2), my = Math.max(0, (bImg.offsetHeight * s - h) / 2);
+      var mx = Math.max(0, (tgt.offsetWidth * s - w) / 2), my = Math.max(0, (tgt.offsetHeight * s - h) / 2);
       tx = Math.max(-mx, Math.min(mx, tx)); ty = Math.max(-my, Math.min(my, ty));
     }
     function apply(anim){
       if (s <= 1.001) { s = 1; tx = 0; ty = 0; }
       clamp();
-      bImg.style.transition = anim ? 'transform 0.3s cubic-bezier(.16,1,.3,1)' : 'none';
-      bImg.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+      tgt.style.transition = anim ? 'transform 0.3s cubic-bezier(.16,1,.3,1)' : 'none';
+      tgt.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
       view.classList.toggle('zoomed', s > 1);
       pct.textContent = Math.round(s * 100) + '%';
     }
@@ -48,8 +48,14 @@ const JS = `  // Click (or Enter) on an article image opens it larger, with its 
     function center(){ var r = view.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }
     function open(img){
       lastFocus = img;
-      bImg.src = img.src; bImg.alt = img.alt;
-      var cap = img.closest('figure').querySelector('figcaption');
+      if (svgCopy) { svgCopy.remove(); svgCopy = null; }
+      var svg = img.tagName !== 'IMG' && img.querySelector('svg');
+      if (svg) {
+        svgCopy = svg.cloneNode(true); svgCopy.classList.add('lb-svg');
+        var holder = document.createElement('div'); holder.className = img.className + ' lb-svg-wrap'; holder.appendChild(svgCopy);
+        svgCopy = holder; view.appendChild(holder); bImg.hidden = true; tgt = holder;
+      } else { bImg.hidden = false; bImg.src = img.src; bImg.alt = img.alt; tgt = bImg; }
+      var cap = (img.closest('figure') || img).querySelector('figcaption');
       bCap.innerHTML = cap ? cap.innerHTML : '';
       s = 1; tx = 0; ty = 0; apply(false);
       box.classList.add('show');
@@ -57,6 +63,12 @@ const JS = `  // Click (or Enter) on an article image opens it larger, with its 
       box.querySelector('.lb-close').focus();
     }
     function close(){ box.classList.remove('show'); document.documentElement.classList.remove('lb-open'); if (lastFocus) lastFocus.focus(); }
+    var svgs = document.querySelectorAll('.ptol-map');
+    Array.prototype.forEach.call(svgs, function(d){
+      d.tabIndex = 0; d.classList.add('lb-able');
+      d.addEventListener('click', function(){ open(d); });
+      d.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(d); } });
+    });
     imgs.forEach(function(img){
       img.tabIndex = 0;
       img.setAttribute('role', 'button');
@@ -139,6 +151,11 @@ const CSS = `  /* lb-zoom: zoom în fereastra imaginii; buton „Înapoi sus” 
   .lb-pct{ min-width: 48px; text-align: center; font: 700 0.74rem 'JetBrains Mono', monospace; color: #e6d7c3; font-variant-numeric: tabular-nums; }
   .lb-hint{ position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); margin: 0; font: 0.72rem 'JetBrains Mono', monospace; color: rgba(230, 215, 195, 0.6); white-space: nowrap; }
   html.lb-open{ overflow: hidden; }
+  .lb-able{ cursor: zoom-in; }
+  .lb-able:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 4px; }
+  .img-lightbox .lb-svg-wrap{ width: min(100%, calc((100vh - 190px) * 1.5)); max-width: none; margin: 0; transform-origin: center; }
+  .img-lightbox .lb-svg-wrap figcaption{ display: none; }
+  .img-lightbox .lb-svg-wrap svg{ display: block; width: 100%; height: auto; }
   .to-top{ position: fixed; right: 18px; bottom: 86px; z-index: 90; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--accent-2); background: color-mix(in srgb, var(--paper) 88%, transparent); color: var(--accent-2); cursor: pointer; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity 0.25s, transform 0.25s; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
   .to-top svg{ width: 18px; height: 18px; }
   .to-top.show{ opacity: 1; transform: none; pointer-events: auto; }

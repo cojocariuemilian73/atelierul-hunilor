@@ -42,8 +42,8 @@ for (const rel of ['index.html', 'atelierul-hunilor.html']) {
 
   // navigare și descriere
   s = s.split('<a href="#mod-atelier">Atelierul istoricului</a>').join('<a href="#mod-atelier">Masa istoricului</a>');
-  s = s.replace(/<li><strong>Atelierul istoricului<\/strong>[^\n]*?<\/li>/,
-    '<li><strong>Masa istoricului</strong>: douăsprezece surse despre huni (obiecte, izvoare scrise, picturi) de așezat pe axa timpului: cât de multe sunt cu adevărat din epoca lui Attila.</li>');
+  s = s.replace(/<li><strong>(?:Atelierul istoricului|Masa istoricului)<\/strong>[^\n]*?<\/li>/,
+    '<li><strong>Masa istoricului</strong>: treisprezece surse despre huni (obiecte, izvoare scrise, o copie medievală, picturi) de așezat pe axa timpului și de clasificat: cât de multe sunt cu adevărat din epoca lui Attila.</li>');
 
   fs.writeFileSync(f, crlf ? s.split('\n').join('\r\n') : s);
   console.log(rel + ': Masa istoricului la zi');

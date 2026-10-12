@@ -1,11 +1,14 @@
-// Pune la zi, în paginile publicate, stilurile jocurilor (jocuri.css) și scriptul simulării (migratie.js).
+// Pune la zi, în paginile publicate, stilurile jocurilor (jocuri.css), scriptul simulării (migratie.js)
+// și scriptul jocului Imperiul lui Attila (imperiu.js).
 // Folosire: node scripturi-build/splice-jocuri.js
 const fs = require('fs');
 const path = require('path');
 const root = path.join(__dirname, '..');
 const J = path.join(__dirname, 'jocuri');
-const CSS = fs.readFileSync(path.join(J, 'jocuri.css'), 'utf8').split('\r\n').join('\n').replace(/\n+$/, '\n');
-const MIG_JS = fs.readFileSync(path.join(J, 'migratie.js'), 'utf8').split('\r\n').join('\n').replace(/\n+$/, '');
+const rd = f => fs.readFileSync(path.join(J, f), 'utf8').split('\r\n').join('\n');
+const CSS = rd('jocuri.css').replace(/\n+$/, '\n');
+const MIG_JS = rd('migratie.js').replace(/\n+$/, '');
+const IMP_JS = rd('imperiu.js').replace(/\n+$/, '');
 const MARK = '  /* ============ MODULE: JOCURILE';
 const END = '  /* ============ MODULE: ATLASUL MIGRAȚIEI (.m-atlas) ============ */';
 const files = ['index.html', 'atelierul-hunilor.html', 'module-individuale/imperiul-lui-attila.html', 'module-individuale/simularea-marii-migratii.html'];
@@ -20,12 +23,12 @@ for (const rel of files) {
   let c1 = s.indexOf(END, c0);
   if (c1 < 0) c1 = s.indexOf('</style>', c0);
   s = s.slice(0, c0) + CSS + s.slice(c1);
-  let mig = 0;
+  let mig = 0, imp = 0;
   s = s.replace(/<script>\n[\s\S]*?\n<\/script>/g, blk => {
-    if (!blk.includes("getElementById('mig-root')")) return blk;
-    mig++;
-    return '<script>\n' + MIG_JS + '\n</script>';
+    if (blk.includes("getElementById('mig-root')")) { mig++; return '<script>\n' + MIG_JS + '\n</script>'; }
+    if (blk.includes("getElementById('imp-root')")) { imp++; return '<script>\n' + IMP_JS + '\n</script>'; }
+    return blk;
   });
   fs.writeFileSync(f, crlf ? s.split('\n').join('\r\n') : s);
-  console.log(rel + ': CSS la zi' + (mig ? ', simularea la zi' : ''));
+  console.log(rel + ': CSS la zi' + (mig ? ', simularea la zi' : '') + (imp ? ', Imperiul la zi' : ''));
 }
