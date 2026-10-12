@@ -116,6 +116,7 @@
   .md-big{ margin: 0; font: 700 3rem/1 'Cinzel', serif; color: #f6eddc; font-variant-numeric: tabular-nums; }
   .md-big span{ font-size: 1.3rem; color: var(--md-dim); }
   .md-rank{ margin: 6px 0 12px; font: 700 1.05rem 'Cinzel', serif; color: var(--md-gold2); }
+  .md-scale{ margin: -6px 0 12px; font-size: 0.86rem; line-height: 1.5; color: var(--md-dim); }
   .md-sum{ margin: 0 0 10px; line-height: 1.6; }
   .md-end ul{ margin: 0 0 16px; padding-left: 18px; display: grid; gap: 6px; line-height: 1.55; color: #d8cab2; }
 

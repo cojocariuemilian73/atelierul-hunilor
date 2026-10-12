@@ -95,10 +95,13 @@
     { year: 378, at: [41.68, 26.56], place: 'Adrianopol', cond: function(){ return choice.d1 === 'B'; }, t: '378 · Adrianopol: goții răsculați distrug armata romană; împăratul Valens moare', src: 'Ammianus 31.13', fx: { stab: -20 } },
     { year: 378, cond: function(){ return choice.d1 === 'A'; }, t: '378 · Fără răscoală, la Adrianopol nu are loc nicio bătălie (scenariu ipotetic)' },
     { year: 378, cond: function(){ return choice.d1 === 'C'; }, t: '378 · Goții se îngrămădesc pe malul stâng al Dunării, prinși între huni și Imperiu (scenariu ipotetic)' },
-    { year: 406.9, at: [50.0, 8.3], place: 'Rinul, la Mogontiacum', t: '406 · Noaptea de 31 decembrie: vandalii, alanii și suebii ajung la Rin' },
+    { year: 406.9, at: [50.0, 8.3], place: 'Rinul, la Mogontiacum', cond: function(){ return choice.d2 !== 'B'; }, t: '406 · Noaptea de 31 decembrie: vandalii, alanii și suebii trec Rinul' },
+    { year: 406.9, at: [50.0, 8.3], place: 'Rinul, la Mogontiacum', cond: function(){ return choice.d2 === 'B'; }, t: '406 · Armata rămasă pe Rin îi ține pe vandali, alani și suebi la graniță (scenariu ipotetic)' },
     { year: 410, at: [41.9, 12.5], place: 'Roma', check: 'roma', t: '410 · Alaric și vizigoții jefuiesc Roma', src: 'Orosius; Ieronim', fx: { stab: -10 } },
     { year: 429, at: [36.0, -5.4], place: 'Strâmtoarea Gibraltar', check: 'africa', t: '429 · Vandalii trec în Africa, sub regele Genseric' },
     { year: 439, at: [36.85, 10.2], place: 'Cartagina', check: 'cartagina', t: '439 · Vandalii cuceresc Cartagina' },
+    { year: 451.5, at: [48.95, 4.4], place: 'Câmpiile Catalaunice', cond: function(){ return choice.d4 !== 'B'; }, t: '451 · Câmpiile Catalaunice: coaliția lui Aetius și a vizigoților îl oprește pe Attila', src: 'Iordanes, Getica 197–213' },
+    { year: 451.5, at: [48.95, 4.4], place: 'Galia', cond: function(){ return choice.d4 === 'B'; }, t: '451 · Fără vizigoți, armata romană e învinsă; Attila pustiește Galia până la Loara (scenariu ipotetic)', fx: { stab: -8 } },
     { year: 453, at: [47.0, 20.2], place: 'Moartea lui Attila', t: '453 · Attila moare. Imperiul hunilor începe să se destrame', src: 'Iordanes, Getica' },
     { year: 454.6, cond: function(){ return choice.d5 === 'A'; }, t: '454 · Nedao: gepizii lui Ardaric îi înving pe fiii lui Attila', src: 'Iordanes, Getica 260–262' },
     { year: 454.6, cond: function(){ return choice.d5 === 'B'; }, t: '454 · Fără Nedao: neamurile rămân sub fiii lui Attila (scenariu ipotetic)' },
@@ -136,7 +139,8 @@
       '<div class="mig-year"><small>Anul</small><b id="mig-year">370</b></div>' +
       '<div class="mig-ctl"><button class="jg-btn" id="mig-play" type="button" aria-pressed="false">Pornește</button>' +
       '<div class="mig-speed" role="group" aria-label="Viteza simulării"><button type="button" data-s="1" class="on" aria-pressed="true">1×</button><button type="button" data-s="2" aria-pressed="false">2×</button><button type="button" data-s="4" aria-pressed="false">4×</button></div>' +
-      '<button class="jg-btn ghost" id="mig-reset" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>De la capăt</button></div>' +
+      '<button class="jg-btn ghost" id="mig-reset" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>De la capăt</button>' +
+      '<button class="jg-btn ghost mig-fs" id="mig-fs" type="button" aria-label="Ecran complet"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Ecran complet</span></button></div>' +
       '<div class="mig-stab"><label>Stabilitatea Imperiului <b id="mig-stab-v">70</b></label><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
     '</div>' +
     '<div class="mig-main">' +
@@ -683,6 +687,7 @@
     log.push({ y: Math.floor(d.year), title: d.title, t: o.t, real: !!o.real, note: o.note });
     renderLog(); markTimeline(d, o.real);
     if (o.note) toast(o.note);
+    if (!o.real) { var ro = d.opts.filter(function(x){ return x.real; })[0]; if (ro) toast('În realitate: ' + ro.t.charAt(0).toLowerCase() + ro.t.slice(1) + '.', ro.note); }
   }
   function renderLog(){
     var el = document.getElementById('mig-log');
@@ -763,6 +768,7 @@
       '<table class="mig-table"><thead><tr><th>Popor</th><th>Lumea ta</th><th>Lumea reală</th><th>Distanța</th></tr></thead><tbody>' + rows + '</tbody></table>' +
       '<p class="mig-stats">Stabilitatea Imperiului: <b>' + Math.round(stab) + '</b> · grupuri care au trecut Dunărea: <b>' + crossings.dunare + '</b>, Rinul: <b>' + crossings.rin + '</b> (din ' + N.toLocaleString('ro-RO') + ')</p>' +
       (allReal && far.length ? '<p class="mig-stats">Cu aceleași decizii, modelul nu reproduce perfect toate drumurile: ' + far.join(', iar ') + ' de locul real. E o simplificare, nu o reconstituire.</p>' : '') +
+      (!allReal ? '<p class="mig-stats">' + (stab >= 75 ? 'Cu stabilitatea ' + Math.round(stab) + ', mai mare decât în istorie, Imperiul de Apus ar fi putut rezista câțiva ani în plus (scenariu ipotetic).' : stab <= 55 ? 'Cu stabilitatea ' + Math.round(stab) + ', mai mică decât în istorie, Imperiul de Apus s-ar fi prăbușit probabil mai devreme (scenariu ipotetic).' : 'Stabilitatea ' + Math.round(stab) + ' e apropiată de cea din istorie: deciziile tale au schimbat drumurile popoarelor, nu și soarta Imperiului de Apus.') + '</p>' : '') +
       '<p class="mig-lesson">' + (allReal ? 'Aceleași decizii, aceeași istorie: presiunea hunilor și slăbirea granițelor au împins popoarele, unele după altele, în Imperiu.' : 'Ce s-a schimbat prin deciziile tale? Istoricii pun aceeași întrebare când discută dacă hunii au provocat căderea Romei sau doar au grăbit-o.') + '</p>' +
       '<div class="mig-end-btns"><button class="jg-btn" id="mig-again" type="button">' + ICON.reset + 'Joacă din nou</button><button class="jg-btn ghost" id="mig-hist" type="button">Arată istoria reală</button><button class="jg-btn ghost" id="mig-hide" type="button">Ascunde tabelul</button></div></div>';
     document.getElementById('mig-again').addEventListener('click', function(){ auto = false; restart(); intro(); });
@@ -795,6 +801,19 @@
     if (over.querySelector('[aria-modal]')) return;
     if (running) pause(); else play();
   });
+  // ecran complet: harta și dialogurile ocupă tot ecranul; pe telefon încercăm și orientarea orizontală
+  (function(){
+    var btn = document.getElementById('mig-fs'), stage = root.querySelector('.mig-stage');
+    var req = stage.requestFullscreen || stage.webkitRequestFullscreen;
+    if (!req) { btn.hidden = true; return; }
+    btn.addEventListener('click', function(){
+      if (document.fullscreenElement || document.webkitFullscreenElement) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; }
+      var r = req.call(stage);
+      if (r && r.then) r.then(function(){ if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(function(){}); }).catch(function(){});
+    });
+    function onFs(){ var on = !!(document.fullscreenElement || document.webkitFullscreenElement); btn.querySelector('span').textContent = on ? 'Ieși din ecran complet' : 'Ecran complet'; bgKey = ''; labelCache = {}; setTimeout(function(){ draw(); }, 60); }
+    document.addEventListener('fullscreenchange', onFs); document.addEventListener('webkitfullscreenchange', onFs);
+  })();
   document.getElementById('mig-reset').addEventListener('click', function(){ pause(); auto = false; restart(); intro(); });
   Array.prototype.forEach.call(root.querySelectorAll('.mig-speed button'), function(b){
     b.addEventListener('click', function(){ speed = +b.getAttribute('data-s'); Array.prototype.forEach.call(root.querySelectorAll('.mig-speed button'), function(x){ x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); });
