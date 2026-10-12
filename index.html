@@ -426,89 +426,91 @@
     paint-order: stroke; stroke: #f0e6d6; stroke-width: 3.5; stroke-linejoin: round;
   }
 
-  /* ---------- CRONOLOGIE: BENZI PE CATEGORII, CU ZOOM ---------- */
-  .hx{ margin: 26px 0 10px; padding: 22px 0 24px; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); }
+  /* ---------- CRONOLOGIE: LINIA EPOCILOR ȘI FILA EVENIMENTULUI ---------- */
+  .hx{ margin: 26px 0 10px; }
 
-  .hx-top{ display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; margin: 0 0 18px; }
-  .hx-periods{ display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line-strong); }
-  .hx-per{ min-height: 36px; padding: 7px 14px; border: 0; border-right: 1px solid var(--line-strong); background: transparent; color: var(--ink-dim); font: 0.74rem 'JetBrains Mono', monospace; cursor: pointer; transition: background 0.2s, color 0.2s; }
-  .hx-per:last-child{ border-right: 0; }
-  .hx-per:hover{ color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, transparent); }
-  .hx-per.on{ background: var(--accent-2); color: var(--paper); font-weight: 700; }
-  .hx-range{ margin: 0; font: 700 0.74rem 'JetBrains Mono', monospace; color: var(--accent-2); font-variant-numeric: tabular-nums; }
+  .hx-eras{ display: grid; }
+  .hx-era{ display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; min-height: 52px; padding: 10px 12px 10px 0; border: 0; border-top: 1px solid var(--line-strong); background: transparent; color: var(--ink-dim); text-align: left; cursor: pointer; transition: color 0.25s, border-color 0.25s; }
+  .hx-era + .hx-era{ padding-left: 12px; }
+  .hx-era b{ font: 700 0.86rem/1.15 'Cinzel', serif; letter-spacing: 0.03em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+  .hx-era .s{ display: none; }
+  .hx-era small{ font: 0.68rem 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; opacity: 0.8; }
+  .hx-era:hover{ color: var(--ink); }
+  .hx-era.on{ color: var(--accent-2); border-top: 3px solid var(--accent-2); padding-top: 8px; }
 
-  .hx-board{ display: grid; grid-template-columns: 172px minmax(0, 1fr); }
-  .hx-names{ display: grid; grid-auto-rows: 58px; padding-bottom: 28px; }
-  .hx-lname{ display: flex; align-items: center; gap: 9px; padding: 0 12px 0 0; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); text-align: left; cursor: pointer; transition: opacity 0.2s; }
-  .hx-lname i{ flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
-  .hx-lname b{ font: 600 1.02rem/1.2 'Cormorant Garamond', serif; }
-  .hx-lname span{ margin-left: auto; font: 0.7rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
-  .hx-lname[aria-pressed="false"]{ opacity: 0.4; }
-  .hx-lname[aria-pressed="false"] i{ background: transparent; box-shadow: inset 0 0 0 1.5px var(--c); }
-  .hx-lname:hover b{ color: var(--accent-2); }
+  .hx-rib{ position: relative; height: 54px; cursor: pointer; touch-action: pan-y; user-select: none; outline: none; }
+  .hx-rib.drag{ cursor: grabbing; }
+  .hx-line{ position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line-strong); }
+  .hx-marks{ position: absolute; inset: 0; }
+  .hx-sep{ position: absolute; top: -27px; height: 54px; width: 1px; background: var(--line); }
+  .hx-mk{ position: absolute; top: -9px; width: 3px; height: 18px; margin-left: -1.5px; border-radius: 2px; background: var(--c); opacity: 0.75; transition: height 0.25s, top 0.25s, opacity 0.25s; }
+  .hx-mk.cur{ top: -17px; height: 34px; opacity: 1; }
+  .hx-mk.cur::after{ content: ''; position: absolute; left: 50%; bottom: -9px; width: 9px; height: 9px; margin-left: -4.5px; background: var(--accent-2); transform: rotate(45deg); }
+  .hx-rib:hover .hx-mk:not(.cur){ opacity: 1; }
+  .hx-rib:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; }
+  .hx-tip{ position: absolute; bottom: calc(100% - 4px); transform: translateX(-50%); padding: 4px 9px; background: var(--paper); border: 1px solid var(--line-strong); font: 0.72rem 'JetBrains Mono', monospace; color: var(--ink); white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 2; }
+  .hx-tip.left{ transform: translateX(-12px); }
+  .hx-tip.right{ transform: translateX(calc(-100% + 12px)); }
+  .hx-tip.show{ opacity: 1; }
 
-  .hx-field{ position: relative; margin-right: 10px; overflow-x: clip; overflow-y: visible; padding-left: 4px; }
-  .hx-grid{ position: absolute; inset: 0 0 0 0; pointer-events: none; }
-  .hx-grid span{ position: absolute; top: 0; bottom: 22px; width: 1px; background: color-mix(in srgb, var(--ink) 8%, transparent); }
-  .hx-grid em{ position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); font: 0.7rem 'JetBrains Mono', monospace; font-style: normal; color: var(--ink-dim); white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .hx-rows{ position: relative; display: grid; grid-auto-rows: 58px; padding-bottom: 28px; }
-  .hx-row{ position: relative; border-bottom: 1px solid var(--line); }
-  .hx-row::before{ content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: color-mix(in srgb, var(--c) 22%, transparent); }
-  .hx-row.off{ opacity: 0.25; }
+  .hx-legend{ display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 16px; margin: 2px 0 0; font: 0.68rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
+  .hx-legend span{ display: inline-flex; align-items: center; gap: 6px; }
+  .hx-legend i{ width: 3px; height: 11px; border-radius: 2px; background: var(--c); }
 
-  .hx-dot{ position: absolute; top: 50%; display: flex; align-items: center; gap: 7px; height: 30px; margin: -15px 0 0 -8px; padding: 0 6px 0 0; border: 0; background: none; color: var(--ink); cursor: pointer; white-space: nowrap; transition: left 0.6s cubic-bezier(.16,1,.3,1), opacity 0.3s; }
-  .hx-dot i{ flex: none; width: 16px; height: 16px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 3px var(--paper); transition: transform 0.2s, box-shadow 0.2s; }
-  .hx-dot span{ font: 0.76rem 'JetBrains Mono', monospace; color: var(--ink-dim); transition: color 0.2s; }
-  .hx-dot.flip{ flex-direction: row-reverse; margin-left: 0; padding: 0 0 0 6px; transform: translateX(calc(-100% + 8px)); }
-  .hx-dot.nolab span{ display: none; }
-  .hx-dot:hover i, .hx-dot.cur i{ transform: scale(1.3); }
-  .hx-dot:hover span{ color: var(--ink); }
-  .hx-dot.cur{ z-index: 3; }
-  .hx-dot.cur i{ box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--c); }
-  .hx-dot.cur span, .hx-dot.nolab:hover span, .hx-dot.nolab:focus-visible span{ display: inline; padding: 3px 7px; background: var(--paper); border: 1px solid var(--c); color: var(--ink); font-weight: 700; }
-  .hx-dot.nolab:hover, .hx-dot.nolab:focus-visible{ z-index: 4; }
-  .hx-dot.off{ opacity: 0; pointer-events: none; }
+  .hx-folio{ display: grid; grid-template-columns: 170px minmax(0, 1fr) minmax(0, 0.8fr); grid-template-areas: "yr body img" "yr nav nav"; gap: 6px 32px; margin: 26px 0 0; padding: 28px 0 0; border-top: 1px solid var(--line-strong); }
+  .hx-folio.noimg{ grid-template-columns: 170px minmax(0, 1fr); grid-template-areas: "yr body" "yr nav"; }
+  .hx-yr{ grid-area: yr; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding-right: 24px; border-right: 1px solid var(--line); }
+  .hx-big{ font: 700 4rem/0.9 'Cinzel', serif; color: var(--accent-2); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em; }
+  .hx-date{ font: 0.74rem 'JetBrains Mono', monospace; color: var(--ink); }
+  .hx-cat{ display: inline-flex; align-items: center; gap: 7px; margin-top: 10px; font: 0.72rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
+  .hx-cat i{ width: 3px; height: 12px; border-radius: 2px; background: var(--c); }
+  .hx-count{ font: 0.68rem 'JetBrains Mono', monospace; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+  .hx-body{ grid-area: body; min-width: 0; }
+  .hx-body h4{ margin: 0 0 10px; font: 600 2rem/1.1 'Cormorant Garamond', serif; text-wrap: balance; }
+  .hx-body p{ margin: 0; max-width: 60ch; color: var(--ink-dim); line-height: 1.65; }
+  .hx-img{ grid-area: img; margin: 0; align-self: start; }
+  .hx-img img{ display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--line); }
+  .hx-nav{ grid-area: nav; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+  .hx-step{ display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 8px 12px; border: 1px solid var(--line); background: transparent; color: var(--ink); text-align: left; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+  .hx-step.next{ flex-direction: row-reverse; text-align: right; }
+  .hx-step svg{ flex: none; width: 14px; height: 14px; color: var(--accent-2); }
+  .hx-step span{ display: flex; flex-direction: column; gap: 2px; min-width: 0; font: 600 1rem/1.2 'Cormorant Garamond', serif; }
+  .hx-step small{ font: 0.66rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
+  .hx-step:hover{ border-color: var(--accent-2); }
+  .hx-era:focus-visible, .hx-step:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; }
 
-  .hx-over{ position: relative; height: 26px; margin: 34px 10px 22px 172px; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); cursor: crosshair; touch-action: none; user-select: none; }
-  .hx-over-dots i{ position: absolute; top: 50%; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%; background: var(--c); }
-  .hx-over-dots i.off{ opacity: 0.18; }
-  .hx-over-ticks span{ position: absolute; top: 100%; margin-top: 4px; transform: translateX(-50%); font: 0.64rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
-  .hx-win{ position: absolute; top: -1px; bottom: -1px; border: 1px solid var(--accent-2); background: color-mix(in srgb, var(--accent-2) 9%, transparent); cursor: grab; outline: none; }
-  .hx-over.drag .hx-win{ cursor: grabbing; }
-  .hx-h{ position: absolute; top: 50%; width: 6px; height: 16px; margin-top: -8px; background: var(--accent-2); border-radius: 1px; cursor: ew-resize; }
-  .hx-h.l{ left: -3.5px; } .hx-h.r{ right: -3.5px; }
-  .hx-h::before{ content: ''; position: absolute; inset: -8px -8px; }
+  .hx-folio.in > *{ animation: hx-in 0.45s cubic-bezier(.16,1,.3,1) both; }
+  .hx-folio.in.back > *{ animation-name: hx-in-back; }
+  .hx-folio.in > .hx-body{ animation-delay: 0.04s; }
+  .hx-folio.in > .hx-img{ animation-delay: 0.08s; }
+  @keyframes hx-in{ from{ opacity: 0; transform: translateX(14px); } }
+  @keyframes hx-in-back{ from{ opacity: 0; transform: translateX(-14px); } }
 
-  .hx-card{ display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 20px; align-items: start; margin: 8px 0 0; padding: 16px; border: 1px solid var(--line-strong); border-top: 2px solid var(--c, var(--accent-2)); background: color-mix(in srgb, var(--ink) 3%, transparent); min-height: 150px; }
-  .hx-card.noimg{ grid-template-columns: 1fr; }
-  .hx-img{ margin: 0; }
-  .hx-img img{ display: block; width: 100%; max-height: 220px; object-fit: cover; }
-  .hx-meta{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 0 0 6px; font: 0.74rem 'JetBrains Mono', monospace; }
-  .hx-meta b{ color: var(--accent-2); text-transform: uppercase; letter-spacing: 0.05em; }
-  .hx-cat{ display: inline-flex; align-items: center; gap: 6px; color: var(--ink-dim); }
-  .hx-cat i{ width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
-  .hx-card h4{ margin: 0 0 8px; font: 600 1.5rem/1.2 'Cormorant Garamond', serif; text-wrap: balance; }
-  .hx-body > p:not(.hx-meta){ margin: 0; color: var(--ink-dim); line-height: 1.6; max-width: 62ch; }
-  .hx-nav{ display: flex; align-items: center; gap: 10px; margin-top: 14px; font: 0.72rem 'JetBrains Mono', monospace; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
-  .hx-step{ display: inline-grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--line-strong); background: transparent; color: var(--ink); cursor: pointer; }
-  .hx-step svg{ width: 14px; height: 14px; }
-  .hx-step:hover:not(:disabled){ border-color: var(--accent-2); color: var(--accent-2); }
-  .hx-step:disabled{ opacity: 0.35; cursor: default; }
-  .hx-empty{ margin: 0; color: var(--ink-dim); }
-  .hx-per:focus-visible, .hx-lname:focus-visible, .hx-dot:focus-visible, .hx-win:focus-visible, .hx-step:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; }
-
-  @media (max-width: 760px){
-    .hx-board{ grid-template-columns: 42px minmax(0, 1fr); }
-    .hx-lname b, .hx-lname span{ display: none; }
-    .hx-lname{ justify-content: center; padding: 0; }
-    .hx-lname i{ width: 12px; height: 12px; }
-    .hx-over{ margin-left: 42px; }
-    .hx-per{ padding: 7px 10px; font-size: 0.7rem; }
-    .hx-dot span{ font-size: 0.7rem; }
-    .hx-card{ grid-template-columns: 1fr; }
-    .hx-img img{ max-height: 180px; }
+  @media (max-width: 900px){
+    .hx-folio, .hx-folio.noimg{ grid-template-columns: 130px minmax(0, 1fr); grid-template-areas: "yr body" "yr img" "nav nav"; }
+    .hx-folio.noimg{ grid-template-areas: "yr body" "nav nav"; }
+    .hx-big{ font-size: 3.1rem; }
+    .hx-img img{ max-height: 240px; }
   }
-  @media (prefers-reduced-motion: reduce){ .hx-dot, .hx-dot i, .hx-per, .hx-lname{ transition: none; } }
+  @media (max-width: 1020px){
+    .hx-era .l{ display: none; }
+    .hx-era .s{ display: inline; }
+  }
+  @media (max-width: 640px){
+    .hx-era{ padding-right: 6px; }
+    .hx-era + .hx-era{ padding-left: 6px; }
+    .hx-era b{ font-size: 0.74rem; }
+    .hx-era small{ font-size: 0.58rem; white-space: nowrap; }
+    .hx-legend{ justify-content: flex-start; }
+    .hx-folio, .hx-folio.noimg{ grid-template-columns: minmax(0, 1fr); grid-template-areas: "yr" "body" "img" "nav"; gap: 14px; padding-top: 20px; }
+    .hx-yr{ flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 0 0 12px; border-right: 0; border-bottom: 1px solid var(--line); }
+    .hx-big{ font-size: 2.6rem; }
+    .hx-cat{ margin-top: 0; }
+    .hx-count{ margin-left: auto; }
+    .hx-body h4{ font-size: 1.6rem; }
+    .hx-nav{ grid-template-columns: 1fr; margin-top: 0; }
+  }
+  @media (prefers-reduced-motion: reduce){ .hx-mk, .hx-era, .hx-tip{ transition: none; } }
 
   /* ---------- AURUL HUNILOR: GRAFIC CARE SE CONSTRUIEȘTE LA DERULARE ---------- */
   .gs{ display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(20px, 3vw, 44px); margin: 30px 0 44px; }
@@ -527,6 +529,12 @@
   .gs-grid text{ font: 12px 'JetBrains Mono', monospace; fill: var(--ink-dim); text-anchor: end; }
   .gs-grid .gs-unit{ text-anchor: start; fill: var(--accent-2); font-weight: 700; }
   .gs-x text{ text-anchor: middle; }
+  .gs-ghost rect{ fill: color-mix(in srgb, #e5c158 5%, transparent); stroke: #e5c158; stroke-opacity: 0.4; stroke-width: 1; stroke-dasharray: 4 4; }
+  .gs-ghost text{ font: 700 24px 'Cinzel', serif; fill: #e5c158; fill-opacity: 0.55; text-anchor: middle; transition: opacity 0.4s; }
+  .gs-ghost .gs-hint{ font: 600 17px 'Cormorant Garamond', serif; fill: var(--ink-dim); fill-opacity: 1; }
+  .gs:not([data-s="0"]) .gs-ghost text{ opacity: 0; }
+  .gs[data-s="4"] .gs-ghost{ opacity: 0; }
+  .gs-ghost{ transition: opacity 0.5s; }
   .gs-bar{ transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); transition: transform 1s cubic-bezier(.16,1,.3,1), opacity 0.5s; }
   .gs-lab{ font: 700 13px 'JetBrains Mono', monospace; fill: var(--ink); text-anchor: middle; opacity: 0; transition: opacity 0.4s 0.5s; }
   .gs-lump, .gs-stop{ opacity: 0; transition: opacity 0.6s 0.4s; }
@@ -1452,7 +1460,7 @@
   /* tipărire: doar articolul, pe fundal alb, cu miturile și glosarul deschise */
   @media print{
     html, body{ background: #fff !important; color: #111 !important; }
-    .site-nav, .chap-bar, .progress-bar, .to-top, .site-pager, .hero-bg, .hero-scrim, .hero-btns, .hero-btn, .mx-btn, .mx-all, .hx-top, .hx-names, .hx-over, .gl-tip, .img-lightbox, .about-overlay, .sim-link, .map-hint{ display: none !important; }
+    .site-nav, .chap-bar, .progress-bar, .to-top, .site-pager, .hero-bg, .hero-scrim, .hero-btns, .hero-btn, .mx-btn, .mx-all, .hx-rib, .hx-legend, .hx-nav, .gl-tip, .img-lightbox, .about-overlay, .sim-link, .map-hint{ display: none !important; }
     .site-page{ display: none !important; }
     #page-acasa{ display: block !important; }
     #page-acasa *{ color: #111 !important; background: transparent !important; box-shadow: none !important; text-shadow: none !important; }
@@ -1636,29 +1644,17 @@
     <section id="sec-cronologie">
       <div class="chapter-mark"><span class="chapter-num">02</span><span class="chapter-slash">/</span><span class="chapter-tag">Cronologie interactivă</span></div>
       <h2 class="sec-title">Cronologie interactivă</h2>
-      <p class="sec-sub">Apasă pe un punct ca să afli ce s-a întâmplat. Alege o perioadă sau trage fereastra de jos ca să mărești un interval; filtrele ascund tipuri de evenimente.</p>
+      <p class="sec-sub">Trage de-a lungul liniei sau apasă pe o epocă: dedesubt apare fila fiecărui eveniment. Săgețile te duc la cel dinainte sau la cel de după.</p>
 
       <div class="cron-wrap">
       <div class="hx" id="hx">
-        <div class="hx-top">
-          <div class="hx-periods" id="hx-periods" role="group" aria-label="Alege perioada"></div>
-          <p class="hx-range" id="hx-range" aria-live="polite"></p>
+        <div class="hx-eras" id="hx-eras" role="group" aria-label="Sari la începutul unei epoci"></div>
+        <div class="hx-rib" id="hx-rib" role="slider" tabindex="0" aria-label="Linia timpului: trage sau folosește săgețile ca să treci de la un eveniment la altul" aria-valuemin="1">
+          <div class="hx-line"><div class="hx-marks" id="hx-marks"></div></div>
+          <span class="hx-tip" id="hx-tip" aria-hidden="true"></span>
         </div>
-        <div class="hx-board" id="hx-board">
-          <div class="hx-names" id="hx-names" role="group" aria-label="Arată sau ascunde un tip de evenimente"></div>
-          <div class="hx-field" id="hx-stage">
-            <div class="hx-grid" id="hx-grid" aria-hidden="true"></div>
-            <div class="hx-rows" id="hx-dots" role="list" aria-label="Evenimentele din perioada aleasă"></div>
-          </div>
-        </div>
-        <div class="hx-over" id="hx-over">
-          <div class="hx-over-dots" id="hx-over-dots" aria-hidden="true"></div>
-          <div class="hx-win" id="hx-win" role="slider" tabindex="0" aria-label="Fereastra de timp: săgețile o mută, Shift și săgețile o lărgesc sau o strâng" aria-valuemin="365" aria-valuemax="480">
-            <span class="hx-h l" data-h="l"></span><span class="hx-h r" data-h="r"></span>
-          </div>
-          <div class="hx-over-ticks" id="hx-over-ticks" aria-hidden="true"></div>
-        </div>
-        <article class="hx-card" id="hx-card" aria-live="polite"></article>
+        <p class="hx-legend" id="hx-legend" aria-hidden="true"></p>
+        <article class="hx-folio" id="hx-folio" aria-live="polite"></article>
       </div>
         <p class="section-sources">Surse pentru evenimentele din cronologie: moartea lui Ermanaric<sup class="fn" data-n="9">9</sup>, trecerea Dunării de către vizigoți<sup class="fn" data-n="10">10</sup>, Câmpiile Catalaunice și solia la curtea lui Attila<sup class="fn" data-n="11">11</sup>.</p>
       </div>
@@ -1693,8 +1689,7 @@
       <!-- aur:start -->
       <div class="gs" id="gold-story">
         <div class="gs-chart">
-          <svg viewBox="0 0 600 380" role="img" aria-labelledby="gs-svg-t" id="gs-svg">
-            <title id="gs-svg-t">Tributul anual în aur plătit hunilor de Imperiul Roman de Răsărit: 350 de livre (c. 422), 700 (435), 2.100 (447) plus 6.000 restanță, apoi nimic din 450.</title>
+          <svg viewBox="0 0 600 380" role="img" aria-label="Tributul anual în aur plătit hunilor de Imperiul Roman de Răsărit: 350 de livre (c. 422), 700 (435), 2.100 (447) plus 6.000 restanță, apoi nimic din 450." id="gs-svg">
             <defs>
               <pattern id="gs-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#3a2f12"/><rect width="2.6" height="6" fill="#e5c158"/></pattern>
               <linearGradient id="gs-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2d474"/><stop offset="1" stop-color="#a8841f"/></linearGradient>
@@ -1708,6 +1703,14 @@
               <line x1="60" x2="580" y1="40" y2="40"/><text x="52" y="44">2.100</text>
               <text class="gs-unit" x="60" y="22">livre de aur pe an</text>
               <g class="gs-x"><text x="60" y="352">420</text><text x="222.5" y="352">430</text><text x="385" y="352">440</text><text x="547.5" y="352">450</text></g>
+            </g>
+            <g class="gs-ghost" aria-hidden="true">
+              <rect x="92.5" y="281.7" width="211.25" height="48.3"/>
+              <rect x="303.75" y="233.3" width="195" height="96.7"/>
+              <rect x="498.75" y="40" width="48.75" height="290"/>
+              <text x="198" y="313">?</text><text x="401" y="289">?</text><text x="523" y="193">?</text>
+              <text class="gs-hint" x="300" y="150">Derulează: fiecare pas adaugă</text>
+              <text class="gs-hint" x="300" y="170">o nouă plată pe grafic</text>
             </g>
             <g class="gs-bars">
               <rect class="gs-bar b1" x="92.5" y="281.7" width="211.25" height="48.3" fill="url(#gs-gold)"/>
@@ -2338,8 +2341,8 @@
   // Cronologie interactivă (slider)
   // ============================================================
 
-  // Cronologia: fiecare eveniment e un punct așezat la anul lui real.
-  // Fereastra de jos alege intervalul mărit; filtrele ascund categorii întregi.
+  // Cronologia: o linie a timpului împărțită pe epoci; dedesubt, fila evenimentului ales,
+  // ca o pagină de cronică. Se trage de-a lungul liniei sau se merge cu săgețile.
   var HX_CATS = {
     militar: { name: 'Militar', c: '#e0626c' },
     politic: { name: 'Politic', c: '#7ab0e8' },
@@ -2376,196 +2379,129 @@
     { y: 469, date: '469', cat: 'militar', short: 'Dengizich', title: 'Sfârșitul lui Dengizich', desc: 'Dengizich, un alt fiu al lui Attila, e ucis în luptă cu romanii, iar capul lui e purtat prin Constantinopol: ultimul episod important al hunilor în Europa.' },
     { y: 476, date: '476', cat: 'politic', short: 'Odoacru', title: 'Sfârșitul Imperiului de Apus', desc: 'Odoacru, fost ofițer în armata romană, îl depune pe Romulus Augustulus. Tatăl lui, Edeco, fusese probabil unul dintre oamenii de încredere ai lui Attila.' }
   ];
-  var HX_PERIODS = [
-    { name: 'Toată perioada', a: 365, b: 480 },
-    { name: 'Sosirea hunilor', a: 367, b: 382 },
-    { name: 'Valul spre Apus', a: 392, b: 442 },
-    { name: 'Epoca lui Attila', a: 433, b: 456 },
-    { name: 'După Attila', a: 450, b: 479 }
+  // epocile liniei: fiecare primește o lățime după câte evenimente are, ca anii aglomerați
+  // (cei ai lui Attila) să nu se calce unul pe altul; în interiorul epocii, scara e liniară
+  var HX_ERAS = [
+    { name: 'Sosirea hunilor', short: 'Sosirea', a: 365, b: 392 },
+    { name: 'Valul spre Apus', short: 'Spre Apus', a: 392, b: 434 },
+    { name: 'Epoca lui Attila', short: 'Attila', a: 434, b: 454 },
+    { name: 'După Attila', short: 'După', a: 454, b: 480 }
   ];
 
   function initTimelineSlider(){
     var root = document.getElementById('hx');
     if (!root) return;
-    var A0 = 365, B0 = 480, MIN = 6;
-    var stage = document.getElementById('hx-stage'), dotsEl = document.getElementById('hx-dots'), grid = document.getElementById('hx-grid');
-    var over = document.getElementById('hx-over'), win = document.getElementById('hx-win');
-    var card = document.getElementById('hx-card'), rangeEl = document.getElementById('hx-range');
-    var a = A0, b = B0, on = { militar: true, politic: true, aur: true, izvoare: true }, cur = -1;
+    var rib = document.getElementById('hx-rib'), marksEl = document.getElementById('hx-marks');
+    var tip = document.getElementById('hx-tip'), folio = document.getElementById('hx-folio');
+    var cur = -1, N = CRON.length;
     function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+    function eraOf(y){ for (var k = 0; k < HX_ERAS.length; k++) if (y < HX_ERAS[k].b) return k; return HX_ERAS.length - 1; }
 
-    // benzile: câte una pentru fiecare tip de eveniment; numele benzii o ascunde sau o arată
-    var CATS = Object.keys(HX_CATS), rowEl = {};
-    document.getElementById('hx-names').innerHTML = CATS.map(function(k){
-      var n = CRON.filter(function(e){ return e.cat === k; }).length;
-      return '<button type="button" class="hx-lname" data-cat="' + k + '" aria-pressed="true" title="' + HX_CATS[k].name + ': arată sau ascunde" style="--c:' + HX_CATS[k].c + '"><i></i><b>' + HX_CATS[k].name + '</b><span>' + n + '</span></button>';
-    }).join('');
-    dotsEl.innerHTML = CATS.map(function(k){ return '<div class="hx-row" data-cat="' + k + '" style="--c:' + HX_CATS[k].c + '"></div>'; }).join('');
-    CATS.forEach(function(k){ rowEl[k] = dotsEl.querySelector('.hx-row[data-cat="' + k + '"]'); });
-    document.getElementById('hx-periods').innerHTML = HX_PERIODS.map(function(p, i){
-      return '<button type="button" class="hx-per' + (i === 0 ? ' on' : '') + '" data-i="' + i + '" aria-pressed="' + (i === 0) + '">' + p.name + '</button>';
-    }).join('');
+    // lățimea fiecărei epoci: 2 + numărul de evenimente din ea (cel puțin 6, ca numele să încapă)
+    var wsum = 0, edge = 0;
+    HX_ERAS.forEach(function(er, k){ er.n = CRON.filter(function(e){ return eraOf(e.y) === k; }).length; er.w = Math.max(6, er.n + 2); wsum += er.w; });
+    HX_ERAS.forEach(function(er){ er.x = edge; er.p = er.w / wsum * 100; edge += er.p; });
+    function pos(y){ var er = HX_ERAS[eraOf(y)]; return er.x + (y - er.a) / (er.b - er.a) * er.p; }
 
-    // punctele (create o singură dată, apoi doar mutate)
-    var dots = CRON.map(function(e, i){
-      var d = document.createElement('button');
-      d.type = 'button'; d.className = 'hx-dot'; d.setAttribute('role', 'listitem');
-      d.style.setProperty('--c', HX_CATS[e.cat].c);
-      d.setAttribute('aria-label', e.date + ': ' + e.title);
-      d.innerHTML = '<i></i><span>' + esc(e.short) + '</span>';
-      d.addEventListener('click', function(){ select(i, true); });
-      d.addEventListener('mouseenter', function(){ if (window.matchMedia('(hover: hover)').matches) select(i, false); });
-      d.addEventListener('keydown', function(ev){
-        var dir = ev.key === 'ArrowRight' ? 1 : ev.key === 'ArrowLeft' ? -1 : 0;
-        if (!dir) return;
-        ev.preventDefault();
-        var vis = visible(), k = vis.indexOf(i), n = vis[k + dir];
-        if (n !== undefined) { select(n, true); dots[n].focus(); }
-      });
-      rowEl[e.cat].appendChild(d);
-      return d;
-    });
-    // punctele mici, pe toată perioada
-    document.getElementById('hx-over-dots').innerHTML = CRON.map(function(e){
-      return '<i data-cat="' + e.cat + '" style="left:' + ((e.y - A0) / (B0 - A0) * 100).toFixed(2) + '%;--c:' + HX_CATS[e.cat].c + '"></i>';
+    var eras = document.getElementById('hx-eras');
+    eras.style.gridTemplateColumns = HX_ERAS.map(function(er){ return 'minmax(0, ' + er.w + 'fr)'; }).join(' ');
+    eras.innerHTML = HX_ERAS.map(function(er, k){
+      return '<button type="button" class="hx-era" data-k="' + k + '"><b><span class="l">' + er.name + '</span><span class="s">' + er.short + '</span></b><small>' + er.a + '–' + er.b + '</small></button>';
     }).join('');
-    document.getElementById('hx-over-ticks').innerHTML = [375, 400, 425, 450, 475].map(function(y){
-      return '<span style="left:' + ((y - A0) / (B0 - A0) * 100).toFixed(2) + '%">' + y + '</span>';
+    marksEl.innerHTML = HX_ERAS.slice(1).map(function(er){ return '<span class="hx-sep" style="left:' + er.x.toFixed(3) + '%"></span>'; }).join('') +
+      CRON.map(function(e, i){ return '<i class="hx-mk" style="left:' + pos(e.y).toFixed(3) + '%;--c:' + HX_CATS[e.cat].c + '"></i>'; }).join('');
+    var marks = marksEl.querySelectorAll('.hx-mk'), eraBtns = eras.querySelectorAll('.hx-era');
+    document.getElementById('hx-legend').innerHTML = Object.keys(HX_CATS).map(function(k){
+      return '<span style="--c:' + HX_CATS[k].c + '"><i></i>' + HX_CATS[k].name + '</span>';
     }).join('');
+    rib.setAttribute('aria-valuemax', N);
 
-    function visible(){
-      return CRON.map(function(e, i){ return i; }).filter(function(i){ var e = CRON[i]; return on[e.cat] && e.y >= a && e.y <= b; });
+    // evenimentul cel mai apropiat de un punct de pe linie
+    function nearest(clientX){
+      var r = rib.getBoundingClientRect(), p = (clientX - r.left) / r.width * 100, best = 0, bd = 1e9;
+      CRON.forEach(function(e, i){ var d = Math.abs(pos(e.y) - p); if (d < bd) { bd = d; best = i; } });
+      return best;
     }
+    function bigYear(e){ return String(Math.floor(e.y)); }
 
-    // fiecare eveniment stă pe banda lui, la anul lui; numele apare doar unde încape,
-    // celelalte se citesc la trecerea mouse-ului sau în fișa de dedesubt
-    function layout(){
-      var w = stage.clientWidth || 800, span = b - a, compact = w < 420;
-      var step = span > 70 ? 10 : span > 30 ? 5 : span > 14 ? 2 : 1, h = '';
-      for (var y = Math.ceil(a / step) * step; y <= b; y += step) {
-        h += '<span style="left:' + ((y - a) / span * 100).toFixed(3) + '%"><em>' + y + '</em></span>';
-      }
-      grid.innerHTML = h;
-      var perCat = {};
-      CATS.forEach(function(k){ perCat[k] = []; rowEl[k].classList.toggle('off', !on[k]); });
-      CRON.forEach(function(e, i){
-        var d = dots[i], show = on[e.cat] && e.y >= a - 0.01 && e.y <= b + 0.01;
-        var x = (e.y - a) / span;
-        d.style.left = (Math.max(-0.05, Math.min(1.05, x)) * 100).toFixed(3) + '%';
-        d.classList.toggle('off', !show);
-        d.tabIndex = show ? 0 : -1;
-        d.setAttribute('aria-hidden', show ? 'false' : 'true');
-        if (show) perCat[e.cat].push({ i: i, px: x * w, need: 16 + e.short.length * 7.4 });
-      });
-      // pe fiecare bandă: o etichetă apare doar dacă nu atinge nici eticheta dinainte, nici punctul următor
-      CATS.forEach(function(k){
-        var list = perCat[k].sort(function(p, q){ return p.px - q.px; }), lastEnd = -1e9;
-        list.forEach(function(it, n){
-          var d = dots[it.i], next = list[n + 1], prev = list[n - 1];
-          var flip = it.px + it.need > w;
-          var st = flip ? it.px - it.need : it.px - 8, en = flip ? it.px + 8 : it.px + it.need;
-          var clearNext = flip || !next || next.px - 10 > en;
-          var clearPrev = !flip || !prev || prev.px + 10 < st;
-          var fits = !compact && st > lastEnd + 6 && clearNext && clearPrev;
-          d.classList.toggle('nolab', !fits);
-          d.classList.toggle('flip', flip);
-          lastEnd = fits ? en : Math.max(lastEnd, it.px + 8);
-        });
-      });
-      win.style.left = ((a - A0) / (B0 - A0) * 100).toFixed(3) + '%';
-      win.style.width = ((b - a) / (B0 - A0) * 100).toFixed(3) + '%';
-      win.setAttribute('aria-valuenow', Math.round(a));
-      win.setAttribute('aria-valuetext', Math.round(a) + '–' + Math.round(b));
-      var n = visible().length;
-      rangeEl.textContent = Math.round(a) + '–' + Math.round(b) + ' · ' + (n === 1 ? 'un eveniment' : n + ' evenimente');
-      if (cur >= 0 && dots[cur].classList.contains('off')) { var v = visible(); select(v.length ? v[0] : -1, false); }
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function step(n, d){
+      if (!n) return '<span></span>';
+      return '<button type="button" class="hx-step ' + (d < 0 ? 'prev' : 'next') + '" data-d="' + d + '">' +
+        '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + (d < 0 ? 'M10 3L5 8l5 5' : 'M6 3l5 5-5 5') + '" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '<span><small>' + (d < 0 ? 'Înainte' : 'Apoi') + ' · ' + esc(n.date) + '</small>' + esc(n.title) + '</span></button>';
     }
-
-    function select(i, sticky){
+    function select(i){
+      if (i < 0 || i >= N || i === cur) return;
+      var back = i < cur;
       cur = i;
-      dots.forEach(function(d, k){ d.classList.toggle('cur', k === i); d.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
-      if (i < 0) { card.innerHTML = '<p class="hx-empty">Niciun eveniment în intervalul și categoriile alese.</p>'; return; }
       var e = CRON[i], k = HX_CATS[e.cat], src = '';
+      Array.prototype.forEach.call(marks, function(m, j){ m.classList.toggle('cur', j === i); });
+      Array.prototype.forEach.call(eraBtns, function(b, j){ b.classList.toggle('on', j === eraOf(e.y)); });
+      rib.setAttribute('aria-valuenow', i + 1);
+      rib.setAttribute('aria-valuetext', e.date + ': ' + e.title);
       if (e.img) { var node = document.querySelector(e.img); if (node) src = node.getAttribute('src'); }
-      var vis = visible(), pos = vis.indexOf(i);
-      card.style.setProperty('--c', k.c);
-      card.innerHTML = (src ? '<figure class="hx-img"><img src="' + src + '" alt=""></figure>' : '') +
-        '<div class="hx-body"><p class="hx-meta"><b>' + esc(e.date) + '</b><span class="hx-cat"><i></i>' + k.name + '</span></p>' +
-        '<h4>' + esc(e.title) + '</h4><p>' + esc(e.desc) + '</p>' +
-        '<div class="hx-nav"><button type="button" class="hx-step" data-d="-1"' + (pos <= 0 ? ' disabled' : '') + ' aria-label="Evenimentul anterior"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
-        '<span>' + (pos + 1) + ' / ' + vis.length + '</span>' +
-        '<button type="button" class="hx-step" data-d="1"' + (pos >= vis.length - 1 ? ' disabled' : '') + ' aria-label="Evenimentul următor"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>';
-      card.classList.toggle('noimg', !src);
-      Array.prototype.forEach.call(card.querySelectorAll('.hx-step'), function(btn){
-        btn.addEventListener('click', function(){ var v = visible(), p = v.indexOf(cur), n = v[p + +btn.getAttribute('data-d')]; if (n !== undefined) select(n, true); });
-      });
+      var big = bigYear(e);
+      folio.style.setProperty('--c', k.c);
+      folio.classList.toggle('noimg', !src);
+      folio.innerHTML =
+        '<div class="hx-yr"><span class="hx-big">' + big + '</span>' +
+          '<span class="hx-date">' + (e.date !== big ? esc(e.date) : '&nbsp;') + '</span>' +
+          '<span class="hx-cat"><i></i>' + k.name + '</span><span class="hx-count">' + (i + 1) + ' din ' + N + '</span></div>' +
+        '<div class="hx-body"><h4>' + esc(e.title) + '</h4><p>' + esc(e.desc) + '</p></div>' +
+        (src ? '<figure class="hx-img"><img src="' + src + '" alt=""></figure>' : '') +
+        '<nav class="hx-nav" aria-label="Evenimentele vecine">' + step(CRON[i - 1], -1) + step(CRON[i + 1], 1) + '</nav>';
+      if (!reduce) { folio.classList.remove('in'); void folio.offsetWidth; folio.classList.add('in'); folio.classList.toggle('back', back); }
     }
 
-    function setRange(na, nb, keepPeriod){
-      var span = Math.max(MIN, Math.min(B0 - A0, nb - na));
-      na = Math.max(A0, Math.min(B0 - span, na));
-      a = na; b = na + span;
-      if (!keepPeriod) Array.prototype.forEach.call(document.querySelectorAll('.hx-per'), function(p){ p.classList.remove('on'); p.setAttribute('aria-pressed', 'false'); });
-      layout();
+    folio.addEventListener('click', function(ev){
+      var b = ev.target.closest('.hx-step');
+      if (b) select(cur + +b.getAttribute('data-d'));
+    });
+    eras.addEventListener('click', function(ev){
+      var b = ev.target.closest('.hx-era');
+      if (!b) return;
+      var k = +b.getAttribute('data-k');
+      for (var i = 0; i < N; i++) if (eraOf(CRON[i].y) === k) { select(i); break; }
+    });
+
+    // trasul pe linie: fila se schimbă pe măsură ce treci peste evenimente
+    var dragging = false;
+    function showTip(i){
+      var e = CRON[i], p = pos(e.y);
+      tip.textContent = bigYear(e) + ' · ' + e.title;
+      tip.style.left = p.toFixed(3) + '%';
+      tip.classList.toggle('right', p > 75);
+      tip.classList.toggle('left', p < 25);
+      tip.classList.add('show');
     }
-
-    root.addEventListener('click', function(ev){
-      var chip = ev.target.closest('.hx-lname');
-      if (chip) {
-        var c = chip.getAttribute('data-cat');
-        on[c] = !on[c];
-        chip.setAttribute('aria-pressed', on[c] ? 'true' : 'false');
-        Array.prototype.forEach.call(document.querySelectorAll('#hx-over-dots i[data-cat="' + c + '"]'), function(d){ d.classList.toggle('off', !on[c]); });
-        layout();
-        return;
-      }
-      var per = ev.target.closest('.hx-per');
-      if (per) {
-        var p = HX_PERIODS[+per.getAttribute('data-i')];
-        Array.prototype.forEach.call(document.querySelectorAll('.hx-per'), function(x){ x.classList.toggle('on', x === per); x.setAttribute('aria-pressed', x === per ? 'true' : 'false'); });
-        setRange(p.a, p.b, true);
-        var v = visible(); if (v.length) select(v[0], false);
-      }
+    rib.addEventListener('pointerdown', function(ev){
+      dragging = true;
+      try { rib.setPointerCapture(ev.pointerId); } catch (err) {}
+      select(nearest(ev.clientX));
+      showTip(cur);
+      rib.classList.add('drag');
     });
-
-    // fereastra de jos: trage corpul ca s-o muți, marginile ca s-o lărgești
-    var drag = null;
-    function yearAt(clientX){ var r = over.getBoundingClientRect(); return A0 + (clientX - r.left) / r.width * (B0 - A0); }
-    over.addEventListener('pointerdown', function(ev){
-      var h = ev.target.getAttribute && ev.target.getAttribute('data-h');
-      var y = yearAt(ev.clientX);
-      if (!h && !win.contains(ev.target)) { var s = b - a; setRange(y - s / 2, y + s / 2); }
-      drag = { h: h, y0: y, a0: a, b0: b };
-      try { over.setPointerCapture(ev.pointerId); } catch (err) {}
-      over.classList.add('drag');
+    rib.addEventListener('pointermove', function(ev){
+      var i = nearest(ev.clientX);
+      if (dragging) select(i);
+      if (dragging || ev.pointerType === 'mouse') showTip(i);
+    });
+    function up(ev){ dragging = false; rib.classList.remove('drag'); if (!ev || ev.pointerType !== 'mouse') tip.classList.remove('show'); }
+    rib.addEventListener('pointerup', up);
+    rib.addEventListener('pointercancel', up);
+    rib.addEventListener('pointerleave', function(){ if (!dragging) tip.classList.remove('show'); });
+    rib.addEventListener('keydown', function(ev){
+      var n = null;
+      if (ev.key === 'ArrowRight' || ev.key === 'ArrowUp') n = cur + 1;
+      else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowDown') n = cur - 1;
+      else if (ev.key === 'Home') n = 0;
+      else if (ev.key === 'End') n = N - 1;
+      if (n === null) return;
       ev.preventDefault();
+      select(Math.max(0, Math.min(N - 1, n)));
     });
-    over.addEventListener('pointermove', function(ev){
-      if (!drag) return;
-      var d = yearAt(ev.clientX) - drag.y0;
-      if (drag.h === 'l') setRange(Math.min(drag.a0 + d, drag.b0 - MIN), drag.b0);
-      else if (drag.h === 'r') setRange(drag.a0, Math.max(drag.b0 + d, drag.a0 + MIN));
-      else setRange(drag.a0 + d, drag.b0 + d);
-    });
-    function end(){ drag = null; over.classList.remove('drag'); }
-    over.addEventListener('pointerup', end);
-    over.addEventListener('pointercancel', end);
-    win.addEventListener('keydown', function(ev){
-      var d = ev.key === 'ArrowRight' ? 1 : ev.key === 'ArrowLeft' ? -1 : 0;
-      if (!d) return;
-      ev.preventDefault();
-      var st = Math.max(1, Math.round((b - a) / 10));
-      if (ev.shiftKey) setRange(a - d * st, b + d * st); else setRange(a + d * st, b + d * st);
-    });
-
-    var rz;
-    function relayout(){ clearTimeout(rz); rz = setTimeout(layout, 100); }
-    window.addEventListener('hashchange', relayout);
-    var lastW = 0;
-    if ('ResizeObserver' in window) new ResizeObserver(function(){ if (stage.clientWidth !== lastW) { lastW = stage.clientWidth; relayout(); } }).observe(stage);
-    else window.addEventListener('resize', relayout);
-    layout();
-    select(0, false);
+    select(0);
   }
 
   // ============================================================

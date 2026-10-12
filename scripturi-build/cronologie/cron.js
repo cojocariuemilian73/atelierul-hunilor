@@ -1,5 +1,5 @@
-  // Cronologia: fiecare eveniment e un punct așezat la anul lui real.
-  // Fereastra de jos alege intervalul mărit; filtrele ascund categorii întregi.
+  // Cronologia: o linie a timpului împărțită pe epoci; dedesubt, fila evenimentului ales,
+  // ca o pagină de cronică. Se trage de-a lungul liniei sau se merge cu săgețile.
   var HX_CATS = {
     militar: { name: 'Militar', c: '#e0626c' },
     politic: { name: 'Politic', c: '#7ab0e8' },
@@ -36,195 +36,127 @@
     { y: 469, date: '469', cat: 'militar', short: 'Dengizich', title: 'Sfârșitul lui Dengizich', desc: 'Dengizich, un alt fiu al lui Attila, e ucis în luptă cu romanii, iar capul lui e purtat prin Constantinopol: ultimul episod important al hunilor în Europa.' },
     { y: 476, date: '476', cat: 'politic', short: 'Odoacru', title: 'Sfârșitul Imperiului de Apus', desc: 'Odoacru, fost ofițer în armata romană, îl depune pe Romulus Augustulus. Tatăl lui, Edeco, fusese probabil unul dintre oamenii de încredere ai lui Attila.' }
   ];
-  var HX_PERIODS = [
-    { name: 'Toată perioada', a: 365, b: 480 },
-    { name: 'Sosirea hunilor', a: 367, b: 382 },
-    { name: 'Valul spre Apus', a: 392, b: 442 },
-    { name: 'Epoca lui Attila', a: 433, b: 456 },
-    { name: 'După Attila', a: 450, b: 479 }
+  // epocile liniei: fiecare primește o lățime după câte evenimente are, ca anii aglomerați
+  // (cei ai lui Attila) să nu se calce unul pe altul; în interiorul epocii, scara e liniară
+  var HX_ERAS = [
+    { name: 'Sosirea hunilor', short: 'Sosirea', a: 365, b: 392 },
+    { name: 'Valul spre Apus', short: 'Spre Apus', a: 392, b: 434 },
+    { name: 'Epoca lui Attila', short: 'Attila', a: 434, b: 454 },
+    { name: 'După Attila', short: 'După', a: 454, b: 480 }
   ];
 
   function initTimelineSlider(){
     var root = document.getElementById('hx');
     if (!root) return;
-    var A0 = 365, B0 = 480, MIN = 6;
-    var stage = document.getElementById('hx-stage'), dotsEl = document.getElementById('hx-dots'), grid = document.getElementById('hx-grid');
-    var over = document.getElementById('hx-over'), win = document.getElementById('hx-win');
-    var card = document.getElementById('hx-card'), rangeEl = document.getElementById('hx-range');
-    var a = A0, b = B0, on = { militar: true, politic: true, aur: true, izvoare: true }, cur = -1;
+    var rib = document.getElementById('hx-rib'), marksEl = document.getElementById('hx-marks');
+    var tip = document.getElementById('hx-tip'), folio = document.getElementById('hx-folio');
+    var cur = -1, N = CRON.length;
     function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+    function eraOf(y){ for (var k = 0; k < HX_ERAS.length; k++) if (y < HX_ERAS[k].b) return k; return HX_ERAS.length - 1; }
 
-    // benzile: câte una pentru fiecare tip de eveniment; numele benzii o ascunde sau o arată
-    var CATS = Object.keys(HX_CATS), rowEl = {};
-    document.getElementById('hx-names').innerHTML = CATS.map(function(k){
-      var n = CRON.filter(function(e){ return e.cat === k; }).length;
-      return '<button type="button" class="hx-lname" data-cat="' + k + '" aria-pressed="true" title="' + HX_CATS[k].name + ': arată sau ascunde" style="--c:' + HX_CATS[k].c + '"><i></i><b>' + HX_CATS[k].name + '</b><span>' + n + '</span></button>';
-    }).join('');
-    dotsEl.innerHTML = CATS.map(function(k){ return '<div class="hx-row" data-cat="' + k + '" style="--c:' + HX_CATS[k].c + '"></div>'; }).join('');
-    CATS.forEach(function(k){ rowEl[k] = dotsEl.querySelector('.hx-row[data-cat="' + k + '"]'); });
-    document.getElementById('hx-periods').innerHTML = HX_PERIODS.map(function(p, i){
-      return '<button type="button" class="hx-per' + (i === 0 ? ' on' : '') + '" data-i="' + i + '" aria-pressed="' + (i === 0) + '">' + p.name + '</button>';
-    }).join('');
+    // lățimea fiecărei epoci: 2 + numărul de evenimente din ea (cel puțin 6, ca numele să încapă)
+    var wsum = 0, edge = 0;
+    HX_ERAS.forEach(function(er, k){ er.n = CRON.filter(function(e){ return eraOf(e.y) === k; }).length; er.w = Math.max(6, er.n + 2); wsum += er.w; });
+    HX_ERAS.forEach(function(er){ er.x = edge; er.p = er.w / wsum * 100; edge += er.p; });
+    function pos(y){ var er = HX_ERAS[eraOf(y)]; return er.x + (y - er.a) / (er.b - er.a) * er.p; }
 
-    // punctele (create o singură dată, apoi doar mutate)
-    var dots = CRON.map(function(e, i){
-      var d = document.createElement('button');
-      d.type = 'button'; d.className = 'hx-dot'; d.setAttribute('role', 'listitem');
-      d.style.setProperty('--c', HX_CATS[e.cat].c);
-      d.setAttribute('aria-label', e.date + ': ' + e.title);
-      d.innerHTML = '<i></i><span>' + esc(e.short) + '</span>';
-      d.addEventListener('click', function(){ select(i, true); });
-      d.addEventListener('mouseenter', function(){ if (window.matchMedia('(hover: hover)').matches) select(i, false); });
-      d.addEventListener('keydown', function(ev){
-        var dir = ev.key === 'ArrowRight' ? 1 : ev.key === 'ArrowLeft' ? -1 : 0;
-        if (!dir) return;
-        ev.preventDefault();
-        var vis = visible(), k = vis.indexOf(i), n = vis[k + dir];
-        if (n !== undefined) { select(n, true); dots[n].focus(); }
-      });
-      rowEl[e.cat].appendChild(d);
-      return d;
-    });
-    // punctele mici, pe toată perioada
-    document.getElementById('hx-over-dots').innerHTML = CRON.map(function(e){
-      return '<i data-cat="' + e.cat + '" style="left:' + ((e.y - A0) / (B0 - A0) * 100).toFixed(2) + '%;--c:' + HX_CATS[e.cat].c + '"></i>';
+    var eras = document.getElementById('hx-eras');
+    eras.style.gridTemplateColumns = HX_ERAS.map(function(er){ return 'minmax(0, ' + er.w + 'fr)'; }).join(' ');
+    eras.innerHTML = HX_ERAS.map(function(er, k){
+      return '<button type="button" class="hx-era" data-k="' + k + '"><b><span class="l">' + er.name + '</span><span class="s">' + er.short + '</span></b><small>' + er.a + '–' + er.b + '</small></button>';
     }).join('');
-    document.getElementById('hx-over-ticks').innerHTML = [375, 400, 425, 450, 475].map(function(y){
-      return '<span style="left:' + ((y - A0) / (B0 - A0) * 100).toFixed(2) + '%">' + y + '</span>';
+    marksEl.innerHTML = HX_ERAS.slice(1).map(function(er){ return '<span class="hx-sep" style="left:' + er.x.toFixed(3) + '%"></span>'; }).join('') +
+      CRON.map(function(e, i){ return '<i class="hx-mk" style="left:' + pos(e.y).toFixed(3) + '%;--c:' + HX_CATS[e.cat].c + '"></i>'; }).join('');
+    var marks = marksEl.querySelectorAll('.hx-mk'), eraBtns = eras.querySelectorAll('.hx-era');
+    document.getElementById('hx-legend').innerHTML = Object.keys(HX_CATS).map(function(k){
+      return '<span style="--c:' + HX_CATS[k].c + '"><i></i>' + HX_CATS[k].name + '</span>';
     }).join('');
+    rib.setAttribute('aria-valuemax', N);
 
-    function visible(){
-      return CRON.map(function(e, i){ return i; }).filter(function(i){ var e = CRON[i]; return on[e.cat] && e.y >= a && e.y <= b; });
+    // evenimentul cel mai apropiat de un punct de pe linie
+    function nearest(clientX){
+      var r = rib.getBoundingClientRect(), p = (clientX - r.left) / r.width * 100, best = 0, bd = 1e9;
+      CRON.forEach(function(e, i){ var d = Math.abs(pos(e.y) - p); if (d < bd) { bd = d; best = i; } });
+      return best;
     }
+    function bigYear(e){ return String(Math.floor(e.y)); }
 
-    // fiecare eveniment stă pe banda lui, la anul lui; numele apare doar unde încape,
-    // celelalte se citesc la trecerea mouse-ului sau în fișa de dedesubt
-    function layout(){
-      var w = stage.clientWidth || 800, span = b - a, compact = w < 420;
-      var step = span > 70 ? 10 : span > 30 ? 5 : span > 14 ? 2 : 1, h = '';
-      for (var y = Math.ceil(a / step) * step; y <= b; y += step) {
-        h += '<span style="left:' + ((y - a) / span * 100).toFixed(3) + '%"><em>' + y + '</em></span>';
-      }
-      grid.innerHTML = h;
-      var perCat = {};
-      CATS.forEach(function(k){ perCat[k] = []; rowEl[k].classList.toggle('off', !on[k]); });
-      CRON.forEach(function(e, i){
-        var d = dots[i], show = on[e.cat] && e.y >= a - 0.01 && e.y <= b + 0.01;
-        var x = (e.y - a) / span;
-        d.style.left = (Math.max(-0.05, Math.min(1.05, x)) * 100).toFixed(3) + '%';
-        d.classList.toggle('off', !show);
-        d.tabIndex = show ? 0 : -1;
-        d.setAttribute('aria-hidden', show ? 'false' : 'true');
-        if (show) perCat[e.cat].push({ i: i, px: x * w, need: 16 + e.short.length * 7.4 });
-      });
-      // pe fiecare bandă: o etichetă apare doar dacă nu atinge nici eticheta dinainte, nici punctul următor
-      CATS.forEach(function(k){
-        var list = perCat[k].sort(function(p, q){ return p.px - q.px; }), lastEnd = -1e9;
-        list.forEach(function(it, n){
-          var d = dots[it.i], next = list[n + 1], prev = list[n - 1];
-          var flip = it.px + it.need > w;
-          var st = flip ? it.px - it.need : it.px - 8, en = flip ? it.px + 8 : it.px + it.need;
-          var clearNext = flip || !next || next.px - 10 > en;
-          var clearPrev = !flip || !prev || prev.px + 10 < st;
-          var fits = !compact && st > lastEnd + 6 && clearNext && clearPrev;
-          d.classList.toggle('nolab', !fits);
-          d.classList.toggle('flip', flip);
-          lastEnd = fits ? en : Math.max(lastEnd, it.px + 8);
-        });
-      });
-      win.style.left = ((a - A0) / (B0 - A0) * 100).toFixed(3) + '%';
-      win.style.width = ((b - a) / (B0 - A0) * 100).toFixed(3) + '%';
-      win.setAttribute('aria-valuenow', Math.round(a));
-      win.setAttribute('aria-valuetext', Math.round(a) + '–' + Math.round(b));
-      var n = visible().length;
-      rangeEl.textContent = Math.round(a) + '–' + Math.round(b) + ' · ' + (n === 1 ? 'un eveniment' : n + ' evenimente');
-      if (cur >= 0 && dots[cur].classList.contains('off')) { var v = visible(); select(v.length ? v[0] : -1, false); }
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function step(n, d){
+      if (!n) return '<span></span>';
+      return '<button type="button" class="hx-step ' + (d < 0 ? 'prev' : 'next') + '" data-d="' + d + '">' +
+        '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + (d < 0 ? 'M10 3L5 8l5 5' : 'M6 3l5 5-5 5') + '" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '<span><small>' + (d < 0 ? 'Înainte' : 'Apoi') + ' · ' + esc(n.date) + '</small>' + esc(n.title) + '</span></button>';
     }
-
-    function select(i, sticky){
+    function select(i){
+      if (i < 0 || i >= N || i === cur) return;
+      var back = i < cur;
       cur = i;
-      dots.forEach(function(d, k){ d.classList.toggle('cur', k === i); d.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
-      if (i < 0) { card.innerHTML = '<p class="hx-empty">Niciun eveniment în intervalul și categoriile alese.</p>'; return; }
       var e = CRON[i], k = HX_CATS[e.cat], src = '';
+      Array.prototype.forEach.call(marks, function(m, j){ m.classList.toggle('cur', j === i); });
+      Array.prototype.forEach.call(eraBtns, function(b, j){ b.classList.toggle('on', j === eraOf(e.y)); });
+      rib.setAttribute('aria-valuenow', i + 1);
+      rib.setAttribute('aria-valuetext', e.date + ': ' + e.title);
       if (e.img) { var node = document.querySelector(e.img); if (node) src = node.getAttribute('src'); }
-      var vis = visible(), pos = vis.indexOf(i);
-      card.style.setProperty('--c', k.c);
-      card.innerHTML = (src ? '<figure class="hx-img"><img src="' + src + '" alt=""></figure>' : '') +
-        '<div class="hx-body"><p class="hx-meta"><b>' + esc(e.date) + '</b><span class="hx-cat"><i></i>' + k.name + '</span></p>' +
-        '<h4>' + esc(e.title) + '</h4><p>' + esc(e.desc) + '</p>' +
-        '<div class="hx-nav"><button type="button" class="hx-step" data-d="-1"' + (pos <= 0 ? ' disabled' : '') + ' aria-label="Evenimentul anterior"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
-        '<span>' + (pos + 1) + ' / ' + vis.length + '</span>' +
-        '<button type="button" class="hx-step" data-d="1"' + (pos >= vis.length - 1 ? ' disabled' : '') + ' aria-label="Evenimentul următor"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>';
-      card.classList.toggle('noimg', !src);
-      Array.prototype.forEach.call(card.querySelectorAll('.hx-step'), function(btn){
-        btn.addEventListener('click', function(){ var v = visible(), p = v.indexOf(cur), n = v[p + +btn.getAttribute('data-d')]; if (n !== undefined) select(n, true); });
-      });
+      var big = bigYear(e);
+      folio.style.setProperty('--c', k.c);
+      folio.classList.toggle('noimg', !src);
+      folio.innerHTML =
+        '<div class="hx-yr"><span class="hx-big">' + big + '</span>' +
+          '<span class="hx-date">' + (e.date !== big ? esc(e.date) : '&nbsp;') + '</span>' +
+          '<span class="hx-cat"><i></i>' + k.name + '</span><span class="hx-count">' + (i + 1) + ' din ' + N + '</span></div>' +
+        '<div class="hx-body"><h4>' + esc(e.title) + '</h4><p>' + esc(e.desc) + '</p></div>' +
+        (src ? '<figure class="hx-img"><img src="' + src + '" alt=""></figure>' : '') +
+        '<nav class="hx-nav" aria-label="Evenimentele vecine">' + step(CRON[i - 1], -1) + step(CRON[i + 1], 1) + '</nav>';
+      if (!reduce) { folio.classList.remove('in'); void folio.offsetWidth; folio.classList.add('in'); folio.classList.toggle('back', back); }
     }
 
-    function setRange(na, nb, keepPeriod){
-      var span = Math.max(MIN, Math.min(B0 - A0, nb - na));
-      na = Math.max(A0, Math.min(B0 - span, na));
-      a = na; b = na + span;
-      if (!keepPeriod) Array.prototype.forEach.call(document.querySelectorAll('.hx-per'), function(p){ p.classList.remove('on'); p.setAttribute('aria-pressed', 'false'); });
-      layout();
+    folio.addEventListener('click', function(ev){
+      var b = ev.target.closest('.hx-step');
+      if (b) select(cur + +b.getAttribute('data-d'));
+    });
+    eras.addEventListener('click', function(ev){
+      var b = ev.target.closest('.hx-era');
+      if (!b) return;
+      var k = +b.getAttribute('data-k');
+      for (var i = 0; i < N; i++) if (eraOf(CRON[i].y) === k) { select(i); break; }
+    });
+
+    // trasul pe linie: fila se schimbă pe măsură ce treci peste evenimente
+    var dragging = false;
+    function showTip(i){
+      var e = CRON[i], p = pos(e.y);
+      tip.textContent = bigYear(e) + ' · ' + e.title;
+      tip.style.left = p.toFixed(3) + '%';
+      tip.classList.toggle('right', p > 75);
+      tip.classList.toggle('left', p < 25);
+      tip.classList.add('show');
     }
-
-    root.addEventListener('click', function(ev){
-      var chip = ev.target.closest('.hx-lname');
-      if (chip) {
-        var c = chip.getAttribute('data-cat');
-        on[c] = !on[c];
-        chip.setAttribute('aria-pressed', on[c] ? 'true' : 'false');
-        Array.prototype.forEach.call(document.querySelectorAll('#hx-over-dots i[data-cat="' + c + '"]'), function(d){ d.classList.toggle('off', !on[c]); });
-        layout();
-        return;
-      }
-      var per = ev.target.closest('.hx-per');
-      if (per) {
-        var p = HX_PERIODS[+per.getAttribute('data-i')];
-        Array.prototype.forEach.call(document.querySelectorAll('.hx-per'), function(x){ x.classList.toggle('on', x === per); x.setAttribute('aria-pressed', x === per ? 'true' : 'false'); });
-        setRange(p.a, p.b, true);
-        var v = visible(); if (v.length) select(v[0], false);
-      }
+    rib.addEventListener('pointerdown', function(ev){
+      dragging = true;
+      try { rib.setPointerCapture(ev.pointerId); } catch (err) {}
+      select(nearest(ev.clientX));
+      showTip(cur);
+      rib.classList.add('drag');
     });
-
-    // fereastra de jos: trage corpul ca s-o muți, marginile ca s-o lărgești
-    var drag = null;
-    function yearAt(clientX){ var r = over.getBoundingClientRect(); return A0 + (clientX - r.left) / r.width * (B0 - A0); }
-    over.addEventListener('pointerdown', function(ev){
-      var h = ev.target.getAttribute && ev.target.getAttribute('data-h');
-      var y = yearAt(ev.clientX);
-      if (!h && !win.contains(ev.target)) { var s = b - a; setRange(y - s / 2, y + s / 2); }
-      drag = { h: h, y0: y, a0: a, b0: b };
-      try { over.setPointerCapture(ev.pointerId); } catch (err) {}
-      over.classList.add('drag');
+    rib.addEventListener('pointermove', function(ev){
+      var i = nearest(ev.clientX);
+      if (dragging) select(i);
+      if (dragging || ev.pointerType === 'mouse') showTip(i);
+    });
+    function up(ev){ dragging = false; rib.classList.remove('drag'); if (!ev || ev.pointerType !== 'mouse') tip.classList.remove('show'); }
+    rib.addEventListener('pointerup', up);
+    rib.addEventListener('pointercancel', up);
+    rib.addEventListener('pointerleave', function(){ if (!dragging) tip.classList.remove('show'); });
+    rib.addEventListener('keydown', function(ev){
+      var n = null;
+      if (ev.key === 'ArrowRight' || ev.key === 'ArrowUp') n = cur + 1;
+      else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowDown') n = cur - 1;
+      else if (ev.key === 'Home') n = 0;
+      else if (ev.key === 'End') n = N - 1;
+      if (n === null) return;
       ev.preventDefault();
+      select(Math.max(0, Math.min(N - 1, n)));
     });
-    over.addEventListener('pointermove', function(ev){
-      if (!drag) return;
-      var d = yearAt(ev.clientX) - drag.y0;
-      if (drag.h === 'l') setRange(Math.min(drag.a0 + d, drag.b0 - MIN), drag.b0);
-      else if (drag.h === 'r') setRange(drag.a0, Math.max(drag.b0 + d, drag.a0 + MIN));
-      else setRange(drag.a0 + d, drag.b0 + d);
-    });
-    function end(){ drag = null; over.classList.remove('drag'); }
-    over.addEventListener('pointerup', end);
-    over.addEventListener('pointercancel', end);
-    win.addEventListener('keydown', function(ev){
-      var d = ev.key === 'ArrowRight' ? 1 : ev.key === 'ArrowLeft' ? -1 : 0;
-      if (!d) return;
-      ev.preventDefault();
-      var st = Math.max(1, Math.round((b - a) / 10));
-      if (ev.shiftKey) setRange(a - d * st, b + d * st); else setRange(a + d * st, b + d * st);
-    });
-
-    var rz;
-    function relayout(){ clearTimeout(rz); rz = setTimeout(layout, 100); }
-    window.addEventListener('hashchange', relayout);
-    var lastW = 0;
-    if ('ResizeObserver' in window) new ResizeObserver(function(){ if (stage.clientWidth !== lastW) { lastW = stage.clientWidth; relayout(); } }).observe(stage);
-    else window.addEventListener('resize', relayout);
-    layout();
-    select(0, false);
+    select(0);
   }
-
