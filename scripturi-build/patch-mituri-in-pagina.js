@@ -38,7 +38,7 @@ const JS = `  // mx: miturile, puse în capitolele de care țin; faptele puțin 
       it.innerHTML =
         '<div class="mx-q"><p class="mx-meta"><span class="mx-tag">Mit</span><span class="mx-theme">' + th.label + '</span></p>' +
         '<p class="mx-myth">' + m.myth + '</p><span class="mx-stamp" aria-hidden="true">Fals</span></div>' +
-        '<button type="button" class="mx-btn" aria-expanded="false" aria-controls="' + id + '">Verifică</button>' +
+        '<button type="button" class="mx-btn" aria-expanded="false" aria-controls="' + id + '">Verifică →</button>' +
         '<div class="mx-a" id="' + id + '" role="region" aria-label="Ce arată sursele"><p class="mx-meta"><span class="mx-theme">Ce arată sursele</span></p>' +
         '<p class="mx-truth">' + m.truth + '</p>' + mxSrc(m) + '</div>' +
         '<button type="button" class="mx-x" aria-label="Ascunde răspunsul">' + MX_X + '</button>';
@@ -121,8 +121,9 @@ const CSS = `  /* mx: mituri în capitole */
   .mx-stamp{ position: absolute; right: 4px; bottom: -14px; padding: 1px 12px; border: 3px double #e0626c; color: #e0626c; font: 800 1.15rem/1.3 'Cinzel', serif; letter-spacing: 0.12em; text-transform: uppercase; background: color-mix(in srgb, var(--paper) 75%, transparent); opacity: 0; transform: rotate(-9deg) scale(1.7); pointer-events: none; transition: opacity 0.2s, transform 0.35s cubic-bezier(.3,1.6,.5,1); }
   .mx-item.open .mx-stamp{ opacity: 0.92; transform: rotate(-9deg) scale(1); }
   .mx-item.open .mx-q{ padding-bottom: 22px; }
-  .mx-btn{ min-width: 112px; min-height: 42px; padding: 10px 18px; border: 1px solid var(--accent-2); background: var(--accent-2); color: var(--paper); font: 700 0.86rem 'Cinzel', serif; cursor: pointer; transition: background 0.2s; }
-  .mx-btn:hover{ background: #f2d474; }
+  .mx-btn{ min-height: 40px; padding: 8px 0; border: 0; background: none; color: var(--accent-2); font: 700 0.8rem 'JetBrains Mono', monospace; text-transform: none; white-space: nowrap; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+  .mx-btn:hover{ color: #f2d474; }
+  .mx .mx-title{ text-transform: none; letter-spacing: 0; font-family: 'Cormorant Garamond', serif; }
   .mx-item.open .mx-btn{ display: none; }
   .mx-a{ display: none; min-width: 0; padding-left: 28px; border-left: 1px solid var(--line); }
   .mx-item.open .mx-a{ display: block; animation: mx-in 0.45s cubic-bezier(.16,1,.3,1) both; }
