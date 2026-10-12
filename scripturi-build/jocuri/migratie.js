@@ -173,7 +173,7 @@
         '<li>Țintele popoarelor urmează pozițiile lor reale din izvoare; deciziile schimbă granițele și stabilitatea, iar restul se petrece de la sine. Rezultatul e un <b>model didactic</b>, nu o reconstituire.</li>' +
       '</ul></details>';
 
-  var cv = document.getElementById('mig-canvas'), ctx = cv.getContext('2d');
+  var cv = document.getElementById('mig-canvas'), ctx = cv.getContext('2d', { alpha: false });
   var baseCv = document.createElement('canvas'); baseCv.width = CW; baseCv.height = CH;
   var trailCv = document.createElement('canvas'); trailCv.width = CW; trailCv.height = CH;
   var terrCv = document.createElement('canvas'); terrCv.width = GW; terrCv.height = GH;
@@ -418,33 +418,103 @@
   // =====================================================================
   var SHORT = { huni: 'HUNII', ostro: 'OSTROGOȚII', vizi: 'VIZIGOȚII', vand: 'VANDALII', gep: 'GEPIZII' };
   var pulses = [], cents = [], showCompare = false;
-  var vignette = (function(){ var g = ctx.createRadialGradient(CW / 2, CH / 2, CH * 0.35, CW / 2, CH / 2, CW * 0.72); g.addColorStop(0, 'rgba(10,8,6,0)'); g.addColorStop(1, 'rgba(10,8,6,0.62)'); return g; })();
   function pulse(at, text, color){ var p = proj(at[0], at[1]); pulses.push({ x: p[0], y: p[1], text: text, color: color || '#f2d474', t0: performance.now() }); }
 
-  function draw(){
-    var now = performance.now();
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.drawImage(baseCv, 0, 0);
-    ctx.fillStyle = 'rgba(24, 16, 8, 0.30)'; ctx.fillRect(0, 0, CW, CH);
-    ctx.fillStyle = vignette; ctx.fillRect(0, 0, CW, CH);
-    if (layers.terrain) { ctx.imageSmoothingEnabled = false; ctx.globalAlpha = 0.75; ctx.drawImage(terrCv, 0, 0, CW, CH); ctx.globalAlpha = 1; ctx.imageSmoothingEnabled = true; }
-    // urmele: fiecare popor își lasă drumul pe hartă
-    tctx.globalCompositeOperation = 'destination-out'; tctx.fillStyle = 'rgba(0,0,0,0.03)'; tctx.fillRect(0, 0, CW, CH);
-    tctx.globalCompositeOperation = 'source-over'; tctx.globalAlpha = 0.32;
-    for (var i = 0; i < N; i += lowFx ? 4 : 2) { tctx.fillStyle = GROUPS[ag[i]].color; var q = W2C(ax[i], ay[i]); tctx.fillRect(q[0] - 1, q[1] - 1, 2, 2); }
-    tctx.globalAlpha = 1;
-    ctx.drawImage(trailCv, 0, 0);
+  // Harta e desenată pe 1200 px, dar pe pagină apare mai mică: textul se scrie la o mărime
+  // calculată după lățimea afișată, ca să rămână lizibil (circa 11–13 px pe ecran).
+  var txtScale = 1;
+  function measureScale(){ var w = cv.clientWidth || CW; var s = Math.max(1, Math.min(2.6, CW / w)); if (Math.abs(s - txtScale) > 0.04) { txtScale = s; labelCache = {}; bgKey = ''; } }
+
+  // Fundalul fix (harta tonifiată, vigneta, limesul, numele fixe) se desenează o singură dată,
+  // nu la fiecare cadru; se reface doar când se schimbă stratul de teren sau mărimea textului.
+  var bgCv = document.createElement('canvas'); bgCv.width = CW; bgCv.height = CH;
+  var GLW = CW / 4, GLH = Math.ceil(CH / 4), glowCv = document.createElement('canvas'); glowCv.width = GLW; glowCv.height = GLH;
+  var gctx = glowCv.getContext('2d'), glowImg = gctx.createImageData(GLW, GLH), gd = glowImg.data;
+  // punctele, la jumătate de rezoluție: fiecare agent e un pătrat de 2 × 2 pixeli (4 × 4 pe harta mare)
+  var DW = CW / 2, DH = Math.ceil(CH / 2), dotCv = document.createElement('canvas'); dotCv.width = DW; dotCv.height = DH;
+  var dctx = dotCv.getContext('2d'), dotImg = dctx.createImageData(DW, DH), dot32 = new Uint32Array(dotImg.data.buffer);
+  var GRGB = GROUPS.map(function(g){ var h = parseInt(g.color.slice(1), 16); return [h >> 16 & 255, h >> 8 & 255, h & 255]; });
+  var G32 = GRGB.map(function(c){ return (0xF0 << 24 | c[2] << 16 | c[1] << 8 | c[0]) >>> 0; });
+  function rasterAgents(stp){
+    dot32.fill(0); gd.fill(0);
+    for (var gi = 0; gi < GROUPS.length; gi++) {
+      var r = ranges[gi], col = G32[gi], rgb = GRGB[gi], cr = rgb[0] * 0.28, cg = rgb[1] * 0.28, cb = rgb[2] * 0.28;
+      for (var i = r.start; i < r.end; i += stp) {
+        var x = ((ax[i] - VB.x) * SC * 0.5) | 0, y = ((ay[i] - VB.y) * SC * 0.5) | 0;
+        if (x < 0 || y < 0 || x >= DW - 1 || y >= DH - 1) continue;
+        var o = y * DW + x; dot32[o] = col; dot32[o + 1] = col; dot32[o + DW] = col; dot32[o + DW + 1] = col;
+        if (!lowFx) { var q = ((y >> 1) * GLW + (x >> 1)) * 4; gd[q] += cr; gd[q + 1] += cg; gd[q + 2] += cb; gd[q + 3] = 255; }
+      }
+    }
+    dctx.putImageData(dotImg, 0, 0);
+    if (!lowFx) gctx.putImageData(glowImg, 0, 0);
+  }
+  var bctx = bgCv.getContext('2d'), bgKey = '';
+  function buildBackdrop(){
+    var b = bctx;
+    b.globalCompositeOperation = 'source-over'; b.globalAlpha = 1;
+    b.fillStyle = '#0e0d0b'; b.fillRect(0, 0, CW, CH);
+    // harta, mai închisă și mai caldă, ca popoarele colorate să iasă în față
+    if ('filter' in b) { b.filter = 'saturate(0.5) brightness(0.58) contrast(1.12) sepia(0.28)'; b.drawImage(baseCv, 0, 0); b.filter = 'none'; }
+    else { b.drawImage(baseCv, 0, 0); b.fillStyle = 'rgba(18, 13, 8, 0.5)'; b.fillRect(0, 0, CW, CH); }
+    var vg = b.createRadialGradient(CW / 2, CH / 2, CH * 0.32, CW / 2, CH / 2, CW * 0.72);
+    vg.addColorStop(0, 'rgba(10,8,6,0)'); vg.addColorStop(1, 'rgba(10,8,6,0.66)');
+    b.fillStyle = vg; b.fillRect(0, 0, CW, CH);
+    if (layers.terrain) { b.imageSmoothingEnabled = false; b.globalAlpha = 0.7; b.drawImage(terrCv, 0, 0, CW, CH); b.globalAlpha = 1; b.imageSmoothingEnabled = true; }
     // limesul: o linie aurie cu halou
     Object.keys(FRONT).forEach(function(k){
-      ctx.beginPath(); FRONT[k].forEach(function(p, j){ var q2 = W2C.apply(null, proj(p[0], p[1])); if (j) ctx.lineTo(q2[0], q2[1]); else ctx.moveTo(q2[0], q2[1]); });
-      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-      ctx.setLineDash([]); ctx.lineWidth = 11; ctx.strokeStyle = 'rgba(229, 193, 88, 0.16)'; ctx.stroke();
-      ctx.setLineDash([12, 7]); ctx.lineWidth = 2.6; ctx.strokeStyle = 'rgba(242, 212, 116, 0.95)'; ctx.stroke();
-      ctx.setLineDash([]);
+      b.beginPath(); FRONT[k].forEach(function(p, j){ var q = proj(p[0], p[1]), x = (q[0] - VB.x) * SC, y = (q[1] - VB.y) * SC; if (j) b.lineTo(x, y); else b.moveTo(x, y); });
+      b.lineCap = 'round'; b.lineJoin = 'round';
+      b.setLineDash([]); b.lineWidth = 12; b.strokeStyle = 'rgba(229, 193, 88, 0.14)'; b.stroke();
+      b.setLineDash([12, 7]); b.lineWidth = 2.6; b.strokeStyle = 'rgba(242, 212, 116, 0.9)'; b.stroke();
+      b.setLineDash([]);
     });
-    label('LIMES · RINUL', proj(49.4, 7.2), '#f2d474', 'right', 12);
-    label('LIMES · DUNĂREA', proj(43.35, 24.4), '#f2d474', 'center', 12);
-    label('IMPERIUL ROMAN', proj(42.6, 13.6), 'rgba(246,237,220,0.55)', 'center', 16, 4);
+    // pe hărțile foarte mici (telefon) rămân doar numele popoarelor, ca să nu se calce
+    if (txtScale < 2.5) {
+      label('LIMES · RINUL', proj(49.4, 7.2), '#f2d474', 'right', 11, 0.5, b);
+      label('LIMES · DUNĂREA', proj(43.35, 24.4), '#f2d474', 'center', 11, 0.5, b);
+      label('IMPERIUL ROMAN', proj(42.6, 13.6), 'rgba(246,237,220,0.62)', 'center', 14, 4, b);
+    }
+    bgKey = layers.terrain + '|' + txtScale;
+  }
+
+  // etichetele: fiecare text e desenat o dată într-o imagine mică, apoi doar copiat
+  var labelCache = {};
+  function labelSprite(text, color, size, spacing){
+    var px = Math.round(size * txtScale), key = text + '|' + color + '|' + px + '|' + spacing, s = labelCache[key];
+    if (s) return s;
+    var c = document.createElement('canvas'), x = c.getContext('2d'), font = '700 ' + px + 'px "JetBrains Mono", monospace';
+    x.font = font; if ('letterSpacing' in x) x.letterSpacing = (spacing * txtScale) + 'px';
+    var pad = Math.ceil(px * 0.45), w = Math.ceil(x.measureText(text).width) + pad * 2, h = Math.ceil(px * 1.5) + pad;
+    c.width = w; c.height = h;
+    x.font = font; if ('letterSpacing' in x) x.letterSpacing = (spacing * txtScale) + 'px';
+    x.textBaseline = 'middle'; x.lineJoin = 'round'; x.lineWidth = Math.max(3, px * 0.32);
+    x.strokeStyle = 'rgba(12,10,8,0.92)'; x.strokeText(text, pad, h / 2); x.fillStyle = color; x.fillText(text, pad, h / 2);
+    return (labelCache[key] = { c: c, w: w, h: h, pad: pad });
+  }
+  function label(text, p, color, align, size, spacing, target){
+    var s = labelSprite(text, color, size || 13, spacing === undefined ? 0.5 : spacing), c = target || ctx;
+    var x = (p[0] - VB.x) * SC, y = (p[1] - VB.y) * SC;
+    var left = align === 'center' ? x - s.w / 2 : align === 'right' ? x - s.w + s.pad : x - s.pad;
+    c.drawImage(s.c, Math.round(left), Math.round(y - s.h / 2 - s.h * 0.12));
+  }
+
+  function draw(){
+    if (!visible) { dirty = true; return; }
+    dirty = false;
+    var now = performance.now();
+    measureScale();
+    if (bgKey !== layers.terrain + '|' + txtScale) buildBackdrop();
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+    ctx.drawImage(bgCv, 0, 0);
+    var i, x, y, gi, g, r, stp = lowFx ? 2 : 1;
+    // toate punctele, scrise direct ca pixeli: un singur transfer pe cadru, nu mii de apeluri de desen
+    rasterAgents(stp);
+    // urmele: imaginea punctelor se adaugă, slab, peste urmele care se estompează
+    tctx.globalCompositeOperation = 'destination-out'; tctx.fillStyle = 'rgba(0,0,0,0.035)'; tctx.fillRect(0, 0, CW, CH);
+    tctx.globalCompositeOperation = 'source-over'; tctx.globalAlpha = 0.3; tctx.imageSmoothingEnabled = false;
+    tctx.drawImage(dotCv, 0, 0, CW, CH); tctx.globalAlpha = 1;
+    ctx.drawImage(trailCv, 0, 0);
     if (layers.press && pressGrid) {
       for (var py = 0; py < PH; py++) for (var px = 0; px < PW; px++) {
         var v = pressGrid[py * PW + px]; if (v < 1) continue;
@@ -463,53 +533,65 @@
       }
       var tq = W2C.apply(null, proj(tg[1], tg[2])); ctx.beginPath(); ctx.arc(tq[0], tq[1], 10, 0, 7); ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
     }
-    // agenții: un halou discret și un miez luminos
-    ctx.globalCompositeOperation = 'lighter';
-    for (var j = 0; j < N; j += lowFx ? 2 : 1) {
-      var q3 = W2C(ax[j], ay[j]), gc = GROUPS[ag[j]].color;
-      ctx.fillStyle = gc;
-      if (!lowFx) { ctx.globalAlpha = 0.16; ctx.fillRect(q3[0] - 3.5, q3[1] - 3.5, 7, 7); }
-      ctx.globalAlpha = 0.95; ctx.fillRect(q3[0] - 1.4, q3[1] - 1.4, 2.8, 2.8);
-    }
-    ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+    // strălucirea: densitatea pe harta mică, întinsă și estompată; miezurile: imaginea punctelor, fără netezire
+    if (!lowFx) { ctx.globalCompositeOperation = 'lighter'; ctx.imageSmoothingEnabled = true; ctx.drawImage(glowCv, 0, 0, CW, CH); ctx.globalCompositeOperation = 'source-over'; }
+    ctx.imageSmoothingEnabled = false; ctx.drawImage(dotCv, 0, 0, CW, CH); ctx.imageSmoothingEnabled = true;
     // lumea reală (cercuri punctate) și numele popoarelor lângă grupuri
-    cents = GROUPS.map(function(g){ var cc = centroid(g.id); return W2C(cc[0], cc[1]); });
-    if (layers.real && !showCompare) GROUPS.forEach(function(g){
-      var h = interp(HIST[g.id], t), q4 = W2C.apply(null, proj(h[0], h[1]));
-      ctx.setLineDash([5, 4]); ctx.lineWidth = 2.5; ctx.strokeStyle = g.color;
+    cents = GROUPS.map(function(gr){ var cc = centroid(gr.id); return W2C(cc[0], cc[1]); });
+    if (layers.real && !showCompare) GROUPS.forEach(function(gr){
+      var h = interp(HIST[gr.id], t), q4 = W2C.apply(null, proj(h[0], h[1]));
+      ctx.setLineDash([5, 4]); ctx.lineWidth = 2.5; ctx.strokeStyle = gr.color;
       ctx.beginPath(); ctx.arc(q4[0], q4[1], 17, 0, 7); ctx.stroke(); ctx.setLineDash([]);
       ctx.beginPath(); ctx.arc(q4[0], q4[1], 3, 0, 7); ctx.fillStyle = '#fff8e8'; ctx.fill();
     });
-    if (showCompare) GROUPS.forEach(function(g, gi){
-      var h2 = HIST[g.id][HIST[g.id].length - 1], r2 = W2C.apply(null, proj(h2[1], h2[2])), m = cents[gi];
-      ctx.setLineDash([7, 5]); ctx.lineWidth = 2.4; ctx.strokeStyle = g.color;
+    if (showCompare) GROUPS.forEach(function(gr, k){
+      var h2 = HIST[gr.id][HIST[gr.id].length - 1], r2 = W2C.apply(null, proj(h2[1], h2[2])), m = cents[k];
+      ctx.setLineDash([7, 5]); ctx.lineWidth = 2.4; ctx.strokeStyle = gr.color;
       ctx.beginPath(); ctx.moveTo(m[0], m[1]); ctx.lineTo(r2[0], r2[1]); ctx.stroke(); ctx.setLineDash([]);
       ctx.beginPath(); ctx.arc(r2[0], r2[1], 15, 0, 7); ctx.lineWidth = 3; ctx.stroke();
-      ctx.beginPath(); ctx.arc(m[0], m[1], 7, 0, 7); ctx.fillStyle = g.color; ctx.fill(); ctx.strokeStyle = '#121214'; ctx.lineWidth = 2; ctx.stroke();
-      label('în realitate', [r2[0] / SC + VB.x, r2[1] / SC + VB.y + 14], '#fff8e8', 'center', 11);
+      ctx.beginPath(); ctx.arc(m[0], m[1], 7, 0, 7); ctx.fillStyle = gr.color; ctx.fill(); ctx.strokeStyle = '#121214'; ctx.lineWidth = 2; ctx.stroke();
+      label('în realitate', [r2[0] / SC + VB.x, r2[1] / SC + VB.y + 14], '#fff8e8', 'center', 10);
     });
-    GROUPS.forEach(function(g, gi){
-      var m = cents[gi]; if (m[0] < 0 || m[0] > CW || m[1] < 0 || m[1] > CH) return;
-      label(SHORT[g.id], [m[0] / SC + VB.x, m[1] / SC + VB.y - 13], g.color, 'center', 12, 3);
+    // numele popoarelor: când două grupuri sunt aproape, etichetele se dau la o parte, cu o linie spre grup
+    var tags = [];
+    GROUPS.forEach(function(gr, k){
+      var m = cents[k]; if (m[0] < 0 || m[0] > CW || m[1] < 0 || m[1] > CH) return;
+      var sp = labelSprite(SHORT[gr.id], gr.color, 11, 2);
+      tags.push({ s: sp, ax: m[0], ay: m[1], x: m[0] - sp.w / 2, y: m[1] - sp.h - 6 * txtScale, c: gr.color });
+    });
+    tags.sort(function(a, b){ return b.ay - a.ay; });
+    for (var ti = 0; ti < tags.length; ti++) {
+      for (var guard = 0; guard < 8; guard++) {
+        var hit = false;
+        for (var tj = 0; tj < ti; tj++) {
+          var A = tags[ti], B = tags[tj];
+          if (A.x < B.x + B.s.w && A.x + A.s.w > B.x && A.y < B.y + B.s.h * 0.86 && A.y + A.s.h * 0.86 > B.y) { A.y = B.y - A.s.h * 0.86; hit = true; }
+        }
+        if (!hit) break;
+      }
+    }
+    tags.forEach(function(tg){
+      var ly = tg.y + tg.s.h * 0.62;
+      if (tg.ay - ly > 14 * txtScale) { ctx.strokeStyle = tg.c; ctx.globalAlpha = 0.55; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(tg.ax, tg.ay - 3); ctx.lineTo(tg.ax, ly); ctx.stroke(); ctx.globalAlpha = 1; }
+      ctx.drawImage(tg.s.c, Math.round(tg.x), Math.round(tg.y));
     });
     // momentele istorice, pe locul lor
     pulses = pulses.filter(function(p){ return now - p.t0 < 4200; });
     pulses.forEach(function(p){
       var k = (now - p.t0) / 4200, q5 = W2C(p.x, p.y);
-      for (var r = 0; r < 2; r++) { var kk = (k * 2 + r * 0.5) % 1; ctx.beginPath(); ctx.arc(q5[0], q5[1], 8 + kk * 46, 0, 7); ctx.strokeStyle = p.color; ctx.globalAlpha = (1 - kk) * (1 - k * 0.6); ctx.lineWidth = 2.5; ctx.stroke(); }
+      for (var rr = 0; rr < 2; rr++) { var kk = (k * 2 + rr * 0.5) % 1; ctx.beginPath(); ctx.arc(q5[0], q5[1], 8 + kk * 46, 0, 7); ctx.strokeStyle = p.color; ctx.globalAlpha = (1 - kk) * (1 - k * 0.6); ctx.lineWidth = 2.5; ctx.stroke(); }
       ctx.globalAlpha = 1 - Math.max(0, k - 0.75) * 4;
       ctx.beginPath(); ctx.arc(q5[0], q5[1], 5, 0, 7); ctx.fillStyle = p.color; ctx.fill();
-      label(p.text, [p.x, p.y - 18 / SC * 2], '#fff8e8', 'center', 13);
+      label(p.text, [p.x, p.y - 12 - 6 * txtScale], '#fff8e8', 'center', 12);
       ctx.globalAlpha = 1;
     });
   }
-  function label(text, p, color, align, size, spacing){
-    var q = W2C(p[0], p[1]);
-    ctx.font = '700 ' + (size || 13) + 'px "JetBrains Mono", monospace'; ctx.textAlign = align || 'left';
-    if ('letterSpacing' in ctx) ctx.letterSpacing = (spacing || 0.5) + 'px';
-    ctx.lineJoin = 'round'; ctx.lineWidth = 4.5; ctx.strokeStyle = 'rgba(12,10,8,0.92)'; ctx.strokeText(text, q[0], q[1]); ctx.fillStyle = color; ctx.fillText(text, q[0], q[1]);
-    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
-  }
+  // harta nu se desenează când nu e pe ecran; se redesenează când revine
+  var visible = true, dirty = false;
+  if ('IntersectionObserver' in window) new IntersectionObserver(function(es){
+    visible = es[0].isIntersecting;
+    if (visible && dirty && !running) draw();
+  }).observe(cv);
 
   // =====================================================================
   // 10. Bucla, evenimente, decizii, final
