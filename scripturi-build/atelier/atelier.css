@@ -135,8 +135,14 @@
   }
   @media (max-width: 640px){
     .md-board{ padding: 14px 10px 16px; }
-    .md-tl-scroll{ overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 6px; }
-    .md-tl{ min-width: 720px; }
+    .md-tl-scroll{ padding-bottom: 6px; }
+    .md-tl{ margin: 0 4px; }
+    .md-tick.minor em{ display: none; }
+    .md-tick em{ font-size: 0.64rem; }
+    .md-tick.att em{ font-size: 0.62rem; }
+    .md-pin{ width: 30px; height: 30px; margin-left: -15px; bottom: calc(8px + var(--lane) * 34px); }
+    .md-tl{ height: calc(90px + var(--lanes) * 34px); }
+    .md-band span{ font-size: 0.56rem; }
     .md-tray{ gap: 10px; }
     .md-zoom img{ max-height: 240px; }
   }

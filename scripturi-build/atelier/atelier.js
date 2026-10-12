@@ -63,7 +63,7 @@
 
   function buildTicks(){
     var h = [375, 400, 500, 550, 600, 800, 1000, 1200, 1400, 1600, 1800].map(function(y){
-      return '<span class="md-tick' + (y === 600 ? ' brk' : '') + '" style="left:' + pc(y) + '"><em>' + y + '</em></span>';
+      return '<span class="md-tick' + (y === 600 ? ' brk' : '') + ([375, 400, 500, 550, 800, 1200, 1600].indexOf(y) >= 0 ? ' minor' : '') + '" style="left:' + pc(y) + '"><em>' + y + '</em></span>';
     }).join('');
     h += '<span class="md-tick att" style="left:' + pc(453) + '"><em>453 · Attila</em></span>';
     $('md-ticks').innerHTML = h;
@@ -198,7 +198,7 @@
   }
 
   function renderPins(fresh){
-    var w = tl.clientWidth || 800, size = 40, lanes = [];
+    var w = tl.clientWidth || 800, size = w < 500 ? 30 : 40, lanes = [];
     var list = items.filter(function(it){ return placed[it.id] && placed[it.id].cls; }).sort(function(a, b){ return a.year - b.year; });
     pins.innerHTML = list.map(function(it){
       var p = placed[it.id], x = f(it.year) * w, lane = 0;

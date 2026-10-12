@@ -1,49 +1,50 @@
 # Proiect Istorie — Hunii și Marea Migrație
 
-Proiect pentru concursul național „Istorie și societate în dimensiune virtuală".
+Proiect pentru concursul național „Istorie și societate în dimensiune virtuală", Secțiunea I, Istorie.
 
 🔗 **Site live:** https://cojocariuemilian73.github.io/atelierul-hunilor/
 
 ## Ce deschizi
 
-**`atelierul-hunilor.html`** (= `index.html`, identice) — pagina finală, completă, cu toate cele 5 module combinate într-un singur site. Deschide direct în browser (dublu-click) sau accesează link-ul de mai sus.
+**`index.html`** (identic cu `atelierul-hunilor.html`) — site-ul complet, într-un singur fișier, cu patru pagini:
+
+1. **Acasă / Articol** — articolul cu 23 de note și bibliografie, cronologia cu zoom și filtre, graficul „Aurul hunilor”, atlasul migrației, muzeul virtual, miturile verificate la sfârșitul capitolelor și glosarul.
+2. **Imperiul lui Attila** — joc de strategie, 8 runde reale (435–452), cu fragmente din izvoare.
+3. **Marea Migrație, în timp real** — simulare cu agenți pe harta reală (370–476), cinci decizii istorice, mod ușor pentru calculatoare lente.
+4. **Masa istoricului** — 13 surse de așezat pe axa timpului și de clasificat.
+
+Se deschide direct în browser (dublu-clic) sau la adresa de mai sus.
 
 ## Structura folderului
 
-- `atelierul-hunilor.html` — pagina combinată finală (aceasta e livrarea)
-- Pagina „Masa istoricului” (sursele de așezat pe axa timpului) are sursele în `scripturi-build/atelier/` (HTML, CSS, JS) și se pune la zi în paginile construite cu `node scripturi-build/splice-atelier.js`. Stilurile jocurilor și simularea (`scripturi-build/jocuri/`) se pun la zi cu `node scripturi-build/splice-jocuri.js`.
-- Cronologia de pe pagina Acasă (axă cu zoom și filtre) e în `scripturi-build/cronologie/`, graficul „Aurul hunilor” în `scripturi-build/aur/`; se pun la zi cu `node scripturi-build/splice-cronologie.js` și `node scripturi-build/splice-aur.js`. Zoom-ul pe imagini și butonul „Înapoi sus” vin din `node scripturi-build/patch-lightbox-zoom.js`.
-- `ghid-profesor.html` — Ghidul profesorului: corespondența cu programa de istorie de clasa a IX-a (cele 4 competențe generale), trei scenarii de lecție și o fișă de lucru cu barem, gata de tipărit.
-- Jocul „Imperiul lui Attila” și simularea „Marea Migrație, în timp real” au sursele în `scripturi-build/jocuri/` (imperiu.*, migratie.*, jocuri.css). Simularea e pusă în pagini cu `scripturi-build/rebuild-migratie-sim.js`, care generează și pagina ei separată. `build-standalone.js` nu mai trebuie rulat pentru ele.
-- `qr-joc.html` — pagină de tipărit sau de proiectat, cu codul QR care deschide jocul pe telefon (generat cu `python scripturi-build/make-qr.py`, are nevoie de `pip install segno`).
-- `module-individuale/` — cele 5 module ca fișiere separate, de sine stătătoare (regenerate automat din aceleași surse ca pagina combinată, cu `scripturi-build/build-standalone.js`):
-  - `huni-prezentare.html` — articolul academic (Acasă / Context / Cronologie / Marea Migrație / Personalități)
-  - `imperiul-lui-attila.html` — jocul „Imperiul lui Attila” (strategie, 435–453)
-  - `simularea-marii-migratii.html` — simularea „Marea Migrație, în timp real” (370–476)
-  - `atlas-hunic.html` — harta interactivă (orașe, bătălii și trasee poziționate pe coordonate geografice reale)
-  - `laborator-muzeu.html` — Muzeul Hunilor (artefacte reale fotografiate în muzee, mit vs. adevăr paleogenetic)
-- `build/` — piesele intermediare din care e asamblată pagina combinată (CSS/JS/HTML separate pe modul + `FINAL.html`, rezultatul brut al asamblării)
-- `scripturi-build/` — scripturile Node.js folosite ca să reconstruiesc pagina combinată după orice modificare:
-  - `scope-css.js` — izolează CSS-ul fiecărui modul sub o clasă unică, ca stilurile să nu se ciocnească
-  - `assemble.js` — combină toate modulele într-un singur `FINAL.html`
-  - `deglow.js` / `extract.js` — scripturi folosite punctual în etapele de curățare a designului
-- `imagini/reale/` — imaginile folosite acum pe site, toate de pe Wikimedia Commons: fresca lui Rafael, gravura lui Geiger și pictura lui Mór Than (domeniu public) pentru antete și harta fizică a Europei (Alexrk2, CC BY-SA 3.0) pentru hărțile interactive. Fotografiile de artefact și hărțile istorice din articol sunt în `imagini/muzeu/`. Toate sunt încorporate direct ca `base64` în HTML, recodate în WebP cu `python scripturi-build/to-webp.py fisier.html` (pagina a scăzut de la 5,6 la 4,4 MB). Cele trei fișiere rămase direct în `imagini/` (harta militară 370–406, harta campaniei lui Attila în Galia și harta invaziilor) sunt hărți istorice reale, păstrate ca originale. Imaginile mai vechi, generate cu AI, au fost șterse.
-- `scripturi-build/geo.js` — proiecția hărții fizice: transformă latitudinea și longitudinea în poziția exactă pe imagine (aceleași formule pe care le folosește Wikipedia pentru această hartă).
+- `index.html`, `atelierul-hunilor.html` — site-ul (aceeași pagină, două nume).
+- `ghid-profesor.html` — Ghidul profesorului: corespondența cu programa de clasa a IX-a, trei scenarii de lecție, fișă de lucru cu barem.
+- `qr-joc.html` — pagina cu codul QR care deschide jocul pe telefon (`python scripturi-build/make-qr.py`, are nevoie de `pip install segno`).
+- `og.jpg` — imaginea care apare când trimiți linkul pe WhatsApp sau Facebook.
+- `module-individuale/` — câteva părți ale site-ului ca fișiere separate: articolul, atlasul, muzeul, jocul și simularea. Sunt păstrate pentru prezentare; versiunea de referință e `index.html`.
+- `imagini/` — originalele imaginilor (Wikimedia Commons, cu sursa și licența trecute pe site). În pagină sunt încorporate ca WebP, cu `python scripturi-build/to-webp.py fisier.html`.
+- `scripturi-build/` — sursele părților interactive și scripturile care le pun în pagină (vezi mai jos).
 
-## Cum reconstruiesc pagina după o modificare
+## Cum se actualizează site-ul
 
-Folderul `build/` nu e în git (e în `.gitignore`). Pe un calculator unde lipsește, îl recreezi din paginile existente:
-```
-node scripturi-build/restore-build.js
-```
-Scriptul verifică singur că sursele refăcute dau exact aceeași pagină (`FINAL.html` identic cu `index.html`).
+Fiecare parte interactivă are sursele într-un folder separat. După o modificare, scriptul ei o pune în `index.html`, `atelierul-hunilor.html` și, unde e cazul, în pagina separată din `module-individuale/`:
 
-Dacă modific un fișier din `build/` (ex. `build/atlas.css`), rulez din acest folder:
-```
-node scripturi-build/scope-css.js build/atlas.css build/atlas.scoped.css m-atlas
-node scripturi-build/assemble.js build
-```
-apoi copiez `build/FINAL.html` peste `atelierul-hunilor.html` **și** peste `index.html`, și rulez `node scripturi-build/build-standalone.js` pentru paginile din `module-individuale/`.
+| Partea | Sursele | Comanda |
+|---|---|---|
+| Imperiul lui Attila, simularea, stilurile jocurilor | `scripturi-build/jocuri/` | `node scripturi-build/splice-jocuri.js` |
+| Masa istoricului | `scripturi-build/atelier/` | `node scripturi-build/splice-atelier.js` |
+| Cronologia | `scripturi-build/cronologie/` | `node scripturi-build/splice-cronologie.js` |
+| Aurul hunilor | `scripturi-build/aur/` | `node scripturi-build/splice-aur.js` |
+| Glosarul | `scripturi-build/glosar/` | `node scripturi-build/splice-glosar.js` |
+| Miturile în capitole | în script | `node scripturi-build/patch-mituri-in-pagina.js` |
+| Zoom pe imagini, „Înapoi sus” | în script | `node scripturi-build/patch-lightbox-zoom.js` |
+| Imagini lângă textele scurte | în script | `node scripturi-build/patch-sr-fit.js` |
+
+Toate scripturile se pot rula de mai multe ori: înlocuiesc partea lor, fără s-o dubleze.
+
+Textul articolului (capitole, note, bibliografie) se modifică direct în `index.html`, apoi se copiază peste `atelierul-hunilor.html`.
+
+**Atenție:** scripturile vechi de asamblare (`assemble.js`, `build-standalone.js`, `restore-build.js`, `rebuild-*.js`) țin de prima versiune a site-ului, construită din folderul `build/`. Ele nu mai trebuie rulate, pentru că ar scrie peste pagini versiuni mai vechi.
 
 ## Cum public modificările pe site-ul live
 
@@ -52,4 +53,5 @@ git add -A
 git commit -m "descriere modificare"
 git push
 ```
-GitHub Pages redeployează automat din `index.html`, în ~1 minut.
+
+GitHub Pages republică automat site-ul din `index.html`, în circa un minut.

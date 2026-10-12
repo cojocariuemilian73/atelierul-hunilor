@@ -242,7 +242,7 @@
       '<div class="jg-panel">' +
         '<p class="jg-eyebrow">' + (revolt ? 'Sfârșit înainte de vreme' : '453 · Attila moare în noaptea nunții cu Ildico') + '</p>' +
         '<p class="imp-verdict">' + v[0] + '</p><p class="jg-lead">' + v[1] + '</p>' +
-        '<p class="jg-lead"><b>Ai construit ceva care să-ți supraviețuiască?</b> ' + (st.stab >= 50 ? 'Da: ai împărțit puterea sau ai creat legături care nu depind doar de tine.' : st.stab > 0 ? 'Doar puțin: o singură decizie a mers în această direcție.' : 'Nu: totul a depins de tine, ca la Attila.') + '</p>' +
+        '<p class="jg-lead"><b>Ai construit ceva care să-ți supraviețuiască?</b> ' + (st.stab >= 50 ? (!revolt && st.loial >= 50 && st.aur >= 20 ? 'Da: ai împărțit puterea sau ai creat legături care nu depind doar de tine.' : 'Da, ai împărțit puterea, dar fără aur și fără loialitatea neamurilor nu a fost de ajuns.') : st.stab > 0 ? 'Doar puțin: o singură decizie a mers în această direcție.' : 'Nu: totul a depins de tine, ca la Attila.') + '</p>' +
         '<div class="imp-legend"><span><i style="background:#e5c158"></i>Drumul tău</span><span><i style="background:rgba(230,215,195,0.45)"></i>Drumul lui Attila, după izvoare</span></div>' +
         '<div class="imp-compare">' + rows + '</div>' +
         '<h3 class="jg-h2" style="font-size:1.1rem">De ce s-a prăbușit, de fapt, imperiul hunilor?</h3>' +

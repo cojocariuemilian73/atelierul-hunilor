@@ -131,12 +131,10 @@ for (const rel of ['index.html', 'atelierul-hunilor.html']) {
     s = s.slice(0, end) + '\n      <div class="mx" data-myths="' + g.ids.join(',') + '" data-title="' + g.title + '"></div>' + s.slice(end);
   }
 
-  // 2. capitolul separat dispare, bibliografia devine 07
+  // 2. capitolul separat dispare (numerotarea Bibliografiei o face splice-glosar.js)
   const m0 = s.indexOf('    <section id="sec-mituri"');
   if (m0 >= 0) { const m1 = s.indexOf('\n    </section>\n', m0) + '\n    </section>\n'.length; s = s.slice(0, m0) + s.slice(m1); }
   s = s.replace(/\n    <a href="#sec-mituri" data-sec="sec-mituri" class="toc-link"><i>07<\/i>Mit vs\. adevăr<\/a>/, '');
-  s = s.replace('<a href="#biblio" data-sec="biblio" class="toc-link"><i>08</i>Bibliografie</a>', '<a href="#biblio" data-sec="biblio" class="toc-link"><i>07</i>Bibliografie</a>');
-  s = s.replace('<span class="chapter-num">08</span><span class="chapter-slash">/</span><span class="chapter-tag">Bibliografie</span>', '<span class="chapter-num">07</span><span class="chapter-slash">/</span><span class="chapter-tag">Bibliografie</span>');
 
   // 3. scriptul: în locul cardurilor întoarse
   let j0 = s.indexOf('  function renderFlipCard(');
