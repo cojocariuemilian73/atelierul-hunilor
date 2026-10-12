@@ -10,7 +10,7 @@
     { k: 'cai', label: 'Cavalerie', c: '#7ab0e8', hint: 'caii au nevoie de pășuni; departe de stepă, cavaleria slăbește' },
     { k: 'stab', label: 'Moștenire', c: '#b98ae6', hint: 'ce rămâne în picioare după tine: putere împărțită și legături care nu depind doar de persoana ta. De la 50 în sus, imperiul poate să-ți supraviețuiască' }
   ];
-  var START = { aur: 30, prestigiu: 40, loial: 60, cai: 80, stab: 0 };
+  var START = { aur: 30, prestigiu: 25, loial: 60, cai: 80, stab: 0 };
   var UPKEEP = 8;
 
   var ROUNDS = [
@@ -162,7 +162,13 @@
     document.getElementById('imp-start').addEventListener('click', start);
   }
 
+  var inGame = false;
+  function syncPager(){ document.documentElement.classList.toggle('imp-playing', inGame && location.hash === '#mod-game'); }
+  function playing(on){ inGame = on; syncPager(); }
+  window.addEventListener('hashchange', syncPager);
+
   function start(){
+    playing(true);
     st = Object.assign({}, START); round = 0; trail = []; picks = [];
     hist = historicPath();
     show();
@@ -212,11 +218,15 @@
         '<h3>' + (c.real ? 'Ai ales ce a ales și Attila' : 'Ce s-a întâmplat în realitate') + '</h3>' +
         fxHtml(total) +
         (notes.length ? '<p><i>' + notes.join(' ') + '</i></p>' : '<p><i>Războinicii au primit darurile lor: aur −' + UPKEEP + '.</i></p>') +
+        (!revolt && st.loial < 30 ? '<p class="imp-warn"><b>Atenție:</b> loialitatea neamurilor e ' + st.loial + '. Sub 10, se răscoală și domnia ta se încheie.</p>' : '') +
         '<p>' + r.real + '</p>' +
         (r.q ? '<blockquote class="imp-q"><p>„' + r.q + '”</p><cite>' + r.qs + ' · traducere adaptată</cite></blockquote>' : '') +
         '<p class="jg-src">Sursa: ' + r.src + '</p>' +
         '<button class="jg-btn jg-next" id="imp-next" type="button">' + (revolt ? 'Neamurile se răscoală →' : last ? 'Anul 453 →' : 'Runda următoare →') + '</button>' +
       '</div>';
+    var out = document.getElementById('imp-out'), reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var orr = out.getBoundingClientRect();
+    if (orr.bottom > window.innerHeight - 90 || orr.top < 0) window.scrollTo({ top: window.pageYOffset + orr.top - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 0) - 150, behavior: reduce ? 'auto' : 'smooth' });
     var nx = document.getElementById('imp-next');
     nx.addEventListener('click', function(){ if (revolt) end(true); else if (last) end(false); else { round++; show(); root.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
     nx.focus({ preventScroll: true });
@@ -232,6 +242,7 @@
   }
 
   function end(revolt){
+    playing(false);
     var v = revolt ? ['Neamurile supuse s-au răsculat', 'Fără aur și fără loialitate, imperiul s-a destrămat încă din timpul domniei tale. În realitate, asta s-a întâmplat abia după moartea lui Attila, la Nedao.'] : verdict();
     var rows = METERS.map(function(m){
       return '<div class="imp-cmp"><b>' + m.label + '</b><div class="bars">' +
