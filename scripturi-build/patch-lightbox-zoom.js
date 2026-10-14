@@ -63,7 +63,7 @@ const JS = `  // Click (or Enter) on an article image opens it larger, with its 
       box.querySelector('.lb-close').focus();
     }
     function close(){ box.classList.remove('show'); document.documentElement.classList.remove('lb-open'); if (lastFocus) lastFocus.focus(); }
-    var svgs = document.querySelectorAll('.ptol-map');
+    var svgs = document.querySelectorAll('.ptol-map, .gal-wrap');
     Array.prototype.forEach.call(svgs, function(d){
       d.tabIndex = 0; d.classList.add('lb-able');
       d.addEventListener('click', function(){ open(d); });
