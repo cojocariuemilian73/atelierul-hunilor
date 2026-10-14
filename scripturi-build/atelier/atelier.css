@@ -126,8 +126,6 @@
   .md-cls button span{ font-size: 0.86rem; color: var(--md-dim); }
   .md-cls button:hover{ border-color: var(--c); background: color-mix(in srgb, var(--c) 16%, transparent); }
   .md-cls button:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
-  .md-guide{ margin: 18px 0 0; text-align: center; font-size: 0.92rem; color: var(--md-dim); }
-  .md-guide a{ color: var(--md-gold2); text-underline-offset: 3px; }
 
   @media (max-width: 900px){
     .md-desk{ grid-template-columns: 1fr; }

@@ -134,48 +134,45 @@
   // =====================================================================
   // 4. Interfață
   // =====================================================================
+  var SVG = function(d, fill){ return '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + d + '" ' + (fill ? 'fill="currentColor"' : 'fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"') + '/></svg>'; };
+  // harta e elementul principal: comenzile stau peste ea, într-o bară subțire; legenda, în colțul din stânga jos;
+  // straturile tehnice și modul ușor se deschid doar din „Straturi”
   root.innerHTML =
-    '<div class="mig-bar">' +
-      '<div class="mig-year"><small>Anul</small><b id="mig-year">370</b></div>' +
-      '<div class="mig-ctl"><button class="jg-btn" id="mig-play" type="button" aria-pressed="false">Pornește</button>' +
-      '<div class="mig-speed" role="group" aria-label="Viteza simulării"><button type="button" data-s="1" class="on" aria-pressed="true">1×</button><button type="button" data-s="2" aria-pressed="false">2×</button><button type="button" data-s="4" aria-pressed="false">4×</button></div>' +
-      '<button class="jg-btn ghost" id="mig-reset" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>De la capăt</button>' +
-      '<button class="jg-btn ghost mig-fs" id="mig-fs" type="button" aria-label="Ecran complet"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Ecran complet</span></button></div>' +
-      '<div class="mig-stab"><label>Stabilitatea Imperiului <b id="mig-stab-v">70</b></label><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
-    '</div>' +
     '<div class="mig-main">' +
       '<div class="mig-stage">' +
         '<canvas id="mig-canvas" width="' + CW + '" height="' + CH + '" role="img" aria-label="Simularea Marii Migrații: puncte colorate reprezintă popoarele care se deplasează pe harta Europei între 370 și 476"></canvas>' +
+        '<div class="mig-hud">' +
+          '<div class="mig-year" aria-live="off"><b id="mig-year">370</b></div>' +
+          '<button class="mig-play" id="mig-play" type="button" aria-pressed="false">Pornește</button>' +
+          '<div class="mig-speed" role="group" aria-label="Viteza simulării"><button type="button" data-s="1" class="on" aria-pressed="true">1×</button><button type="button" data-s="2" aria-pressed="false">2×</button><button type="button" data-s="4" aria-pressed="false">4×</button></div>' +
+          '<span class="mig-hud-sp"></span>' +
+          '<button class="mig-ib" id="mig-reset" type="button" aria-label="De la capăt" title="De la capăt">' + SVG('M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1') + '</button>' +
+          '<button class="mig-ib" id="mig-lay" type="button" aria-label="Straturi" title="Straturi" aria-expanded="false" aria-controls="mig-pop">' + SVG('M8 2l6 3-6 3-6-3zM2 8l6 3 6-3M2 11l6 3 6-3') + '</button>' +
+          '<button class="mig-ib mig-fs" id="mig-fs" type="button" aria-label="Ecran complet" title="Ecran complet">' + SVG('M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10') + '</button>' +
+        '</div>' +
+        '<div class="mig-pop" id="mig-pop" hidden>' +
+          '<p class="mig-pop-h">Straturi</p><div class="mig-layers">' +
+            '<label><input type="checkbox" data-l="real" checked> Lumea reală (reper)</label>' +
+            '<label><input type="checkbox" data-l="terrain"> Terenul calculat din hartă</label>' +
+            '<label><input type="checkbox" data-l="flow"> Drumurile calculate (Dijkstra)</label>' +
+            '<label><input type="checkbox" data-l="press"> Presiunea hunilor</label>' +
+          '</div>' +
+          '<label class="mig-flowl">Drumuri pentru <select id="mig-flowg">' + GROUPS.map(function(g, i){ return '<option value="' + i + '"' + (i === 2 ? ' selected' : '') + '>' + g.name.split(',')[0] + '</option>'; }).join('') + '</select></label>' +
+          '<p class="mig-pop-h">Calculatorul tău</p><button type="button" class="mig-lite" id="mig-lite" aria-pressed="' + LITE + '">' + (LITE ? 'Mod ușor: ' + N.toLocaleString('ro-RO') + ' de agenți. Treci la modul complet' : 'Mod ușor: ' + Math.round(FULL_N * 0.4).toLocaleString('ro-RO') + ' de agenți, dacă merge greu') + '</button>' +
+          '<p class="mig-pop-note">Cum funcționează modelul: <b>Despre proiect</b>, la „Fișă tehnică”.</p>' +
+        '</div>' +
+        '<ul class="mig-legend" id="mig-legend" aria-label="Popoarele">' + GROUPS.map(function(g){ return '<li title="' + g.name + '"><i style="background:' + g.color + '"></i>' + g.name.split(',')[0] + '<small id="mig-where-' + g.id + '" hidden></small></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
         '<div class="mig-toast" id="mig-toast" aria-live="polite"></div><div class="mig-tip" id="mig-tip" hidden></div>' +
         '<div class="mig-over" id="mig-over"></div>' +
         '<span class="mig-credit">Hartă: Alexrk2, Wikimedia Commons, CC BY-SA 3.0</span>' +
         '<div class="mig-tl" id="mig-tl" aria-label="Cronologia simulării: deciziile și evenimentele"></div>' +
       '</div>' +
       '<aside class="mig-side">' +
-        '<p class="jg-eyebrow">Popoarele</p><ul class="mig-legend" id="mig-legend">' + GROUPS.map(function(g){ return '<li><i style="background:' + g.color + '"></i><span>' + g.name + '<small id="mig-where-' + g.id + '"></small></span></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
-        '<p class="jg-eyebrow">Straturi</p><div class="mig-layers">' +
-          '<label><input type="checkbox" data-l="real" checked> Lumea reală (reper)</label>' +
-          '<label><input type="checkbox" data-l="terrain"> Terenul calculat din hartă</label>' +
-          '<label><input type="checkbox" data-l="flow"> Drumurile calculate (Dijkstra)</label>' +
-          '<label><input type="checkbox" data-l="press"> Presiunea hunilor</label>' +
-          '<button type="button" class="mig-flowg" id="mig-flowg">Drumuri pentru: Vizigoții</button>' +
-        '</div>' +
-        '<p class="jg-eyebrow">Calculatorul tău</p><button type="button" class="mig-flowg mig-lite" id="mig-lite" aria-pressed="' + LITE + '">' + (LITE ? 'Mod ușor activ: ' + N.toLocaleString('ro-RO') + ' de agenți. Treci la modul complet' : 'Merge greu? Mod ușor: ' + Math.round(FULL_N * 0.4).toLocaleString('ro-RO') + ' de agenți') + '</button>' +
-        '<p class="jg-eyebrow">Grupuri care au trecut granița</p><div class="mig-cross"><span>Dunărea <b id="mig-cd">0</b></span><span>Rinul <b id="mig-cr">0</b></span></div>' +
-        '<p class="jg-eyebrow">Deciziile tale</p><ol class="mig-log" id="mig-log"></ol>' +
+        '<div class="mig-stab"><p class="mig-side-h">Stabilitatea Imperiului <b id="mig-stab-v">70</b></p><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
+        '<div><p class="mig-side-h">Au trecut granița</p><div class="mig-cross"><span><b id="mig-cd">0</b>Dunărea</span><span><b id="mig-cr">0</b>Rinul</span></div></div>' +
+        '<div><p class="mig-side-h">Deciziile tale</p><ol class="mig-log" id="mig-log"></ol></div>' +
       '</aside>' +
-    '</div>' +
-    '<details class="mig-how"><summary>Cum funcționează simularea</summary>' +
-      '<ul>' +
-        '<li><b>' + N.toLocaleString('ro-RO') + ' de agenți</b>, fiecare un grup de oameni, se mișcă independent, de 50 de ori pe an simulat.</li>' +
-        '<li><b>Terenul e citit din pixelii hărții reale:</b> marea e de netrecut, câmpia e ușoară, dealurile și munții încetinesc (straturi: „Terenul calculat”).</li>' +
-        '<li><b>Drumurile nu sunt desenate de mână.</b> Pentru fiecare țintă, algoritmul lui Dijkstra calculează pe o grilă de 300 × 145 de celule (circa 14 km fiecare) cel mai ușor drum din orice punct; agenții urmează aceste câmpuri de drum.</li>' +
-        '<li><b>Granițele romane</b> (Rinul și Dunărea) sunt linii pe care un agent le poate trece doar cu o anumită probabilitate, care depinde de decizii și de stabilitatea Imperiului.</li>' +
-        '<li><b>Presiunea hunilor</b> e un câmp de densitate: celelalte popoare sunt împinse departe de zonele cu mulți huni. De aici vine efectul de domino.</li>' +
-        '<li><b>Vandalii, alanii și suebii</b> apar ca un singur grup: au trecut Rinul împreună, în 406, dar erau popoare diferite. E o simplificare a modelului.</li>' +
-        '<li>Generatorul de numere aleatoare are o sămânță fixă: <b>aceleași decizii dau mereu aceeași istorie</b>.</li>' +
-        '<li>Țintele popoarelor urmează pozițiile lor reale din izvoare; deciziile schimbă granițele și stabilitatea, iar restul se petrece de la sine. Rezultatul e un <b>model didactic</b>, nu o reconstituire.</li>' +
-      '</ul></details>';
+    '</div>';
 
   var cv = document.getElementById('mig-canvas'), ctx = cv.getContext('2d', { alpha: false });
   var baseCv = document.createElement('canvas'); baseCv.width = CW; baseCv.height = CH;
@@ -618,7 +615,7 @@
     draw(); updateHud();
     // calculator lent: după ~2 secunde cu cadre de peste 35 ms, propune modul ușor
     slowEma = slowEma * 0.9 + (performance.now() - c0) * 0.1; slowN++;
-    if (!LITE && !slowWarned && slowN > 90 && slowEma > 35) { slowWarned = true; toast('Simularea merge greu pe acest calculator', 'Apasă „Mod ușor” din dreapta: mai puțini agenți, aceeași istorie.'); document.getElementById('mig-lite').classList.add('hint'); }
+    if (!LITE && !slowWarned && slowN > 90 && slowEma > 35) { slowWarned = true; toast('Simularea merge greu pe acest calculator', 'Deschide „Straturi” de pe hartă și alege „Mod ușor”: mai puțini agenți, aceeași istorie.'); document.getElementById('mig-lite').classList.add('hint'); document.getElementById('mig-lay').classList.add('hint'); }
     if (running) requestAnimationFrame(loop);
   }
   // pe pauză, harta continuă să fie desenată cât timp mai „pulsează” un moment istoric
@@ -691,7 +688,7 @@
   }
   function renderLog(){
     var el = document.getElementById('mig-log');
-    el.innerHTML = log.length ? log.map(function(l){ return '<li><b>' + l.y + ' · ' + l.title + '</b>' + l.t + '<em class="' + (l.real ? '' : 'alt') + '">' + (l.real ? 'ca în istorie' : 'altă istorie') + '</em></li>'; }).join('') : '<li class="empty">Deciziile tale apar aici, pe măsură ce le iei.</li>';
+    el.innerHTML = log.length ? log.map(function(l){ return '<li class="' + (l.real ? '' : 'alt') + '"><b>' + l.y + ' · ' + l.title + '</b><span>' + l.t + '</span><em>' + (l.real ? 'ca în istorie' : 'altă istorie') + '</em></li>'; }).join('') : '<li class="empty">Deciziile tale apar aici, pe măsură ce le iei.</li>';
   }
 
   // cronologia de sub hartă
@@ -811,7 +808,7 @@
       var r = req.call(stage);
       if (r && r.then) r.then(function(){ if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(function(){}); }).catch(function(){});
     });
-    function onFs(){ var on = !!(document.fullscreenElement || document.webkitFullscreenElement); btn.querySelector('span').textContent = on ? 'Ieși din ecran complet' : 'Ecran complet'; bgKey = ''; labelCache = {}; setTimeout(function(){ draw(); }, 60); }
+    function onFs(){ var on = !!(document.fullscreenElement || document.webkitFullscreenElement); var lb = on ? 'Ieși din ecran complet' : 'Ecran complet'; btn.setAttribute('aria-label', lb); btn.title = lb; bgKey = ''; labelCache = {}; setTimeout(function(){ draw(); }, 60); }
     document.addEventListener('fullscreenchange', onFs); document.addEventListener('webkitfullscreenchange', onFs);
   })();
   document.getElementById('mig-reset').addEventListener('click', function(){ pause(); auto = false; restart(); intro(); });
@@ -827,12 +824,19 @@
     // agenții se alocă la încărcare, deci pagina se reîncarcă, pe aceeași simulare
     location.href = location.pathname + (next ? '?usor' : '') + '#mod-migratie';
   });
-  document.getElementById('mig-flowg').addEventListener('click', function(){
-    flowGroup = (flowGroup + 1) % GROUPS.length;
-    this.textContent = 'Drumuri pentru: ' + GROUPS[flowGroup].name.split(',')[0];
+  document.getElementById('mig-flowg').addEventListener('change', function(){
+    flowGroup = +this.value;
     layers.flow = true; root.querySelector('.mig-layers input[data-l="flow"]').checked = true;
     if (!running) draw();
   });
+  (function(){
+    var lay = document.getElementById('mig-lay'), pop = document.getElementById('mig-pop');
+    function setPop(on){ pop.hidden = !on; lay.setAttribute('aria-expanded', on ? 'true' : 'false'); lay.classList.toggle('on', on); }
+    lay.addEventListener('click', function(e){ e.stopPropagation(); setPop(pop.hidden); lay.classList.remove('hint'); });
+    pop.addEventListener('click', function(e){ e.stopPropagation(); });
+    document.addEventListener('click', function(){ if (!pop.hidden) setPop(false); });
+    pop.addEventListener('keydown', function(e){ if (e.key === 'Escape') { setPop(false); lay.focus(); } });
+  })();
   document.addEventListener('keydown', function(e){
     if (!page || !page.classList.contains('active') || e.target.closest('input, button, textarea, select')) return;
     if (e.key === ' ') { e.preventDefault(); document.getElementById('mig-play').click(); }

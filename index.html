@@ -1024,8 +1024,6 @@
   .md-cls button span{ font-size: 0.86rem; color: var(--md-dim); }
   .md-cls button:hover{ border-color: var(--c); background: color-mix(in srgb, var(--c) 16%, transparent); }
   .md-cls button:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
-  .md-guide{ margin: 18px 0 0; text-align: center; font-size: 0.92rem; color: var(--md-dim); }
-  .md-guide a{ color: var(--md-gold2); text-underline-offset: 3px; }
 
   @media (max-width: 900px){
     .md-desk{ grid-template-columns: 1fr; }
@@ -1174,25 +1172,11 @@
   }
 
   /* ---------- Marea Migrație, simularea ---------- */
-  .mig-hero{ min-height: clamp(240px, 34vh, 340px); background: radial-gradient(120% 90% at 80% 20%, rgba(167, 29, 42, 0.35), transparent 60%), linear-gradient(160deg, #1d1a14, #121214 70%); }
-  .mig-bar{ display: grid; grid-template-columns: auto 1fr minmax(180px, 240px); gap: 16px; align-items: center; margin: 0 0 12px; padding: 10px 14px; background: var(--s1); border: 1px solid var(--line); }
-  .mig-year small{ display: block; font: 700 0.6rem 'JetBrains Mono', monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
-  .mig-year b{ font: 700 2.2rem/1 'Cinzel', serif; color: #f2d474; font-variant-numeric: tabular-nums; }
-  .mig-ctl{ display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .mig-ctl .jg-btn{ min-height: 44px; padding: 8px 16px; font-size: 0.85rem; }
-  .mig-speed{ display: inline-flex; border: 1px solid var(--gold); }
-  .mig-speed button{ min-width: 44px; min-height: 42px; background: transparent; border: 0; font: 700 0.8rem 'JetBrains Mono', monospace; color: var(--gold2); cursor: pointer; }
-  .mig-speed button.on{ background: var(--gold); color: #1a1405; }
-  .mig-stab label{ display: flex; justify-content: space-between; font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
-  .mig-stab label b{ color: #f0e6d6; }
-  .mig-stab .jg-bar i{ transition: width 0.4s ease, background 0.4s; }
-  @media (max-width: 760px){ .mig-bar{ grid-template-columns: 1fr; } }
   .mig-main{ display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 14px; align-items: start; }
   @media (max-width: 980px){ .mig-main{ grid-template-columns: 1fr; } }
   .mig-stage{ position: relative; border: 1px solid rgba(212, 175, 55, 0.4); background: #0e0e10; overflow: hidden; }
   .mig-stage canvas{ display: block; width: 100%; height: auto; }
   .mig-credit{ position: absolute; right: 6px; bottom: 4px; font: 0.55rem 'JetBrains Mono', monospace; color: rgba(230, 215, 195, 0.7); text-shadow: 0 1px 2px #000; pointer-events: none; }
-  .mig-toast{ position: absolute; left: 10px; top: 10px; display: grid; gap: 6px; max-width: min(520px, 75%); pointer-events: none; }
   .mig-t{ padding: 8px 12px; background: rgba(14, 14, 16, 0.9); border: 1px solid rgba(212,175,55,0.45); font-size: 0.86rem; line-height: 1.4; animation: jg-in 0.4s ease both; transition: opacity 0.7s; }
   .mig-t b{ display: block; font-weight: 600; color: #f6eddc; }
   .mig-t small{ display: block; margin-top: 2px; font: 0.64rem 'JetBrains Mono', monospace; color: var(--gold2); }
@@ -1210,24 +1194,6 @@
   .mig-table th{ font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold2); }
   .mig-table td i{ display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 7px; vertical-align: middle; }
   .mig-lesson{ padding: 10px 12px; border: 1px solid var(--line); background: var(--s2); }
-  .mig-side{ display: grid; gap: 8px; align-content: start; padding: 14px; background: var(--s1); border: 1px solid var(--line); }
-  .mig-side .jg-eyebrow{ margin: 4px 0 2px; }
-  .mig-legend{ list-style: none; padding: 0; margin: 0; display: grid; gap: 5px; font-size: 0.86rem; }
-  .mig-legend i{ display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
-  .mig-legend i.ghost{ background: transparent; border: 2px dashed #f0e6d6; }
-  .mig-layers{ display: grid; gap: 4px; font-size: 0.86rem; }
-  .mig-layers label{ display: flex; gap: 8px; align-items: center; min-height: 32px; cursor: pointer; }
-  .mig-layers input{ width: 18px; height: 18px; accent-color: var(--gold); }
-  .mig-flowg{ min-height: 36px; padding: 6px 10px; background: var(--s2); border: 1px solid var(--line); font: 0.74rem 'JetBrains Mono', monospace; color: var(--gold2) !important; cursor: pointer; text-align: left; }
-  .mig-cross{ display: flex; gap: 14px; font: 0.8rem 'JetBrains Mono', monospace; color: var(--dim); }
-  .mig-cross b{ color: #f2d474; font-size: 1rem; }
-  .mig-log{ margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 0.82rem; line-height: 1.4; }
-  .mig-log b{ display: block; color: var(--gold2); font: 700 0.72rem 'Cinzel', serif; }
-  .mig-log em{ font-style: normal; color: var(--good); font-size: 0.74rem; } .mig-log em.alt{ color: var(--orange); }
-  .mig-log .empty{ list-style: none; margin-left: -18px; color: var(--dim); font-style: italic; }
-  .mig-how{ margin-top: 14px; padding: 12px 16px; background: var(--s1); border: 1px solid var(--line); }
-  .mig-how summary{ cursor: pointer; font: 700 0.95rem 'Cinzel', serif; color: var(--gold2); min-height: 32px; }
-  .mig-how ul{ margin: 10px 0 0; padding-left: 20px; display: grid; gap: 6px; line-height: 1.55; color: #dccfb8; }
   @media (max-width: 760px){
     .mig-over{ position: fixed; inset: 0; z-index: 400; background: rgba(10, 10, 12, 0.82); }
     .mig-dec{ max-height: calc(100vh - 28px); }
@@ -1236,7 +1202,6 @@
     .mig-t small{ display: none; }
   }
   /* simularea: cronologie, informații, butoane cu iconițe, ecranul final */
-  .mig-ctl .jg-btn svg{ width: 14px; height: 14px; flex: none; }
   .mig-tl{ position: relative; height: 46px; margin: 0; padding: 0 16px; background: #141210; border-top: 1px solid rgba(212,175,55,0.3); }
   .mig-over.dock{ bottom: 46px; }
   .mig-tl-track{ position: absolute; left: 16px; right: 16px; top: 14px; height: 4px; background: rgba(230,215,195,0.14); border-radius: 2px; overflow: hidden; }
@@ -1251,7 +1216,6 @@
   .mig-tl-head{ top: 6px; width: 2px; height: 20px; background: #fff8e8; margin-left: 16px; box-shadow: 0 0 8px rgba(255,248,232,0.7); }
   .mig-tip{ position: absolute; z-index: 5; display: grid; gap: 2px; min-width: 190px; padding: 9px 12px; background: rgba(18,16,12,0.95); border: 1px solid rgba(212,175,55,0.5); box-shadow: 0 10px 24px rgba(0,0,0,0.5); font-size: 0.8rem; color: #e0d3bd; pointer-events: none; }
   .mig-tip b{ font: 700 0.9rem 'Cinzel', serif; }
-  .mig-legend small{ display: block; font-size: 0.72rem; color: var(--dim); }
   .mig-dec h3 .mig-yr{ display: inline-block; margin-right: 10px; padding: 1px 8px; background: #e5c158; color: #1a1405; font: 700 0.95rem 'JetBrains Mono', monospace; vertical-align: 3px; }
   .mig-who{ color: var(--gold2) !important; font-style: italic; margin-top: -2px !important; }
   .mig-table td.num{ font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -1263,18 +1227,12 @@
   .mig-over.dock .mig-end-btns .jg-btn{ padding: 8px 12px; font-size: 0.8rem; white-space: nowrap; }
   .mig-over.dock .mig-end.min{ width: auto; max-width: 100%; }
   .mig-end.min h3{ margin-bottom: 0; }
-  .mig-lite{ text-align: left; line-height: 1.4; }
-  .mig-lite.hint{ border-color: #f2d474; color: #f2d474; box-shadow: 0 0 0 3px rgba(242, 212, 116, 0.18); }
   /* Imperiul: alegerea lui Attila (neutru, nu „corect”), izvorul, reflecția */
   .jg-choice.attila{ border-color: rgba(201, 180, 138, 0.8); border-style: dashed; }
   .imp-tag{ display: block; margin-top: 6px; font: normal 700 0.66rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: #c9b48a; }
   .imp-q{ margin: 12px 0 0; padding: 12px 16px; background: rgba(230, 215, 195, 0.05); border: 1px solid rgba(230, 215, 195, 0.14); }
   .imp-q p{ margin: 0; font: italic 1.02rem/1.6 'Source Serif 4', Georgia, serif; color: #f0e2c6; }
   .imp-q cite{ display: block; margin-top: 6px; font: normal 0.7rem 'JetBrains Mono', monospace; color: var(--dim); }
-  .imp-reflect{ margin-top: 18px; padding: 14px 16px; border: 1px solid rgba(212, 175, 55, 0.35); }
-  .imp-reflect h3{ margin: 0 0 6px; font: 700 1rem 'Cinzel', serif; color: var(--gold2); }
-  .imp-reflect p{ margin: 0; line-height: 1.6; }
-  .imp-reflect a{ color: var(--gold2); }
   .mig-prep{ margin: 10px 0 0; font: 0.74rem/1.5 "JetBrains Mono", monospace; color: var(--gold2); }
   .mig-prep:empty{ display: none; }
   /* Imperiul: avertisment la loialitate, harta după text pe telefon, fără bara de pagini în timpul jocului */
@@ -1283,7 +1241,6 @@
   @media (max-width: 900px){ .imp-round .imp-map{ order: 2; } }
   html.imp-playing .site-pager{ display: none; }
   /* simularea pe ecran complet */
-  .mig-fs svg{ width: 14px; height: 14px; flex: none; }
   .mig-stage:fullscreen{ display: flex; flex-direction: column; justify-content: center; background: #0e0d0b; border: 0; }
   .mig-stage:fullscreen canvas{ width: 100%; height: auto; max-height: calc(100vh - 46px); object-fit: contain; }
   .mig-stage:-webkit-full-screen{ display: flex; flex-direction: column; justify-content: center; background: #0e0d0b; }
@@ -1292,6 +1249,68 @@
   .jg .qr-code{ position: relative; z-index: 5; transform-origin: 0 50%; transition: transform 0.25s cubic-bezier(.16,1,.3,1), box-shadow 0.25s; }
   .jg .qr-code:hover, .jg .qr-code:focus-visible{ transform: scale(3); box-shadow: 0 0 0 100vmax rgba(10,10,12,0.72); outline: none; }
   @media (prefers-reduced-motion: reduce){ .jg .qr-code{ transition: none; } }
+  /* Marea Migrație: antet scurt, harta ca element principal, comenzile peste hartă */
+  .mig-head{ padding: 30px 0 0; }
+  .mig-head h1{ margin: 0 0 6px; font: 600 clamp(1.8rem, 3.4vw, 2.4rem)/1.1 'Cormorant Garamond', Georgia, serif; color: #f6eddc; text-wrap: balance; }
+  .mig-head p{ margin: 0; font: 0.8rem/1.5 'JetBrains Mono', monospace; color: var(--gold2); }
+  .mig-head + .jg-stage{ margin-top: 16px; }
+  .mig-hud{ position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: rgba(14, 13, 11, 0.74); border-bottom: 1px solid rgba(212, 175, 55, 0.25); backdrop-filter: blur(4px); }
+  .mig-year b{ display: block; min-width: 3.4ch; font: 700 1.7rem/1 'Cinzel', serif; color: #f2d474; font-variant-numeric: lining-nums tabular-nums; }
+  .mig-play{ display: inline-flex; align-items: center; gap: 7px; min-height: 36px; padding: 6px 14px; border: 1px solid var(--gold); background: var(--gold); color: #1a1405; font: 700 0.8rem 'Cinzel', serif; cursor: pointer; transition: background 0.2s; }
+  .mig-play:hover:not(:disabled){ background: #f2d474; }
+  .mig-play:disabled{ opacity: 0.5; cursor: default; }
+  .mig-play svg{ width: 12px; height: 12px; flex: none; }
+  .mig-speed{ display: inline-flex; border: 1px solid rgba(212, 175, 55, 0.5); }
+  .mig-speed button{ min-width: 38px; min-height: 34px; background: transparent; border: 0; font: 700 0.76rem 'JetBrains Mono', monospace; color: var(--gold2); cursor: pointer; }
+  .mig-speed button.on{ background: var(--gold); color: #1a1405; }
+  .mig-hud-sp{ flex: 1; }
+  .mig-ib{ display: inline-grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1px solid rgba(230, 215, 195, 0.25); background: transparent; color: #e6d7c3; cursor: pointer; transition: color 0.2s, border-color 0.2s; }
+  .mig-ib svg{ width: 15px; height: 15px; }
+  .mig-ib:hover, .mig-ib.on{ color: #f2d474; border-color: var(--gold); }
+  .mig-ib.hint{ color: #f2d474; border-color: #f2d474; box-shadow: 0 0 0 3px rgba(242, 212, 116, 0.25); }
+  .mig-hud button:focus-visible, .mig-pop :focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
+  .mig-toast{ position: absolute; left: 10px; top: 58px; z-index: 2; display: grid; gap: 6px; max-width: min(520px, 75%); pointer-events: none; }
+  .mig-pop{ position: absolute; top: 54px; right: 10px; z-index: 4; display: grid; gap: 6px; width: min(280px, calc(100% - 20px)); padding: 12px 14px; background: rgba(20, 18, 15, 0.97); border: 1px solid rgba(212, 175, 55, 0.45); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5); }
+  .mig-pop[hidden]{ display: none; }
+  .mig-pop-h{ margin: 4px 0 0; font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+  .mig-layers{ display: grid; gap: 2px; font-size: 0.86rem; }
+  .mig-layers label{ display: flex; gap: 8px; align-items: center; min-height: 32px; cursor: pointer; }
+  .mig-layers input{ width: 18px; height: 18px; accent-color: var(--gold); }
+  .mig-flowl{ display: flex; align-items: center; gap: 8px; font-size: 0.84rem; }
+  .mig-flowl select{ flex: 1; min-height: 34px; padding: 4px 8px; background: var(--s2); border: 1px solid var(--line); color: #f0e6d6; font: inherit; }
+  .mig-lite{ min-height: 38px; padding: 8px 10px; background: var(--s2); border: 1px solid var(--line); color: var(--gold2); font: 0.74rem/1.4 'JetBrains Mono', monospace; text-align: left; cursor: pointer; }
+  .mig-lite.hint{ border-color: #f2d474; color: #f2d474; }
+  .mig-pop-note{ margin: 4px 0 0; font-size: 0.76rem; line-height: 1.45; color: var(--dim); }
+  .mig-legend{ position: absolute; left: 10px; bottom: 54px; z-index: 2; display: flex; flex-wrap: wrap; gap: 3px 12px; max-width: calc(100% - 20px); margin: 0; padding: 5px 10px; list-style: none; background: rgba(14, 13, 11, 0.74); font-size: 0.76rem; color: #e6d7c3; pointer-events: none; }
+  .mig-legend li{ display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .mig-legend i{ width: 9px; height: 9px; border-radius: 50%; }
+  .mig-legend i.ghost{ background: transparent; border: 1.5px dashed #f0e6d6; }
+  .mig-side{ display: grid; gap: 20px; align-content: start; padding: 16px; background: var(--s1); border: 1px solid var(--line); }
+  .mig-side-h{ display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 8px; font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+  .mig-side-h b{ font-size: 0.95rem; color: #f0e6d6; letter-spacing: 0; }
+  .mig-stab .jg-bar i{ transition: width 0.4s ease, background 0.4s; }
+  .mig-cross{ display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mig-cross span{ display: grid; gap: 2px; font: 0.7rem 'JetBrains Mono', monospace; color: var(--dim); }
+  .mig-cross b{ font: 700 1.6rem/1 'Cinzel', serif; color: #f2d474; font-variant-numeric: lining-nums tabular-nums; }
+  .mig-log{ display: grid; gap: 14px; margin: 0; padding: 0 0 0 16px; list-style: none; border-left: 2px solid var(--line); }
+  .mig-log li{ position: relative; }
+  .mig-log li::before{ content: ''; position: absolute; left: -22px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 3px var(--s1); }
+  .mig-log li.alt::before{ background: #e5c158; }
+  .mig-log b{ display: block; font: 700 0.74rem 'Cinzel', serif; color: var(--gold2); }
+  .mig-log span{ display: block; margin-top: 2px; font-size: 0.84rem; line-height: 1.4; color: #dccfb8; }
+  .mig-log em{ display: inline-block; margin-top: 5px; padding: 1px 6px; border: 1px solid var(--good); font: normal 700 0.6rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--good); }
+  .mig-log li.alt em{ border-color: #e5c158; color: #e5c158; }
+  .mig-log li.empty::before{ display: none; }
+  .mig-log .empty{ color: var(--dim); font-style: italic; font-size: 0.84rem; }
+  @media (max-width: 760px){
+    .mig-stage{ display: flex; flex-direction: column; }
+    .mig-hud{ position: relative; order: -1; flex-wrap: wrap; gap: 6px; }
+    .mig-year b{ font-size: 1.3rem; }
+    .mig-pop{ top: 50px; }
+    .mig-toast{ top: 56px; }
+    .mig-legend{ position: static; max-width: none; background: none; padding: 8px 10px; }
+  }
+  @media (prefers-reduced-motion: reduce){ .mig-play, .mig-ib{ transition: none; } }
   /* ============ MODULE: ATLASUL MIGRAȚIEI (.m-atlas) ============ */
 
   .m-atlas{
@@ -1540,6 +1559,20 @@
     </ul>
     <p><strong>Precizare:</strong> proiectul are un pas de build la <em>sursă</em>: scripturile Node.js care izolează CSS-ul și asamblează modulele. Livrabilul, în schimb, este un singur fișier HTML static, care se deschide direct în browser, fără server și fără instalare. Codul sursă, cu modulele separate și scripturile de asamblare, este public: <a href="https://github.com/cojocariuemilian73/atelierul-hunilor" target="_blank" rel="noopener">github.com/cojocariuemilian73/atelierul-hunilor</a>.</p>
 
+    <h3>Cum funcționează simularea Marii Migrații</h3>
+    <ul>
+      <li><b>1.820 de agenți</b> (728 în modul ușor), fiecare un grup de oameni, se mișcă independent, de 50 de ori pe an simulat.</li>
+      <li><b>Terenul e citit din pixelii hărții reale:</b> marea e de netrecut, câmpia e ușoară, dealurile și munții încetinesc (stratul „Terenul calculat din hartă”).</li>
+      <li><b>Drumurile nu sunt desenate de mână.</b> Pentru fiecare țintă, algoritmul lui Dijkstra calculează, pe o grilă de 300 × 145 de celule (circa 14 km fiecare), cel mai ușor drum din orice punct; agenții urmează aceste câmpuri de drum (stratul „Drumurile calculate”).</li>
+      <li><b>Granițele romane</b> (Rinul și Dunărea) sunt linii pe care un agent le poate trece doar cu o anumită probabilitate, care depinde de decizii și de stabilitatea Imperiului.</li>
+      <li><b>Presiunea hunilor</b> e un câmp de densitate: celelalte popoare sunt împinse departe de zonele cu mulți huni. De aici vine efectul de domino.</li>
+      <li><b>Desenul</b>: fundalul hărții e pregătit o singură dată, punctele sunt scrise direct ca pixeli, iar strălucirea vine dintr-o hartă de densitate la rezoluție mică; un cadru costă circa 3,6 ms.</li>
+      <li><b>Vandalii, alanii și suebii</b> apar ca un singur grup: au trecut Rinul împreună, în 406, dar erau popoare diferite. E o simplificare a modelului.</li>
+      <li>Generatorul de numere aleatoare are o sămânță fixă: <b>aceleași decizii dau mereu aceeași istorie</b>.</li>
+      <li>Țintele popoarelor urmează pozițiile lor reale din izvoare; deciziile schimbă granițele și stabilitatea, iar restul se petrece de la sine. Rezultatul e un <b>model didactic</b>, nu o reconstituire.</li>
+    </ul>
+    <p>Straturile tehnice (terenul, drumurile, presiunea) se pot vedea pe hartă, din butonul „Straturi”.</p>
+
     <h3>Despre imagini</h3>
     <ul>
       <li><strong>Fotografiile de artefact</strong> din Muzeu sunt documente reale: piese din colecții publice, cu muzeul, locul descoperirii, autorul fotografiei și licența afișate sub fiecare imagine (Wikimedia Commons, CC BY-SA sau CC0).</li>
@@ -1557,9 +1590,6 @@
       <li>Pagina rulează dintr-un singur fișier, fără server și fără instalare; singura resursă externă este fontul de pe Google Fonts (fără el, textul se afișează cu fonturi de rezervă)</li>
     </ul>
 
-    <h3>Valoare educațională</h3>
-    <p><a href="ghid-profesor.html" target="_blank" rel="noopener"><strong>Ghidul profesorului</strong></a>: corespondența cu programa de clasa a IX-a, trei scenarii de lecție și o fișă de lucru cu barem, gata de tipărit.</p>
-    <p>Proiectul poate fi folosit la orele de istorie de gimnaziu/liceu ca material interactiv: jocurile (Imperiul lui Attila, simularea Marii Migrații) pun elevul să decidă și să argumenteze în contextul istoric real, cu sursa fiecărei scene, iar Atlasul și Muzeul susțin localizarea geografică și analiza de sursă istorică.</p>
     <h3>Autor &amp; coordonare</h3>
     <p><strong>Elev autor:</strong> Adăscăliței Rareș Luca</p>
     <p><strong>Profesor îndrumător:</strong> Monica Ciobanu</p>
@@ -2186,10 +2216,10 @@
 
 <section id="mod-migratie" class="site-page">
 <div class="jg">
-  <header class="jg-hero mig-hero">
-    <div class="jg-hero-in">
-      <h1>Marea Migrație, <span>în timp real</span></h1>
-      <p class="jg-sub">Mii de puncte, fiecare un grup de oameni, se mișcă pe harta reală a Europei: hunii vin din răsărit, iar goții, vandalii și ceilalți sunt împinși spre granițele Imperiului. De cinci ori, istoria se oprește și decizi tu. Cercurile punctate arată mereu unde erau popoarele în realitate.</p>
+  <header class="mig-head">
+    <div class="jg-wrap">
+      <h1>Marea Migrație, în timp real</h1>
+      <p>370–476 · cinci decizii · popoarele se mișcă pe harta reală a Europei.</p>
     </div>
   </header>
   <div class="jg-wrap jg-stage">
@@ -2228,7 +2258,6 @@
     </div>
   </div>
 
-  <p class="md-guide">Pentru profesori: <a href="ghid-profesor.html" target="_blank" rel="noopener">Ghidul profesorului</a>, cu scenarii de lecție și fișă de lucru tipăribilă.</p>
 </div>
 </section>
 
@@ -4236,7 +4265,6 @@
         '<h3 class="jg-h2" style="font-size:1.1rem">De ce s-a prăbușit, de fapt, imperiul hunilor?</h3>' +
         '<ul class="imp-lessons">' + LESSONS.map(function(l){ return '<li>' + l + '</li>'; }).join('') + '</ul>' +
         '<p class="jg-src">Surse: Priscus din Panium; Iordanes, Getica; Prosper Tiro; Hydatius. Valorile indicatorilor sunt ilustrative: jocul compară decizii, nu măsoară trecutul.</p>' +
-        '<div class="imp-reflect"><h3>Întrebare de reflecție</h3><p>Care decizie ți-a schimbat cel mai mult drumul față de cel al lui Attila? Explică în trei-patru rânduri, folosind un izvor din joc.</p><p class="jg-src">Pentru profesori: întrebarea se leagă de <a href="ghid-profesor.html#fisa" target="_blank" rel="noopener">fișa de lucru din Ghidul profesorului</a>.</p></div>' +
         '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><button class="jg-btn" id="imp-again" type="button">Joacă din nou</button><button class="jg-btn ghost" id="imp-copy" type="button">Copiază rezultatul</button><a class="jg-btn ghost" href="#mod-migratie">Vezi Marea Migrație în timp real →</a></div>' +
       '</div>';
     updateMeters();
@@ -4393,48 +4421,45 @@
   // =====================================================================
   // 4. Interfață
   // =====================================================================
+  var SVG = function(d, fill){ return '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + d + '" ' + (fill ? 'fill="currentColor"' : 'fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"') + '/></svg>'; };
+  // harta e elementul principal: comenzile stau peste ea, într-o bară subțire; legenda, în colțul din stânga jos;
+  // straturile tehnice și modul ușor se deschid doar din „Straturi”
   root.innerHTML =
-    '<div class="mig-bar">' +
-      '<div class="mig-year"><small>Anul</small><b id="mig-year">370</b></div>' +
-      '<div class="mig-ctl"><button class="jg-btn" id="mig-play" type="button" aria-pressed="false">Pornește</button>' +
-      '<div class="mig-speed" role="group" aria-label="Viteza simulării"><button type="button" data-s="1" class="on" aria-pressed="true">1×</button><button type="button" data-s="2" aria-pressed="false">2×</button><button type="button" data-s="4" aria-pressed="false">4×</button></div>' +
-      '<button class="jg-btn ghost" id="mig-reset" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>De la capăt</button>' +
-      '<button class="jg-btn ghost mig-fs" id="mig-fs" type="button" aria-label="Ecran complet"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Ecran complet</span></button></div>' +
-      '<div class="mig-stab"><label>Stabilitatea Imperiului <b id="mig-stab-v">70</b></label><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
-    '</div>' +
     '<div class="mig-main">' +
       '<div class="mig-stage">' +
         '<canvas id="mig-canvas" width="' + CW + '" height="' + CH + '" role="img" aria-label="Simularea Marii Migrații: puncte colorate reprezintă popoarele care se deplasează pe harta Europei între 370 și 476"></canvas>' +
+        '<div class="mig-hud">' +
+          '<div class="mig-year" aria-live="off"><b id="mig-year">370</b></div>' +
+          '<button class="mig-play" id="mig-play" type="button" aria-pressed="false">Pornește</button>' +
+          '<div class="mig-speed" role="group" aria-label="Viteza simulării"><button type="button" data-s="1" class="on" aria-pressed="true">1×</button><button type="button" data-s="2" aria-pressed="false">2×</button><button type="button" data-s="4" aria-pressed="false">4×</button></div>' +
+          '<span class="mig-hud-sp"></span>' +
+          '<button class="mig-ib" id="mig-reset" type="button" aria-label="De la capăt" title="De la capăt">' + SVG('M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1') + '</button>' +
+          '<button class="mig-ib" id="mig-lay" type="button" aria-label="Straturi" title="Straturi" aria-expanded="false" aria-controls="mig-pop">' + SVG('M8 2l6 3-6 3-6-3zM2 8l6 3 6-3M2 11l6 3 6-3') + '</button>' +
+          '<button class="mig-ib mig-fs" id="mig-fs" type="button" aria-label="Ecran complet" title="Ecran complet">' + SVG('M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10') + '</button>' +
+        '</div>' +
+        '<div class="mig-pop" id="mig-pop" hidden>' +
+          '<p class="mig-pop-h">Straturi</p><div class="mig-layers">' +
+            '<label><input type="checkbox" data-l="real" checked> Lumea reală (reper)</label>' +
+            '<label><input type="checkbox" data-l="terrain"> Terenul calculat din hartă</label>' +
+            '<label><input type="checkbox" data-l="flow"> Drumurile calculate (Dijkstra)</label>' +
+            '<label><input type="checkbox" data-l="press"> Presiunea hunilor</label>' +
+          '</div>' +
+          '<label class="mig-flowl">Drumuri pentru <select id="mig-flowg">' + GROUPS.map(function(g, i){ return '<option value="' + i + '"' + (i === 2 ? ' selected' : '') + '>' + g.name.split(',')[0] + '</option>'; }).join('') + '</select></label>' +
+          '<p class="mig-pop-h">Calculatorul tău</p><button type="button" class="mig-lite" id="mig-lite" aria-pressed="' + LITE + '">' + (LITE ? 'Mod ușor: ' + N.toLocaleString('ro-RO') + ' de agenți. Treci la modul complet' : 'Mod ușor: ' + Math.round(FULL_N * 0.4).toLocaleString('ro-RO') + ' de agenți, dacă merge greu') + '</button>' +
+          '<p class="mig-pop-note">Cum funcționează modelul: <b>Despre proiect</b>, la „Fișă tehnică”.</p>' +
+        '</div>' +
+        '<ul class="mig-legend" id="mig-legend" aria-label="Popoarele">' + GROUPS.map(function(g){ return '<li title="' + g.name + '"><i style="background:' + g.color + '"></i>' + g.name.split(',')[0] + '<small id="mig-where-' + g.id + '" hidden></small></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
         '<div class="mig-toast" id="mig-toast" aria-live="polite"></div><div class="mig-tip" id="mig-tip" hidden></div>' +
         '<div class="mig-over" id="mig-over"></div>' +
         '<span class="mig-credit">Hartă: Alexrk2, Wikimedia Commons, CC BY-SA 3.0</span>' +
         '<div class="mig-tl" id="mig-tl" aria-label="Cronologia simulării: deciziile și evenimentele"></div>' +
       '</div>' +
       '<aside class="mig-side">' +
-        '<p class="jg-eyebrow">Popoarele</p><ul class="mig-legend" id="mig-legend">' + GROUPS.map(function(g){ return '<li><i style="background:' + g.color + '"></i><span>' + g.name + '<small id="mig-where-' + g.id + '"></small></span></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
-        '<p class="jg-eyebrow">Straturi</p><div class="mig-layers">' +
-          '<label><input type="checkbox" data-l="real" checked> Lumea reală (reper)</label>' +
-          '<label><input type="checkbox" data-l="terrain"> Terenul calculat din hartă</label>' +
-          '<label><input type="checkbox" data-l="flow"> Drumurile calculate (Dijkstra)</label>' +
-          '<label><input type="checkbox" data-l="press"> Presiunea hunilor</label>' +
-          '<button type="button" class="mig-flowg" id="mig-flowg">Drumuri pentru: Vizigoții</button>' +
-        '</div>' +
-        '<p class="jg-eyebrow">Calculatorul tău</p><button type="button" class="mig-flowg mig-lite" id="mig-lite" aria-pressed="' + LITE + '">' + (LITE ? 'Mod ușor activ: ' + N.toLocaleString('ro-RO') + ' de agenți. Treci la modul complet' : 'Merge greu? Mod ușor: ' + Math.round(FULL_N * 0.4).toLocaleString('ro-RO') + ' de agenți') + '</button>' +
-        '<p class="jg-eyebrow">Grupuri care au trecut granița</p><div class="mig-cross"><span>Dunărea <b id="mig-cd">0</b></span><span>Rinul <b id="mig-cr">0</b></span></div>' +
-        '<p class="jg-eyebrow">Deciziile tale</p><ol class="mig-log" id="mig-log"></ol>' +
+        '<div class="mig-stab"><p class="mig-side-h">Stabilitatea Imperiului <b id="mig-stab-v">70</b></p><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
+        '<div><p class="mig-side-h">Au trecut granița</p><div class="mig-cross"><span><b id="mig-cd">0</b>Dunărea</span><span><b id="mig-cr">0</b>Rinul</span></div></div>' +
+        '<div><p class="mig-side-h">Deciziile tale</p><ol class="mig-log" id="mig-log"></ol></div>' +
       '</aside>' +
-    '</div>' +
-    '<details class="mig-how"><summary>Cum funcționează simularea</summary>' +
-      '<ul>' +
-        '<li><b>' + N.toLocaleString('ro-RO') + ' de agenți</b>, fiecare un grup de oameni, se mișcă independent, de 50 de ori pe an simulat.</li>' +
-        '<li><b>Terenul e citit din pixelii hărții reale:</b> marea e de netrecut, câmpia e ușoară, dealurile și munții încetinesc (straturi: „Terenul calculat”).</li>' +
-        '<li><b>Drumurile nu sunt desenate de mână.</b> Pentru fiecare țintă, algoritmul lui Dijkstra calculează pe o grilă de 300 × 145 de celule (circa 14 km fiecare) cel mai ușor drum din orice punct; agenții urmează aceste câmpuri de drum.</li>' +
-        '<li><b>Granițele romane</b> (Rinul și Dunărea) sunt linii pe care un agent le poate trece doar cu o anumită probabilitate, care depinde de decizii și de stabilitatea Imperiului.</li>' +
-        '<li><b>Presiunea hunilor</b> e un câmp de densitate: celelalte popoare sunt împinse departe de zonele cu mulți huni. De aici vine efectul de domino.</li>' +
-        '<li><b>Vandalii, alanii și suebii</b> apar ca un singur grup: au trecut Rinul împreună, în 406, dar erau popoare diferite. E o simplificare a modelului.</li>' +
-        '<li>Generatorul de numere aleatoare are o sămânță fixă: <b>aceleași decizii dau mereu aceeași istorie</b>.</li>' +
-        '<li>Țintele popoarelor urmează pozițiile lor reale din izvoare; deciziile schimbă granițele și stabilitatea, iar restul se petrece de la sine. Rezultatul e un <b>model didactic</b>, nu o reconstituire.</li>' +
-      '</ul></details>';
+    '</div>';
 
   var cv = document.getElementById('mig-canvas'), ctx = cv.getContext('2d', { alpha: false });
   var baseCv = document.createElement('canvas'); baseCv.width = CW; baseCv.height = CH;
@@ -4877,7 +4902,7 @@
     draw(); updateHud();
     // calculator lent: după ~2 secunde cu cadre de peste 35 ms, propune modul ușor
     slowEma = slowEma * 0.9 + (performance.now() - c0) * 0.1; slowN++;
-    if (!LITE && !slowWarned && slowN > 90 && slowEma > 35) { slowWarned = true; toast('Simularea merge greu pe acest calculator', 'Apasă „Mod ușor” din dreapta: mai puțini agenți, aceeași istorie.'); document.getElementById('mig-lite').classList.add('hint'); }
+    if (!LITE && !slowWarned && slowN > 90 && slowEma > 35) { slowWarned = true; toast('Simularea merge greu pe acest calculator', 'Deschide „Straturi” de pe hartă și alege „Mod ușor”: mai puțini agenți, aceeași istorie.'); document.getElementById('mig-lite').classList.add('hint'); document.getElementById('mig-lay').classList.add('hint'); }
     if (running) requestAnimationFrame(loop);
   }
   // pe pauză, harta continuă să fie desenată cât timp mai „pulsează” un moment istoric
@@ -4950,7 +4975,7 @@
   }
   function renderLog(){
     var el = document.getElementById('mig-log');
-    el.innerHTML = log.length ? log.map(function(l){ return '<li><b>' + l.y + ' · ' + l.title + '</b>' + l.t + '<em class="' + (l.real ? '' : 'alt') + '">' + (l.real ? 'ca în istorie' : 'altă istorie') + '</em></li>'; }).join('') : '<li class="empty">Deciziile tale apar aici, pe măsură ce le iei.</li>';
+    el.innerHTML = log.length ? log.map(function(l){ return '<li class="' + (l.real ? '' : 'alt') + '"><b>' + l.y + ' · ' + l.title + '</b><span>' + l.t + '</span><em>' + (l.real ? 'ca în istorie' : 'altă istorie') + '</em></li>'; }).join('') : '<li class="empty">Deciziile tale apar aici, pe măsură ce le iei.</li>';
   }
 
   // cronologia de sub hartă
@@ -5070,7 +5095,7 @@
       var r = req.call(stage);
       if (r && r.then) r.then(function(){ if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(function(){}); }).catch(function(){});
     });
-    function onFs(){ var on = !!(document.fullscreenElement || document.webkitFullscreenElement); btn.querySelector('span').textContent = on ? 'Ieși din ecran complet' : 'Ecran complet'; bgKey = ''; labelCache = {}; setTimeout(function(){ draw(); }, 60); }
+    function onFs(){ var on = !!(document.fullscreenElement || document.webkitFullscreenElement); var lb = on ? 'Ieși din ecran complet' : 'Ecran complet'; btn.setAttribute('aria-label', lb); btn.title = lb; bgKey = ''; labelCache = {}; setTimeout(function(){ draw(); }, 60); }
     document.addEventListener('fullscreenchange', onFs); document.addEventListener('webkitfullscreenchange', onFs);
   })();
   document.getElementById('mig-reset').addEventListener('click', function(){ pause(); auto = false; restart(); intro(); });
@@ -5086,12 +5111,19 @@
     // agenții se alocă la încărcare, deci pagina se reîncarcă, pe aceeași simulare
     location.href = location.pathname + (next ? '?usor' : '') + '#mod-migratie';
   });
-  document.getElementById('mig-flowg').addEventListener('click', function(){
-    flowGroup = (flowGroup + 1) % GROUPS.length;
-    this.textContent = 'Drumuri pentru: ' + GROUPS[flowGroup].name.split(',')[0];
+  document.getElementById('mig-flowg').addEventListener('change', function(){
+    flowGroup = +this.value;
     layers.flow = true; root.querySelector('.mig-layers input[data-l="flow"]').checked = true;
     if (!running) draw();
   });
+  (function(){
+    var lay = document.getElementById('mig-lay'), pop = document.getElementById('mig-pop');
+    function setPop(on){ pop.hidden = !on; lay.setAttribute('aria-expanded', on ? 'true' : 'false'); lay.classList.toggle('on', on); }
+    lay.addEventListener('click', function(e){ e.stopPropagation(); setPop(pop.hidden); lay.classList.remove('hint'); });
+    pop.addEventListener('click', function(e){ e.stopPropagation(); });
+    document.addEventListener('click', function(){ if (!pop.hidden) setPop(false); });
+    pop.addEventListener('keydown', function(e){ if (e.key === 'Escape') { setPop(false); lay.focus(); } });
+  })();
   document.addEventListener('keydown', function(e){
     if (!page || !page.classList.contains('active') || e.target.closest('input, button, textarea, select')) return;
     if (e.key === ' ') { e.preventDefault(); document.getElementById('mig-play').click(); }

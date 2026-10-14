@@ -104,7 +104,7 @@ const R = [
   ['sf. sec. IV – sec. V', 'sf. sec. IV–V']
 ];
 
-const files = ['index.html', 'atelierul-hunilor.html', 'ghid-profesor.html', 'qr-joc.html', 'README.md']
+const files = ['index.html', 'atelierul-hunilor.html', 'qr-joc.html', 'README.md']
   .concat(fs.readdirSync(path.join(root, 'module-individuale')).filter(f => f.endsWith('.html')).map(f => 'module-individuale/' + f))
   .concat(['scripturi-build/jocuri/migratie.js', 'scripturi-build/jocuri/imperiu.js', 'scripturi-build/jocuri/migratie.html', 'scripturi-build/jocuri/imperiu.html',
     'scripturi-build/atelier/atelier.js', 'scripturi-build/cronologie/cron.js', 'scripturi-build/aur/aur.html']);
