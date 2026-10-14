@@ -18,7 +18,6 @@ Se deschide direct în browser (dublu-clic) sau la adresa de mai sus.
 ## Structura folderului
 
 - `index.html`, `atelierul-hunilor.html` — site-ul (aceeași pagină, două nume).
-- `ghid-profesor.html` — Ghidul profesorului: corespondența cu programa de clasa a IX-a, trei scenarii de lecție, fișă de lucru cu barem.
 - `qr-joc.html` — pagina cu codul QR care deschide jocul pe telefon (`python scripturi-build/make-qr.py`, are nevoie de `pip install segno`).
 - `og.jpg` — imaginea care apare când trimiți linkul pe WhatsApp sau Facebook.
 - `module-individuale/` — câteva părți ale site-ului ca fișiere separate: articolul, atlasul, muzeul, jocul și simularea. Sunt păstrate pentru prezentare; versiunea de referință e `index.html`.

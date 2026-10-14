@@ -18,13 +18,13 @@
       clue: 'Os real, dintr-un cimitir din vremea stăpânirii hunice. Arată un obicei al epocii, nu și originea omului.' },
     { id: 'ziduri', kind: 'obj', sel: '#img-ziduri', year: 447, label: '413 / 447', name: 'Zidurile Theodosiene',
       clue: 'Ridicate în 413 și refăcute în 447, când Attila amenința Constantinopolul. Monument din epocă, fotografiat azi.' },
-    { id: 'ammianus', kind: 'txt', year: 390, ev: 375, label: 'c. 390', name: 'Ammianus Marcellinus', work: 'Res Gestae, cartea 31',
+    { id: 'ammianus', kind: 'txt', ms: '#img-ms-ammianus', msNote: 'Pagina: Res gestae 31.2, despre huni, într-o copie din secolul al IX-lea (Codex Fuldensis, Biblioteca Apostolică Vaticană, Vat. lat. 1873) · domeniu public, Wikimedia Commons.', year: 390, ev: 375, label: 'c. 390', name: 'Ammianus Marcellinus', work: 'Res Gestae, cartea 31',
       about: 'Descrie sosirea hunilor, în 375.',
       clue: 'Scrie la vreo 15 ani după eveniment, dar nu i-a văzut niciodată pe huni: preia povești și tipare vechi despre „barbari”.' },
     { id: 'priscus', kind: 'txt', year: 475, ev: 449, label: 'după 472', name: 'Priscus din Panium', work: 'Istoria (fragmente)',
       about: 'Povestește solia la curtea lui Attila, din 449.',
       clue: 'Martor ocular: a fost în solie. Cartea lui s-a pierdut; o cunoaștem doar din fragmente copiate de alții.' },
-    { id: 'iordanes', kind: 'txt', year: 551, ev: 453, label: '551', name: 'Iordanes', work: 'Getica',
+    { id: 'iordanes', kind: 'txt', ms: '#img-ms-getica', strip: true, msNote: 'Începutul Geticii într-o copie din secolul al IX-lea (Biblioteca Apostolică Vaticană, Pal. lat. 920, f. 49r) · domeniu public, Wikimedia Commons.', year: 551, ev: 453, label: '551', name: 'Iordanes', work: 'Getica',
       about: 'Povestește moartea lui Attila, din 453.',
       clue: 'Scrie la un secol după, dar rezumă cartea lui Priscus: un izvor târziu care păstrează unul timpuriu.' },
     { id: 'codex', kind: 'copy', year: 780, ev: 551, label: 'sec. VIII', name: 'Getica, manuscrisul de la Heidelberg', work: 'copie medievală a cărții lui Iordanes',
@@ -76,7 +76,7 @@
 
   function collect(){
     items = ITEMS.map(function(it){
-      if (isPaper(it)) return Object.assign({}, it);
+      if (isPaper(it)) { var ms = it.ms && document.querySelector(it.ms); return Object.assign(ms && ms.getAttribute('src') ? { msrc: ms.getAttribute('src') } : {}, it); }
       var node = document.querySelector(it.sel);
       return node && node.getAttribute('src') ? Object.assign({ src: node.getAttribute('src') }, it) : null;
     }).filter(Boolean);
@@ -88,7 +88,8 @@
 
   function cardFace(it){
     return isPaper(it)
-      ? '<span class="md-paper">' + BOOK + '<b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i></span>'
+      ? (it.msrc ? '<span class="md-paper ms' + (it.strip ? ' strip' : '') + '" style="background-image:url(' + it.msrc + ')"><span class="md-ms-band"><small>Izvor scris · ' + esc(it.name) + '</small><i>' + esc(it.work) + '</i></span></span>'
+        : '<span class="md-paper">' + BOOK + '<b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i></span>')
       : '<img src="' + it.src + '" alt="" draggable="false">';
   }
 
@@ -108,7 +109,8 @@
   function inspect(it){
     var p = placed[it.id], k = KIND[it.kind];
     var media = isPaper(it)
-      ? '<div class="md-insp-paper">' + BOOK + '<b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i><p>' + esc(it.about) + '</p></div>'
+      ? (it.msrc ? '<div class="md-insp-paper ms"><div class="md-insp-page' + (it.strip ? ' strip' : '') + '"><img src="' + it.msrc + '" alt="' + esc(it.msNote) + '"></div><b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i><p>' + esc(it.about) + '</p><small>' + esc(it.msNote) + '</small></div>'
+        : '<div class="md-insp-paper">' + BOOK + '<b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i><p>' + esc(it.about) + '</p></div>')
       : '<div class="md-zoom" id="md-zoom"><img src="' + it.src + '" alt="' + esc(p ? it.name : 'Sursa selectată, încă fără titlu') + '" draggable="false"><span class="md-lens" id="md-lens" hidden></span></div>';
     var body;
     if (!p) {

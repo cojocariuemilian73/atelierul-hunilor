@@ -259,7 +259,6 @@
         '<h3 class="jg-h2" style="font-size:1.1rem">De ce s-a prăbușit, de fapt, imperiul hunilor?</h3>' +
         '<ul class="imp-lessons">' + LESSONS.map(function(l){ return '<li>' + l + '</li>'; }).join('') + '</ul>' +
         '<p class="jg-src">Surse: Priscus din Panium; Iordanes, Getica; Prosper Tiro; Hydatius. Valorile indicatorilor sunt ilustrative: jocul compară decizii, nu măsoară trecutul.</p>' +
-        '<div class="imp-reflect"><h3>Întrebare de reflecție</h3><p>Care decizie ți-a schimbat cel mai mult drumul față de cel al lui Attila? Explică în trei-patru rânduri, folosind un izvor din joc.</p><p class="jg-src">Pentru profesori: întrebarea se leagă de <a href="ghid-profesor.html#fisa" target="_blank" rel="noopener">fișa de lucru din Ghidul profesorului</a>.</p></div>' +
         '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><button class="jg-btn" id="imp-again" type="button">Joacă din nou</button><button class="jg-btn ghost" id="imp-copy" type="button">Copiază rezultatul</button><a class="jg-btn ghost" href="#mod-migratie">Vezi Marea Migrație în timp real →</a></div>' +
       '</div>';
     updateMeters();

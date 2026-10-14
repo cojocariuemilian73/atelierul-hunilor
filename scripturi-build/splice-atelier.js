@@ -6,7 +6,9 @@ const path = require('path');
 const root = path.join(__dirname, '..');
 const A = path.join(__dirname, 'atelier');
 const rd = f => fs.readFileSync(path.join(A, f), 'utf8').split('\r\n').join('\n');
-const HTML = rd('atelier.html').trim();
+const b64 = f => 'data:image/webp;base64,' + fs.readFileSync(path.join(A, f)).toString('base64');
+// paginile de manuscris (Wikimedia Commons, domeniu public), micșorate în atelier/*.webp
+const HTML = rd('atelier.html').trim().replace('__MS_AMMIANUS__', b64('ms-ammianus.webp')).replace('__MS_GETICA__', b64('ms-getica.webp'));
 const CSS = rd('atelier.css').replace(/\n+$/, '\n');
 const JS = rd('atelier.js').trim();
 const MARK = '  /* ============ MODULE: ATELIERUL ISTORICULUI (.m-atelier) ============ */';
