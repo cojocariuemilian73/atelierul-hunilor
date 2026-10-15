@@ -52,7 +52,7 @@
     ['Hispania', 40.0, -3.8], ['Africa (Cartagina)', 36.6, 9.5], ['Germania', 51.0, 10.5], ['Noricum și Raetia', 47.6, 12.5], ['Tisa superioară', 48.2, 22.4], ['Transilvania', 46.7, 23.9], ['Crișana', 47.0, 21.8]
   ];
   var DECISIONS = [
-    { year: 376, id: 'd1', at: [44.1, 27.4], place: 'Dunărea, la Durostorum', title: 'Goții la Dunăre', who: 'Ești împăratul Valens',
+    { year: 376, id: 'd1', pic: 'valens', at: [44.1, 27.4], place: 'Dunărea, la Durostorum', title: 'Goții la Dunăre', who: 'Ești împăratul Valens',
       text: 'Fugind din calea hunilor, zeci de mii de goți tervingi s-au strâns pe malul stâng al Dunării și cer să fie primiți în Imperiu.',
       src: 'Ammianus Marcellinus, Res Gestae 31.4–5',
       opts: [
@@ -60,7 +60,7 @@
         { t: 'Îi primești, dar îi lași pe mâna comandanților locali', real: true, fx: {}, set: { d1: 'B' }, note: 'Ammianus scrie că Lupicinus și Maximus i-au înfometat și exploatat pe refugiați. Goții s-au răsculat.' },
         { t: 'Închizi granița', fx: { stab: -3 }, set: { d1: 'C' } }
       ] },
-    { year: 402, id: 'd2', at: [45.46, 9.19], place: 'Mediolanum', title: 'Rinul sau Italia?', who: 'Ești generalul Stilicho',
+    { year: 402, id: 'd2', pic: 'stilicho', at: [45.46, 9.19], place: 'Mediolanum', title: 'Rinul sau Italia?', who: 'Ești generalul Stilicho',
       text: 'Alaric și vizigoții au intrat în Italia. Ca s-o aperi, ai nevoie de trupele care păzesc granița de pe Rin.',
       src: 'Claudian, Războiul gotic (De bello Gothico)',
       opts: [
@@ -68,8 +68,8 @@
         { t: 'Lași armata pe Rin', fx: { stab: -6 }, set: { d2: 'B' } }
       ] },
     // ---------- ACTUL II: ești Attila (rundele din „Imperiul lui Attila”, pe aceeași hartă) ----------
-    { kind: 'act', year: 434.9, id: 'a2', at: [47.0, 20.2], place: 'Câmpia Panonică', title: 'Actul II: ești Attila', opts: [{ t: 'Începe domnia', real: true, set: {} }] },
-    { kind: 'att', year: 435.2, id: 'r1', yl: '435 (sau 439)', at: [44.62, 21.19], place: 'Margus', title: 'Tratatul de la Margus',
+    { kind: 'act', year: 434.9, id: 'a2', pic: 'attila', at: [47.0, 20.2], place: 'Câmpia Panonică', title: 'Actul II: ești Attila', opts: [{ t: 'Începe domnia', real: true, set: {} }] },
+    { kind: 'att', year: 435.2, id: 'r1', pic: 'solid', yl: '435 (sau 439)', at: [44.62, 21.19], place: 'Margus', title: 'Tratatul de la Margus',
       text: 'Regele Rua a murit. Tu și fratele tău Bleda moșteniți conducerea hunilor. La Margus, pe Dunăre, vă întâlniți cu solii Constantinopolului. Hunii negociază călare, iar romanii, ca să nu pară mai prejos, rămân și ei în șa.',
       opts: [
         { t: 'Ceri dublarea tributului, predarea fugarilor și piețe deschise la Dunăre', fx: { aur: 20, prestigiu: 10, loial: 5 }, sim: { stab: -2 }, real: true },
@@ -79,7 +79,7 @@
       real: 'Tratatul de la Margus dublează tributul la 700 de livre de aur pe an. Romanii promit să predea fugarii și să nu se alieze cu dușmanii hunilor. Data e discutată: cei mai mulți istorici o pun în 435, alții în 439.',
       src: 'Priscus din Panium, fragmentul despre tratatul de la Margus',
       q: 'Socotind că nu se cuvine să coboare de pe cai, barbarii au ținut sfatul călare; iar romanii, ca să nu se arate mai prejos, au vorbit și ei tot din șa.', qs: 'Priscus, fr. 2' },
-    { kind: 'att', year: 441, id: 'r2', yl: '441', at: [43.32, 21.9], place: 'Viminacium · Naissus', title: 'Episcopul din Margus',
+    { kind: 'att', year: 441, id: 'r2', pic: 'attila', yl: '441', at: [43.32, 21.9], place: 'Viminacium · Naissus', title: 'Episcopul din Margus',
       text: 'Romanii întârzie plata. Mai mult, episcopul din Margus a trecut Dunărea și a jefuit morminte regale hunice. Ceri predarea lui, iar Constantinopolul refuză.',
       opts: [
         { t: 'Treci Dunărea: Viminacium și Margus sunt primele ținte', fx: { aur: 15, prestigiu: 12, loial: 8, cai: -6 }, sim: { stab: -3, path: [[442, 44.3, 21.4], [443, 43.3, 21.9], [444.3, 47.0, 20.2]] }, real: true },
@@ -89,7 +89,7 @@
       real: 'Hunii atacă. Temându-se că va fi predat, episcopul le deschide chiar el porțile orașului Margus. Cad Viminacium, apoi Naissus; campaniile pustiesc Balcanii.',
       src: 'Priscus din Panium, fragmentul despre episcopul din Margus',
       q: 'Hunii spuneau că episcopul din Margus trecuse în țara lor și, scotocind prin mormintele regilor, furase comorile îngropate acolo.', qs: 'Priscus, fragmentul despre episcop' },
-    { kind: 'att', year: 445, id: 'r3', yl: 'c. 445', at: [47.0, 20.2], place: 'Câmpia Panonică', title: 'Doi regi, un singur imperiu',
+    { kind: 'att', year: 445, id: 'r3', pic: 'attila', yl: 'c. 445', at: [47.0, 20.2], place: 'Câmpia Panonică', title: 'Doi regi, un singur imperiu',
       text: 'Bleda, fratele tău, conduce o parte din neamuri. Doi regi înseamnă două curți, două rânduri de daruri și două voințe care nu se potrivesc mereu.',
       opts: [
         { t: 'Rămâi singur la conducere', fx: { prestigiu: 12, loial: -8, aur: 5 }, sim: {}, real: true },
@@ -99,7 +99,7 @@
       real: 'Bleda moare în jurul anului 445; cronicarul Prosper Tiro scrie că a fost ucis de Attila. De acum, Attila conduce singur un imperiu ținut laolaltă de loialitatea față de persoana lui.',
       src: 'Prosper Tiro, Epitoma chronicon',
       q: 'Bleda, regele hunilor, a fost ucis prin uneltirile fratelui său, Attila.', qs: 'Marcellinus Comes, Chronicon, anul 445' },
-    { kind: 'att', year: 447, id: 'r4', yl: '447', at: [41.01, 28.98], place: 'Constantinopol', title: 'Zidurile au căzut',
+    { kind: 'att', year: 447, id: 'r4', pic: 'ziduri', yl: '447', at: [41.01, 28.98], place: 'Constantinopol', title: 'Zidurile au căzut',
       text: 'Un cutremur dărâmă o parte din zidurile Constantinopolului. Armata ta coboară prin Balcani spre capitala Răsăritului.',
       opts: [
         { t: 'Asediezi capitala cât zidurile sunt la pământ', fx: { prestigiu: 6, cai: -15, loial: -5 }, sim: { stab: -6, path: [[447.5, 43.5, 25.5], [448.1, 41.2, 28.4], [448.9, 47.0, 20.2]] } },
@@ -109,7 +109,7 @@
       real: 'Prefectul Constantinus reface zidurile în circa două luni. Attila nu asediază capitala, dar prin Pacea lui Anatolius primește 6.000 de livre de aur restanțe, un tribut de 2.100 de livre pe an și o fâșie pustie la sud de Dunăre.',
       src: 'Priscus din Panium, fragmentul despre Pacea lui Anatolius; inscripțiile de pe zidurile Theodosiene',
       q: 'Un cutremur puternic a dărâmat cea mai mare parte a zidurilor orașului imperial, împreună cu 57 de turnuri.', qs: 'Marcellinus Comes, Chronicon, anul 447' },
-    { kind: 'att', year: 449, id: 'r5', yl: '449', at: [47.0, 20.2], place: 'Curtea lui Attila', title: 'Complotul',
+    { kind: 'att', year: 449, id: 'r5', pic: 'attila', yl: '449', at: [47.0, 20.2], place: 'Curtea lui Attila', title: 'Complotul',
       text: 'O solie romană sosește la curte, cu interpretul Vigilas. Edeco, unul dintre oamenii tăi, îți dezvăluie că la Constantinopol i s-a promis aur ca să te ucidă.',
       opts: [
         { t: 'Aștepți ca Vigilas să aducă aurul mitei și îl prinzi asupra faptei', fx: { prestigiu: 15, aur: 5 }, sim: {}, real: true },
@@ -119,7 +119,7 @@
       real: 'Vigilas se întoarce cu 50 de livre de aur și e prins. Își scapă fiul plătind încă 50 de livre, iar Attila trimite soli la Constantinopol să-i reproșeze împăratului complotul.',
       src: 'Priscus din Panium, relatarea soliei din 449',
       q: 'Când Vigilas s-a întors la curte, oamenii lui Attila l-au prins și i-au găsit în bagaje aurul pe care îl adusese pentru Edeco.', qs: 'Priscus, relatarea soliei din 449' },
-    { kind: 'att', year: 449.7, id: 'r6', yl: '450', at: [44.42, 12.2], place: 'Ravenna', title: 'Inelul Honoriei',
+    { kind: 'att', year: 449.7, id: 'r6', pic: 'honoria', yl: '450', at: [44.42, 12.2], place: 'Ravenna', title: 'Inelul Honoriei',
       text: 'Noul împărat al Răsăritului, Marcian, refuză să mai plătească tributul. În Apus, Honoria, sora împăratului Valentinian al III-lea, îți trimite un inel și îți cere ajutorul.',
       opts: [
         { t: 'Spre Apus: ceri mâna Honoriei și jumătate din Imperiul de Apus ca zestre', fx: { prestigiu: 10, aur: 8, cai: -12, loial: 5 }, sim: { stab: -2, path: [[450.3, 48.3, 13.0], [451.2, 48.95, 4.4], [451.75, 48.95, 4.4]] }, set: { r6: 'A' }, real: true },
@@ -129,7 +129,7 @@
       real: 'Attila alege Apusul. În 451 trece Rinul cu o armată în care luptă ostrogoți, gepizi și alte neamuri supuse. Departe de stepă, caii găsesc greu pășune.',
       src: 'Priscus din Panium, fragmentul despre Honoria; Iordanes, Getica',
       q: 'Honoria l-a trimis la Attila pe eunucul Hyacinthus, cu bani și cu inelul ei, rugându-l să o scape de căsătoria la care era silită.', qs: 'Priscus, fragmentul despre Honoria, păstrat de Ioan din Antiohia' },
-    { kind: 'att', year: 451.6, id: 'r7', yl: '451', at: [48.95, 4.4], place: 'Câmpiile Catalaunice', title: 'Câmpiile Catalaunice', west: true,
+    { kind: 'att', year: 451.6, id: 'r7', pic: 'catal', yl: '451', at: [48.95, 4.4], place: 'Câmpiile Catalaunice', title: 'Câmpiile Catalaunice', west: true,
       text: 'Generalul Aetius a strâns o coaliție: romani, vizigoți, franci, burgunzi, alani. Bătălia începe după-amiaza târziu și ține până noaptea.',
       opts: [
         { t: 'Lupți până la capăt, pe câmp deschis', fx: { cai: -18, loial: -10, prestigiu: -4 }, sim: { stab: -3, path: [[452.0, 48.6, 7.0], [452.75, 45.9, 13.4], [452.95, 45.8, 13.4]] } },
@@ -139,7 +139,7 @@
       real: 'Iordanes scrie că Attila, închis în tabăra de căruțe, pregătise un rug din șei, ca să nu cadă viu în mâinile dușmanilor. Coaliția nu atacă tabăra, iar hunii se retrag peste Rin.',
       src: 'Iordanes, Getica',
       q: 'O luptă cumplită, schimbătoare, crudă și îndârjită, cum n-a mai povestit nimeni din vechime.', qs: 'Iordanes, Getica, 207' },
-    { kind: 'att', year: 452.85, id: 'r8', yl: '452', at: [45.77, 13.37], place: 'Aquileia', title: 'Italia', west: true,
+    { kind: 'att', year: 452.85, id: 'r8', pic: 'aquileia', yl: '452', at: [45.77, 13.37], place: 'Aquileia', title: 'Italia', west: true,
       text: 'Treci Alpii. Aquileia cade după un asediu lung. Dar în armată bântuie foametea și boala, iar Marcian trimite trupe peste Dunăre, în ținuturile tale.',
       opts: [
         { t: 'Mergi spre Roma', fx: { prestigiu: 8, cai: -18, loial: -8 }, sim: { stab: -8, path: [[453.2, 41.9, 12.5], [453.8, 47.0, 20.2]] } },
@@ -150,8 +150,8 @@
       src: 'Prosper Tiro, Epitoma chronicon; Hydatius, Chronicon',
       q: 'Regele a primit cu cinste întreaga solie și, după ce a promis pacea, s-a retras dincolo de Dunăre.', qs: 'Prosper Tiro, Epitoma chronicon, anul 452' },
     // ---------- ACTUL III: după Attila ----------
-    { kind: 'act', year: 453.3, id: 'a3', at: [47.0, 20.2], place: 'Moartea lui Attila', title: 'Actul III: după Attila', opts: [{ t: 'Continuă', real: true, set: {} }] },
-    { year: 454, id: 'd5', at: [47.6, 21.8], place: 'Țara gepizilor', title: 'Nedao', who: 'Ești Ardaric, regele gepizilor',
+    { kind: 'act', year: 453.3, id: 'a3', pic: 'moartea', at: [47.0, 20.2], place: 'Moartea lui Attila', title: 'Actul III: după Attila', opts: [{ t: 'Continuă', real: true, set: {} }] },
+    { year: 454, id: 'd5', pic: 'apahida', at: [47.6, 21.8], place: 'Țara gepizilor', title: 'Nedao', who: 'Ești Ardaric, regele gepizilor',
       text: 'Attila a murit. Fiii lui își împart neamurile supuse ca pe o moștenire de familie. Tu ai fost unul dintre cei mai de încredere oameni ai lui Attila.',
       more: function(){ var v = verdict(); return v[2] === 2 ? 'În jocul tău, Attila a lăsat o moștenire solidă: neamurile au motive să rămână alături de fiii lui.' : revolted ? 'În jocul tău, neamurile s-au răsculat încă din timpul domniei lui Attila.' : 'Ca în istorie, imperiul ținea doar prin persoana lui Attila.'; },
       src: 'Iordanes, Getica 259–264',
@@ -175,6 +175,27 @@
     '<b>Loialitatea era față de Attila, nu față de un stat.</b> La moartea lui, neamurile supuse s-au răsculat: la Nedao (c. 454), gepizii lui Ardaric i-au învins pe fiii lui Attila.',
     '<b>Departe de stepă, cavaleria își pierdea avantajul.</b> Caii aveau nevoie de pășuni întinse; în Galia și Italia, armata depindea tot mai mult de infanteria popoarelor supuse (teza lui R. P. Lindner).'
   ];
+  // portretele personajelor și iconițele indicatorilor (din joc-imagini.json, puse la asamblare)
+  var JOC_IMG = /*__JOC_IMAGINI__*/null || { portrete: {}, iconite: {} };
+  var PICS = {
+    valens: { src: 'valens', coin: true, credit: 'Valens pe un solid de aur · The Metropolitan Museum of Art, CC0' },
+    stilicho: { src: 'stilicho', credit: 'Stilicho pe dipticul de fildeș de la Monza (c. 400) · domeniu public' },
+    honoria: { src: 'honoria', coin: true, credit: 'Honoria pe un solid bătut la Ravenna (c. 430–450) · CNG, CC BY-SA 2.5' },
+    apahida: { src: 'apahida', credit: 'Aplice de șa ale unui principe gepid, Apahida (sec. V), MNIR · J. Steakley, GFDL' },
+    attila: { src: '#img-attila', credit: 'Attila în Cronica pictată de la Viena (c. 1360): imagine medievală, nu portret' },
+    solid: { src: '#img-solidus', coin: true, credit: 'Solid al lui Teodosie al II-lea, moneda tributului · CC0' },
+    ziduri: { src: '#img-ziduri', credit: 'Zidurile Theodosiene · foto Carole Raddato, CC BY-SA 2.0' },
+    catal: { src: '#img-catalaunice', credit: 'Spieghel Historiael (c. 1330) · domeniu public' },
+    aquileia: { src: '#img-aquileia', credit: 'Asediul Aquileiei, Cronica pictată (c. 1360) · domeniu public' },
+    moartea: { src: '#img-moartea', credit: 'F. Paczka, Moartea lui Attila (1884) · domeniu public' }
+  };
+  function picHtml(key){
+    var pc = PICS[key]; if (!pc) return '';
+    var src = pc.src.charAt(0) === '#' ? (document.querySelector(pc.src) || {}).src : JOC_IMG.portrete[pc.src];
+    if (!src) return '';
+    return '<figure class="mig-pic' + (pc.coin ? ' coin' : '') + '"><img src="' + src + '" alt=""><figcaption>' + pc.credit + '</figcaption></figure>';
+  }
+  function ico(k){ var d = JOC_IMG.iconite[k]; return d ? '<svg class="mig-ico" viewBox="0 0 512 512" aria-hidden="true"><path d="' + d + '" fill="currentColor"/></svg>' : ''; }
   var EVENTS = [
     { year: 375, at: [47.4, 33.4], place: 'Regatul lui Ermanaric', t: '375 · Hunii zdrobesc regatul goților lui Ermanaric', src: 'Ammianus 31.3' },
     { year: 378, at: [41.68, 26.56], place: 'Adrianopol', cond: function(){ return choice.d1 === 'B'; }, t: '378 · Adrianopol: goții răsculați distrug armata romană; împăratul Valens moare', src: 'Ammianus 31.13', fx: { stab: -20 } },
@@ -250,9 +271,9 @@
         '<div class="mig-tl" id="mig-tl" aria-label="Cronologia simulării: deciziile și evenimentele"></div>' +
       '</div>' +
       '<aside class="mig-side">' +
-        '<div class="mig-stab"><p class="mig-side-h">Stabilitatea Imperiului <b id="mig-stab-v">70</b></p><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
+        '<div class="mig-stab"><p class="mig-side-h"><span>' + ico('stab') + 'Stabilitatea Imperiului</span> <b id="mig-stab-v">70</b></p><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
         '<div><p class="mig-side-h">Au trecut granița</p><div class="mig-cross"><span><b id="mig-cd">0</b>Dunărea</span><span><b id="mig-cr">0</b>Rinul</span></div></div>' +
-        '<div class="mig-att" id="mig-att" hidden><p class="mig-side-h">Imperiul lui Attila</p>' + METERS.map(function(m){ return '<div class="jg-meter" id="mig-m-' + m.k + '" style="--c:' + m.c + '" title="' + m.label + ': ' + m.hint + '"><label>' + m.label + ' <b>0</b></label><div class="jg-bar"><i></i></div><span class="jg-delta"></span></div>'; }).join('') + '</div>' +
+        '<div class="mig-att" id="mig-att" hidden><p class="mig-side-h">Imperiul lui Attila</p>' + METERS.map(function(m){ return '<div class="jg-meter" id="mig-m-' + m.k + '" style="--c:' + m.c + '" title="' + m.label + ': ' + m.hint + '"><label><span>' + ico(m.k) + m.label + '</span> <b>0</b></label><div class="jg-bar"><i></i></div><span class="jg-delta"></span></div>'; }).join('') + '</div>' +
         '<div><p class="mig-side-h">Deciziile tale</p><ol class="mig-log" id="mig-log"></ol></div>' +
       '</aside>' +
     '</div>';
@@ -539,11 +560,27 @@
     b.globalCompositeOperation = 'source-over'; b.globalAlpha = 1;
     b.fillStyle = '#0e0d0b'; b.fillRect(0, 0, CW, CH);
     // harta, mai închisă și mai caldă, ca popoarele colorate să iasă în față
-    if ('filter' in b) { b.filter = 'saturate(0.5) brightness(0.58) contrast(1.12) sepia(0.28)'; b.drawImage(baseCv, 0, 0); b.filter = 'none'; }
+    if ('filter' in b) { b.filter = 'sepia(0.8) saturate(0.62) brightness(0.62) contrast(1.1)'; b.drawImage(baseCv, 0, 0); b.filter = 'none'; }
     else { b.drawImage(baseCv, 0, 0); b.fillStyle = 'rgba(18, 13, 8, 0.5)'; b.fillRect(0, 0, CW, CH); }
     var vg = b.createRadialGradient(CW / 2, CH / 2, CH * 0.32, CW / 2, CH / 2, CW * 0.72);
     vg.addColorStop(0, 'rgba(10,8,6,0)'); vg.addColorStop(1, 'rgba(10,8,6,0.66)');
     b.fillStyle = vg; b.fillRect(0, 0, CW, CH);
+    // granulația hârtiei: zgomot fin, desenat o singură dată
+    var gn = document.createElement('canvas'); gn.width = gn.height = 96; var gx = gn.getContext('2d'), gd = gx.createImageData(96, 96);
+    for (var gi = 0; gi < gd.data.length; gi += 4) { var gv = 120 + Math.random() * 90; gd.data[gi] = gv; gd.data[gi + 1] = gv * 0.86; gd.data[gi + 2] = gv * 0.62; gd.data[gi + 3] = 16; }
+    gx.putImageData(gd, 0, 0); b.fillStyle = b.createPattern(gn, 'repeat'); b.fillRect(0, 0, CW, CH);
+    // cadrul dublu, ca la hărțile vechi
+    b.strokeStyle = 'rgba(212, 175, 55, 0.55)'; b.lineWidth = 2; b.strokeRect(9, 9, CW - 18, CH - 18);
+    b.strokeStyle = 'rgba(212, 175, 55, 0.3)'; b.lineWidth = 1; b.strokeRect(15, 15, CW - 30, CH - 30);
+    // roza vânturilor, în colțul din dreapta jos
+    (function(cx, cy, r){
+      b.save(); b.translate(cx, cy); b.strokeStyle = 'rgba(242, 212, 116, 0.55)'; b.fillStyle = 'rgba(242, 212, 116, 0.32)'; b.lineWidth = 1.2;
+      b.beginPath(); b.arc(0, 0, r * 0.62, 0, Math.PI * 2); b.stroke();
+      for (var k = 0; k < 8; k++) { var a = k * Math.PI / 4, l = k % 2 ? r * 0.55 : r, w = r * 0.12;
+        b.beginPath(); b.moveTo(Math.cos(a) * l, Math.sin(a) * l); b.lineTo(Math.cos(a + Math.PI / 2) * w, Math.sin(a + Math.PI / 2) * w); b.lineTo(0, 0); b.closePath(); b.fill(); b.stroke(); }
+      b.fillStyle = 'rgba(242, 212, 116, 0.8)'; b.font = 'italic 600 ' + Math.round(r * 0.42) + 'px "Cormorant Garamond", Georgia, serif'; b.textAlign = 'center'; b.fillText('N', 0, -r - 6);
+      b.restore();
+    })(CW - 70, CH - 120, 34);
     if (layers.terrain) { b.imageSmoothingEnabled = false; b.globalAlpha = 0.7; b.drawImage(terrCv, 0, 0, CW, CH); b.globalAlpha = 1; b.imageSmoothingEnabled = true; }
     // limesul: o linie aurie cu halou
     Object.keys(FRONT).forEach(function(k){
@@ -557,27 +594,29 @@
     if (txtScale < 2.5) {
       label('LIMES · RINUL', proj(49.4, 7.2), '#f2d474', 'right', 11, 0.5, b);
       label('LIMES · DUNĂREA', proj(43.35, 24.4), '#f2d474', 'center', 11, 0.5, b);
-      label('IMPERIUL ROMAN', proj(42.6, 13.6), 'rgba(246,237,220,0.62)', 'center', 14, 4, b);
+      // provinciile și mările, în latină, ca pe o hartă veche
+      [['GALLIA', 46.9, 2.6], ['HISPANIA', 40.3, -4.0], ['ITALIA', 42.7, 13.0], ['PANNONIA', 46.9, 17.6], ['THRACIA', 42.1, 26.2], ['GERMANIA', 51.2, 10.5], ['SCYTHIA', 47.6, 39.0], ['DACIA', 46.1, 24.4]].forEach(function(r){ label(r[0], proj(r[1], r[2]), 'rgba(246, 237, 220, 0.5)', 'center', 15, 4, b, true); });
+      [['Pontus Euxinus', 43.4, 34.6], ['Mare Nostrum', 37.2, 19.6], ['Oceanus', 46.0, -6.5]].forEach(function(r){ label(r[0], proj(r[1], r[2]), 'rgba(170, 205, 235, 0.6)', 'center', 15, 1, b, true); });
     }
     bgKey = layers.terrain + '|' + txtScale;
   }
 
   // etichetele: fiecare text e desenat o dată într-o imagine mică, apoi doar copiat
   var labelCache = {};
-  function labelSprite(text, color, size, spacing){
-    var px = Math.round(size * txtScale), key = text + '|' + color + '|' + px + '|' + spacing, s = labelCache[key];
+  function labelSprite(text, color, size, spacing, serif){
+    var px = Math.round(size * txtScale), key = text + '|' + color + '|' + px + '|' + spacing + '|' + !!serif, s = labelCache[key];
     if (s) return s;
-    var c = document.createElement('canvas'), x = c.getContext('2d'), font = '700 ' + px + 'px "JetBrains Mono", monospace';
+    var c = document.createElement('canvas'), x = c.getContext('2d'), font = serif ? 'italic 600 ' + px + 'px "Cormorant Garamond", Georgia, serif' : '700 ' + px + 'px "JetBrains Mono", monospace';
     x.font = font; if ('letterSpacing' in x) x.letterSpacing = (spacing * txtScale) + 'px';
     var pad = Math.ceil(px * 0.45), w = Math.ceil(x.measureText(text).width) + pad * 2, h = Math.ceil(px * 1.5) + pad;
     c.width = w; c.height = h;
     x.font = font; if ('letterSpacing' in x) x.letterSpacing = (spacing * txtScale) + 'px';
-    x.textBaseline = 'middle'; x.lineJoin = 'round'; x.lineWidth = Math.max(3, px * 0.32);
+    x.textBaseline = 'middle'; x.lineJoin = 'round'; x.lineWidth = serif ? Math.max(2, px * 0.16) : Math.max(3, px * 0.32);
     x.strokeStyle = 'rgba(12,10,8,0.92)'; x.strokeText(text, pad, h / 2); x.fillStyle = color; x.fillText(text, pad, h / 2);
     return (labelCache[key] = { c: c, w: w, h: h, pad: pad });
   }
-  function label(text, p, color, align, size, spacing, target){
-    var s = labelSprite(text, color, size || 13, spacing === undefined ? 0.5 : spacing), c = target || ctx;
+  function label(text, p, color, align, size, spacing, target, serif){
+    var s = labelSprite(text, color, size || 13, spacing === undefined ? 0.5 : spacing, serif), c = target || ctx;
     var x = (p[0] - VB.x) * SC, y = (p[1] - VB.y) * SC;
     var left = align === 'center' ? x - s.w / 2 : align === 'right' ? x - s.w + s.pad : x - s.pad;
     c.drawImage(s.c, Math.round(left), Math.round(y - s.h / 2 - s.h * 0.12));
@@ -782,8 +821,8 @@
     if (auto) { var o = d.opts.filter(function(x){ return x.real; })[0]; apply(d, o); if (d.kind === 'att') toast(d.yl + ' · ' + d.title + ': ' + o.t.charAt(0).toLowerCase() + o.t.slice(1), d.src); if (d.kind === 'act') toast(d.title); setTimeout(play, 700); return; }
     if (d.kind === 'act') { apply(d, d.opts[0]); return actDialog(d); }
     if (d.kind === 'att') return roundDialog(d);
-    over.className = 'mig-over show';
-    over.innerHTML = '<div class="mig-dec" role="dialog" aria-modal="true" aria-labelledby="mig-dt"><h3 id="mig-dt"><span class="mig-yr">' + Math.floor(d.year) + '</span>' + d.title + '</h3><p class="mig-who">' + d.who + '</p><p>' + d.text + (d.more ? ' <b>' + d.more() + '</b>' : '') + '</p>' +
+    over.className = 'mig-over show big';
+    over.innerHTML = '<div class="mig-dec" role="dialog" aria-modal="true" aria-labelledby="mig-dt">' + picHtml(d.pic) + '<h3 id="mig-dt"><span class="mig-yr">' + Math.floor(d.year) + '</span>' + d.title + '</h3><p class="mig-who">' + d.who + '</p><p>' + d.text + (d.more ? ' <b>' + d.more() + '</b>' : '') + '</p>' +
       '<div class="jg-choices">' + d.opts.map(function(o, i){ return '<button class="jg-choice" type="button" data-i="' + i + '"><i>' + 'ABC'[i] + '</i><span>' + o.t + '</span></button>'; }).join('') + '</div>' +
       '<p class="jg-src">Sursa: ' + d.src + '</p></div>';
     Array.prototype.forEach.call(over.querySelectorAll('.jg-choice'), function(b){
@@ -794,14 +833,14 @@
   function actDialog(d){
     var h, btn;
     if (d.id === 'a2') {
-      h = '<h3 id="mig-dt"><span class="mig-yr">434</span>' + d.title + '</h3><p class="mig-who">Regele Rua a murit · opt momente reale, 435–452</p>' +
+      h = picHtml(d.pic) + '<h3 id="mig-dt"><span class="mig-yr">434</span>' + d.title + '</h3><p class="mig-who">Regele Rua a murit · opt momente reale, 435–452</p>' +
         '<p>Hunii stăpânesc acum Câmpia Panonică. De aici înainte nu mai ești de partea Romei: ești Attila. Opt momente din istoria hunilor, la fiecare trei decizii; după fiecare afli ce s-a întâmplat în realitate și din ce izvor știm. Alegerile tale mută hunii pe hartă și schimbă stabilitatea Imperiului.</p>' +
-        '<ul class="jg-how">' + METERS.map(function(m){ return '<li><b style="color:' + m.c + '">' + m.label + '</b>' + m.hint.charAt(0).toUpperCase() + m.hint.slice(1) + (/[.…]$/.test(m.hint) ? '' : '.') + '</li>'; }).join('') + '</ul>' +
+        '<ul class="jg-how">' + METERS.map(function(m){ return '<li><b style="color:' + m.c + '">' + ico(m.k) + m.label + '</b>' + m.hint.charAt(0).toUpperCase() + m.hint.slice(1) + (/[.…]$/.test(m.hint) ? '' : '.') + '</li>'; }).join('') + '</ul>' +
         '<p>După fiecare rundă, războinicii trebuie răsplătiți: aurul scade cu ' + UPKEEP + '. Dacă loialitatea neamurilor supuse coboară la 10, se răscoală înainte de vreme. Și gândește-te din timp: ce rămâne din imperiu după tine?</p>';
       btn = 'Începe domnia →';
     } else {
       var v = verdict();
-      h = '<h3 id="mig-dt"><span class="mig-yr">453</span>' + d.title + '</h3><p class="mig-who">' + (revolted ? 'Domnia ta s-a încheiat mai devreme' : 'Attila moare în noaptea nunții cu Ildico') + '</p>' +
+      h = picHtml(d.pic) + '<h3 id="mig-dt"><span class="mig-yr">453</span>' + d.title + '</h3><p class="mig-who">' + (revolted ? 'Domnia ta s-a încheiat mai devreme' : 'Attila moare în noaptea nunții cu Ildico') + '</p>' +
         '<p class="imp-verdict">' + v[0] + '</p><p>' + v[1] + '</p>' + attTable() +
         '<p>Acum ești Ardaric, regele gepizilor, unul dintre cei mai de încredere oameni ai lui Attila. Simularea merge mai departe, până la sfârșitul Imperiului de Apus, în 476.</p>';
       btn = 'Continuă: ești Ardaric →';
@@ -811,11 +850,11 @@
   }
   function attTable(){
     var hs = histAtt();
-    return '<div class="mig-attcmp">' + METERS.map(function(m){ return '<span><b>' + m.label + '</b><i style="--c:' + m.c + '"><s style="width:' + att[m.k] + '%"></s></i>' + att[m.k] + '<small>Attila: ' + hs[m.k] + '</small></span>'; }).join('') + '</div>';
+    return '<div class="mig-attcmp">' + METERS.map(function(m){ return '<span><b>' + ico(m.k) + m.label + '</b><i style="--c:' + m.c + '"><s style="width:' + att[m.k] + '%"></s></i>' + att[m.k] + '<small>Attila: ' + hs[m.k] + '</small></span>'; }).join('') + '</div>';
   }
   function roundDialog(d){
     var n = ROUNDS.indexOf(d) + 1;
-    dialog('<h3 id="mig-dt"><span class="mig-yr">' + d.yl + '</span>' + d.title + '</h3><p class="mig-who">Ești Attila · runda ' + n + ' din ' + ROUNDS.length + ' · ' + d.place + '</p><p>' + d.text + '</p>' +
+    dialog(picHtml(d.pic) + '<h3 id="mig-dt"><span class="mig-yr">' + d.yl + '</span>' + d.title + '</h3><p class="mig-who">Ești Attila · runda ' + n + ' din ' + ROUNDS.length + ' · ' + d.place + '</p><p>' + d.text + '</p>' +
       '<div class="jg-choices" id="mig-ch">' + d.opts.map(function(o, i){ return '<button class="jg-choice" type="button" data-i="' + i + '"><i>' + 'ABC'[i] + '</i><span>' + o.t + '</span></button>'; }).join('') + '</div><div id="mig-out" aria-live="polite"></div>', 'mig-dt');
     Array.prototype.forEach.call(over.querySelectorAll('#mig-ch .jg-choice'), function(b){
       b.addEventListener('click', function(){
