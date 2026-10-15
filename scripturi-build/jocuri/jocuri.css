@@ -261,3 +261,33 @@
     .mig-legend{ position: static; max-width: none; background: none; padding: 8px 10px; }
   }
   @media (prefers-reduced-motion: reduce){ .mig-play, .mig-ib{ transition: none; } }
+  /* un singur joc: actul II (Attila) în panoul din dreapta, în ferestre și în cronologie */
+  .mig-att{ display: grid; gap: 10px; }
+  .mig-att[hidden]{ display: none; }
+  .mig-att .mig-side-h{ margin-bottom: 0; color: #e0626c; }
+  .mig-att .jg-meter label{ margin-bottom: 4px; }
+  .mig-tl-dec.att{ top: 10px; width: 10px; height: 10px; border-color: #e0626c; }
+  .mig-tl-dec.att.done{ background: #8fbd82; border-color: #8fbd82; } .mig-tl-dec.att.done.alt{ background: #f0a25c; border-color: #f0a25c; }
+  .mig-tl-dec.skip{ opacity: 0.3; }
+  .mig-log li.att b{ color: #f4a0a6; }
+  .mig-acts{ display: grid; gap: 8px; margin: 0 0 12px; padding: 0; list-style: none; }
+  .mig-acts li{ padding: 8px 12px; background: var(--s2); border-left: 3px solid var(--gold); line-height: 1.5; color: #e0d3bd; font-size: 0.92rem; }
+  .mig-acts li:nth-child(2){ border-left-color: #e0626c; }
+  .mig-acts li b{ display: block; color: #f6eddc; }
+  .mig-dec .jg-how{ margin: 10px 0 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px; }
+  .mig-dec .jg-how li{ padding: 8px 10px; font-size: 0.84rem; }
+  .mig-dec .imp-verdict{ font-size: 1.25rem; }
+  .mig-attcmp{ display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px 14px; margin: 8px 0 12px; }
+  .mig-attcmp span{ display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 8px; font: 700 0.8rem 'JetBrains Mono', monospace; color: #f0e6d6; }
+  .mig-attcmp b{ grid-column: 1 / -1; font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); }
+  .mig-attcmp i{ display: block; height: 6px; background: var(--s3); }
+  .mig-attcmp s{ display: block; height: 100%; background: var(--c); }
+  .mig-attcmp small{ grid-column: 1 / -1; font: 0.66rem 'JetBrains Mono', monospace; color: var(--dim); }
+  .mig-end-h{ margin: 14px 0 4px; font: 700 1rem 'Cinzel', serif; color: #f4a0a6; }
+  .mig-over{ z-index: 6; }
+  .mig-acts li{ padding: 6px 10px; font-size: 0.86rem; line-height: 1.4; }
+  .jg-choice .imp-tag{ grid-column: 2; margin-top: -6px; }
+  /* rundele lui Attila și actele: fereastră mare, peste toată pagina (harta rămâne în spate) */
+  .mig-over.big{ position: fixed; inset: 0; z-index: 400; padding: 20px; background: rgba(10, 10, 12, 0.72); }
+  .mig-over.big .mig-dec{ width: min(720px, 100%); max-height: calc(100vh - 40px); }
+  .mig-log{ max-height: 380px; overflow-y: auto; padding-right: 4px; }

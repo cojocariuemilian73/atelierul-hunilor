@@ -6,12 +6,11 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
 
 ## Ce deschizi
 
-**`index.html`** (identic cu `atelierul-hunilor.html`) — site-ul complet, într-un singur fișier, cu patru pagini:
+**`index.html`** (identic cu `atelierul-hunilor.html`) — site-ul complet, într-un singur fișier, cu trei pagini:
 
-1. **Acasă / Articol** — articolul cu 23 de note și bibliografie, cronologia cu zoom și filtre, graficul „Aurul hunilor”, atlasul migrației, muzeul virtual, miturile verificate la sfârșitul capitolelor și glosarul.
-2. **Imperiul lui Attila** — joc de strategie, 8 runde reale (435–452), cu fragmente din izvoare.
-3. **Marea Migrație, în timp real** — simulare cu agenți pe harta reală (370–476), cinci decizii istorice, mod ușor pentru calculatoare lente.
-4. **Masa istoricului** — 13 surse de așezat pe axa timpului și de clasificat.
+1. **Acasă / Articol** — articolul cu 23 de note și bibliografie, cronologia pe epoci, graficul „Aurul hunilor”, atlasul migrației, muzeul virtual, miturile verificate la sfârșitul capitolelor și glosarul.
+2. **Attila și Marea Migrație** — un singur joc, în trei acte, pe harta reală (370–476): simulare cu agenți (Valens, Stilicho), cele 8 runde ale lui Attila (435–452) cu aur, renume, loialitate, cavalerie și moștenire, apoi Ardaric la Nedao; mod ușor pentru calculatoare lente. Adresa veche `#mod-game` duce tot aici.
+3. **Masa istoricului** — 13 surse de așezat pe axa timpului și de clasificat.
 
 Se deschide direct în browser (dublu-clic) sau la adresa de mai sus.
 
@@ -30,7 +29,7 @@ Fiecare parte interactivă are sursele într-un folder separat. După o modifica
 
 | Partea | Sursele | Comanda |
 |---|---|---|
-| Imperiul lui Attila, simularea, stilurile jocurilor | `scripturi-build/jocuri/` | `node scripturi-build/splice-jocuri.js` |
+| Jocul (simularea cu actul lui Attila), stilurile jocurilor | `scripturi-build/jocuri/` | `node scripturi-build/splice-jocuri.js`, apoi `node scripturi-build/splice-joc-unic.js` |
 | Masa istoricului | `scripturi-build/atelier/` | `node scripturi-build/splice-atelier.js` |
 | Cronologia | `scripturi-build/cronologie/` | `node scripturi-build/splice-cronologie.js` |
 | Aurul hunilor | `scripturi-build/aur/` | `node scripturi-build/splice-aur.js` |
