@@ -316,7 +316,7 @@
   .lab-how{ display: inline-flex; align-items: center; gap: 10px; margin: -10px 0 26px; padding: 8px 14px; border: 1px solid var(--line-strong); font-size: 0.95rem; color: var(--ink); }
   .lab-dot{ flex: none; width: 16px; height: 16px; border-radius: 50%; background: #a71d2a; box-shadow: 0 0 0 2px #f0cf6a; }
   /* mx: mituri în capitole */
-  h1, h2, h3, h4{ font-variant-numeric: lining-nums; }
+  h1, h2, h3, h4{ font-variant-numeric: lining-nums !important; }
   .mx{ margin: 34px 0 8px; border-top: 1px solid var(--line-strong); }
   .mx-head{ display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; padding: 18px 0 6px; }
   .mx-title{ margin: 0; font: 600 1.45rem/1.2 'Cormorant Garamond', serif; color: var(--ink); }
@@ -504,28 +504,47 @@
   .hx-legend span{ display: inline-flex; align-items: center; gap: 6px; }
   .hx-legend i{ width: 3px; height: 11px; border-radius: 2px; background: var(--c); }
 
-  .hx-folio{ display: grid; grid-template-columns: 170px minmax(0, 1fr) minmax(0, 0.8fr); grid-template-areas: "yr body img" "yr nav nav"; gap: 6px 32px; margin: 26px 0 0; padding: 28px 0 0; border-top: 1px solid var(--line-strong); }
-  .hx-folio.noimg{ grid-template-columns: 170px minmax(0, 1fr); grid-template-areas: "yr body" "yr nav"; }
-  .hx-yr{ grid-area: yr; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding-right: 24px; border-right: 1px solid var(--line); }
-  .hx-big{ font: 700 4rem/0.9 'Cinzel', serif; color: var(--accent-2); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em; }
+
+  /* dedesubt: harta (unde s-a întâmplat, cu drumul hunilor până atunci) și fila evenimentului */
+  .hx-main{ display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 0 28px; align-items: start; margin: 22px 0 0; padding: 22px 0 0; border-top: 1px solid var(--line-strong); }
+  .hx-map{ position: relative; margin: 0; }
+  .hx-main.nomap{ grid-template-columns: minmax(0, 1fr); }
+  .hx-main.nomap .hx-map{ display: none; }
+  .hx-map svg{ display: block; width: 100%; height: auto; border: 1px solid var(--line-strong); background: #0e0e10; }
+  .hx-map svg use{ filter: saturate(0.6) brightness(0.78) sepia(0.15); }
+  .hx-map figcaption{ margin-top: 6px; font: 0.64rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
+  .hx-route{ fill: none; stroke: #e0626c; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 7 5; }
+  .hx-hun circle{ fill: #e0626c; stroke: #14120f; stroke-width: 1.5; }
+  .hx-hun.near text{ display: none; }
+  .hx-hun text{ font: 700 13px 'JetBrains Mono', monospace; fill: #f4a0a6; paint-order: stroke; stroke: rgba(14, 13, 11, 0.9); stroke-width: 2.5px; letter-spacing: 0.08em; }
+  .hx-pt{ fill: var(--c); stroke: #14120f; stroke-width: 0.8; cursor: pointer; transition: opacity 0.3s, r 0.3s; }
+  .hx-pt.future{ opacity: 0.22; }
+  .hx-pt:hover{ opacity: 1; }
+  .hx-ring{ fill: none; stroke: #f2d474; stroke-width: 2.4; }
+  .hx-ring.pulse{ animation: hx-ping 1.4s ease-out; transform-box: fill-box; transform-origin: center; }
+  @keyframes hx-ping{ from{ stroke-width: 6; opacity: 0.3; } }
+  .hx-place{ font: 600 17px 'Source Serif 4', Georgia, serif; fill: #f6eddc; paint-order: stroke; stroke: rgba(14, 13, 11, 0.9); stroke-width: 4px; }
+
+  .hx-folio{ min-width: 0; }
+  .hx-yr{ display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 0 0 10px; padding: 0 0 10px; border-bottom: 1px solid var(--line); }
+  .hx-big{ font: 700 3.2rem/0.95 'Cinzel', serif; color: var(--accent-2); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em; }
   .hx-date{ font: 0.74rem 'JetBrains Mono', monospace; color: var(--ink); }
-  .hx-cat{ display: inline-flex; align-items: center; gap: 7px; margin-top: 10px; font: 0.72rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
+  .hx-cat{ display: inline-flex; align-items: center; gap: 7px; font: 0.72rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
   .hx-cat i{ width: 3px; height: 12px; border-radius: 2px; background: var(--c); }
-  .hx-count{ font: 0.68rem 'JetBrains Mono', monospace; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
-  .hx-body{ grid-area: body; min-width: 0; }
-  .hx-body h4{ margin: 0 0 10px; font: 600 2rem/1.1 'Cormorant Garamond', serif; text-wrap: balance; }
-  .hx-body p{ margin: 0; max-width: 60ch; color: var(--ink-dim); line-height: 1.65; }
-  .hx-img{ grid-area: img; margin: 0; align-self: start; }
-  .hx-img img{ display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--line); }
-  .hx-nav{ grid-area: nav; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
-  .hx-step{ display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 8px 12px; border: 1px solid var(--line); background: transparent; color: var(--ink); text-align: left; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+  .hx-count{ margin-left: auto; font: 0.68rem 'JetBrains Mono', monospace; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+  .hx-body h4{ margin: 0 0 8px; font: 600 1.8rem/1.12 'Cormorant Garamond', serif; text-wrap: balance; }
+  .hx-where{ margin: 0 0 8px; font: 0.72rem 'JetBrains Mono', monospace; color: #f2d474; }
+  .hx-body p{ margin: 0; color: var(--ink-dim); line-height: 1.65; }
+  .hx-img{ margin: 14px 0 0; }
+  .hx-img img{ display: block; width: 100%; max-height: 190px; object-fit: cover; border: 1px solid var(--line); }
+  .hx-nav{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .hx-step{ display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 10px; border: 1px solid var(--line); background: transparent; color: var(--ink); text-align: left; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
   .hx-step.next{ flex-direction: row-reverse; text-align: right; }
   .hx-step svg{ flex: none; width: 14px; height: 14px; color: var(--accent-2); }
-  .hx-step span{ display: flex; flex-direction: column; gap: 2px; min-width: 0; font: 600 1rem/1.2 'Cormorant Garamond', serif; }
-  .hx-step small{ font: 0.66rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
+  .hx-step span{ display: flex; flex-direction: column; gap: 2px; min-width: 0; font: 600 0.98rem/1.2 'Cormorant Garamond', serif; }
+  .hx-step small{ font: 0.64rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
   .hx-step:hover{ border-color: var(--accent-2); }
-  .hx-era:focus-visible, .hx-step:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; }
-
+  .hx-era:focus-visible, .hx-step:focus-visible, .hx-pt:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; }
   .hx-folio.in > *{ animation: hx-in 0.45s cubic-bezier(.16,1,.3,1) both; }
   .hx-folio.in.back > *{ animation-name: hx-in-back; }
   .hx-folio.in > .hx-body{ animation-delay: 0.04s; }
@@ -533,15 +552,12 @@
   @keyframes hx-in{ from{ opacity: 0; transform: translateX(14px); } }
   @keyframes hx-in-back{ from{ opacity: 0; transform: translateX(-14px); } }
 
-  @media (max-width: 900px){
-    .hx-folio, .hx-folio.noimg{ grid-template-columns: 130px minmax(0, 1fr); grid-template-areas: "yr body" "yr img" "nav nav"; }
-    .hx-folio.noimg{ grid-template-areas: "yr body" "nav nav"; }
-    .hx-big{ font-size: 3.1rem; }
-    .hx-img img{ max-height: 240px; }
-  }
   @media (max-width: 1020px){
     .hx-era .l{ display: none; }
     .hx-era .s{ display: inline; }
+  }
+  @media (max-width: 860px){
+    .hx-main{ grid-template-columns: minmax(0, 1fr); gap: 18px; }
   }
   @media (max-width: 640px){
     .hx-era{ padding-right: 6px; }
@@ -549,19 +565,15 @@
     .hx-era b{ font-size: 0.74rem; }
     .hx-era small{ font-size: 0.58rem; white-space: nowrap; }
     .hx-legend{ justify-content: flex-start; }
-    .hx-folio, .hx-folio.noimg{ grid-template-columns: minmax(0, 1fr); grid-template-areas: "yr" "body" "img" "nav"; gap: 14px; padding-top: 20px; }
-    .hx-yr{ flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 0 0 12px; border-right: 0; border-bottom: 1px solid var(--line); }
     .hx-big{ font-size: 2.6rem; }
-    .hx-cat{ margin-top: 0; }
-    .hx-count{ margin-left: auto; }
-    .hx-body h4{ font-size: 1.6rem; }
-    .hx-nav{ grid-template-columns: 1fr; margin-top: 0; }
+    .hx-body h4{ font-size: 1.55rem; }
+    .hx-nav{ grid-template-columns: 1fr; }
   }
-  @media (prefers-reduced-motion: reduce){ .hx-mk, .hx-era, .hx-tip{ transition: none; } }
+  @media (prefers-reduced-motion: reduce){ .hx-mk, .hx-era, .hx-tip, .hx-pt{ transition: none; } .hx-folio.in > *, .hx-ring.pulse{ animation: none; } }
 
   /* ---------- AURUL HUNILOR: GRAFIC CARE SE CONSTRUIEȘTE LA DERULARE ---------- */
   .gs{ display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(20px, 3vw, 44px); margin: 30px 0 44px; }
-  .gs-chart{ grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--nav-h, 0px) + 24px); align-self: start; padding: 14px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
+  .gs-chart{ grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--nav-h, 0px) + 64px); align-self: start; padding: 14px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
   .gs-chart svg{ display: block; width: 100%; height: auto; }
   .gs-steps{ grid-column: 1; grid-row: 1; }
   .gs-step{ min-height: 62vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.32; transition: opacity 0.5s ease; }
@@ -572,36 +584,35 @@
   .gs-yr{ margin: 0 0 6px !important; font: 700 0.74rem 'JetBrains Mono', monospace; color: var(--accent-2) !important; letter-spacing: 0.06em; text-transform: uppercase; }
   .gs-src{ margin: 10px 0 0; font-size: 0.8rem; color: var(--ink-dim); line-height: 1.5; }
 
-  .gs-grid line{ stroke: color-mix(in srgb, var(--ink) 14%, transparent); stroke-width: 1; }
-  .gs-grid text{ font: 12px 'JetBrains Mono', monospace; fill: var(--ink-dim); text-anchor: end; }
-  .gs-grid .gs-unit{ text-anchor: start; fill: var(--accent-2); font-weight: 700; }
-  .gs-x text{ text-anchor: middle; }
-  .gs-ghost rect{ fill: color-mix(in srgb, #e5c158 5%, transparent); stroke: #e5c158; stroke-opacity: 0.4; stroke-width: 1; stroke-dasharray: 4 4; }
-  .gs-ghost text{ font: 700 24px 'Cinzel', serif; fill: #e5c158; fill-opacity: 0.55; text-anchor: middle; transition: opacity 0.4s; }
-  .gs-ghost .gs-hint{ font: 600 17px 'Cormorant Garamond', serif; fill: var(--ink-dim); fill-opacity: 1; }
-  .gs:not([data-s="0"]) .gs-ghost text{ opacity: 0; }
-  .gs[data-s="4"] .gs-ghost{ opacity: 0; }
+  .gs-base{ stroke: color-mix(in srgb, var(--ink) 22%, transparent); stroke-width: 1; }
+  .gs-unit{ font: 12px 'JetBrains Mono', monospace; fill: var(--ink-dim); text-anchor: middle; transition: opacity 0.4s; }
+  .gs-ghost rect, .gs-ghost path{ fill: color-mix(in srgb, #e5c158 5%, transparent); stroke: #e5c158; stroke-opacity: 0.4; stroke-dasharray: 4 4; }
+  .gs-ghost text{ font: 700 24px 'Cinzel', serif; fill: #e5c158; fill-opacity: 0.55; text-anchor: middle; }
+  .gs-ghost .gs-hint{ font: 600 18px 'Cormorant Garamond', serif; fill: var(--ink-dim); fill-opacity: 1; text-anchor: middle; }
   .gs-ghost{ transition: opacity 0.5s; }
-  .gs-bar{ transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); transition: transform 1s cubic-bezier(.16,1,.3,1), opacity 0.5s; }
-  .gs-lab{ font: 700 13px 'JetBrains Mono', monospace; fill: var(--ink); text-anchor: middle; opacity: 0; transition: opacity 0.4s 0.5s; }
-  .gs-lump, .gs-stop{ opacity: 0; transition: opacity 0.6s 0.4s; }
-  .gs-lump text, .gs-stop text{ font: 700 12px 'JetBrains Mono', monospace; fill: #f2d474; }
-  .gs-stop line{ stroke: #e0626c; stroke-width: 2; stroke-dasharray: 5 4; }
-  .gs-stop text{ fill: #f4a0a6; }
-  .gs[data-s="1"] .b1, .gs[data-s="2"] .b1, .gs[data-s="2"] .b2,
-  .gs[data-s="3"] .b1, .gs[data-s="3"] .b2, .gs[data-s="3"] .b3,
-  .gs[data-s="4"] .gs-bar, .gs[data-s="5"] .gs-bar{ transform: scaleY(1); opacity: 1; }
-  .gs[data-s="1"] .gs-lab.b1, .gs[data-s="2"] .gs-lab.b1, .gs[data-s="2"] .gs-lab.b2,
-  .gs[data-s="3"] .gs-lab, .gs[data-s="5"] .gs-lab{ opacity: 1; }
-  .gs[data-s="3"] .gs-lump, .gs[data-s="5"] .gs-lump, .gs[data-s="5"] .gs-stop{ opacity: 1; }
-  .gs[data-s="4"] .gs-bars{ opacity: 0.12; }
-  .gs-bars, .gs-grid{ transition: opacity 0.6s; }
-  .gs[data-s="4"] .gs-grid{ opacity: 0.2; }
+  .gs:not([data-s="0"]) .gs-ghost{ opacity: 0; }
+  /* monedele cad în teanc, una după alta */
+  .gs-stk ellipse{ opacity: 0; transform: translateY(-70px); transition: transform 0.55s cubic-bezier(.3,1.35,.5,1), opacity 0.2s; }
+  .gs[data-s="1"] .s1 ellipse, .gs[data-s="2"] .s1 ellipse, .gs[data-s="2"] .s2 ellipse,
+  .gs[data-s="3"] .gs-stk ellipse, .gs[data-s="4"] .gs-stk ellipse, .gs[data-s="5"] .gs-stk ellipse{ opacity: 1; transform: none; }
+  .gs-lab{ font: 700 22px 'Cinzel', serif; fill: #f2d474; text-anchor: middle; font-variant-numeric: lining-nums; opacity: 0; transition: opacity 0.4s 0.35s; }
+  .gs-lab.lm{ font-size: 18px; }
+  .gs-who{ font: 12px 'JetBrains Mono', monospace; fill: var(--ink-dim); text-anchor: middle; opacity: 0; transition: opacity 0.4s; }
+  .gs[data-s="1"] .l1, .gs[data-s="2"] .l1, .gs[data-s="2"] .l2, .gs[data-s="3"] .gs-labels text, .gs[data-s="5"] .gs-labels text{ opacity: 1; }
+  .gs-stacks, .gs-labels{ transition: opacity 0.5s, filter 0.5s; }
+  .gs[data-s="4"] .gs-stacks, .gs[data-s="4"] .gs-labels, .gs[data-s="4"] .gs-unit{ opacity: 0.1; }
+  .gs[data-s="5"] .gs-stacks{ filter: saturate(0.25) brightness(0.6); }
+  .gs-stop{ opacity: 0; transition: opacity 0.5s 0.2s; }
+  .gs[data-s="5"] .gs-stop{ opacity: 1; }
+  .gs-stop rect{ fill: rgba(18, 16, 14, 0.9); stroke: #e0626c; stroke-width: 1.5; }
+  .gs-stop text{ font: 700 20px 'Cinzel', serif; fill: #f4a0a6; text-anchor: middle; }
+  .gs-stop text.sm{ font: 13px 'JetBrains Mono', monospace; fill: #e6d7c3; }
   .gs-coins circle{ opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.2); transition: opacity 0.35s, transform 0.5s cubic-bezier(.16,1,.3,1); }
   .gs[data-s="4"] .gs-coins circle{ opacity: 1; transform: none; }
   .gs-coins-lab{ font: 700 12px 'JetBrains Mono', monospace; fill: #f2d474; opacity: 0; transition: opacity 0.5s 0.6s; }
   .gs[data-s="4"] .gs-coins-lab{ opacity: 1; }
   @media (max-width: 860px){
+    .gs-who{ font-size: 15px; } .gs-unit{ font-size: 15px; } .gs-lab{ font-size: 26px; }
     .gs{ grid-template-columns: 1fr; }
     .gs-chart{ grid-column: 1; top: calc(var(--nav-h, 0px) + 8px); z-index: 2; background: var(--paper); padding: 8px; }
     .gs-steps{ grid-row: 2; position: relative; z-index: 3; }
@@ -614,7 +625,7 @@
     .gs-step:first-child{ min-height: 50vh; }
   }
   @media (prefers-reduced-motion: reduce){
-    .gs-bar, .gs-lab, .gs-lump, .gs-stop, .gs-coins circle, .gs-coins-lab, .gs-step, .gs-bars{ transition: none; }
+    .gs-stk ellipse, .gs-lab, .gs-who, .gs-stop, .gs-coins circle, .gs-coins-lab, .gs-step, .gs-stacks, .gs-ghost{ transition: none; }
   }
   /* ---------- /AURUL HUNILOR ---------- */
   /* ---------- MAREA MIGRAȚIE: HARTĂ CU SĂGEȚI ---------- */
@@ -1763,7 +1774,7 @@
     <section id="sec-cronologie">
       <div class="chapter-mark"><span class="chapter-num">02</span><span class="chapter-slash">/</span><span class="chapter-tag">Cronologie interactivă</span></div>
       <h2 class="sec-title">Cronologie interactivă</h2>
-      <p class="sec-sub">Trage de-a lungul liniei sau apasă pe o epocă: dedesubt apare fila fiecărui eveniment. Săgețile te duc la cel dinainte sau la cel de după.</p>
+      <p class="sec-sub">Trage de-a lungul liniei sau apasă pe o epocă. Harta arată unde s-a petrecut fiecare eveniment și până unde ajunseseră hunii în acel an; alături afli ce s-a întâmplat. Poți apăsa și direct pe punctele de pe hartă.</p>
 
       <div class="cron-wrap">
       <div class="hx" id="hx">
@@ -1773,7 +1784,10 @@
           <span class="hx-tip" id="hx-tip" aria-hidden="true"></span>
         </div>
         <p class="hx-legend" id="hx-legend" aria-hidden="true"></p>
-        <article class="hx-folio" id="hx-folio" aria-live="polite"></article>
+        <div class="hx-main">
+          <figure class="hx-map"><svg id="hx-map" viewBox="20 300 600 290" role="img" aria-label="Harta Europei: locul evenimentului ales și drumul hunilor până în acel an"></svg><figcaption>Punctele: unde s-au petrecut evenimentele (cele de mai târziu, estompate). Linia roșie: drumul hunilor până în anul ales. Hartă: Alexrk2, Wikimedia Commons, CC BY-SA 3.0</figcaption></figure>
+          <article class="hx-folio" id="hx-folio" aria-live="polite"></article>
+        </div>
       </div>
         <p class="section-sources">Surse pentru evenimentele din cronologie: moartea lui Ermanaric<sup class="fn" data-n="9">9</sup>, trecerea Dunării de către vizigoți<sup class="fn" data-n="10">10</sup>, Câmpiile Catalaunice și solia la curtea lui Attila<sup class="fn" data-n="11">11</sup>.</p>
       </div>
@@ -1808,49 +1822,27 @@
       <!-- aur:start -->
       <div class="gs" id="gold-story">
         <div class="gs-chart">
-          <svg viewBox="0 0 600 380" role="img" aria-label="Tributul anual în aur plătit hunilor de Imperiul Roman de Răsărit: 350 de livre (c. 422), 700 (435), 2.100 (447) plus 6.000 restanță, apoi nimic din 450." id="gs-svg">
+          <svg viewBox="0 0 600 390" role="img" aria-label="Tributul anual în aur plătit hunilor de Imperiul Roman de Răsărit, ca teancuri de monede: 350 de livre (c. 422), 700 (435), 2.100 (447) plus 6.000 restanță, apoi nimic din 450." id="gs-svg">
             <defs>
-              <pattern id="gs-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#3a2f12"/><rect width="2.6" height="6" fill="#e5c158"/></pattern>
-              <linearGradient id="gs-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2d474"/><stop offset="1" stop-color="#a8841f"/></linearGradient>
               <radialGradient id="gs-coin" cx="0.38" cy="0.35" r="0.7"><stop offset="0" stop-color="#fbe7a1"/><stop offset="0.55" stop-color="#d9b13c"/><stop offset="1" stop-color="#8a6a14"/></radialGradient>
             </defs>
-            <g class="gs-grid">
-              <line x1="60" x2="580" y1="330" y2="330"/>
-              <line x1="60" x2="580" y1="281.7" y2="281.7"/><text x="52" y="285.7">350</text>
-              <line x1="60" x2="580" y1="233.3" y2="233.3"/><text x="52" y="237.3">700</text>
-              <line x1="60" x2="580" y1="136.7" y2="136.7"/><text x="52" y="140.7">1.400</text>
-              <line x1="60" x2="580" y1="40" y2="40"/><text x="52" y="44">2.100</text>
-              <text class="gs-unit" x="60" y="22">livre de aur pe an</text>
-              <g class="gs-x"><text x="60" y="352">420</text><text x="222.5" y="352">430</text><text x="385" y="352">440</text><text x="547.5" y="352">450</text></g>
+            <line class="gs-base" x1="30" x2="570" y1="336" y2="336"/>
+            <g class="gs-ghost" id="gs-ghost" aria-hidden="true"></g>
+            <g class="gs-stacks" id="gs-stacks" aria-hidden="true"></g>
+            <g class="gs-labels" aria-hidden="true">
+              <text class="gs-lab l1" x="120" y="280">350</text><text class="gs-who l1" x="120" y="356">c. 422 · Rua</text>
+              <text class="gs-lab l2" x="250" y="234">700</text><text class="gs-who l2" x="250" y="356">435 · Margus</text>
+              <text class="gs-lab l3" x="380" y="50">2.100</text><text class="gs-who l3" x="380" y="356">447 · Anatolius</text>
+              <text class="gs-lab lm" x="510" y="248">+6.000</text><text class="gs-who lm" x="510" y="356">restanță, o dată</text>
             </g>
-            <g class="gs-ghost" aria-hidden="true">
-              <rect x="92.5" y="281.7" width="211.25" height="48.3"/>
-              <rect x="303.75" y="233.3" width="195" height="96.7"/>
-              <rect x="498.75" y="40" width="48.75" height="290"/>
-              <text x="198" y="313">?</text><text x="401" y="289">?</text><text x="523" y="193">?</text>
-              <text class="gs-hint" x="300" y="150">Derulează: fiecare pas adaugă</text>
-              <text class="gs-hint" x="300" y="170">o nouă plată pe grafic</text>
-            </g>
-            <g class="gs-bars">
-              <rect class="gs-bar b1" x="92.5" y="281.7" width="211.25" height="48.3" fill="url(#gs-gold)"/>
-              <text class="gs-lab b1" x="198" y="272">350 · Rua</text>
-              <rect class="gs-bar b2" x="303.75" y="233.3" width="195" height="96.7" fill="url(#gs-gold)"/>
-              <text class="gs-lab b2" x="401" y="224">700 · Margus</text>
-              <rect class="gs-bar b3" x="498.75" y="40" width="48.75" height="290" fill="url(#gs-gold)"/>
-              <text class="gs-lab b3" x="490" y="66" style="text-anchor:end">2.100 · Anatolius</text>
-              <g class="gs-lump">
-                <rect x="498.75" y="10" width="48.75" height="30" fill="url(#gs-hatch)"/>
-                <path d="M496 12l8.3-6 8.3 6 8.3-6 8.3 6 8.3-6 8.3 6" fill="none" stroke="#14120f" stroke-width="5"/>
-                <text x="490" y="24" text-anchor="end">+6.000 restanță,</text>
-                <text x="490" y="40" text-anchor="end">o singură dată (în afara scării)</text>
-              </g>
-              <g class="gs-stop">
-                <line x1="547.5" x2="547.5" y1="40" y2="330"/>
-                <text x="556" y="318">450</text><text x="556" y="302">stop</text>
-              </g>
+            <g class="gs-stop" aria-hidden="true">
+              <rect x="150" y="150" width="300" height="64" rx="2"/>
+              <text x="300" y="178">450 · plata se oprește</text>
+              <text class="sm" x="300" y="200">Marcian refuză tributul</text>
             </g>
             <g class="gs-coins" id="gs-coins"></g>
             <text class="gs-coins-lab" x="300" y="300" text-anchor="middle">fiecare monedă = 1.000 de solizi</text>
+            <text class="gs-unit" x="300" y="382">o monedă în teanc = 50 de livre de aur (circa 16 kg)</text>
           </svg>
         </div>
         <div class="gs-steps">
@@ -2522,6 +2514,27 @@
   ];
   // epocile liniei: fiecare primește o lățime după câte evenimente are, ca anii aglomerați
   // (cei ai lui Attila) să nu se calce unul pe altul; în interiorul epocii, scara e liniară
+  // unde s-a petrecut fiecare eveniment (lat, lon, loc), în ordinea din CRON
+  var HX_AT = [
+    [46.0, 41.5, 'Între Marea Azov și Caucaz'], [47.4, 33.4, 'Regatul lui Ermanaric'], [44.1, 27.4, 'Dunărea, la Durostorum'],
+    [41.68, 26.56, 'Adrianopol'], [41.9, 12.5, 'Roma, unde scrie Ammianus'], [39.6, 39.0, 'Armenia și Cappadocia'],
+    [50.0, 8.3, 'Rinul, la Mogontiacum'], [43.8, 22.9, 'Castra Martis, în Moesia'], [41.9, 12.5, 'Roma'],
+    [41.01, 28.98, 'Constantinopol'], [41.01, 28.98, 'Constantinopol'], [36.0, -5.4, 'Strâmtoarea Gibraltar'],
+    [44.62, 21.19, 'Margus, pe Dunăre'], [36.85, 10.2, 'Cartagina'], [43.32, 21.9, 'Naissus (Niš)'],
+    [47.0, 20.2, 'Câmpia Panonică'], [43.4, 24.6, 'Râul Utus (Vit)'], [41.01, 28.98, 'Constantinopol'],
+    [47.0, 20.2, 'Curtea lui Attila'], [44.42, 12.2, 'Ravenna'], [48.95, 4.4, 'Câmpiile Catalaunice'],
+    [45.77, 13.37, 'Aquileia'], [47.0, 20.2, 'Curtea lui Attila'], [46.6, 19.0, 'Nedao, în Pannonia (loc nesigur)'],
+    [42.6, 26.0, 'Tracia'], [44.42, 12.2, 'Ravenna']
+  ];
+  // drumul hunilor, după izvoare (același cu cel din joc)
+  var HX_HUNI = [[365, 47.0, 46.5], [370, 46.8, 44.2], [376, 47.2, 35.5], [395, 46.5, 28.5], [420, 47.0, 20.2], [440, 47.0, 20.2], [441.5, 43.4, 21.9], [443, 47.0, 20.2], [447, 43.0, 25.0], [448, 47.0, 20.2], [450.4, 48.6, 12.0], [451.5, 48.95, 4.4], [452, 45.9, 13.4], [453, 47.0, 20.2], [455, 47.0, 20.5], [470, 46.6, 31], [480, 46.6, 32]];
+  function hxProj(lat, lon){
+    var r = Math.PI / 180, p = lat * r, l = (lon - 10) * r, p0 = 52 * r;
+    var k = Math.pow((1 + Math.sin(p) * Math.sin(p0) + Math.cos(p) * Math.cos(p0) * Math.cos(l)) * 0.5, -0.5);
+    var x = 131.579 * (Math.cos(p) * Math.sin(l)) * k + 36.388;
+    var y = 55.11 - 153.610 * (Math.cos(p0) * Math.sin(p) - Math.sin(p0) * Math.cos(p) * Math.cos(l)) * k;
+    return [x / 100 * 690, y / 100 * 1351 * 690 / 1580];
+  }
   var HX_ERAS = [
     { name: 'Sosirea hunilor', short: 'Sosirea', a: 365, b: 392 },
     { name: 'Valul spre Apus', short: 'Spre Apus', a: 392, b: 434 },
@@ -2572,6 +2585,43 @@
         '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + (d < 0 ? 'M10 3L5 8l5 5' : 'M6 3l5 5-5 5') + '" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
         '<span><small>' + (d < 0 ? 'Înainte' : 'Apoi') + ' · ' + esc(n.date) + '</small>' + esc(n.title) + '</span></button>';
     }
+    // harta: punctele evenimentelor, drumul hunilor până în anul ales, inelul pe locul evenimentului
+    var map = document.getElementById('hx-map');
+    // o pagină fără harta de bază (modulul separat) afișează doar fila
+    if (!document.getElementById('shared-img-0')) map.closest('.hx-main').classList.add('nomap');
+    map.innerHTML = '<use href="#shared-img-0"/><rect x="20" y="300" width="600" height="290" fill="rgba(14, 13, 11, 0.3)"/>' +
+      '<path class="hx-route" id="hx-route"/>' +
+      CRON.map(function(e, i){ var q = hxProj(HX_AT[i][0], HX_AT[i][1]); return '<circle class="hx-pt" data-i="' + i + '" cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="5.5" style="--c:' + HX_CATS[e.cat].c + '"><title>' + esc(e.date + ': ' + e.title) + '</title></circle>'; }).join('') +
+      '<g class="hx-hun" id="hx-hun"><circle r="6.5"/><text x="10" y="-9">HUNII</text></g>' +
+      '<circle class="hx-ring" id="hx-ring" r="13"/><text class="hx-place" id="hx-place"></text>';
+    var pts = map.querySelectorAll('.hx-pt'), ring = document.getElementById('hx-ring'), place = document.getElementById('hx-place');
+    var route = document.getElementById('hx-route'), hun = document.getElementById('hx-hun');
+    function hunsAt(y){
+      var pts2 = [];
+      for (var k = 0; k < HX_HUNI.length; k++) {
+        var w = HX_HUNI[k];
+        if (w[0] <= y) { pts2.push(hxProj(w[1], w[2])); continue; }
+        var a = HX_HUNI[k - 1], f = (y - a[0]) / (w[0] - a[0]);
+        pts2.push(hxProj(a[1] + (w[1] - a[1]) * f, a[2] + (w[2] - a[2]) * f));
+        break;
+      }
+      return pts2;
+    }
+    function drawMap(i){
+      var e = CRON[i], q = hxProj(HX_AT[i][0], HX_AT[i][1]), h = hunsAt(e.y), end = h[h.length - 1];
+      route.setAttribute('d', 'M' + h.map(function(p){ return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L'));
+      hun.setAttribute('transform', 'translate(' + end[0].toFixed(1) + ' ' + end[1].toFixed(1) + ')');
+      hun.classList.toggle('near', Math.hypot(end[0] - q[0], end[1] - q[1]) < 40);
+      Array.prototype.forEach.call(pts, function(c, j){ c.classList.toggle('future', CRON[j].y > e.y); c.setAttribute('r', j === i ? 7.5 : 5.5); });
+      ring.setAttribute('cx', q[0].toFixed(1)); ring.setAttribute('cy', q[1].toFixed(1));
+      if (!reduce) { ring.classList.remove('pulse'); void ring.getBoundingClientRect(); ring.classList.add('pulse'); }
+      var right = q[0] > 430;
+      place.textContent = HX_AT[i][2];
+      place.setAttribute('x', (q[0] + (right ? -18 : 18)).toFixed(1)); place.setAttribute('y', (q[1] + 6).toFixed(1));
+      place.setAttribute('text-anchor', right ? 'end' : 'start');
+    }
+    map.addEventListener('click', function(ev){ var c = ev.target.closest('.hx-pt'); if (c) select(+c.getAttribute('data-i')); });
+
     function select(i){
       if (i < 0 || i >= N || i === cur) return;
       var back = i < cur;
@@ -2589,10 +2639,11 @@
         '<div class="hx-yr"><span class="hx-big">' + big + '</span>' +
           '<span class="hx-date">' + (e.date !== big ? esc(e.date) : '&nbsp;') + '</span>' +
           '<span class="hx-cat"><i></i>' + k.name + '</span><span class="hx-count">' + (i + 1) + ' din ' + N + '</span></div>' +
-        '<div class="hx-body"><h4>' + esc(e.title) + '</h4><p>' + esc(e.desc) + '</p></div>' +
+        '<div class="hx-body"><h4>' + esc(e.title) + '</h4><p class="hx-where">' + esc(HX_AT[i][2]) + '</p><p>' + esc(e.desc) + '</p></div>' +
         (src ? '<figure class="hx-img"><img src="' + src + '" alt=""></figure>' : '') +
         '<nav class="hx-nav" aria-label="Evenimentele vecine">' + step(CRON[i - 1], -1) + step(CRON[i + 1], 1) + '</nav>';
       if (!reduce) { folio.classList.remove('in'); void folio.offsetWidth; folio.classList.add('in'); folio.classList.toggle('back', back); }
+      drawMap(i);
     }
 
     folio.addEventListener('click', function(ev){
@@ -5174,9 +5225,31 @@
 </script>
 <script>
 (function(){
-  // Aurul hunilor: graficul se construiește pe măsură ce derulezi pașii din stânga.
+  // Aurul hunilor: tributul crește în teancuri de monede, pe măsură ce derulezi pașii din stânga.
   var gs = document.getElementById('gold-story');
   if (!gs) return;
+  var COIN = 'fill="url(#gs-coin)" stroke="#6b5210" stroke-width="1"';
+  // un teanc: câte o monedă la 50 de livre (350 → 7, 700 → 14, 2.100 → 42)
+  function stack(cls, x, n){
+    var h = '<g class="gs-stk ' + cls + '">';
+    for (var i = 0; i < n; i++) h += '<ellipse cx="' + x + '" cy="' + (336 - i * 6.6).toFixed(1) + '" rx="26" ry="6.5" ' + COIN + ' style="transition-delay:' + (i * 22) + 'ms"/>';
+    return h + '</g>';
+  }
+  // restanța de 6.000 de livre: o grămadă de 120 de monede mai mici, pe 15 rânduri
+  function mound(x){
+    var h = '<g class="gs-stk sm">', k = 0;
+    for (var r = 0; r < 15; r++) {
+      var n = 15 - r, w = 9.4;
+      for (var j = 0; j < n; j++, k++) h += '<ellipse cx="' + (x - (n - 1) * w / 2 + j * w).toFixed(1) + '" cy="' + (336 - r * 5.5).toFixed(1) + '" rx="5.4" ry="2.6" ' + COIN + ' style="transition-delay:' + (300 + k * 5) + 'ms"/>';
+    }
+    return h + '</g>';
+  }
+  document.getElementById('gs-stacks').innerHTML = stack('s1', 120, 7) + stack('s2', 250, 14) + stack('s3', 380, 42) + mound(510);
+  // înainte de primul pas: conturul teancurilor, cu semne de întrebare
+  function ghost(x, n){ var top = 336 - (n - 1) * 6.6 - 6.5; return '<rect x="' + (x - 26) + '" y="' + top.toFixed(1) + '" width="52" height="' + (343 - top).toFixed(1) + '" rx="10"/><text x="' + x + '" y="' + ((top + 343) / 2 + 8).toFixed(1) + '">?</text>'; }
+  document.getElementById('gs-ghost').innerHTML = ghost(120, 7) + ghost(250, 14) + ghost(380, 42) +
+    '<path d="M440 343 L510 259 L580 343 Z"/><text x="510" y="326">?</text>' +
+    '<text class="gs-hint" x="200" y="120">Derulează: la fiecare pas</text><text class="gs-hint" x="200" y="142">crește un nou teanc de aur</text>';
   var coins = document.getElementById('gs-coins'), h = '', cols = 19, n = 151;
   for (var i = 0; i < n; i++) {
     var c = i % cols, r = Math.floor(i / cols);

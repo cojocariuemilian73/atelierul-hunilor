@@ -38,6 +38,27 @@
   ];
   // epocile liniei: fiecare primește o lățime după câte evenimente are, ca anii aglomerați
   // (cei ai lui Attila) să nu se calce unul pe altul; în interiorul epocii, scara e liniară
+  // unde s-a petrecut fiecare eveniment (lat, lon, loc), în ordinea din CRON
+  var HX_AT = [
+    [46.0, 41.5, 'Între Marea Azov și Caucaz'], [47.4, 33.4, 'Regatul lui Ermanaric'], [44.1, 27.4, 'Dunărea, la Durostorum'],
+    [41.68, 26.56, 'Adrianopol'], [41.9, 12.5, 'Roma, unde scrie Ammianus'], [39.6, 39.0, 'Armenia și Cappadocia'],
+    [50.0, 8.3, 'Rinul, la Mogontiacum'], [43.8, 22.9, 'Castra Martis, în Moesia'], [41.9, 12.5, 'Roma'],
+    [41.01, 28.98, 'Constantinopol'], [41.01, 28.98, 'Constantinopol'], [36.0, -5.4, 'Strâmtoarea Gibraltar'],
+    [44.62, 21.19, 'Margus, pe Dunăre'], [36.85, 10.2, 'Cartagina'], [43.32, 21.9, 'Naissus (Niš)'],
+    [47.0, 20.2, 'Câmpia Panonică'], [43.4, 24.6, 'Râul Utus (Vit)'], [41.01, 28.98, 'Constantinopol'],
+    [47.0, 20.2, 'Curtea lui Attila'], [44.42, 12.2, 'Ravenna'], [48.95, 4.4, 'Câmpiile Catalaunice'],
+    [45.77, 13.37, 'Aquileia'], [47.0, 20.2, 'Curtea lui Attila'], [46.6, 19.0, 'Nedao, în Pannonia (loc nesigur)'],
+    [42.6, 26.0, 'Tracia'], [44.42, 12.2, 'Ravenna']
+  ];
+  // drumul hunilor, după izvoare (același cu cel din joc)
+  var HX_HUNI = [[365, 47.0, 46.5], [370, 46.8, 44.2], [376, 47.2, 35.5], [395, 46.5, 28.5], [420, 47.0, 20.2], [440, 47.0, 20.2], [441.5, 43.4, 21.9], [443, 47.0, 20.2], [447, 43.0, 25.0], [448, 47.0, 20.2], [450.4, 48.6, 12.0], [451.5, 48.95, 4.4], [452, 45.9, 13.4], [453, 47.0, 20.2], [455, 47.0, 20.5], [470, 46.6, 31], [480, 46.6, 32]];
+  function hxProj(lat, lon){
+    var r = Math.PI / 180, p = lat * r, l = (lon - 10) * r, p0 = 52 * r;
+    var k = Math.pow((1 + Math.sin(p) * Math.sin(p0) + Math.cos(p) * Math.cos(p0) * Math.cos(l)) * 0.5, -0.5);
+    var x = 131.579 * (Math.cos(p) * Math.sin(l)) * k + 36.388;
+    var y = 55.11 - 153.610 * (Math.cos(p0) * Math.sin(p) - Math.sin(p0) * Math.cos(p) * Math.cos(l)) * k;
+    return [x / 100 * 690, y / 100 * 1351 * 690 / 1580];
+  }
   var HX_ERAS = [
     { name: 'Sosirea hunilor', short: 'Sosirea', a: 365, b: 392 },
     { name: 'Valul spre Apus', short: 'Spre Apus', a: 392, b: 434 },
@@ -88,6 +109,43 @@
         '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + (d < 0 ? 'M10 3L5 8l5 5' : 'M6 3l5 5-5 5') + '" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
         '<span><small>' + (d < 0 ? 'Înainte' : 'Apoi') + ' · ' + esc(n.date) + '</small>' + esc(n.title) + '</span></button>';
     }
+    // harta: punctele evenimentelor, drumul hunilor până în anul ales, inelul pe locul evenimentului
+    var map = document.getElementById('hx-map');
+    // o pagină fără harta de bază (modulul separat) afișează doar fila
+    if (!document.getElementById('shared-img-0')) map.closest('.hx-main').classList.add('nomap');
+    map.innerHTML = '<use href="#shared-img-0"/><rect x="20" y="300" width="600" height="290" fill="rgba(14, 13, 11, 0.3)"/>' +
+      '<path class="hx-route" id="hx-route"/>' +
+      CRON.map(function(e, i){ var q = hxProj(HX_AT[i][0], HX_AT[i][1]); return '<circle class="hx-pt" data-i="' + i + '" cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="5.5" style="--c:' + HX_CATS[e.cat].c + '"><title>' + esc(e.date + ': ' + e.title) + '</title></circle>'; }).join('') +
+      '<g class="hx-hun" id="hx-hun"><circle r="6.5"/><text x="10" y="-9">HUNII</text></g>' +
+      '<circle class="hx-ring" id="hx-ring" r="13"/><text class="hx-place" id="hx-place"></text>';
+    var pts = map.querySelectorAll('.hx-pt'), ring = document.getElementById('hx-ring'), place = document.getElementById('hx-place');
+    var route = document.getElementById('hx-route'), hun = document.getElementById('hx-hun');
+    function hunsAt(y){
+      var pts2 = [];
+      for (var k = 0; k < HX_HUNI.length; k++) {
+        var w = HX_HUNI[k];
+        if (w[0] <= y) { pts2.push(hxProj(w[1], w[2])); continue; }
+        var a = HX_HUNI[k - 1], f = (y - a[0]) / (w[0] - a[0]);
+        pts2.push(hxProj(a[1] + (w[1] - a[1]) * f, a[2] + (w[2] - a[2]) * f));
+        break;
+      }
+      return pts2;
+    }
+    function drawMap(i){
+      var e = CRON[i], q = hxProj(HX_AT[i][0], HX_AT[i][1]), h = hunsAt(e.y), end = h[h.length - 1];
+      route.setAttribute('d', 'M' + h.map(function(p){ return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L'));
+      hun.setAttribute('transform', 'translate(' + end[0].toFixed(1) + ' ' + end[1].toFixed(1) + ')');
+      hun.classList.toggle('near', Math.hypot(end[0] - q[0], end[1] - q[1]) < 40);
+      Array.prototype.forEach.call(pts, function(c, j){ c.classList.toggle('future', CRON[j].y > e.y); c.setAttribute('r', j === i ? 7.5 : 5.5); });
+      ring.setAttribute('cx', q[0].toFixed(1)); ring.setAttribute('cy', q[1].toFixed(1));
+      if (!reduce) { ring.classList.remove('pulse'); void ring.getBoundingClientRect(); ring.classList.add('pulse'); }
+      var right = q[0] > 430;
+      place.textContent = HX_AT[i][2];
+      place.setAttribute('x', (q[0] + (right ? -18 : 18)).toFixed(1)); place.setAttribute('y', (q[1] + 6).toFixed(1));
+      place.setAttribute('text-anchor', right ? 'end' : 'start');
+    }
+    map.addEventListener('click', function(ev){ var c = ev.target.closest('.hx-pt'); if (c) select(+c.getAttribute('data-i')); });
+
     function select(i){
       if (i < 0 || i >= N || i === cur) return;
       var back = i < cur;
@@ -105,10 +163,11 @@
         '<div class="hx-yr"><span class="hx-big">' + big + '</span>' +
           '<span class="hx-date">' + (e.date !== big ? esc(e.date) : '&nbsp;') + '</span>' +
           '<span class="hx-cat"><i></i>' + k.name + '</span><span class="hx-count">' + (i + 1) + ' din ' + N + '</span></div>' +
-        '<div class="hx-body"><h4>' + esc(e.title) + '</h4><p>' + esc(e.desc) + '</p></div>' +
+        '<div class="hx-body"><h4>' + esc(e.title) + '</h4><p class="hx-where">' + esc(HX_AT[i][2]) + '</p><p>' + esc(e.desc) + '</p></div>' +
         (src ? '<figure class="hx-img"><img src="' + src + '" alt=""></figure>' : '') +
         '<nav class="hx-nav" aria-label="Evenimentele vecine">' + step(CRON[i - 1], -1) + step(CRON[i + 1], 1) + '</nav>';
       if (!reduce) { folio.classList.remove('in'); void folio.offsetWidth; folio.classList.add('in'); folio.classList.toggle('back', back); }
+      drawMap(i);
     }
 
     folio.addEventListener('click', function(ev){
