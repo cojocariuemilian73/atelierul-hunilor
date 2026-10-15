@@ -98,7 +98,7 @@ const JS = `  // mx: miturile, puse în capitolele de care țin; faptele puțin 
 `;
 
 const CSS = `  /* mx: mituri în capitole */
-  h1, h2, h3, h4{ font-variant-numeric: lining-nums; }
+  h1, h2, h3, h4{ font-variant-numeric: lining-nums !important; }
   .mx{ margin: 34px 0 8px; border-top: 1px solid var(--line-strong); }
   .mx-head{ display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; padding: 18px 0 6px; }
   .mx-title{ margin: 0; font: 600 1.45rem/1.2 'Cormorant Garamond', serif; color: var(--ink); }
