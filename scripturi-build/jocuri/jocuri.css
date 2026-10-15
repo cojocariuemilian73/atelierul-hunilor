@@ -304,3 +304,13 @@
   .mig-att .jg-meter label{ color: var(--dim); }
   .mig-att .jg-meter label .mig-ico{ color: var(--c); }
   @media (max-width: 640px){ .mig-pic{ width: 84px; margin-left: 12px; } .mig-pic img{ width: 84px; height: 84px; } .mig-pic figcaption{ display: none; } }
+  /* deciziile stau în dreapta, peste panou, ca harta să rămână la vedere (pe ecranele late) */
+  @media (min-width: 1100px){
+    .mig-over.big.side{ left: auto; right: 0; top: var(--nav-h, 0px); width: min(470px, 40vw); padding: 14px; align-items: flex-start; background: transparent; pointer-events: none; }
+    .mig-over.big.side .mig-dec{ pointer-events: auto; width: 100%; max-height: calc(100vh - var(--nav-h, 0px) - 28px); box-shadow: -18px 0 40px rgba(0, 0, 0, 0.55); }
+    .mig-over.big.side .mig-pic{ width: 92px; } .mig-over.big.side .mig-pic img{ width: 92px; height: 92px; }
+  }
+  .mig-over.big .mig-end{ width: min(880px, 100%); }
+  .mig-note{ margin: 4px 0 10px !important; font: 0.72rem/1.5 'JetBrains Mono', monospace; color: var(--dim) !important; }
+  /* cât timp rulează jocul, bara de pagini e ascunsă: o apăsare greșită nu te mai scoate din joc */
+  html.mig-playing .site-pager{ display: none; }
