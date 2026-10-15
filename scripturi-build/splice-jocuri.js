@@ -7,7 +7,9 @@ const root = path.join(__dirname, '..');
 const J = path.join(__dirname, 'jocuri');
 const rd = f => fs.readFileSync(path.join(J, f), 'utf8').split('\r\n').join('\n');
 const CSS = rd('jocuri.css').replace(/\n+$/, '\n');
-const MIG_JS = rd('migratie.js').replace(/\n+$/, '');
+// portretele și iconițele jocului (joc-imagini.json) intră direct în script
+const JOC_IMG = fs.readFileSync(path.join(J, 'joc-imagini.json'), 'utf8').trim();
+const MIG_JS = rd('migratie.js').replace(/\n+$/, '').replace('/*__JOC_IMAGINI__*/null', () => JOC_IMG);
 const IMP_JS = rd('imperiu.js').replace(/\n+$/, '');
 const MARK = '  /* ============ MODULE: JOCURILE';
 const END = '  /* ============ MODULE: ATLASUL MIGRAȚIEI (.m-atlas) ============ */';
