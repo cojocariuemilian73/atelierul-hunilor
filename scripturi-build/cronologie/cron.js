@@ -59,6 +59,15 @@
     var y = 55.11 - 153.610 * (Math.cos(p0) * Math.sin(p) - Math.sin(p0) * Math.cos(p) * Math.cos(l)) * k;
     return [x / 100 * 690, y / 100 * 1351 * 690 / 1580];
   }
+  // iconița fiecărei categorii (sabii, coroană, monedă, pană de scris) și evenimentele mari, desenate mai mare
+  var HX_ICO = {
+    militar: '<path d="M3 3l10 10M13 3L3 13M10.5 13.5l3-3M2.5 10.5l3 3"/>',
+    politic: '<path d="M2.5 13h11M3.2 11L2.5 5l3 2.5L8 3l2.5 4.5 3-2.5-.7 6z"/>',
+    aur: '<circle cx="8" cy="8" r="5.6"/><circle cx="8" cy="8" r="2.4"/>',
+    izvoare: '<path d="M13.5 2.5C9 3 5.6 6.6 4.6 11.4L3 13.5M4.6 11.4c3.4-.4 6-3 7-6.6M7.2 8.6h3"/>'
+  };
+  function hxIco(cat){ return '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + HX_ICO[cat] + '</svg>'; }
+  var HX_MAJOR = ['Adrianopol', 'Rinul', 'Roma', 'Margus', 'Catalaunice', 'Attila †', 'Nedao', 'Odoacru'];
   var HX_ERAS = [
     { name: 'Sosirea hunilor', short: 'Sosirea', a: 365, b: 392 },
     { name: 'Valul spre Apus', short: 'Spre Apus', a: 392, b: 434 },
@@ -87,10 +96,18 @@
       return '<button type="button" class="hx-era" data-k="' + k + '"><b><span class="l">' + er.name + '</span><span class="s">' + er.short + '</span></b><small>' + er.a + '–' + er.b + '</small></button>';
     }).join('');
     marksEl.innerHTML = HX_ERAS.slice(1).map(function(er){ return '<span class="hx-sep" style="left:' + er.x.toFixed(3) + '%"></span>'; }).join('') +
-      CRON.map(function(e, i){ return '<i class="hx-mk" style="left:' + pos(e.y).toFixed(3) + '%;--c:' + HX_CATS[e.cat].c + '"></i>'; }).join('');
+      (function(){ var near = 26 / (rib.clientWidth || 1300) * 100, prev = ''; return CRON.map(function(e, i){
+        // evenimente prea apropiate: urcă deasupra liniei sau coboară sub ea, pe rând, ca să nu se acopere
+        var lane = i && pos(e.y) - pos(CRON[i - 1].y) < near ? (prev === ' up' ? ' dn' : ' up') : ''; prev = lane;
+        return '<i class="hx-mk' + (HX_MAJOR.indexOf(e.short) >= 0 ? ' big' : '') + lane + '" style="left:' + pos(e.y).toFixed(3) + '%;--c:' + HX_CATS[e.cat].c + '">' + hxIco(e.cat) + '</i>';
+      }).join(''); })();
+    // viața și domnia lui Attila, deasupra epocilor
+    var life = document.getElementById('hx-life');
+    if (life) life.innerHTML = '<span class="hx-life-l" style="left:' + pos(406).toFixed(3) + '%;width:' + (pos(453) - pos(406)).toFixed(3) + '%"><em>Viața lui Attila · c. 406–453</em></span>' +
+      '<span class="hx-life-r" style="left:' + pos(434).toFixed(3) + '%;width:' + (pos(453) - pos(434)).toFixed(3) + '%"><em>domnia, 434–453</em></span>';
     var marks = marksEl.querySelectorAll('.hx-mk'), eraBtns = eras.querySelectorAll('.hx-era');
     document.getElementById('hx-legend').innerHTML = Object.keys(HX_CATS).map(function(k){
-      return '<span style="--c:' + HX_CATS[k].c + '"><i></i>' + HX_CATS[k].name + '</span>';
+      return '<span style="--c:' + HX_CATS[k].c + '">' + hxIco(k) + HX_CATS[k].name + '</span>';
     }).join('');
     rib.setAttribute('aria-valuemax', N);
 
