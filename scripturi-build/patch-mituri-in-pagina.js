@@ -17,6 +17,13 @@ const GROUPS = [
 const JS = `  // mx: miturile, puse în capitolele de care țin; faptele puțin cunoscute apar ca „Știai că…?”
   // Mitul e un card cu două fețe: în stânga afirmația, în dreapta ce arată sursele.
   var MX_X = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  // „dovada” din dreapta cardului: o imagine din site, dacă se potrivește; altfel, sigiliul temei
+  var MX_PIC = { 1: ['#img-ms-ammianus', 'Res Gestae, copie din sec. IX'], 2: ['#img-craniu', 'Craniu deformat, sec. V'], 7: ['#img-moartea', 'Moartea lui Attila, Paczka, 1884'], 8: ['#img-aquileia', 'Asediul Aquileiei, c. 1360'] };
+  function mxEvidence(i, th, nr){
+    var p = MX_PIC[i], el = p && document.querySelector(p[0]), src = el && el.getAttribute('src');
+    if (src) return '<figure class="mx-ev" aria-hidden="true"><img src="' + src + '" alt="" loading="lazy"><figcaption>' + p[1] + '</figcaption></figure>';
+    return '<span class="mx-ev mx-seal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">' + th.icon + '</svg><small>Dosar ' + nr + '</small></span>';
+  }
   function mxSrc(m){
     if (!m.src) return '';
     return '<p class="mx-src">Sursa: ' + m.src.replace(/nota (\\d+)/g, '<a class="mx-note" href="#note-$1">nota $1</a>') + '</p>';
@@ -34,10 +41,12 @@ const JS = `  // mx: miturile, puse în capitolele de care țin; faptele puțin 
     var items = ids.map(function(i){
       var m = MYTHS[i], th = THEME[MYTH_THEMES[i]] || THEME.izv, id = 'mx-a-' + i;
       var it = document.createElement('article');
+      var nr = (i + 1 < 10 ? '0' : '') + (i + 1);
       it.className = 'mx-item';
+      it.setAttribute('data-file', 'Dosar nr. ' + nr);
       it.innerHTML =
         '<div class="mx-q"><p class="mx-meta"><span class="mx-tag">Mit</span><span class="mx-theme">' + th.label + '</span></p>' +
-        '<p class="mx-myth">' + m.myth + '</p><span class="mx-stamp" aria-hidden="true">Fals</span></div>' +
+        '<p class="mx-myth">' + m.myth + '</p><span class="mx-stamp" aria-hidden="true">Fals</span></div>' + mxEvidence(i, th, nr) +
         '<button type="button" class="mx-btn" aria-expanded="false" aria-controls="' + id + '">Verifică →</button>' +
         '<div class="mx-a" id="' + id + '" role="region" aria-label="Ce arată sursele"><p class="mx-meta"><span class="mx-theme">Ce arată sursele</span></p>' +
         '<p class="mx-truth">' + m.truth + '</p>' + mxSrc(m) + '</div>' +
@@ -114,12 +123,30 @@ const CSS = `  /* mx: mituri în capitole */
   .mx-tag.stiai{ border-color: var(--accent-2); color: var(--accent-2); }
   .mx-theme{ color: var(--ink-dim); }
 
-  .mx-item{ position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px 32px; align-items: center; margin: 12px 0 0; padding: 22px 24px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
-  .mx-item.open{ grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: start; padding-right: 52px; }
+  /* fiecare mit e un dosar de arhivă: o filă cu număr deasupra, dovada în dreapta, ștampila la verificare */
+  .mx-item{ position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'q ev' 'btn ev'; gap: 8px 32px; align-items: center; margin: 40px 0 0; padding: 22px 24px; border: 1px solid var(--line-strong); background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--ink) 1.6%, transparent) 0 1px, transparent 1px 4px), color-mix(in srgb, var(--ink) 3%, transparent); }
+  .mx-item::before{ content: attr(data-file); position: absolute; left: -1px; top: -1px; transform: translateY(-100%); padding: 5px 26px 4px 14px; border: 1px solid var(--line-strong); border-bottom: 0; background: color-mix(in srgb, var(--ink) 5%, var(--paper, #141210)); font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%); }
+  .mx-head + .mx-item{ margin-top: 34px; }
+  .mx-q{ grid-area: q; } .mx-btn{ grid-area: btn; justify-self: start; } .mx-a{ grid-area: a; }
+  .mx-ev{ grid-area: ev; margin: 0; }
+  .mx-item.open{ grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); grid-template-areas: 'q a'; align-items: start; padding-right: 52px; }
+  .mx-item.open .mx-ev{ display: none; }
+  .mx-item.open .mx-myth{ color: var(--ink-dim); text-decoration: line-through; text-decoration-color: rgba(224, 98, 108, 0.55); text-decoration-thickness: 1.5px; }
+  /* dovada: o fotografie prinsă cu o agrafă, ușor înclinată */
+  figure.mx-ev{ position: relative; width: 168px; padding: 6px 6px 8px; background: #ece0c6; box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45); transform: rotate(2.2deg); }
+  figure.mx-ev img{ display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: sepia(0.25) contrast(1.05); }
+  figure.mx-ev figcaption{ margin-top: 5px; font: 0.6rem/1.3 'JetBrains Mono', monospace; color: #4a3a24; text-align: center; }
+  figure.mx-ev::before{ content: ''; position: absolute; top: -12px; left: 22px; width: 11px; height: 30px; border: 2px solid #b9b2a6; border-radius: 6px; transform: rotate(-6deg); }
+  .mx-seal{ display: grid; place-items: center; align-content: center; gap: 4px; width: 112px; height: 112px; border: 1px dashed color-mix(in srgb, var(--accent-2) 45%, transparent); border-radius: 50%; color: color-mix(in srgb, var(--accent-2) 55%, transparent); box-shadow: inset 0 0 0 6px color-mix(in srgb, var(--ink) 3%, transparent); }
+  .mx-seal svg{ width: 40px; height: 40px; }
+  .mx-seal small{ font: 700 0.58rem 'JetBrains Mono', monospace; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); }
   .mx-q{ position: relative; min-width: 0; }
   .mx-myth{ margin: 0; font: 600 1.42rem/1.32 'Cormorant Garamond', serif; color: var(--ink); font-variant-numeric: lining-nums; max-width: 46ch; text-wrap: pretty; }
   .mx-stamp{ position: absolute; right: 4px; bottom: -14px; padding: 1px 12px; border: 3px double #e0626c; color: #e0626c; font: 800 1.15rem/1.3 'Cinzel', serif; letter-spacing: 0.12em; text-transform: uppercase; background: color-mix(in srgb, var(--paper) 75%, transparent); opacity: 0; transform: rotate(-9deg) scale(1.7); pointer-events: none; transition: opacity 0.2s, transform 0.35s cubic-bezier(.3,1.6,.5,1); }
   .mx-item.open .mx-stamp{ opacity: 0.92; transform: rotate(-9deg) scale(1); }
+  .mx-stamp{ font-size: 1.5rem; padding: 2px 16px; -webkit-mask-image: radial-gradient(circle, transparent 0 0.7px, #000 1.3px), radial-gradient(circle, transparent 0 0.9px, #000 1.5px); -webkit-mask-size: 6px 7px, 11px 9px; -webkit-mask-composite: source-in; mask-image: radial-gradient(circle, transparent 0 0.7px, #000 1.3px), radial-gradient(circle, transparent 0 0.9px, #000 1.5px); mask-size: 6px 7px, 11px 9px; mask-composite: intersect; }
+  .mx-item.open{ animation: mx-thud 0.4s ease-out 0.12s; }
+  @keyframes mx-thud{ 30%{ transform: translateY(2px); } 60%{ transform: translateY(-1px); } }
   .mx-item.open .mx-q{ padding-bottom: 22px; }
   .mx-btn{ min-height: 40px; padding: 8px 0; border: 0; background: none; color: var(--accent-2); font: 700 0.8rem 'JetBrains Mono', monospace; text-transform: none; white-space: nowrap; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
   .mx-btn:hover{ color: #f2d474; }
@@ -153,7 +180,9 @@ const CSS = `  /* mx: mituri în capitole */
   .mx-fact .mx-src{ margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--line); }
 
   @media (max-width: 760px){
-    .mx-item, .mx-item.open{ grid-template-columns: 1fr; padding: 18px 16px; }
+    .mx-item, .mx-item.open{ grid-template-columns: 1fr; grid-template-areas: 'q' 'btn'; padding: 18px 16px; }
+    .mx-item.open{ grid-template-areas: 'q' 'a'; }
+    .mx-ev{ display: none; }
     .mx-item.open{ padding-top: 18px; }
     .mx-item.open .mx-q{ padding-right: 40px; }
     .mx-btn{ justify-self: start; }
@@ -161,7 +190,7 @@ const CSS = `  /* mx: mituri în capitole */
     .mx-a{ padding: 16px 0 0; border-left: 0; border-top: 1px solid var(--line); }
     .mx-all{ margin-left: 0; }
   }
-  @media (prefers-reduced-motion: reduce){ .mx-stamp, .mx-more-body{ transition: none; } .mx-item.open .mx-a, .mx-flash{ animation: none; } }
+  @media (prefers-reduced-motion: reduce){ .mx-item.open{ animation: none; } .mx-stamp, .mx-more-body{ transition: none; } .mx-item.open .mx-a, .mx-flash{ animation: none; } }
   /* /mx */
 `;
 

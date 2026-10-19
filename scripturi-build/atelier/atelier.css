@@ -160,3 +160,26 @@
   @media (prefers-reduced-motion: reduce){
     .m-atelier *{ animation: none !important; transition: none !important; }
   }
+
+  /* straturile epocilor, ca la o săpătură: deasupra axei o nuanță, dedesubt „pământul” */
+  .md-strata{ position: absolute; inset: 0; pointer-events: none; }
+  .md-era{ position: absolute; top: 0; bottom: 0; background: linear-gradient(180deg, transparent 15%, var(--t) 100%); border-left: 1px solid rgba(230, 215, 195, 0.07); }
+  .md-era::after{ content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 41px; background: radial-gradient(circle, rgba(255, 240, 210, 0.07) 0 1px, transparent 1.4px) 0 0 / 9px 7px, radial-gradient(circle, rgba(0, 0, 0, 0.25) 0 1px, transparent 1.6px) 4px 3px / 11px 9px, var(--s); border-top: 1px solid rgba(0, 0, 0, 0.35); }
+  .md-era em{ position: absolute; top: 6px; left: 8px; font: 700 0.6rem 'JetBrains Mono', monospace; font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(230, 215, 195, 0.42); white-space: nowrap; }
+  .md-era.e0{ --t: rgba(212, 175, 55, 0.06); --s: #33291b; border-left: 0; }
+  .md-era.e0 em{ display: none; }
+  .md-era.e1{ --t: rgba(170, 115, 70, 0.08); --s: #2e2219; }
+  .md-era.e2{ --t: rgba(140, 100, 80, 0.08); --s: #291f19; }
+  .md-era.e3{ --t: rgba(110, 100, 95, 0.08); --s: #221c19; }
+  .md-tick em{ text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
+  .md-tl.done .md-era.e1 em, .md-tl.done .md-era.e2 em{ opacity: 0; }
+
+  /* finalul: anii fără nicio imagine a hunilor, ca o ceață peste axă */
+  .md-gap{ top: 0; bottom: 42px; height: auto; overflow: hidden; align-items: flex-start; padding-top: 8px; border: 0; border-left: 1px dashed rgba(205, 205, 215, 0.4); border-right: 1px dashed rgba(205, 205, 215, 0.4);
+    background: linear-gradient(90deg, rgba(160, 160, 172, 0.04), rgba(160, 160, 172, 0.17) 18%, rgba(160, 160, 172, 0.2) 50%, rgba(160, 160, 172, 0.17) 82%, rgba(160, 160, 172, 0.04)); }
+  .md-gap::before{ content: ''; position: absolute; inset: -20% -30%; background: radial-gradient(30% 45% at 25% 60%, rgba(215, 215, 225, 0.16), transparent 70%), radial-gradient(28% 40% at 62% 35%, rgba(215, 215, 225, 0.13), transparent 70%), radial-gradient(25% 50% at 85% 70%, rgba(215, 215, 225, 0.12), transparent 70%); animation: md-mist 16s ease-in-out infinite alternate; pointer-events: none; }
+  @keyframes md-mist{ to{ transform: translateX(14%); } }
+  .md-gap span{ position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 0; background: none; text-align: center; }
+  .md-gap span b{ font: 700 1.05rem/1.1 'Cinzel', serif; color: #ecebf2; letter-spacing: 0.02em; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); font-variant-numeric: lining-nums; }
+  .md-gap span small{ font: 0.66rem 'JetBrains Mono', monospace; color: #c4c3cf; letter-spacing: 0.06em; }
+  @media (max-width: 640px){ .md-era em{ display: none; } .md-gap span b{ font-size: 0.82rem; } .md-gap span small{ display: none; } }

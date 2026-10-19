@@ -252,6 +252,14 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   /* ---------- CRONOLOGIE: LINIA EPOCILOR ȘI FILA EVENIMENTULUI ---------- */
   .hx{ margin: 26px 0 10px; }
 
+  /* deasupra epocilor: viața lui Attila, cu domnia mai groasă */
+  .hx-life{ position: relative; height: 26px; margin-bottom: 4px; }
+  .hx-life span{ position: absolute; bottom: 4px; height: 0; border-top: 1px solid rgba(224, 98, 108, 0.7); }
+  .hx-life-l::before, .hx-life-l::after{ content: ''; position: absolute; top: -4px; width: 1px; height: 8px; background: rgba(224, 98, 108, 0.8); }
+  .hx-life-l::before{ left: 0; } .hx-life-l::after{ right: 0; }
+  .hx-life-r{ border-top-width: 4px !important; border-color: #e0626c !important; bottom: 2.5px !important; }
+  .hx-life em{ position: absolute; bottom: 5px; left: 0; font: 700 0.62rem 'JetBrains Mono', monospace; font-style: normal; letter-spacing: 0.06em; text-transform: uppercase; color: #f0a0a6; white-space: nowrap; }
+  .hx-life-r em{ left: auto; right: 0; bottom: 3px; color: #e0626c; }
   .hx-eras{ display: grid; }
   .hx-era{ display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; min-height: 52px; padding: 10px 12px 10px 0; border: 0; border-top: 1px solid var(--line-strong); background: transparent; color: var(--ink-dim); text-align: left; cursor: pointer; transition: color 0.25s, border-color 0.25s; }
   .hx-era + .hx-era{ padding-left: 12px; }
@@ -261,14 +269,23 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   .hx-era:hover{ color: var(--ink); }
   .hx-era.on{ color: var(--accent-2); border-top: 3px solid var(--accent-2); padding-top: 8px; }
 
-  .hx-rib{ position: relative; height: 54px; cursor: pointer; touch-action: pan-y; user-select: none; outline: none; }
+  .hx-rib{ position: relative; height: 64px; cursor: pointer; touch-action: pan-y; user-select: none; outline: none; }
   .hx-rib.drag{ cursor: grabbing; }
   .hx-line{ position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line-strong); }
   .hx-marks{ position: absolute; inset: 0; }
-  .hx-sep{ position: absolute; top: -27px; height: 54px; width: 1px; background: var(--line); }
-  .hx-mk{ position: absolute; top: -9px; width: 3px; height: 18px; margin-left: -1.5px; border-radius: 2px; background: var(--c); opacity: 0.75; transition: height 0.25s, top 0.25s, opacity 0.25s; }
-  .hx-mk.cur{ top: -17px; height: 34px; opacity: 1; }
-  .hx-mk.cur::after{ content: ''; position: absolute; left: 50%; bottom: -9px; width: 9px; height: 9px; margin-left: -4.5px; background: var(--accent-2); transform: rotate(45deg); }
+  .hx-sep{ position: absolute; top: -32px; height: 64px; width: 1px; background: var(--line); }
+  /* fiecare eveniment: o iconiță în culoarea categoriei; evenimentele mari sunt mai mari */
+  .hx-mk{ position: absolute; top: -10px; display: grid; place-items: center; width: 20px; height: 20px; margin-left: -10px; border: 1.5px solid var(--c); border-radius: 50%; background: var(--paper, #17161a); color: var(--c); opacity: 0.88; transition: transform 0.25s cubic-bezier(.2,.7,.2,1), opacity 0.25s, background 0.25s, color 0.25s, box-shadow 0.25s; }
+  .hx-mk svg{ width: 11px; height: 11px; }
+  .hx-mk.big{ top: -13px; width: 26px; height: 26px; margin-left: -13px; border-width: 2px; }
+  .hx-mk.big svg{ width: 14px; height: 14px; }
+  .hx-mk.up{ top: -27px; }
+  .hx-mk.up::before{ content: ''; position: absolute; left: 50%; top: 100%; width: 1px; height: 7px; background: var(--c); opacity: 0.6; }
+  .hx-mk.cur{ z-index: 1; transform: scale(1.35); background: var(--c); color: #14120f; opacity: 1; box-shadow: 0 0 0 3px rgba(242, 212, 116, 0.28), 0 4px 12px rgba(0, 0, 0, 0.5); }
+  .hx-mk.cur::after{ content: ''; position: absolute; left: 50%; top: calc(100% + 6px); width: 7px; height: 7px; margin-left: -3.5px; background: var(--accent-2); transform: rotate(45deg); }
+  .hx-mk.up.cur::after{ top: calc(100% + 18px); }
+  .hx-mk.dn{ top: 7px; }
+  .hx-mk.dn::before{ content: ''; position: absolute; left: 50%; bottom: 100%; width: 1px; height: 7px; background: var(--c); opacity: 0.6; }
   .hx-rib:hover .hx-mk:not(.cur){ opacity: 1; }
   .hx-rib:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; }
   .hx-tip{ position: absolute; bottom: calc(100% - 4px); transform: translateX(-50%); padding: 4px 9px; background: var(--paper); border: 1px solid var(--line-strong); font: 0.72rem 'JetBrains Mono', monospace; color: var(--ink); white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 2; }
@@ -278,7 +295,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
 
   .hx-legend{ display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 16px; margin: 2px 0 0; font: 0.68rem 'JetBrains Mono', monospace; color: var(--ink-dim); }
   .hx-legend span{ display: inline-flex; align-items: center; gap: 6px; }
-  .hx-legend i{ width: 3px; height: 11px; border-radius: 2px; background: var(--c); }
+  .hx-legend svg{ width: 13px; height: 13px; color: var(--c); }
 
 
   /* dedesubt: harta (unde s-a întâmplat, cu drumul hunilor până atunci) și fila evenimentului */
@@ -336,6 +353,14 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     .hx-main{ grid-template-columns: minmax(0, 1fr); gap: 18px; }
   }
   @media (max-width: 640px){
+    /* pe telefon, iconițele s-ar înghesui: rămân liniuțele colorate */
+    .hx-mk, .hx-mk.big, .hx-mk.up, .hx-mk.dn{ top: -9px; width: 3px; height: 18px; margin-left: -1.5px; border: 0; border-radius: 2px; background: var(--c); }
+    .hx-mk svg, .hx-mk.up::before, .hx-mk.dn::before{ display: none; }
+    .hx-mk.big{ top: -12px; height: 24px; }
+    .hx-mk.cur{ transform: scaleY(1.4); }
+    .hx-mk.cur::after, .hx-mk.up.cur::after{ top: calc(100% + 4px); }
+    .hx-life em{ font-size: 0.56rem; }
+    .hx-life-r em{ display: none; }
     .hx-era{ padding-right: 6px; }
     .hx-era + .hx-era{ padding-left: 6px; }
     .hx-era b{ font-size: 0.74rem; }
@@ -786,6 +811,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
 
       <div class="cron-wrap">
       <div class="hx" id="hx">
+        <div class="hx-life" id="hx-life" aria-hidden="true"></div>
         <div class="hx-eras" id="hx-eras" role="group" aria-label="Sari la începutul unei epoci"></div>
         <div class="hx-rib" id="hx-rib" role="slider" tabindex="0" aria-label="Linia timpului: trage sau folosește săgețile ca să treci de la un eveniment la altul" aria-valuemin="1">
           <div class="hx-line"><div class="hx-marks" id="hx-marks"></div></div>
@@ -1269,6 +1295,15 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     var y = 55.11 - 153.610 * (Math.cos(p0) * Math.sin(p) - Math.sin(p0) * Math.cos(p) * Math.cos(l)) * k;
     return [x / 100 * 690, y / 100 * 1351 * 690 / 1580];
   }
+  // iconița fiecărei categorii (sabii, coroană, monedă, pană de scris) și evenimentele mari, desenate mai mare
+  var HX_ICO = {
+    militar: '<path d="M3 3l10 10M13 3L3 13M10.5 13.5l3-3M2.5 10.5l3 3"/>',
+    politic: '<path d="M2.5 13h11M3.2 11L2.5 5l3 2.5L8 3l2.5 4.5 3-2.5-.7 6z"/>',
+    aur: '<circle cx="8" cy="8" r="5.6"/><circle cx="8" cy="8" r="2.4"/>',
+    izvoare: '<path d="M13.5 2.5C9 3 5.6 6.6 4.6 11.4L3 13.5M4.6 11.4c3.4-.4 6-3 7-6.6M7.2 8.6h3"/>'
+  };
+  function hxIco(cat){ return '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + HX_ICO[cat] + '</svg>'; }
+  var HX_MAJOR = ['Adrianopol', 'Rinul', 'Roma', 'Margus', 'Catalaunice', 'Attila †', 'Nedao', 'Odoacru'];
   var HX_ERAS = [
     { name: 'Sosirea hunilor', short: 'Sosirea', a: 365, b: 392 },
     { name: 'Valul spre Apus', short: 'Spre Apus', a: 392, b: 434 },
@@ -1297,10 +1332,18 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
       return '<button type="button" class="hx-era" data-k="' + k + '"><b><span class="l">' + er.name + '</span><span class="s">' + er.short + '</span></b><small>' + er.a + '–' + er.b + '</small></button>';
     }).join('');
     marksEl.innerHTML = HX_ERAS.slice(1).map(function(er){ return '<span class="hx-sep" style="left:' + er.x.toFixed(3) + '%"></span>'; }).join('') +
-      CRON.map(function(e, i){ return '<i class="hx-mk" style="left:' + pos(e.y).toFixed(3) + '%;--c:' + HX_CATS[e.cat].c + '"></i>'; }).join('');
+      (function(){ var near = 26 / (rib.clientWidth || 1300) * 100, prev = ''; return CRON.map(function(e, i){
+        // evenimente prea apropiate: urcă deasupra liniei sau coboară sub ea, pe rând, ca să nu se acopere
+        var lane = i && pos(e.y) - pos(CRON[i - 1].y) < near ? (prev === ' up' ? ' dn' : ' up') : ''; prev = lane;
+        return '<i class="hx-mk' + (HX_MAJOR.indexOf(e.short) >= 0 ? ' big' : '') + lane + '" style="left:' + pos(e.y).toFixed(3) + '%;--c:' + HX_CATS[e.cat].c + '">' + hxIco(e.cat) + '</i>';
+      }).join(''); })();
+    // viața și domnia lui Attila, deasupra epocilor
+    var life = document.getElementById('hx-life');
+    if (life) life.innerHTML = '<span class="hx-life-l" style="left:' + pos(406).toFixed(3) + '%;width:' + (pos(453) - pos(406)).toFixed(3) + '%"><em>Viața lui Attila · c. 406–453</em></span>' +
+      '<span class="hx-life-r" style="left:' + pos(434).toFixed(3) + '%;width:' + (pos(453) - pos(434)).toFixed(3) + '%"><em>domnia, 434–453</em></span>';
     var marks = marksEl.querySelectorAll('.hx-mk'), eraBtns = eras.querySelectorAll('.hx-era');
     document.getElementById('hx-legend').innerHTML = Object.keys(HX_CATS).map(function(k){
-      return '<span style="--c:' + HX_CATS[k].c + '"><i></i>' + HX_CATS[k].name + '</span>';
+      return '<span style="--c:' + HX_CATS[k].c + '">' + hxIco(k) + HX_CATS[k].name + '</span>';
     }).join('');
     rib.setAttribute('aria-valuemax', N);
 

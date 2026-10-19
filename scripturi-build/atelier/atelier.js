@@ -70,6 +70,10 @@
     }).join('');
     h += '<span class="md-tick att" style="left:' + pc(453) + '"><em>453 · Attila</em></span>';
     $('md-ticks').innerHTML = h;
+    // straturile, ca la o săpătură: fiecare epocă are culoarea ei de pământ
+    $('md-strata').innerHTML = [[Y0, 600, 'Antichitatea târzie'], [600, 1000, 'Evul Mediu timpuriu'], [1000, 1500, 'Evul Mediu'], [1500, Y1, 'Epoca modernă']].map(function(e, k){
+      return '<span class="md-era e' + k + '" style="left:' + pc(e[0]) + ';width:calc(' + pc(e[1]) + ' - ' + pc(e[0]) + ')"><em>' + e[2] + '</em></span>';
+    }).join('');
     var band = $('md-band');
     band.style.left = pc(370); band.style.width = 'calc(' + pc(469) + ' - ' + pc(370) + ')';
   }
@@ -307,7 +311,7 @@
     var firstImg = Math.min.apply(null, late);
     var gap = $('md-gap');
     gap.style.left = pc(453); gap.style.width = 'calc(' + pc(firstImg) + ' - ' + pc(453) + ')';
-    gap.innerHTML = '<span>' + ani(firstImg - 453) + ' fără nicio imagine a hunilor</span>';
+    gap.innerHTML = '<span><b>' + ani(firstImg - 453) + ' de tăcere</b><small>nicio imagine a hunilor</small></span>';
     gap.hidden = false;
     tl.classList.add('done');
     var max = items.length * (MAXP + 1);
