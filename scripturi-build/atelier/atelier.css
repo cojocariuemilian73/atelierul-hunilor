@@ -183,3 +183,118 @@
   .md-gap span b{ font: 700 1.05rem/1.1 'Cinzel', serif; color: #ecebf2; letter-spacing: 0.02em; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); font-variant-numeric: lining-nums; }
   .md-gap span small{ font: 0.66rem 'JetBrains Mono', monospace; color: #c4c3cf; letter-spacing: 0.06em; }
   @media (max-width: 640px){ .md-era em{ display: none; } .md-gap span b{ font-size: 0.82rem; } .md-gap span small{ display: none; } }
+
+  /* ---------- Masa istoricului, după recenzie ---------- */
+  /* totul încape pe un ecran: antet scurt, cinci cărți pe rând, panoul din dreapta derulează în el însuși */
+  #mod-atelier{ padding-block: 52px 28px; }
+  .md-head{ padding: 0 0 12px; }
+  .md-title{ font-size: clamp(1.8rem, 3.4vw, 2.4rem); margin: 0 0 6px; }
+  .md-sub{ font-size: 1rem; }
+  .md-board{ padding: 16px 18px 18px; }
+  .md-bar{ margin-bottom: 12px; padding-top: 8px; }
+  .md-tray{ grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+  .md-card img{ border-width: 4px; }
+  .md-insp{ max-height: calc(100vh - var(--nav-h, 44px) - 32px); overflow-y: auto; }
+  .md-zoom img{ max-height: 260px; }
+  /* epocile, colorate pe toată axa, cu numele lizibile */
+  .md-era{ background: var(--t); }
+  .md-era.e0{ --t: rgba(212, 175, 55, 0.1); }
+  .md-era.e1{ --t: rgba(196, 120, 72, 0.11); }
+  .md-era.e2{ --t: rgba(130, 150, 100, 0.1); }
+  .md-era.e3{ --t: rgba(110, 130, 170, 0.11); }
+  .md-era em{ font-size: 0.7rem; color: rgba(240, 228, 205, 0.78); }
+  .md-era.e0 em{ display: block; left: auto; right: 8px; }
+  /* sursele scrise fără manuscris: un citat pe pergament */
+  .md-paper.qt{ justify-content: space-between; padding: 0; background: linear-gradient(160deg, #efe3c8, #d9c69f); }
+  .md-paper.qt q{ display: block; padding: 10px 10px 0; font: italic 0.74rem/1.35 'Source Serif 4', Georgia, serif; color: #3a2a16; text-align: left; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; quotes: '„' '”'; }
+  .md-ghost .md-paper.qt q{ -webkit-line-clamp: 2; font-size: 0.6rem; padding: 5px 6px 0; }
+  .md-insp-paper.qt blockquote{ margin: 0 0 4px; font: italic 1.08rem/1.55 'Source Serif 4', Georgia, serif; color: #2a1f12; }
+  .md-insp-paper.qt small{ margin-bottom: 8px; font-size: 0.74rem; opacity: 0.75; }
+  /* lupa, la vedere */
+  .md-zbtn{ position: absolute; right: 8px; bottom: 8px; display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 4px 10px; border: 1px solid rgba(242, 212, 116, 0.7); background: rgba(14, 13, 11, 0.85); color: #f2d474; font: 600 0.82rem 'Source Serif 4', Georgia, serif; cursor: pointer; }
+  .md-zbtn svg{ width: 15px; height: 15px; }
+  .md-zbtn:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
+  .md-ztip{ position: absolute; left: 8px; bottom: 8px; padding: 3px 8px; background: rgba(14, 13, 11, 0.8); font-size: 0.74rem; color: #e6d7c3; pointer-events: none; transition: opacity 0.3s; }
+  .md-zoom:hover .md-ztip{ opacity: 0; }
+  @media (hover: none){ .md-ztip{ display: none; } }
+  .md-zoom.zoomed{ max-height: 340px; overflow: auto; cursor: grab; }
+  .md-zoom.zoomed img{ width: 220%; max-width: none; max-height: none; }
+  .md-zoom.zoomed .md-lens, .md-zoom.zoomed .md-ztip{ display: none !important; }
+  .md-zoom.zoomed .md-zbtn{ position: sticky; float: right; margin: -42px 8px 8px 0; }
+  /* indiciul */
+  .md-hintb{ margin-top: 10px; min-height: 36px; padding: 6px 12px; border: 1px dashed rgba(229, 193, 88, 0.6); background: transparent; color: var(--md-gold2); font: 600 0.88rem 'Source Serif 4', Georgia, serif; cursor: pointer; }
+  .md-hintb:hover{ border-style: solid; }
+  .md-hintx{ margin: 10px 0 0; padding: 8px 10px; border-left: 3px solid var(--md-gold2); background: rgba(229, 193, 88, 0.08); font-size: 0.92rem; line-height: 1.5; color: #f0e2c6; }
+  .md-hintx b{ color: var(--md-gold2); }
+  /* pinul alunecă spre anul real; distanța se scrie pe linie; scorul sare */
+  .md-pin{ transition: left 0.9s cubic-bezier(.45, 0, .2, 1), transform 0.2s; }
+  .md-dist{ position: absolute; bottom: 8px; transform: translateX(-50%); padding: 1px 7px; background: #1b1713; border: 1px solid var(--c); color: var(--c); font: 700 0.72rem 'JetBrains Mono', monospace; white-space: nowrap; animation: md-dist 4s ease forwards; pointer-events: none; }
+  @keyframes md-dist{ 0%{ opacity: 0; } 25%{ opacity: 1; } 80%{ opacity: 1; } 100%{ opacity: 0; } }
+  .md-score{ position: relative; }
+  .md-score.bump{ animation: md-bump 0.6s ease; }
+  @keyframes md-bump{ 40%{ transform: scale(1.18); color: #f2d474; } }
+  .md-plus{ position: absolute; right: 0; top: -20px; font: 700 1rem 'Cinzel', serif; color: #8fbd82; animation: md-plus 1.5s ease-out forwards; pointer-events: none; }
+  .md-plus.zero{ color: #e0626c; }
+  @keyframes md-plus{ from{ opacity: 0; transform: translateY(8px); } 20%{ opacity: 1; transform: none; } to{ opacity: 0; transform: translateY(-18px); } }
+  /* pinii înghesuiți: un cerc „×N” care se desface */
+  .md-clu{ position: absolute; bottom: 10px; z-index: 2; transform: translateX(-50%); pointer-events: auto; }
+  .md-clu-b{ position: relative; width: 44px; height: 44px; padding: 0; border: 2px solid #e0626c; border-radius: 50%; overflow: visible; background: var(--md-paper); cursor: pointer; box-shadow: 4px -4px 0 -1px #1b1713, 4px -4px 0 1px rgba(224, 98, 108, 0.6), 0 6px 14px rgba(0, 0, 0, 0.5); }
+  .md-clu-b img{ width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+  .md-clu-b b{ position: absolute; right: -10px; top: -10px; min-width: 24px; padding: 1px 5px; border-radius: 12px; background: #e0626c; color: #1b1712; font: 700 0.72rem 'JetBrains Mono', monospace; }
+  .md-clu-b:focus-visible{ outline: 2px solid #f2d474; outline-offset: 3px; }
+  .md-clu-pop{ position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%); display: none; gap: 8px; padding: 8px 10px 20px; background: rgba(20, 18, 15, 0.97); border: 1px solid rgba(212, 175, 55, 0.5); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55); }
+  .md-clu:hover .md-clu-pop, .md-clu:focus-within .md-clu-pop, .md-clu.open .md-clu-pop, .md-tl.answers .md-clu-pop{ display: flex; }
+  .md-clu-pop .md-pin{ position: relative; left: auto !important; bottom: auto; margin: 0; flex: none; overflow: visible; }
+  .md-clu-pop .md-pin img{ border-radius: 50%; }
+  /* răspunsurile pe axă: anul real sub fiecare pin */
+  .md-pin{ overflow: visible; }
+  .md-pin > img{ border-radius: 50%; }
+  .md-pin-lab{ display: none; position: absolute; top: calc(100% + 3px); left: 50%; transform: translateX(-50%); padding: 0 4px; background: #1b1713; font: 700 0.62rem 'JetBrains Mono', monospace; color: #f6eddc; white-space: nowrap; }
+  .md-tl.answers .md-pin-lab, .md-clu-pop .md-pin-lab{ display: block; }
+  .md-tl.answers .md-miss{ opacity: 1; border-bottom-style: dashed; }
+  /* reglajul fin, pe ecranele tactile */
+  .md-adjust{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; margin: 6px 14px 0; }
+  .md-adjust[hidden]{ display: none; }
+  .md-adjust > button:not(.md-btn){ min-width: 48px; min-height: 42px; border: 1px solid rgba(212, 175, 55, 0.5); background: transparent; color: #f2d474; font: 700 0.86rem 'JetBrains Mono', monospace; }
+  .md-adjust b{ min-width: 4ch; font: 700 1.3rem 'Cinzel', serif; color: #f6eddc; text-align: center; font-variant-numeric: lining-nums tabular-nums; }
+  /* finalul: scara rangurilor și rezumatul pe categorii */
+  .md-ladder{ margin: 4px 0 14px; }
+  .md-lad-track{ position: relative; height: 10px; margin: 26px 0 8px; background: rgba(230, 215, 195, 0.12); }
+  .md-lad-track i{ display: block; height: 100%; background: linear-gradient(90deg, #8f6d1d, #f2d474); }
+  .md-lad-track em{ position: absolute; bottom: calc(100% + 4px); transform: translateX(-50%); padding: 1px 7px; background: #f2d474; color: #17140e; font: 700 0.74rem 'JetBrains Mono', monospace; font-style: normal; white-space: nowrap; }
+  .md-ladder ol{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .md-ladder li{ padding: 6px 8px; border: 1px solid var(--md-line); color: var(--md-dim); font-size: 0.8rem; line-height: 1.3; }
+  .md-ladder li b{ display: block; font: 700 0.82rem 'Cinzel', serif; }
+  .md-ladder li.on{ border-color: rgba(212, 175, 55, 0.45); color: #e6d7c3; }
+  .md-ladder li.me{ background: rgba(212, 175, 55, 0.14); border-color: #f2d474; color: #f6eddc; }
+  .md-ladder li.me b{ color: #f2d474; }
+  .md-cats{ display: grid !important; grid-template-columns: 1fr 1fr; gap: 6px !important; margin: 0 0 14px !important; padding: 0 !important; list-style: none; }
+  .md-cats li{ padding: 7px 10px; border-left: 3px solid var(--c); background: rgba(230, 215, 195, 0.04); font-size: 0.86rem; }
+  .md-cats b{ display: block; color: var(--c); font-weight: 700; }
+  .md-end-btns{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .md-btn.ghost{ background: transparent; color: var(--md-gold2) !important; }
+  .md-btn.ghost:hover{ background: rgba(212, 175, 55, 0.12); }
+  .md-shared{ margin: 8px 0 0; font-size: 0.8rem; color: var(--md-dim); word-break: break-word; }
+  .md-shared:empty{ display: none; }
+  @media (max-width: 900px){
+    .md-tray{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .md-insp{ max-height: none; }
+    /* pe telefon, axa stă lipită sus cât timp alegi */
+    .md-tl-scroll{ position: sticky; top: var(--nav-h, 44px); z-index: 6; margin: 0 -10px; padding: 6px 10px 4px; background: #1d1813; box-shadow: 0 10px 18px rgba(0, 0, 0, 0.45); }
+  }
+  @media (max-width: 640px){
+    .md-tray{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .md-ladder ol, .md-cats{ grid-template-columns: 1fr 1fr; }
+    .md-clu-b{ width: 34px; height: 34px; }
+  }
+  @media (prefers-reduced-motion: reduce){ .md-pin{ transition: none; } .md-dist, .md-score.bump, .md-plus{ animation: none; } }
+  #mod-atelier{ padding-top: 40px; }
+  .md-zoom img{ max-height: 200px; }
+  .md-insp-body{ padding: 12px 16px 14px; }
+  .md-cls{ gap: 6px; margin: 8px 0 6px; }
+  .md-cls button{ min-height: 40px; padding: 6px 12px; }
+  .md-q{ margin-bottom: 4px; }
+  .md-insp-paper.ms .md-insp-page{ max-height: 170px; }
+  @media (max-width: 900px){ .md-zoom img{ max-height: 240px; } }
+  .md-tl.done .md-era.e0 em{ opacity: 0; }
+  @media (max-width: 640px){ .md-era em, .md-era.e0 em{ display: none; } }

@@ -40,20 +40,21 @@ const CSS = `  /* rd: corecturi de design după recenzie */
 `;
 
 const JS = `<script>
-/* rd: pe Acasă, bara „Pagina următoare” apare abia la sfârșitul articolului */
+/* rd: pe Acasă, bara „Pagina următoare” apare abia la sfârșitul articolului; pe Masa istoricului, la sfârșitul paginii */
 (function(){
-  var home = document.getElementById('page-acasa'), de = document.documentElement, raf = 0;
+  var home = document.getElementById('page-acasa'), masa = document.querySelector('.m-atelier.site-page'), de = document.documentElement, raf = 0;
   if (!home) return;
   function upd(){
     raf = 0;
     var end = window.innerHeight + window.pageYOffset >= de.scrollHeight - Math.max(900, window.innerHeight * 1.2);
-    de.classList.toggle('pager-hide', home.classList.contains('active') && !end);
+    var endM = window.innerHeight + window.pageYOffset >= de.scrollHeight - 60;
+    de.classList.toggle('pager-hide', (home.classList.contains('active') && !end) || (!!masa && masa.classList.contains('active') && !endM));
   }
   function req(){ if (!raf) raf = requestAnimationFrame(upd); }
   window.addEventListener('scroll', req, { passive: true });
   window.addEventListener('resize', req);
   window.addEventListener('hashchange', req);
-  if ('MutationObserver' in window) new MutationObserver(req).observe(home, { attributes: true, attributeFilter: ['class'] });
+  if ('MutationObserver' in window) [home, masa].forEach(function(p){ if (p) new MutationObserver(req).observe(p, { attributes: true, attributeFilter: ['class'] }); });
   upd();
 })();
 </script>
