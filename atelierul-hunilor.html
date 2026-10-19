@@ -1527,6 +1527,131 @@
   .mig-intro .mig-go-row{ position: sticky; bottom: 0; z-index: 1; margin: 6px -20px 0; padding: 12px 20px 14px; background: linear-gradient(180deg, rgba(26, 26, 30, 0), rgba(26, 26, 30, 0.98) 26%); }
   .mig-intro .mig-prep{ padding-bottom: 10px; } .mig-intro .mig-prep:empty{ display: none; }
   @media (max-width: 760px){ .mig-intro .mig-acts{ grid-template-columns: 1fr; } }
+  /* ---------- jocul, după a doua recenzie ---------- */
+  /* harta pe toată lățimea paginii; panoul îngust în dreapta */
+  #mod-migratie .jg-stage, #mod-migratie .mig-head .jg-wrap{ max-width: none; padding: 0 clamp(12px, 2vw, 24px); }
+  #mod-migratie .mig-head{ padding-top: 16px; }
+  #mod-migratie .mig-head h1{ font-size: clamp(1.5rem, 2.6vw, 2rem); }
+  @media (min-width: 981px){ .mig-main{ grid-template-columns: minmax(0, 1fr) 290px; } }
+  .mig-stage{ display: flex; flex-direction: column; }
+  .mig-view{ position: relative; background: #0e0d0b; }
+  /* harta cât mai mare, dar întreagă pe ecran: lățimea ține cont și de înălțimea ferestrei */
+  .mig-view canvas{ width: min(100%, max(560px, calc((100vh - var(--nav-h, 44px) - 190px) * 2.069))); margin: 0 auto; }
+  /* banda de știri, deasupra hărții: mesajele nu mai acoperă Europa */
+  .mig-news{ display: flex; align-items: baseline; gap: 12px; min-height: 42px; padding: 9px 14px; background: #141210; border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
+  .mig-news > b{ flex: none; font: 700 1.05rem 'Cinzel', serif; color: #f2d474; font-variant-numeric: lining-nums tabular-nums; }
+  .mig-news p{ flex: 1; min-width: 0; margin: 0; font-size: 0.95rem; line-height: 1.4; color: #f0e2c6; }
+  .mig-news small{ flex: none; max-width: 32%; font-size: 0.74rem; color: var(--dim); text-align: right; }
+  .mig-news.in p, .mig-news.in > b{ animation: jg-in 0.45s ease both; }
+  /* comenzile, într-o singură bară sub hartă */
+  .mig-hud{ position: relative; top: auto; left: auto; right: auto; flex-wrap: nowrap; background: #141210; border-top: 1px solid rgba(212, 175, 55, 0.3); border-bottom: 0; backdrop-filter: none; }
+  .mig-year b{ font-size: 1.45rem; }
+  /* auriu plin doar pentru acțiunea principală: pornirea are contur, viteza e un buton discret */
+  .mig-play{ background: transparent; color: #f2d474; border-color: rgba(212, 175, 55, 0.7); }
+  .mig-play:hover:not(:disabled){ background: rgba(212, 175, 55, 0.14); }
+  .mig-spd{ width: auto; min-width: 42px; padding: 0 8px; font: 700 0.8rem 'JetBrains Mono', monospace; color: #e6d7c3; }
+  .mig-spd.on{ color: #f2d474; border-color: rgba(212, 175, 55, 0.7); }
+  .mig-link{ min-height: 40px; padding: 6px 4px; border: 0; background: none; color: var(--gold2); font: 600 0.92rem 'Source Serif 4', Georgia, serif; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+  .mig-link:hover{ color: #f2d474; }
+  .mig-link:disabled{ opacity: 0.5; cursor: default; }
+  .mig-link:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
+  .mig-go-row{ align-items: center; }
+  /* straturile, legenda, reluarea: în colțurile hărții */
+  .mig-pop{ top: auto; bottom: 10px; right: 10px; }
+  .mig-legend{ bottom: 10px; }
+  .mig-replay{ top: 10px; }
+  .mig-view .mig-over.dock{ bottom: 0; }
+  /* fereastra de decizie: în cadrul hărții, ca panou lateral; harta se întunecă ușor spre panou */
+  @media (min-width: 761px){
+    .mig-over.inframe{ position: absolute; inset: 0; justify-content: flex-end; align-items: stretch; padding: 10px; background: linear-gradient(90deg, rgba(10, 10, 12, 0.08) 30%, rgba(10, 10, 12, 0.62)); backdrop-filter: none; }
+    .mig-over.inframe.left{ justify-content: flex-start; background: linear-gradient(270deg, rgba(10, 10, 12, 0.08) 30%, rgba(10, 10, 12, 0.62)); }
+    .mig-over.inframe .mig-dec{ width: min(460px, 48%); max-height: 100%; padding: 16px 18px; box-shadow: 0 0 40px rgba(0, 0, 0, 0.6); }
+    .mig-over.inframe .mig-pic{ width: 84px; } .mig-over.inframe .mig-pic img{ width: 84px; height: 84px; } .mig-over.inframe .mig-pic figcaption{ display: none; }
+  }
+  /* „Tu / În realitate”: consecința, pe scurt */
+  .mig-vs{ display: grid; gap: 4px; margin: 0 0 10px; padding: 10px 12px; border-left: 3px solid #f2d474; background: rgba(242, 212, 116, 0.07); }
+  .mig-vs p{ margin: 0 !important; font-size: 0.95rem; line-height: 1.45; }
+  .mig-vs b{ color: #f2d474; }
+  /* stabilitatea: cifra care urcă și bara care se aprinde */
+  .mig-stab{ position: relative; }
+  .mig-float{ position: absolute; right: 0; top: -4px; font: 700 1.25rem 'Cinzel', serif; pointer-events: none; animation: mig-float 1.8s cubic-bezier(.16,1,.3,1) forwards; }
+  .mig-float.up{ color: #8fbd82; } .mig-float.down{ color: #e0626c; }
+  @keyframes mig-float{ from{ opacity: 0; transform: translateY(10px) scale(0.8); } 18%{ opacity: 1; transform: none; } to{ opacity: 0; transform: translateY(-30px); } }
+  .mig-stab.flash .jg-bar{ animation: mig-flash 0.9s ease; }
+  @keyframes mig-flash{ 30%{ box-shadow: 0 0 0 3px rgba(242, 212, 116, 0.35); } }
+  /* cine joci acum */
+  .mig-now-c{ display: flex; align-items: center; gap: 12px; }
+  .mig-now-c img, .mig-mono{ flex: none; width: 58px; height: 58px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(212, 175, 55, 0.6); background: #0e0d0b; }
+  .mig-mono{ display: grid; place-items: center; font: 700 1.6rem 'Cinzel', serif; color: #f2d474; }
+  .mig-now-c b{ display: block; font: 700 1.15rem 'Cinzel', serif; color: #f6eddc; }
+  .mig-now-c span{ font-size: 0.84rem; color: var(--dim); }
+  .mig-now-goal{ margin: 10px 0 0; font-size: 0.9rem; line-height: 1.5; color: #e0d3bd; }
+  .mig-now .mig-side-h{ color: #f2d474; }
+  /* fișa poporului */
+  .mig-fiche{ position: absolute; z-index: 5; left: 10px; top: 10px; width: min(290px, calc(100% - 20px)); padding: 12px 14px; background: rgba(18, 16, 12, 0.96); border: 1px solid rgba(212, 175, 55, 0.55); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5); font-size: 0.86rem; color: #e0d3bd; }
+  .mig-fiche[hidden]{ display: none; }
+  .mig-fiche > b{ display: block; padding-right: 26px; font: 700 1rem 'Cinzel', serif; }
+  .mig-fiche dl{ display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; margin: 8px 0; }
+  .mig-fiche dt{ color: var(--dim); } .mig-fiche dd{ margin: 0; color: #f0e6d6; }
+  .mig-fiche p{ margin: 0; font-size: 0.76rem; color: var(--dim); }
+  .mig-fiche-x{ position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; border: 0; background: none; color: #e6d7c3; font-size: 1.3rem; cursor: pointer; }
+  .mig-tip em{ font-size: 0.72rem; color: var(--gold2); }
+  /* cronologia de jos: forme explicate, se poate reciti */
+  .mig-tl{ height: 60px; }
+  .mig-tl-ev, .mig-tl-dec{ cursor: pointer; }
+  .mig-tl-ev:focus-visible, .mig-tl-dec:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
+  .mig-tl-key{ right: 16px; top: 42px; transform: none !important; font-size: 0.68rem; color: var(--dim); white-space: nowrap; }
+  .mig-tl-key i{ display: inline-block; width: 8px; height: 8px; margin: 0 5px 0 10px; vertical-align: 0; }
+  .mig-tl-key i.d{ transform: rotate(45deg); border: 1.5px solid #d4af37; }
+  .mig-tl-key i.e{ border-radius: 50%; background: #f2d474; }
+  .mig-tlpop{ position: absolute; z-index: 8; bottom: 66px; width: min(320px, calc(100% - 12px)); padding: 10px 12px; background: rgba(18, 16, 12, 0.97); border: 1px solid rgba(212, 175, 55, 0.55); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.5); font-size: 0.86rem; color: #e0d3bd; }
+  .mig-tlpop[hidden]{ display: none; }
+  .mig-tlpop small{ display: block; font-size: 0.7rem; color: var(--gold2); text-transform: uppercase; letter-spacing: 0.08em; }
+  .mig-tlpop b{ display: block; margin: 2px 0; font-weight: 600; color: #f6eddc; }
+  .mig-tlpop span{ display: block; font-style: italic; color: var(--dim); }
+  .mig-tlpop p{ margin: 6px 0 0; } .mig-tlpop p.ok{ color: #8fbd82; }
+  /* cartea de titlu a actelor */
+  .mig-over.actc{ background: radial-gradient(circle at 50% 38%, rgba(48, 36, 20, 0.97), rgba(8, 8, 9, 0.98) 70%); }
+  .mig-actcard{ display: flex; flex-direction: column; align-items: center; gap: 10px; max-width: 620px; text-align: center; animation: mig-act 0.9s cubic-bezier(.16,1,.3,1) both; }
+  .mig-ac-n{ margin: 0; font: 700 0.95rem 'Cinzel', serif; letter-spacing: 0.32em; text-transform: uppercase; color: #d4af37; }
+  .mig-ac-pic{ width: 170px; height: 170px; object-fit: cover; border: 2px solid rgba(212, 175, 55, 0.7); box-shadow: 0 0 0 8px rgba(212, 175, 55, 0.08), 0 20px 50px rgba(0, 0, 0, 0.7); }
+  .mig-ac-pic.coin{ border-radius: 50%; }
+  .mig-actcard h3{ margin: 6px 0 0; font: 700 clamp(2rem, 5vw, 3.2rem)/1.05 'Cinzel', serif; color: #f6eddc; }
+  .mig-ac-who{ margin: 0 0 8px; font: italic 1.1rem/1.5 'Source Serif 4', Georgia, serif; color: #e5c158; }
+  @keyframes mig-act{ from{ opacity: 0; transform: scale(0.96); } }
+  /* finalul: cele două lumi, una lângă alta */
+  .mig-worlds{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 14px; }
+  .mig-worlds figure{ margin: 0; }
+  .mig-worlds img{ display: block; width: 100%; height: auto; border: 1px solid rgba(212, 175, 55, 0.4); }
+  .mig-worlds figcaption{ margin-top: 4px; font: 700 0.8rem 'Cinzel', serif; color: #f2d474; text-align: center; }
+  /* telefonul ținut vertical: rugămintea de a-l întoarce */
+  .mig-rotate{ display: none; position: absolute; inset: 0; z-index: 6; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 16px; background: rgba(10, 10, 12, 0.9); text-align: center; color: #f0e2c6; }
+  .mig-rotate svg{ width: 44px; height: 44px; color: #f2d474; animation: mig-rot 2.4s ease-in-out infinite; }
+  .mig-rotate p{ margin: 0; font-size: 0.9rem; line-height: 1.4; }
+  @keyframes mig-rot{ 40%, 60%{ transform: rotate(-90deg); } }
+  @media (max-width: 700px) and (orientation: portrait){ html.mig-playing .mig-rotate:not(.off){ display: flex; } }
+  /* telefonul: o singură bară cu iconițe */
+  @media (max-width: 760px){
+    .mig-hud{ order: 0; flex-wrap: nowrap; gap: 4px; padding: 5px 6px; overflow-x: auto; }
+    .mig-play span{ display: none; }
+    .mig-play{ padding: 6px 10px; }
+    .mig-year b{ font-size: 1.15rem; }
+    .mig-news{ min-height: 0; padding: 7px 10px; gap: 8px; }
+    .mig-news p{ font-size: 0.82rem; }
+    .mig-news small{ display: none; }
+    .mig-view canvas{ width: 100%; }
+    .mig-legend{ position: static; }
+    .mig-worlds{ grid-template-columns: 1fr; }
+    .mig-tl-key{ display: none; }
+    .mig-tl{ height: 46px; }
+    .mig-tlpop{ bottom: 52px; }
+  }
+  /* ecranul complet: aceeași ordine, harta cât încape */
+  .mig-stage:fullscreen .mig-view canvas, .mig-stage:-webkit-full-screen .mig-view canvas{ width: min(100%, calc((100vh - 160px) * 2.069)); max-height: none; }
+  /* codul QR: mic, sub joc */
+  #mod-migratie .qr-card{ max-width: 560px; margin-top: 14px; padding: 10px 12px; }
+  @media (prefers-reduced-motion: reduce){ .mig-float, .mig-actcard, .mig-rotate svg, .mig-news.in p, .mig-news.in > b{ animation: none; } }
+  .mig-view:has(.mig-replay:not([hidden])) .mig-fiche{ top: 62px; }
   /* ============ MODULE: ATLASUL MIGRAȚIEI (.m-atlas) ============ */
 
   .m-atlas{
@@ -4399,6 +4524,25 @@
     { id: 'gep', name: 'Gepizii', color: '#7fd08a', n: 200 }
   ];
   var GI = {}; GROUPS.forEach(function(g, i){ GI[g.id] = i; });
+  // fișa unui popor: cine îl conducea (de la anul dat) și din ce izvor știm
+  var LEAD = {
+    huni: [[0, 'Balamber, după Iordanes'], [395, 'Uldin'], [420, 'Rua și Octar'], [434, 'Attila și Bleda'], [445, 'Attila'], [453.3, 'fiii lui Attila: Ellac, Dengizich, Ernac']],
+    ostro: [[0, 'Ermanaric'], [376, 'sub stăpânirea hunilor'], [454.5, 'Valamir, Thiudimir și Vidimir'], [474, 'Teodoric cel Mare']],
+    vizi: [[0, 'Athanaric și Fritigern'], [395, 'Alaric'], [410.6, 'Athaulf'], [415, 'Wallia'], [418, 'Teodoric I'], [451.5, 'Thorismund'], [453, 'Teodoric al II-lea'], [466, 'Euric']],
+    vand: [[0, 'Godigisel'], [406, 'Gunderic'], [428, 'Genseric']],
+    gep: [[0, 'sub stăpânirea hunilor'], [440, 'Ardaric, sub Attila'], [454.5, 'Ardaric, rege liber']]
+  };
+  var GSRC = { huni: 'Ammianus 31.2; Priscus; Iordanes, Getica', ostro: 'Iordanes, Getica', vizi: 'Ammianus 31; Orosius; Iordanes, Getica', vand: 'Procopius, Războiul vandalic; Hydatius', gep: 'Iordanes, Getica 259–264' };
+  // cine joci acum (din anul dat), pentru panoul din dreapta
+  var CAST = [
+    [0, 'Valens', 'valens', 'Împăratul Romei de Răsărit', 'Actul I · Roma în fața valului', 'Hunii împing goții spre Dunăre. Îi primești în Imperiu sau închizi granița?'],
+    [395, 'Stilicho', 'stilicho', 'Generalul Apusului', 'Actul I · Roma în fața valului', 'Apără Italia de vizigoți fără să lași Rinul fără pază.'],
+    [408, 'Honorius', null, 'Împăratul Apusului, la Ravenna', 'Actul I · Roma în fața valului', 'Alaric cere pământ și aur. Ce faci cu Roma?'],
+    [423, 'Rua', null, 'Regele hunilor', 'Între acte', 'Hunii se așază în Câmpia Panonică și primesc primul tribut. Urmează Actul II: vei fi Attila.'],
+    [434.8, 'Attila', 'attila', 'Regele hunilor', 'Actul II · ești Attila', 'Ține neamurile unite cu aur și loialitate și gândește-te la ce rămâne după tine.'],
+    [453.3, 'Ardaric', 'apahida', 'Regele gepizilor', 'Actul III · după Attila', 'Imperiul lui Attila se destramă. De partea cui stai?'],
+    [457, 'Leon I', null, 'Împăratul Romei de Răsărit', 'Actul III · după Attila', 'Vandalii stăpânesc Mediterana. Trimiți marea flotă împotriva lor?']
+  ];
   // Granițele romane (limes): Rinul și Dunărea.
   var FRONT = {
     rin: [[51.9, 6.1], [51.0, 6.9], [50.4, 7.6], [50.0, 8.3], [49.0, 8.4], [47.6, 7.6], [47.6, 9.4]],
@@ -4410,31 +4554,31 @@
     ['Hispania', 40.0, -3.8], ['Africa (Cartagina)', 36.6, 9.5], ['Germania', 51.0, 10.5], ['Noricum și Raetia', 47.6, 12.5], ['Tisa superioară', 48.2, 22.4], ['Transilvania', 46.7, 23.9], ['Crișana', 47.0, 21.8]
   ];
   var DECISIONS = [
-    { year: 376, id: 'd1', pic: 'valens', at: [44.1, 27.4], place: 'Dunărea, la Durostorum', title: 'Goții la Dunăre', who: 'Ești împăratul Valens',
+    { year: 376, id: 'd1', grp: 'vizi', real2: 'Valens i-a primit, dar i-a lăsat pe mâna comandanților. Înfometați, goții s-au răsculat: Adrianopol, 378.', pic: 'valens', at: [44.1, 27.4], place: 'Dunărea, la Durostorum', title: 'Goții la Dunăre', who: 'Ești împăratul Valens',
       text: 'Fugind din calea hunilor, zeci de mii de goți tervingi s-au strâns pe malul stâng al Dunării și cer să fie primiți în Imperiu.',
       src: 'Ammianus Marcellinus, Res Gestae 31.4–5',
       q: 'Comandanții au adunat toți câinii pe care i-au putut găsi și au dat câte unul pentru fiecare sclav; printre cei luați erau și fii de căpetenii.', qs: 'Ammianus Marcellinus, Res Gestae 31.4.11',
       opts: [
-        { t: 'Îi primești și le asiguri hrană și pământ', fx: { stab: 5 }, set: { d1: 'A' } },
-        { t: 'Îi primești, dar îi lași pe mâna comandanților locali', real: true, fx: {}, set: { d1: 'B' }, note: 'Ammianus scrie că Lupicinus și Maximus i-au înfometat și exploatat pe refugiați. Goții s-au răsculat.' },
-        { t: 'Închizi granița', fx: { stab: -3 }, set: { d1: 'C' } }
+        { t: 'Îi primești și le asiguri hrană și pământ', fx: { stab: 5 }, set: { d1: 'A' }, map: ['Goții se așază în pace', '#8fbd82'] },
+        { t: 'Îi primești, dar îi lași pe mâna comandanților locali', real: true, fx: {}, set: { d1: 'B' }, map: ['Goții, înfometați, se răscoală', '#e0626c'], note: 'Ammianus scrie că Lupicinus și Maximus i-au înfometat și exploatat pe refugiați. Goții s-au răsculat.' },
+        { t: 'Închizi granița', fx: { stab: -3 }, set: { d1: 'C' }, map: ['Goții rămân blocați la Dunăre', '#e5c158'] }
       ] },
-    { year: 402, id: 'd2', pic: 'stilicho', at: [45.46, 9.19], place: 'Mediolanum', title: 'Rinul sau Italia?', who: 'Ești generalul Stilicho',
+    { year: 402, id: 'd2', grp: 'vand', real2: 'Stilicho a adus trupele în Italia. În noaptea de 31 decembrie 406, vandalii, alanii și suebii au trecut Rinul.', pic: 'stilicho', at: [45.46, 9.19], place: 'Mediolanum', title: 'Rinul sau Italia?', who: 'Ești generalul Stilicho',
       text: 'Alaric și vizigoții au intrat în Italia. Ca s-o aperi, ai nevoie de trupele care păzesc granița de pe Rin.',
       src: 'Claudian, Războiul gotic (De bello Gothico)',
       q: 'Neamuri nenumărate și sălbatice au ocupat toată Galia. Tot ce se află între Alpi și Pirinei, între Ocean și Rin, a fost pustiit.', qs: 'Ieronim, Scrisoarea 123, scrisă în 409',
       opts: [
-        { t: 'Aduci trupele de pe Rin în Italia', real: true, fx: { stab: 0 }, set: { d2: 'A' }, note: 'Granița de pe Rin rămâne slab apărată. În noaptea de 31 decembrie 406, vandalii, alanii și suebii o trec. Legătura dintre retragerea trupelor și trecerea din 406 e însă o teză discutată: unii istorici cred că granița era slăbită de mai mult timp.' },
-        { t: 'Lași armata pe Rin', fx: { stab: -6 }, set: { d2: 'B' } }
+        { t: 'Aduci trupele de pe Rin în Italia', real: true, fx: { stab: 0 }, set: { d2: 'A' }, map: ['Rinul rămâne fără trupe', '#e0626c'], note: 'Granița de pe Rin rămâne slab apărată. În noaptea de 31 decembrie 406, vandalii, alanii și suebii o trec. Legătura dintre retragerea trupelor și trecerea din 406 e însă o teză discutată: unii istorici cred că granița era slăbită de mai mult timp.' },
+        { t: 'Lași armata pe Rin', fx: { stab: -6 }, set: { d2: 'B' }, map: ['Armata păzește Rinul', '#8fbd82'] }
       ] },
-    { year: 409.6, id: 'dh', at: [44.42, 12.2], place: 'Ravenna', title: 'Alaric la porțile Romei', who: 'Ești împăratul Honorius, la Ravenna',
+    { year: 409.6, id: 'dh', grp: 'vizi', real2: 'Honorius a refuzat orice înțelegere. Pe 24 august 410, vizigoții au jefuit Roma.', at: [44.42, 12.2], place: 'Ravenna', title: 'Alaric la porțile Romei', who: 'Ești împăratul Honorius, la Ravenna',
       text: 'Vizigoții lui Alaric au asediat Roma de două ori. Cer pământ pentru neamul lor, grâu și aur. Tu ești în siguranță, dincolo de mlaștinile Ravennei.',
       src: 'Zosimus, Istoria nouă 5.48–51; Orosius, Istorii 7.39',
       q: 'Orașul care a cucerit lumea întreagă a fost cucerit el însuși.', qs: 'Ieronim, Scrisoarea 127, despre anul 410',
       opts: [
-        { t: 'Refuzi orice înțelegere și rămâi la Ravenna', real: true, fx: {}, set: { dh: 'A' }, note: 'Pe 24 august 410, vizigoții intră în Roma și o jefuiesc trei zile: prima cucerire a orașului de către un dușman străin în aproape 800 de ani.' },
-        { t: 'Le dai pământ în Noricum și grâu, ca aliați ai Imperiului', fx: { stab: -3 }, set: { dh: 'B' }, note: 'Vizigoții se așază în Noricum, iar Roma nu e jefuită (scenariu ipotetic). Prețul: Imperiul cedează un ținut întreg unui rege care nu-i datorează nimic.' },
-        { t: 'Ceri ajutor de la Constantinopol și aștepți', fx: { stab: -2 }, set: { dh: 'C' }, note: 'Ajutorul nu vine la timp: Roma e jefuită, ca în istorie.' }
+        { t: 'Refuzi orice înțelegere și rămâi la Ravenna', real: true, fx: {}, set: { dh: 'A' }, map: ['Roma rămâne fără apărare', '#e0626c'], note: 'Pe 24 august 410, vizigoții intră în Roma și o jefuiesc trei zile: prima cucerire a orașului de către un dușman străin în aproape 800 de ani.' },
+        { t: 'Le dai pământ în Noricum și grâu, ca aliați ai Imperiului', fx: { stab: -3 }, set: { dh: 'B' }, map: ['Vizigoții pleacă spre Noricum', '#8fbd82'], note: 'Vizigoții se așază în Noricum, iar Roma nu e jefuită (scenariu ipotetic). Prețul: Imperiul cedează un ținut întreg unui rege care nu-i datorează nimic.' },
+        { t: 'Ceri ajutor de la Constantinopol și aștepți', fx: { stab: -2 }, set: { dh: 'C' }, map: ['Roma așteaptă ajutor', '#e5c158'], note: 'Ajutorul nu vine la timp: Roma e jefuită, ca în istorie.' }
       ] },
     // ---------- ACTUL II: ești Attila (rundele din „Imperiul lui Attila”, pe aceeași hartă) ----------
     { kind: 'act', year: 434.9, id: 'a2', pic: 'attila', at: [47.0, 20.2], place: 'Câmpia Panonică', title: 'Actul II: ești Attila', opts: [{ t: 'Începe domnia', real: true, set: {} }] },
@@ -4520,24 +4664,24 @@
       q: 'Regele a primit cu cinste întreaga solie și, după ce a promis pacea, s-a retras dincolo de Dunăre.', qs: 'Prosper Tiro, Epitoma chronicon, anul 452' },
     // ---------- ACTUL III: după Attila ----------
     { kind: 'act', year: 453.3, id: 'a3', pic: 'moartea', at: [47.0, 20.2], place: 'Moartea lui Attila', title: 'Actul III: după Attila', opts: [{ t: 'Continuă', real: true, set: {} }] },
-    { year: 467.6, id: 'dl', at: [36.85, 10.2], place: 'Cartagina', title: 'Flota împotriva vandalilor', who: 'Ești împăratul Leon I, la Constantinopol',
+    { year: 467.6, id: 'dl', grp: 'vand', real2: 'Leon a trimis flota lui Basiliscus. La Capul Bon, în 468, vandalii au ars-o cu corăbii incendiare.', at: [36.85, 10.2], place: 'Cartagina', title: 'Flota împotriva vandalilor', who: 'Ești împăratul Leon I, la Constantinopol',
       text: 'Genseric și vandalii din Africa jefuiesc coastele Mediteranei; în 455 au jefuit chiar Roma. Răsăritul și Apusul pot strânge împreună cea mai mare flotă a epocii.',
       src: 'Procopius, Războiul vandalic 1.6',
       q: 'Vandalii au umplut corăbii goale cu lemne uscate, le-au dat foc și le-au lăsat să plutească, cu vântul din spate, spre flota romană strânsă laolaltă.', qs: 'Procopius, Războiul vandalic 1.6',
       opts: [
-        { t: 'Trimiți marea flotă a lui Basiliscus spre Cartagina', real: true, fx: {}, set: { dl: 'A' }, note: 'În 468, la Capul Bon, vandalii dau foc flotei cu corăbii incendiare. Pierderea e uriașă, iar Apusul rămâne fără sprijin în ultimii lui ani.' },
-        { t: 'Faci pace cu Genseric și îi recunoști regatul', fx: { stab: 2 }, set: { dl: 'B' }, note: 'Fără război, Răsăritul își păstrează aurul și corăbiile (scenariu ipotetic). Vandalii rămân însă stăpânii Mediteranei de vest.' },
-        { t: 'Aperi doar coastele Răsăritului', fx: { stab: -3 }, set: { dl: 'C' }, note: 'Răsăritul se apără, dar Apusul e lăsat singur în fața vandalilor (scenariu ipotetic).' }
+        { t: 'Trimiți marea flotă a lui Basiliscus spre Cartagina', real: true, fx: {}, set: { dl: 'A' }, map: ['Flota pornește spre Cartagina', '#e5c158'], note: 'În 468, la Capul Bon, vandalii dau foc flotei cu corăbii incendiare. Pierderea e uriașă, iar Apusul rămâne fără sprijin în ultimii lui ani.' },
+        { t: 'Faci pace cu Genseric și îi recunoști regatul', fx: { stab: 2 }, set: { dl: 'B' }, map: ['Pace cu vandalii', '#8fbd82'], note: 'Fără război, Răsăritul își păstrează aurul și corăbiile (scenariu ipotetic). Vandalii rămân însă stăpânii Mediteranei de vest.' },
+        { t: 'Aperi doar coastele Răsăritului', fx: { stab: -3 }, set: { dl: 'C' }, map: ['Răsăritul își apără coastele', '#e5c158'], note: 'Răsăritul se apără, dar Apusul e lăsat singur în fața vandalilor (scenariu ipotetic).' }
       ] },
-    { year: 454, id: 'd5', pic: 'apahida', at: [47.6, 21.8], place: 'Țara gepizilor', title: 'Nedao', who: 'Ești Ardaric, regele gepizilor',
+    { year: 454, id: 'd5', grp: 'gep', real2: 'Ardaric a ridicat neamurile supuse. La Nedao, c. 454, fiii lui Attila au fost învinși, iar imperiul hunilor s-a destrămat.', pic: 'apahida', at: [47.6, 21.8], place: 'Țara gepizilor', title: 'Nedao', who: 'Ești Ardaric, regele gepizilor',
       text: 'Attila a murit. Fiii lui își împart neamurile supuse ca pe o moștenire de familie. Tu ai fost unul dintre cei mai de încredere oameni ai lui Attila.',
       more: function(){ var v = verdict(); return v[2] === 2 ? 'În jocul tău, Attila a lăsat o moștenire solidă: neamurile au motive să rămână alături de fiii lui.' : revolted ? 'În jocul tău, neamurile s-au răsculat încă din timpul domniei lui Attila.' : 'Ca în istorie, imperiul ținea doar prin persoana lui Attila.'; },
       src: 'Iordanes, Getica 259–264',
       q: 'Acolo puteai vedea gotul luptând cu sulița, gepidul dezlănțuit cu sabia, suevul pe jos, hunul cu arcul.', qs: 'Iordanes, Getica 261',
       opts: [
-        { t: 'Ridici neamurile supuse împotriva fiilor lui Attila', real: true, fx: { stab: 3 }, set: { d5: 'A' }, note: 'La Nedao, gepizii și aliații lor îi înving pe huni; Ellac, fiul cel mare al lui Attila, cade în luptă. Gepizii se așază la est de Tisa și în Transilvania, unde rămân până în 567.' },
-        { t: 'Rămâi credincios fiilor lui Attila', fx: {}, set: { d5: 'B' } },
-        { t: 'Îți duci neamul spre apus, în slujba Romei', fx: { stab: 2 }, set: { d5: 'C' } }
+        { t: 'Ridici neamurile supuse împotriva fiilor lui Attila', real: true, fx: { stab: 3 }, set: { d5: 'A' }, map: ['Neamurile se ridică împotriva hunilor', '#e0626c'], note: 'La Nedao, gepizii și aliații lor îi înving pe huni; Ellac, fiul cel mare al lui Attila, cade în luptă. Gepizii se așază la est de Tisa și în Transilvania, unde rămân până în 567.' },
+        { t: 'Rămâi credincios fiilor lui Attila', fx: {}, set: { d5: 'B' }, map: ['Gepizii rămân alături de huni', '#e5c158'] },
+        { t: 'Îți duci neamul spre apus, în slujba Romei', fx: { stab: 2 }, set: { d5: 'C' }, map: ['Gepizii pleacă spre apus', '#8fbd82'] }
       ] }
   ];
   DECISIONS.sort(function(a, b){ return a.year - b.year; });
@@ -4629,16 +4773,9 @@
   root.innerHTML =
     '<div class="mig-main">' +
       '<div class="mig-stage">' +
+        '<div class="mig-news" id="mig-news" aria-live="polite"><b id="mig-news-y">370</b><p id="mig-news-t">Stepa de la nord de Marea Neagră: hunii trec Volga.</p><small id="mig-news-s"></small></div>' +
+        '<div class="mig-view">' +
         '<canvas id="mig-canvas" width="' + CW + '" height="' + CH + '" role="img" aria-label="Simularea Marii Migrații: puncte colorate reprezintă popoarele care se deplasează pe harta Europei între 370 și 476"></canvas>' +
-        '<div class="mig-hud">' +
-          '<div class="mig-year" aria-live="off"><b id="mig-year">370</b></div>' +
-          '<button class="mig-play" id="mig-play" type="button" aria-pressed="false">Pornește</button>' +
-          '<div class="mig-speed" role="group" aria-label="Viteza simulării"><button type="button" data-s="1" class="on" aria-pressed="true">1×</button><button type="button" data-s="2" aria-pressed="false">2×</button><button type="button" data-s="4" aria-pressed="false">4×</button></div>' +
-          '<span class="mig-hud-sp"></span>' +
-          '<button class="mig-ib" id="mig-reset" type="button" aria-label="De la capăt" title="De la capăt">' + SVG('M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1') + '</button>' +
-          '<button class="mig-ib" id="mig-lay" type="button" aria-label="Straturi" title="Straturi" aria-expanded="false" aria-controls="mig-pop">' + SVG('M8 2l6 3-6 3-6-3zM2 8l6 3 6-3M2 11l6 3 6-3') + '</button>' +
-          '<button class="mig-ib mig-fs" id="mig-fs" type="button" aria-label="Ecran complet" title="Ecran complet">' + SVG('M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10') + '</button>' +
-        '</div>' +
         '<div class="mig-pop" id="mig-pop" hidden>' +
           '<p class="mig-pop-h">Straturi</p><div class="mig-layers">' +
             '<label><input type="checkbox" data-l="real" checked> Lumea reală (reper)</label>' +
@@ -4651,15 +4788,30 @@
           '<p class="mig-pop-note">Cum funcționează modelul: <b>Despre proiect</b>, la „Fișă tehnică”.</p>' +
         '</div>' +
         '<ul class="mig-legend" id="mig-legend" aria-label="Popoarele">' + GROUPS.map(function(g){ return '<li title="' + g.name + '"><i style="background:' + g.color + '"></i>' + g.name.split(',')[0] + '<small id="mig-where-' + g.id + '" hidden></small></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
-        '<div class="mig-toast" id="mig-toast" aria-live="polite"></div><div class="mig-tip" id="mig-tip" hidden></div>' +
+        '<div class="mig-tip" id="mig-tip" hidden></div><div class="mig-fiche" id="mig-fiche" role="dialog" aria-label="Fișa poporului" hidden></div>' +
         '<div class="mig-over" id="mig-over"></div>' +
         '<div class="mig-replay" id="mig-replay" hidden><button class="mig-ib" id="mig-rp-play" type="button" aria-label="Pornește reluarea" title="Pornește reluarea"></button>' +
           '<input type="range" id="mig-rp" min="' + T0 + '" max="' + T1 + '" step="1" value="' + T1 + '" aria-label="Anul reluării"><b id="mig-rp-y">' + T1 + '</b>' +
           '<span class="mig-rp-key"><i class="solid"></i>drumul tău <i></i>drumul real</span></div>' +
         '<span class="mig-credit">Hartă: Alexrk2, Wikimedia Commons, CC BY-SA 3.0</span>' +
+        '<div class="mig-rotate" id="mig-rotate"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="15" y="6" width="18" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M8 30a16 16 0 0 0 14 12M40 18A16 16 0 0 0 26 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M22 42l-4 2 1-4M26 6l4-2-1 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Întoarce telefonul: pe orizontală, harta e de trei ori mai mare.</p><button type="button" class="mig-link" id="mig-rot-x">Continuă așa</button></div>' +
+        '</div>' +
+        '<div class="mig-hud">' +
+          '<div class="mig-year" aria-live="off"><b id="mig-year">370</b></div>' +
+          '<button class="mig-play" id="mig-play" type="button" aria-pressed="false">Pornește</button>' +
+          '<button class="mig-ib mig-spd" id="mig-spd" type="button" aria-label="Viteza: 1×. Apasă ca s-o schimbi" title="Viteza">1×</button>' +
+          '<span class="mig-hud-sp"></span>' +
+          '<button class="mig-ib" id="mig-snd" type="button" aria-pressed="true" aria-label="Sunet" title="Sunet"></button>' +
+          '<button class="mig-ib" id="mig-reset" type="button" aria-label="De la capăt" title="De la capăt">' + SVG('M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1') + '</button>' +
+          '<button class="mig-ib" id="mig-lay" type="button" aria-label="Straturi" title="Straturi" aria-expanded="false" aria-controls="mig-pop">' + SVG('M8 2l6 3-6 3-6-3zM2 8l6 3 6-3M2 11l6 3 6-3') + '</button>' +
+          '<button class="mig-ib mig-fs" id="mig-fs" type="button" aria-label="Ecran complet" title="Ecran complet">' + SVG('M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10') + '</button>' +
+        '</div>' +
+
         '<div class="mig-tl" id="mig-tl" aria-label="Cronologia simulării: deciziile și evenimentele"></div>' +
+        '<div class="mig-tlpop" id="mig-tlpop" hidden></div>' +
       '</div>' +
       '<aside class="mig-side">' +
+        '<div class="mig-now" id="mig-now"></div>' +
         '<div class="mig-stab"><p class="mig-side-h"><span>' + ico('stab') + 'Stabilitatea Imperiului</span> <b id="mig-stab-v">70</b></p><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
         '<div class="mig-att" id="mig-att" hidden><p class="mig-side-h">Imperiul lui Attila</p>' + METERS.map(function(m){ return '<div class="jg-meter" id="mig-m-' + m.k + '" style="--c:' + m.c + '" title="' + m.label + ': ' + m.hint + '"><label><span>' + ico(m.k) + m.label + '</span> <b>0</b></label><div class="jg-bar"><i></i></div><span class="jg-delta"></span></div>'; }).join('') + '</div>' +
         '<div><p class="mig-side-h">Deciziile tale</p><ol class="mig-log" id="mig-log"></ol></div>' +
@@ -4671,7 +4823,7 @@
   var trailCv = document.createElement('canvas'); trailCv.width = CW; trailCv.height = CH;
   var terrCv = document.createElement('canvas'); terrCv.width = GW; terrCv.height = GH;
   var tctx = trailCv.getContext('2d');
-  var over = document.getElementById('mig-over'), toastEl = document.getElementById('mig-toast');
+  var over = document.getElementById('mig-over');
   function W2C(x, y){ return [(x - VB.x) * SC, (y - VB.y) * SC]; }
 
   // =====================================================================
@@ -4833,6 +4985,7 @@
   // 8. Pornire și pasul simulării
   // =====================================================================
   function reset(){
+    nowIx = -1; arrows = []; chist = GROUPS.map(function(){ return []; }); chT = T0; lastArr = GROUPS.map(function(){ return -99; }); cacc = GROUPS.map(function(){ return { n: 0, x: 0, y: 0, vx: 0, vy: 0, k: '', t: T0 }; });
     seed = 20260; rnd = mulberry(seed); t = T0; stab = 70; eventIx = 0; decIx = 0; crossings = { dunare: 0, rin: 0 }; log = []; finished = false;
     choice = {}; att = Object.assign({}, ATT0); attPicks = []; revolted = false;
     buildPlans();
@@ -4898,7 +5051,7 @@
           var sg = frontSeg[fs];
           if (segX(ax[i], ay[i], nx, ny, sg)) {
             var p = 1 - Math.exp(-rate(g.id, sg.k) * DT);
-            if (rnd() < p) { var bit = sg.k === "rin" ? 2 : 1; if (!(crossed[i] & bit)) { crossed[i] |= bit; crossings[sg.k]++; } } else { blocked = true; }
+            if (rnd() < p) { var bit = sg.k === "rin" ? 2 : 1; if (!(crossed[i] & bit)) { crossed[i] |= bit; crossings[sg.k]++; var ca = cacc[gi]; if (ca) { ca.n++; ca.x += nx; ca.y += ny; ca.vx += avx[i]; ca.vy += avy[i]; ca.k = sg.k; } } } else { blocked = true; }
             break;
           }
         }
@@ -4912,8 +5065,25 @@
   // =====================================================================
   // 9. Desen
   // =====================================================================
+  var PROV = [['GALLIA', 46.9, 2.6], ['HISPANIA', 40.3, -4.0], ['ITALIA', 42.7, 13.0], ['PANNONIA', 46.9, 17.6], ['THRACIA', 42.1, 26.2], ['GERMANIA', 50.6, 10.5], ['SCYTHIA', 47.6, 39.0], ['DACIA', 46.1, 24.4]]
+    .map(function(r){ return r.concat(['rgba(246, 237, 220, 0.5)', 4]); })
+    .concat([['Pontus Euxinus', 43.4, 34.6, 'rgba(170, 205, 235, 0.6)', 1], ['Mare Nostrum', 37.2, 19.6, 'rgba(170, 205, 235, 0.6)', 1], ['Oceanus', 46.0, -6.5, 'rgba(170, 205, 235, 0.6)', 1]]);
   var SHORT = { huni: 'HUNII', ostro: 'OSTROGOȚII', vizi: 'VIZIGOȚII', vand: 'VANDALII', gep: 'GEPIZII' };
-  var pulses = [], cents = [], showCompare = false;
+  var pulses = [], cents = [], showCompare = false, arrows = [], chist = [], chT = 0, cacc = [], lastArr = [], noFx = false;
+  // urma fiecărui grup: centrul lui, la fiecare sfert de an (ultimii doi ani)
+  function trackCents(){ if (t - chT < 0.25) return; chT = t; GROUPS.forEach(function(g, k){ chist[k].push(centroid(g.id)); if (chist[k].length > 8) chist[k].shift(); }); }
+  // când mulți agenți ai aceluiași popor trec granița deodată, apare o săgeată: „Vizigoții trec Dunărea”
+  function checkCross(){
+    var now = performance.now();
+    cacc.forEach(function(a, gi){
+      if (a.n >= 8 && t - lastArr[gi] > 5) {
+        var vl = Math.hypot(a.vx, a.vy) || 1, nm = SHORT[GROUPS[gi].id];
+        arrows.push({ x: a.x / a.n, y: a.y / a.n, dx: a.vx / vl, dy: a.vy / vl, c: GROUPS[gi].color, text: nm.charAt(0) + nm.slice(1).toLowerCase() + ' trec ' + (a.k === 'rin' ? 'Rinul' : 'Dunărea'), t0: now });
+        lastArr[gi] = t; a.n = 0; a.x = a.y = a.vx = a.vy = 0;
+      }
+      if (t - a.t > 0.6) { a.t = t; a.n = 0; a.x = a.y = a.vx = a.vy = 0; }
+    });
+  }
   function pulse(at, text, color){ var p = proj(at[0], at[1]); pulses.push({ x: p[0], y: p[1], text: text, color: color || '#f2d474', t0: performance.now() }); }
 
   // Harta e desenată pe 1200 px, dar pe pagină apare mai mică: textul se scrie la o mărime
@@ -4985,9 +5155,6 @@
     if (txtScale < 2.5) {
       label('LIMES · RINUL', proj(49.4, 7.2), '#f2d474', 'right', 11, 0.5, b);
       label('LIMES · DUNĂREA', proj(43.35, 24.4), '#f2d474', 'center', 11, 0.5, b);
-      // provinciile și mările, în latină, ca pe o hartă veche
-      [['GALLIA', 46.9, 2.6], ['HISPANIA', 40.3, -4.0], ['ITALIA', 42.7, 13.0], ['PANNONIA', 46.9, 17.6], ['THRACIA', 42.1, 26.2], ['GERMANIA', 51.2, 10.5], ['SCYTHIA', 47.6, 39.0], ['DACIA', 46.1, 24.4]].forEach(function(r){ label(r[0], proj(r[1], r[2]), 'rgba(246, 237, 220, 0.5)', 'center', 15, 4, b, true); });
-      [['Pontus Euxinus', 43.4, 34.6], ['Mare Nostrum', 37.2, 19.6], ['Oceanus', 46.0, -6.5]].forEach(function(r){ label(r[0], proj(r[1], r[2]), 'rgba(170, 205, 235, 0.6)', 'center', 15, 1, b, true); });
     }
     bgKey = layers.terrain + '|' + txtScale;
   }
@@ -5052,6 +5219,15 @@
     ctx.imageSmoothingEnabled = false; ctx.drawImage(dotCv, 0, 0, CW, CH); ctx.imageSmoothingEnabled = true;
     // lumea reală (cercuri punctate) și numele popoarelor lângă grupuri
     cents = GROUPS.map(function(gr){ var cc = centroid(gr.id); return W2C(cc[0], cc[1]); });
+    // urma fiecărui grup arată încotro se mișcă
+    if (!showCompare && replayY === null && !noFx && chist.length) GROUPS.forEach(function(gr, k){
+      var hs = chist[k]; if (!hs || hs.length < 2) return;
+      var pts = hs.map(function(q){ return W2C(q[0], q[1]); }).concat([cents[k]]), a0 = pts[0], a1 = pts[pts.length - 1];
+      if ((a1[0] - a0[0]) * (a1[0] - a0[0]) + (a1[1] - a0[1]) * (a1[1] - a0[1]) < 144) return;
+      ctx.strokeStyle = gr.color; ctx.lineCap = 'round';
+      for (var j = 1; j < pts.length; j++) { ctx.globalAlpha = 0.1 + 0.55 * j / pts.length; ctx.lineWidth = 2 + 8 * j / pts.length; ctx.beginPath(); ctx.moveTo(pts[j - 1][0], pts[j - 1][1]); ctx.lineTo(pts[j][0], pts[j][1]); ctx.stroke(); }
+      ctx.globalAlpha = 1;
+    });
     if (layers.real && !showCompare) GROUPS.forEach(function(gr){
       var h = interp(HIST[gr.id], t), q4 = W2C.apply(null, proj(h[0], h[1]));
       ctx.setLineDash([5, 4]); ctx.lineWidth = 2.5; ctx.strokeStyle = gr.color;
@@ -5099,10 +5275,31 @@
         if (!hit) break;
       }
     }
+    if (txtScale < 2.5) PROV.forEach(function(r){
+      var sp3 = labelSprite(r[0], r[3], 15, r[4], true), q = W2C.apply(null, proj(r[1], r[2])), x = q[0] - sp3.w / 2, y = q[1] - sp3.h / 2, k;
+      if (x < 6 || y < 6 || x + sp3.w > CW - 6 || y + sp3.h > CH - 6) return;
+      for (k = 0; k < tags.length; k++) { var T = tags[k]; if (x < T.x + T.s.w && x + sp3.w > T.x && y < T.y + T.s.h && y + sp3.h > T.y) return; }
+      for (k = 0; k < cents.length; k++) if (Math.abs(cents[k][0] - q[0]) < sp3.w / 2 + 16 && Math.abs(cents[k][1] - q[1]) < sp3.h + 8) return;
+      for (k = 0; k < pulses.length; k++) { var pq = W2C(pulses[k].x, pulses[k].y); if (Math.abs(pq[0] - q[0]) < 170 && Math.abs(pq[1] - q[1]) < 64) return; }
+      ctx.drawImage(sp3.c, Math.round(x), Math.round(y));
+    });
     tags.forEach(function(tg){
       var ly = tg.y + tg.s.h * 0.62;
       if (tg.ay - ly > 14 * txtScale) { ctx.strokeStyle = tg.c; ctx.globalAlpha = 0.55; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(tg.ax, tg.ay - 3); ctx.lineTo(tg.ax, ly); ctx.stroke(); ctx.globalAlpha = 1; }
       ctx.drawImage(tg.s.c, Math.round(tg.x), Math.round(tg.y));
+    });
+    // săgețile de la trecerea granițelor
+    arrows = arrows.filter(function(a){ return now - a.t0 < 3400; });
+    if (!noFx) arrows.forEach(function(a){
+      var k = (now - a.t0) / 3400, q = W2C(a.x, a.y), L = 80 * Math.min(1, k * 2.4), al = k > 0.7 ? (1 - k) / 0.3 : 1;
+      var x0 = q[0] - a.dx * 46, y0 = q[1] - a.dy * 46, x1 = x0 + a.dx * (46 + L), y1 = y0 + a.dy * (46 + L), an = Math.atan2(a.dy, a.dx);
+      ctx.globalAlpha = al; ctx.lineCap = 'round';
+      ctx.strokeStyle = 'rgba(14, 13, 11, 0.8)'; ctx.lineWidth = 9; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+      ctx.strokeStyle = a.c; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+      ctx.fillStyle = a.c; ctx.beginPath(); ctx.moveTo(x1 + Math.cos(an) * 16, y1 + Math.sin(an) * 16); ctx.lineTo(x1 + Math.cos(an + 2.4) * 13, y1 + Math.sin(an + 2.4) * 13); ctx.lineTo(x1 + Math.cos(an - 2.4) * 13, y1 + Math.sin(an - 2.4) * 13); ctx.closePath(); ctx.fill();
+      var sp2 = labelSprite(a.text, a.c, 12, 0.5);
+      ctx.drawImage(sp2.c, Math.round(Math.max(4, Math.min(CW - sp2.w - 4, x1 - sp2.w / 2))), Math.round(Math.max(4, Math.min(CH - sp2.h - 4, y1 - sp2.h - 16))));
+      ctx.globalAlpha = 1;
     });
     // momentele istorice, pe locul lor
     pulses = pulses.filter(function(p){ return now - p.t0 < 4200; });
@@ -5111,7 +5308,8 @@
       for (var rr = 0; rr < 2; rr++) { var kk = (k * 2 + rr * 0.5) % 1; ctx.beginPath(); ctx.arc(q5[0], q5[1], 8 + kk * 46, 0, 7); ctx.strokeStyle = p.color; ctx.globalAlpha = (1 - kk) * (1 - k * 0.6); ctx.lineWidth = 2.5; ctx.stroke(); }
       ctx.globalAlpha = 1 - Math.max(0, k - 0.75) * 4;
       ctx.beginPath(); ctx.arc(q5[0], q5[1], 5, 0, 7); ctx.fillStyle = p.color; ctx.fill();
-      label(p.text, [p.x, p.y - 12 - 6 * txtScale], '#fff8e8', 'center', 12);
+      var ps = labelSprite(p.text, '#fff8e8', 12, 0.5), pc = W2C(p.x, p.y - 12 - 6 * txtScale);
+      ctx.drawImage(ps.c, Math.round(Math.max(4, Math.min(CW - ps.w - 4, pc[0] - ps.w / 2))), Math.round(Math.max(4, Math.min(CH - ps.h - 4, pc[1] - ps.h / 2))));
       ctx.globalAlpha = 1;
     });
   }
@@ -5144,6 +5342,7 @@
       if (checkEvents()) break;
       if (t >= T1) { finish(); break; }
     }
+    if (running) { trackCents(); checkCross(); }
     draw(); updateHud();
     // calculator lent: după ~2 secunde cu cadre de peste 35 ms, propune modul ușor
     slowEma = slowEma * 0.9 + (performance.now() - c0) * 0.1; slowN++;
@@ -5157,15 +5356,65 @@
     pause: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor"/></svg>',
     reset: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   };
+  ICON.snd = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3H2.5z" fill="currentColor"/><path d="M10.8 5.4a3.6 3.6 0 0 1 0 5.2M12.6 3.6a6.2 6.2 0 0 1 0 8.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  ICON.mute = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3H2.5z" fill="currentColor"/><path d="M11 6l4 4M15 6l-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  // sunetul e generat în browser: vântul stepei în fundal, un clopot la fiecare decizie, un sunet scurt la alegere,
+  // o tobă la evenimentele grele; butonul din bară îl oprește (alegerea se ține minte)
+  var AU = { ctx: null, on: true, amb: null, master: null };
+  try { AU.on = localStorage.getItem('mig-sound') !== '0'; } catch (e) {}
+  function auCtx(){
+    if (AU.ctx) return AU.ctx;
+    var C = window.AudioContext || window.webkitAudioContext; if (!C) return null;
+    try { AU.ctx = new C(); } catch (e) { return null; }
+    AU.master = AU.ctx.createGain(); AU.master.gain.value = AU.on ? 0.5 : 0; AU.master.connect(AU.ctx.destination);
+    return AU.ctx;
+  }
+  function auAmbient(on){
+    var c = on ? auCtx() : AU.ctx; if (!c) return;
+    if (on && c.state === 'suspended') c.resume();
+    if (on && !AU.amb) {
+      var len = c.sampleRate * 4, buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0), lst = 0;
+      for (var i = 0; i < len; i++) { lst = (lst + 0.02 * (Math.random() * 2 - 1)) / 1.02; d[i] = lst * 3.2; }
+      var src = c.createBufferSource(); src.buffer = buf; src.loop = true;
+      var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 420;
+      var g = c.createGain(); g.gain.value = 0;
+      var lfo = c.createOscillator(), lg = c.createGain(); lfo.frequency.value = 0.07; lg.gain.value = 0.03; lfo.connect(lg); lg.connect(g.gain); lfo.start();
+      var dr = c.createOscillator(), dg = c.createGain(); dr.frequency.value = 55; dg.gain.value = 0; dr.connect(dg); dg.connect(AU.master); dr.start();
+      src.connect(lp); lp.connect(g); g.connect(AU.master); src.start();
+      g.gain.setTargetAtTime(0.07, c.currentTime, 1.5); dg.gain.setTargetAtTime(0.016, c.currentTime, 2);
+      AU.amb = { src: src, g: g, dr: dr, dg: dg, lfo: lfo };
+    } else if (!on && AU.amb) {
+      var a = AU.amb; AU.amb = null;
+      a.g.gain.setTargetAtTime(0, c.currentTime, 0.4); a.dg.gain.setTargetAtTime(0, c.currentTime, 0.4);
+      setTimeout(function(){ try { a.src.stop(); a.dr.stop(); a.lfo.stop(); } catch (e) {} }, 1600);
+    }
+  }
+  function sfx(k){
+    if (!AU.on) return; var c = auCtx(); if (!c) return; if (c.state === 'suspended') c.resume();
+    var t0 = c.currentTime;
+    function tone(f, type, a, dur, at){ var o = c.createOscillator(), g = c.createGain(); o.type = type; o.frequency.value = f; g.gain.setValueAtTime(0.0001, t0 + at); g.gain.exponentialRampToValueAtTime(a, t0 + at + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t0 + at + dur); o.connect(g); g.connect(AU.master); o.start(t0 + at); o.stop(t0 + at + dur + 0.05); }
+    if (k === 'dec') { tone(523, 'sine', 0.2, 1.8, 0); tone(784, 'sine', 0.1, 1.5, 0); tone(1046, 'sine', 0.04, 1.0, 0); }
+    else if (k === 'pick') { tone(180, 'triangle', 0.22, 0.25, 0); tone(360, 'sine', 0.07, 0.18, 0); }
+    else if (k === 'act') { tone(147, 'sawtooth', 0.04, 2.4, 0); tone(220, 'sine', 0.12, 2.4, 0.12); tone(294, 'sine', 0.09, 2.2, 0.3); }
+    else if (k === 'drum') { var o = c.createOscillator(), g = c.createGain(); o.frequency.setValueAtTime(110, t0); o.frequency.exponentialRampToValueAtTime(40, t0 + 0.5); g.gain.setValueAtTime(0.45, t0); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.7); o.connect(g); g.connect(AU.master); o.start(t0); o.stop(t0 + 0.75); }
+  }
+  function setSound(on){
+    AU.on = on; try { localStorage.setItem('mig-sound', on ? '1' : '0'); } catch (e) {}
+    if (AU.master) AU.master.gain.setTargetAtTime(on ? 0.5 : 0, AU.ctx.currentTime, 0.15);
+    var b = document.getElementById('mig-snd'); b.innerHTML = on ? ICON.snd : ICON.mute; b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    b.setAttribute('aria-label', on ? 'Sunet pornit. Apasă ca să-l oprești' : 'Sunet oprit. Apasă ca să-l pornești'); b.title = on ? 'Oprește sunetul' : 'Pornește sunetul';
+  }
+  setSound(AU.on);
   // până se calculează toate drumurile, butoanele de pornire așteaptă
   function prepUi(){
     var go = document.getElementById('mig-go'), au = document.getElementById('mig-auto'), pr = document.getElementById('mig-prep');
     if (go) go.disabled = !ready; if (au) au.disabled = !ready;
+    var gfs = document.getElementById('mig-go-fs'); if (gfs) gfs.disabled = !ready;
     document.getElementById('mig-play').disabled = !ready || finished;
     if (pr) pr.textContent = ready ? '' : 'Se pregătește harta: se calculează drumurile popoarelor (' + Math.round(prepDone / prepTotal * 100) + '%)…';
   }
-  function setPlayLabel(){ var b = document.getElementById('mig-play'); b.innerHTML = running ? ICON.pause + 'Pauză' : ICON.play + (finished ? 'Final' : t > T0 + 0.01 ? 'Continuă' : 'Pornește'); b.setAttribute('aria-pressed', running ? 'true' : 'false'); }
-  function play(){ if (finished || !ready) return; running = true; last = 0; if (fpsN >= 0) { fpsT0 = 0; fpsN = 0; } setPlayLabel(); requestAnimationFrame(loop); }
+  function setPlayLabel(){ var b = document.getElementById('mig-play'); b.innerHTML = running ? ICON.pause + '<span>Pauză</span>' : ICON.play + '<span>' + (finished ? 'Final' : t > T0 + 0.01 ? 'Continuă' : 'Pornește') + '</span>'; b.setAttribute('aria-pressed', running ? 'true' : 'false'); }
+  function play(){ if (finished || !ready) return; auAmbient(true); running = true; last = 0; if (fpsN >= 0) { fpsT0 = 0; fpsN = 0; } setPlayLabel(); requestAnimationFrame(loop); }
   function pause(){ running = false; setPlayLabel(); if (!idleRaf) idleRaf = requestAnimationFrame(idle); }
 
   function centroid(gid){
@@ -5188,7 +5437,7 @@
         continue;
       }
       if (e.check === 'gep' && !near('gep', 46.8, 23.6, 250)) continue;
-      if (e.fx && e.fx.stab) setStab(stab + e.fx.stab);
+      if (e.fx && e.fx.stab) { setStab(stab + e.fx.stab); if (e.fx.stab < 0) sfx('drum'); floatStab(e.fx.stab); }
       toast(e.t, e.src);
       if (e.at) pulse(e.at, e.place, e.fx && e.fx.stab < 0 ? '#e0626c' : '#f2d474');
       markTimeline(e);
@@ -5206,10 +5455,15 @@
     return Math.max(0, Math.min(100, v));
   }
   function setStab(v){ stab = Math.max(0, Math.min(100, v)); }
+  // mesajele nu mai acoperă harta: apar în banda de deasupra ei, cu anul separat
   function toast(text, src){
-    var el = document.createElement('div'); el.className = 'mig-t'; el.innerHTML = '<b>' + text + '</b>' + (src ? '<small>' + src + '</small>' : '');
-    toastEl.appendChild(el); setTimeout(function(){ el.classList.add('out'); }, 4600); setTimeout(function(){ el.remove(); }, 5400);
-    while (toastEl.children.length > 3) toastEl.firstChild.remove();
+    var m = /^((?:c\. )?\d{3}(?: \(sau \d{3}\))?) · (.*)$/.exec(text);
+    news(m ? m[1] : String(Math.floor(t)), m ? m[2] : text, src || '');
+  }
+  function news(y, text, src){
+    var b = document.getElementById('mig-news');
+    document.getElementById('mig-news-y').textContent = y; document.getElementById('mig-news-t').textContent = text; document.getElementById('mig-news-s').textContent = src;
+    b.classList.remove('in'); void b.offsetWidth; b.classList.add('in');
   }
 
   function verdict(){
@@ -5241,9 +5495,38 @@
     return '<div class="imp-fx">' + METERS.filter(function(m){ return d[m.k]; }).map(function(m){ var v = d[m.k]; return '<span class="' + (v > 0 ? 'up' : 'down') + '">' + m.label + ' ' + (v > 0 ? '+' : '') + v + '</span>'; }).join('') +
       (ds ? '<span class="' + (ds > 0 ? 'up' : 'down') + '">Imperiul ' + (ds > 0 ? '+' : '') + ds + '</span>' : '') + '</div>';
   }
+  // fereastra de decizie stă în cadrul hărții, ca panou lateral, de partea opusă locului deciziei
+  function frameCls(at){ var left = at && at.length && (proj(at[0], at[1])[0] - VB.x) / VB.w > 0.56; return 'mig-over show inframe' + (left ? ' left' : ''); }
   function dialog(html, label, side){
-    over.className = 'mig-over show big' + (side ? ' side' : '');
+    over.className = side ? frameCls(side) : 'mig-over show big';
     over.innerHTML = '<div class="mig-dec" role="dialog" aria-modal="true" aria-labelledby="' + label + '">' + html + '</div>';
+  }
+  // „+5” care urcă lângă bara stabilității, ca schimbarea să se vadă
+  function floatStab(ds){
+    ds = Math.round(ds || 0); if (!ds) return;
+    var box = root.querySelector('.mig-stab'), f = document.createElement('span');
+    f.className = 'mig-float ' + (ds > 0 ? 'up' : 'down'); f.textContent = (ds > 0 ? '+' : '') + ds; box.appendChild(f);
+    setTimeout(function(){ f.remove(); }, 1900);
+    box.classList.remove('flash'); void box.offsetWidth; box.classList.add('flash'); updateHud();
+  }
+  // efectul imediat al alegerii, pe hartă, lângă poporul atins
+  function mapEffect(d, o){
+    if (!o.map || !d.grp) return;
+    var c = centroid(d.grp); pulses.push({ x: c[0], y: c[1] - 14, text: o.map[0], color: o.map[1], t0: performance.now() });
+    if (!idleRaf) idleRaf = requestAnimationFrame(idle);
+  }
+  function picSrc(key){ var pc = PICS[key]; if (!pc) return ''; return pc.src.charAt(0) === '#' ? (document.querySelector(pc.src) || {}).src || '' : JOC_IMG.portrete[pc.src] || ''; }
+  // cartea de titlu a unui act: pe tot ecranul, cu portretul personajului
+  function actCard(n, yr, title, who, pic, then){
+    var src = picSrc(pic), done = false, tm;
+    over.className = 'mig-over show big actc';
+    over.innerHTML = '<div class="mig-actcard" role="dialog" aria-modal="true" aria-labelledby="mig-ac"><p class="mig-ac-n">Actul ' + n + ' · ' + yr + '</p>' +
+      (src ? '<img class="mig-ac-pic' + (PICS[pic] && PICS[pic].coin ? ' coin' : '') + '" src="' + src + '" alt="">' : '') +
+      '<h3 id="mig-ac">' + title + '</h3><p class="mig-ac-who">' + who + '</p><button class="jg-btn" id="mig-ac-go" type="button">Începe →</button></div>';
+    sfx('act');
+    function go(){ if (done) return; done = true; clearTimeout(tm); over.className = 'mig-over'; over.innerHTML = ''; then(); }
+    var b = document.getElementById('mig-ac-go'); b.addEventListener('click', go); b.focus({ preventScroll: true });
+    tm = setTimeout(go, 6000);
   }
   function quote(d){ return d.q ? '<blockquote class="imp-q"><p>„' + d.q + '”</p><cite>' + d.qs + ' · traducere adaptată</cite></blockquote>' : ''; }
   function cont(text){ return '<div class="mig-end-btns"><button class="jg-btn" id="mig-cont" type="button">' + text + '</button></div>'; }
@@ -5253,10 +5536,15 @@
   function decide(d){
     pause();
     if (d.at) pulse(d.at, d.place, d.kind === 'att' ? '#e0626c' : null);
+    if (!auto && d.kind !== 'act') sfx('dec');
     if (auto) { var o = d.opts.filter(function(x){ return x.real; })[0]; apply(d, o); if (d.kind === 'att') toast(d.yl + ' · ' + d.title + ': ' + o.t.charAt(0).toLowerCase() + o.t.slice(1), d.src); if (d.kind === 'act') toast(d.title); setTimeout(play, 700); return; }
-    if (d.kind === 'act') { apply(d, d.opts[0]); return actDialog(d); }
+    if (d.kind === 'act') {
+      apply(d, d.opts[0]);
+      return d.id === 'a2' ? actCard('II', '435', 'Ești Attila', 'Regele hunilor · opt momente reale, 435–452', 'attila', function(){ actDialog(d); })
+        : actCard('III', '453', 'După Attila', 'Ești Ardaric, regele gepizilor, apoi împăratul Leon I', 'apahida', function(){ actDialog(d); });
+    }
     if (d.kind === 'att') return roundDialog(d);
-    over.className = 'mig-over show big side';
+    over.className = frameCls(d.at);
     over.innerHTML = '<div class="mig-dec" role="dialog" aria-modal="true" aria-labelledby="mig-dt">' + picHtml(d.pic) + '<h3 id="mig-dt"><span class="mig-yr">' + Math.floor(d.year) + '</span>' + d.title + '</h3><p class="mig-who">' + d.who + '</p><p>' + d.text + (d.more ? ' <b>' + d.more() + '</b>' : '') + '</p>' +
       '<div class="jg-choices">' + d.opts.map(function(o, i){ return '<button class="jg-choice" type="button" data-i="' + i + '"><i>' + 'ABC'[i] + '</i><span>' + o.t + '</span></button>'; }).join('') + '</div>' +
       '<p class="jg-src">Sursa: ' + d.src + '</p></div>';
@@ -5268,11 +5556,12 @@
           if (d.opts[k].real) { x.classList.add('attila'); x.insertAdjacentHTML('beforeend', '<em class="imp-tag">Alegerea din istorie</em>'); }
         });
         var before = stab; apply(d, o); var ds = Math.round(stab - before);
+        sfx('pick'); floatStab(ds); mapEffect(d, o);
         var out = document.createElement('div'); out.setAttribute('aria-live', 'polite');
-        out.innerHTML = '<div class="jg-reveal" style="--c:#c9b48a"><h3>' + (o.real ? 'Ai ales ce s-a întâmplat în istorie' : 'Ce s-a întâmplat în realitate') + '</h3>' +
+        // întâi, pe scurt: ce ai ales tu și ce s-a întâmplat de fapt; apoi detaliile și izvorul
+        out.innerHTML = '<div class="jg-reveal" style="--c:#c9b48a"><div class="mig-vs"><p><b>Tu:</b> ' + o.t.charAt(0).toLowerCase() + o.t.slice(1) + '.</p><p><b>' + (o.real ? 'Ca în istorie:' : 'În realitate:') + '</b> ' + d.real2 + '</p></div>' +
           (ds ? '<div class="imp-fx"><span class="' + (ds > 0 ? 'up' : 'down') + '">Stabilitatea Imperiului ' + (ds > 0 ? '+' : '') + ds + '</span></div>' : '') +
-          (o.real ? '' : '<p><i>' + (o.note || 'Alegerea ta schimbă drumul popoarelor (scenariu ipotetic).') + '</i></p>') +
-          '<p>' + (o.real ? (o.note || '') : (ro ? ro.t + '. ' + (ro.note || '') : '')) + '</p>' + quote(d) + '</div>' + cont('Continuă →');
+          (o.real ? (o.note ? '<p>' + o.note + '</p>' : '') : '<p><i>' + (o.note || 'Alegerea ta schimbă drumul popoarelor (scenariu ipotetic).') + '</i></p>' + (ro && ro.note ? '<p>' + ro.note + '</p>' : '')) + quote(d) + '</div>' + cont('Continuă →');
         over.querySelector('.mig-dec').appendChild(out);
         onCont(function(){});
         if (out.scrollIntoView) out.scrollIntoView({ block: 'nearest' });
@@ -5305,7 +5594,7 @@
   function roundDialog(d){
     var n = ROUNDS.indexOf(d) + 1;
     dialog(picHtml(d.pic) + '<h3 id="mig-dt"><span class="mig-yr">' + d.yl + '</span>' + d.title + '</h3><p class="mig-who">Ești Attila · runda ' + n + ' din ' + ROUNDS.length + ' · ' + d.place + '</p><p>' + d.text + '</p>' +
-      '<div class="jg-choices" id="mig-ch">' + d.opts.map(function(o, i){ return '<button class="jg-choice" type="button" data-i="' + i + '"><i>' + 'ABC'[i] + '</i><span>' + o.t + '</span></button>'; }).join('') + '</div><div id="mig-out" aria-live="polite"></div>', 'mig-dt', true);
+      '<div class="jg-choices" id="mig-ch">' + d.opts.map(function(o, i){ return '<button class="jg-choice" type="button" data-i="' + i + '"><i>' + 'ABC'[i] + '</i><span>' + o.t + '</span></button>'; }).join('') + '</div><div id="mig-out" aria-live="polite"></div>', 'mig-dt', d.at || true);
     Array.prototype.forEach.call(over.querySelectorAll('#mig-ch .jg-choice'), function(b){
       b.addEventListener('click', function(){
         var i = +b.getAttribute('data-i'), o = d.opts[i];
@@ -5313,7 +5602,7 @@
           x.disabled = true; if (k === i) x.classList.add('picked');
           if (d.opts[k].real) { x.classList.add('attila'); x.insertAdjacentHTML('beforeend', '<em class="imp-tag">Alegerea lui Attila</em>'); }
         });
-        var r = apply(d, o), last = n === ROUNDS.length;
+        var r = apply(d, o), last = n === ROUNDS.length; sfx('pick'); floatStab(o.sim && o.sim.stab);
         document.getElementById('mig-out').innerHTML = '<div class="jg-reveal" style="--c:#c9b48a"><h3>' + (o.real ? 'Ai ales ce a ales și Attila' : 'Ce s-a întâmplat în realitate') + '</h3>' + meterChips(r.delta, o.sim && o.sim.stab) +
           (r.poor ? '<p class="imp-warn">Aurul nu mai ajunge pentru darurile căpeteniilor: loialitate −10.</p>' : '') +
           (revolted ? '<p class="imp-warn"><b>Neamurile supuse se răscoală.</b> Domnia ta se încheie aici; hunii se întorc în Câmpia Panonică.</p>' : att.loial < 30 ? '<p class="imp-warn"><b>Atenție:</b> loialitatea neamurilor e ' + att.loial + '. La 10, se răscoală și domnia ta se încheie.</p>' : '') +
@@ -5359,9 +5648,9 @@
   function buildTimeline(){
     var h = '<div class="mig-tl-track"><i class="mig-tl-fill" id="mig-tl-fill"></i></div>';
     [375, 400, 425, 450, 475].forEach(function(y){ h += '<span class="mig-tl-tick" style="left:' + pct(y) + '">' + y + '</span>'; });
-    EVENTS.forEach(function(e, i){ h += '<span class="mig-tl-ev" data-e="' + i + '" style="left:' + pct(e.year) + '" title="' + e.t.replace(/"/g, '&quot;') + '"></span>'; });
-    DECISIONS.forEach(function(d, i){ if (d.kind === 'act') return; h += '<span class="mig-tl-dec' + (d.kind === 'att' ? ' att' : '') + '" data-d="' + i + '" style="left:' + pct(d.year) + '" title="' + (d.yl || Math.floor(d.year)) + ' · ' + d.title + '"><b>' + Math.floor(d.year) + '</b></span>'; });
-    h += '<span class="mig-tl-head" id="mig-tl-head"></span>';
+    EVENTS.forEach(function(e, i){ h += '<span class="mig-tl-ev" data-e="' + i + '" style="left:' + pct(e.year) + '" tabindex="0" role="button" aria-label="Eveniment, ' + Math.floor(e.year) + '"></span>'; });
+    DECISIONS.forEach(function(d, i){ if (d.kind === 'act') return; h += '<span class="mig-tl-dec' + (d.kind === 'att' ? ' att' : '') + '" data-d="' + i + '" style="left:' + pct(d.year) + '" tabindex="0" role="button" aria-label="Decizie, ' + (d.yl || Math.floor(d.year)) + ': ' + d.title + '"><b>' + Math.floor(d.year) + '</b></span>'; });
+    h += '<span class="mig-tl-head" id="mig-tl-head"></span><span class="mig-tl-key" aria-hidden="true"><i class="d"></i>decizie<i class="e"></i>eveniment · apasă ca să recitești</span>';
     tlEl.innerHTML = h;
   }
   function markTimeline(item, real){
@@ -5369,7 +5658,30 @@
     if (di !== -1) { var d = tlEl.querySelector('[data-d="' + di + '"]'); if (d) d.className = 'mig-tl-dec' + (item.kind === 'att' ? ' att' : '') + (real === null ? ' skip' : ' done' + (real ? '' : ' alt')); }
     if (ei !== -1) { var e = tlEl.querySelector('[data-e="' + ei + '"]'); if (e) e.className = 'mig-tl-ev done'; }
   }
-  function resetTimeline(){ buildTimeline(); }
+  function resetTimeline(){ buildTimeline(); tlHide(); }
+  var tlPop = document.getElementById('mig-tlpop'), tlPin = null;
+  function tlHide(){ tlPop.hidden = true; tlPin = null; }
+  function tlInfo(el, full){
+    var di = el.getAttribute('data-d'), ei = el.getAttribute('data-e'), h;
+    if (di !== null) {
+      var d = DECISIONS[+di], lg = log.filter(function(l){ return l.title === d.title; })[0], ro = d.opts.filter(function(x){ return x.real; })[0];
+      h = '<small>Decizie · ' + (d.yl || Math.floor(d.year)) + '</small><b>' + d.title + '</b><span>' + (d.who || 'Ești Attila') + '</span>' +
+        (full ? (lg ? '<p><i>Tu:</i> ' + lg.t + '</p>' + (lg.real ? '<p class="ok">Ca în istorie.</p>' : '<p><i>În istorie:</i> ' + ro.t + '</p>') : el.classList.contains('skip') ? '<p>Nu a avut loc în lumea ta.</p>' : '<p>Încă nu ai ajuns aici.</p>') : '');
+    } else {
+      var e = EVENTS[+ei], seen = el.classList.contains('done') || !e.cond;
+      h = '<small>Eveniment' + (e.cond ? ', depinde de deciziile tale' : '') + '</small><b>' + (seen ? e.t : Math.floor(e.year) + ' · ?') + '</b>' + (full && seen && e.src ? '<p>Sursa: ' + e.src + '</p>' : '');
+    }
+    tlPop.innerHTML = h; tlPop.hidden = false;
+    var sr = root.querySelector('.mig-stage').getBoundingClientRect(), r = el.getBoundingClientRect(), w = tlPop.offsetWidth;
+    tlPop.style.left = Math.max(6, Math.min(sr.width - w - 6, r.left - sr.left + r.width / 2 - w / 2)) + 'px';
+  }
+  function tlItem(ev){ return ev.target.closest && ev.target.closest('[data-d], [data-e]'); }
+  tlEl.addEventListener('mouseover', function(ev){ var el = tlItem(ev); if (el && !tlPin) tlInfo(el, false); });
+  tlEl.addEventListener('mouseleave', function(){ if (!tlPin) tlPop.hidden = true; });
+  tlEl.addEventListener('focusin', function(ev){ var el = tlItem(ev); if (el) tlInfo(el, false); });
+  tlEl.addEventListener('click', function(ev){ var el = tlItem(ev); ev.stopPropagation(); if (!el) { tlHide(); return; } tlPin = el; tlInfo(el, true); });
+  tlEl.addEventListener('keydown', function(ev){ var el = tlItem(ev); if (el && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); tlPin = el; tlInfo(el, true); } if (ev.key === 'Escape') tlHide(); });
+  document.addEventListener('click', function(ev){ if (tlPin && !tlPop.contains(ev.target)) tlHide(); });
 
   function updateAtt(fx){
     var box = document.getElementById('mig-att'); if (!box) return;
@@ -5382,7 +5694,16 @@
       if (d) { dl.textContent = (d > 0 ? '+' : '') + d; dl.className = 'jg-delta'; void dl.offsetWidth; dl.className = 'jg-delta show ' + (d > 0 ? 'up' : 'down'); }
     });
   }
+  var nowIx = -1;
+  function updateNow(){
+    var k = 0; CAST.forEach(function(c, i){ if (t >= c[0]) k = i; });
+    if (k === nowIx) return; nowIx = k;
+    var c = CAST[k], src = c[2] && picSrc(c[2]);
+    document.getElementById('mig-now').innerHTML = '<p class="mig-side-h">' + c[4] + '</p><div class="mig-now-c">' + (src ? '<img src="' + src + '" alt="">' : '<span class="mig-mono" aria-hidden="true">' + c[1].charAt(0) + '</span>') +
+      '<div><b>' + c[1] + '</b><span>' + c[3] + '</span></div></div><p class="mig-now-goal">' + c[5] + '</p>';
+  }
   function updateHud(){
+    updateNow();
     var ab = document.getElementById('mig-att'); if (ab && ab.hidden !== (t < 434.8)) updateAtt();
     document.getElementById('mig-year').textContent = Math.min(T1, Math.floor(t));
     document.getElementById('mig-stab-v').textContent = Math.round(stab);
@@ -5410,21 +5731,37 @@
     var g = GROUPS[best], r = ranges[best], inside = 0;
     for (var i = r.start; i < r.end; i++) if (crossed[i]) inside++;
     var h = interp(HIST[g.id], t), hp = proj(h[0], h[1]);
-    tip.innerHTML = '<b style="color:' + g.color + '">' + g.name + '</b><span>Acum: ' + regionOf(centroid(g.id)) + '</span><span>În realitate: ' + regionOf(hp) + '</span><span>Au trecut granița: ' + Math.round(inside / g.n * 100) + '%</span>';
+    tip.innerHTML = '<b style="color:' + g.color + '">' + g.name + '</b><span>Acum: ' + regionOf(centroid(g.id)) + '</span><span>În realitate: ' + regionOf(hp) + '</span><span>Au trecut granița: ' + Math.round(inside / g.n * 100) + '%</span><em>Apasă pentru fișa poporului</em>';
     tip.hidden = false;
     var x = ev.clientX - rect.left + 14, y = ev.clientY - rect.top + 14;
     tip.style.left = Math.min(x, rect.width - 220) + 'px'; tip.style.top = Math.min(y, rect.height - 96) + 'px';
   }
   cv.addEventListener('mousemove', showTip);
-  cv.addEventListener('click', showTip);
+  // clic pe un popor: fișa lui (cine îl conduce, unde e, încotro merge, unde era în realitate, izvorul)
+  var fEl = document.getElementById('mig-fiche');
+  function nearestGroup(ev){
+    var rect = cv.getBoundingClientRect(), mx = (ev.clientX - rect.left) * CW / rect.width, my = (ev.clientY - rect.top) * CH / rect.height, best = -1, bd = 80;
+    cents.forEach(function(c, gi){ var d = Math.hypot(c[0] - mx, c[1] - my); if (d < bd) { bd = d; best = gi; } });
+    return best;
+  }
+  function fiche(gi){
+    var g = GROUPS[gi], lead = LEAD[g.id][0][1], tg = target(g.id), h = interp(HIST[g.id], t);
+    LEAD[g.id].forEach(function(x){ if (t >= x[0]) lead = x[1]; });
+    fEl.innerHTML = '<button class="mig-fiche-x" type="button" aria-label="Închide fișa">×</button><b style="color:' + g.color + '">' + g.name + '</b>' +
+      '<dl><dt>Conducători, ' + Math.floor(t) + '</dt><dd>' + lead + '</dd><dt>Acum</dt><dd>' + regionOf(centroid(g.id)) + '</dd><dt>Se îndreaptă spre</dt><dd>' + regionOf(proj(tg[1], tg[2])) + '</dd><dt>În realitate, acum</dt><dd>' + regionOf(proj(h[0], h[1])) + '</dd></dl>' +
+      '<p>Izvoare: ' + GSRC[g.id] + '</p>';
+    fEl.hidden = false; tip.hidden = true;
+    fEl.querySelector('.mig-fiche-x').addEventListener('click', function(){ fEl.hidden = true; });
+  }
+  cv.addEventListener('click', function(ev){ var gi = nearestGroup(ev); if (gi < 0) { fEl.hidden = true; return; } fiche(gi); });
   cv.addEventListener('mouseleave', function(){ tip.hidden = true; });
 
   function finish(){
     pause(); if (!finished) rec(); finished = true; t = T1; showCompare = true; updateHud(); draw(); setPlayLabel();
     // drumul fiecărui popor, an de an (centrul grupului), pentru reluare
     cpath = GROUPS.map(function(g, gi){ var r = ranges[gi]; return snaps.map(function(a){ var sx = 0, sy = 0; for (var i = r.start; i < r.end; i++) { sx += a[i]; sy += a[N + i]; } return W2C(sx / g.n, sy / g.n); }); });
-    var ttl = titles(allRealOf(), verdict());
-    toastEl.innerHTML = '';
+    var ttl = titles(allRealOf(), verdict()), shots = worldShots();
+    news('476', 'Sfârșitul Imperiului Roman de Apus.', '');
     document.getElementById('mig-play').disabled = true;
     var allReal = allRealOf(), v = verdict();
     var far = [];
@@ -5440,6 +5777,7 @@
     over.innerHTML = '<div class="mig-dec mig-end" role="dialog" aria-labelledby="mig-et"><h3 id="mig-et"><span class="mig-yr">476</span>' + (allReal ? 'Ai urmat drumul istoric. Iată cât de aproape a ajuns modelul.' : 'Ai scris o altă istorie') + '</h3>' +
       '<p class="mig-who">Sfârșitul Imperiului Roman de Apus. Pe hartă, fiecare linie unește lumea ta de lumea reală.</p>' +
       '<div class="mig-title"><small>Titlul tău</small><b>' + ttl[0].n + '</b><span>' + ttl[0].d + '</span></div>' +
+      '<div class="mig-worlds"><figure><img src="' + shots[0] + '" alt="Harta: unde au ajuns popoarele în lumea ta, în 476"><figcaption>Lumea ta, 476</figcaption></figure><figure><img src="' + shots[1] + '" alt="Harta: unde erau popoarele în realitate, în 476"><figcaption>Lumea reală, 476</figcaption></figure></div>' +
       '<table class="mig-table"><thead><tr><th>Popor</th><th>Lumea ta</th><th>Lumea reală</th><th>Distanța</th></tr></thead><tbody>' + rows + '</tbody></table>' +
       '<p class="mig-lesson">' + (allReal ? 'Aceleași decizii, aceeași istorie: presiunea hunilor și slăbirea granițelor au împins popoarele, unele după altele, în Imperiu.' : 'Ce s-a schimbat prin deciziile tale? Istoricii pun aceeași întrebare când discută dacă hunii au provocat căderea Romei sau doar au grăbit-o.') + '</p>' +
       '<p class="mig-stats">' + (allReal ? 'Stabilitatea Imperiului: <b>' + st + '</b>, ca pe drumul istoric.' : dst >= 8 ? 'Cu stabilitatea <b>' + st + '</b>, mai mare decât în istorie (' + hs + '), Imperiul de Apus ar fi putut rezista câțiva ani în plus (scenariu ipotetic).' : dst <= -8 ? 'Cu stabilitatea <b>' + st + '</b>, mai mică decât în istorie (' + hs + '), Imperiul de Apus s-ar fi prăbușit probabil mai devreme (scenariu ipotetic).' : 'Stabilitatea <b>' + st + '</b> e apropiată de cea din istorie (' + hs + '): deciziile tale au schimbat drumurile popoarelor, nu și soarta Imperiului de Apus.') + '</p>' +
@@ -5455,6 +5793,18 @@
       if (hid) { replayShow(true); replayGo(T0); replayPlay(true); } else { replayShow(false); replayGo(T1); }
     });
     document.getElementById('mig-card').addEventListener('click', function(){ showCard(ttl, v); });
+  }
+  // două imagini ale hărții din 476: popoarele unde au ajuns în joc și aceleași popoare strânse în locurile reale
+  function worldShots(){
+    var sc = showCompare, lr = layers.real, vis = visible, sx = ax.slice(), sy = ay.slice(), out = [];
+    showCompare = false; layers.real = false; visible = true; noFx = true; pulses = [];
+    tctx.clearRect(0, 0, CW, CH); draw(); out.push(cv.toDataURL('image/jpeg', 0.82));
+    var r2 = mulberry(7), k = 0;
+    GROUPS.forEach(function(g){ var h = HIST[g.id][HIST[g.id].length - 1], c = proj(h[1], h[2]); for (var i = 0; i < g.n; i++, k++) { var a = r2() * 6.283, rr = Math.sqrt(r2()) * 14; ax[k] = c[0] + Math.cos(a) * rr; ay[k] = c[1] + Math.sin(a) * rr * 0.7; } });
+    tctx.clearRect(0, 0, CW, CH); draw(); out.push(cv.toDataURL('image/jpeg', 0.82));
+    ax.set(sx); ay.set(sy); tctx.clearRect(0, 0, CW, CH);
+    showCompare = sc; layers.real = lr; visible = vis; noFx = false; draw();
+    return out;
   }
   function allRealOf(){ return log.length > 0 && log.every(function(l){ return l.real; }); }
   // titlul jucătorului, după alegerile cele mai neobișnuite (primul care se potrivește e titlul principal)
@@ -5544,9 +5894,12 @@
     document.getElementById('mig-save').focus({ preventScroll: true });
   }
   function playing(on){ document.documentElement.classList.toggle('mig-playing', on); }
-  function restart(){ replayShow(false); over.className = 'mig-over'; over.innerHTML = ''; showCompare = false; pulses = []; document.getElementById('mig-play').disabled = !ready; reset(); resetTimeline(); setPlayLabel(); }
+  function restart(){ replayShow(false); if (fEl) fEl.hidden = true; news('370', 'Stepa de la nord de Marea Neagră: hunii trec Volga.', ''); over.className = 'mig-over'; over.innerHTML = ''; showCompare = false; pulses = []; document.getElementById('mig-play').disabled = !ready; reset(); resetTimeline(); setPlayLabel(); }
 
+  // pornirea: Actul I începe cu cartea lui de titlu; „Arată istoria reală” merge direct
+  function start(a){ auto = a; restart(); playing(true); if (a) play(); else actCard('I', '370', 'Roma în fața valului', 'Ești împăratul Valens · hunii împing goții spre Dunăre', 'valens', play); }
   function intro(){
+    var fsb = document.getElementById('mig-fs'), mob = window.matchMedia('(max-width: 700px)').matches && fsb && !fsb.hidden;
     over.className = 'mig-over show';
     over.innerHTML = '<div class="mig-dec mig-intro" role="dialog" aria-modal="true" aria-labelledby="mig-it"><h3 id="mig-it">Attila și Marea Migrație</h3>' +
       '<p class="mig-who">370–476 · trei acte · o hartă reală</p>' +
@@ -5554,14 +5907,15 @@
       '<ol class="mig-acts"><li><b>Actul I, 370–434: Roma în fața valului.</b> Ești împăratul Valens, generalul Stilicho și împăratul Honorius.</li><li><b>Actul II, 435–452: ești Attila.</b> Opt momente reale; hunii merg pe hartă unde îi trimiți.</li><li><b>Actul III, 453–476: după Attila.</b> Ești Ardaric, regele gepizilor, apoi împăratul Leon I.</li></ol>' +
       '<p>Cercurile punctate arată <b>unde erau popoarele în realitate</b>.</p>' +
       '<p class="mig-note mig-keys">Tastatura: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> pentru alegeri, <kbd>Enter</kbd> ca să continui, <kbd>Spațiu</kbd> pentru pauză.</p>' +
-      (window.matchMedia('(max-width: 700px)').matches && document.getElementById('mig-fs') && !document.getElementById('mig-fs').hidden ? '<p class="mig-note">Pe telefon, harta e mică: întoarce telefonul și joacă pe ecran complet.</p><div class="mig-end-btns"><button class="jg-btn" id="mig-go-fs" type="button">Pornește pe ecran complet</button></div>' : '') +
-      '<div class="mig-end-btns mig-go-row"><button class="jg-btn" id="mig-go" type="button">' + ICON.play + 'Pornește simularea</button><button class="jg-btn ghost" id="mig-auto" type="button">Arată istoria reală</button></div>' +
+      (mob ? '<p class="mig-note">Pe telefon, harta e mică: joacă pe ecran complet, cu telefonul întors.</p>' : '') +
+      '<div class="mig-end-btns mig-go-row">' + (mob ? '<button class="jg-btn" id="mig-go-fs" type="button">' + ICON.play + 'Pornește pe ecran complet</button><button class="mig-link" id="mig-go" type="button">sau joacă fără ecran complet</button>'
+        : '<button class="jg-btn" id="mig-go" type="button">' + ICON.play + 'Pornește jocul</button>') + '<button class="mig-link" id="mig-auto" type="button">Arată istoria reală</button></div>' +
       '<p class="mig-prep" id="mig-prep" aria-live="polite"></p></div>';
     prepUi();
-    document.getElementById('mig-go').addEventListener('click', function(){ auto = false; restart(); playing(true); play(); });
-    document.getElementById('mig-auto').addEventListener('click', function(){ auto = true; restart(); playing(true); play(); });
+    document.getElementById('mig-go').addEventListener('click', function(){ start(false); });
+    document.getElementById('mig-auto').addEventListener('click', function(){ start(true); });
     var gf = document.getElementById('mig-go-fs');
-    if (gf) gf.addEventListener('click', function(){ document.getElementById('mig-fs').click(); auto = false; restart(); playing(true); play(); });
+    if (gf) gf.addEventListener('click', function(){ document.getElementById('mig-fs').click(); start(false); });
   }
 
   // =====================================================================
@@ -5589,9 +5943,12 @@
   document.getElementById('mig-rp').addEventListener('input', function(){ replayPlay(false); replayGo(+this.value); });
   document.getElementById('mig-rp-play').addEventListener('click', function(){ if (replayRaf) replayPlay(false); else { if (replayY === null) replayGo(T0); replayPlay(true); } });
   document.getElementById('mig-reset').addEventListener('click', function(){ pause(); auto = false; restart(); intro(); });
-  Array.prototype.forEach.call(root.querySelectorAll('.mig-speed button'), function(b){
-    b.addEventListener('click', function(){ speed = +b.getAttribute('data-s'); Array.prototype.forEach.call(root.querySelectorAll('.mig-speed button'), function(x){ x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); });
+  document.getElementById('mig-spd').addEventListener('click', function(){
+    speed = speed === 1 ? 2 : speed === 2 ? 4 : 1;
+    this.textContent = speed + '×'; this.classList.toggle('on', speed > 1); this.setAttribute('aria-label', 'Viteza: ' + speed + '×. Apasă ca s-o schimbi');
   });
+  document.getElementById('mig-snd').addEventListener('click', function(){ setSound(!AU.on); if (AU.on && running) auAmbient(true); });
+  document.getElementById('mig-rot-x').addEventListener('click', function(){ document.getElementById('mig-rotate').classList.add('off'); });
   Array.prototype.forEach.call(root.querySelectorAll('.mig-layers input'), function(cb){
     cb.addEventListener('change', function(){ layers[cb.getAttribute('data-l')] = cb.checked; if (!running) draw(); });
   });
@@ -5640,12 +5997,12 @@
       if (dlg.classList.contains('mig-intro')) { e.preventDefault(); over.className = 'mig-over'; over.innerHTML = ''; restart(); document.getElementById('mig-play').focus(); }
       else if (dlg.classList.contains('mig-card')) { e.preventDefault(); finish(); }
       else if (dlg.classList.contains('mig-end')) { e.preventDefault(); var h = document.getElementById('mig-hide'); if (h) h.click(); }
-      else { var t0 = dlg.querySelector('.jg-choice:not(:disabled), #mig-cont'); if (t0) t0.focus(); }
+      else { var t0 = dlg.querySelector('.jg-choice:not(:disabled), #mig-cont, #mig-ac-go'); if (t0) t0.focus(); }
     }
   });
-  document.addEventListener('visibilitychange', function(){ if (document.hidden && running) pause(); });
+  document.addEventListener('visibilitychange', function(){ if (document.hidden && running) pause(); if (AU.ctx) { if (document.hidden) AU.ctx.suspend(); else if (AU.amb) AU.ctx.resume(); } });
   var page = document.getElementById('mod-migratie');
-  if (page && 'MutationObserver' in window) new MutationObserver(function(){ if (!page.classList.contains('active')) { if (running) pause(); playing(false); } }).observe(page, { attributes: true, attributeFilter: ['class'] });
+  if (page && 'MutationObserver' in window) new MutationObserver(function(){ if (!page.classList.contains('active')) { if (running) pause(); playing(false); auAmbient(false); } }).observe(page, { attributes: true, attributeFilter: ['class'] });
 
   // =====================================================================
   // 12. Încărcarea hărții de bază
