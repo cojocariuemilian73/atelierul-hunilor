@@ -28,6 +28,7 @@ const JS = `  // mx: miturile, puse în capitolele de care țin; faptele puțin 
     if (!m.src) return '';
     return '<p class="mx-src">Sursa: ' + m.src.replace(/nota (\\d+)/g, '<a class="mx-note" href="#note-$1">nota $1</a>') + '</p>';
   }
+  var mxFile = 0;
   function renderMythGroup(host){
     var all = host.getAttribute('data-myths').split(',').map(Number), done = 0;
     var ids = all.filter(function(i){ return !MYTHS[i].fact; }), facts = all.filter(function(i){ return MYTHS[i].fact; });
@@ -41,7 +42,8 @@ const JS = `  // mx: miturile, puse în capitolele de care țin; faptele puțin 
     var items = ids.map(function(i){
       var m = MYTHS[i], th = THEME[MYTH_THEMES[i]] || THEME.izv, id = 'mx-a-' + i;
       var it = document.createElement('article');
-      var nr = (i + 1 < 10 ? '0' : '') + (i + 1);
+      // dosarele sunt numerotate în ordinea citirii, de-a lungul întregului articol
+      var k = ++mxFile, nr = (k < 10 ? '0' : '') + k;
       it.className = 'mx-item';
       it.setAttribute('data-file', 'Dosar nr. ' + nr);
       it.innerHTML =
