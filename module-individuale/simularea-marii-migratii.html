@@ -126,7 +126,7 @@
   /* cod QR pentru joc: doar pe ecrane late */
   .jg .qr-card{ display: none; }
   @media (min-width: 900px) and (hover: hover){
-    .jg .qr-card{ display: flex; align-items: center; gap: 18px; margin-top: 22px; padding: 14px 16px; border: 1px dashed rgba(212,175,55,0.5); background: rgba(212,175,55,0.05); }
+    .jg .qr-card{ display: flex; align-items: center; gap: 18px; margin-top: 22px; padding: 14px 16px; border: 1px solid rgba(212, 175, 55, 0.28); background: rgba(212,175,55,0.05); }
     .jg .qr-code{ flex: none; width: 104px; padding: 7px; background: #fff; border-radius: 3px; }
     .jg .qr-code svg{ display: block; width: 100%; height: auto; }
     .jg .qr-title{ font-family: 'Cinzel', Georgia, serif; font-weight: 700; font-size: 1rem; color: #e5c158; margin: 0 0 4px; }
@@ -350,6 +350,12 @@
   /* în timpul reluării, din fereastra de final rămâne doar butonul de întoarcere */
   .mig-over.dock .mig-end-btns .jg-btn:not(#mig-hide){ display: none; }
   .mig-over.dock .mig-end.min h3{ font-size: 0.95rem; }
+  /* fereastra de început: actele pe trei coloane, iar butoanele de pornire rămân mereu la vedere, jos */
+  .mig-dec.mig-intro{ width: min(820px, 100%); padding-bottom: 0; }
+  .mig-intro .mig-acts{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mig-intro .mig-go-row{ position: sticky; bottom: 0; z-index: 1; margin: 6px -20px 0; padding: 12px 20px 14px; background: linear-gradient(180deg, rgba(26, 26, 30, 0), rgba(26, 26, 30, 0.98) 26%); }
+  .mig-intro .mig-prep{ padding-bottom: 10px; } .mig-intro .mig-prep:empty{ display: none; }
+  @media (max-width: 760px){ .mig-intro .mig-acts{ grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -1568,7 +1574,7 @@
       '<p>Cercurile punctate arată <b>unde erau popoarele în realitate</b>.</p>' +
       '<p class="mig-note mig-keys">Tastatura: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> pentru alegeri, <kbd>Enter</kbd> ca să continui, <kbd>Spațiu</kbd> pentru pauză.</p>' +
       (window.matchMedia('(max-width: 700px)').matches && document.getElementById('mig-fs') && !document.getElementById('mig-fs').hidden ? '<p class="mig-note">Pe telefon, harta e mică: întoarce telefonul și joacă pe ecran complet.</p><div class="mig-end-btns"><button class="jg-btn" id="mig-go-fs" type="button">Pornește pe ecran complet</button></div>' : '') +
-      '<div class="mig-end-btns"><button class="jg-btn" id="mig-go" type="button">' + ICON.play + 'Pornește simularea</button><button class="jg-btn ghost" id="mig-auto" type="button">Arată istoria reală</button></div>' +
+      '<div class="mig-end-btns mig-go-row"><button class="jg-btn" id="mig-go" type="button">' + ICON.play + 'Pornește simularea</button><button class="jg-btn ghost" id="mig-auto" type="button">Arată istoria reală</button></div>' +
       '<p class="mig-prep" id="mig-prep" aria-live="polite"></p></div>';
     prepUi();
     document.getElementById('mig-go').addEventListener('click', function(){ auto = false; restart(); playing(true); play(); });
