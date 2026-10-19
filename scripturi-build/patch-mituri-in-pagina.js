@@ -28,6 +28,7 @@ const JS = `  // mx: miturile, puse în capitolele de care țin; faptele puțin 
     if (!m.src) return '';
     return '<p class="mx-src">Sursa: ' + m.src.replace(/nota (\\d+)/g, '<a class="mx-note" href="#note-$1">nota $1</a>') + '</p>';
   }
+  var mxFile = 0, mxGroup = 0;
   function renderMythGroup(host){
     var all = host.getAttribute('data-myths').split(',').map(Number), done = 0;
     var ids = all.filter(function(i){ return !MYTHS[i].fact; }), facts = all.filter(function(i){ return MYTHS[i].fact; });
@@ -37,11 +38,26 @@ const JS = `  // mx: miturile, puse în capitolele de care țin; faptele puțin 
       '<p class="mx-count"><b>0</b> din ' + ids.length + ' verificate</p>' +
       '<button type="button" class="mx-all">Verifică toate</button>';
     host.appendChild(head);
+    // primul grup din articol e deschis; următoarele încep ca un teanc de dosare închise, cu primul mit ca mostră
+    if (++mxGroup > 1) {
+      var nf = all.length - ids.length;
+      host.classList.add('mx-closed');
+      var tz = document.createElement('div');
+      tz.className = 'mx-teaser';
+      tz.innerHTML = '<p class="mx-teaser-q">„' + MYTHS[ids[0]].myth.replace(/[.]$/, '') + '”</p>' +
+        '<button type="button" class="mx-open">Deschide dosarul: ' + ids.length + (ids.length === 1 ? ' mit' : ' mituri') + (nf ? ' și ' + nf + (nf === 1 ? ' curiozitate' : ' curiozități') : '') + ' →</button>';
+      tz.querySelector('.mx-open').addEventListener('click', function(){
+        host.classList.remove('mx-closed');
+        var b = host.querySelector('.mx-item .mx-btn'); if (b) b.focus({ preventScroll: true });
+      });
+      host.appendChild(tz);
+    }
     var countEl = head.querySelector('b'), allBtn = head.querySelector('.mx-all');
     var items = ids.map(function(i){
       var m = MYTHS[i], th = THEME[MYTH_THEMES[i]] || THEME.izv, id = 'mx-a-' + i;
       var it = document.createElement('article');
-      var nr = (i + 1 < 10 ? '0' : '') + (i + 1);
+      // dosarele sunt numerotate în ordinea citirii, de-a lungul întregului articol
+      var k = ++mxFile, nr = (k < 10 ? '0' : '') + k;
       it.className = 'mx-item';
       it.setAttribute('data-file', 'Dosar nr. ' + nr);
       it.innerHTML =
@@ -191,6 +207,14 @@ const CSS = `  /* mx: mituri în capitole */
     .mx-all{ margin-left: 0; }
   }
   @media (prefers-reduced-motion: reduce){ .mx-item.open{ animation: none; } .mx-stamp, .mx-more-body{ transition: none; } .mx-item.open .mx-a, .mx-flash{ animation: none; } }
+  /* grupurile închise: un teanc de dosare, cu primul mit ca mostră */
+  .mx-teaser{ display: none; }
+  .mx-closed > .mx-item, .mx-closed > .mx-facts, .mx-closed .mx-all{ display: none; }
+  .mx-closed .mx-teaser{ position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin: 14px 10px 18px 0; padding: 18px 22px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, var(--paper)); box-shadow: 5px 5px 0 -1px var(--paper), 5px 5px 0 0 var(--line-strong), 10px 10px 0 -1px var(--paper), 10px 10px 0 0 var(--line); }
+  .mx-teaser-q{ flex: 1 1 320px; margin: 0; font: italic 600 1.2rem/1.4 'Cormorant Garamond', serif; color: var(--ink-dim); }
+  .mx-open{ min-height: 42px; padding: 9px 16px; border: 1px solid var(--accent-2); background: transparent; color: var(--accent-2); font: 700 0.86rem 'Cinzel', serif; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .mx-open:hover{ background: var(--accent-2); color: var(--paper); }
+  .mx-open:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 3px; }
   /* /mx */
 `;
 

@@ -373,13 +373,19 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   @media (prefers-reduced-motion: reduce){ .hx-mk, .hx-era, .hx-tip, .hx-pt{ transition: none; } .hx-folio.in > *, .hx-ring.pulse{ animation: none; } }
 
   /* ---------- AURUL HUNILOR: GRAFIC CARE SE CONSTRUIEȘTE LA DERULARE ---------- */
-  .gs{ display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(20px, 3vw, 44px); margin: 30px 0 44px; }
-  .gs-chart{ grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--nav-h, 0px) + 64px); align-self: start; padding: 14px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
+  /* compact: graficul și textul unul lângă altul; anii sunt butoane, iar la prima vedere pașii trec singuri */
+  .gs{ display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(20px, 3vw, 40px); align-items: center; margin: 30px 0 44px; }
+  .gs-chart{ grid-column: 1; grid-row: 1; padding: 14px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
   .gs-chart svg{ display: block; width: 100%; height: auto; }
-  .gs-steps{ grid-column: 1; grid-row: 1; }
-  .gs-step{ min-height: 62vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.32; transition: opacity 0.5s ease; }
-  .gs-step:first-child{ min-height: 46vh; }
-  .gs-step.on{ opacity: 1; }
+  .gs-steps{ grid-column: 2; grid-row: 1; display: flex; flex-direction: column; }
+  .gs-nav{ display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
+  .gs-nav button{ min-height: 38px; padding: 6px 12px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-dim); font: 600 1rem 'Cormorant Garamond', serif; font-variant-numeric: lining-nums; cursor: pointer; transition: color 0.2s, border-color 0.2s, background 0.2s; }
+  .gs-nav button:hover{ color: var(--ink); border-color: var(--accent-2); }
+  .gs-nav button.on{ color: #17140e; background: var(--accent-2); border-color: var(--accent-2); }
+  .gs-nav button:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; }
+  .gs-step{ display: none; min-height: 13em; }
+  .gs-step.on{ display: block; animation: gs-in 0.45s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes gs-in{ from{ opacity: 0; transform: translateY(8px); } }
   .gs-step h3{ margin: 0 0 10px; font: 600 clamp(1.5rem, 2.6vw, 2rem)/1.15 'Cormorant Garamond', serif; text-wrap: balance; }
   .gs-step p{ margin: 0; line-height: 1.65; color: var(--ink-dim); max-width: 46ch; }
   .gs-yr{ margin: 0 0 6px !important; font: 700 0.74rem 'JetBrains Mono', monospace; color: var(--accent-2) !important; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -413,20 +419,16 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   .gs-coins-lab{ font: 700 12px 'JetBrains Mono', monospace; fill: #f2d474; opacity: 0; transition: opacity 0.5s 0.6s; }
   .gs[data-s="4"] .gs-coins-lab{ opacity: 1; }
   @media (max-width: 860px){
-    .gs-who{ font-size: 15px; } .gs-unit{ font-size: 15px; } .gs-lab{ font-size: 26px; }
-    .gs{ grid-template-columns: 1fr; }
-    .gs-chart{ grid-column: 1; top: calc(var(--nav-h, 0px) + 8px); z-index: 2; background: var(--paper); padding: 8px; }
-    .gs-steps{ grid-row: 2; position: relative; z-index: 3; }
-    .gs-step{ min-height: 70vh; justify-content: flex-end; padding-bottom: 12vh; opacity: 1; }
-    .gs-step > *{ background: var(--paper); }
-    .gs-step h3, .gs-step p{ padding: 0 12px; }
-    .gs-step .gs-yr{ padding-top: 10px; }
-    .gs-step p:last-child{ padding-bottom: 12px; }
-    .gs-step{ pointer-events: none; }
-    .gs-step:first-child{ min-height: 50vh; }
+    .gs-who{ display: none; } .gs-unit{ font-size: 15px; } .gs-lab{ font-size: 26px; }
+    .gs{ grid-template-columns: 1fr; gap: 14px; }
+    .gs-chart{ padding: 8px; }
+    .gs-steps{ grid-column: 1; grid-row: 2; }
+    .gs-nav{ margin-bottom: 12px; }
+    .gs-step{ min-height: 0; }
   }
   @media (prefers-reduced-motion: reduce){
     .gs-stk ellipse, .gs-lab, .gs-who, .gs-stop, .gs-coins circle, .gs-coins-lab, .gs-step, .gs-stacks, .gs-ghost{ transition: none; }
+    .gs-step.on{ animation: none; }
   }
   /* ---------- /AURUL HUNILOR ---------- */
   /* ---------- MAREA MIGRAȚIE: HARTĂ CU SĂGEȚI ---------- */
@@ -880,7 +882,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           </svg>
         </div>
         <div class="gs-steps">
-          <div class="gs-step" data-s="0"><h3>De ce plătea Constantinopolul aur?</h3><p>Un popor fără orașe și fără monede proprii a primit, an de an, sute de kilograme de aur de la Imperiul Roman de Răsărit. Derulează ca să vezi cum a crescut prețul păcii.</p></div>
+          <div class="gs-step" data-s="0"><h3>De ce plătea Constantinopolul aur?</h3><p>Un popor fără orașe și fără monede proprii a primit, an de an, sute de kilograme de aur de la Imperiul Roman de Răsărit. Urmărește anii de mai sus ca să vezi cum a crescut prețul păcii.</p></div>
           <div class="gs-step" data-s="1"><p class="gs-yr">c. 422–430</p><h3>350 de livre pe an</h3><p>Sub regele Rua, hunii primesc 350 de livre de aur în fiecare an. Pentru Constantinopol, e prețul liniștii la Dunăre.</p></div>
           <div class="gs-step" data-s="2"><p class="gs-yr">c. 435</p><h3>Dublu: 700 de livre</h3><p>La Margus, Attila și Bleda obțin dublarea tributului și deschiderea târgurilor de la graniță.</p></div>
           <div class="gs-step" data-s="3"><p class="gs-yr">443 sau 447</p><h3>Triplu: 2.100 de livre, plus 6.000 restanță</h3><p>După două campanii în Balcani, tributul se triplează. Restanța trebuie plătită pe loc: senatorii își vând mobila și bijuteriile soțiilor, scrie Priscus.</p></div>
@@ -1705,24 +1707,38 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   function ghost(x, n){ var top = 336 - (n - 1) * 6.6 - 6.5; return '<rect x="' + (x - 26) + '" y="' + top.toFixed(1) + '" width="52" height="' + (343 - top).toFixed(1) + '" rx="10"/><text x="' + x + '" y="' + ((top + 343) / 2 + 8).toFixed(1) + '">?</text>'; }
   document.getElementById('gs-ghost').innerHTML = ghost(120, 7) + ghost(250, 14) + ghost(380, 42) +
     '<path d="M440 343 L510 259 L580 343 Z"/><text x="510" y="326">?</text>' +
-    '<text class="gs-hint" x="200" y="120">Derulează: la fiecare pas</text><text class="gs-hint" x="200" y="142">crește un nou teanc de aur</text>';
+    '<text class="gs-hint" x="200" y="120">La fiecare an</text><text class="gs-hint" x="200" y="142">crește un nou teanc de aur</text>';
   var coins = document.getElementById('gs-coins'), h = '', cols = 19, n = 151;
   for (var i = 0; i < n; i++) {
     var c = i % cols, r = Math.floor(i / cols);
     h += '<circle cx="' + (84 + c * 24) + '" cy="' + (78 + r * 24) + '" r="9.5" fill="url(#gs-coin)" stroke="#6b5210" stroke-width="1" style="transition-delay:' + (i * 6) + 'ms"/>';
   }
   coins.innerHTML = h;
+  // pașii: butoane cu anii, deasupra textului; graficul nu mai cere derulare
   var steps = Array.prototype.slice.call(gs.querySelectorAll('.gs-step'));
+  var LAB = ['Începutul', 'c. 422', '435', '447', 'În monede', '450'];
+  var nav = document.createElement('div');
+  nav.className = 'gs-nav'; nav.setAttribute('role', 'group'); nav.setAttribute('aria-label', 'Pașii graficului');
+  nav.innerHTML = steps.map(function(st, k){ return '<button type="button" data-s="' + st.getAttribute('data-s') + '" aria-pressed="false">' + (LAB[k] || st.getAttribute('data-s')) + '</button>'; }).join('');
+  steps[0].parentNode.insertBefore(nav, steps[0]);
+  var btns = Array.prototype.slice.call(nav.querySelectorAll('button')), timer = 0;
   function set(s){
     gs.setAttribute('data-s', s);
     steps.forEach(function(st){ st.classList.toggle('on', st.getAttribute('data-s') === s); });
+    btns.forEach(function(b){ var on = b.getAttribute('data-s') === s; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
   }
+  nav.addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b) return; clearInterval(timer); set(b.getAttribute('data-s')); });
   set('0');
-  if (!('IntersectionObserver' in window)) { set('5'); return; }
+  // la prima vedere, pașii trec singuri, câte unul la 3,2 secunde; un clic pe un an oprește trecerea
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) { set('5'); return; }
   var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if (e.isIntersecting) set(e.target.getAttribute('data-s')); });
-  }, { rootMargin: '-45% 0px -45% 0px' });
-  steps.forEach(function(st){ io.observe(st); });
+    if (!entries[0].isIntersecting) return;
+    io.disconnect();
+    var k = 0;
+    timer = setInterval(function(){ k++; if (k >= steps.length) { clearInterval(timer); return; } set(steps[k].getAttribute('data-s')); }, 3200);
+  }, { threshold: 0.5 });
+  io.observe(gs.querySelector('.gs-chart'));
 })();
 </script>
 <script>

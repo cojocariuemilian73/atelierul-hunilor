@@ -1,5 +1,5 @@
   /* ============ MODULE: ATELIERUL ISTORICULUI (.m-atelier) ============ */
-  #mod-atelier{ padding-block: 28px; }
+  #mod-atelier{ padding-block: 64px 28px; }
   .m-atelier{
     --md-s1: #17161a; --md-s2: #211f24; --md-line: rgba(230, 215, 195, 0.16);
     --md-ink: #e6d7c3; --md-dim: #b3a58f; --md-gold: #d4af37; --md-gold2: #e5c158;
