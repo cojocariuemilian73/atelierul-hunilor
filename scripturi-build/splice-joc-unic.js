@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const root = path.join(__dirname, '..');
 const TITLE = 'Attila și Marea Migrație';
-const SUB = '370–476 · trei acte · ești Valens, Stilicho, Attila și Ardaric · popoarele se mișcă pe harta reală a Europei.';
+const SUB = '370–476 · trei acte · șase personaje · popoarele se mișcă pe harta reală a Europei.';
 
 for (const rel of ['index.html', 'atelierul-hunilor.html']) {
   const f = path.join(root, rel);
@@ -58,6 +58,9 @@ for (const rel of ['index.html', 'atelierul-hunilor.html']) {
   // „Despre proiect”: de unde vin portretele și iconițele jocului
   if (!s.includes('<strong>Portretele din joc</strong>')) s = s.replace('      <li><strong>Fondul hărților interactive</strong>', '      <li><strong>Portretele din joc</strong> (ferestrele de decizie): Valens pe un solid de aur (The Metropolitan Museum of Art, CC0), Stilicho pe dipticul de fildeș de la Monza (domeniu public), Honoria pe un solid bătut la Ravenna (CNG, CC BY-SA 2.5), aplicele de șa ale principelui gepid de la Apahida (MNIR; foto J. Steakley, GFDL), toate de pe Wikimedia Commons; celelalte sunt imaginile din articol. Iconițele indicatorilor sunt de pe game-icons.net (autori: Lorc și Delapouite), CC BY 3.0.</li>\n      <li><strong>Fondul hărților interactive</strong>');
 
+  rep('Actul I: ești Valens și Stilicho.', 'Actul I: ești Valens, Stilicho și Honorius.');
+  rep('Actul III: ești Ardaric, la Nedao.', 'Actul III: ești Ardaric, la Nedao, apoi împăratul Leon I.');
+  rep('ești Valens și Stilicho când vin hunii, apoi Attila în opt momente reale (aur, renume, loialitate, cai), apoi Ardaric, după moartea lui.', 'ești Valens, Stilicho și Honorius când vin hunii, apoi Attila în opt momente reale (aur, renume, loialitate, cai), apoi Ardaric și Leon I, după moartea lui.');
   // 5. „Despre proiect”
   s = s.replace(/      <li><strong>Imperiul lui Attila<\/strong>:[^\n]*<\/li>\n      <li><strong>Marea Migrație, în timp real<\/strong>:[^\n]*<\/li>/,
     '      <li><strong>' + TITLE + '</strong>: un singur joc, în trei acte, pe harta reală a Europei (370–476), cu peste 1.800 de agenți. Actul I: ești Valens și Stilicho. Actul II: ești Attila, în opt momente reale (435–452), cu aur, renume, loialitate, cavalerie și moștenire; alegerile tale mută hunii pe hartă și schimbă stabilitatea Imperiului. Actul III: ești Ardaric, la Nedao. Terenul e citit din hartă, drumurile sunt calculate cu algoritmul lui Dijkstra, iar la final îți compari lumea cu cea reală.</li>');
