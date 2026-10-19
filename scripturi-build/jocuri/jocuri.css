@@ -314,3 +314,26 @@
   .mig-note{ margin: 4px 0 10px !important; font: 0.72rem/1.5 'JetBrains Mono', monospace; color: var(--dim) !important; }
   /* cât timp rulează jocul, bara de pagini e ascunsă: o apăsare greșită nu te mai scoate din joc */
   html.mig-playing .site-pager{ display: none; }
+  /* finalul: titlul jucătorului, reluarea pe hartă, cronica */
+  .mig-title{ margin: 4px 0 14px; padding: 12px 16px; border: 1px solid rgba(212, 175, 55, 0.5); background: linear-gradient(90deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.02)); }
+  .mig-title small{ display: block; font: 700 0.62rem 'JetBrains Mono', monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
+  .mig-title b{ display: block; margin: 2px 0 2px; font: 700 clamp(1.25rem, 3.2vw, 1.6rem)/1.2 'Cinzel', serif; color: #f2d474; }
+  .mig-title span{ font: italic 0.95rem/1.5 'Source Serif 4', Georgia, serif; color: #e8dcc4; }
+  .mig-replay{ position: absolute; z-index: 7; top: 56px; left: 50%; transform: translateX(-50%); width: min(560px, calc(100% - 24px)); display: flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; background: rgba(14, 13, 11, 0.88); border: 1px solid rgba(212, 175, 55, 0.45); backdrop-filter: blur(4px); }
+  .mig-replay[hidden]{ display: none; }
+  .mig-replay input{ flex: 1; min-width: 80px; accent-color: #d4af37; }
+  .mig-replay > b{ min-width: 3ch; font: 700 1rem 'Cinzel', serif; color: #f2d474; font-variant-numeric: lining-nums tabular-nums; }
+  .mig-rp-key{ display: flex; align-items: center; gap: 5px; font: 0.62rem 'JetBrains Mono', monospace; color: var(--dim); white-space: nowrap; }
+  .mig-rp-key i{ display: inline-block; width: 16px; border-top: 2px dashed #c9b48a; }
+  .mig-rp-key i.solid{ border-top-style: solid; border-top-width: 3px; }
+  .mig-rp-key i:not(.solid){ margin-left: 6px; }
+  .mig-replay .mig-ib svg{ width: 14px; height: 14px; }
+  @media (max-width: 760px){ .mig-replay{ top: 8px; } .mig-rp-key{ display: none; } }
+  .mig-over.big .mig-card{ width: min(760px, 100%); }
+  .mig-card img{ display: block; width: 100%; height: auto; margin: 6px 0 4px; border: 1px solid rgba(212, 175, 55, 0.35); }
+  .mig-card a.jg-btn{ text-decoration: none; }
+  .mig-keys kbd{ display: inline-block; min-width: 1.6em; padding: 0 5px; border: 1px solid rgba(230, 215, 195, 0.35); border-bottom-width: 2px; font: 700 0.68rem/1.5 'JetBrains Mono', monospace; color: #f0e2c6; text-align: center; }
+  @media (hover: none){ .mig-keys{ display: none; } }
+  /* în timpul reluării, din fereastra de final rămâne doar butonul de întoarcere */
+  .mig-over.dock .mig-end-btns .jg-btn:not(#mig-hide){ display: none; }
+  .mig-over.dock .mig-end.min h3{ font-size: 0.95rem; }

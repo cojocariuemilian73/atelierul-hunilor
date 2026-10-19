@@ -9,7 +9,7 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
 **`index.html`** (identic cu `atelierul-hunilor.html`) — site-ul complet, într-un singur fișier, cu trei pagini:
 
 1. **Acasă / Articol** — articolul cu 23 de note și bibliografie, cronologia pe epoci, graficul „Aurul hunilor”, atlasul migrației, muzeul virtual, miturile verificate la sfârșitul capitolelor și glosarul.
-2. **Attila și Marea Migrație** — un singur joc, în trei acte, pe harta reală (370–476): simulare cu agenți (Valens, Stilicho, Honorius), cele 8 runde ale lui Attila (435–452) cu aur, renume, loialitate, cavalerie și moștenire, apoi Ardaric la Nedao și Leon I la Capul Bon; mod ușor pentru calculatoare lente. Adresa veche `#mod-game` duce tot aici.
+2. **Attila și Marea Migrație** — un singur joc, în trei acte, pe harta reală (370–476): simulare cu agenți (Valens, Stilicho, Honorius), cele 8 runde ale lui Attila (435–452) cu aur, renume, loialitate, cavalerie și moștenire, apoi Ardaric la Nedao și Leon I la Capul Bon; un citat din izvor la fiecare decizie; la final, titlul jucătorului, reluarea pe hartă (drumul tău și drumul real, an de an) și „Cronica ta”, o imagine de salvat; tastele 1, 2, 3 pentru alegeri; mod ușor pentru calculatoare lente. Adresa veche `#mod-game` duce tot aici.
 3. **Masa istoricului** — 13 surse de așezat pe axa timpului și de clasificat.
 
 Se deschide direct în browser (dublu-clic) sau la adresa de mai sus.
