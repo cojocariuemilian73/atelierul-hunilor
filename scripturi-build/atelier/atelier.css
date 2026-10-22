@@ -319,3 +319,15 @@
   @media (max-width: 900px){ .md-scl{ display: none; } }
   @media (prefers-reduced-motion: reduce){ .md-axis::after{ animation: none; display: none; } .md-ink span{ animation-name: md-ink-fade; } }
   @keyframes md-ink-fade{ from{ opacity: 0; } }
+
+  /* ---------- a treia recenzie: cum se joacă și lumina răspunsului ---------- */
+  .md-insp-empty .md-how-h{ margin: 4px 0 8px; font: 700 0.95rem 'Cinzel', Georgia, serif; letter-spacing: 0.06em; color: #f2d474; }
+  .md-how{ counter-reset: md; margin: 0; padding: 0; list-style: none; text-align: left; }
+  .md-how li{ counter-increment: md; position: relative; margin: 0 0 10px; padding-left: 38px; font-size: 0.92rem; line-height: 1.5; color: #e6d7c3; }
+  .md-how li::before{ content: counter(md); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 26px; height: 26px; border: 1.5px solid #c9a13a; border-radius: 50%; font: 700 0.85rem 'Cinzel', serif; color: #f2d474; }
+  .md-how b{ color: #f6eddc; }
+  .md-how-f{ margin: 4px 0 0; font-size: 0.82rem; color: var(--md-dim); text-align: left; }
+  .md-tl::after{ content: ''; position: absolute; inset: -6px -14px; pointer-events: none; opacity: 0; border-radius: 4px; }
+  .md-tl.md-ok::after{ box-shadow: inset 0 0 0 2px rgba(143, 189, 130, 0.8), inset 0 0 40px rgba(143, 189, 130, 0.25); animation: md-glow 1.2s ease-out; }
+  .md-tl.md-bad::after{ box-shadow: inset 0 0 0 2px rgba(224, 98, 108, 0.8), inset 0 0 40px rgba(224, 98, 108, 0.25); animation: md-glow 1.2s ease-out; }
+  @keyframes md-glow{ 0%{ opacity: 0; } 15%{ opacity: 1; } 100%{ opacity: 0; } }

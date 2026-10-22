@@ -111,7 +111,11 @@
 
   function inspectEmpty(){
     insp.innerHTML = '<div class="md-insp-empty"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="26" cy="26" r="16" fill="none" stroke="currentColor" stroke-width="3"/><path d="M38 38l16 16" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>' +
-      '<p>Alege o sursă de pe masă ca s-o privești de aproape. Pe imagini, lupa îți arată detaliile: hainele, armele, stilul.</p></div>';
+      '<p class="md-how-h">Cum se joacă</p><ol class="md-how">' +
+      '<li><b>Alege o sursă</b> de pe masă. Privește-o de aproape: lupa îți arată hainele, armele, stilul.</li>' +
+      '<li><b>Așaz-o pe axă</b>, în anul în care a fost făcută: trage-o cu mouse-ul sau atinge axa. Cu cât ești mai aproape, cu atât mai multe puncte (până la 3).</li>' +
+      '<li><b>Spune ce fel de sursă e</b>: obiect din epocă, text antic, copie târzie sau imagine târzie (încă un punct).</li></ol>' +
+      '<p class="md-how-f">Nu știi? Fiecare sursă are un indiciu, care costă un punct.</p></div>';
   }
 
   function inspect(it){
@@ -214,6 +218,7 @@
     var g = gained(it, pl); score += g;
     renderPins(id);
     updateScore(g);
+    if (g >= 3 || g <= 1) { tl.classList.remove('md-ok', 'md-bad'); void tl.offsetWidth; tl.classList.add(g >= 3 ? 'md-ok' : 'md-bad'); }
     select(id);
     var nb = $('md-next'); if (nb) nb.focus({ preventScroll: true });
     if (items.every(function(x){ return placed[x.id] && placed[x.id].cls; })) setTimeout(finale, 900);
