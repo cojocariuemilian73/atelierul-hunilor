@@ -361,6 +361,7 @@
     gap.innerHTML = '<span><b>' + ani(firstImg - 453) + ' de tăcere</b><small>nicio imagine a hunilor</small></span>';
     gap.hidden = false;
     tl.classList.add('done');
+    countUp(gap.querySelector('b'), firstImg - 453);
     var max = items.length * (MAXP + 1);
     var rank = score >= max * 0.8 ? 'Ochi de istoric' : score >= max * 0.6 ? 'Cercetător atent' : score >= max * 0.38 ? 'Ucenic de arhivă' : 'La început de drum';
     var objs = items.filter(function(it){ return it.kind === 'obj'; }).length, txts = items.filter(function(it){ return it.kind === 'txt' && it.year <= 600; }).length;
@@ -382,8 +383,21 @@
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, function(){ out.textContent = txt; }); else out.textContent = txt;
     });
     var end = insp.querySelector('.md-end'); end.setAttribute('tabindex', '-1'); end.focus({ preventScroll: true });
+    countUp(insp.querySelector('.md-big'), score);
   }
 
+  // un număr dintr-un text urcă de la 0 la valoarea lui (fără mișcare pe ecran, doar cifre)
+  function countUp(el, to){
+    if (!el) return;
+    var txt = el.innerHTML, t0 = 0, re = new RegExp(fmt(to).replace('.', '\\.'));
+    function step(ts){
+      if (!t0) t0 = ts;
+      var k = Math.min(1, (ts - t0) / 1100);
+      el.innerHTML = k < 1 ? txt.replace(re, fmt(Math.round(to * (1 - Math.pow(1 - k, 3))))) : txt;
+      if (k < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
   // scara rangurilor, cu poziția ta
   function ladder(max, rank){
     var R = [['La început de drum', 0], ['Ucenic de arhivă', Math.ceil(max * 0.38)], ['Cercetător atent', Math.ceil(max * 0.6)], ['Ochi de istoric', Math.ceil(max * 0.8)]];
