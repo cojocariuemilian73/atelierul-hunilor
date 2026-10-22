@@ -67,9 +67,11 @@
 
   function buildTicks(){
     var h = [375, 400, 500, 550, 600, 800, 1000, 1200, 1400, 1600, 1800].map(function(y){
-      return '<span class="md-tick' + (y === 600 ? ' brk' : '') + ([375, 400, 500, 550, 800, 1200, 1600].indexOf(y) >= 0 ? ' minor' : '') + '" style="left:' + pc(y) + '"><em>' + y + '</em></span>';
+      return '<span class="md-tick' + (y === 600 ? ' brk" title="Aici scara se schimbă: secolele IV–VI sunt mărite' : '') + ([375, 400, 500, 550, 800, 1200, 1600].indexOf(y) >= 0 ? ' minor' : '') + '" style="left:' + pc(y) + '"><em>' + y + '</em></span>';
     }).join('');
     h += '<span class="md-tick att" style="left:' + pc(453) + '"><em>453 · Attila</em></span>';
+    h += '<span class="md-ruler" style="left:0;width:' + pc(YB) + ';--n:' + (YB - Y0) / 25 + '"></span><span class="md-ruler" style="left:' + pc(YB) + ';right:0;--n:' + (Y1 - YB) / 50 + '"></span>';
+    h += '<span class="md-scl" style="right:calc(100% - ' + pc(YB) + ' + 14px)">o gradație = 25 de ani</span><span class="md-scl" style="right:0">o gradație = 50 de ani</span>';
     $('md-ticks').innerHTML = h;
     // straturile, ca la o săpătură: fiecare epocă are culoarea ei de pământ
     $('md-strata').innerHTML = [[Y0, 600, 'Antichitatea târzie'], [600, 1000, 'Evul Mediu timpuriu'], [1000, 1500, 'Evul Mediu'], [1500, Y1, 'Epoca modernă']].map(function(e, k){
@@ -115,7 +117,7 @@
   function inspect(it){
     var p = placed[it.id], k = KIND[it.kind];
     var media = it.qt
-      ? '<div class="md-insp-paper qt"><blockquote>„' + esc(it.qt) + '”</blockquote><small>' + esc(it.qtSrc) + ' · traducere adaptată</small><b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i><p>' + esc(it.about) + '</p></div>'
+      ? '<div class="md-insp-paper qt"><blockquote class="md-ink">' + ('„' + esc(it.qt) + '”').split(' ').map(function(w, k){ return '<span style="--i:' + k + '">' + w + '</span>'; }).join(' ') + '</blockquote><small>' + esc(it.qtSrc) + ' · traducere adaptată</small><b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i><p>' + esc(it.about) + '</p></div>'
       : isPaper(it)
       ? (it.msrc ? '<div class="md-insp-paper ms"><div class="md-insp-page' + (it.strip ? ' strip' : '') + '"><img src="' + it.msrc + '" alt="' + esc(it.msNote) + '"></div><b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i><p>' + esc(it.about) + '</p><small>' + esc(it.msNote) + '</small></div>'
         : '<div class="md-insp-paper">' + BOOK + '<b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i><p>' + esc(it.about) + '</p></div>')
@@ -267,6 +269,9 @@
   function showCursor(y){
     curY = snap(Math.max(Y0, Math.min(Y1, y)));
     cursor.hidden = false;
+    var it = sel && byId(sel), sh = cursor.querySelector('i');
+    if (!sh) { sh = document.createElement('i'); sh.setAttribute('aria-hidden', 'true'); cursor.appendChild(sh); }
+    if (sh.getAttribute('data-id') !== (sel || '')) { sh.setAttribute('data-id', sel || ''); sh.innerHTML = it ? (isPaper(it) ? BOOK : '<img src="' + it.src + '" alt="">') : ''; sh.hidden = !it; }
     cursor.style.left = pc(curY);
     cursor.querySelector('b').textContent = curY;
     tl.setAttribute('aria-valuenow', curY);

@@ -1,16 +1,21 @@
   /* ---------- AURUL HUNILOR: GRAFIC CARE SE CONSTRUIEȘTE LA DERULARE ---------- */
-  /* compact: graficul și textul unul lângă altul; anii sunt butoane, iar la prima vedere pașii trec singuri */
-  .gs{ display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(20px, 3vw, 40px); align-items: center; margin: 30px 0 44px; }
+  /* graficul și textul unul lângă altul; graficul stă fix pe ecran și monedele cad la derulare (dacă încape pe ecran) */
+  .gs{ position: relative; margin: 30px 0 44px; }
+  .gs.scrolly .gs-pin{ position: sticky; }
+  .gs-pin{ display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(20px, 3vw, 40px); align-items: center; }
   .gs-chart{ grid-column: 1; grid-row: 1; padding: 14px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
   .gs-chart svg{ display: block; width: 100%; height: auto; }
-  .gs-steps{ grid-column: 2; grid-row: 1; display: flex; flex-direction: column; }
+  .gs-steps{ grid-column: 2; grid-row: 1; display: grid; align-content: center; }
+  .gs-nav{ grid-row: 1; } .gs-src{ grid-row: 3; }
   .gs-nav{ display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
   .gs-nav button{ min-height: 38px; padding: 6px 12px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-dim); font: 600 1rem 'Cormorant Garamond', serif; font-variant-numeric: lining-nums; cursor: pointer; transition: color 0.2s, border-color 0.2s, background 0.2s; }
   .gs-nav button:hover{ color: var(--ink); border-color: var(--accent-2); }
   .gs-nav button.on{ color: #17140e; background: var(--accent-2); border-color: var(--accent-2); }
   .gs-nav button:focus-visible{ outline: 2px solid var(--accent-2); outline-offset: 2px; }
-  .gs-step{ display: none; min-height: 13em; }
-  .gs-step.on{ display: block; animation: gs-in 0.45s cubic-bezier(.16,1,.3,1) both; }
+  /* toți pașii în aceeași celulă: înălțimea e a celui mai lung, deci graficul nu sare între pași */
+  .gs-step{ grid-row: 2; grid-column: 1; visibility: hidden; opacity: 0; }
+  .gs-step.on{ visibility: visible; opacity: 1; }
+  .gs-step.on{ animation: gs-in 0.45s cubic-bezier(.16,1,.3,1) both; }
   @keyframes gs-in{ from{ opacity: 0; transform: translateY(8px); } }
   .gs-step h3{ margin: 0 0 10px; font: 600 clamp(1.5rem, 2.6vw, 2rem)/1.15 'Cormorant Garamond', serif; text-wrap: balance; }
   .gs-step p{ margin: 0; line-height: 1.65; color: var(--ink-dim); max-width: 46ch; }
@@ -25,9 +30,8 @@
   .gs-ghost{ transition: opacity 0.5s; }
   .gs:not([data-s="0"]) .gs-ghost{ opacity: 0; }
   /* monedele cad în teanc, una după alta */
-  .gs-stk ellipse{ opacity: 0; transform: translateY(-70px); transition: transform 0.55s cubic-bezier(.3,1.35,.5,1), opacity 0.2s; }
-  .gs[data-s="1"] .s1 ellipse, .gs[data-s="2"] .s1 ellipse, .gs[data-s="2"] .s2 ellipse,
-  .gs[data-s="3"] .gs-stk ellipse, .gs[data-s="4"] .gs-stk ellipse, .gs[data-s="5"] .gs-stk ellipse{ opacity: 1; transform: none; }
+  .gs-stk ellipse{ opacity: 0; transform: translateY(-150px); transition: transform 0.6s cubic-bezier(.3,1.3,.5,1), opacity 0.15s; }
+  .gs-stk ellipse.in{ opacity: 1; transform: none; }
   .gs-lab{ font: 700 22px 'Cinzel', serif; fill: #f2d474; text-anchor: middle; font-variant-numeric: lining-nums; opacity: 0; transition: opacity 0.4s 0.35s; }
   .gs-lab.lm{ font-size: 18px; }
   .gs-who{ font: 12px 'JetBrains Mono', monospace; fill: var(--ink-dim); text-anchor: middle; opacity: 0; transition: opacity 0.4s; }
@@ -41,19 +45,20 @@
   .gs-stop text{ font: 700 20px 'Cinzel', serif; fill: #f4a0a6; text-anchor: middle; }
   .gs-stop text.sm{ font: 13px 'JetBrains Mono', monospace; fill: #e6d7c3; }
   .gs-coins circle{ opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.2); transition: opacity 0.35s, transform 0.5s cubic-bezier(.16,1,.3,1); }
-  .gs[data-s="4"] .gs-coins circle{ opacity: 1; transform: none; }
+  .gs-coins circle.in{ opacity: 1; transform: none; }
   .gs-coins-lab{ font: 700 12px 'JetBrains Mono', monospace; fill: #f2d474; opacity: 0; transition: opacity 0.5s 0.6s; }
   .gs[data-s="4"] .gs-coins-lab{ opacity: 1; }
   @media (max-width: 860px){
     .gs-who{ display: none; } .gs-unit{ font-size: 15px; } .gs-lab{ font-size: 26px; }
-    .gs{ grid-template-columns: 1fr; gap: 14px; }
+    .gs-pin{ grid-template-columns: 1fr; gap: 14px; }
     .gs-chart{ padding: 8px; }
     .gs-steps{ grid-column: 1; grid-row: 2; }
     .gs-nav{ margin-bottom: 12px; }
-    .gs-step{ min-height: 0; }
   }
   @media (prefers-reduced-motion: reduce){
-    .gs-stk ellipse, .gs-lab, .gs-who, .gs-stop, .gs-coins circle, .gs-coins-lab, .gs-step, .gs-stacks, .gs-ghost{ transition: none; }
+    /* monedele nu mai cad, doar apar */
+    .gs-stk ellipse, .gs-coins circle{ transform: none; transition: opacity 0.3s; }
+    .gs-lab, .gs-who, .gs-stop, .gs-coins-lab, .gs-stacks, .gs-ghost{ transition-duration: 0.2s; }
     .gs-step.on{ animation: none; }
   }
 

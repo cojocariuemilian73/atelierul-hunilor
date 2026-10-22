@@ -298,3 +298,24 @@
   @media (max-width: 900px){ .md-zoom img{ max-height: 240px; } }
   .md-tl.done .md-era.e0 em{ opacity: 0; }
   @media (max-width: 640px){ .md-era em, .md-era.e0 em{ display: none; } }
+
+  /* ---------- axa ca o riglă de alamă ---------- */
+  .md-axis{ height: 3px; bottom: 41px; background: linear-gradient(180deg, #f8e7a4, #c9a13a 55%, #7d5f17); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.6); overflow: hidden; }
+  .md-axis::after{ content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 18%; background: linear-gradient(90deg, transparent, rgba(255, 250, 225, 0.95), transparent); transform: translateX(-100%); animation: md-sheen 9s ease-in-out 1.5s infinite; }
+  @keyframes md-sheen{ 0%{ transform: translateX(-100%); } 22%, 100%{ transform: translateX(560%); } }
+  .md-ruler{ position: absolute; bottom: 44px; height: 6px; pointer-events: none; background: repeating-linear-gradient(90deg, rgba(229, 193, 88, 0.55) 0 1px, transparent 1px calc(100% / var(--n))); }
+  .md-scl{ position: absolute; bottom: 52px; font: italic 0.7rem 'Source Serif 4', Georgia, serif; color: rgba(229, 193, 88, 0.72); white-space: nowrap; pointer-events: none; }
+  .md-tick.brk{ cursor: help; }
+  /* 453: un sigiliu de ceară roșie pe axă */
+  .md-tick.att::after{ content: ''; position: absolute; left: 50%; bottom: -1px; width: 15px; height: 15px; transform: translateX(-50%) rotate(-12deg); border-radius: 52% 46% 50% 47%; background: radial-gradient(circle at 36% 34%, #f39aa1 0 12%, #c8323f 42%, #7b1420 100%); box-shadow: 0 0 0 2px rgba(123, 20, 32, 0.35), 0 2px 4px rgba(0, 0, 0, 0.6); }
+  /* umbra sursei, acolo unde o vei așeza */
+  .md-cursor i{ position: absolute; bottom: 10px; left: 50%; width: 42px; height: 42px; transform: translateX(-50%); border: 2px dashed #f2d474; border-radius: 50%; overflow: hidden; background: rgba(27, 23, 19, 0.7); opacity: 0.75; color: #e5c158; }
+  .md-cursor i[hidden]{ display: none; }
+  .md-cursor i img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .md-cursor i .md-book{ width: 70%; height: 70%; margin: 15%; display: block; }
+  /* citatul din inspector, scris cu cerneală */
+  .md-ink span{ display: inline-block; animation: md-ink 0.5s ease both; animation-delay: calc(var(--i) * 45ms); }
+  @keyframes md-ink{ from{ opacity: 0; transform: translateY(3px); color: #a07a1c; } }
+  @media (max-width: 900px){ .md-scl{ display: none; } }
+  @media (prefers-reduced-motion: reduce){ .md-axis::after{ animation: none; display: none; } .md-ink span{ animation-name: md-ink-fade; } }
+  @keyframes md-ink-fade{ from{ opacity: 0; } }

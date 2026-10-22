@@ -27,26 +27,26 @@ function curve(pts){
 }
 
 const ROUTES = [
-  { id: 'vand', c: '#6fb3f2', w: 2.4, pts: [[50.6, 17.0], [49.4, 13.0], [50.0, 8.6], [47.8, 3.5], [43.5, -1.0], [37.8, -4.2], [36.2, -5.2], [36.6, 2.5], [36.85, 9.6]] },
-  { id: 'vizi', c: '#b98ae6', w: 2.4, pts: [[46.8, 28.2], [44.4, 27.4], [41.9, 26.4], [40.2, 22.6], [42.4, 19.6], [45.2, 14.2], [42.1, 12.7], [43.4, 6.5], [43.6, 1.6], [40.6, -3.4]] },
-  { id: 'ostro', c: '#f0a25c', w: 2.4, pts: [[47.3, 32.5], [46.4, 25.0], [45.6, 19.4], [45.4, 15.6], [44.6, 12.6]] },
-  { id: 'huni', c: '#e0626c', w: 3.2, pts: [[47.4, 46.0], [47.2, 38.0], [46.6, 30.5], [47.0, 20.4]] },
-  { id: 'huni', c: '#e0626c', w: 3.2, pts: [[47.0, 20.2], [44.6, 21.3], [43.2, 22.6], [42.4, 25.4]] },
-  { id: 'huni', c: '#e0626c', w: 3.2, pts: [[47.0, 20.2], [48.3, 13.5], [49.1, 8.3], [48.95, 4.8]] },
-  { id: 'huni', c: '#e0626c', w: 3.2, pts: [[47.0, 20.2], [46.4, 16.2], [45.85, 13.7]] }
+  { id: 'vand', c: '#6fb3f2', w: 2.4, d: 1.3, pts: [[50.6, 17.0], [49.4, 13.0], [50.0, 8.6], [47.8, 3.5], [43.5, -1.0], [37.8, -4.2], [36.2, -5.2], [36.6, 2.5], [36.85, 9.6]] },
+  { id: 'vizi', c: '#b98ae6', w: 2.4, d: 0.6, pts: [[46.8, 28.2], [44.4, 27.4], [41.9, 26.4], [40.2, 22.6], [42.4, 19.6], [45.2, 14.2], [42.1, 12.7], [43.4, 6.5], [43.6, 1.6], [40.6, -3.4]] },
+  { id: 'ostro', c: '#f0a25c', w: 2.4, d: 2.9, pts: [[47.3, 32.5], [46.4, 25.0], [45.6, 19.4], [45.4, 15.6], [44.6, 12.6]] },
+  { id: 'huni', c: '#e0626c', w: 3.2, d: 0, pts: [[47.4, 46.0], [47.2, 38.0], [46.6, 30.5], [47.0, 20.4]] },
+  { id: 'huni', c: '#e0626c', w: 3.2, d: 2.1, pts: [[47.0, 20.2], [44.6, 21.3], [43.2, 22.6], [42.4, 25.4]] },
+  { id: 'huni', c: '#e0626c', w: 3.2, d: 2.1, pts: [[47.0, 20.2], [48.3, 13.5], [49.1, 8.3], [48.95, 4.8]] },
+  { id: 'huni', c: '#e0626c', w: 3.2, d: 2.1, pts: [[47.0, 20.2], [46.4, 16.2], [45.85, 13.7]] }
 ];
-// locurile: [lat, lon, nume, dx, dy, aliniere]
+// locurile: [lat, lon, nume, dx, dy, aliniere, când apare (s)]
 const PLACES = [
-  [41.68, 26.56, 'Adrianopol, 378', -6, 12, 'end'],
-  [41.9, 12.5, 'Roma, 410', -7, 12, 'end'],
-  [36.85, 10.2, 'Cartagina, 439', 7, 4, 'start'],
-  [48.95, 4.4, 'Câmpiile Catalaunice, 451', -7, -7, 'end'],
-  [45.77, 13.37, 'Aquileia, 452', -7, -6, 'end'],
-  [41.01, 28.98, 'Constantinopol', 7, 4, 'start'],
-  [47.0, 20.2, 'curtea lui Attila', 7, -7, 'start']
+  [41.68, 26.56, 'Adrianopol, 378', -6, 12, 'end', 1.1],
+  [41.9, 12.5, 'Roma, 410', -7, 12, 'end', 1.7],
+  [36.85, 10.2, 'Cartagina, 439', 7, 4, 'start', 2.7],
+  [48.95, 4.4, 'Câmpiile Catalaunice, 451', -7, -7, 'end', 3.4],
+  [45.77, 13.37, 'Aquileia, 452', -7, -6, 'end', 3.6],
+  [41.01, 28.98, 'Constantinopol', 7, 4, 'start', 0.2],
+  [47.0, 20.2, 'curtea lui Attila', 7, -7, 'start', 1.4]
 ];
 const NAMES = [
-  ['HUNII', 46.0, 41.0, '#f4a0a6'], ['VIZIGOȚII', 39.2, -1.6, '#d3b4f2'], ['OSTROGOȚII', 48.3, 28.5, '#f6c08f'], ['VANDALII', 38.6, 4.2, '#a9d2f8']
+  ['HUNII', 46.0, 41.0, '#f4a0a6', 0.1], ['VIZIGOȚII', 39.2, -1.6, '#d3b4f2', 1.9], ['OSTROGOȚII', 48.3, 28.5, '#f6c08f', 3.4], ['VANDALII', 38.6, 4.2, '#a9d2f8', 2.6]
 ];
 
 const markers = [...new Set(ROUTES.map(r => r.id))].map(id => {
@@ -56,9 +56,9 @@ const markers = [...new Set(ROUTES.map(r => r.id))].map(id => {
 const svg = '<svg class="hv-map" viewBox="20 300 600 290" role="img" aria-label="Harta marilor migrații, 370–476: drumurile hunilor, vizigoților, ostrogoților și vandalilor, cu locurile marilor bătălii și jafuri.">' +
   '<defs>' + markers + '</defs>' +
   '<use class="hv-base" href="#shared-img-0"/><rect x="20" y="300" width="600" height="290" fill="rgba(14, 13, 11, 0.32)"/>' +
-  ROUTES.map(r => { const d = curve(r.pts); return '<path class="hv-halo" d="' + d + '" stroke-width="' + (r.w + 3) + '"/><path class="hv-route" d="' + d + '" stroke="' + r.c + '" stroke-width="' + r.w + '" marker-end="url(#hv-a-' + r.id + ')"/>'; }).join('') +
-  PLACES.map(p => { const q = proj(p[0], p[1]); return '<circle class="hv-pt" cx="' + f1(q[0]) + '" cy="' + f1(q[1]) + '" r="2.8"/><text class="hv-place" x="' + f1(q[0] + p[3]) + '" y="' + f1(q[1] + p[4]) + '" text-anchor="' + p[5] + '">' + p[2] + '</text>'; }).join('') +
-  NAMES.map(n => { const q = proj(n[1], n[2]); return '<text class="hv-name" x="' + f1(q[0]) + '" y="' + f1(q[1]) + '" fill="' + n[3] + '" text-anchor="middle">' + n[0] + '</text>'; }).join('') +
+  ROUTES.map(r => { const d = curve(r.pts); return '<g style="--d:' + r.d + 's"><path class="hv-halo" pathLength="1" d="' + d + '" stroke-width="' + (r.w + 3) + '"/><path class="hv-route" pathLength="1" d="' + d + '" stroke="' + r.c + '" stroke-width="' + r.w + '" marker-end="url(#hv-a-' + r.id + ')"/></g>'; }).join('') +
+  PLACES.map(p => { const q = proj(p[0], p[1]); return '<g class="hv-at" style="--d:' + p[6] + 's"><circle class="hv-pt" cx="' + f1(q[0]) + '" cy="' + f1(q[1]) + '" r="2.8"/><text class="hv-place" x="' + f1(q[0] + p[3]) + '" y="' + f1(q[1] + p[4]) + '" text-anchor="' + p[5] + '">' + p[2] + '</text></g>'; }).join('') +
+  NAMES.map(n => { const q = proj(n[1], n[2]); return '<text class="hv-name" style="--d:' + n[4] + 's" x="' + f1(q[0]) + '" y="' + f1(q[1]) + '" fill="' + n[3] + '" text-anchor="middle">' + n[0] + '</text>'; }).join('') +
   '</svg>';
 const FIG = '<figure class="fig-map fig-invazii">\n        ' + svg + '\n        <figcaption><b>Marile migrații, 370–476.</b> Hunii (roșu) vin din stepă în Câmpia Panonică, de unde pornesc spre Balcani, spre Galia (451) și spre Italia (452). Vizigoții (mov), împinși dinaintea lor, trec Dunărea în 376, înving la Adrianopol (378), jefuiesc Roma (410) și ajung în Aquitania și Hispania. Ostrogoții (portocaliu) rămân sub huni până după Nedao, apoi trec în Balcani și în Italia. Vandalii, alanii și suebii (albastru) trec Rinul în 406 și ajung până la Cartagina (439). Drumuri simplificate, în aceleași culori ca în joc. Fundalul hărții: Alexrk2, Wikimedia Commons, CC BY-SA 3.0.</figcaption>\n      </figure>';
 const CSS = `  /* harta marilor migrații, desenată în stilul site-ului */
@@ -69,6 +69,13 @@ const CSS = `  /* harta marilor migrații, desenată în stilul site-ului */
   .hv-pt{ fill: #f2d474; stroke: #14120f; stroke-width: 1.2; }
   .hv-place{ font: 600 9.5px 'Source Serif 4', Georgia, serif; fill: #f6eddc; paint-order: stroke; stroke: rgba(14, 13, 11, 0.9); stroke-width: 2.6px; }
   .hv-name{ font: 700 11px 'Cinzel', Georgia, serif; letter-spacing: 0.08em; paint-order: stroke; stroke: rgba(14, 13, 11, 0.9); stroke-width: 3px; }
+  /* se desenează singură când ajungi la ea: drumurile în ordinea istorică, apoi săgețile (html.fx = animațiile site-ului) */
+  .fx .fig-invazii .hv-route, .fx .fig-invazii .hv-halo{ stroke-dasharray: 1 2; stroke-dashoffset: 1.05; }
+  .fx .fig-invazii.hv-on .hv-route, .fx .fig-invazii.hv-on .hv-halo{ animation: hv-draw 1.7s cubic-bezier(.45, 0, .25, 1) var(--d) forwards; }
+  @keyframes hv-draw{ to{ stroke-dashoffset: 0; } }
+  .fx .fig-invazii:not(.hv-end) .hv-route{ marker-end: none; }
+  .fx .fig-invazii .hv-at, .fx .fig-invazii .hv-name{ opacity: 0; transition: opacity 0.6s ease var(--d); }
+  .fx .fig-invazii.hv-on .hv-at, .fx .fig-invazii.hv-on .hv-name{ opacity: 1; }
   /* /hv */
 `;
 
