@@ -1,5 +1,5 @@
 // Animațiile site-ului: titlurile curg cuvânt cu cuvânt când ajungi la ele, epitetele se scriu ca
-// din peniță, prima literă a capitolului se pictează, harta marilor migrații se desenează singură, iar la
+// din peniță (și citatele mari), prima literă a capitolului se pictează, harta marilor migrații se desenează singură, iar la
 // schimbarea paginii trece o cortină cu numele paginii noi. Imaginea din deschidere se mișcă mai încet decât
 // pagina, dosarele de mituri se revarsă din teanc, punctele cronologiei răsar pe rând, obiectele din muzeu se
 // înclină după mouse, iar pe Masa istoricului sursele sunt împărțite pe masă. Totul rulează o singură dată; cine a cerut mai puțină mișcare vede doar estompări.
@@ -95,10 +95,10 @@ const JS = `<script>
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('fw-in'); io.unobserve(e.target); } });
   }, { rootMargin: '0px 0px -12% 0px' });
-  Array.prototype.slice.call(document.querySelectorAll('h1.title, .sec-title, .sub-title, .md-title, .dc-epithet')).forEach(function(el){
+  Array.prototype.slice.call(document.querySelectorAll('h1.title, .sec-title, .sub-title, .md-title, .dc-epithet, .pq blockquote p')).forEach(function(el){
     n = 0; split(el);
     el.classList.add('fw-host');
-    if (el.classList.contains('dc-epithet')) el.classList.add('ink');
+    if (el.classList.contains('dc-epithet') || el.closest('.pq')) el.classList.add('ink');
     io.observe(el);
   });
 
