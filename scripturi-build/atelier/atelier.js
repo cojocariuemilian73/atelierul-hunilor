@@ -111,7 +111,11 @@
 
   function inspectEmpty(){
     insp.innerHTML = '<div class="md-insp-empty"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="26" cy="26" r="16" fill="none" stroke="currentColor" stroke-width="3"/><path d="M38 38l16 16" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>' +
-      '<p>Alege o sursă de pe masă ca s-o privești de aproape. Pe imagini, lupa îți arată detaliile: hainele, armele, stilul.</p></div>';
+      '<p class="md-how-h">Cum se joacă</p><ol class="md-how">' +
+      '<li><b>Alege o sursă</b> de pe masă. Privește-o de aproape: lupa îți arată hainele, armele, stilul.</li>' +
+      '<li><b>Așaz-o pe axă</b>, în anul în care a fost făcută: trage-o cu mouse-ul sau atinge axa. Cu cât ești mai aproape, cu atât mai multe puncte (până la 3).</li>' +
+      '<li><b>Spune ce fel de sursă e</b>: obiect din epocă, text antic, copie târzie sau imagine târzie (încă un punct).</li></ol>' +
+      '<p class="md-how-f">Nu știi? Fiecare sursă are un indiciu, care costă un punct.</p></div>';
   }
 
   function inspect(it){
@@ -214,6 +218,7 @@
     var g = gained(it, pl); score += g;
     renderPins(id);
     updateScore(g);
+    if (g >= 3 || g <= 1) { tl.classList.remove('md-ok', 'md-bad'); void tl.offsetWidth; tl.classList.add(g >= 3 ? 'md-ok' : 'md-bad'); }
     select(id);
     var nb = $('md-next'); if (nb) nb.focus({ preventScroll: true });
     if (items.every(function(x){ return placed[x.id] && placed[x.id].cls; })) setTimeout(finale, 900);
@@ -373,7 +378,7 @@
       '<ul><li>Obiectele (monede, oase, ziduri) au existat în vremea hunilor, dar nu spun singure cine le-a folosit.</li>' +
       '<li>Nu se cunoaște niciun portret al lui Attila făcut în timpul vieții lui.</li>' +
       '<li>O imagine veche nu e, prin asta, o sursă: întreabă „când și pentru cine a fost făcută?”.</li></ul>' +
-      '<div class="md-end-btns"><button class="md-btn" type="button" id="md-ans" aria-pressed="false">Vezi răspunsurile pe axă</button><button class="md-btn ghost" type="button" id="md-share">Copiază rezultatul</button><button class="md-btn ghost" type="button" id="md-again">Așază din nou</button></div><p class="md-shared" id="md-shared" aria-live="polite"></p></div>';
+      '<div class="md-end-btns"><button class="md-btn" type="button" id="md-ans" aria-pressed="false">Vezi răspunsurile pe axă</button><button class="md-btn" type="button" id="md-cert">Certificatul tău (imagine)</button><button class="md-btn ghost" type="button" id="md-share">Copiază rezultatul</button><button class="md-btn ghost" type="button" id="md-again">Așază din nou</button></div><p class="md-shared" id="md-shared" aria-live="polite"></p></div>';
     $('md-hint').textContent = 'Toate sursele sunt pe axă. Atinge o miniatură ca s-o revezi.';
     $('md-again').addEventListener('click', reset);
     $('md-ans').addEventListener('click', function(){ var on = tl.classList.toggle('answers'); this.setAttribute('aria-pressed', on ? 'true' : 'false'); this.textContent = on ? 'Ascunde răspunsurile' : 'Vezi răspunsurile pe axă'; });
@@ -384,6 +389,8 @@
     });
     var end = insp.querySelector('.md-end'); end.setAttribute('tabindex', '-1'); end.focus({ preventScroll: true });
     countUp(insp.querySelector('.md-big'), score);
+    try { localStorage.setItem('ah-masa', rank); document.dispatchEvent(new CustomEvent('ah-progres')); } catch (e) {}
+    $('md-cert').addEventListener('click', function(){ certificate(rank, score, max, this); });
   }
 
   // un număr dintr-un text urcă de la 0 la valoarea lui (fără mișcare pe ecran, doar cifre)
@@ -397,6 +404,50 @@
       if (k < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
+  }
+  // certificatul: desenat într-un canvas, ca imaginea să poată fi salvată sau trimisă
+  function certificate(rank, sc, max, btn){
+    var box = $('md-cert-box');
+    if (!box) {
+      box = document.createElement('div'); box.id = 'md-cert-box'; box.className = 'md-cert-box';
+      box.innerHTML = '<label for="md-cert-name">Numele de pe certificat (nu pleacă nicăieri, rămâne în imagine)</label><div class="md-cert-row"><input id="md-cert-name" type="text" maxlength="40" autocomplete="name" placeholder="de exemplu, Ana Popescu"><button class="md-btn" type="button" id="md-cert-go">Fă imaginea</button></div><div id="md-cert-out"></div>';
+      btn.parentNode.insertAdjacentElement('afterend', box);
+      $('md-cert-go').addEventListener('click', function(){ draw($('md-cert-name').value.trim()); });
+      $('md-cert-name').addEventListener('keydown', function(e){ if (e.key === 'Enter') draw(this.value.trim()); });
+    }
+    $('md-cert-name').focus();
+    function draw(name){
+      var W = 1400, H = 990, c = document.createElement('canvas'); c.width = W; c.height = H;
+      var g = c.getContext('2d');
+      var bg = g.createLinearGradient(0, 0, W, H); bg.addColorStop(0, '#f1e4c6'); bg.addColorStop(1, '#dcc59a');
+      g.fillStyle = bg; g.fillRect(0, 0, W, H);
+      g.strokeStyle = '#8a6a1c'; g.lineWidth = 6; g.strokeRect(36, 36, W - 72, H - 72);
+      g.lineWidth = 1.5; g.strokeRect(54, 54, W - 108, H - 108);
+      g.textAlign = 'center'; g.fillStyle = '#5a4214';
+      g.font = '600 30px Cinzel, Georgia, serif'; g.fillText('ATELIERUL HUNILOR · MASA ISTORICULUI', W / 2, 150);
+      g.fillStyle = '#2a1d0e'; g.font = '700 84px Cinzel, Georgia, serif'; g.fillText('Certificat de istoric', W / 2, 280);
+      g.font = 'italic 34px "Cormorant Garamond", Georgia, serif'; g.fillStyle = '#5a4214';
+      g.fillText(name ? 'se acordă lui' : 'se acordă celui care a așezat', W / 2, 370);
+      g.fillStyle = '#2a1d0e'; g.font = (name ? '600 66px' : 'italic 44px') + ' "Cormorant Garamond", Georgia, serif';
+      g.fillText(name || 'toate cele ' + items.length + ' surse pe axa timpului', W / 2, 460);
+      g.strokeStyle = '#8a6a1c'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(W / 2 - 300, 492); g.lineTo(W / 2 + 300, 492); g.stroke();
+      g.fillStyle = '#a0281f'; g.font = '700 60px Cinzel, Georgia, serif'; g.fillText(rank, W / 2, 600);
+      g.fillStyle = '#2a1d0e'; g.font = '600 40px "Source Serif 4", Georgia, serif'; g.fillText(sc + ' din ' + max + ' puncte', W / 2, 670);
+      g.font = '28px "Source Serif 4", Georgia, serif'; g.fillStyle = '#5a4214';
+      g.fillText('A deosebit obiectele din epocă și textele antice', W / 2, 740);
+      g.fillText('de copiile târzii și de imaginile făcute la secole după Attila.', W / 2, 780);
+      // sigiliul de ceară
+      var sx = W - 200, sy = H - 165, sg = g.createRadialGradient(sx - 18, sy - 22, 6, sx, sy, 92);
+      sg.addColorStop(0, '#e2525c'); sg.addColorStop(0.6, '#a5232d'); sg.addColorStop(1, '#6b1018');
+      g.fillStyle = sg; g.beginPath(); for (var k = 0; k <= 40; k++) { var a = k / 40 * Math.PI * 2, r = 86 + (k % 2 ? 6 : 0); g.lineTo(sx + Math.cos(a) * r, sy + Math.sin(a) * r); } g.fill();
+      g.strokeStyle = 'rgba(255, 220, 200, 0.5)'; g.lineWidth = 2; g.beginPath(); g.arc(sx, sy, 60, 0, 7); g.stroke();
+      g.fillStyle = '#ffe6dc'; g.font = '700 30px Cinzel, Georgia, serif'; g.fillText('AH', sx, sy + 11);
+      g.textAlign = 'left'; g.fillStyle = '#5a4214'; g.font = '24px "Source Serif 4", Georgia, serif';
+      g.fillText(new Date().toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' }), 120, H - 150);
+      g.fillText(location.href.split('#')[0].replace(/^https?:\/\//, ''), 120, H - 112);
+      var url = c.toDataURL('image/png');
+      $('md-cert-out').innerHTML = '<img src="' + url + '" alt="Certificatul tău: ' + esc(rank) + ', ' + sc + ' din ' + max + ' puncte"><a class="md-btn" download="certificat-masa-istoricului.png" href="' + url + '">Salvează imaginea</a>';
+    }
   }
   // scara rangurilor, cu poziția ta
   function ladder(max, rank){

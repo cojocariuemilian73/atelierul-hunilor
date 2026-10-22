@@ -1,5 +1,5 @@
 // Animațiile site-ului: titlurile curg cuvânt cu cuvânt când ajungi la ele, epitetele se scriu ca
-// din peniță, prima literă a capitolului se pictează, harta marilor migrații se desenează singură, iar la
+// din peniță (și citatele mari), prima literă a capitolului se pictează, harta marilor migrații se desenează singură, iar la
 // schimbarea paginii trece o cortină cu numele paginii noi. Imaginea din deschidere se mișcă mai încet decât
 // pagina, dosarele de mituri se revarsă din teanc, punctele cronologiei răsar pe rând, obiectele din muzeu se
 // înclină după mouse, iar pe Masa istoricului sursele sunt împărțite pe masă. Totul rulează o singură dată; cine a cerut mai puțină mișcare vede doar estompări.
@@ -43,6 +43,8 @@ const CSS = `  /* fx: animațiile site-ului */
   .fx-move .m-lab .viewer-object.tilt{ transition-duration: 0.12s; }
   .fx-move .m-lab .viewer-object::after{ content: ''; position: absolute; inset: 0; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 30%), rgba(255, 240, 205, 0.2), transparent 55%); opacity: 0; transition: opacity 0.4s; pointer-events: none; }
   .fx-move .m-lab .viewer-object.tilt::after{ opacity: 1; }
+  .fx-move .duel-card .dc-img img{ transition: transform 0.5s cubic-bezier(.2, .7, .2, 1), filter 0.3s; }
+  .fx-move .duel-card .dc-img img.tilt{ transition-duration: 0.12s; filter: brightness(1.08) saturate(1.05); }
   /* Masa istoricului: sursele sunt împărțite pe masă, iar cea aleasă se ridică */
   .fx-move .md-deal .md-card{ animation: md-deal 0.6s cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--k) * 55ms); }
   @keyframes md-deal{ from{ opacity: 0; translate: 40px -70px; rotate: 9deg; } }
@@ -95,10 +97,10 @@ const JS = `<script>
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('fw-in'); io.unobserve(e.target); } });
   }, { rootMargin: '0px 0px -12% 0px' });
-  Array.prototype.slice.call(document.querySelectorAll('h1.title, .sec-title, .sub-title, .md-title, .dc-epithet')).forEach(function(el){
+  Array.prototype.slice.call(document.querySelectorAll('h1.title, .sec-title, .sub-title, .md-title, .dc-epithet, .pq blockquote p')).forEach(function(el){
     n = 0; split(el);
     el.classList.add('fw-host');
-    if (el.classList.contains('dc-epithet')) el.classList.add('ink');
+    if (el.classList.contains('dc-epithet') || el.closest('.pq')) el.classList.add('ink');
     io.observe(el);
   });
 
@@ -163,14 +165,14 @@ const JS = `<script>
       setTimeout(function(){ hm.classList.remove('hx-up'); }, 600 + k * 45);
     }, { threshold: 0.6 });
 
-    // muzeul: înclinarea după mouse (doar cu mouse-ul, nu la atingere)
+    // muzeul și fișele lui Attila și Aetius: înclinarea după mouse (doar cu mouse-ul, nu la atingere)
     if (window.matchMedia('(hover: hover)').matches) {
       document.addEventListener('pointermove', function(e){
         if (e.pointerType !== 'mouse') return;
-        var st = e.target.closest && e.target.closest('.m-lab .viewer-stage');
-        each('.m-lab .viewer-object.tilt', function(o){ if (!st || o.parentNode !== st) { o.classList.remove('tilt'); o.style.transform = ''; } });
+        var st = e.target.closest && e.target.closest('.m-lab .viewer-stage, .duel-card .dc-img');
+        each('.tilt', function(o){ if (!st || o.parentNode !== st) { o.classList.remove('tilt'); o.style.transform = ''; } });
         if (!st) return;
-        var o = st.querySelector('.viewer-object'), r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        var o = st.querySelector('.viewer-object') || st.querySelector('img'), r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
         o.classList.add('tilt');
         o.style.transform = 'perspective(900px) rotateX(' + ((0.5 - y) * 7).toFixed(2) + 'deg) rotateY(' + ((x - 0.5) * 9).toFixed(2) + 'deg)';
         o.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); o.style.setProperty('--gy', (y * 100).toFixed(1) + '%');

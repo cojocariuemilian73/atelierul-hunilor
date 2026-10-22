@@ -302,9 +302,9 @@
           '</div>' +
           '<label class="mig-flowl">Drumuri pentru <select id="mig-flowg">' + GROUPS.map(function(g, i){ return '<option value="' + i + '"' + (i === 2 ? ' selected' : '') + '>' + g.name.split(',')[0] + '</option>'; }).join('') + '</select></label>' +
           '<p class="mig-pop-h">Calculatorul tău</p><button type="button" class="mig-lite" id="mig-lite" aria-pressed="' + LITE + '">' + (LITE ? 'Mod ușor: ' + N.toLocaleString('ro-RO') + ' de agenți. Treci la modul complet' : 'Mod ușor: ' + Math.round(FULL_N * 0.4).toLocaleString('ro-RO') + ' de agenți, dacă merge greu') + '</button>' +
-          '<p class="mig-pop-note">Cum funcționează modelul: <b>Despre proiect</b>, la „Fișă tehnică”.</p>' +
+          '<p class="mig-pop-note">Cum funcționează modelul: ' + (document.getElementById('about-trigger') ? '<button type="button" class="mig-link mig-culise" data-about="culise">Culisele proiectului</button>' : '<b>Despre proiect</b>, la „Culisele proiectului”') + '.</p>' +
         '</div>' +
-        '<ul class="mig-legend" id="mig-legend" aria-label="Popoarele">' + GROUPS.map(function(g){ return '<li title="' + g.name + '"><i style="background:' + g.color + '"></i>' + g.name.split(',')[0] + '<small id="mig-where-' + g.id + '" hidden></small></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
+        '<ul class="mig-legend" id="mig-legend" aria-label="Popoarele: apasă pe unul ca să-l vezi doar pe el">' + GROUPS.map(function(g, k){ return '<li><button type="button" class="mig-solo" data-g="' + k + '" aria-pressed="false" title="Vezi doar: ' + g.name + '"><i style="background:' + g.color + '"></i>' + g.name.split(',')[0] + '</button><small id="mig-where-' + g.id + '" hidden></small></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
         '<div class="mig-tip" id="mig-tip" hidden></div><div class="mig-fiche" id="mig-fiche" role="dialog" aria-label="Fișa poporului" hidden></div>' +
         '<div class="mig-over" id="mig-over"></div>' +
         '<div class="mig-replay" id="mig-replay" hidden><button class="mig-ib" id="mig-rp-play" type="button" aria-label="Pornește reluarea" title="Pornește reluarea"></button>' +
@@ -618,9 +618,11 @@
   var dctx = dotCv.getContext('2d'), dotImg = dctx.createImageData(DW, DH), dot32 = new Uint32Array(dotImg.data.buffer);
   var GRGB = GROUPS.map(function(g){ var h = parseInt(g.color.slice(1), 16); return [h >> 16 & 255, h >> 8 & 255, h & 255]; });
   var G32 = GRGB.map(function(c){ return (0xF0 << 24 | c[2] << 16 | c[1] << 8 | c[0]) >>> 0; });
+  var solo = -1;
   function rasterAgents(stp){
     dot32.fill(0); gd.fill(0);
     for (var gi = 0; gi < GROUPS.length; gi++) {
+      if (solo >= 0 && gi !== solo) continue;
       var r = ranges[gi], col = G32[gi], rgb = GRGB[gi], cr = rgb[0] * 0.28, cg = rgb[1] * 0.28, cb = rgb[2] * 0.28;
       for (var i = r.start; i < r.end; i += stp) {
         var x = ((ax[i] - VB.x) * SC * 0.5) | 0, y = ((ay[i] - VB.y) * SC * 0.5) | 0;
@@ -1073,7 +1075,7 @@
           if (d.opts[k].real) { x.classList.add('attila'); x.insertAdjacentHTML('beforeend', '<em class="imp-tag">Alegerea din istorie</em>'); }
         });
         var before = stab; apply(d, o); var ds = Math.round(stab - before);
-        sfx('pick'); floatStab(ds); mapEffect(d, o);
+        sfx('pick'); floatStab(ds); mapEffect(d, o); flash(ds > 0 ? true : ds < 0 ? false : null);
         var out = document.createElement('div'); out.setAttribute('aria-live', 'polite');
         // întâi, pe scurt: ce ai ales tu și ce s-a întâmplat de fapt; apoi detaliile și izvorul
         out.innerHTML = '<div class="jg-reveal" style="--c:#c9b48a"><div class="mig-vs"><p><b>Tu:</b> ' + o.t.charAt(0).toLowerCase() + o.t.slice(1) + '.</p><p><b>' + (o.real ? 'Ca în istorie:' : 'În realitate:') + '</b> ' + d.real2 + '</p></div>' +
@@ -1108,10 +1110,23 @@
     var hs = histAtt();
     return '<div class="mig-attcmp">' + METERS.map(function(m){ return '<span><b>' + ico(m.k) + m.label + '</b><i style="--c:' + m.c + '"><s style="width:' + att[m.k] + '%"></s></i>' + att[m.k] + '<small>Attila: ' + hs[m.k] + '</small></span>'; }).join('') + '</div>';
   }
+  // săgețile de sub o opțiune: ▲▲ mult, ▲ puțin, ▼ scade (aurul pentru daruri se scade după, la fiecare rundă)
+  function fxHint(fx){
+    var ks = METERS.filter(function(m){ return fx && fx[m.k]; });
+    if (!ks.length) return '';
+    return '<span class="mig-fxh">' + ks.map(function(m){ var v = fx[m.k], a = v >= 10 ? '▲▲' : v > 0 ? '▲' : v <= -8 ? '▼▼' : '▼';
+      return '<em class="' + (v > 0 ? 'up' : 'down') + '" style="--c:' + m.c + '" title="' + m.label + (v > 0 ? ' crește' : ' scade') + '">' + ico(m.k) + m.label + ' <b>' + a + '</b></em>'; }).join('') + '</span>';
+  }
+  // o lumină scurtă pe marginea hărții: verde când alegerea ajută, roșie când costă
+  function flash(good){
+    var v = root.querySelector('.mig-view'); if (!v || good === null) return;
+    v.classList.remove('fx-good', 'fx-bad'); void v.offsetWidth; v.classList.add(good ? 'fx-good' : 'fx-bad');
+  }
   function roundDialog(d){
     var n = ROUNDS.indexOf(d) + 1;
     dialog(picHtml(d.pic) + '<h3 id="mig-dt"><span class="mig-yr">' + d.yl + '</span>' + d.title + '</h3><p class="mig-who">Ești Attila · runda ' + n + ' din ' + ROUNDS.length + ' · ' + d.place + '</p><p>' + d.text + '</p>' +
-      '<div class="jg-choices" id="mig-ch">' + d.opts.map(function(o, i){ return '<button class="jg-choice" type="button" data-i="' + i + '"><i>' + 'ABC'[i] + '</i><span>' + o.t + '</span></button>'; }).join('') + '</div><div id="mig-out" aria-live="polite"></div>', 'mig-dt', d.at || true);
+      '<p class="mig-fxnote">Săgețile arată încotro împinge fiecare alegere. Cifrele le afli după.</p>' +
+      '<div class="jg-choices" id="mig-ch">' + d.opts.map(function(o, i){ return '<button class="jg-choice" type="button" data-i="' + i + '"><i>' + 'ABC'[i] + '</i><span>' + o.t + fxHint(o.fx) + '</span></button>'; }).join('') + '</div><div id="mig-out" aria-live="polite"></div>', 'mig-dt', d.at || true);
     Array.prototype.forEach.call(over.querySelectorAll('#mig-ch .jg-choice'), function(b){
       b.addEventListener('click', function(){
         var i = +b.getAttribute('data-i'), o = d.opts[i];
@@ -1120,6 +1135,7 @@
           if (d.opts[k].real) { x.classList.add('attila'); x.insertAdjacentHTML('beforeend', '<em class="imp-tag">Alegerea lui Attila</em>'); }
         });
         var r = apply(d, o), last = n === ROUNDS.length; sfx('pick'); floatStab(o.sim && o.sim.stab);
+        var sum = METERS.reduce(function(a, m){ return a + (r.delta[m.k] || 0); }, 0); flash(revolted ? false : sum > 0 ? true : sum < 0 ? false : null);
         document.getElementById('mig-out').innerHTML = '<div class="jg-reveal" style="--c:#c9b48a"><h3>' + (o.real ? 'Ai ales ce a ales și Attila' : 'Ce s-a întâmplat în realitate') + '</h3>' + meterChips(r.delta, o.sim && o.sim.stab) +
           (r.poor ? '<p class="imp-warn">Aurul nu mai ajunge pentru darurile căpeteniilor: loialitate −10.</p>' : '') +
           (revolted ? '<p class="imp-warn"><b>Neamurile supuse se răscoală.</b> Domnia ta se încheie aici; hunii se întorc în Câmpia Panonică.</p>' : att.loial < 30 ? '<p class="imp-warn"><b>Atenție:</b> loialitatea neamurilor e ' + att.loial + '. La 10, se răscoală și domnia ta se încheie.</p>' : '') +
@@ -1275,6 +1291,7 @@
 
   function finish(){
     pause(); if (!finished) rec(); finished = true; t = T1; showCompare = true; updateHud(); draw(); setPlayLabel();
+    if (!auto) try { localStorage.setItem('ah-joc', '1'); document.dispatchEvent(new CustomEvent('ah-progres')); } catch (e) {}
     // drumul fiecărui popor, an de an (centrul grupului), pentru reluare
     cpath = GROUPS.map(function(g, gi){ var r = ranges[gi]; return snaps.map(function(a){ var sx = 0, sy = 0; for (var i = r.start; i < r.end; i++) { sx += a[i]; sy += a[N + i]; } return W2C(sx / g.n, sy / g.n); }); });
     var ttl = titles(allRealOf(), verdict()), shots = worldShots();
@@ -1303,7 +1320,7 @@
       '<ul class="imp-lessons">' + LESSONS.map(function(l){ return '<li>' + l + '</li>'; }).join('') + '</ul>' +
       '<div class="mig-end-btns"><button class="jg-btn" id="mig-card" type="button">Cronica ta (imagine)</button><button class="jg-btn ghost" id="mig-hide" type="button">Revezi totul pe hartă</button><button class="jg-btn ghost" id="mig-again" type="button">' + ICON.reset + 'Joacă din nou</button><button class="jg-btn ghost" id="mig-hist" type="button">Arată istoria reală</button></div></div>';
     document.getElementById('mig-again').addEventListener('click', function(){ auto = false; restart(); intro(); });
-    document.getElementById('mig-hist').addEventListener('click', function(){ auto = true; restart(); play(); });
+    document.getElementById('mig-hist').addEventListener('click', function(){ auto = true; restart(); setSpeed(4); play(); });
     document.getElementById('mig-hide').addEventListener('click', function(){
       var d = over.querySelector('.mig-end'); var hid = d.classList.toggle('min'); over.className = 'mig-over show ' + (hid ? 'dock' : 'big'); this.textContent = hid ? 'Arată rezultatul' : 'Revezi totul pe hartă';
       // pe hartă: reluarea pornește de la 370; la întoarcere, harta rămâne pe 476
@@ -1413,8 +1430,12 @@
   function playing(on){ document.documentElement.classList.toggle('mig-playing', on); }
   function restart(){ replayShow(false); if (fEl) fEl.hidden = true; news('370', 'Stepa de la nord de Marea Neagră: hunii trec Volga.', ''); over.className = 'mig-over'; over.innerHTML = ''; showCompare = false; pulses = []; document.getElementById('mig-play').disabled = !ready; reset(); resetTimeline(); setPlayLabel(); }
 
-  // pornirea: Actul I începe cu cartea lui de titlu; „Arată istoria reală” merge direct
-  function start(a){ auto = a; restart(); playing(true); if (a) play(); else actCard('I', '370', 'Roma în fața valului', 'Ești împăratul Valens · hunii împing goții spre Dunăre', 'valens', play); }
+  // pornirea: Actul I începe cu cartea lui de titlu; „Privește ca film” merge direct, la 4×
+  function setSpeed(v){
+    speed = v; var b = document.getElementById('mig-spd');
+    b.textContent = speed + '×'; b.classList.toggle('on', speed > 1); b.setAttribute('aria-label', 'Viteza: ' + speed + '×. Apasă ca s-o schimbi');
+  }
+  function start(a){ auto = a; restart(); playing(true); setSpeed(a ? 4 : 1); if (a) play(); else actCard('I', '370', 'Roma în fața valului', 'Ești împăratul Valens · hunii împing goții spre Dunăre', 'valens', play); }
   function intro(){
     var fsb = document.getElementById('mig-fs'), mob = window.matchMedia('(max-width: 700px)').matches && fsb && !fsb.hidden;
     over.className = 'mig-over show';
@@ -1426,7 +1447,7 @@
       '<p class="mig-note mig-keys">Tastatura: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> pentru alegeri, <kbd>Enter</kbd> ca să continui, <kbd>Spațiu</kbd> pentru pauză.</p>' +
       (mob ? '<p class="mig-note">Pe telefon, harta e mică: joacă pe ecran complet, cu telefonul întors.</p>' : '') +
       '<div class="mig-end-btns mig-go-row">' + (mob ? '<button class="jg-btn" id="mig-go-fs" type="button">' + ICON.play + 'Pornește pe ecran complet</button><button class="mig-link" id="mig-go" type="button">sau joacă fără ecran complet</button>'
-        : '<button class="jg-btn" id="mig-go" type="button">' + ICON.play + 'Pornește jocul</button>') + '<button class="mig-link" id="mig-auto" type="button">Arată istoria reală</button></div>' +
+        : '<button class="jg-btn" id="mig-go" type="button">' + ICON.play + 'Pornește jocul</button>') + '<button class="jg-btn ghost mig-film" id="mig-auto" type="button">' + ICON.play + 'Privește ca film<small>istoria reală, singură, de 4 ori mai repede</small></button></div>' +
       '<p class="mig-prep" id="mig-prep" aria-live="polite"></p></div>';
     prepUi();
     document.getElementById('mig-go').addEventListener('click', function(){ start(false); });
@@ -1461,8 +1482,16 @@
   document.getElementById('mig-rp-play').addEventListener('click', function(){ if (replayRaf) replayPlay(false); else { if (replayY === null) replayGo(T0); replayPlay(true); } });
   document.getElementById('mig-reset').addEventListener('click', function(){ pause(); auto = false; restart(); intro(); });
   document.getElementById('mig-spd').addEventListener('click', function(){
-    speed = speed === 1 ? 2 : speed === 2 ? 4 : 1;
-    this.textContent = speed + '×'; this.classList.toggle('on', speed > 1); this.setAttribute('aria-label', 'Viteza: ' + speed + '×. Apasă ca s-o schimbi');
+    setSpeed(speed === 1 ? 2 : speed === 2 ? 4 : 1);
+  });
+  // legenda: un popor singur pe hartă; încă un clic le arată din nou pe toate
+  document.getElementById('mig-legend').addEventListener('click', function(e){
+    var b = e.target.closest('.mig-solo'); if (!b) return;
+    var k = +b.getAttribute('data-g');
+    solo = solo === k ? -1 : k;
+    Array.prototype.forEach.call(this.querySelectorAll('.mig-solo'), function(x){ var on = +x.getAttribute('data-g') === solo; x.setAttribute('aria-pressed', on ? 'true' : 'false'); x.classList.toggle('off', solo >= 0 && !on); });
+    this.classList.toggle('solo', solo >= 0);
+    if (!running) draw();
   });
   document.getElementById('mig-snd').addEventListener('click', function(){ setSound(!AU.on); if (AU.on && running) auAmbient(true); });
   document.getElementById('mig-rot-x').addEventListener('click', function(){ document.getElementById('mig-rotate').classList.add('off'); });
