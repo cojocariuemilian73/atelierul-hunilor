@@ -6,7 +6,7 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
 
 ## Ce deschizi
 
-**`index.html`** (identic cu `atelierul-hunilor.html`) — site-ul complet, într-un singur fișier, cu trei pagini:
+**`atelierul-hunilor.html`** — site-ul complet, într-un singur fișier (livrabilul pentru concurs, se deschide direct, fără internet), cu trei pagini. **`index.html`** e aceeași pagină pentru web, cu imaginile în `media/`, ca să se încarce repede pe GitHub Pages:
 
 1. **Acasă / Articol** — articolul cu 23 de note și bibliografie, cronologia pe epoci, graficul „Aurul hunilor”, atlasul migrației, muzeul virtual, miturile verificate la sfârșitul capitolelor și glosarul.
 2. **Attila și Marea Migrație** — un singur joc, în trei acte, pe harta reală (370–476): simulare cu agenți (Valens, Stilicho, Honorius), cele 8 runde ale lui Attila (435–452) cu aur, renume, loialitate, cavalerie și moștenire, apoi Ardaric la Nedao și Leon I la Capul Bon; un citat din izvor la fiecare decizie; la final, titlul jucătorului, reluarea pe hartă (drumul tău și drumul real, an de an) și „Cronica ta”, o imagine de salvat; tastele 1, 2, 3 pentru alegeri; fișe ale popoarelor (clic pe hartă), cronologia de jos se poate reciti, cărți de titlu între acte, sunet generat în browser (cu buton de oprire), finalul cu lumea ta și lumea reală alături; mod ușor pentru calculatoare lente. Adresa veche `#mod-game` duce tot aici.
@@ -16,7 +16,8 @@ Se deschide direct în browser (dublu-clic) sau la adresa de mai sus.
 
 ## Structura folderului
 
-- `index.html`, `atelierul-hunilor.html` — site-ul (aceeași pagină, două nume).
+- `atelierul-hunilor.html` — site-ul într-un singur fișier (cu imaginile încorporate).
+- `index.html` + `media/` — aceeași pagină pentru web, făcută de `scripturi-build/build-web.js`; deschisă de pe disc, trimite singură la `atelierul-hunilor.html`.
 - `qr-joc.html` — pagina cu codul QR care deschide jocul pe telefon (`python scripturi-build/make-qr.py`, are nevoie de `pip install segno`).
 - `og.jpg` — imaginea care apare când trimiți linkul pe WhatsApp sau Facebook.
 - `module-individuale/` — câteva părți ale site-ului ca fișiere separate: articolul, atlasul, muzeul, jocul și simularea. Sunt păstrate pentru prezentare; versiunea de referință e `index.html`.
@@ -41,11 +42,14 @@ Fiecare parte interactivă are sursele într-un folder separat. După o modifica
 | Corecturile de design (bara de jos, fonturi, chenare) | în script | `node scripturi-build/patch-recenzie-design.js` |
 | Designul articolului (titlul ca o copertă, ornamentele dintre capitole, citatele mari, Attila și Aetius față în față) | în script | `node scripturi-build/patch-design-pagina.js` |
 | Legendele scurte (sursa la „ⓘ”), „Despre proiect” pe file, bara de capitole pe telefon | în script | `node scripturi-build/patch-recenzie-3.js` |
-| Animațiile (titluri, prima literă, harta care se desenează, cortina dintre pagini, paralaxa din deschidere, dosarele, cronologia, muzeul, cărțile de pe Masă) | în script | `node scripturi-build/patch-animatii.js` (ultimul) |
+| Culorile (auriu pentru structură, roșu doar pentru huni), „Pe scurt”, bifele la capitole și jocuri, Atlasul cu un singur chenar | în script | `node scripturi-build/patch-recenzie-4.js` |
+| Animațiile (titluri, prima literă, harta care se desenează, cortina dintre pagini, paralaxa din deschidere, dosarele, cronologia, muzeul, cărțile de pe Masă) | în script | `node scripturi-build/patch-animatii.js` (după celelalte; apoi `build-web.js`) |
 
 Toate scripturile se pot rula de mai multe ori: înlocuiesc partea lor, fără s-o dubleze.
 
-Textul articolului (capitole, note, bibliografie) se modifică direct în `index.html`, apoi se copiază peste `atelierul-hunilor.html`.
+Textul articolului (capitole, note, bibliografie) se modifică direct în `atelierul-hunilor.html`.
+
+**La final, de fiecare dată:** `node scripturi-build/build-web.js` refăce `index.html` din `atelierul-hunilor.html` și pune imaginile în `media/`. Nu modifica `index.html` de mână: se suprascrie.
 
 **Atenție:** scripturile vechi de asamblare (`assemble.js`, `build-standalone.js`, `restore-build.js`, `rebuild-*.js`) țin de prima versiune a site-ului, construită din folderul `build/`. Ele nu mai trebuie rulate, pentru că ar scrie peste pagini versiuni mai vechi.
 

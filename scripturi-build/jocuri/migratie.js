@@ -1291,6 +1291,7 @@
 
   function finish(){
     pause(); if (!finished) rec(); finished = true; t = T1; showCompare = true; updateHud(); draw(); setPlayLabel();
+    if (!auto) try { localStorage.setItem('ah-joc', '1'); document.dispatchEvent(new CustomEvent('ah-progres')); } catch (e) {}
     // drumul fiecărui popor, an de an (centrul grupului), pentru reluare
     cpath = GROUPS.map(function(g, gi){ var r = ranges[gi]; return snaps.map(function(a){ var sx = 0, sy = 0; for (var i = r.start; i < r.end; i++) { sx += a[i]; sy += a[N + i]; } return W2C(sx / g.n, sy / g.n); }); });
     var ttl = titles(allRealOf(), verdict()), shots = worldShots();

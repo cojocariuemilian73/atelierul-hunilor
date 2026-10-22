@@ -331,3 +331,12 @@
   .md-tl.md-ok::after{ box-shadow: inset 0 0 0 2px rgba(143, 189, 130, 0.8), inset 0 0 40px rgba(143, 189, 130, 0.25); animation: md-glow 1.2s ease-out; }
   .md-tl.md-bad::after{ box-shadow: inset 0 0 0 2px rgba(224, 98, 108, 0.8), inset 0 0 40px rgba(224, 98, 108, 0.25); animation: md-glow 1.2s ease-out; }
   @keyframes md-glow{ 0%{ opacity: 0; } 15%{ opacity: 1; } 100%{ opacity: 0; } }
+
+  /* certificatul */
+  .md-cert-box{ margin: 12px 0 0; padding: 12px 14px; border: 1px solid rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.05); }
+  .md-cert-box label{ display: block; margin-bottom: 6px; font-size: 0.86rem; color: #e6d7c3; }
+  .md-cert-row{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .md-cert-row input{ flex: 1 1 180px; min-height: 42px; padding: 8px 10px; border: 1px solid rgba(212, 175, 55, 0.5); background: #14110d; color: #f6eddc; font: 1rem 'Source Serif 4', Georgia, serif; }
+  .md-cert-row input:focus-visible{ outline: 2px solid #f2d474; outline-offset: 1px; }
+  #md-cert-out img{ display: block; width: 100%; margin: 12px 0 8px; border: 1px solid rgba(212, 175, 55, 0.5); }
+  #md-cert-out a{ display: inline-flex; text-decoration: none; }

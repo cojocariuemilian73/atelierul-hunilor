@@ -1,6 +1,6 @@
 // Corecturi de design după recenzie: roșul din titluri devine lizibil pe fundalul închis, textul articolului
 // nu mai apare stins la derulare (efectul rămâne doar pe imagini), bara de jos de pe Acasă apare abia la
-// sfârșitul articolului, „Despre proiect” devine un buton discret, etichetele mici nu mai folosesc fontul
+// sfârșitul articolului (acum: bara stă la finalul fiecărei pagini, nefixată), „Despre proiect” devine un buton discret, etichetele mici nu mai folosesc fontul
 // monospace (rămâne doar pentru ani și cifre), iar figurile au același chenar.
 // Folosire: node scripturi-build/patch-recenzie-design.js (se poate rula de mai multe ori)
 const fs = require('fs');
@@ -20,9 +20,10 @@ const CSS = `  /* rd: corecturi de design după recenzie */
   .js-sr .sr-reveal{ opacity: 1 !important; transform: none !important; transition: none !important; }
   .js-sr .fig-map.sr-reveal:not(.sr-in), .js-sr .diagram.sr-reveal:not(.sr-in){ opacity: 0 !important; }
   .js-sr .fig-map.sr-reveal, .js-sr .diagram.sr-reveal{ transition: opacity 0.6s ease !important; }
-  /* pe Acasă, bara de jos apare abia la sfârșitul articolului; până atunci, „sus” stă în colț */
-  html.pager-hide .site-pager{ display: none; }
-  html.pager-hide .to-top{ left: auto; right: 18px; bottom: 18px; }
+  /* bara „Pagina anterioară / următoare” nu mai e fixă: stă la sfârșitul fiecărei pagini; „sus” stă în colț */
+  .site-pager{ position: static; margin-top: 48px; }
+  .to-top{ left: auto !important; right: 18px; bottom: 18px; }
+  @media (max-width: 640px){ .to-top{ right: 12px; bottom: 14px; } }
   /* „Despre proiect”: buton discret, cu contur, ca să nu concureze cu „Joacă” */
   .about-trigger{ background: transparent !important; color: #e5c158 !important; border: 1px solid rgba(229, 193, 88, 0.55) !important; }
   .about-trigger:hover{ background: rgba(229, 193, 88, 0.12) !important; border-color: #e5c158 !important; }
@@ -37,27 +38,6 @@ const CSS = `  /* rd: corecturi de design după recenzie */
   .fig-map figcaption, .gal-item figcaption{ padding: 9px 0 0; margin-top: 0; }
   @media print{ .mx-closed > .mx-item, .mx-closed > .mx-facts{ display: grid !important; } .mx-teaser{ display: none !important; } }
   /* /rd */
-`;
-
-const JS = `<script>
-/* rd: pe Acasă, bara „Pagina următoare” apare abia la sfârșitul articolului; pe Masa istoricului, la sfârșitul paginii */
-(function(){
-  var home = document.getElementById('page-acasa'), masa = document.querySelector('.m-atelier.site-page'), de = document.documentElement, raf = 0;
-  if (!home) return;
-  function upd(){
-    raf = 0;
-    var end = window.innerHeight + window.pageYOffset >= de.scrollHeight - Math.max(900, window.innerHeight * 1.2);
-    var endM = window.innerHeight + window.pageYOffset >= de.scrollHeight - 60;
-    de.classList.toggle('pager-hide', (home.classList.contains('active') && !end) || (!!masa && masa.classList.contains('active') && !endM));
-  }
-  function req(){ if (!raf) raf = requestAnimationFrame(upd); }
-  window.addEventListener('scroll', req, { passive: true });
-  window.addEventListener('resize', req);
-  window.addEventListener('hashchange', req);
-  if ('MutationObserver' in window) [home, masa].forEach(function(p){ if (p) new MutationObserver(req).observe(p, { attributes: true, attributeFilter: ['class'] }); });
-  upd();
-})();
-</script>
 `;
 
 for (const rel of ['index.html', 'atelierul-hunilor.html']) {
@@ -76,12 +56,9 @@ for (const rel of ['index.html', 'atelierul-hunilor.html']) {
   if (st < 0) fail('</style>');
   s = s.slice(0, st) + CSS + s.slice(st);
 
-  // 3. scriptul barei de jos, înainte de </body>
+  // 3. scriptul vechi care ascundea bara de jos: scos (bara nu mai e fixă)
   const j0 = s.indexOf('<script>\n/* rd: pe Acasă');
   if (j0 >= 0) s = s.slice(0, j0) + s.slice(s.indexOf('</script>\n', j0) + '</script>\n'.length);
-  const b = s.lastIndexOf('</body>');
-  if (b < 0) fail('</body>');
-  s = s.slice(0, b) + JS + s.slice(b);
 
   fs.writeFileSync(f, crlf ? s.split('\n').join('\r\n') : s);
   console.log(rel + ': corecturile de design');

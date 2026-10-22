@@ -438,6 +438,12 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   /* la 450, teancul de 2.100 crapă */
   .gs-crack{ fill: none; stroke: #2a1a08; stroke-width: 2.5; stroke-linejoin: round; stroke-dasharray: 1 2; stroke-dashoffset: 1.05; opacity: 0; }
   .gs[data-s="5"] .gs-crack{ opacity: 0.9; stroke-dashoffset: 0; transition: stroke-dashoffset 0.7s cubic-bezier(.5, 0, .2, 1) 0.3s, opacity 0.1s 0.3s; }
+  /* cât mai e de derulat: o bară sub grafic și îndemnul „Derulează ↓”, care dispare la capăt */
+  .gs-prog{ display: none; align-items: center; gap: 10px; margin-top: 8px; font: 600 0.8rem 'Source Serif 4', Georgia, serif; color: var(--ink-dim); }
+  .gs.scrolly .gs-prog{ display: flex; }
+  .gs-prog i{ flex: 1; height: 3px; background: linear-gradient(90deg, #e5c158 calc(var(--gp, 0) * 100%), rgba(230, 215, 195, 0.15) 0); }
+  .gs-prog span{ white-space: nowrap; transition: opacity 0.3s; }
+  .gs.gs-end .gs-prog span{ opacity: 0; }
   /* ---------- /AURUL HUNILOR ---------- */
   /* ---------- MAREA MIGRAȚIE: HARTĂ CU SĂGEȚI ---------- */
   .migr-wrap{ margin: 26px 0 10px; }
@@ -890,6 +896,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
             <text class="gs-coins-lab" x="300" y="300" text-anchor="middle">fiecare monedă = 1.000 de solizi</text>
             <text class="gs-unit" x="300" y="382">o monedă în teanc = 50 de livre de aur (circa 16 kg)</text>
           </svg>
+          <div class="gs-prog" aria-hidden="true"><i></i><span>Derulează ↓</span></div>
         </div>
         <div class="gs-steps">
           <div class="gs-step" data-s="0"><h3>De ce plătea Constantinopolul aur?</h3><p>Un popor fără orașe și fără monede proprii a primit, an de an, sute de kilograme de aur de la Imperiul Roman de Răsărit. Urmărește anii de mai sus ca să vezi cum a crescut prețul păcii.</p></div>
@@ -1799,7 +1806,8 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     if (!scrolly) return;
     top = navH() + Math.max(8, (room - ph) / 2);
     gs.classList.add('scrolly');
-    gs.style.height = Math.round(ph + window.innerHeight * 2.6) + 'px';
+    // pe telefon pista e mai scurtă, ca să nu rămână ecrane întregi doar cu graficul
+    gs.style.height = Math.round(ph + window.innerHeight * (window.innerWidth < 700 ? 1.5 : 2.1)) + 'px';
     pin.style.top = top + 'px';
   }
   function prog(){ var len = gs.offsetHeight - pin.offsetHeight; return len > 0 ? Math.max(0, Math.min(1, (top - gs.getBoundingClientRect().top) / len)) : 1; }
@@ -1807,6 +1815,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     raf = 0;
     if (!scrolly) return;
     var p = prog(), k = 0;
+    gs.style.setProperty('--gp', p.toFixed(3)); gs.classList.toggle('gs-end', p > 0.97);
     while (k < SPAN.length - 1 && p >= EDGE[k + 1]) k++;
     show(k + (p - EDGE[k]) / SPAN[k]);
   }

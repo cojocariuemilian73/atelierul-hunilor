@@ -104,7 +104,8 @@
     if (!scrolly) return;
     top = navH() + Math.max(8, (room - ph) / 2);
     gs.classList.add('scrolly');
-    gs.style.height = Math.round(ph + window.innerHeight * 2.6) + 'px';
+    // pe telefon pista e mai scurtă, ca să nu rămână ecrane întregi doar cu graficul
+    gs.style.height = Math.round(ph + window.innerHeight * (window.innerWidth < 700 ? 1.5 : 2.1)) + 'px';
     pin.style.top = top + 'px';
   }
   function prog(){ var len = gs.offsetHeight - pin.offsetHeight; return len > 0 ? Math.max(0, Math.min(1, (top - gs.getBoundingClientRect().top) / len)) : 1; }
@@ -112,6 +113,7 @@
     raf = 0;
     if (!scrolly) return;
     var p = prog(), k = 0;
+    gs.style.setProperty('--gp', p.toFixed(3)); gs.classList.toggle('gs-end', p > 0.97);
     while (k < SPAN.length - 1 && p >= EDGE[k + 1]) k++;
     show(k + (p - EDGE[k]) / SPAN[k]);
   }
