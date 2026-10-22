@@ -61,4 +61,6 @@
     .gs-lab, .gs-who, .gs-stop, .gs-coins-lab, .gs-stacks, .gs-ghost{ transition-duration: 0.2s; }
     .gs-step.on{ animation: none; }
   }
-
+  /* la 450, teancul de 2.100 crapă */
+  .gs-crack{ fill: none; stroke: #2a1a08; stroke-width: 2.5; stroke-linejoin: round; stroke-dasharray: 1 2; stroke-dashoffset: 1.05; opacity: 0; }
+  .gs[data-s="5"] .gs-crack{ opacity: 0.9; stroke-dashoffset: 0; transition: stroke-dashoffset 0.7s cubic-bezier(.5, 0, .2, 1) 0.3s, opacity 0.1s 0.3s; }

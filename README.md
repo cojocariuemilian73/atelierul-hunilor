@@ -39,7 +39,7 @@ Fiecare parte interactivă are sursele într-un folder separat. După o modifica
 | Imagini lângă textele scurte | în script | `node scripturi-build/patch-sr-fit.js` |
 | Harta marilor migrații | în script | `node scripturi-build/splice-harta-invazii.js` |
 | Corecturile de design (bara de jos, fonturi, chenare) | în script | `node scripturi-build/patch-recenzie-design.js` |
-| Animațiile (titluri, harta care se desenează, cortina dintre pagini) | în script | `node scripturi-build/patch-animatii.js` (ultimul) |
+| Animațiile (titluri, prima literă, harta care se desenează, cortina dintre pagini, paralaxa din deschidere, dosarele, cronologia, muzeul, cărțile de pe Masă) | în script | `node scripturi-build/patch-animatii.js` (ultimul) |
 
 Toate scripturile se pot rula de mai multe ori: înlocuiesc partea lor, fără s-o dubleze.
 

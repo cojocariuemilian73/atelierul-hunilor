@@ -47,9 +47,31 @@
   nav.innerHTML = steps.map(function(st, k){ return '<button type="button" data-s="' + st.getAttribute('data-s') + '" aria-pressed="false">' + (LAB[k] || st.getAttribute('data-s')) + '</button>'; }).join('');
   steps[0].parentNode.insertBefore(nav, steps[0]);
   var btns = list('.gs-nav button'), cur = '', timer = 0;
+  // cifrele de deasupra teancurilor numără de la 0 când apar
+  var LABS = list('.gs-lab').map(function(t){ return { el: t, txt: t.textContent, v: +t.textContent.replace(/[^0-9]/g, ''), on: false }; });
+  var NEED = [1, 2, 3, 3];
+  function count(L){
+    var t0 = 0, pre = L.txt.charAt(0) === '+' ? '+' : '';
+    function step(ts){
+      if (!L.on) return;
+      if (!t0) t0 = ts;
+      var k = Math.min(1, (ts - t0) / 700), v = Math.round(L.v * (1 - Math.pow(1 - k, 3)));
+      L.el.textContent = pre + v.toLocaleString('ro-RO');
+      if (k < 1) requestAnimationFrame(step); else L.el.textContent = L.txt;
+    }
+    requestAnimationFrame(step);
+  }
+  function labels(s){
+    LABS.forEach(function(L, k){
+      var on = +s >= NEED[k] && s !== '4';
+      if (on && !L.on) { L.on = true; L.el.textContent = L.txt.charAt(0) === '+' ? '+0' : '0'; count(L); }
+      else if (!on && L.on) { L.on = false; L.el.textContent = L.txt; }
+    });
+  }
   function set(s){
     if (s === cur) return;
     cur = s;
+    labels(s);
     gs.setAttribute('data-s', s);
     steps.forEach(function(st){ st.classList.toggle('on', st.getAttribute('data-s') === s); });
     btns.forEach(function(b){ var on = b.getAttribute('data-s') === s; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
