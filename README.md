@@ -10,7 +10,7 @@ Proiect pentru concursul național „Istorie și societate în dimensiune virtu
 
 1. **Acasă / Articol** — articolul cu 23 de note și bibliografie, cronologia pe epoci, graficul „Aurul hunilor”, atlasul migrației, muzeul virtual, miturile verificate la sfârșitul capitolelor și glosarul.
 2. **Attila și Marea Migrație** — un singur joc, în trei acte, pe harta reală (370–476): simulare cu agenți (Valens, Stilicho, Honorius), cele 8 runde ale lui Attila (435–452) cu aur, renume, loialitate, cavalerie și moștenire, apoi Ardaric la Nedao și Leon I la Capul Bon; un citat din izvor la fiecare decizie; la final, titlul jucătorului, reluarea pe hartă (drumul tău și drumul real, an de an) și „Cronica ta”, o imagine de salvat; tastele 1, 2, 3 pentru alegeri; fișe ale popoarelor (clic pe hartă), cronologia de jos se poate reciti, cărți de titlu între acte, sunet generat în browser (cu buton de oprire), finalul cu lumea ta și lumea reală alături; mod ușor pentru calculatoare lente. Adresa veche `#mod-game` duce tot aici.
-3. **Masa istoricului** — 13 surse de așezat pe axa timpului și de clasificat.
+3. **Masa istoricului** — 13 surse de așezat pe axa timpului și de clasificat, pe un birou de arhivă: axa arată întâi cele cinci epoci mari, iar epoca atinsă se mărește, cu gradațiile ei; pe telefon axa e verticală. „Cum se joacă” e la butonul „?” de lângă titlu (turul apare singur la prima vizită).
 
 Se deschide direct în browser (dublu-clic) sau la adresa de mai sus.
 
@@ -45,6 +45,8 @@ Fiecare parte interactivă are sursele într-un folder separat. După o modifica
 | Culorile (auriu pentru structură, roșu doar pentru huni), „Pe scurt”, bifele la capitole și jocuri, Atlasul cu un singur chenar | în script | `node scripturi-build/patch-recenzie-4.js` |
 | Fișele lui Attila și Aetius, consecințele în cascadă, codul QR din deschidere și fereastra lui, fără „Pe scurt” la capitolele 03 și 05 și fără harta Galiei | în script | `node scripturi-build/patch-recenzie-5.js` (după `patch-animatii.js`; apoi `build-web.js`) |
 | Animațiile (titluri, prima literă, harta care se desenează, cortina dintre pagini, paralaxa din deschidere, dosarele, cronologia, muzeul, cărțile de pe Masă) | în script | `node scripturi-build/patch-animatii.js` (după celelalte; apoi `build-web.js`) |
+| Pagina Acasă: fundalul fără „cutie” (coloană de 860 px), meniul unic sticky (capitolele 01–08, Jocul, Masa, Despre proiect; sertar pe telefon), deschiderea cu pictura ca imagine WebP și trei chip-uri, titlul capitolului într-un singur bloc, ramă subțire la imagini | `scripturi-build/acasa/` | `node scripturi-build/patch-acasa.js` (după `patch-recenzie-5.js`, înainte de `patch-efecte.js`) |
+| Efectele: cursorul tematic (doar cu mouse), linia timpului din stânga articolului (375, 441–447, 451, 453, 476), pergamentul pe ilustrații și picturi (clasa `.img-parchment`) și călărețul de sub meniu, care merge de la 370 la 476 pe măsură ce citești (drumul și reperele apar în urma lui) | `scripturi-build/efecte/` | `node scripturi-build/patch-efecte.js` (ultimul, după `patch-acasa.js`; apoi `build-web.js`) |
 
 Toate scripturile se pot rula de mai multe ori: înlocuiesc partea lor, fără s-o dubleze.
 

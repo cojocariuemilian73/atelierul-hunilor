@@ -1,16 +1,23 @@
 <div class="wrap md">
   <header class="md-head">
-    <h1 class="md-title">Masa istoricului</h1>
+    <div class="md-title-row">
+      <h1 class="md-title">Masa istoricului</h1>
+      <button type="button" class="md-help-b" id="md-help-b" aria-haspopup="dialog" aria-controls="md-help" title="Cum se joacă"><span aria-hidden="true">?</span><span class="md-sr">Cum se joacă</span></button>
+    </div>
     <p class="md-sub">Treisprezece surse despre huni: așază-le pe axa timpului și spune ce fel de sursă e fiecare.</p>
   </header>
 
   <div class="md-board">
-    <div class="md-tl-scroll">
-      <div class="md-tl" id="md-tl" role="slider" tabindex="-1" aria-label="Axa timpului: alege anul în care a fost făcută sursa selectată" aria-valuemin="350" aria-valuemax="1950" aria-valuenow="453" aria-disabled="true">
-        <div class="md-strata" id="md-strata" aria-hidden="true"></div>
-        <div class="md-band" id="md-band"><span>Epoca hunilor</span></div>
-        <div class="md-axis"></div>
-        <div class="md-ticks" id="md-ticks"></div>
+    <div class="md-top">
+      <div class="md-tl-head">
+        <button type="button" class="md-back" id="md-back" hidden><span aria-hidden="true">←</span> Axa completă</button>
+        <p class="md-tl-note" id="md-tl-note">Atinge o epocă ca s-o vezi de aproape.</p>
+      </div>
+      <div class="md-tl" id="md-tl" role="slider" tabindex="-1" aria-label="Axa timpului: alege epoca, apoi anul în care a fost făcută sursa selectată" aria-valuemin="350" aria-valuemax="1950" aria-valuenow="453" aria-disabled="true">
+        <div class="md-ribbon-w" aria-hidden="true"><div class="md-ribbon" id="md-ribbon"></div></div>
+        <div class="md-eras" id="md-eras" aria-hidden="true"></div>
+        <div class="md-axis" aria-hidden="true"></div>
+        <div class="md-ticks" id="md-ticks" aria-hidden="true"></div>
         <div class="md-gap" id="md-gap" hidden></div>
         <div class="md-pins" id="md-pins"></div>
         <div class="md-cursor" id="md-cursor" hidden><b></b></div>
@@ -19,8 +26,11 @@
     </div>
 
     <div class="md-bar">
-      <p class="md-hint" id="md-hint">Alege o sursă de pe masă, apoi trage-o (sau atinge axa) în anul potrivit.</p>
-      <p class="md-score" id="md-score">0 / 13 așezate · 0 puncte</p>
+      <p class="md-hint" id="md-hint">Alege o sursă de pe masă, apoi așaz-o pe axă, în anul potrivit.</p>
+      <div class="md-progress">
+        <div class="md-dots" id="md-dots" role="img" aria-label="0 din 13 surse așezate"></div>
+        <p class="md-score" id="md-score" aria-live="polite">0 puncte</p>
+      </div>
     </div>
 
     <div class="md-desk">
@@ -30,4 +40,21 @@
   </div>
   <div hidden><img id="img-ms-ammianus" src="__MS_AMMIANUS__" alt=""><img id="img-ms-getica" src="__MS_GETICA__" alt=""></div>
 
+  <div class="md-modal" id="md-help" role="dialog" aria-modal="true" aria-labelledby="md-help-h" hidden>
+    <div class="md-modal-box">
+      <button type="button" class="md-modal-x" id="md-help-x" aria-label="Închide">×</button>
+      <p class="md-modal-k" id="md-help-h">Cum se joacă</p>
+      <ol class="md-steps" id="md-steps">
+        <li data-s="0"><span class="md-step-n">1</span><svg viewBox="0 0 64 48" aria-hidden="true"><rect x="6" y="10" width="22" height="17" transform="rotate(-6 17 18)" fill="none" stroke="currentColor" stroke-width="2"/><rect x="34" y="8" width="22" height="17" transform="rotate(5 45 16)" fill="currentColor" opacity="0.35"/><rect x="20" y="24" width="22" height="17" fill="none" stroke="currentColor" stroke-width="2.4"/></svg><b>Alege o sursă</b><span>Atinge o carte de pe masă. O vezi mare alături: lupa îți arată hainele, armele, stilul.</span></li>
+        <li data-s="1"><span class="md-step-n">2</span><svg viewBox="0 0 64 48" aria-hidden="true"><path d="M4 30h56" stroke="currentColor" stroke-width="2.4"/><path d="M4 22h10v16H4zM16 22h34v16H16zM52 22h8v16h-8z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M33 8v22" stroke="currentColor" stroke-width="2.4"/><circle cx="33" cy="8" r="4" fill="currentColor"/></svg><b>Așaz-o pe axă</b><span>Atinge epoca potrivită ca s-o mărești, apoi anul. Poți și să tragi cartea până acolo. Cu cât ești mai aproape, cu atât mai multe puncte (până la 3).</span></li>
+        <li data-s="2"><span class="md-step-n">3</span><svg viewBox="0 0 64 48" aria-hidden="true"><rect x="8" y="8" width="48" height="32" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18 30l8-8 6 6 12-12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Spune ce fel de sursă e</b><span>Obiect din epocă, text antic, copie târzie sau imagine târzie: încă un punct. Abia apoi afli anul real.</span></li>
+      </ol>
+      <p class="md-modal-f">Nu știi? Fiecare sursă are un indiciu, care costă un punct.</p>
+      <div class="md-modal-nav">
+        <button type="button" class="md-btn ghost" id="md-help-prev">Înapoi</button>
+        <span class="md-modal-pips" id="md-help-pips" aria-hidden="true"><i></i><i></i><i></i></span>
+        <button type="button" class="md-btn" id="md-help-next">Mai departe</button>
+      </div>
+    </div>
+  </div>
 </div>
