@@ -1,0 +1,25 @@
+  /* r6: recenzia 6 (deschiderea mai simplă, trimiterea spre Atlas din capitolul 03) */
+  /* sursele, ca un rând discret sub butoane */
+  #page-acasa .hero .hero-src{ margin: 16px 0 0; font: italic 400 0.95rem/1.4 'Source Serif 4', Georgia, serif; color: #d9ccb4; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8); }
+  /* fresca mai întunecată, mai ales în dreapta, ca să nu concureze cu textul */
+  #page-acasa .hero-scrim{ background: linear-gradient(90deg, rgba(12, 9, 6, 0.92) 0%, rgba(12, 9, 6, 0.74) 38%, rgba(12, 9, 6, 0.5) 72%, rgba(12, 9, 6, 0.42) 100%), linear-gradient(180deg, rgba(12, 9, 6, 0.5) 0%, rgba(12, 9, 6, 0.1) 34%, rgba(12, 9, 6, 0.6) 80%, rgba(12, 9, 6, 0) 100%) !important; }
+  /* capitolul 03 fără hartă: trimiterea spre Atlas */
+  .to-atlas{ margin: 28px 0 10px; }
+  .to-atlas a{ display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 10px 18px; border: 1px solid rgba(229, 193, 88, 0.6); color: #f2d474; font: 600 1.05rem 'Cormorant Garamond', serif; text-decoration: none; transition: background 0.2s, border-color 0.2s; }
+  .to-atlas a:hover{ background: rgba(229, 193, 88, 0.1); border-color: #e5c158; }
+  .to-atlas a:focus-visible{ outline: 2px solid #e5c158; outline-offset: 3px; }
+  /* meniul: linkul jocului rămâne doar pentru comutatorul de pagini */
+  #site-nav .st-game{ display: none !important; }
+  /* prima literă: litera mare e desenată din atribut, ca textul să conțină litera o singură dată */
+  .fx .lede .dc::before{ content: attr(data-l); }
+  /* meniul încape și la 1024 px: mai puțin spațiu între capitole */
+  @media (max-width: 1279px){
+    #site-nav .chap-bar a{ padding: 0 4px; letter-spacing: 0.02em; }
+    #site-nav .chap-bar a::before{ left: 4px; right: 4px; }
+  }
+  /* pe telefon, creditul frescei coboară în colțul de jos, ca să nu acopere rândul de sus */
+  @media (max-width: 767px){
+    #page-acasa .hero-credit{ top: auto; bottom: 6px; }
+    #page-acasa .hero-inner{ padding-bottom: 46px; }
+  }
+  /* /r6 */

@@ -69,7 +69,8 @@
   @media (max-width: 1499px){ #site-nav .st-pages a .nav-long{ display: none; } #site-nav .st-pages a .nav-short{ display: inline; } }
   @media (max-width: 1599px){ #site-nav .about-trigger .nav-long{ display: none; } #site-nav .about-trigger{ width: 34px; padding: 0; justify-content: center; } }
   /* capitolele citite și jocurile terminate: un punct auriu mic (același mecanism ca bifele de până acum) */
-  .chap-bar a.seen::after, .site-nav a.done .nav-long::after, .site-nav a.done .nav-short::after{ content: ''; display: inline-block; width: 5px; height: 5px; margin-left: 6px; vertical-align: 0.15em; border-radius: 50%; background: #e5c158; box-shadow: 0 0 6px rgba(229, 193, 88, 0.75); font-size: 0; }
+  /* fără buline în meniu: doar textul capitolelor */
+  .chap-bar a.seen::after, .site-nav a.done .nav-long::after, .site-nav a.done .nav-short::after{ content: none; }
 
   /* pe telefon: titlul + „Meniu”, care deschide un sertar cu toate linkurile */
   @media (max-width: 767px){

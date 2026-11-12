@@ -1,0 +1,103 @@
+  /* r7: recenzia 7, varianta B: pergament deschis cu granat; deschiderea și „vitrinele” rămân întunecate */
+  /* ---------- culorile: de la capitolul 01 încolo, pergament ---------- */
+  #page-acasa{ background: #f3ead7; }
+  /* pergamentul ține toată lățimea ecranului cât e deschis articolul (deschiderea e oricum pe toată lățimea) */
+  html:has(#page-acasa.active), html:has(#page-acasa.active) body{ background: #f3ead7 !important; }
+  #page-acasa .page-shell, #page-acasa .cta-card, #page-acasa ~ .site-final-footer, .site-final-footer{
+    --paper: #f3ead7; --paper-2: #ebe0c8; --paper-3: #e0d2b2;
+    --ink: #2b1d12; --ink-dim: #5a4632;
+    --line: rgba(70, 45, 25, 0.18); --line-strong: rgba(70, 45, 25, 0.38);
+    --accent: #8a2a1f; --accent-2: #7a5714; --accent-bg: #ead2cb; --accent2-bg: #e8dcbc;
+    --gold: #7a5714; --gold2: #7a5714; --red: #8a2a1f; --red2: #8a2a1f;
+    color: var(--ink);
+  }
+  #page-acasa .page-shell{ border-color: transparent; }
+  /* ---------- vitrinele: cronologia, graficul aurului, Atlasul, muzeul rămân pe fundal închis ---------- */
+  #page-acasa .hx, #page-acasa .gs, #page-acasa #sec-atlas, #page-acasa #sec-muzeu{
+    --paper: #16120e; --paper-2: #1d1813; --paper-3: #2b241b;
+    --ink: #e6d7c3; --ink-dim: #b3a48c;
+    --line: rgba(230, 215, 195, 0.16); --line-strong: rgba(230, 215, 195, 0.34);
+    --accent: #e0626c; --accent-2: #e5c158; --accent-bg: #2e1416; --accent2-bg: #2c2410;
+    --gold: #e5c158; --gold2: #e5c158; --red: #a71d2a; --red2: #e0626c;
+    color: var(--ink); background: #16120e;
+  }
+  #page-acasa .hx, #page-acasa .gs{ padding: clamp(16px, 2.4vw, 32px); }
+  #page-acasa #sec-atlas, #page-acasa #sec-muzeu{ box-sizing: border-box; background: #16120e !important; padding: clamp(20px, 3vw, 40px) clamp(14px, 2.4vw, 32px); }
+  /* ---------- texte care aveau culori fixe pentru fundalul închis ---------- */
+  #page-acasa .page-shell .sec-sub{ color: var(--ink-dim); }
+  #page-acasa .hx .sec-sub, #page-acasa #sec-atlas .sec-sub, #page-acasa #sec-muzeu .sec-sub{ color: #cbbda4; }
+  #page-acasa .to-atlas a{ color: #8a2a1f; border-color: rgba(138, 42, 31, 0.55); }
+  #page-acasa .to-atlas a:hover{ background: rgba(138, 42, 31, 0.07); border-color: #8a2a1f; }
+  #page-acasa .page-shell .pq figcaption b, #page-acasa .page-shell .dc-role, #page-acasa .page-shell .dk-label,
+  #page-acasa .page-shell .it-year, #page-acasa .page-shell .dl-451 small{ color: #7a5714; }
+  #page-acasa .page-shell .mx-tag{ color: #8a2a1f; border-color: rgba(138, 42, 31, 0.5); }
+  #page-acasa .sc-gap.zero{ color: #3d6b2f; } #page-acasa .sc-gap.modern{ color: #2c5a8a; }
+  #page-acasa .sc-table .sc-c0{ background: #f3ead7; }
+  #page-acasa .page-shell .sc-table tbody th{ color: #7a5714; }
+  #page-acasa .page-shell .duel-card.attila h4, #page-acasa .page-shell .dl-row.attila b{ color: #8a2a1f; }
+  /* liniile aurii deschise devin bronz pe pergament */
+  #page-acasa .page-shell .sc-table th, #page-acasa .page-shell .sc-table td{ border-top-color: rgba(122, 87, 20, 0.22); }
+  #page-acasa .page-shell .sc-table thead th{ border-top-color: #7a5714; }
+  #page-acasa .page-shell .mx-item{ border-top-color: rgba(122, 87, 20, 0.3); }
+  #page-acasa .page-shell .duel-card{ border-top-color: rgba(122, 87, 20, 0.45); }
+  #page-acasa .page-shell .sub-title, #page-acasa .page-shell .sub-title .fw{ color: var(--ink); }
+  #page-acasa .page-shell .sc-table td .sc-w span{ color: #7a5714; }
+  #page-acasa .page-shell .mx-stamp{ color: #8a2a1f; border-color: #8a2a1f; }
+  /* ---------- granatul, folosit rar: linkuri, note, separatorul, „Atenție la sursă” ---------- */
+  #page-acasa .page-shell sup.fn, #page-acasa .page-shell sup.fn a, #page-acasa .page-shell p a, #page-acasa .page-shell li a{ color: #8a2a1f; }
+  #page-acasa .page-shell .source-caution{ border-left: 2px solid #8a2a1f; padding-left: 14px; }
+  #page-acasa .page-shell .source-caution b{ color: #8a2a1f; }
+  #page-acasa .ch-orn path{ stroke: rgba(138, 42, 31, 0.6); }
+  #page-acasa .ch-orn path.d{ fill: #8a2a1f; stroke: #8a2a1f; }
+  /* ---------- citatele mari, pe pergament ---------- */
+  #page-acasa .page-shell .pq{ background: none; border-color: rgba(122, 87, 20, 0.35); }
+  #page-acasa .page-shell .pq::before{ color: #8a2a1f; opacity: 1; }
+  #page-acasa .page-shell .pq blockquote p, #page-acasa .page-shell .pq blockquote p .fw{ color: var(--ink); }
+  /* ---------- curățenie: fără numerele capitolelor și fără chipuri rotunjite ---------- */
+  #page-acasa .chapter-num{ display: none; }
+  #page-acasa .duel.dk .dc-role{ padding: 0; border: 0; border-radius: 0; }
+  /* ---------- aceeași ramă și aceeași legendă la toate imaginile din articol ---------- */
+  #page-acasa .page-shell figure:not(.pq):not(.mx-ev) img{ box-sizing: border-box; padding: 5px; background: #ebe0c8; border: 1px solid rgba(70, 45, 25, 0.32) !important; }
+  #page-acasa .page-shell figure:not(.pq):not(.mx-ev) figcaption, #page-acasa .page-shell .sr-row.cap-over .sr-fig figcaption{
+    position: static; margin: 8px 0 0; padding: 0; background: none; text-align: left;
+    font: italic 400 0.875rem/1.5 'Source Serif 4', Georgia, serif; color: var(--ink-dim); pointer-events: auto; }
+  #page-acasa .page-shell figure:not(.pq):not(.mx-ev) figcaption b{ font-style: normal; font-weight: 600; color: var(--ink); }
+  /* ---------- mișcarea: o singură dată, scurt; nimic cu „reducerea mișcării” ---------- */
+  @media (prefers-reduced-motion: no-preference){
+    /* textul și imaginile apar la derulare: un fade cu o ridicare de 12 px */
+    .r7-js .r7-rv{ opacity: 0; transform: translateY(12px); transition: opacity 0.45s ease, transform 0.45s cubic-bezier(.2, .7, .2, 1); }
+    .r7-js .r7-rv.r7-in{ opacity: 1; transform: none; }
+    /* linia 370–476 se desenează, apoi rombul alunecă până la 453 */
+    .r7-js .hero-years i{ transform-origin: 0 50%; animation: r7-line 0.6s cubic-bezier(.3, .7, .2, 1) 0.3s both; }
+    .r7-js .hero-years i::after{ animation: r7-dia 0.6s cubic-bezier(.3, .7, .2, 1) 0.9s both; }
+    .r7-js .hero-years i::before{ animation: r7-fade 0.3s ease 1.5s both; }
+    /* citatele mari: întâi ghilimeaua, apoi textul */
+    .r7-js .pq:not(.r7-in)::before, .r7-js .pq:not(.r7-in) blockquote, .r7-js .pq:not(.r7-in) figcaption{ opacity: 0; }
+    .r7-js .pq.r7-in::before{ animation: r7-fade 0.25s ease both; }
+    .r7-js .pq.r7-in blockquote{ animation: r7-up 0.45s ease 0.2s both; }
+    .r7-js .pq.r7-in figcaption{ animation: r7-fade 0.3s ease 0.5s both; }
+    /* miturile se întorc ca o carte: pe spate, verdictul și sursa */
+    #page-acasa .mx-item{ perspective: 900px; }
+    #page-acasa .mx-item.open .mx-a{ transform-origin: 50% 0; animation: r7-flip 0.5s cubic-bezier(.2, .7, .2, 1) both !important; }
+    /* muzeul: lupă ușoară la trecerea cu mouse-ul */
+    #page-acasa .m-lab .viewer-stage{ overflow: hidden; }
+    #page-acasa .m-lab .viewer-face{ transition: transform 0.4s ease; }
+    #page-acasa .m-lab .viewer-stage:hover .viewer-face{ transform: scale(1.05); }
+  }
+  @keyframes r7-line{ from{ transform: scaleX(0); } }
+  @keyframes r7-dia{ from{ left: 0; } }
+  @keyframes r7-fade{ from{ opacity: 0; } }
+  @keyframes r7-up{ from{ opacity: 0; transform: translateY(8px); } }
+  @keyframes r7-flip{ from{ opacity: 0; transform: rotateX(-80deg); } }
+  /* rombul stă la 453; sub el, anul */
+  #page-acasa .hero-years i::after{ left: 78.3%; }
+  #page-acasa .hero-years i::before{ content: '453'; position: absolute; left: 78.3%; top: 9px; transform: translateX(-50%); font: 600 0.8125rem 'EB Garamond', Georgia, serif; letter-spacing: 0.06em; color: #e5c158; }
+  /* punctele roșii din muzeu pulsează doar până la primul clic */
+  #page-acasa #sec-muzeu.r7-hs-seen .hotspot{ animation: none; }
+  /* meniul: o singură linie aurie, care alunecă la capitolul curent */
+  #site-nav .chap-bar-row{ position: relative; }
+  #site-nav .r7-bar{ position: absolute; bottom: 4px; left: 0; height: 2px; width: 0; background: #e5c158; pointer-events: none; opacity: 0; transition: transform 0.35s cubic-bezier(.3, .7, .2, 1), width 0.35s cubic-bezier(.3, .7, .2, 1), opacity 0.2s; }
+  #site-nav.r7-slide .chap-bar a::before{ display: none; }
+  @media (prefers-reduced-motion: reduce){ #site-nav .r7-bar{ transition: none; } }
+  @media (max-width: 899px){ #site-nav .r7-bar{ display: none; } #site-nav.r7-slide .chap-bar a::before{ display: block; } }
+  /* /r7 */

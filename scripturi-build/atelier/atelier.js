@@ -169,7 +169,7 @@
     return isPaper(it)
       ? (it.msrc ? '<span class="md-paper ms' + (it.strip ? ' strip' : '') + '" style="clip-path:' + tornOf(it.id) + ';background-image:url(' + it.msrc + ')"><span class="md-ms-band"><small>Izvor scris · ' + esc(it.name) + '</small><i>' + esc(it.work) + '</i></span></span>'
         : '<span class="md-paper" style="clip-path:' + tornOf(it.id) + '">' + BOOK + '<b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i></span>')
-      : '<img src="' + it.src + '" alt="" draggable="false">';
+      : '<img src="' + it.src + '" alt="" aria-hidden="true" draggable="false">';
   }
 
   function renderTray(){
@@ -183,8 +183,7 @@
 
   function inspectEmpty(){
     insp.innerHTML = '<div class="md-insp-empty"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="26" cy="26" r="16" fill="none" stroke="currentColor" stroke-width="3"/><path d="M38 38l16 16" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>' +
-      '<p>Alege o sursă de pe masă ca s-o vezi de aproape.</p><button type="button" class="md-link" id="md-how-b">Cum se joacă?</button></div>';
-    $('md-how-b').addEventListener('click', function(){ openHelp(false); });
+      '<p>Alege o sursă de pe masă ca s-o vezi de aproape.</p></div>';
   }
 
   function inspect(it){
@@ -332,7 +331,7 @@
     if (items.every(function(x){ return placed[x.id] && placed[x.id].cls; })) setTimeout(finale, 900);
   }
 
-  function faceOf(it){ return isPaper(it) ? BOOK : '<img src="' + it.src + '" alt="">'; }
+  function faceOf(it){ return isPaper(it) ? BOOK : '<img src="' + it.src + '" alt="" aria-hidden="true">'; }
   function renderPins(fresh){
     var len = (vert ? tl.clientHeight : tl.clientWidth) || 800, size = vert ? 36 : (len < 500 ? 30 : 42), lanes = [];
     var list = items.filter(function(it){ return placed[it.id] && placed[it.id].cls; }).sort(function(a, b){ return a.year - b.year; });
