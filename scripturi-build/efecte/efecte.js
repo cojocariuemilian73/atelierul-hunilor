@@ -1,69 +1,10 @@
-/* ef: efecte (cursorul tematic, pergamentul imaginilor, călărețul de sub meniu) */
+/* ef: efecte (pergamentul imaginilor, călărețul de sub meniu; cursorul tematic a fost scos în recenzia 7) */
 (function(){
   var doc = document.documentElement;
   var mqR = window.matchMedia('(prefers-reduced-motion: reduce)');
   function reduced(){ return mqR.matches; }
   function on(mq, fn){ if (mq.addEventListener) mq.addEventListener('change', fn); else if (mq.addListener) mq.addListener(fn); }
   var raf = window.requestAnimationFrame || function(f){ return setTimeout(f, 16); };
-
-  // ---------------- A) cursorul tematic (doar mouse, fără „reducerea mișcării”) ----------------
-  (function(){
-    var mqF = window.matchMedia('(hover: hover) and (pointer: fine)');
-    if (!mqF.matches) return;
-    var NATIVE = 'input, textarea, select, [contenteditable="true"], .md-card:not(.done), .hx-rib, .img-lightbox .lb-view.zoomed, .md-zoom.zoomed';
-    var HOT = 'a[href], button, [role="button"], summary, label, .md-card, .md-era, .md-pin, .md-clu-b, .lb-able, .toc-link, [tabindex]:not([tabindex="-1"])';
-    var N = 4, built = false, dot, ring, trail = [], mx = -100, my = -100, rx = -100, ry = -100, pts = [], running = false, target = null;
-    var atel = document.getElementById('mod-atelier');
-    function build(){
-      dot = document.createElement('div'); dot.className = 'ef-dot';
-      ring = document.createElement('div'); ring.className = 'ef-ring'; ring.innerHTML = '<span></span>';
-      [ring, dot].forEach(function(el){ el.setAttribute('aria-hidden', 'true'); document.body.appendChild(el); });
-      for (var k = 0; k < N; k++) {
-        var t = document.createElement('div'); t.className = 'ef-trail'; t.setAttribute('aria-hidden', 'true');
-        document.body.appendChild(t); trail.push(t); pts.push({ x: mx, y: my });
-      }
-      built = true;
-    }
-    function active(){ return mqF.matches && !reduced(); }
-    function setHidden(h){ [dot, ring].concat(trail).forEach(function(el){ el.classList.toggle('off', h); }); }
-    function look(el){
-      if (!el || !el.closest) return;
-      var nat = !!el.closest(NATIVE) || !!(atel && atel.classList.contains('md-dragging'));
-      setHidden(nat);
-      ring.classList.toggle('hot', !nat && !!el.closest(HOT));
-    }
-    function frame(){
-      rx += (mx - rx) * 0.2; ry += (my - ry) * 0.2;
-      dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
-      ring.style.transform = 'translate3d(' + rx.toFixed(1) + 'px,' + ry.toFixed(1) + 'px,0)';
-      var px = mx, py = my, moving = Math.abs(mx - rx) + Math.abs(my - ry) > 0.3;
-      for (var k = 0; k < N; k++) {
-        var p = pts[k]; p.x += (px - p.x) * 0.45; p.y += (py - p.y) * 0.45;
-        var d = Math.abs(px - p.x) + Math.abs(py - p.y);
-        trail[k].style.transform = 'translate3d(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px,0) scale(' + (0.9 - k * 0.17).toFixed(2) + ')';
-        trail[k].style.opacity = Math.min(0.5 - k * 0.1, d / 40).toFixed(2);
-        if (d > 0.3) moving = true;
-        px = p.x; py = p.y;
-      }
-      if (moving) raf(frame); else running = false;
-    }
-    window.addEventListener('pointermove', function(e){
-      if (e.pointerType && e.pointerType !== 'mouse') return;
-      if (!active()) return;
-      if (!built) { build(); rx = e.clientX; ry = e.clientY; pts.forEach(function(p){ p.x = e.clientX; p.y = e.clientY; }); }
-      doc.classList.add('ef-cur'); doc.classList.remove('ef-off');
-      mx = e.clientX; my = e.clientY;
-      if (e.target !== target) { target = e.target; look(target); }
-      if (!running) { running = true; raf(frame); }
-    }, { passive: true });
-    // după un clic, starea (de ex. tragerea unei cărți) se poate schimba sub cursor
-    window.addEventListener('pointerdown', function(e){ if (ring) { ring.classList.add('press'); look(e.target); } }, { passive: true });
-    window.addEventListener('pointerup', function(e){ if (ring) { ring.classList.remove('press'); setTimeout(function(){ look(e.target); }, 0); } }, { passive: true });
-    document.addEventListener('mouseleave', function(){ doc.classList.add('ef-off'); });
-    document.addEventListener('mouseenter', function(){ doc.classList.remove('ef-off'); });
-    function sync(){ if (!active()) doc.classList.remove('ef-cur'); }
-    on(mqR, sync); on(mqF, sync);
-  })();
 
   // ---------------- B) reperele din text (375, 441–447, 451, 453, 476), folosite de călărețul de sub meniu ----------------
   (function(){

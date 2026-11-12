@@ -1,6 +1,7 @@
 // Pagina Acasă / Articol, redesenată (din scripturi-build/acasa/):
 //  A) fundalul: fără „cutia” articolului, o coloană de lectură de 860 px direct pe un fundal cald; meta theme-color;
-//  B) un singur meniu sticky: „Atelierul Hunilor” (Acasă) · capitolele 01–08 · Jocul, Masa istoricului, Despre proiect;
+//  B) un singur meniu sticky: „Atelierul Hunilor” (Acasă) · capitolele, fără numere (Glosarul și Bibliografia ca „Surse”) ·
+//     Izvoarele pe axă, Despre proiect (jocul are butonul din deschidere; linkul lui rămâne ascuns, pentru comutatorul de pagini);
 //     se ascunde la derularea în jos, revine la derularea în sus; pe telefon, un sertar; punct auriu la capitolele citite;
 //  C) hero-ul: pictura lui Rafael ca imagine (WebP, două mărimi), metadatele ca trei chip-uri, legenda în colț;
 //  D) titlul capitolului: numărul mare și titlul într-un singur bloc (fără eticheta repetată);
@@ -47,8 +48,11 @@ if (c0 >= 0) {
   chap = (oldNav.match(/<div class="chap-bar" id="chap-bar">[\s\S]*?<\/div>\n    <\/div>/) || [])[0];
   if (!chap) fail('capitolele');
 }
-const chapLinks = (chap.match(/<a href="#sec-[^"]+"[^>]*class="toc-link"[^>]*>[\s\S]*?<\/a>|<a href="#biblio"[^>]*class="toc-link"[^>]*>[\s\S]*?<\/a>/g) || []);
-if (chapLinks.length !== 8) fail('capitolele 01–08 (' + chapLinks.length + ')');
+// capitolele, fără numere; Glosarul și Bibliografia sunt un singur item, „Surse” (activ în ambele)
+const CH = [['sec-origini', 'Origini'], ['sec-cronologie', 'Cronologie'], ['sec-migratie', 'Marea Migrație'], ['sec-atlas', 'Atlas'],
+  ['sec-personalitati', 'Personalități'], ['sec-muzeu', 'Muzeu'], ['sec-glosar', 'Surse', 'biblio']];
+CH.forEach(c => { if (!s.includes('id="' + c[0] + '"')) fail('capitolul ' + c[0]); });
+const chapLinks = CH.map(c => '<a href="#' + c[0] + '" data-sec="' + c[0] + '"' + (c[2] ? ' data-also="' + c[2] + '"' : '') + ' class="toc-link">' + c[1] + '</a>');
 const NAV = `<nav class="site-nav" id="site-nav" aria-label="Navigare principală">
   <a class="st-brand" href="#page-acasa" data-page><span class="st-mark" aria-hidden="true"></span>Atelierul Hunilor</a>
   <div class="st-links" id="st-links">
@@ -58,8 +62,8 @@ const NAV = `<nav class="site-nav" id="site-nav" aria-label="Navigare principal�
       </div>
     </div>
     <div class="st-pages">
-      <a href="#mod-migratie" data-page><span class="nav-long">Jocul: Attila și Marea Migrație</span><span class="nav-short" aria-hidden="true">Jocul</span></a>
-      <a href="#mod-atelier" data-page><span class="nav-long">Masa istoricului</span><span class="nav-short" aria-hidden="true">Masa</span></a>
+      <a href="#mod-migratie" data-page class="st-game" hidden><span class="nav-long">Jocul: Attila și Marea Migrație</span></a>
+      <a href="#mod-atelier" data-page><span class="nav-long">Izvoarele pe axă</span><span class="nav-short" aria-hidden="true">Izvoarele</span></a>
       ${about}
     </div>
   </div>
@@ -75,8 +79,13 @@ swap("navLinks.forEach(function(a, i){ a.classList.toggle('current', i === index
   "navLinks.forEach(function(a, i){ a.classList.toggle('current', i === index); if (i === index) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });", 'router: pagina curentă');
 // capitolul curent: niciunul cât timp ești în deschidere; aria-current pe cel activ
 swap('var current = sections[0];', 'var current = null;', 'cuprins: începutul');
-swap("a.classList.toggle('active', current && a.getAttribute('data-sec') === current.id);",
-  "var on = !!(current && a.getAttribute('data-sec') === current.id); a.classList.toggle('active', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');", 'cuprins: activ');
+// capitolul activ (și „Surse” când citești bibliografia)
+{
+  const A = "a.classList.toggle('active', current && a.getAttribute('data-sec') === current.id);";
+  const B1 = "var on = !!(current && a.getAttribute('data-sec') === current.id); a.classList.toggle('active', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');";
+  const B = "var on = !!(current && (a.getAttribute('data-sec') === current.id || a.getAttribute('data-also') === current.id)); a.classList.toggle('active', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');";
+  if (s.includes(B1)) s = s.replace(B1, () => B); else swap(A, B, 'cuprins: activ');
+}
 
 // ---------- C) hero-ul: pictura ca imagine reală ----------
 const IMG = '<img id="hero-img" class="hero-img" src="' + b64('hero-1310.webp') + '" srcset="' + b64('hero-900.webp') + ' 900w, ' + b64('hero-1310.webp') + ' 1310w" sizes="100vw" width="1310" height="700" alt="Fresca lui Rafael: papa Leon cel Mare și Attila, cu Roma în fundal." loading="eager" fetchpriority="high" decoding="async">';
@@ -98,7 +107,7 @@ else {
     s = s.replace(qr[0], '');
     const p1 = s.indexOf('</p>\n', s.indexOf(head)) + '</p>\n'.length;
     s = s.slice(0, p1) + qr[0] + s.slice(p1);
-  } else if (!qr) fail('codul QR');
+  } // fără cod QR (scos în recenzia 7): nimic de mutat
 }
 // atlasul refolosește pictura: acum o ia din imagine
 swap("bg: '#acasa .hero-bg',", "id: 'hero-img',", 'atlas: pictura');
