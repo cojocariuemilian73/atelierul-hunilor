@@ -4,6 +4,8 @@
 <script>if (location.protocol === 'file:') location.replace('atelierul-hunilor.html' + location.hash);</script>
 <meta name="theme-color" content="#0c0a08">
 <meta charset="utf-8">
+<meta name="color-scheme" content="only light">
+<meta name="darkreader-lock">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atelierul Hunilor: Hunii și Marea Migrație a Popoarelor</title>
 <meta name="description" content="Site interactiv de istorie despre hunii lui Attila și Marea Migrație a Popoarelor: articol cu note și bibliografie, atlas, muzeu virtual cu artefacte reale, jocuri de decizie bazate pe izvoare și jocuri de gândire istorică.">
@@ -2768,7 +2770,14 @@
   @media (max-width: 620px){ #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: minmax(0, 1fr); } }
   /* meniul pe ecranele medii: încap și „Mituri”, și cele două jocuri */
   @media (max-width: 1279px){ #site-nav .st-pages a{ padding: 0 6px; } #site-nav .chap-bar a{ letter-spacing: 0.01em; } }
+  /* pagina are doar mod luminos: browserul nu o mai întunecă singur (pergamentul rămâne crem, etichetele hărților clare) */
+  :root{ color-scheme: only light; }
   /* /r8 */
+  /* r9: recenzia 9 (miturile și „Știai că…?” prin capitole) */
+  /* grupurile mici din capitole: aerisite, cu titlul ca un subtitlu mic */
+  #page-acasa .page-shell .mx.mx-inline{ margin: clamp(28px, 4vw, 48px) 0; }
+  #page-acasa .page-shell .mx.mx-inline .mx-title{ font-size: 1.3125rem; }
+  /* /r9 */
   /* ef: efecte (pergamentul imaginilor, călărețul de sub meniu) */
 
   /* ---------- D) călărețul de sub meniu: înaintează în ani pe măsură ce citești ---------- */
@@ -2841,7 +2850,6 @@
         <a href="#sec-atlas" data-sec="sec-atlas" class="toc-link">Atlas</a>
         <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități</a>
         <a href="#sec-muzeu" data-sec="sec-muzeu" class="toc-link">Muzeu</a>
-        <a href="#sec-mituri" data-sec="sec-mituri" class="toc-link">Mituri</a>
         <a href="#sec-glosar" data-sec="sec-glosar" data-also="biblio" class="toc-link">Surse</a>
       </div>
     </div>
@@ -2976,6 +2984,7 @@
         </div>
       </div>
 
+      <div class="mx mx-inline" data-myths="3,0,2" data-title="Mituri despre origine"></div>
       <div class="sr-row sr-reveal">
         <div class="sr-media"><figure class="sr-fig"><img class="img-parchment" id="img-neuville" src="media/7e79371c2b2d.jpg" alt="Ilustrație: călăreți huni cu arcuri, în galop, în plină bătălie." loading="lazy"><figcaption>Alphonse de Neuville, <b><i>Hunii la bătălia de la Châlons</i></b> (1869), din <i>Istoria Franței</i> a lui Guizot: arcașii călare, așa cum și-i imagina secolul al XIX-lea. Domeniu public.</figcaption></figure></div>
         <div class="sr-text">
@@ -2992,12 +3001,14 @@
       </div>
 
       <!-- pq:start --><figure class="pq"><blockquote><p>Socotind că nu se cuvine să coboare de pe cai, barbarii au ținut sfatul călare; iar romanii, ca să nu se arate mai prejos, au vorbit și ei tot din șa.</p></blockquote><figcaption><b>Priscus</b>, fr. 2, despre tratatul de la Margus (c. 435) · traducere adaptată</figcaption></figure><!-- pq:end -->
+      <div class="mx mx-inline" data-myths="13,9,12" data-title="Știai că…? Viața în șa"></div>
       <div class="src-compare sr-reveal">
         <h3 class="sub-title">Izvoarele, față în față</h3>
         <p class="sc-lead">Tot ce știm despre huni vine din cinci tipuri de surse. Niciuna nu e completă. Un martor ocular are interesele lui, un rezumat târziu poate păstra surse pierdute, iar un obiect arată ce a existat, dar nu cine l-a folosit.</p>
         <div class="sc-wrap" role="region" aria-label="Izvoarele, față în față (tabel)" tabindex="0"><table class="sc-table"><colgroup><col class="sc-c0"><col><col><col><col><col></colgroup><thead><tr><th scope="col" class="sc-c0">Sursa</th><th scope="col" class="sc-text"><b>Ammianus Marcellinus</b><small>Res Gestae, cartea 31 · c. 390</small></th><th scope="col" class="sc-text"><b>Priscus din Panium</b><small>Istorie, păstrată în fragmente · după 472</small></th><th scope="col" class="sc-text"><b>Iordanes</b><small>Getica · 551</small></th><th scope="col" class="sc-obj"><b>Arheologia</b><small>morminte, cazane, diademe, arcuri · sec. IV–V</small></th><th scope="col" class="sc-dna"><b>Genetica (ADN antic)</b><small>Neparáczki 2019, Maróti 2022 · 2019–2022</small></th></tr></thead><tbody><tr><th scope="row" class="sc-c0">Distanța în timp</th><td class="sc-text"><span class="sc-gap"><i style="width:15%"></i>~15 ani după</span></td><td class="sc-text"><span class="sc-gap zero">din epocă</span></td><td class="sc-text"><span class="sc-gap"><i style="width:100%"></i>~100 de ani după</span></td><td class="sc-obj"><span class="sc-gap zero">din epocă</span></td><td class="sc-dna"><span class="sc-gap modern">cercetare modernă</span></td></tr><tr><th scope="row" class="sc-c0">Tipul sursei</th><td class="sc-text"><p class="sc-w sc-w-no"><span aria-hidden="true">○</span>Contemporan, dar nu i-a văzut pe huni</p></td><td class="sc-text"><p class="sc-w sc-w-yes"><span aria-hidden="true">●</span>Martor ocular: în solia din 449</p></td><td class="sc-text"><p class="sc-w sc-w-no"><span aria-hidden="true">○</span>Nu a fost martor; rezumă autori mai vechi</p></td><td class="sc-obj"><p class="sc-w sc-w-obj"><span aria-hidden="true">◆</span>Obiecte din epocă</p></td><td class="sc-dna"><p class="sc-w sc-w-obj"><span aria-hidden="true">◆</span>Analiză modernă pe schelete din epocă</p></td></tr><tr><th scope="row" class="sc-c0">Ce aflăm</th><td class="sc-text">Cea mai veche descriere amănunțită a hunilor și a șocului din 375–378.</td><td class="sc-text">Curtea lui Attila văzută din interior: ospățul, diplomația, tributul.</td><td class="sc-text">Câmpiile Catalaunice, moartea lui Attila, bătălia de la Nedao.</td><td class="sc-obj">Ce purtau, ce foloseau și cât de departe ajungea moda elitelor din lumea hunică.</td><td class="sc-dna">O populație amestecată: câteva linii est-asiatice într-o masă majoritar locală.</td></tr><tr><th scope="row" class="sc-c0">Limite</th><td class="sc-text">Folosește tipare vechi despre „barbari”: imaginea e literară, nu observație de teren.</td><td class="sc-text">Avem doar fragmente copiate de alții; privește lumea hunică cu ochi de diplomat bizantin.</td><td class="sc-text">Scrie o istorie a goților, la un secol distanță, și are interesul să-i pună în lumină.</td><td class="sc-obj">Obiectele nu spun etnia: aceeași diademă putea fi purtată de un hun, un got sau un alan.</td><td class="sc-dna">Eșantioane mici, mai ales din morminte de elită; ADN-ul nu arată identitatea asumată.</td></tr></tbody></table></div><p class="sc-hint" aria-hidden="true">Derulează tabelul spre dreapta →</p>
         <p class="section-sources">Distanța e socotită față de evenimentele descrise (375–378 pentru Ammianus, 451–454 pentru Iordanes). Edițiile și studiile sunt în bibliografia de la final.</p>
       </div>
+      <div class="mx mx-inline" data-myths="1,6" data-title="Mituri despre izvoare"></div>
     </section>
 
     <div class="ch-orn" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12H108M132 12H232"/><path class="d" d="M120 4l8 8-8 8-8-8z"/></svg></div>
@@ -3088,6 +3099,7 @@
         </div>
       </div>
       <!-- aur:end -->
+      <div class="mx mx-inline" data-myths="10,11,14" data-title="Știai că…? Aurul tributului"></div>
 
       <!-- pq:start --><figure class="pq"><blockquote><p>Orașul care a cucerit lumea întreagă a fost cucerit el însuși.</p></blockquote><figcaption><b>Ieronim</b>, Scrisoarea 127, despre jefuirea Romei (410) · traducere adaptată</figcaption></figure><!-- pq:end -->
       <p class="to-atlas"><a href="#sec-atlas">Traseele vizigoților, ostrogoților, vandalilor și hunilor, an cu an: vezi Atlasul →</a></p>
@@ -3282,6 +3294,7 @@
       <div class="sr-row sr-reveal">
         <div class="sr-media"><figure class="sr-fig"><img class="img-parchment" id="img-delacroix" src="media/789e943479ae.webp" alt="Pictură romantică: Attila călare, urmat de războinici, trece peste figuri care reprezintă Italia și artele." loading="lazy"><figcaption>Eugène Delacroix, <b><i>Attila și hoardele sale călcând Italia și artele</i></b> (1838–1847, detaliu), Palatul Bourbon, Paris: imaginea romantică a „biciului lui Dumnezeu”. Domeniu public.</figcaption></figure></div>
         <div class="sr-text">
+      <div class="mx mx-inline" data-myths="8,7,5" data-title="Mituri despre Attila"></div>
       <h3 class="sub-title">Consecințe de lungă durată</h3>
       <ol class="cascade" aria-label="Consecințele, ca un lanț de cauze și efecte">
         <li class="cs-step" style="--k:0"><p class="it-year">476 d.Hr.</p><p>La doar 23 de ani după moartea lui Attila, ultimul împărat al Romei de Apus este detronat. E data convențională a căderii Imperiului Roman de Apus.</p></li>
@@ -3302,6 +3315,7 @@
         </div>
       </div>
       <p class="source-caution"><b>O precizare necesară.</b> Prezența unor obiecte „hunice” într-un mormânt nu dovedește că cel îngropat era hun. În secolul al V-lea, stilul policrom cu granate, cazanele de bronz și chiar deformarea craniană circulau între popoare ca modă a elitelor. Ele arată apartenența la o lume politică dominată de huni, nu neapărat originea etnică a purtătorului, iar „prințesa” de la Gherăseni e un exemplu bun tocmai fiindcă originea ei etnică rămâne deschisă.</p>
+      <div class="mx mx-inline" data-myths="4" data-title="Un mit despre Bazinul Carpatic"></div>
     </section>
 
     <div class="ch-orn" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12H108M132 12H232"/><path class="d" d="M120 4l8 8-8 8-8-8z"/></svg></div>
@@ -3323,12 +3337,6 @@
 
 
     <!-- TEXTUL TĂU: un final personal (ce ai învățat, ce n-ai reușit să lămurești, ce ai citi mai departe). Scrie-l aici, într-un <section id="sec-final">. -->
-    <div class="ch-orn" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12H108M132 12H232"/><path class="d" d="M120 4l8 8-8 8-8-8z"/></svg></div>
-    <section id="sec-mituri">
-      <div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">07</span><h2 class="sec-title">Mituri verificate</h2></div>
-      <p class="sec-sub">Ce se spune adesea despre huni și ce arată, de fapt, izvoarele, arheologia și genetica.</p>
-      <div class="mx mx-all-in-one" data-myths="0,1,3,13,4,10,11,14,7,8,2,5,6,9,12" data-title="Opt mituri și șapte curiozități"></div>
-    </section>
   </article>
 
   <div class="cta-card">
@@ -3908,6 +3916,7 @@
     var miTag = document.getElementById('mi-tag');
     var miTitle = document.getElementById('mi-title');
     var miDesc = document.getElementById('mi-desc');
+    if (!miTag || !miTitle || !miDesc) return;
     if (!miTag || !miTitle || !miDesc) return;
     if (!miTag || !miTitle || !miDesc) return;
 
@@ -4810,8 +4819,8 @@
     var head = document.createElement('div');
     head.className = 'mx-head';
     head.innerHTML = '<h3 class="mx-title">' + host.getAttribute('data-title') + '</h3>' +
-      '<p class="mx-count"><b>0</b> din ' + ids.length + ' verificate</p>' +
-      '<button type="button" class="mx-all">Verifică toate</button>';
+      (ids.length > 1 ? '<p class="mx-count"><b>0</b> din ' + ids.length + ' verificate</p>' +
+      '<button type="button" class="mx-all">Verifică toate</button>' : '<p class="mx-count" hidden><b>0</b></p><button type="button" class="mx-all" hidden></button>');
     host.appendChild(head);
     // toate grupurile de mituri au același format: rânduri deschise (teancul de dosare închise nu se mai folosește)
     if (++mxGroup < 0) {

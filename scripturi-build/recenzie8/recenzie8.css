@@ -19,4 +19,6 @@
   @media (max-width: 620px){ #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: minmax(0, 1fr); } }
   /* meniul pe ecranele medii: încap și „Mituri”, și cele două jocuri */
   @media (max-width: 1279px){ #site-nav .st-pages a{ padding: 0 6px; } #site-nav .chap-bar a{ letter-spacing: 0.01em; } }
+  /* pagina are doar mod luminos: browserul nu o mai întunecă singur (pergamentul rămâne crem, etichetele hărților clare) */
+  :root{ color-scheme: only light; }
   /* /r8 */

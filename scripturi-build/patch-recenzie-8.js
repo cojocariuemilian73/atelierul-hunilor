@@ -20,6 +20,9 @@ let s = raw.split('\r\n').join('\n');
 const fail = m => { console.error(rel + ': ' + m); process.exit(1); };
 function swap(a, b, what){ const n = s.split(a).length - 1; if (n === 1) { s = s.replace(a, () => b); return; } if (s.includes(b)) return; fail(what + ' (' + n + ')'); }
 
+// ---------- modul luminos: browserele cu „mod întunecat forțat” (Chrome/Edge, Dark Reader) nu mai recolorează pagina ----------
+swap('<meta charset="utf-8">\n', '<meta charset="utf-8">\n<meta name="color-scheme" content="only light">\n<meta name="darkreader-lock">\n', 'modul luminos');
+
 // ---------- stilurile și scriptul ----------
 const k0 = s.indexOf('  /* r8: recenzia 8');
 if (k0 >= 0) { const e = '  /* /r8 */\n'; const k1 = s.indexOf(e, k0); if (k1 < 0) fail('sfârșit CSS r8'); s = s.slice(0, k0) + s.slice(k1 + e.length); }

@@ -1,7 +1,7 @@
 // Pagina Acasă / Articol, redesenată (din scripturi-build/acasa/):
 //  A) fundalul: fără „cutia” articolului, o coloană de lectură de 860 px direct pe un fundal cald; meta theme-color;
 //  B) un singur meniu sticky: „Atelierul Hunilor” (Acasă) · capitolele, fără numere (Glosarul și Bibliografia ca „Surse”) ·
-//     Mituri, Jocul, Jocul izvoarelor, Despre proiect;
+//     Jocul, Jocul izvoarelor, Despre proiect;
 //     se ascunde la derularea în jos, revine la derularea în sus; pe telefon, un sertar; punct auriu la capitolele citite;
 //  C) hero-ul: pictura lui Rafael ca imagine (WebP, două mărimi), metadatele ca trei chip-uri, legenda în colț;
 //  D) titlul capitolului: numărul mare și titlul într-un singur bloc (fără eticheta repetată);
@@ -50,9 +50,8 @@ if (c0 >= 0) {
 }
 // capitolele, fără numere; Glosarul și Bibliografia sunt un singur item, „Surse” (activ în ambele)
 const CH = [['sec-origini', 'Origini'], ['sec-cronologie', 'Cronologie'], ['sec-migratie', 'Marea Migrație'], ['sec-atlas', 'Atlas'],
-  ['sec-personalitati', 'Personalități'], ['sec-muzeu', 'Muzeu'], ['sec-mituri', 'Mituri'], ['sec-glosar', 'Surse', 'biblio']];
-// „Mituri” e o secțiune adăugată mai târziu (patch-recenzie-7.js), deci poate lipsi aici
-CH.forEach(c => { if (c[0] !== 'sec-mituri' && !s.includes('id="' + c[0] + '"')) fail('capitolul ' + c[0]); });
+  ['sec-personalitati', 'Personalități'], ['sec-muzeu', 'Muzeu'], ['sec-glosar', 'Surse', 'biblio']];
+CH.forEach(c => { if (!s.includes('id="' + c[0] + '"')) fail('capitolul ' + c[0]); });
 const chapLinks = CH.map(c => '<a href="#' + c[0] + '" data-sec="' + c[0] + '"' + (c[2] ? ' data-also="' + c[2] + '"' : '') + ' class="toc-link">' + c[1] + '</a>');
 const NAV = `<nav class="site-nav" id="site-nav" aria-label="Navigare principală">
   <a class="st-brand" href="#page-acasa" data-page><span class="st-mark" aria-hidden="true"></span>Atelierul Hunilor</a>
@@ -117,7 +116,7 @@ swap("bg: '#acasa .hero-bg',", "id: 'hero-img',", 'atlas: pictura');
 s = s.replace(/<div class="chapter-mark"><span class="chapter-num">(\d+)<\/span><span class="chapter-slash">\/<\/span><span class="chapter-tag">[^<]*<\/span><\/div>\s*<h2 class="sec-title">([\s\S]*?)<\/h2>/g,
   (m, n, t) => '<div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">' + n + '</span><h2 class="sec-title">' + t + '</h2></div>');
 const heads = (s.match(/class="chapter-mark sec-head"/g) || []).length;
-if (heads !== 8) fail('titlurile capitolelor (' + heads + ')');
+if (heads !== 8 && !(heads === 9 && s.includes('<section id="sec-mituri">'))) fail('titlurile capitolelor (' + heads + ')');
 
 // ---------- stilurile și scriptul ----------
 const k0 = s.indexOf('  /* ah: acasa');
