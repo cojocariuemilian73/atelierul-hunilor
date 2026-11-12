@@ -458,31 +458,6 @@
   /* /hv */
   .fig-map{ margin: 28px 0; }
   .fig-map img{ width: 100%; height: auto; display: block; border: 1px solid var(--line-strong); border-radius: 2px; background: #f0e6d6; }
-  /* harta campaniei din Galia (galia/splice-galia.js) */
-  .gal-fig{ max-width: 780px; margin-left: auto; margin-right: auto; }
-  .gal-map{ display: block; width: 100%; height: auto; border: 1px solid var(--line-strong); background: #0e0e10; }
-  .gal-wrap{ cursor: zoom-in; }
-  .lb-svg-wrap.gal-wrap{ cursor: inherit; }
-  .gal-region{ font: 700 4px 'Cinzel', serif; letter-spacing: 0.35em; fill: rgba(246, 237, 220, 0.42); text-anchor: middle; }
-  .gal-river{ font: italic 600 2.5px 'Cormorant Garamond', serif; fill: #9cc6f0; text-anchor: middle; }
-  .gal-map use{ filter: saturate(0.65) brightness(0.82) sepia(0.18); }
-  .gal-from{ font: italic 600 2.3px 'Cormorant Garamond', serif; fill: #9cc6f0; text-anchor: middle; }
-  .gal-sea{ font: italic 600 2.8px 'Cormorant Garamond', serif; fill: rgba(156, 198, 240, 0.75); text-anchor: middle; letter-spacing: 0.08em; }
-  .gal-hun{ stroke: #e0626c; stroke-width: 0.85; }
-  .gal-hun.back{ stroke-dasharray: 1.6 1.2; }
-  .gal-rom{ stroke: #9cc6f0; stroke-width: 0.85; }
-  .gal-pts text{ font: 600 2.45px 'Source Serif 4', Georgia, serif; fill: #f6eddc; paint-order: stroke; stroke: rgba(14, 13, 11, 0.85); stroke-width: 0.7px; }
-  .gal-j{ fill: #e0626c; stroke: #14120f; stroke-width: 0.35; }
-  .gal-a{ fill: #14120f; stroke: #e0626c; stroke-width: 0.45; }
-  .gal-o{ fill: none; stroke: #f2d474; stroke-width: 0.45; }
-  .gal-b{ fill: #9cc6f0; stroke: #14120f; stroke-width: 0.3; }
-  .gal-battle{ fill: #f2d474; stroke: #14120f; stroke-width: 0.35; }
-  .gal-pts .gal-bt{ font: 700 2.7px 'Cinzel', serif; fill: #f2d474; }
-  .gal-pts .gal-bt2{ font: 600 2.2px 'JetBrains Mono', monospace; fill: #e6d7c3; }
-  .gal-legend > rect{ fill: rgba(14, 13, 11, 0.86); stroke: rgba(212, 175, 55, 0.45); stroke-width: 0.25; }
-  .gal-legend text{ font: 2.15px 'Source Serif 4', Georgia, serif; fill: #e6d7c3; }
-  .gal-legend path{ fill: none; }
-  /* /galia */
   .fig-map figcaption{
     font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; line-height: 1.65; color: var(--ink-dim);
     margin-top: 10px;
@@ -807,15 +782,7 @@
   .duel-card .dc-epithet{ font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--ink-dim); font-size: 1rem; margin: 0 0 16px; }
   .duel-card ul{ margin: 0; padding-left: 16px; }
   .duel-card li{ font-size: 0.92rem; line-height: 1.55; margin-bottom: 9px; color: var(--ink-dim); }
-  .duel-vs{ display: none; }
 
-  .impact-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 24px 0; border-top: 1px solid var(--line-strong); }
-  @media (max-width: 720px){ .impact-grid{ grid-template-columns: repeat(2, 1fr); } }
-  .impact-tile{ padding: 16px 16px 16px 0; border-right: 1px solid var(--line); }
-  .impact-tile:last-child{ border-right: none; }
-  @media (max-width: 720px){ .impact-tile:nth-child(2n){ border-right: none; } .impact-tile{ border-bottom: 1px solid var(--line); padding-right: 16px; } }
-  .impact-tile .it-year{ font-family: 'JetBrains Mono', monospace; font-size: 0.86rem; font-weight: 700; color: var(--accent); margin: 0 0 8px; }
-  .impact-tile p{ font-size: 0.9rem; color: var(--ink-dim); margin: 0; line-height: 1.55; }
 
   /* ---------- BIBLIOGRAPHY ---------- */
   .biblio{ list-style: none; margin: 0; padding: 0; counter-reset: bib; column-count: 1; }
@@ -965,9 +932,6 @@
   .sr-row.cap-over .sr-fig figcaption b{ color: #f6eddc; }
   /* /sr-fit */
   .sr-text > :first-child{ margin-top: 0; }
-  .sr-text .impact-grid{ grid-template-columns: repeat(2, 1fr); }
-  .sr-text .impact-tile:nth-child(2n){ border-right: none; }
-  .sr-text .impact-tile{ border-bottom: 1px solid var(--line); padding-right: 16px; }
   @media (max-width: 760px){
     .sr-row{ grid-template-columns: 1fr; gap: 18px; }
     .sr-media{ position: static; }
@@ -1006,17 +970,6 @@
   .lab-in-article .module{ margin-top: 18px; }
 
 
-  /* cod QR pentru joc: doar pe ecrane late, unde nu ești deja pe telefon */
-  .m-game .qr-card{ display: none; }
-  @media (min-width: 900px) and (hover: hover){
-    .m-game .qr-card{ display: flex; align-items: center; gap: 18px; margin-top: 22px; padding: 14px 16px; border: 1px dashed rgba(212,175,55,0.5); background: rgba(212,175,55,0.05); }
-    .m-game .qr-code{ flex: none; width: 112px; padding: 7px; background: #fff; border-radius: 3px; }
-    .m-game .qr-code svg{ display: block; width: 100%; height: auto; }
-    .m-game .qr-title{ font-family: 'Cinzel', Georgia, serif; font-weight: 700; font-size: 1rem; color: #e5c158; margin: 0 0 4px; }
-    .m-game .qr-text p{ margin: 0 0 6px; font-size: 0.86rem; line-height: 1.5; color: #cbbca4; }
-    .m-game .qr-text a{ font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #e5c158; text-decoration: none; letter-spacing: 0.04em; }
-    .m-game .qr-text a:hover{ text-decoration: underline; }
-  }
 
   /* ============ MODULE: ATELIERUL ISTORICULUI (.m-atelier) ============ */
   #mod-atelier{ padding-block: 64px 28px; }
@@ -1473,17 +1426,6 @@
 
   @media (prefers-reduced-motion: reduce){ .jg *{ animation: none !important; transition: none !important; } }
 
-  /* cod QR pentru joc: doar pe ecrane late */
-  .jg .qr-card{ display: none; }
-  @media (min-width: 900px) and (hover: hover){
-    .jg .qr-card{ display: flex; align-items: center; gap: 18px; margin-top: 22px; padding: 14px 16px; border: 1px solid rgba(212, 175, 55, 0.28); background: rgba(212,175,55,0.05); }
-    .jg .qr-code{ flex: none; width: 104px; padding: 7px; background: #fff; border-radius: 3px; }
-    .jg .qr-code svg{ display: block; width: 100%; height: auto; }
-    .jg .qr-title{ font-family: 'Cinzel', Georgia, serif; font-weight: 700; font-size: 1rem; color: #e5c158; margin: 0 0 4px; }
-    .jg .qr-text p{ margin: 0 0 6px; font-size: 0.86rem; line-height: 1.5; color: #cbbca4; }
-    .jg .qr-text a{ font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #e5c158; text-decoration: none; }
-  }
-
   /* ---------- Marea Migrație, simularea ---------- */
   .mig-main{ display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 14px; align-items: start; }
   @media (max-width: 980px){ .mig-main{ grid-template-columns: 1fr; } }
@@ -1558,10 +1500,6 @@
   .mig-stage:fullscreen canvas{ width: 100%; height: auto; max-height: calc(100vh - 46px); object-fit: contain; }
   .mig-stage:-webkit-full-screen{ display: flex; flex-direction: column; justify-content: center; background: #0e0d0b; }
   .mig-stage:-webkit-full-screen canvas{ width: 100%; height: auto; max-height: calc(100vh - 46px); object-fit: contain; }
-  /* codul QR se mărește de 3 ori la mouse sau Tab (doar pe ecrane late; pe telefon blocul e ascuns) */
-  .jg .qr-code{ position: relative; z-index: 5; transform-origin: 0 50%; transition: transform 0.25s cubic-bezier(.16,1,.3,1), box-shadow 0.25s; }
-  .jg .qr-code:hover, .jg .qr-code:focus-visible{ transform: scale(3); box-shadow: 0 0 0 100vmax rgba(10,10,12,0.72); outline: none; }
-  @media (prefers-reduced-motion: reduce){ .jg .qr-code{ transition: none; } }
   /* Marea Migrație: antet scurt, harta ca element principal, comenzile peste hartă */
   .mig-head{ padding: 30px 0 0; }
   .mig-head h1{ margin: 0 0 6px; font: 600 clamp(1.8rem, 3.4vw, 2.4rem)/1.1 'Cormorant Garamond', Georgia, serif; color: #f6eddc; text-wrap: balance; }
@@ -1827,8 +1765,6 @@
   }
   /* ecranul complet: aceeași ordine, harta cât încape */
   .mig-stage:fullscreen .mig-view canvas, .mig-stage:-webkit-full-screen .mig-view canvas{ width: min(100%, calc((100vh - 160px) * 2.069)); max-height: none; }
-  /* codul QR: mic, sub joc */
-  #mod-migratie .qr-card{ max-width: 560px; margin-top: 14px; padding: 10px 12px; }
   @media (prefers-reduced-motion: reduce){ .mig-float, .mig-actcard, .mig-rotate svg, .mig-news.in p, .mig-news.in > b{ animation: none; } }
   .mig-view:has(.mig-replay:not([hidden])) .mig-fiche{ top: 62px; }
 
@@ -2132,10 +2068,6 @@
   .pq figcaption b{ font: 600 0.92rem 'Cinzel', Georgia, serif; letter-spacing: 0.04em; color: #e5c158; }
   @media (max-width: 620px){ h1.title{ font-size: 2.5rem; } h1.title .t-sub{ font-size: 0.56em; } .hero-years{ font-size: 0.82rem; margin-bottom: 16px; } }
   @media (max-width: 620px){ .pq{ padding: 22px 16px 18px 50px; } .pq::before{ left: 6px; font-size: 4.6rem; } }
-  /* Attila și Aetius: „VS” în mijloc */
-  .duel{ position: relative; }
-  .duel-vs{ display: grid !important; place-items: center; position: absolute; left: 52.38%; top: 0; z-index: 2; width: 58px; height: 58px; transform: translate(-50%, -50%) rotate(-6deg); border: 1px solid #c9a13a; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #2a2219, #14110d 70%); box-shadow: 0 0 0 5px var(--paper), 0 8px 20px rgba(0, 0, 0, 0.5); font: 700 1.1rem 'Cinzel', Georgia, serif; letter-spacing: 0.04em; color: #f2d474; text-transform: uppercase; }
-  @media (max-width: 620px){ .duel-vs{ position: static; justify-self: center; margin: -29px 0; transform: rotate(-6deg); } }
   /* viețile lor, pe aceeași linie */
   .duel-lives{ max-width: 760px; margin: -6px auto 30px; padding: 16px 18px 12px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
   .dl-row, .dl-axis{ display: grid; grid-template-columns: 74px 1fr 92px; align-items: center; gap: 12px; }
@@ -2156,7 +2088,7 @@
   .dl-key span{ display: inline-block; width: 18px; height: 8px; background: #e0626c; opacity: 0.45; }
   .dl-key span.k2{ opacity: 1; margin-left: 8px; }
   @media (max-width: 620px){ .dl-row, .dl-axis{ grid-template-columns: 56px 1fr; } .dl-row em{ display: none; } .dl-key{ margin-left: 0; } .dl-axis small:not(.x){ font-size: 0.64rem; } }
-  @media print{ .ch-orn, .duel-vs{ display: none !important; } .pq{ break-inside: avoid; } }
+  @media print{ .ch-orn{ display: none !important; } .pq{ break-inside: avoid; } }
   /* /dp */
   /* r3: a treia recenzie */
   /* textul articolului: mai mult aer între paragrafe și înaintea subtitlurilor */
@@ -2286,6 +2218,75 @@
   @keyframes pg-fade{ 0%, 35%{ opacity: 1; } 100%{ opacity: 0; } }
   @media print{ .fx .fw-host .fw{ opacity: 1 !important; animation: none !important; } .fx .lede .dc{ color: var(--accent) !important; animation: none !important; } .pg-curtain{ display: none; } }
   /* /fx */
+  /* r5: a cincea recenzie */
+  /* Attila și Aetius: două fișe de personaj */
+  .duel.dk{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(18px, 3vw, 34px); margin: 30px 0 12px; border: 0; }
+  .duel.dk .duel-card{ position: relative; display: flex; flex-direction: column; padding: 14px 16px 18px; border: 1px solid rgba(229, 193, 88, 0.5); border-radius: 10px; background: linear-gradient(180deg, rgba(229, 193, 88, 0.08), rgba(229, 193, 88, 0) 42%), var(--paper); box-shadow: inset 0 0 0 4px var(--paper), inset 0 0 0 5px rgba(229, 193, 88, 0.2), 0 18px 40px rgba(0, 0, 0, 0.32); }
+  .duel.dk .duel-card.attila{ border-right: 1px solid rgba(229, 193, 88, 0.5); border-bottom: 1px solid rgba(229, 193, 88, 0.5); }
+  .duel.dk .dc-img{ margin: 0 0 14px; }
+  .duel.dk .dc-img img{ height: clamp(190px, 22vw, 240px); }
+  .duel.dk .dc-role{ align-self: flex-start; margin: 0 0 8px; padding: 3px 10px; border: 1px solid var(--line-strong); border-radius: 999px; color: #e5c158; }
+  .duel.dk h4{ font-size: 1.8rem; line-height: 1.1; margin: 0 0 4px; }
+  .duel.dk .dc-epithet{ margin: 0 0 14px; }
+  .dk-stats{ margin: 0 0 14px; padding: 12px 0 2px; border-top: 1px solid var(--line-strong); }
+  .dk-stat{ display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 2px 10px; margin-bottom: 10px; }
+  .dk-stat dt{ font: 700 0.76rem 'Cinzel', Georgia, serif; letter-spacing: 0.06em; color: var(--ink); }
+  .dk-stat dd{ display: contents; }
+  .dk-stat em{ grid-column: 2; grid-row: 1; font: italic 0.82rem 'Source Serif 4', Georgia, serif; color: var(--ink-dim); }
+  .dk-bar{ grid-column: 1 / -1; display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; height: 8px; }
+  .dk-bar i{ border-radius: 1px; background: rgba(229, 193, 88, 0.14); }
+  .dk-v3 i:nth-child(-n+3), .dk-v4 i:nth-child(-n+4), .dk-v5 i{ background: linear-gradient(180deg, #f2d474, #c9a13a); }
+  .dk-label{ margin: 0 0 6px; font: 700 0.72rem 'Cinzel', Georgia, serif; letter-spacing: 0.08em; text-transform: uppercase; color: #e5c158; }
+  .duel.dk .dk-facts{ list-style: none; margin: 0; padding: 0; }
+  .duel.dk .dk-facts li{ position: relative; margin: 0 0 7px; padding-left: 16px; font-size: 0.88rem; line-height: 1.5; color: var(--ink-dim); }
+  .dk-facts li::before{ content: ''; position: absolute; left: 1px; top: 0.6em; width: 6px; height: 6px; background: #e5c158; transform: rotate(45deg); }
+  .dk-note{ max-width: 760px; margin: 0 auto 26px; text-align: center; font: italic 0.84rem 'Source Serif 4', Georgia, serif; color: var(--ink-dim); }
+  @media (max-width: 700px){ .duel.dk{ grid-template-columns: 1fr; } }
+  /* Consecințe de lungă durată: lanțul cauză–efect, în cascadă */
+  .cascade{ list-style: none; margin: 22px 0 8px; padding: 0; }
+  .cs-step{ position: relative; width: 78%; margin: 0 0 30px calc(var(--k) * 7.3%); padding: 12px 16px 13px; border: 1px solid var(--line-strong); border-left: 2px solid #e5c158; background: linear-gradient(90deg, rgba(229, 193, 88, 0.08), rgba(229, 193, 88, 0.02)); }
+  .cs-step:last-child{ margin-bottom: 0; }
+  .cs-step .it-year{ margin: 0 0 4px; font: 700 0.86rem 'JetBrains Mono', monospace; color: #e5c158; }
+  .cs-step p:not(.it-year){ margin: 0 !important; font-size: 0.92rem; line-height: 1.55; color: var(--ink-dim); }
+  .cs-step:not(:last-child)::after{ content: ''; position: absolute; left: 22px; top: calc(100% + 3px); width: 34px; height: 25px; background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 25'%3E%3Cpath d='M2 1c0 11 9 18 24 19' fill='none' stroke='%23e5c158' stroke-width='1.4' stroke-opacity='.7'/%3E%3Cpath d='M22 15.5l6 4.6-6.6 3.4' fill='none' stroke='%23e5c158' stroke-width='1.4' stroke-opacity='.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  @media (max-width: 620px){
+    .cs-step{ width: auto; margin-left: 0; margin-bottom: 26px; }
+    .cs-step:not(:last-child)::after{ left: 50%; width: 14px; height: 20px; transform: translateX(-50%); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 20'%3E%3Cpath d='M7 1v16M2.5 12.5L7 17.5l4.5-5' fill='none' stroke='%23e5c158' stroke-width='1.4' stroke-opacity='.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  }
+  /* codul QR: în deschidere și într-o fereastră; pe telefon nu e nevoie de el */
+  .hero-qr, .qr-fab{ display: none; }
+  .hq-code, .qr-d-code{ background: #fff; border-radius: 4px; }
+  .hq-code svg, .qr-d-code svg{ display: block; width: 100%; height: auto; }
+  @media (min-width: 900px) and (hover: hover){
+    .hero-qr{ display: flex; align-items: center; gap: 18px; max-width: 470px; margin-top: 22px; padding: 14px; border: 1px solid rgba(229, 193, 88, 0.55); background: rgba(14, 12, 9, 0.8); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45); backdrop-filter: blur(4px); }
+    .hq-code{ flex: none; width: 176px; padding: 14px; }
+    .hq-title{ margin: 0 0 6px; font: 700 1.05rem 'Cinzel', Georgia, serif; letter-spacing: 0.04em; color: #f2d474; }
+    .hq-text p:not(.hq-title){ margin: 0 0 10px; font-size: 0.9rem; line-height: 1.5; color: #e6d7c3; }
+    .hq-text a, .qr-dialog a{ font: 700 0.72rem 'JetBrains Mono', monospace; letter-spacing: 0.04em; color: #e5c158; text-decoration: none; }
+    .hq-text a:hover, .qr-dialog a:hover{ text-decoration: underline; }
+    .qr-fab{ position: fixed; left: 18px; bottom: 18px; z-index: 150; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 12px; border: 1px solid rgba(229, 193, 88, 0.6); border-radius: 999px; background: rgba(18, 16, 12, 0.92); color: #f2d474; font: 700 0.78rem 'Cinzel', Georgia, serif; letter-spacing: 0.05em; cursor: pointer; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45); transition: opacity 0.25s, transform 0.25s, background 0.15s; }
+    .qr-fab svg{ width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+    .qr-fab:hover{ background: #221d14; }
+    .qr-fab:focus-visible, .qr-d-close:focus-visible, .qr-dialog a:focus-visible, .hq-text a:focus-visible{ outline: 2px solid #f2d474; outline-offset: 3px; }
+    .qr-fab.away{ opacity: 0; transform: translateY(12px); pointer-events: none; }
+  }
+  @media (min-width: 1200px) and (hover: hover){
+    .hero-inner{ position: relative; }
+    .hero-qr{ position: absolute; right: 18px; bottom: clamp(26px, 5vw, 40px); flex-direction: column; align-items: stretch; width: 236px; margin: 0; text-align: center; }
+    .hq-code{ width: auto; padding: 16px; }
+    .hero-inner .byline{ max-width: calc(100% - 270px); }
+  }
+  .qr-dialog{ width: min(92vw, 380px); padding: 30px 26px 24px; border: 1px solid rgba(229, 193, 88, 0.6); border-radius: 6px; background: #121214; color: #e6d7c3; text-align: center; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6); }
+  .qr-dialog::backdrop{ background: rgba(10, 10, 12, 0.72); }
+  .qr-d-close{ position: absolute; top: 6px; right: 6px; width: 44px; height: 44px; border: 0; background: none; color: #cbbca4; font-size: 1.1rem; cursor: pointer; }
+  .qr-d-close:hover{ color: #f2d474; }
+  .qr-d-kicker{ margin: 0 0 6px; font: 700 0.7rem 'JetBrains Mono', monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #e5c158; }
+  .qr-dialog h2{ margin: 0 0 18px; font: 700 1.6rem 'Cinzel', Georgia, serif; color: #f6eddc; }
+  .qr-d-code{ width: min(100%, 264px); margin: 0 auto 16px; padding: 20px; }
+  .qr-d-how{ margin: 0 0 12px; font-size: 0.92rem; line-height: 1.5; color: #cbbca4; }
+  @media (prefers-reduced-motion: reduce){ .qr-fab{ transition: none; } }
+  @media print{ .hero-qr, .qr-fab, .qr-dialog{ display: none !important; } .cs-step{ width: auto; margin-left: 0; } .cs-step::after{ display: none; } }
+  /* /r5 */
 </style>
 </head>
 <body>
@@ -2344,7 +2345,7 @@
       <li><strong>Ilustrațiile din articol, joc, solie și atlas</strong> sunt tot documente reale, fiecare cu autorul, data și licența în legendă: miniaturi medievale (<em>Cronica pictată de la Viena</em>, c. 1360; <em>Spieghel Historiael</em>, c. 1330), picturi și gravuri din secolul al XIX-lea (Delacroix, Paczka, de Neuville, Trenk) și fotografii (Zidurile Theodosiene, un solid al lui Teodosie al II-lea, craniul deformat de la Mözs). Picturile sunt interpretări artistice târzii, nu surse despre secolul al V-lea.</li>
       <li><strong>Hărțile istorice din articol</strong> (Ptolemeu–Porro, 1596; invaziile Imperiului Roman) sunt reproduse de pe Wikimedia Commons, cu licența afișată.</li>
       <li><strong>Portretele din joc</strong> (ferestrele de decizie): Valens pe un solid de aur (The Metropolitan Museum of Art, CC0), Stilicho pe dipticul de fildeș de la Monza (domeniu public), Honoria pe un solid bătut la Ravenna (CNG, CC BY-SA 2.5), aplicele de șa ale principelui gepid de la Apahida (MNIR; foto J. Steakley, GFDL), toate de pe Wikimedia Commons; celelalte sunt imaginile din articol. Iconițele indicatorilor sunt de pe game-icons.net (autori: Lorc și Delapouite), CC BY 3.0.</li>
-      <li><strong>Fondul hărților interactive</strong> (Atlas, Marea Migrație, harta campaniilor, campania din Galia) este o hartă fizică reală a Europei (Alexrk2, Wikimedia Commons, CC BY-SA 3.0). Orașele, zonele și traseele sunt calculate din latitudine și longitudine, cu proiecția hărții.</li>
+      <li><strong>Fondul hărților interactive</strong> (Atlas, Marea Migrație, harta campaniilor) este o hartă fizică reală a Europei (Alexrk2, Wikimedia Commons, CC BY-SA 3.0). Orașele, zonele și traseele sunt calculate din latitudine și longitudine, cu proiecția hărții.</li>
     </ul>
 
     <h3>Standarde respectate</h3>
@@ -2382,6 +2383,14 @@
         <a class="hero-btn primary" href="#mod-migratie">Joacă „Attila și Marea Migrație”</a>
         <a class="hero-btn" href="#sec-muzeu">Muzeul virtual</a>
       </div>
+      <aside class="hero-qr" aria-label="Joacă pe telefon">
+        <div class="hq-code" role="img" aria-label="Cod QR care deschide jocul pe telefon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno" aria-hidden="true" focusable="false"><path class="qrline" stroke="#121214" d="M0 0.5h7m2 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m3 0h7m-37 1h1m5 0h1m1 0h1m1 0h5m2 0h1m1 0h1m1 0h2m5 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m2 0h2m2 0h2m2 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m5 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h2m1 0h4m4 0h1m1 0h1m1 0h1m3 0h1m-28 1h1m5 0h1m1 0h2m2 0h1m2 0h1m2 0h1m1 0h6m1 0h1m1 0h2m2 0h3m-36 1h1m3 0h2m3 0h1m1 0h4m2 0h1m2 0h1m1 0h1m3 0h2m3 0h5m-36 1h5m1 0h1m1 0h2m8 0h1m1 0h1m2 0h2m1 0h3m1 0h2m3 0h2m-37 1h4m3 0h1m2 0h1m1 0h1m1 0h3m5 0h2m2 0h1m1 0h2m2 0h2m2 0h1m-37 1h2m2 0h4m2 0h1m2 0h1m2 0h1m2 0h2m1 0h1m1 0h1m5 0h2m1 0h1m2 0h1m-37 1h1m1 0h1m1 0h1m4 0h3m1 0h1m1 0h6m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m-35 1h4m1 0h2m3 0h2m2 0h1m1 0h1m2 0h2m4 0h4m1 0h3m1 0h2m-37 1h1m1 0h1m2 0h1m3 0h1m2 0h2m3 0h2m5 0h1m3 0h1m1 0h2m1 0h2m-35 1h4m1 0h4m1 0h1m1 0h2m2 0h1m4 0h1m2 0h4m1 0h2m1 0h1m1 0h1m1 0h1m-37 1h2m1 0h3m1 0h2m4 0h2m2 0h2m1 0h3m1 0h1m2 0h2m2 0h1m1 0h3m-32 1h9m2 0h1m4 0h1m2 0h3m1 0h1m3 0h1m1 0h2m1 0h1m-36 1h1m3 0h1m1 0h1m1 0h2m1 0h3m4 0h2m3 0h1m1 0h2m1 0h1m1 0h2m3 0h1m-36 1h3m1 0h5m1 0h5m1 0h4m1 0h1m1 0h4m1 0h2m1 0h3m-31 1h2m2 0h6m1 0h1m2 0h2m1 0h3m2 0h2m4 0h1m1 0h2m-36 1h1m2 0h4m2 0h1m1 0h6m1 0h1m3 0h1m2 0h5m1 0h3m1 0h2m-37 1h1m2 0h1m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1m4 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h2m-36 1h1m4 0h1m2 0h2m1 0h7m2 0h1m2 0h1m2 0h2m1 0h2m4 0h1m-37 1h3m2 0h1m3 0h1m3 0h2m1 0h2m6 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-35 1h1m2 0h1m2 0h1m2 0h1m2 0h2m3 0h1m2 0h1m1 0h1m3 0h3m2 0h1m3 0h2m-37 1h1m1 0h2m1 0h1m1 0h1m1 0h4m2 0h1m4 0h1m6 0h1m3 0h4m1 0h1m-37 1h1m5 0h4m1 0h1m1 0h1m3 0h1m4 0h1m1 0h3m1 0h7m1 0h1m-29 1h5m1 0h7m2 0h1m4 0h1m3 0h1m-33 1h7m2 0h2m4 0h2m2 0h8m1 0h1m1 0h1m1 0h1m3 0h1m-37 1h1m5 0h1m2 0h1m2 0h3m1 0h3m1 0h1m1 0h1m3 0h3m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m2 0h2m4 0h2m4 0h1m1 0h10m1 0h1m-35 1h1m1 0h3m1 0h1m3 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h2m5 0h1m-37 1h1m1 0h3m1 0h1m8 0h2m1 0h2m1 0h1m6 0h1m4 0h1m1 0h2m-37 1h1m5 0h1m2 0h4m6 0h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m2 0h1m-37 1h7m1 0h1m5 0h2m8 0h1m2 0h3m1 0h1m4 0h1"/></svg></div>
+        <div class="hq-text">
+          <p class="hq-title">Joacă pe telefon</p>
+          <p>Scanează codul cu camera telefonului: jocul se deschide direct în browser, fără instalare.</p>
+          <a href="qr-joc.html" target="_blank" rel="noopener">Pagină de tipărit cu codul →</a>
+        </div>
+      </aside>
       <div class="byline">
         <span><b>Secțiune</b>: Secțiunea I, Istorie</span>
         <span><b>Interval</b>: c. 370–454 d.Hr.</span>
@@ -2493,7 +2502,6 @@
       <div class="chapter-mark"><span class="chapter-num">03</span><span class="chapter-slash">/</span><span class="chapter-tag">Marea Migrație</span></div>
       <h2 class="sec-title">Marea Migrație</h2>
       <p class="sec-sub">Harta dinamică: apasă pe o săgeată pentru a urmări presiunea hunică</p>
-      <div class="pe-scurt"><b>Pe scurt <small>cam 4 minute de citit</small></b><p>Din 375, hunii împing popoarele unele în altele și spre granițele Romei: un „efect de domino” pe care unii istorici îl contestă. Hunii se așază în Câmpia Panonică, lovesc Balcanii (441–447) și primesc un tribut care ajunge la 2.100 de livre de aur pe an, apoi atacă Galia (451) și Italia (452).</p></div>
       <div class="sr-row sr-reveal">
         <div class="sr-media"><figure class="sr-fig"><img id="img-aquileia" src="media/07cd10ac2309.jpg" alt="Miniatură medievală: călăreți în armuri asediază o cetate cu ziduri albe și turnuri." loading="lazy"><figcaption><b>Attila asediază Aquileia</b> (452), în <i>Cronica pictată de la Viena</i> (c. 1360). Pictorul îi îmbracă pe huni în armuri de cavaleri ai secolului său. Domeniu public.</figcaption></figure></div>
         <div class="sr-text">
@@ -2736,78 +2744,47 @@
       <div class="chapter-mark"><span class="chapter-num">05</span><span class="chapter-slash">/</span><span class="chapter-tag">Personalități &amp; impact</span></div>
       <h2 class="sec-title">Personalități &amp; impact</h2>
       <p class="sec-sub">Attila și Aetius: două fețe ale aceluiași conflict</p>
-      <div class="pe-scurt"><b>Pe scurt <small>cam 5 minute de citit</small></b><p>Attila și Aetius, generalul care îl oprește la Câmpiile Catalaunice (451), mor la un an unul după altul (453 și 454). După bătălia de la Nedao, puterea hunică se destramă, iar în 476 cade Imperiul de Apus. Pe teritoriul României, epoca a lăsat tezaurele de la Pietroasa și Șimleul Silvaniei și diadema de la Gherăseni.</p></div>
 
-      <div class="duel">
-        <div class="duel-card attila">
+      <div class="duel dk">
+        <article class="duel-card attila dk-card">
           <figure class="dc-img"><img id="img-attila" src="media/d7faf17b3d03.webp" alt="Miniatură medievală: Attila cu coroană și sabie, într-o inițială decorată." loading="lazy"><figcaption>Attila în <i>Cronica pictată de la Viena</i> (c. 1360): o imagine medievală, nu un portret. Domeniu public.</figcaption></figure>
           <p class="dc-role">Regele hunilor</p>
           <h4>Attila</h4>
           <p class="dc-epithet">„Flagellum Dei”, Biciul lui Dumnezeu<sup class="fn" data-n="15">15</sup></p>
-          <ul>
+          <dl class="dk-stats">
+            <div class="dk-stat"><dt>Putere militară</dt><dd><span class="dk-bar dk-v5" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><em>foarte mare</em></dd></div>
+            <div class="dk-stat"><dt>Diplomație</dt><dd><span class="dk-bar dk-v3" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><em>medie</em></dd></div>
+            <div class="dk-stat"><dt>Moștenire</dt><dd><span class="dk-bar dk-v5" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><em>foarte mare</em></dd></div>
+          </dl>
+          <p class="dk-label">Fapte-cheie</p>
+          <ul class="dk-facts">
             <li>Conduce imperiul hunic singur din 445 d.Hr., după înlăturarea fratelui său, Bleda.</li>
             <li>Devastează Balcanii (441–447) și obține tribut anual uriaș de la Constantinopol.</li>
             <li>Invadează Galia (451) și Italia (452); moare în 453, în noaptea nunții cu Ildico.</li>
           </ul>
-        </div>
-        <div class="duel-vs">vs</div>
-        <div class="duel-card aetius">
+        </article>
+        <article class="duel-card aetius dk-card">
           <figure class="dc-img"><img id="img-catalaunice" src="media/9e6d0b25e4ea.jpg" alt="Miniatură medievală: două armate de cavaleri se ciocnesc călare." loading="lazy"><figcaption>Bătălia de la Câmpiile Catalaunice în <i>Spieghel Historiael</i> al lui Jacob van Maerlant (c. 1330). Domeniu public.</figcaption></figure>
           <p class="dc-role">Generalul roman</p>
           <h4>Flavius Aetius</h4>
           <p class="dc-epithet">„Ultimul dintre romani”<sup class="fn" data-n="16">16</sup></p>
-          <ul>
+          <dl class="dk-stats">
+            <div class="dk-stat"><dt>Putere militară</dt><dd><span class="dk-bar dk-v4" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><em>mare</em></dd></div>
+            <div class="dk-stat"><dt>Diplomație</dt><dd><span class="dk-bar dk-v5" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><em>foarte mare</em></dd></div>
+            <div class="dk-stat"><dt>Moștenire</dt><dd><span class="dk-bar dk-v4" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><em>mare</em></dd></div>
+          </dl>
+          <p class="dk-label">Fapte-cheie</p>
+          <ul class="dk-facts">
             <li>În tinerețe, ostatic la curtea hunilor: cunoștea lumea hunică din interior, un avantaj rar printre romanii vremii.</li>
             <li>Formează, în 451, coaliția care îl oprește pe Attila la Câmpiile Catalaunice: nu doar romani și vizigoți, ci și franci, burgunzi și alani.</li>
             <li>Este ucis chiar de împăratul Valentinian III, în 454, la trei ani după victoria sa cea mai mare.</li>
           </ul>
-        </div>
+        </article>
       </div>
+      <p class="dk-note">Barele sunt orientative: o comparație calitativă făcută pentru acest proiect, după izvoare și după istoricii citați în note, nu o măsurătoare.</p>
 
       <div class="duel-lives" role="img" aria-label="Viețile lor, alături: Aetius, c. 391–454; Attila, c. 406–453. S-au înfruntat la Câmpiile Catalaunice, în 451."><div class="dl-row aetius"><b>Aetius</b><span class="dl-track"><i style="left:4.41%;width:calc(97.06% - 4.41%)"></i></span><em>c. 391–454</em></div><div class="dl-row attila"><b>Attila</b><span class="dl-track"><i style="left:26.47%;width:calc(95.59% - 26.47%)"></i><i class="r" style="left:67.65%;width:calc(95.59% - 67.65%)"></i></span><em>c. 406–453</em></div><div class="dl-axis"><span class="dl-track"><small style="left:17.65%">400</small><small style="left:47.06%">420</small><small style="left:76.47%">440</small><span class="dl-451" style="left:92.65%"><small>451 · Câmpiile Catalaunice</small></span></span></div><p class="dl-key"><span class="k1"></span>viața <span class="k2"></span>domnia lui Attila (434–453)</p></div>
       <!-- pq:start --><figure class="pq"><blockquote><p>O luptă cumplită, schimbătoare, crudă și îndârjită, cum n-a mai povestit nimeni din vechime.</p></blockquote><figcaption><b>Iordanes</b>, Getica 207, despre Câmpiile Catalaunice (451) · traducere adaptată</figcaption></figure><!-- pq:end -->
-      <figure class="fig-map gal-fig">
-        <div class="gal-wrap"><svg class="gal-map" viewBox="136.3 328.1 125.8 95.8" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Harta campaniei lui Attila în Galia, 451: hunii trec Rinul, jefuiesc orașele din nord-est și asediază Orléans; coaliția lui Aetius și a vizigoților vine din sud, ridică asediul, iar bătălia are loc la Câmpiile Catalaunice.">
-          <defs><marker id="gal-ah-h" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#e0626c"/></marker><marker id="gal-ah-r" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#9cc6f0"/></marker></defs>
-          <use href="#shared-img-0"/>
-          <rect x="136.3" y="328.1" width="125.8" height="95.8" fill="rgba(14, 13, 11, 0.38)"/>
-          <g class="gal-geo"><text class="gal-region" x="173.8" y="406.8">GALIA</text><text class="gal-region" x="241.0" y="348.0">GERMANIA</text><text class="gal-region" x="233.5" y="415.1">ALPII</text><text class="gal-river" x="226.4" y="347.7" transform="rotate(-55 226.4 347.7)">Rinul</text><text class="gal-river" x="150.2" y="393.8" transform="rotate(12 150.2 393.8)">Loara</text><text class="gal-sea" x="140.4" y="395.7" transform="rotate(-78 140.4 395.7)">Oceanul Atlantic</text><text class="gal-from" x="190.1" y="415.4" transform="rotate(-62 190.1 415.4)">de la Arles: Aetius</text><text class="gal-from" x="153.2" y="414.1" transform="rotate(-86 153.2 414.1)">de la Toulouse: Teodoric I</text></g>
-          <g class="gal-routes" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path class="gal-rom" d="M192.7 426.6C192.0 424.6 191.1 418.7 188.6 414.4C186.0 410.1 181.5 405.7 177.6 400.8C173.8 396.0 167.3 387.9 165.3 385.3" marker-end="url(#gal-ah-r)"/>
-            <path class="gal-rom" d="M155.0 423.1C155.6 419.9 157.1 410.0 158.8 403.7C160.5 397.4 164.2 388.3 165.3 385.3" marker-end="url(#gal-ah-r)"/>
-            <path class="gal-rom" d="M165.3 385.3C167.1 385.3 173.1 386.5 176.3 385.6C179.6 384.7 182.4 381.6 184.8 380.0C187.2 378.5 189.9 376.9 190.9 376.3" marker-end="url(#gal-ah-r)"/>
-            <path class="gal-hun" d="M267.6 365.3C262.0 364.8 243.6 361.7 234.2 362.4C224.9 363.2 218.9 369.1 211.5 369.7C204.0 370.3 194.8 365.9 189.4 366.0C184.0 366.0 182.3 367.7 178.9 370.0C175.5 372.2 171.3 376.8 169.0 379.3C166.7 381.9 165.9 384.3 165.3 385.3" marker-end="url(#gal-ah-h)"/>
-            <path class="gal-hun" d="M234.2 362.4C234.1 361.5 235.7 360.1 233.5 356.6C231.2 353.0 228.9 343.4 220.7 341.3C212.6 339.2 191.1 342.5 184.7 344.1C178.4 345.7 184.6 349.1 182.6 350.8C180.6 352.5 174.6 352.1 172.6 354.4C170.6 356.7 170.9 362.7 170.5 364.4" marker-end="url(#gal-ah-h)"/>
-            <path class="gal-hun" d="M233.5 356.6C230.7 357.1 220.3 357.8 216.7 359.9C213.0 362.1 212.3 368.0 211.5 369.7" marker-end="url(#gal-ah-h)"/>
-            <path class="gal-hun" d="M260.6 384.4C255.1 383.5 235.7 381.3 227.5 378.9C219.3 376.4 214.1 371.2 211.5 369.7" marker-end="url(#gal-ah-h)"/>
-            <path class="gal-hun back" d="M165.3 385.3C166.9 384.0 171.9 378.8 175.0 377.5C178.1 376.3 181.3 377.8 183.9 377.6C186.6 377.4 189.7 376.5 190.9 376.3" marker-end="url(#gal-ah-h)"/>
-          </g>
-          <g class="gal-pts">
-            <circle class="gal-j" cx="227.5" cy="378.9" r="1.05"/><text x="229.7" y="379.9" text-anchor="start">Strasbourg</text>
-            <circle class="gal-j" cx="234.2" cy="362.4" r="1.05"/><text x="236.4" y="363.6" text-anchor="start">Worms</text>
-            <circle class="gal-j" cx="233.5" cy="356.6" r="1.05"/><text x="235.7" y="356.0" text-anchor="start">Mainz</text>
-            <circle class="gal-j" cx="220.7" cy="341.3" r="1.05"/><text x="222.9" y="342.2" text-anchor="start">Köln</text>
-            <circle class="gal-j" cx="216.7" cy="359.9" r="1.05"/><text x="214.5" y="358.7" text-anchor="end">Trier</text>
-            <circle class="gal-j" cx="211.5" cy="369.7" r="1.05"/><text x="213.7" y="371.3" text-anchor="start">Metz</text>
-            <circle class="gal-j" cx="189.4" cy="366.0" r="1.05"/><text x="189.4" y="363.4" text-anchor="middle">Reims</text>
-            <circle class="gal-j" cx="184.7" cy="344.1" r="1.05"/><text x="182.5" y="345.0" text-anchor="end">Tournai</text>
-            <circle class="gal-j" cx="182.6" cy="350.8" r="1.05"/><text x="184.8" y="352.0" text-anchor="start">Cambrai</text>
-            <circle class="gal-j" cx="172.6" cy="354.4" r="1.05"/><text x="170.4" y="355.3" text-anchor="end">Amiens</text>
-            <circle class="gal-a" cx="171.5" cy="370.7" r="1.05"/><text x="169.1" y="369.3" text-anchor="end">Paris</text>
-            <circle class="gal-a" cx="188.7" cy="381.2" r="1.05"/><text x="191.1" y="383.4" text-anchor="start">Troyes</text>
-            <circle class="gal-o" cx="165.3" cy="385.3" r="1.6"/><circle class="gal-j" cx="165.3" cy="385.3" r="0.75"/><text x="162.9" y="388.9" text-anchor="end">Orléans (asediat)</text>
-            <polygon class="gal-battle" points="190.9 373.7 191.5 375.4 193.4 375.4 191.9 376.6 192.4 378.4 190.9 377.4 189.4 378.4 189.8 376.6 188.4 375.4 190.2 375.4"/><text class="gal-bt" x="194.1" y="376.9">Câmpiile Catalaunice</text><text class="gal-bt2" x="194.1" y="379.6">iunie 451</text>
-          </g>
-          <g class="gal-legend" transform="translate(221.2 404.9) scale(0.82)">
-            <rect width="48" height="21" rx="0.6"/>
-            <path class="gal-hun" d="M2.5 4.2h7" marker-end="url(#gal-ah-h)"/><text x="12" y="5.1">Hunii și aliații lor</text>
-            <path class="gal-rom" d="M2.5 8.6h7" marker-end="url(#gal-ah-r)"/><text x="12" y="9.5">Romanii, vizigoții și aliații</text>
-            <circle class="gal-j" cx="4" cy="13" r="1.05"/><text x="7" y="13.9">jefuit</text><circle class="gal-a" cx="21" cy="13" r="1.05"/><text x="24" y="13.9">amenințat</text>
-            <path class="gal-hun back" d="M2.5 17.4h7"/><text x="12" y="18.3">retragerea hunilor</text>
-          </g>
-        </svg></div>
-        <figcaption><b>Campania lui Attila în Galia, 451 d.Hr.</b> Hunii și aliații lor trec Rinul și jefuiesc pe rând Strasbourg, Worms, Mainz, Trier și Metz (în ziua de Paști, după Grigore din Tours), apoi Reims; un alt grup urcă spre Köln, Tournai, Cambrai și Amiens. Parisul și Troyes sunt doar amenințate: legenda atribuie salvarea Parisului rugăciunilor Sfintei Genoveva, dar motivul a fost probabil strategic. Orléans e asediat, nu cucerit. Din sud vin Aetius, de la Arles, și regele vizigot Teodoric I, de la Toulouse: ridică asediul și îi împing pe huni înapoi, spre bătălia de la Câmpiile Catalaunice (iunie 451). Traseele sunt simplificate, după Iordanes (<i>Getica</i> 194–218) și Grigore din Tours (<i>Istoria francilor</i> II.5–7). Hartă desenată pentru acest proiect pe harta fizică a Europei (Alexrk2, Wikimedia Commons, CC BY-SA 3.0).</figcaption>
-      </figure>
 
       <div class="sr-row sr-reveal">
         <div class="sr-media"><figure class="sr-fig"><img id="img-moartea" src="media/52619d2f40c4.jpg" alt="Pictură: Attila zace mort pe un pat, sub un baldachin roșu." loading="lazy"><figcaption>Ferenc Paczka, <b><i>Moartea lui Attila</i></b> (1884, detaliu). Iordanes, după Priscus, scrie că Attila a murit în noaptea nunții, de o hemoragie. Domeniu public.</figcaption></figure></div>
@@ -2820,24 +2797,12 @@
         <div class="sr-media"><figure class="sr-fig"><img id="img-delacroix" src="media/789e943479ae.webp" alt="Pictură romantică: Attila călare, urmat de războinici, trece peste figuri care reprezintă Italia și artele." loading="lazy"><figcaption>Eugène Delacroix, <b><i>Attila și hoardele sale călcând Italia și artele</i></b> (1838–1847, detaliu), Palatul Bourbon, Paris: imaginea romantică a „biciului lui Dumnezeu”. Domeniu public.</figcaption></figure></div>
         <div class="sr-text">
       <h3 class="sub-title">Consecințe de lungă durată</h3>
-      <div class="impact-grid">
-        <div class="impact-tile">
-          <p class="it-year">476 d.Hr.</p>
-          <p>La doar 23 de ani după moartea lui Attila, ultimul împărat al Romei de Apus este detronat: data convențională a căderii Imperiului Roman de Apus.</p>
-        </div>
-        <div class="impact-tile">
-          <p class="it-year">493 d.Hr.</p>
-          <p>Ostrogoții, eliberați de sub tutela hunică, întemeiază sub Teodoric cel Mare un regat propriu în Italia.</p>
-        </div>
-        <div class="impact-tile">
-          <p class="it-year">c. 500 d.Hr.</p>
-          <p>Vandalii în Africa de Nord, vizigoții în Hispania, francii în ascensiune în Galia; harta etnică a Europei occidentale e complet redesenată.</p>
-        </div>
-        <div class="impact-tile">
-          <p class="it-year">Peste secole</p>
-          <p>Marea Migrație marchează, pentru istoriografia modernă, tranziția simbolică de la Antichitate la Evul Mediu timpuriu.</p>
-        </div>
-      </div>
+      <ol class="cascade" aria-label="Consecințele, ca un lanț de cauze și efecte">
+        <li class="cs-step" style="--k:0"><p class="it-year">476 d.Hr.</p><p>La doar 23 de ani după moartea lui Attila, ultimul împărat al Romei de Apus este detronat: data convențională a căderii Imperiului Roman de Apus.</p></li>
+        <li class="cs-step" style="--k:1"><p class="it-year">493 d.Hr.</p><p>Ostrogoții, eliberați de sub tutela hunică, întemeiază sub Teodoric cel Mare un regat propriu în Italia.</p></li>
+        <li class="cs-step" style="--k:2"><p class="it-year">c. 500 d.Hr.</p><p>Vandalii în Africa de Nord, vizigoții în Hispania, francii în ascensiune în Galia; harta etnică a Europei occidentale e complet redesenată.</p></li>
+        <li class="cs-step" style="--k:3"><p class="it-year">Peste secole</p><p>Marea Migrație marchează, pentru istoriografia modernă, tranziția simbolică de la Antichitate la Evul Mediu timpuriu.</p></li>
+      </ol>
         </div>
       </div>
 
@@ -2996,14 +2961,6 @@
   </header>
   <div class="jg-wrap jg-stage">
     <div id="mig-root"></div>
-    <aside class="qr-card" aria-label="Joacă pe telefon">
-      <div class="qr-code" role="img" tabindex="0" aria-label="Cod QR care deschide jocul pe telefon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno"><path class="qrline" stroke="#121214" d="M0 0.5h7m2 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m3 0h7m-37 1h1m5 0h1m1 0h1m1 0h5m2 0h1m1 0h1m1 0h2m5 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m2 0h2m2 0h2m2 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m5 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h2m1 0h4m4 0h1m1 0h1m1 0h1m3 0h1m-28 1h1m5 0h1m1 0h2m2 0h1m2 0h1m2 0h1m1 0h6m1 0h1m1 0h2m2 0h3m-36 1h1m3 0h2m3 0h1m1 0h4m2 0h1m2 0h1m1 0h1m3 0h2m3 0h5m-36 1h5m1 0h1m1 0h2m8 0h1m1 0h1m2 0h2m1 0h3m1 0h2m3 0h2m-37 1h4m3 0h1m2 0h1m1 0h1m1 0h3m5 0h2m2 0h1m1 0h2m2 0h2m2 0h1m-37 1h2m2 0h4m2 0h1m2 0h1m2 0h1m2 0h2m1 0h1m1 0h1m5 0h2m1 0h1m2 0h1m-37 1h1m1 0h1m1 0h1m4 0h3m1 0h1m1 0h6m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m-35 1h4m1 0h2m3 0h2m2 0h1m1 0h1m2 0h2m4 0h4m1 0h3m1 0h2m-37 1h1m1 0h1m2 0h1m3 0h1m2 0h2m3 0h2m5 0h1m3 0h1m1 0h2m1 0h2m-35 1h4m1 0h4m1 0h1m1 0h2m2 0h1m4 0h1m2 0h4m1 0h2m1 0h1m1 0h1m1 0h1m-37 1h2m1 0h3m1 0h2m4 0h2m2 0h2m1 0h3m1 0h1m2 0h2m2 0h1m1 0h3m-32 1h9m2 0h1m4 0h1m2 0h3m1 0h1m3 0h1m1 0h2m1 0h1m-36 1h1m3 0h1m1 0h1m1 0h2m1 0h3m4 0h2m3 0h1m1 0h2m1 0h1m1 0h2m3 0h1m-36 1h3m1 0h5m1 0h5m1 0h4m1 0h1m1 0h4m1 0h2m1 0h3m-31 1h2m2 0h6m1 0h1m2 0h2m1 0h3m2 0h2m4 0h1m1 0h2m-36 1h1m2 0h4m2 0h1m1 0h6m1 0h1m3 0h1m2 0h5m1 0h3m1 0h2m-37 1h1m2 0h1m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1m4 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h2m-36 1h1m4 0h1m2 0h2m1 0h7m2 0h1m2 0h1m2 0h2m1 0h2m4 0h1m-37 1h3m2 0h1m3 0h1m3 0h2m1 0h2m6 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-35 1h1m2 0h1m2 0h1m2 0h1m2 0h2m3 0h1m2 0h1m1 0h1m3 0h3m2 0h1m3 0h2m-37 1h1m1 0h2m1 0h1m1 0h1m1 0h4m2 0h1m4 0h1m6 0h1m3 0h4m1 0h1m-37 1h1m5 0h4m1 0h1m1 0h1m3 0h1m4 0h1m1 0h3m1 0h7m1 0h1m-29 1h5m1 0h7m2 0h1m4 0h1m3 0h1m-33 1h7m2 0h2m4 0h2m2 0h8m1 0h1m1 0h1m1 0h1m3 0h1m-37 1h1m5 0h1m2 0h1m2 0h3m1 0h3m1 0h1m1 0h1m3 0h3m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m2 0h2m4 0h2m4 0h1m1 0h10m1 0h1m-35 1h1m1 0h3m1 0h1m3 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h2m5 0h1m-37 1h1m1 0h3m1 0h1m8 0h2m1 0h2m1 0h1m6 0h1m4 0h1m1 0h2m-37 1h1m5 0h1m2 0h4m6 0h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m2 0h1m-37 1h7m1 0h1m5 0h2m8 0h1m2 0h3m1 0h1m4 0h1"/></svg></div>
-      <div class="qr-text">
-        <p class="qr-title">Joacă pe telefon</p>
-        <p>Scanează codul cu camera telefonului și jocul se deschide direct în browser. Nu instalezi nimic.</p>
-        <a href="qr-joc.html" target="_blank" rel="noopener">Pagină de tipărit cu codul →</a>
-      </div>
-    </aside>
   </div>
 </div>
 </section>
@@ -3544,7 +3501,7 @@
       box.querySelector('.lb-close').focus();
     }
     function close(){ box.classList.remove('show'); document.documentElement.classList.remove('lb-open'); if (lastFocus) lastFocus.focus(); }
-    var svgs = document.querySelectorAll('.ptol-map, .gal-wrap');
+    var svgs = document.querySelectorAll('.ptol-map');
     Array.prototype.forEach.call(svgs, function(d){
       d.tabIndex = 0; d.classList.add('lb-able');
       d.addEventListener('click', function(){ open(d); });
@@ -6801,7 +6758,7 @@
     { k: 'livra', t: 'Livră romană', re: /\blivre de aur\b/i, d: 'Unitate de greutate de aproximativ 327 g. Tributul plătit hunilor se socotea în livre de aur.' },
     { k: 'hegemonie', t: 'Hegemonie', re: /\bhegemoni(a|ei|e)\b/i, d: 'Dominația unui popor asupra altora, care își păstrează conducătorii și teritoriile, dar plătesc tribut și dau războinici. Așa a stăpânit Attila popoarele din Câmpia Panonică.' },
     { k: 'arc', t: 'Arc compozit', re: /\barc(ul)? (recurbat )?compozit\b/i, d: 'Arc făcut din straturi de lemn, corn sau os și tendoane, lipite între ele. E mai scurt și mai puternic decât un arc simplu, deci potrivit pentru tras de pe cal.' },
-    { k: 'policrom', t: 'Stil policrom', re: /\bstilul policrom\b/i, d: 'Podoabe de aur cu pietre colorate, mai ales granate, fie prinse în celule de metal tăiate pe forma lor (cloisonné), fie montate fiecare separat, șlefuite rotunjit (à cabochon). A fost moda elitelor din epoca migrațiilor.' },
+    { k: 'policrom', t: 'Stil policrom', tip: false, re: /\bstilul policrom\b/i, d: 'Podoabe de aur cu pietre colorate, mai ales granate, fie prinse în celule de metal tăiate pe forma lor (cloisonné), fie montate fiecare separat, șlefuite rotunjit (à cabochon). A fost moda elitelor din epoca migrațiilor.' },
     { k: 'deformare', t: 'Deformare craniană artificială', re: /\bcraniu(l)? deformat artificial\b/i, d: 'Alungirea craniului prin bandaje strânse în primii ani de viață. Era un semn de rang, practicat de mai multe popoare, nu doar de huni.' },
     { k: 'adn', t: 'ADN antic', re: /\bADN antic\b/, d: 'Material genetic extras din oase vechi. Arată din ce populații se trăgeau cei îngropați, dar nu și ce limbă vorbeau sau cum își spuneau.' },
     { k: 'izvor', t: 'Izvor istoric', re: /\bizvoarele\b/i, d: 'Orice sursă din epoca studiată: text, monedă, mormânt, inscripție. Cărțile istoricilor de azi sunt surse secundare, care interpretează izvoarele.' }
@@ -6836,7 +6793,8 @@
     return null;
   }
   var found = {};
-  GL.forEach(function(it){ found[it.k] = wrapFirst(it); });
+  // tip: false = termenul rămâne doar în capitolul „Glosar”, fără definiție în text
+  GL.forEach(function(it){ found[it.k] = it.tip === false ? null : wrapFirst(it); });
 
   // lista din capitolul „Glosar”
   var list = document.getElementById('gl-list');
@@ -7188,6 +7146,32 @@
     cur.classList.remove('go'); void cur.offsetWidth; cur.classList.add('go');
   });
   pages.forEach(function(p){ mo.observe(p, { attributes: true, attributeFilter: ['class'] }); });
+})();
+</script>
+<!-- r5:qr -->
+<button type="button" class="qr-fab" id="qr-fab" aria-haspopup="dialog" aria-controls="qr-dialog"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg>Joacă pe telefon</button>
+<dialog class="qr-dialog" id="qr-dialog" aria-labelledby="qr-d-title">
+  <button type="button" class="qr-d-close" aria-label="Închide">✕</button>
+  <p class="qr-d-kicker">Attila și Marea Migrație</p>
+  <h2 id="qr-d-title">Joacă pe telefon</h2>
+  <div class="qr-d-code" role="img" aria-label="Cod QR care deschide jocul pe telefon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno" aria-hidden="true" focusable="false"><path class="qrline" stroke="#121214" d="M0 0.5h7m2 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m3 0h7m-37 1h1m5 0h1m1 0h1m1 0h5m2 0h1m1 0h1m1 0h2m5 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m2 0h2m2 0h2m2 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m5 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h2m1 0h4m4 0h1m1 0h1m1 0h1m3 0h1m-28 1h1m5 0h1m1 0h2m2 0h1m2 0h1m2 0h1m1 0h6m1 0h1m1 0h2m2 0h3m-36 1h1m3 0h2m3 0h1m1 0h4m2 0h1m2 0h1m1 0h1m3 0h2m3 0h5m-36 1h5m1 0h1m1 0h2m8 0h1m1 0h1m2 0h2m1 0h3m1 0h2m3 0h2m-37 1h4m3 0h1m2 0h1m1 0h1m1 0h3m5 0h2m2 0h1m1 0h2m2 0h2m2 0h1m-37 1h2m2 0h4m2 0h1m2 0h1m2 0h1m2 0h2m1 0h1m1 0h1m5 0h2m1 0h1m2 0h1m-37 1h1m1 0h1m1 0h1m4 0h3m1 0h1m1 0h6m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m-35 1h4m1 0h2m3 0h2m2 0h1m1 0h1m2 0h2m4 0h4m1 0h3m1 0h2m-37 1h1m1 0h1m2 0h1m3 0h1m2 0h2m3 0h2m5 0h1m3 0h1m1 0h2m1 0h2m-35 1h4m1 0h4m1 0h1m1 0h2m2 0h1m4 0h1m2 0h4m1 0h2m1 0h1m1 0h1m1 0h1m-37 1h2m1 0h3m1 0h2m4 0h2m2 0h2m1 0h3m1 0h1m2 0h2m2 0h1m1 0h3m-32 1h9m2 0h1m4 0h1m2 0h3m1 0h1m3 0h1m1 0h2m1 0h1m-36 1h1m3 0h1m1 0h1m1 0h2m1 0h3m4 0h2m3 0h1m1 0h2m1 0h1m1 0h2m3 0h1m-36 1h3m1 0h5m1 0h5m1 0h4m1 0h1m1 0h4m1 0h2m1 0h3m-31 1h2m2 0h6m1 0h1m2 0h2m1 0h3m2 0h2m4 0h1m1 0h2m-36 1h1m2 0h4m2 0h1m1 0h6m1 0h1m3 0h1m2 0h5m1 0h3m1 0h2m-37 1h1m2 0h1m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1m4 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h2m-36 1h1m4 0h1m2 0h2m1 0h7m2 0h1m2 0h1m2 0h2m1 0h2m4 0h1m-37 1h3m2 0h1m3 0h1m3 0h2m1 0h2m6 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-35 1h1m2 0h1m2 0h1m2 0h1m2 0h2m3 0h1m2 0h1m1 0h1m3 0h3m2 0h1m3 0h2m-37 1h1m1 0h2m1 0h1m1 0h1m1 0h4m2 0h1m4 0h1m6 0h1m3 0h4m1 0h1m-37 1h1m5 0h4m1 0h1m1 0h1m3 0h1m4 0h1m1 0h3m1 0h7m1 0h1m-29 1h5m1 0h7m2 0h1m4 0h1m3 0h1m-33 1h7m2 0h2m4 0h2m2 0h8m1 0h1m1 0h1m1 0h1m3 0h1m-37 1h1m5 0h1m2 0h1m2 0h3m1 0h3m1 0h1m1 0h1m3 0h3m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m2 0h2m4 0h2m4 0h1m1 0h10m1 0h1m-35 1h1m1 0h3m1 0h1m3 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h2m5 0h1m-37 1h1m1 0h3m1 0h1m8 0h2m1 0h2m1 0h1m6 0h1m4 0h1m1 0h2m-37 1h1m5 0h1m2 0h4m6 0h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m2 0h1m-37 1h7m1 0h1m5 0h2m8 0h1m2 0h3m1 0h1m4 0h1"/></svg></div>
+  <p class="qr-d-how">Deschide camera telefonului, îndreapt-o spre cod și apasă linkul care apare. Nu instalezi nimic.</p>
+  <a href="qr-joc.html" target="_blank" rel="noopener">Pagină de tipărit cu codul →</a>
+</dialog>
+<!-- /r5:qr -->
+<script>
+/* r5: fereastra cu codul QR; butonul se ascunde cât timp codul din deschidere e pe ecran */
+(function(){
+  var fab = document.getElementById('qr-fab'), dlg = document.getElementById('qr-dialog');
+  if (!fab || !dlg || typeof dlg.showModal !== 'function') { if (fab) fab.hidden = true; return; }
+  fab.addEventListener('click', function(){ dlg.showModal(); });
+  dlg.querySelector('.qr-d-close').addEventListener('click', function(){ dlg.close(); });
+  dlg.addEventListener('click', function(e){ if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', function(){ fab.focus({ preventScroll: true }); });
+  var hq = document.querySelector('.hero-qr');
+  if (hq && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ fab.classList.toggle('away', es[0].isIntersecting); }).observe(hq);
+  }
 })();
 </script>
 </body>

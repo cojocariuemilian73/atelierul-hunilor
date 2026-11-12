@@ -10,7 +10,7 @@ const root = path.join(__dirname, '..');
 const PQ = [
   { before: '      <div class="src-compare sr-reveal">', q: 'Socotind că nu se cuvine să coboare de pe cai, barbarii au ținut sfatul călare; iar romanii, ca să nu se arate mai prejos, au vorbit și ei tot din șa.', who: 'Priscus', src: 'fr. 2, despre tratatul de la Margus (c. 435)' },
   { before: '      <figure class="fig-map fig-invazii">', q: 'Orașul care a cucerit lumea întreagă a fost cucerit el însuși.', who: 'Ieronim', src: 'Scrisoarea 127, despre jefuirea Romei (410)' },
-  { before: '      <figure class="fig-map gal-fig">', q: 'O luptă cumplită, schimbătoare, crudă și îndârjită, cum n-a mai povestit nimeni din vechime.', who: 'Iordanes', src: 'Getica 207, despre Câmpiile Catalaunice (451)' }
+  { before: '      <div class="sr-row sr-reveal">\n        <div class="sr-media"><figure class="sr-fig"><img id="img-moartea"', q: 'O luptă cumplită, schimbătoare, crudă și îndârjită, cum n-a mai povestit nimeni din vechime.', who: 'Iordanes', src: 'Getica 207, despre Câmpiile Catalaunice (451)' }
 ];
 const pqHtml = p => '      <!-- pq:start --><figure class="pq"><blockquote><p>' + p.q + '</p></blockquote><figcaption><b>' + p.who + '</b>, ' + p.src + ' · traducere adaptată</figcaption></figure><!-- pq:end -->\n';
 
@@ -54,10 +54,6 @@ const CSS = `  /* dp: designul articolului */
   .pq figcaption b{ font: 600 0.92rem 'Cinzel', Georgia, serif; letter-spacing: 0.04em; color: #e5c158; }
   @media (max-width: 620px){ h1.title{ font-size: 2.5rem; } h1.title .t-sub{ font-size: 0.56em; } .hero-years{ font-size: 0.82rem; margin-bottom: 16px; } }
   @media (max-width: 620px){ .pq{ padding: 22px 16px 18px 50px; } .pq::before{ left: 6px; font-size: 4.6rem; } }
-  /* Attila și Aetius: „VS” în mijloc */
-  .duel{ position: relative; }
-  .duel-vs{ display: grid !important; place-items: center; position: absolute; left: 52.38%; top: 0; z-index: 2; width: 58px; height: 58px; transform: translate(-50%, -50%) rotate(-6deg); border: 1px solid #c9a13a; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #2a2219, #14110d 70%); box-shadow: 0 0 0 5px var(--paper), 0 8px 20px rgba(0, 0, 0, 0.5); font: 700 1.1rem 'Cinzel', Georgia, serif; letter-spacing: 0.04em; color: #f2d474; text-transform: uppercase; }
-  @media (max-width: 620px){ .duel-vs{ position: static; justify-self: center; margin: -29px 0; transform: rotate(-6deg); } }
   /* viețile lor, pe aceeași linie */
   .duel-lives{ max-width: 760px; margin: -6px auto 30px; padding: 16px 18px 12px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
   .dl-row, .dl-axis{ display: grid; grid-template-columns: 74px 1fr 92px; align-items: center; gap: 12px; }
@@ -78,7 +74,7 @@ const CSS = `  /* dp: designul articolului */
   .dl-key span{ display: inline-block; width: 18px; height: 8px; background: #e0626c; opacity: 0.45; }
   .dl-key span.k2{ opacity: 1; margin-left: 8px; }
   @media (max-width: 620px){ .dl-row, .dl-axis{ grid-template-columns: 56px 1fr; } .dl-row em{ display: none; } .dl-key{ margin-left: 0; } .dl-axis small:not(.x){ font-size: 0.64rem; } }
-  @media print{ .ch-orn, .duel-vs{ display: none !important; } .pq{ break-inside: avoid; } }
+  @media print{ .ch-orn{ display: none !important; } .pq{ break-inside: avoid; } }
   /* /dp */
 `;
 
