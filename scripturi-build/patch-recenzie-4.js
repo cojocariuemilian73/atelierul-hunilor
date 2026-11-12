@@ -10,9 +10,8 @@ const root = path.join(__dirname, '..');
 
 // rezumatele: doar ce spune capitolul, pe scurt
 const SHORT = {
-  'sec-origini': 'Numele „huni” apare la Ptolemeu (sec. II) și la Ammianus (c. 390), dar în locuri diferite. Legătura cu Xiongnu din China e probabilă pentru câțiva indivizi, după genetică, însă nedovedită pentru elita hunică. Despre viața lor știm mai ales din autori romani, care trebuie citiți cu grijă; arheologia confirmă arcul compozit, cazanele și mormintele de călăreți.',
-  'sec-migratie': 'Din 375, hunii împing popoarele unele în altele și spre granițele Romei: un „efect de domino” pe care unii istorici îl contestă. Hunii se așază în Câmpia Panonică, lovesc Balcanii (441–447) și primesc un tribut care ajunge la 2.100 de livre de aur pe an, apoi atacă Galia (451) și Italia (452).',
-  'sec-personalitati': 'Attila și Aetius, generalul care îl oprește la Câmpiile Catalaunice (451), mor la un an unul după altul (453 și 454). După bătălia de la Nedao, puterea hunică se destramă, iar în 476 cade Imperiul de Apus. Pe teritoriul României, epoca a lăsat tezaurele de la Pietroasa și Șimleul Silvaniei și diadema de la Gherăseni.'
+  'sec-origini': 'Numele „huni” apare la Ptolemeu (sec. II) și la Ammianus (c. 390), dar în locuri diferite. Legătura cu Xiongnu din China e probabilă pentru câțiva indivizi, după genetică, însă nedovedită pentru elita hunică. Despre viața lor știm mai ales din autori romani, care trebuie citiți cu grijă; arheologia confirmă arcul compozit, cazanele și mormintele de călăreți.'
+  // capitolele 03 și 05 nu mai au „Pe scurt” (a cincea recenzie)
 };
 
 // cursorul de hartă: un inel auriu cu un punct, desenat în SVG

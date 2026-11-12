@@ -9,7 +9,7 @@
     { k: 'livra', t: 'Livră romană', re: /\blivre de aur\b/i, d: 'Unitate de greutate de aproximativ 327 g. Tributul plătit hunilor se socotea în livre de aur.' },
     { k: 'hegemonie', t: 'Hegemonie', re: /\bhegemoni(a|ei|e)\b/i, d: 'Dominația unui popor asupra altora, care își păstrează conducătorii și teritoriile, dar plătesc tribut și dau războinici. Așa a stăpânit Attila popoarele din Câmpia Panonică.' },
     { k: 'arc', t: 'Arc compozit', re: /\barc(ul)? (recurbat )?compozit\b/i, d: 'Arc făcut din straturi de lemn, corn sau os și tendoane, lipite între ele. E mai scurt și mai puternic decât un arc simplu, deci potrivit pentru tras de pe cal.' },
-    { k: 'policrom', t: 'Stil policrom', re: /\bstilul policrom\b/i, d: 'Podoabe de aur cu pietre colorate, mai ales granate, fie prinse în celule de metal tăiate pe forma lor (cloisonné), fie montate fiecare separat, șlefuite rotunjit (à cabochon). A fost moda elitelor din epoca migrațiilor.' },
+    { k: 'policrom', t: 'Stil policrom', tip: false, re: /\bstilul policrom\b/i, d: 'Podoabe de aur cu pietre colorate, mai ales granate, fie prinse în celule de metal tăiate pe forma lor (cloisonné), fie montate fiecare separat, șlefuite rotunjit (à cabochon). A fost moda elitelor din epoca migrațiilor.' },
     { k: 'deformare', t: 'Deformare craniană artificială', re: /\bcraniu(l)? deformat artificial\b/i, d: 'Alungirea craniului prin bandaje strânse în primii ani de viață. Era un semn de rang, practicat de mai multe popoare, nu doar de huni.' },
     { k: 'adn', t: 'ADN antic', re: /\bADN antic\b/, d: 'Material genetic extras din oase vechi. Arată din ce populații se trăgeau cei îngropați, dar nu și ce limbă vorbeau sau cum își spuneau.' },
     { k: 'izvor', t: 'Izvor istoric', re: /\bizvoarele\b/i, d: 'Orice sursă din epoca studiată: text, monedă, mormânt, inscripție. Cărțile istoricilor de azi sunt surse secundare, care interpretează izvoarele.' }
@@ -44,7 +44,8 @@
     return null;
   }
   var found = {};
-  GL.forEach(function(it){ found[it.k] = wrapFirst(it); });
+  // tip: false = termenul rămâne doar în capitolul „Glosar”, fără definiție în text
+  GL.forEach(function(it){ found[it.k] = it.tip === false ? null : wrapFirst(it); });
 
   // lista din capitolul „Glosar”
   var list = document.getElementById('gl-list');

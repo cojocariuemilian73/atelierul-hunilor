@@ -43,6 +43,7 @@ Fiecare parte interactivă are sursele într-un folder separat. După o modifica
 | Designul articolului (titlul ca o copertă, ornamentele dintre capitole, citatele mari, Attila și Aetius față în față) | în script | `node scripturi-build/patch-design-pagina.js` |
 | Legendele scurte (sursa la „ⓘ”), „Despre proiect” pe file, bara de capitole pe telefon | în script | `node scripturi-build/patch-recenzie-3.js` |
 | Culorile (auriu pentru structură, roșu doar pentru huni), „Pe scurt”, bifele la capitole și jocuri, Atlasul cu un singur chenar | în script | `node scripturi-build/patch-recenzie-4.js` |
+| Fișele lui Attila și Aetius, consecințele în cascadă, codul QR din deschidere și fereastra lui, fără „Pe scurt” la capitolele 03 și 05 și fără harta Galiei | în script | `node scripturi-build/patch-recenzie-5.js` (după `patch-animatii.js`; apoi `build-web.js`) |
 | Animațiile (titluri, prima literă, harta care se desenează, cortina dintre pagini, paralaxa din deschidere, dosarele, cronologia, muzeul, cărțile de pe Masă) | în script | `node scripturi-build/patch-animatii.js` (după celelalte; apoi `build-web.js`) |
 
 Toate scripturile se pot rula de mai multe ori: înlocuiesc partea lor, fără s-o dubleze.
