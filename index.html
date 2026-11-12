@@ -984,7 +984,8 @@
   }
   .m-atelier *{ box-sizing: border-box; }
   .m-atelier button{ font-family: inherit; color: inherit; }
-  .m-atelier .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 16px 56px; }
+  /* Masa ocupă toată pagina: fără lățime maximă, doar o margine mică pe laturi */
+  .m-atelier .wrap{ max-width: none; margin: 0; padding: 0 clamp(16px, 3vw, 56px) 56px; }
   .m-atelier [hidden]{ display: none !important; }
   .m-atelier ::selection{ background: rgba(212, 175, 55, 0.35); color: #fff7e6; }
   .md-sr{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -997,12 +998,8 @@
   .md-help-b:hover{ background: rgba(212, 175, 55, 0.16); }
   .md-help-b:focus-visible{ outline: 2px solid #f2d474; outline-offset: 3px; }
 
-  /* masa: suprafață închisă, cu fibra lemnului abia sugerată */
-  .md-board{ position: relative; padding: 16px 18px 18px; border: 1px solid rgba(212, 175, 55, 0.32);
-    background:
-      repeating-linear-gradient(92deg, rgba(255, 236, 200, 0.018) 0 2px, transparent 2px 9px),
-      radial-gradient(120% 90% at 50% 0%, #2a2219 0%, #1b1713 55%, #141210 100%);
-    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 230, 180, 0.06); }
+  /* masa: direct pe fundalul paginii, fără chenar („tablou”) în jur */
+  .md-board{ position: relative; padding: 0; }
 
   /* ---------- deasupra axei: înapoi la axa completă + ce faci acum ---------- */
   .md-tl-head{ display: flex; align-items: center; gap: 12px; min-height: 38px; margin: 0 4px 14px; }
@@ -1161,8 +1158,9 @@
   @keyframes md-plus{ from{ opacity: 0; transform: translateY(8px); } 20%{ opacity: 1; transform: none; } to{ opacity: 0; transform: translateY(-18px); } }
 
   /* ---------- masa de lemn și documentele de pe ea ---------- */
-  .md-desk{ display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 20px; align-items: start; }
-  .md-tray{ display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px 14px; padding: 20px 18px 22px; border: 1px solid #1d130a;
+  .md-desk{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 440px); gap: 24px; align-items: start; }
+  /* pe ecranele late încap mai multe surse pe rând */
+  .md-tray{ display: grid; grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); gap: 16px 14px; padding: 20px 18px 22px; border: 1px solid #1d130a;
     background:
       radial-gradient(120% 80% at 30% 0%, rgba(255, 210, 150, 0.08), transparent 60%),
       repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 6px, rgba(255, 220, 170, 0.035) 6px 7px, transparent 7px 13px),
@@ -2481,6 +2479,29 @@
   #page-acasa .sr-fig::before, #page-acasa .dc-img::before, #page-acasa .fig-map::before, #page-acasa .gal-item::before{ display: none; }
   #page-acasa .sr-fig.sr-fig-inline{ padding: 6px; }
 
+  /* ---------- codul QR „Joacă pe telefon”: în antetul paginii jocului, în dreapta titlului (doar pe ecrane late, cu mouse) ---------- */
+  @media (min-width: 900px) and (hover: hover){
+    #mod-migratie .mig-head .jg-wrap{ display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; align-items: center; }
+    #mod-migratie .mig-head .jg-wrap > :not(.hero-qr){ grid-column: 1; }
+    #mod-migratie .mig-head .hero-qr{ grid-column: 2; grid-row: 1 / span 2; position: static; flex-direction: row; align-items: center; gap: 14px; width: auto; max-width: 470px; margin: 0; padding: 8px 14px 8px 8px; text-align: left; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    #mod-migratie .mig-head .hq-code{ width: 86px; padding: 6px; }
+    #mod-migratie .mig-head .hq-title{ margin: 0 0 3px; font-size: 0.92rem; }
+    #mod-migratie .mig-head .hq-text p:not(.hq-title){ margin: 0 0 6px; font: 0.82rem/1.4 'Source Serif 4', Georgia, serif; color: #e6d7c3; }
+    /* fără codul din deschidere, chip-urile au tot rândul */
+    #page-acasa .hero-inner .byline{ max-width: none; }
+  }
+  /* ---------- notele pe margine (ecrane late): sursa citată stă lângă paragraful ei ---------- */
+  .ah-sn-layer{ position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; }
+  .ah-sn{ position: absolute; left: var(--sn-x, 0); width: var(--sn-w, 260px); margin: 0; padding: 1px 0 1px 12px; border-left: 1px solid rgba(229, 193, 88, 0.28); color: #a89a83; font: 0.78rem/1.5 'Source Serif 4', Georgia, serif; text-wrap: pretty; transition: color 0.2s, border-color 0.2s; }
+  .ah-sn b{ margin-right: 6px; font: 700 0.76rem 'Cinzel', Georgia, serif; color: #e5c158; font-variant-numeric: lining-nums; }
+  .ah-sn.hl{ color: #e6d7c3; border-left-color: #f2d474; }
+  @media (prefers-reduced-motion: reduce){ .ah-sn{ transition: none; } }
+  @media print{ .ah-sn-layer{ display: none !important; } }
+  /* o singură bară de progres: drumul călărețului de sub meniu; bara subțire veche de sus nu mai apare */
+  #progress-bar.progress-bar{ display: none !important; }
+  /* pe pagina jocului codul e la vedere: butonul din colț nu mai trebuie */
+  body:has(#mod-migratie.active) .qr-fab{ display: none !important; }
+
   @media (prefers-reduced-motion: reduce){
     #site-nav.site-nav, #site-nav a::before, .st-menu i::before, .st-menu i::after{ transition: none; }
   }
@@ -2525,6 +2546,15 @@
   .ef-lab b{ font: 700 0.95rem 'Cinzel', Georgia, serif; color: #f2d474; margin-right: 6px; font-variant-numeric: lining-nums; }
   .ef-lab small{ display: block; margin-top: 1px; font-size: 0.76rem; color: #b3a58f; }
   .ef-pt:hover .ef-lab, .ef-pt:focus-visible .ef-lab{ opacity: 1; transform: translate(0, -50%); }
+  /* pe ecranele late, marginea din stânga nu rămâne goală: anul și evenimentul stau mereu lângă punct (stins până ajungi la el) */
+  @media (min-width: 1600px) and (hover: hover){
+    .ef-line .ef-lab{ opacity: 0.5; transform: translate(0, -50%); left: calc(100% + 6px); max-width: 250px; padding: 2px 8px 3px; overflow: hidden; text-overflow: ellipsis; background: none; border-color: transparent; box-shadow: none; color: #b3a58f; font-size: 0.8rem; transition: opacity 0.4s ease, color 0.4s ease, background 0.18s; }
+    .ef-line .ef-lab b{ font-size: 0.84rem; }
+    .ef-line .ef-lab small{ display: none; }
+    .ef-line .ef-pt.lit .ef-lab{ opacity: 1; color: #e6d7c3; }
+    .ef-line .ef-pt:hover .ef-lab, .ef-line .ef-pt:focus-visible .ef-lab{ max-width: none; overflow: visible; background: rgba(20, 18, 15, 0.96); border-color: rgba(212, 175, 55, 0.55); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); color: #e6d7c3; }
+    .ef-line .ef-pt:hover .ef-lab small, .ef-line .ef-pt:focus-visible .ef-lab small{ display: block; }
+  }
   @media (max-width: 1099px){ .ef-track{ width: 1px; margin-left: -0.5px; } .ef-pt::before{ width: 7px; height: 7px; } }
   @media (max-width: 899px){ .ef-line{ display: none; } }
 
@@ -2545,11 +2575,11 @@
 
   /* ---------- D) călărețul de sub meniu: înaintează în ani pe măsură ce citești ---------- */
   /* banda stă lipită sub meniu; când meniul se ascunde la derulare, urcă la marginea de sus */
-  .ef-ride{ position: fixed; left: 0; right: 0; top: 0; z-index: 139; height: 42px; pointer-events: none;
+  .ef-ride{ position: fixed; left: 0; right: 0; top: 0; z-index: 139; height: 50px; pointer-events: none;
     background: linear-gradient(180deg, rgba(12, 10, 8, 0.92) 0%, rgba(12, 10, 8, 0.7) 62%, rgba(12, 10, 8, 0) 100%);
     opacity: 0; visibility: hidden; transform: translateY(var(--ef-ride-y, 54px)); transition: transform 0.2s ease, opacity 0.35s ease, visibility 0s linear 0.35s; }
   .ef-ride.on{ opacity: 1; visibility: visible; transition: transform 0.2s ease, opacity 0.35s ease; }
-  .ef-rtrack{ position: absolute; left: 34px; right: 46px; top: 29px; height: 0; }
+  .ef-rtrack{ position: absolute; left: 34px; right: 46px; top: 35px; height: 0; }
   /* drumul nu există dinainte: se trasează doar în urma călărețului */
   .ef-rfill{ position: absolute; left: 0; top: -1px; width: 100%; height: 2px; background: linear-gradient(90deg, rgba(143, 109, 29, 0), #8f6d1d 18%, #e5c158 80%, #f2d474); box-shadow: 0 0 6px rgba(242, 212, 116, 0.35); transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
   /* reperele apar abia când ajunge la ele */
@@ -2574,8 +2604,8 @@
   @keyframes ef-leg{ 0%, 100%{ transform: rotate(26deg); } 50%{ transform: rotate(-24deg); } }
   @keyframes ef-bob{ 50%{ transform: translateY(-1.6px); } }
   @media (max-width: 767px){
-    .ef-ride{ height: 36px; }
-    .ef-rtrack{ left: 22px; right: 30px; top: 25px; }
+    .ef-ride{ height: 42px; }
+    .ef-rtrack{ left: 22px; right: 30px; top: 30px; }
     .ef-rider svg{ left: -16px; width: 30px; height: 22px; }
     .ef-ryr{ left: 17px; bottom: 7px; font-size: 0.6rem; }
     .ef-ride.back .ef-ryr, .ef-ride.lft .ef-ryr{ right: 17px; }
@@ -2706,14 +2736,6 @@
         <a class="hero-btn primary" href="#mod-migratie">Joacă „Attila și Marea Migrație”</a>
         <a class="hero-btn" href="#sec-muzeu">Muzeul virtual</a>
       </div>
-      <aside class="hero-qr" aria-label="Joacă pe telefon">
-        <div class="hq-code" role="img" aria-label="Cod QR care deschide jocul pe telefon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno" aria-hidden="true" focusable="false"><path class="qrline" stroke="#121214" d="M0 0.5h7m2 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m3 0h7m-37 1h1m5 0h1m1 0h1m1 0h5m2 0h1m1 0h1m1 0h2m5 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m2 0h2m2 0h2m2 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m5 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h2m1 0h4m4 0h1m1 0h1m1 0h1m3 0h1m-28 1h1m5 0h1m1 0h2m2 0h1m2 0h1m2 0h1m1 0h6m1 0h1m1 0h2m2 0h3m-36 1h1m3 0h2m3 0h1m1 0h4m2 0h1m2 0h1m1 0h1m3 0h2m3 0h5m-36 1h5m1 0h1m1 0h2m8 0h1m1 0h1m2 0h2m1 0h3m1 0h2m3 0h2m-37 1h4m3 0h1m2 0h1m1 0h1m1 0h3m5 0h2m2 0h1m1 0h2m2 0h2m2 0h1m-37 1h2m2 0h4m2 0h1m2 0h1m2 0h1m2 0h2m1 0h1m1 0h1m5 0h2m1 0h1m2 0h1m-37 1h1m1 0h1m1 0h1m4 0h3m1 0h1m1 0h6m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m-35 1h4m1 0h2m3 0h2m2 0h1m1 0h1m2 0h2m4 0h4m1 0h3m1 0h2m-37 1h1m1 0h1m2 0h1m3 0h1m2 0h2m3 0h2m5 0h1m3 0h1m1 0h2m1 0h2m-35 1h4m1 0h4m1 0h1m1 0h2m2 0h1m4 0h1m2 0h4m1 0h2m1 0h1m1 0h1m1 0h1m-37 1h2m1 0h3m1 0h2m4 0h2m2 0h2m1 0h3m1 0h1m2 0h2m2 0h1m1 0h3m-32 1h9m2 0h1m4 0h1m2 0h3m1 0h1m3 0h1m1 0h2m1 0h1m-36 1h1m3 0h1m1 0h1m1 0h2m1 0h3m4 0h2m3 0h1m1 0h2m1 0h1m1 0h2m3 0h1m-36 1h3m1 0h5m1 0h5m1 0h4m1 0h1m1 0h4m1 0h2m1 0h3m-31 1h2m2 0h6m1 0h1m2 0h2m1 0h3m2 0h2m4 0h1m1 0h2m-36 1h1m2 0h4m2 0h1m1 0h6m1 0h1m3 0h1m2 0h5m1 0h3m1 0h2m-37 1h1m2 0h1m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1m4 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h2m-36 1h1m4 0h1m2 0h2m1 0h7m2 0h1m2 0h1m2 0h2m1 0h2m4 0h1m-37 1h3m2 0h1m3 0h1m3 0h2m1 0h2m6 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-35 1h1m2 0h1m2 0h1m2 0h1m2 0h2m3 0h1m2 0h1m1 0h1m3 0h3m2 0h1m3 0h2m-37 1h1m1 0h2m1 0h1m1 0h1m1 0h4m2 0h1m4 0h1m6 0h1m3 0h4m1 0h1m-37 1h1m5 0h4m1 0h1m1 0h1m3 0h1m4 0h1m1 0h3m1 0h7m1 0h1m-29 1h5m1 0h7m2 0h1m4 0h1m3 0h1m-33 1h7m2 0h2m4 0h2m2 0h8m1 0h1m1 0h1m1 0h1m3 0h1m-37 1h1m5 0h1m2 0h1m2 0h3m1 0h3m1 0h1m1 0h1m3 0h3m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m2 0h2m4 0h2m4 0h1m1 0h10m1 0h1m-35 1h1m1 0h3m1 0h1m3 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h2m5 0h1m-37 1h1m1 0h3m1 0h1m8 0h2m1 0h2m1 0h1m6 0h1m4 0h1m1 0h2m-37 1h1m5 0h1m2 0h4m6 0h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m2 0h1m-37 1h7m1 0h1m5 0h2m8 0h1m2 0h3m1 0h1m4 0h1"/></svg></div>
-        <div class="hq-text">
-          <p class="hq-title">Joacă pe telefon</p>
-          <p>Scanează codul cu camera telefonului: jocul se deschide direct în browser, fără instalare.</p>
-          <a href="qr-joc.html" target="_blank" rel="noopener">Pagină de tipărit cu codul →</a>
-        </div>
-      </aside>
       <div class="byline">
         <span><b>Secțiune</b>: Secțiunea I, Istorie</span>
         <span><b>Interval</b>: c. 370–454 d.Hr.</span>
@@ -3259,6 +3281,14 @@
     <div class="jg-wrap">
       <h1>Attila și Marea Migrație</h1>
       <p>370–476 · trei acte · șase personaje · popoarele se mișcă pe harta reală a Europei.</p>
+      <aside class="hero-qr" aria-label="Joacă pe telefon">
+        <div class="hq-code" role="img" aria-label="Cod QR care deschide jocul pe telefon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno" aria-hidden="true" focusable="false"><path class="qrline" stroke="#121214" d="M0 0.5h7m2 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m3 0h7m-37 1h1m5 0h1m1 0h1m1 0h5m2 0h1m1 0h1m1 0h2m5 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m2 0h2m2 0h2m2 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m5 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h2m1 0h4m4 0h1m1 0h1m1 0h1m3 0h1m-28 1h1m5 0h1m1 0h2m2 0h1m2 0h1m2 0h1m1 0h6m1 0h1m1 0h2m2 0h3m-36 1h1m3 0h2m3 0h1m1 0h4m2 0h1m2 0h1m1 0h1m3 0h2m3 0h5m-36 1h5m1 0h1m1 0h2m8 0h1m1 0h1m2 0h2m1 0h3m1 0h2m3 0h2m-37 1h4m3 0h1m2 0h1m1 0h1m1 0h3m5 0h2m2 0h1m1 0h2m2 0h2m2 0h1m-37 1h2m2 0h4m2 0h1m2 0h1m2 0h1m2 0h2m1 0h1m1 0h1m5 0h2m1 0h1m2 0h1m-37 1h1m1 0h1m1 0h1m4 0h3m1 0h1m1 0h6m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m-35 1h4m1 0h2m3 0h2m2 0h1m1 0h1m2 0h2m4 0h4m1 0h3m1 0h2m-37 1h1m1 0h1m2 0h1m3 0h1m2 0h2m3 0h2m5 0h1m3 0h1m1 0h2m1 0h2m-35 1h4m1 0h4m1 0h1m1 0h2m2 0h1m4 0h1m2 0h4m1 0h2m1 0h1m1 0h1m1 0h1m-37 1h2m1 0h3m1 0h2m4 0h2m2 0h2m1 0h3m1 0h1m2 0h2m2 0h1m1 0h3m-32 1h9m2 0h1m4 0h1m2 0h3m1 0h1m3 0h1m1 0h2m1 0h1m-36 1h1m3 0h1m1 0h1m1 0h2m1 0h3m4 0h2m3 0h1m1 0h2m1 0h1m1 0h2m3 0h1m-36 1h3m1 0h5m1 0h5m1 0h4m1 0h1m1 0h4m1 0h2m1 0h3m-31 1h2m2 0h6m1 0h1m2 0h2m1 0h3m2 0h2m4 0h1m1 0h2m-36 1h1m2 0h4m2 0h1m1 0h6m1 0h1m3 0h1m2 0h5m1 0h3m1 0h2m-37 1h1m2 0h1m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1m4 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h2m-36 1h1m4 0h1m2 0h2m1 0h7m2 0h1m2 0h1m2 0h2m1 0h2m4 0h1m-37 1h3m2 0h1m3 0h1m3 0h2m1 0h2m6 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-35 1h1m2 0h1m2 0h1m2 0h1m2 0h2m3 0h1m2 0h1m1 0h1m3 0h3m2 0h1m3 0h2m-37 1h1m1 0h2m1 0h1m1 0h1m1 0h4m2 0h1m4 0h1m6 0h1m3 0h4m1 0h1m-37 1h1m5 0h4m1 0h1m1 0h1m3 0h1m4 0h1m1 0h3m1 0h7m1 0h1m-29 1h5m1 0h7m2 0h1m4 0h1m3 0h1m-33 1h7m2 0h2m4 0h2m2 0h8m1 0h1m1 0h1m1 0h1m3 0h1m-37 1h1m5 0h1m2 0h1m2 0h3m1 0h3m1 0h1m1 0h1m3 0h3m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m2 0h2m4 0h2m4 0h1m1 0h10m1 0h1m-35 1h1m1 0h3m1 0h1m3 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h2m5 0h1m-37 1h1m1 0h3m1 0h1m8 0h2m1 0h2m1 0h1m6 0h1m4 0h1m1 0h2m-37 1h1m5 0h1m2 0h4m6 0h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m2 0h1m-37 1h7m1 0h1m5 0h2m8 0h1m2 0h3m1 0h1m4 0h1"/></svg></div>
+        <div class="hq-text">
+          <p class="hq-title">Joacă pe telefon</p>
+          <p>Scanează codul cu camera telefonului: jocul se deschide direct în browser, fără instalare.</p>
+          <a href="qr-joc.html" target="_blank" rel="noopener">Pagină de tipărit cu codul →</a>
+        </div>
+      </aside>
     </div>
   </header>
   <div class="jg-wrap jg-stage">
@@ -7781,6 +7811,86 @@
   window.addEventListener('resize', fit);
   window.addEventListener('load', fit);
   fit();
+
+  // ---------- capitolul curent, recalculat când apare articolul ----------
+  // la pornire, cuprinsul se măsoară cât articolul e încă ascuns: toate capitolele par la 0 și „08” ar rămâne marcat.
+  // Când pagina devine vizibilă, recalculăm (cuprinsul ascultă de „resize”); fără capitol activ, rândul revine la început.
+  var home = document.getElementById('page-acasa');
+  function respy(){
+    raf(function(){
+      if (!home || !home.classList.contains('active')) return;
+      window.dispatchEvent(new Event('resize'));
+      if (row && !row.querySelector('a.active')) row.scrollLeft = 0;
+    });
+  }
+  if (home && 'MutationObserver' in window) new MutationObserver(respy).observe(home, { attributes: true, attributeFilter: ['class'] });
+  window.addEventListener('load', respy);
+  respy();
+
+  // ---------- notele pe margine: pe ecranele late, fiecare notă stă în dreapta paragrafului care o citează ----------
+  // (cititoarele de ecran și ecranele mici le au ca până acum, la clic pe număr; aici sunt doar o copie vizuală)
+  (function(){
+    var shell = home && home.querySelector('.page-shell'); if (!shell) return;
+    var mqW = window.matchMedia('(min-width: 1360px)');
+    var WIDE = '#sec-cronologie, #sec-atlas, #sec-muzeu, .biblio';
+    var text = {};
+    Array.prototype.forEach.call(home.querySelectorAll('.biblio li[id^="note-"]'), function(li){
+      var c = li.cloneNode(true), b = c.querySelector('a.back'); if (b) b.remove();
+      text[li.id.slice(5)] = c.textContent.replace(/\s+/g, ' ').trim();
+    });
+    var seen = {}, items = [];
+    Array.prototype.forEach.call(home.querySelectorAll('sup.fn[data-n]'), function(sup){
+      var n = sup.getAttribute('data-n');
+      if (seen[n] || !text[n] || sup.closest(WIDE)) return;
+      seen[n] = true;
+      var el = document.createElement('p'); el.className = 'ah-sn';
+      el.innerHTML = '<b></b><span></span>';
+      el.firstChild.textContent = n; el.lastChild.textContent = text[n];
+      items.push({ sup: sup, el: el, n: n });
+    });
+    if (!items.length) return;
+    var layer = document.createElement('div');
+    layer.className = 'ah-sn-layer'; layer.setAttribute('aria-hidden', 'true'); layer.hidden = true;
+    items.forEach(function(it){ layer.appendChild(it.el); });
+    document.body.appendChild(layer);
+
+    var queued = false;
+    function place(){
+      queued = false;
+      var vw = document.documentElement.clientWidth, sr = shell.getBoundingClientRect(), sy = window.pageYOffset;
+      var w = Math.min(290, vw - sr.right - 56);
+      var on = mqW.matches && home.classList.contains('active') && w >= 170;
+      layer.hidden = !on; if (!on) return;
+      layer.style.setProperty('--sn-w', Math.round(w) + 'px');
+      layer.style.setProperty('--sn-x', Math.round(sr.right + 28) + 'px');
+      // modulele late (cronologia, atlasul, muzeul) ocupă și marginea: notele trec sub ele
+      var blocks = Array.prototype.map.call(home.querySelectorAll(WIDE), function(b){ var r = b.getBoundingClientRect(); return [r.top + sy - 12, r.bottom + sy + 12]; });
+      var next = -Infinity;
+      items.forEach(function(it){
+        var r = it.sup.getBoundingClientRect();
+        if (!r.height) { it.el.hidden = true; return; }
+        it.el.hidden = false;
+        var h = it.el.offsetHeight, t = Math.max(r.top + sy - 6, next);
+        blocks.forEach(function(b){ if (t + h > b[0] && t < b[1]) t = b[1]; });
+        it.el.style.top = Math.round(t) + 'px';
+        next = t + h + 14;
+      });
+    }
+    function queue(){ if (!queued) { queued = true; raf(place); } }
+    window.addEventListener('resize', queue);
+    window.addEventListener('load', queue);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(queue);
+    if ('ResizeObserver' in window) new ResizeObserver(queue).observe(shell);
+    if ('MutationObserver' in window) new MutationObserver(queue).observe(home, { attributes: true, attributeFilter: ['class'] });
+    on(mqW, queue);
+    // nota se aprinde cât timp ești cu mouse-ul pe numărul ei din text
+    home.addEventListener('mouseover', function(e){
+      var s = e.target.closest && e.target.closest('sup.fn'); if (!s) return;
+      items.forEach(function(it){ it.el.classList.toggle('hl', it.n === s.getAttribute('data-n')); });
+    });
+    home.addEventListener('mouseout', function(e){ if (e.target.closest && e.target.closest('sup.fn')) items.forEach(function(it){ it.el.classList.remove('hl'); }); });
+    queue();
+  })();
 })();
 </script>
 <script>

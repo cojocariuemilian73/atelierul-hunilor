@@ -31,7 +31,7 @@ Fiecare parte interactivă are sursele într-un folder separat. După o modifica
 | Partea | Sursele | Comanda |
 |---|---|---|
 | Jocul (simularea cu actul lui Attila), stilurile jocurilor | `scripturi-build/jocuri/` | `node scripturi-build/splice-jocuri.js`, apoi `node scripturi-build/splice-joc-unic.js` |
-| Masa istoricului | `scripturi-build/atelier/` | `node scripturi-build/splice-atelier.js` |
+| Masa istoricului (pe toată lățimea paginii, fără chenar) | `scripturi-build/atelier/` | `node scripturi-build/splice-atelier.js` |
 | Cronologia | `scripturi-build/cronologie/` | `node scripturi-build/splice-cronologie.js` |
 | Aurul hunilor | `scripturi-build/aur/` | `node scripturi-build/splice-aur.js` |
 | Glosarul | `scripturi-build/glosar/` | `node scripturi-build/splice-glosar.js` |
@@ -45,8 +45,8 @@ Fiecare parte interactivă are sursele într-un folder separat. După o modifica
 | Culorile (auriu pentru structură, roșu doar pentru huni), „Pe scurt”, bifele la capitole și jocuri, Atlasul cu un singur chenar | în script | `node scripturi-build/patch-recenzie-4.js` |
 | Fișele lui Attila și Aetius, consecințele în cascadă, codul QR din deschidere și fereastra lui, fără „Pe scurt” la capitolele 03 și 05 și fără harta Galiei | în script | `node scripturi-build/patch-recenzie-5.js` (după `patch-animatii.js`; apoi `build-web.js`) |
 | Animațiile (titluri, prima literă, harta care se desenează, cortina dintre pagini, paralaxa din deschidere, dosarele, cronologia, muzeul, cărțile de pe Masă) | în script | `node scripturi-build/patch-animatii.js` (după celelalte; apoi `build-web.js`) |
-| Pagina Acasă: fundalul fără „cutie” (coloană de 860 px), meniul unic sticky (capitolele 01–08, Jocul, Masa, Despre proiect; sertar pe telefon), deschiderea cu pictura ca imagine WebP și trei chip-uri, titlul capitolului într-un singur bloc, ramă subțire la imagini | `scripturi-build/acasa/` | `node scripturi-build/patch-acasa.js` (după `patch-recenzie-5.js`, înainte de `patch-efecte.js`) |
-| Efectele: cursorul tematic (doar cu mouse), linia timpului din stânga articolului (375, 441–447, 451, 453, 476), pergamentul pe ilustrații și picturi (clasa `.img-parchment`) și călărețul de sub meniu, care merge de la 370 la 476 pe măsură ce citești (drumul și reperele apar în urma lui) | `scripturi-build/efecte/` | `node scripturi-build/patch-efecte.js` (ultimul, după `patch-acasa.js`; apoi `build-web.js`) |
+| Pagina Acasă: fundalul fără „cutie” (coloană de 860 px), meniul unic sticky (capitolele 01–08, Jocul, Masa, Despre proiect; sertar pe telefon), deschiderea cu pictura ca imagine WebP și trei chip-uri, titlul capitolului într-un singur bloc, ramă subțire la imagini, codul QR „Joacă pe telefon” mutat în antetul paginii jocului, notele pe marginea din dreapta pe ecranele late, fără bara veche de progres de sus | `scripturi-build/acasa/` | `node scripturi-build/patch-acasa.js` (după `patch-recenzie-5.js`, înainte de `patch-efecte.js`) |
+| Efectele: cursorul tematic (doar cu mouse), linia timpului din stânga articolului (375, 441–447, 451, 453, 476; pe ecranele late, cu anul și evenimentul scrise lângă puncte), pergamentul pe ilustrații și picturi (clasa `.img-parchment`) și călărețul de sub meniu, care merge de la 370 la 476 pe măsură ce citești (drumul și reperele apar în urma lui) | `scripturi-build/efecte/` | `node scripturi-build/patch-efecte.js` (ultimul, după `patch-acasa.js`; apoi `build-web.js`) |
 
 Toate scripturile se pot rula de mai multe ori: înlocuiesc partea lor, fără s-o dubleze.
 

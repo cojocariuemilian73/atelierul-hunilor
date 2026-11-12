@@ -87,6 +87,19 @@ else {
   if (!hi) fail('imaginea din deschidere');
   s = s.replace(hi[0], () => '<div class="hero-bg">' + IMG + '</div>');
 }
+// codul QR „Joacă pe telefon”: din deschiderea articolului în antetul paginii jocului
+{
+  const qr = s.match(/ {6}<aside class="hero-qr"[\s\S]*?<\/aside>\n/);
+  const head = '  <header class="mig-head">\n    <div class="jg-wrap">\n      <h1>Attila și Marea Migrație</h1>\n';
+  const h0 = s.indexOf(head);
+  if (h0 < 0) fail('antetul jocului');
+  const inHead = qr && s.indexOf(qr[0]) > h0 && s.indexOf(qr[0]) < s.indexOf('  </header>\n', h0);
+  if (qr && !inHead) {
+    s = s.replace(qr[0], '');
+    const p1 = s.indexOf('</p>\n', s.indexOf(head)) + '</p>\n'.length;
+    s = s.slice(0, p1) + qr[0] + s.slice(p1);
+  } else if (!qr) fail('codul QR');
+}
 // atlasul refolosește pictura: acum o ia din imagine
 swap("bg: '#acasa .hero-bg',", "id: 'hero-img',", 'atlas: pictura');
 

@@ -37,7 +37,8 @@ for (const rel of ['index.html', 'atelierul-hunilor.html']) {
   // script
   let n = 0;
   s = s.replace(/<script>\n[\s\S]*?\n<\/script>/g, blk => {
-    if (!blk.includes("getElementById('mod-atelier')")) return blk;
+    // scriptul efectelor (/* ef: … */) pomenește și el #mod-atelier, dar nu e al Mesei
+    if (!blk.includes("getElementById('mod-atelier')") || blk.startsWith('<script>\n/* ef:')) return blk;
     n++; return '<script>\n' + JS + '\n</script>';
   });
   if (n !== 1) fail('script atelier (' + n + ')');

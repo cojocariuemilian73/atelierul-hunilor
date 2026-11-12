@@ -37,6 +37,15 @@
   .ef-lab b{ font: 700 0.95rem 'Cinzel', Georgia, serif; color: #f2d474; margin-right: 6px; font-variant-numeric: lining-nums; }
   .ef-lab small{ display: block; margin-top: 1px; font-size: 0.76rem; color: #b3a58f; }
   .ef-pt:hover .ef-lab, .ef-pt:focus-visible .ef-lab{ opacity: 1; transform: translate(0, -50%); }
+  /* pe ecranele late, marginea din stânga nu rămâne goală: anul și evenimentul stau mereu lângă punct (stins până ajungi la el) */
+  @media (min-width: 1600px) and (hover: hover){
+    .ef-line .ef-lab{ opacity: 0.5; transform: translate(0, -50%); left: calc(100% + 6px); max-width: 250px; padding: 2px 8px 3px; overflow: hidden; text-overflow: ellipsis; background: none; border-color: transparent; box-shadow: none; color: #b3a58f; font-size: 0.8rem; transition: opacity 0.4s ease, color 0.4s ease, background 0.18s; }
+    .ef-line .ef-lab b{ font-size: 0.84rem; }
+    .ef-line .ef-lab small{ display: none; }
+    .ef-line .ef-pt.lit .ef-lab{ opacity: 1; color: #e6d7c3; }
+    .ef-line .ef-pt:hover .ef-lab, .ef-line .ef-pt:focus-visible .ef-lab{ max-width: none; overflow: visible; background: rgba(20, 18, 15, 0.96); border-color: rgba(212, 175, 55, 0.55); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); color: #e6d7c3; }
+    .ef-line .ef-pt:hover .ef-lab small, .ef-line .ef-pt:focus-visible .ef-lab small{ display: block; }
+  }
   @media (max-width: 1099px){ .ef-track{ width: 1px; margin-left: -0.5px; } .ef-pt::before{ width: 7px; height: 7px; } }
   @media (max-width: 899px){ .ef-line{ display: none; } }
 
@@ -57,11 +66,11 @@
 
   /* ---------- D) călărețul de sub meniu: înaintează în ani pe măsură ce citești ---------- */
   /* banda stă lipită sub meniu; când meniul se ascunde la derulare, urcă la marginea de sus */
-  .ef-ride{ position: fixed; left: 0; right: 0; top: 0; z-index: 139; height: 42px; pointer-events: none;
+  .ef-ride{ position: fixed; left: 0; right: 0; top: 0; z-index: 139; height: 50px; pointer-events: none;
     background: linear-gradient(180deg, rgba(12, 10, 8, 0.92) 0%, rgba(12, 10, 8, 0.7) 62%, rgba(12, 10, 8, 0) 100%);
     opacity: 0; visibility: hidden; transform: translateY(var(--ef-ride-y, 54px)); transition: transform 0.2s ease, opacity 0.35s ease, visibility 0s linear 0.35s; }
   .ef-ride.on{ opacity: 1; visibility: visible; transition: transform 0.2s ease, opacity 0.35s ease; }
-  .ef-rtrack{ position: absolute; left: 34px; right: 46px; top: 29px; height: 0; }
+  .ef-rtrack{ position: absolute; left: 34px; right: 46px; top: 35px; height: 0; }
   /* drumul nu există dinainte: se trasează doar în urma călărețului */
   .ef-rfill{ position: absolute; left: 0; top: -1px; width: 100%; height: 2px; background: linear-gradient(90deg, rgba(143, 109, 29, 0), #8f6d1d 18%, #e5c158 80%, #f2d474); box-shadow: 0 0 6px rgba(242, 212, 116, 0.35); transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
   /* reperele apar abia când ajunge la ele */
@@ -86,8 +95,8 @@
   @keyframes ef-leg{ 0%, 100%{ transform: rotate(26deg); } 50%{ transform: rotate(-24deg); } }
   @keyframes ef-bob{ 50%{ transform: translateY(-1.6px); } }
   @media (max-width: 767px){
-    .ef-ride{ height: 36px; }
-    .ef-rtrack{ left: 22px; right: 30px; top: 25px; }
+    .ef-ride{ height: 42px; }
+    .ef-rtrack{ left: 22px; right: 30px; top: 30px; }
     .ef-rider svg{ left: -16px; width: 30px; height: 22px; }
     .ef-ryr{ left: 17px; bottom: 7px; font-size: 0.6rem; }
     .ef-ride.back .ef-ryr, .ef-ride.lft .ef-ryr{ right: 17px; }

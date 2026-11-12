@@ -10,7 +10,8 @@
   }
   .m-atelier *{ box-sizing: border-box; }
   .m-atelier button{ font-family: inherit; color: inherit; }
-  .m-atelier .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 16px 56px; }
+  /* Masa ocupă toată pagina: fără lățime maximă, doar o margine mică pe laturi */
+  .m-atelier .wrap{ max-width: none; margin: 0; padding: 0 clamp(16px, 3vw, 56px) 56px; }
   .m-atelier [hidden]{ display: none !important; }
   .m-atelier ::selection{ background: rgba(212, 175, 55, 0.35); color: #fff7e6; }
   .md-sr{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -23,12 +24,8 @@
   .md-help-b:hover{ background: rgba(212, 175, 55, 0.16); }
   .md-help-b:focus-visible{ outline: 2px solid #f2d474; outline-offset: 3px; }
 
-  /* masa: suprafață închisă, cu fibra lemnului abia sugerată */
-  .md-board{ position: relative; padding: 16px 18px 18px; border: 1px solid rgba(212, 175, 55, 0.32);
-    background:
-      repeating-linear-gradient(92deg, rgba(255, 236, 200, 0.018) 0 2px, transparent 2px 9px),
-      radial-gradient(120% 90% at 50% 0%, #2a2219 0%, #1b1713 55%, #141210 100%);
-    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 230, 180, 0.06); }
+  /* masa: direct pe fundalul paginii, fără chenar („tablou”) în jur */
+  .md-board{ position: relative; padding: 0; }
 
   /* ---------- deasupra axei: înapoi la axa completă + ce faci acum ---------- */
   .md-tl-head{ display: flex; align-items: center; gap: 12px; min-height: 38px; margin: 0 4px 14px; }
@@ -187,8 +184,9 @@
   @keyframes md-plus{ from{ opacity: 0; transform: translateY(8px); } 20%{ opacity: 1; transform: none; } to{ opacity: 0; transform: translateY(-18px); } }
 
   /* ---------- masa de lemn și documentele de pe ea ---------- */
-  .md-desk{ display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 20px; align-items: start; }
-  .md-tray{ display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px 14px; padding: 20px 18px 22px; border: 1px solid #1d130a;
+  .md-desk{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 440px); gap: 24px; align-items: start; }
+  /* pe ecranele late încap mai multe surse pe rând */
+  .md-tray{ display: grid; grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); gap: 16px 14px; padding: 20px 18px 22px; border: 1px solid #1d130a;
     background:
       radial-gradient(120% 80% at 30% 0%, rgba(255, 210, 150, 0.08), transparent 60%),
       repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 6px, rgba(255, 220, 170, 0.035) 6px 7px, transparent 7px 13px),
