@@ -24,7 +24,8 @@
   /* ---------- D) călărețul de sub meniu: înaintează în ani pe măsură ce citești ---------- */
   /* banda stă lipită sub meniu; când meniul se ascunde la derulare, urcă la marginea de sus */
   .ef-ride{ position: fixed; left: 0; right: 0; top: 0; z-index: 139; height: 50px; pointer-events: none;
-    background: linear-gradient(180deg, rgba(12, 10, 8, 0.92) 0%, rgba(12, 10, 8, 0.7) 62%, rgba(12, 10, 8, 0) 100%);
+    /* fundal plin, ca drumul să nu pară desenat peste imaginile de dedesubt */
+    background: #120e0a; border-bottom: 1px solid rgba(229, 193, 88, 0.16); box-shadow: 0 8px 14px -8px rgba(0, 0, 0, 0.6);
     opacity: 0; visibility: hidden; transform: translateY(var(--ef-ride-y, 54px)); transition: transform 0.2s ease, opacity 0.35s ease, visibility 0s linear 0.35s; }
   .ef-ride.on{ opacity: 1; visibility: visible; transition: transform 0.2s ease, opacity 0.35s ease; }
   .ef-rtrack{ position: absolute; left: 34px; right: 46px; top: 35px; height: 0; }
