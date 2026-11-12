@@ -1,7 +1,7 @@
-// Trei efecte pe tot site-ul, din scripturi-build/efecte/ (efecte.css, efecte.js):
+// Efectele de pe tot site-ul, din scripturi-build/efecte/ (efecte.css, efecte.js):
 //  A) cursorul tematic: un punct auriu cu un inel care îl urmează și o urmă scurtă (doar cu mouse, fără „reducerea mișcării”);
-//  B) linia timpului: o linie aurie pe marginea stângă a articolului, care se trasează la derulare, cu reperele 375, 441–447,
-//     451, 453 și 476 (din cronologia site-ului); fiecare punct se aprinde când paragraful lui intră în ecran;
+//  B) reperele din text (375, 441–447, 451, 453, 476, din cronologia site-ului), găsite în paragrafele lor; le folosește
+//     călărețul (D). Linia aurie din stânga articolului a fost scoasă: călărețul arată deja anul și reperele;
 //  C) pergamentul: pe ilustrațiile medievale și pe picturi (clasa .img-parchment), margini neregulate, arse și îngălbenite,
 //     iar imaginea se desface ca un manuscris când ajungi la ea;
 //  D) călărețul de sub meniu: un hun călare care merge de la 370 la 476 pe măsură ce citești articolul; drumul auriu
@@ -57,4 +57,4 @@ PARCH.forEach(id => {
 });
 
 fs.writeFileSync(f, crlf ? s.split('\n').join('\r\n') : s);
-console.log(rel + ': efectele (cursor, linia timpului, pergament pe ' + PARCH.length + ' imagini)');
+console.log(rel + ': efectele (cursor, călăreț, pergament pe ' + PARCH.length + ' imagini)');
