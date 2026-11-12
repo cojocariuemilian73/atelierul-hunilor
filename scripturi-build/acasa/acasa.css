@@ -109,6 +109,29 @@
   #page-acasa .sr-fig::before, #page-acasa .dc-img::before, #page-acasa .fig-map::before, #page-acasa .gal-item::before{ display: none; }
   #page-acasa .sr-fig.sr-fig-inline{ padding: 6px; }
 
+  /* ---------- codul QR „Joacă pe telefon”: în antetul paginii jocului, în dreapta titlului (doar pe ecrane late, cu mouse) ---------- */
+  @media (min-width: 900px) and (hover: hover){
+    #mod-migratie .mig-head .jg-wrap{ display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; align-items: center; }
+    #mod-migratie .mig-head .jg-wrap > :not(.hero-qr){ grid-column: 1; }
+    #mod-migratie .mig-head .hero-qr{ grid-column: 2; grid-row: 1 / span 2; position: static; flex-direction: row; align-items: center; gap: 14px; width: auto; max-width: 470px; margin: 0; padding: 8px 14px 8px 8px; text-align: left; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    #mod-migratie .mig-head .hq-code{ width: 86px; padding: 6px; }
+    #mod-migratie .mig-head .hq-title{ margin: 0 0 3px; font-size: 0.92rem; }
+    #mod-migratie .mig-head .hq-text p:not(.hq-title){ margin: 0 0 6px; font: 0.82rem/1.4 'Source Serif 4', Georgia, serif; color: #e6d7c3; }
+    /* fără codul din deschidere, chip-urile au tot rândul */
+    #page-acasa .hero-inner .byline{ max-width: none; }
+  }
+  /* ---------- notele pe margine (ecrane late): sursa citată stă lângă paragraful ei ---------- */
+  .ah-sn-layer{ position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; }
+  .ah-sn{ position: absolute; left: var(--sn-x, 0); width: var(--sn-w, 260px); margin: 0; padding: 1px 0 1px 12px; border-left: 1px solid rgba(229, 193, 88, 0.28); color: #a89a83; font: 0.78rem/1.5 'Source Serif 4', Georgia, serif; text-wrap: pretty; transition: color 0.2s, border-color 0.2s; }
+  .ah-sn b{ margin-right: 6px; font: 700 0.76rem 'Cinzel', Georgia, serif; color: #e5c158; font-variant-numeric: lining-nums; }
+  .ah-sn.hl{ color: #e6d7c3; border-left-color: #f2d474; }
+  @media (prefers-reduced-motion: reduce){ .ah-sn{ transition: none; } }
+  @media print{ .ah-sn-layer{ display: none !important; } }
+  /* o singură bară de progres: drumul călărețului de sub meniu; bara subțire veche de sus nu mai apare */
+  #progress-bar.progress-bar{ display: none !important; }
+  /* pe pagina jocului codul e la vedere: butonul din colț nu mai trebuie */
+  body:has(#mod-migratie.active) .qr-fab{ display: none !important; }
+
   @media (prefers-reduced-motion: reduce){
     #site-nav.site-nav, #site-nav a::before, .st-menu i::before, .st-menu i::after{ transition: none; }
   }
