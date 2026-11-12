@@ -1,4 +1,4 @@
-/* ef: efecte (cursorul tematic, linia timpului, pergamentul imaginilor, călărețul de sub meniu) */
+/* ef: efecte (cursorul tematic, pergamentul imaginilor, călărețul de sub meniu) */
 (function(){
   var doc = document.documentElement;
   var mqR = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -65,7 +65,7 @@
     on(mqR, sync); on(mqF, sync);
   })();
 
-  // ---------------- B) linia timpului ----------------
+  // ---------------- B) reperele din text (375, 441–447, 451, 453, 476), folosite de călărețul de sub meniu ----------------
   (function(){
     var home = document.getElementById('acasa'), page = home && home.closest('.site-page');
     if (!home || !page) return;
@@ -90,32 +90,6 @@
     REP.forEach(function(r){ r.el = locate(r); });
     REP = REP.filter(function(r){ return r.el; });
     if (!REP.length) return;
-
-    var nav = document.createElement('nav');
-    nav.className = 'ef-line'; nav.setAttribute('aria-label', 'Repere pe linia timpului');
-    nav.innerHTML = '<div class="ef-track" aria-hidden="true"><i class="ef-fill"></i></div>' + REP.map(function(r, k){
-      var id = r.el.id || (r.el.id = 'reper-' + r.y.replace(/\D+/g, '-'));
-      return '<a class="ef-pt" href="#' + id + '" data-k="' + k + '" aria-label="' + r.aria + ', ' + r.name + '"><span class="ef-lab" aria-hidden="true"><b>' + r.y + '</b>' + r.name + '<small>' + r.cap + '</small></span></a>';
-    }).join('');
-    document.body.appendChild(nav);
-    var fill = nav.querySelector('.ef-fill'), links = nav.querySelectorAll('.ef-pt');
-
-    nav.addEventListener('click', function(e){
-      var a = e.target.closest('.ef-pt'); if (!a) return;
-      e.preventDefault(); e.stopPropagation();
-      var r = REP[+a.getAttribute('data-k')];
-      r.el.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
-      if (!r.el.hasAttribute('tabindex')) r.el.setAttribute('tabindex', '-1');
-      r.el.focus({ preventScroll: true });
-    });
-
-    function light(k){ var a = links[k]; if (a && !a.classList.contains('lit')) { a.classList.add('lit', 'flash'); setTimeout(function(){ a.classList.remove('flash'); }, 1000); } }
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function(en){
-        en.forEach(function(x){ if (x.isIntersecting) { light(+x.target.getAttribute('data-ef-k')); io.unobserve(x.target); } });
-      }, { rootMargin: '0px 0px -40% 0px' });
-      REP.forEach(function(r, k){ r.el.setAttribute('data-ef-k', k); io.observe(r.el); });
-    }
 
     // ---------- D) călărețul de sub meniu: merge de la 370 la 476 pe măsură ce citești ----------
     // un hun călare, cu arcul în mână; picioarele calului (.lg) galopează doar cât derulezi
@@ -173,29 +147,24 @@
         }
       }
       if (u >= 1) ride.classList.remove('back');
-      // spre capătul drumului, anul trece în stânga călărețului, ca să nu iasă din ecran
-      ride.classList.toggle('lft', u * rideW > rideW - 96);
+      // spre capătul drumului, anul trece în stânga călărețului, ca să nu iasă din ecran;
+      // întors înapoi, anul trece în stânga lui, dar numai dacă are loc acolo (lângă început rămâne în dreapta)
+      var rx = u * rideW;
+      ride.classList.toggle('lft', rx > rideW - 96 || (ride.classList.contains('back') && rx > 96));
       lastU = u;
     }
 
-    // pozițiile punctelor: vârful liniei ajunge la un punct când paragraful lui intră în 60% din ecran
+    // un reper e „atins” când paragraful lui intră în 60% din ecran
     var max = 1, dirty = true, ticking = false;
     function measure(){
       var H = window.innerHeight, sy = window.pageYOffset;
       max = Math.max(1, doc.scrollHeight - H);
-      // linia începe sub meniul de sus și sub banda călărețului (chiar dacă meniul e ascuns la derulare)
-      var sn = document.querySelector('.site-nav'), top = (sn ? Math.max(sn.offsetHeight, 44) : 60) + ride.offsetHeight;
-      nav.style.setProperty('--ef-top', Math.round(top + 12) + 'px');
-      // punctele prea apropiate (451 și 453 sunt în paragrafe vecine) se depărtează cu cel puțin 26 px pe linie
-      var trackH = Math.max(100, H - top - 12 - 28), gap = 26 / trackH, prev = -1, prevRaw = -1;
-      REP.forEach(function(r, k){
+      var prevRaw = -1;
+      REP.forEach(function(r){
         var y = r.el.getBoundingClientRect().top + sy;
-        r.f = r.raw = Math.max(0, Math.min(1, (y - H * 0.6) / max));
+        r.raw = Math.max(0, Math.min(1, (y - H * 0.6) / max));
         if (r.raw <= prevRaw) r.raw = prevRaw + 0.0001;
         prevRaw = r.raw;
-        if (prev >= 0 && r.f < prev + gap) r.f = Math.min(1, prev + gap);
-        prev = r.f;
-        links[k].style.setProperty('--y', r.f.toFixed(4));
       });
       // reperele pe drumul călărețului: 476 e capătul drumului
       var end = REP[REP.length - 1].raw || 1;
@@ -211,13 +180,9 @@
     }
     function frame(){
       ticking = false;
-      if (!page.classList.contains('active')) { nav.classList.remove('on'); ride.classList.remove('on'); return; }
-      nav.classList.add('on');
+      if (!page.classList.contains('active')) { ride.classList.remove('on'); return; }
       if (dirty) measure();
-      var raw = Math.max(0, Math.min(1, window.pageYOffset / max)), p = reduced() ? 1 : raw;
-      fill.style.transform = 'scaleY(' + p.toFixed(4) + ')';
-      REP.forEach(function(r, k){ if (reduced() || p >= r.f - 0.001) light(k); });
-      rideFrame(raw);
+      rideFrame(Math.max(0, Math.min(1, window.pageYOffset / max)));
     }
     function tick(){ if (!ticking) { ticking = true; raf(frame); } }
     function remeasure(){ dirty = true; tick(); }

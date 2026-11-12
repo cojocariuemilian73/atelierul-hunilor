@@ -2,7 +2,7 @@
   /* Masa istoricului ca birou de arhivă: axa e o panglică de pergament cu zoom pe epoci, sursele sunt documente pe o masă de lemn */
   #mod-atelier{ padding-block: 40px 28px; }
   .m-atelier{
-    --md-s1: #17161a; --md-s2: #211f24; --md-line: rgba(230, 215, 195, 0.16);
+    --md-s1: #1d1813; --md-s2: #261f18; --md-line: rgba(230, 215, 195, 0.16);
     --md-ink: #e6d7c3; --md-dim: #b3a58f; --md-gold: #d4af37; --md-gold2: #e5c158;
     --md-paper: #e9dcc0; --md-paper-ink: #2a1f12; --md-perg-ink: #3a2812; --md-perg-dim: #6b5230;
     --md-ease: cubic-bezier(.2, .7, .2, 1); --md-zoom: 0.45s;

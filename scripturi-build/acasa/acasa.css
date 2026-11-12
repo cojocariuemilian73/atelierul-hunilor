@@ -14,6 +14,30 @@
   /* modulele interactive largi (cronologia, atlasul, muzeul) ies din coloană, până la 1180 px */
   #page-acasa #sec-cronologie, #page-acasa #sec-atlas, #page-acasa #sec-muzeu{ width: min(1180px, calc(100vw - 48px)); max-width: none; margin-left: calc(50% - min(590px, 50vw - 24px)); }
 
+  /* ---------- pagina mai lată (ecrane de la 1280 px): articolul până la 1400 px, imaginile mai mari, blocurile pe coloane ---------- */
+  /* rămân cel puțin 80 px pe fiecare parte, pentru linia timpului din stânga */
+  @media (min-width: 1280px){
+    html body #page-acasa .page-shell:not(#x){ max-width: min(1448px, calc(100vw - 160px)); padding-inline: 24px; }
+    /* modulele mari au aceeași lățime ca restul paginii, nu mai ies din coloană */
+    #page-acasa #sec-cronologie, #page-acasa #sec-atlas, #page-acasa #sec-muzeu{ width: auto; margin-left: 0; }
+    #page-acasa #sec-cronologie .wrap, #page-acasa #sec-atlas .wrap, #page-acasa #sec-muzeu .wrap{ max-width: none; }
+    /* Atlasul și Muzeul ies din coloană: toată lățimea ecranului, cu o margine mică pe laturi (ca Masa istoricului) */
+    #page-acasa #sec-atlas, #page-acasa #sec-muzeu{ width: calc(100vw - 2 * clamp(16px, 3vw, 56px)); margin-left: calc(50% - 50vw + clamp(16px, 3vw, 56px)); }
+    /* cele 8 obiecte din muzeu: trei pe rând, patru pe ecranele foarte late (altfel fiecare ar fi uriaș) */
+    #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    /* deschiderea se aliniază cu articolul */
+    #page-acasa .hero-inner{ max-width: min(1448px, calc(100vw - 160px)); padding-left: 24px; padding-right: 24px; }
+    /* rândurile „imagine + text”: imaginea crește, textul are rânduri de lungime bună */
+    #page-acasa .sr-row{ grid-template-columns: minmax(0, 43fr) minmax(0, 57fr); column-gap: 48px; }
+    #page-acasa .sr-row .sr-text p{ max-width: none; }
+    /* paragrafele fără imagine: rânduri de lungime confortabilă */
+    #page-acasa section[id^="sec-"] > p:not(.sec-sub){ max-width: 46em; }
+    /* glosarul pe trei coloane; bibliografia și listele de surse pe două */
+    #page-acasa .gl-list{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #page-acasa .biblio, #page-acasa .refs{ column-count: 2; column-gap: 56px; }
+    #page-acasa .biblio > li, #page-acasa .refs > li{ break-inside: avoid; }
+  }
+
   /* ---------- B) meniul unic ---------- */
   #site-nav.site-nav{ position: sticky; top: 0; z-index: 200; display: flex; align-items: center; justify-content: flex-start; gap: clamp(10px, 1.4vw, 20px); height: 54px; margin: 0 calc(50% - 50vw); padding: 0 clamp(14px, 2vw, 28px); overflow: visible; background: rgba(12, 10, 8, 0.9); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(229, 193, 88, 0.16); transition: transform 0.2s ease; }
   #site-nav.st-hide{ transform: translateY(-100%); }
@@ -104,10 +128,43 @@
   .sec-head .chapter-num{ flex: none; }
   .sec-head .sec-title{ margin: 0; }
 
-  /* ---------- E) decorul imaginilor din articol: doar rama subțire ---------- */
-  #page-acasa .sr-fig, #page-acasa .dc-img, #page-acasa .fig-map, #page-acasa .gal-item{ padding: 6px; background: transparent; border: 1px solid rgba(229, 193, 88, 0.24); border-radius: 0; box-shadow: none; }
+  /* ---------- fără „tablouri”: totul stă direct pe fundalul cald al paginii ---------- */
+  /* griul rece (#121214, #1a1a1e) din variabilele vechi devine maroniul paginii, peste tot pe site */
+  html:not(#x){ --paper: #16120e; --paper-2: #1d1813; }
+  html:not(#x) .m-atlas{ --paper-frame: transparent; }
+  html:not(#x) .m-lab{ --parchment: #16120e; --parchment-2: #1d1813; --parchment-3: #2b241b; }
+  html:not(#x) .jg{ --s1: #1d1813; --s2: #261f18; --s3: #30281e; }
+  .mig-stage, .imp-map, .hx-map svg, .fig-invazii .hv-map{ background: #120e0a !important; }
+
+  /* imaginile din articol: fără ramă, fără colț auriu, fără umbră */
+  #page-acasa .sr-fig, #page-acasa .dc-img, #page-acasa .fig-map, #page-acasa .gal-item, #page-acasa .diagram, #page-acasa .migr-map{ padding: 0; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
   #page-acasa .sr-fig::before, #page-acasa .dc-img::before, #page-acasa .fig-map::before, #page-acasa .gal-item::before{ display: none; }
-  #page-acasa .sr-fig.sr-fig-inline{ padding: 6px; }
+  #page-acasa .sr-fig.sr-fig-inline{ padding: 0; }
+  #page-acasa figcaption{ background: transparent; }
+  #page-acasa .hx-map svg{ border: 0; }
+
+  /* blocurile de text: fără fundal și fără ramă; doar o linie subțire aurie arată unde încep */
+  #page-acasa .source-caution{ background: transparent; }
+  #page-acasa .sc-card{ background: transparent; border: 0; border-top: 2px solid rgba(229, 193, 88, 0.7); padding-inline: 0; }
+  #page-acasa .sc-gap{ background: rgba(229, 193, 88, 0.05); border: 0; }
+  #page-acasa .duel-card{ background: transparent; border: 0; border-top: 1px solid rgba(229, 193, 88, 0.45); border-radius: 0; box-shadow: none; padding-inline: 0; }
+  #page-acasa .duel-lives, #page-acasa .gs-chart, #page-acasa .mx-fact{ background: transparent; border: 0; border-top: 1px solid rgba(229, 193, 88, 0.3); box-shadow: none; padding-inline: 0; }
+  #page-acasa .mx-item{ background: transparent; border: 0; border-top: 1px solid rgba(229, 193, 88, 0.3); box-shadow: none; }
+  #page-acasa .mx-item::before, #page-acasa .mx-item::after{ box-shadow: none; }
+  #page-acasa .mx-teaser{ background: transparent; border: 0; border-top: 1px solid rgba(229, 193, 88, 0.3); box-shadow: none; }
+  @media (min-width: 1600px){ #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  #page-acasa .cs-step{ background: transparent; border: 0; border-left: 2px solid #e5c158; }
+  #page-acasa .hx-step{ border-color: transparent; }
+  .site-final-footer{ background: transparent !important; }
+
+  /* Atlasul: fără fundalul și ramele lui; pe ecranele late, pe toată lățimea ecranului */
+  #page-acasa #sec-atlas.m-atlas{ background: transparent; border: 0; padding: 0; }
+  #page-acasa .m-atlas .frame, #page-acasa .m-atlas .legend-box{ border: 0; background: transparent; padding-inline: 0; }
+  /* Muzeul virtual: fără cadrul gri */
+  #page-acasa .m-lab .frame{ background: transparent; border: 0; padding: 0; }
+
+  /* butoanele „i” din legende nu mai apar; autorul și licența fiecărei imagini rămân în „Despre proiect”, la „Imaginile” */
+  #page-acasa .cap-i{ display: none !important; }
 
   /* ---------- codul QR „Joacă pe telefon”: în antetul paginii jocului, în dreapta titlului (doar pe ecrane late, cu mouse) ---------- */
   @media (min-width: 900px) and (hover: hover){
@@ -120,13 +177,6 @@
     /* fără codul din deschidere, chip-urile au tot rândul */
     #page-acasa .hero-inner .byline{ max-width: none; }
   }
-  /* ---------- notele pe margine (ecrane late): sursa citată stă lângă paragraful ei ---------- */
-  .ah-sn-layer{ position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; }
-  .ah-sn{ position: absolute; left: var(--sn-x, 0); width: var(--sn-w, 260px); margin: 0; padding: 1px 0 1px 12px; border-left: 1px solid rgba(229, 193, 88, 0.28); color: #a89a83; font: 0.78rem/1.5 'Source Serif 4', Georgia, serif; text-wrap: pretty; transition: color 0.2s, border-color 0.2s; }
-  .ah-sn b{ margin-right: 6px; font: 700 0.76rem 'Cinzel', Georgia, serif; color: #e5c158; font-variant-numeric: lining-nums; }
-  .ah-sn.hl{ color: #e6d7c3; border-left-color: #f2d474; }
-  @media (prefers-reduced-motion: reduce){ .ah-sn{ transition: none; } }
-  @media print{ .ah-sn-layer{ display: none !important; } }
   /* o singură bară de progres: drumul călărețului de sub meniu; bara subțire veche de sus nu mai apare */
   #progress-bar.progress-bar{ display: none !important; }
   /* pe pagina jocului codul e la vedere: butonul din colț nu mai trebuie */
