@@ -1,0 +1,107 @@
+  /* ef: efecte (cursorul tematic, linia timpului, pergamentul imaginilor, călărețul de sub meniu) */
+
+  /* ---------- A) cursorul tematic: doar cu mouse; clasa ef-cur apare abia după ce scriptul a pornit ---------- */
+  html.ef-cur, html.ef-cur *{ cursor: none !important; }
+  /* cursorul obișnuit rămâne unde e nevoie de el: câmpuri de text și lucrurile care se trag */
+  html.ef-cur input, html.ef-cur textarea, html.ef-cur [contenteditable="true"]{ cursor: text !important; }
+  html.ef-cur select{ cursor: default !important; }
+  html.ef-cur .md-card:not(.done){ cursor: grab !important; }
+  html.ef-cur .md-dragging, html.ef-cur .md-dragging *{ cursor: grabbing !important; }
+  html.ef-cur .hx-rib{ cursor: grab !important; }
+  html.ef-cur .hx-rib.drag{ cursor: grabbing !important; }
+  html.ef-cur .img-lightbox .lb-view.zoomed, html.ef-cur .md-zoom.zoomed{ cursor: grab !important; }
+  html.ef-cur .img-lightbox .lb-view.zoomed:active{ cursor: grabbing !important; }
+  .ef-dot, .ef-ring, .ef-trail{ position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none; will-change: transform; transition: opacity 0.18s ease; }
+  .ef-dot{ width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #f2d474; box-shadow: 0 0 0 1px rgba(20, 16, 10, 0.7), 0 0 8px rgba(242, 212, 116, 0.55); }
+  .ef-ring{ width: 34px; height: 34px; margin: -17px 0 0 -17px; }
+  .ef-ring span{ position: absolute; inset: 0; border: 1.5px solid rgba(229, 193, 88, 0.75); border-radius: 50%; transition: transform 0.22s cubic-bezier(.2, .7, .2, 1), border-color 0.22s, box-shadow 0.22s, background 0.22s; }
+  .ef-ring.hot span{ transform: scale(1.55); border-color: #f2d474; background: rgba(242, 212, 116, 0.08); box-shadow: 0 0 12px rgba(242, 212, 116, 0.55), inset 0 0 6px rgba(242, 212, 116, 0.3); }
+  .ef-ring.press span{ transform: scale(0.8); }
+  .ef-ring.hot.press span{ transform: scale(1.3); }
+  .ef-trail{ width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: #e5c158; }
+  .ef-off .ef-dot, .ef-off .ef-ring, .ef-off .ef-trail, .ef-dot.off, .ef-ring.off, .ef-trail.off{ opacity: 0 !important; }
+
+  /* ---------- B) linia timpului, pe marginea stângă a articolului ---------- */
+  .ef-line{ --ef-top: 120px; position: fixed; left: max(10px, calc((100vw - 1240px) / 4)); top: var(--ef-top); bottom: 28px; z-index: 140; width: 14px; margin-left: -7px; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+  .ef-line.on{ opacity: 1; }
+  .ef-track{ position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: rgba(229, 193, 88, 0.14); }
+  .ef-fill{ position: absolute; inset: 0; background: linear-gradient(180deg, #8f6d1d, #e5c158 70%, #f2d474); transform: scaleY(0); transform-origin: 50% 0; will-change: transform; box-shadow: 0 0 6px rgba(242, 212, 116, 0.35); }
+  .ef-pt{ position: absolute; left: 50%; top: calc(var(--y, 0) * 100%); width: 24px; height: 24px; margin: -12px 0 0 -12px; display: grid; place-items: center; pointer-events: auto; text-decoration: none; outline: none; }
+  .ef-pt::before{ content: ''; width: 9px; height: 9px; border-radius: 50%; background: #2a2219; border: 1.5px solid rgba(229, 193, 88, 0.6); transition: background 0.4s, border-color 0.4s, box-shadow 0.4s, transform 0.2s; }
+  .ef-pt.lit::before{ background: #f2d474; border-color: #f2d474; box-shadow: 0 0 0 3px rgba(242, 212, 116, 0.18), 0 0 12px rgba(242, 212, 116, 0.75); }
+  .ef-pt.lit.flash::before{ animation: ef-lit 0.9s ease-out; }
+  @keyframes ef-lit{ 0%{ transform: scale(1.9); box-shadow: 0 0 0 6px rgba(242, 212, 116, 0.35), 0 0 22px rgba(242, 212, 116, 0.9); } }
+  .ef-pt:hover::before, .ef-pt:focus-visible::before{ transform: scale(1.35); }
+  .ef-pt:focus-visible::after{ content: ''; position: absolute; inset: 1px; border-radius: 50%; outline: 2px solid #f2d474; outline-offset: 1px; }
+  .ef-lab{ position: absolute; left: calc(100% + 4px); top: 50%; display: block; padding: 5px 10px 6px; white-space: nowrap; background: rgba(20, 18, 15, 0.96); border: 1px solid rgba(212, 175, 55, 0.55); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); color: #e6d7c3; font: 0.86rem/1.3 'Source Serif 4', Georgia, serif; opacity: 0; transform: translate(-6px, -50%); transition: opacity 0.18s ease, transform 0.18s ease; pointer-events: none; }
+  .ef-lab b{ font: 700 0.95rem 'Cinzel', Georgia, serif; color: #f2d474; margin-right: 6px; font-variant-numeric: lining-nums; }
+  .ef-lab small{ display: block; margin-top: 1px; font-size: 0.76rem; color: #b3a58f; }
+  .ef-pt:hover .ef-lab, .ef-pt:focus-visible .ef-lab{ opacity: 1; transform: translate(0, -50%); }
+  @media (max-width: 1099px){ .ef-track{ width: 1px; margin-left: -0.5px; } .ef-pt::before{ width: 7px; height: 7px; } }
+  @media (max-width: 899px){ .ef-line{ display: none; } }
+
+  /* ---------- C) pergamentul: margini neregulate, arse și îngălbenite (doar pe ilustrații și picturi) ---------- */
+  .ef-parch{ position: relative; display: block; isolation: isolate; -webkit-mask: __MASK__ 0 0 / 100% 100% no-repeat; mask: __MASK__ 0 0 / 100% 100% no-repeat; }
+  .ef-parch > img{ display: block; }
+  /* starea finală: centrul clar, marginile calde, brun-aurii, ca hârtia veche */
+  .ef-parch::after{ content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; mix-blend-mode: multiply;
+    background: radial-gradient(ellipse 72% 70% at 50% 50%, transparent 58%, rgba(176, 120, 52, 0.28) 80%, rgba(96, 52, 16, 0.62) 100%);
+    box-shadow: inset 0 0 16px 4px rgba(92, 50, 14, 0.6), inset 0 0 3px 1px rgba(48, 24, 6, 0.85); }
+  /* marginea arsă de la început: întunecată, cu o lumină portocalie slabă, care se liniștește */
+  .ef-parch::before{ content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0;
+    box-shadow: inset 0 0 46px 22px rgba(28, 13, 4, 0.92), inset 0 0 10px 3px rgba(255, 138, 40, 0.45); }
+  .ef-parch.ef-wait{ clip-path: inset(0 50% 0 50%); }
+  .ef-parch.ef-wait::before{ opacity: 1; }
+  .ef-parch.ef-open{ clip-path: inset(0 0 0 0); transition: clip-path 0.85s cubic-bezier(.6, 0, .2, 1); }
+  .ef-parch.ef-open::before{ opacity: 0; transition: opacity 1.1s ease 0.35s; }
+
+  /* ---------- D) călărețul de sub meniu: înaintează în ani pe măsură ce citești ---------- */
+  /* banda stă lipită sub meniu; când meniul se ascunde la derulare, urcă la marginea de sus */
+  .ef-ride{ position: fixed; left: 0; right: 0; top: 0; z-index: 139; height: 42px; pointer-events: none;
+    background: linear-gradient(180deg, rgba(12, 10, 8, 0.92) 0%, rgba(12, 10, 8, 0.7) 62%, rgba(12, 10, 8, 0) 100%);
+    opacity: 0; visibility: hidden; transform: translateY(var(--ef-ride-y, 54px)); transition: transform 0.2s ease, opacity 0.35s ease, visibility 0s linear 0.35s; }
+  .ef-ride.on{ opacity: 1; visibility: visible; transition: transform 0.2s ease, opacity 0.35s ease; }
+  .ef-rtrack{ position: absolute; left: 34px; right: 46px; top: 29px; height: 0; }
+  /* drumul nu există dinainte: se trasează doar în urma călărețului */
+  .ef-rfill{ position: absolute; left: 0; top: -1px; width: 100%; height: 2px; background: linear-gradient(90deg, rgba(143, 109, 29, 0), #8f6d1d 18%, #e5c158 80%, #f2d474); box-shadow: 0 0 6px rgba(242, 212, 116, 0.35); transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
+  /* reperele apar abia când ajunge la ele */
+  .ef-rtick{ position: absolute; left: calc(var(--x, 0) * 100%); top: 0; width: 0; height: 0; opacity: 0; transform: scale(0.4); transition: opacity 0.35s ease, transform 0.35s cubic-bezier(.3, 1.6, .5, 1); }
+  .ef-rtick.on{ opacity: 1; transform: none; }
+  .ef-rtick::before{ content: ''; position: absolute; left: -4px; top: -4px; width: 7px; height: 7px; background: #f2d474; transform: rotate(45deg); box-shadow: 0 0 8px rgba(242, 212, 116, 0.7); }
+  .ef-rtick b{ position: absolute; left: 0; top: 4px; transform: translateX(-50%); white-space: nowrap; font: 700 0.6rem/1 'Cinzel', Georgia, serif; letter-spacing: 0.04em; color: #e5c158; font-variant-numeric: lining-nums; }
+  /* la 476: un steag mic la capătul drumului */
+  .ef-rtick.last.on::after{ content: ''; position: absolute; left: 2px; top: -22px; width: 1.5px; height: 20px; background: #e5c158; }
+  .ef-rtick.last.on i{ position: absolute; left: 3px; top: -22px; width: 11px; height: 8px; background: #b3261e; clip-path: polygon(0 0, 100% 50%, 0 100%); transform-origin: 0 50%; animation: ef-flag 1.6s ease-in-out infinite; }
+  @keyframes ef-flag{ 50%{ transform: scaleX(0.75) skewY(6deg); } }
+  .ef-rider{ position: absolute; left: 0; top: 0; width: 0; height: 0; will-change: transform; }
+  .ef-rider svg{ position: absolute; left: -20px; bottom: 0; width: 38px; height: 28px; overflow: visible; color: #e5c158; filter: drop-shadow(0 0 4px rgba(242, 212, 116, 0.35)); transition: transform 0.25s ease; }
+  .ef-ride.back .ef-rider svg{ transform: scaleX(-1); }
+  .ef-ryr{ position: absolute; left: 22px; bottom: 9px; padding: 1px 6px 2px; border: 1px solid rgba(229, 193, 88, 0.5); border-radius: 999px; background: rgba(12, 10, 8, 0.88); white-space: nowrap; font: 700 0.66rem/1.2 'Cinzel', Georgia, serif; letter-spacing: 0.03em; color: #f2d474; font-variant-numeric: lining-nums tabular-nums; }
+  .ef-ride.back .ef-ryr, .ef-ride.lft .ef-ryr{ left: auto; right: 22px; }
+  /* galopul: picioarele și trupul se mișcă doar cât derulezi */
+  .ef-rider .lg{ transform-box: fill-box; transform-origin: 50% 0; }
+  .ef-ride.go .ef-rider .lg-a{ animation: ef-leg 0.36s linear infinite; }
+  .ef-ride.go .ef-rider .lg-b{ animation: ef-leg 0.36s linear -0.18s infinite; }
+  .ef-ride.go .ef-rider .ef-body{ animation: ef-bob 0.36s ease-in-out infinite; }
+  @keyframes ef-leg{ 0%, 100%{ transform: rotate(26deg); } 50%{ transform: rotate(-24deg); } }
+  @keyframes ef-bob{ 50%{ transform: translateY(-1.6px); } }
+  @media (max-width: 767px){
+    .ef-ride{ height: 36px; }
+    .ef-rtrack{ left: 22px; right: 30px; top: 25px; }
+    .ef-rider svg{ left: -16px; width: 30px; height: 22px; }
+    .ef-ryr{ left: 17px; bottom: 7px; font-size: 0.6rem; }
+    .ef-ride.back .ef-ryr, .ef-ride.lft .ef-ryr{ right: 17px; }
+    .ef-rtick b{ display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .ef-ride, .ef-ride.on, .ef-rtick, .ef-rider svg{ transition: none; }
+    .ef-ride .ef-rider .lg, .ef-ride .ef-rider .ef-body, .ef-rtick.last.on i{ animation: none !important; }
+    .ef-dot, .ef-ring, .ef-trail{ display: none !important; }
+    .ef-fill{ transform: none !important; }
+    .ef-pt.lit.flash::before{ animation: none; }
+    .ef-parch.ef-wait, .ef-parch.ef-open{ clip-path: none; transition: none; }
+    .ef-parch.ef-wait::before, .ef-parch.ef-open::before{ opacity: 0; transition: none; }
+  }
+  @media print{ .ef-line, .ef-ride, .ef-dot, .ef-ring, .ef-trail{ display: none !important; } .ef-parch{ clip-path: none !important; } }
+  /* /ef */

@@ -1,9 +1,11 @@
   /* ============ MODULE: ATELIERUL ISTORICULUI (.m-atelier) ============ */
-  #mod-atelier{ padding-block: 64px 28px; }
+  /* Masa istoricului ca birou de arhivă: axa e o panglică de pergament cu zoom pe epoci, sursele sunt documente pe o masă de lemn */
+  #mod-atelier{ padding-block: 40px 28px; }
   .m-atelier{
     --md-s1: #17161a; --md-s2: #211f24; --md-line: rgba(230, 215, 195, 0.16);
     --md-ink: #e6d7c3; --md-dim: #b3a58f; --md-gold: #d4af37; --md-gold2: #e5c158;
-    --md-paper: #e9dcc0; --md-paper-ink: #2a1f12;
+    --md-paper: #e9dcc0; --md-paper-ink: #2a1f12; --md-perg-ink: #3a2812; --md-perg-dim: #6b5230;
+    --md-ease: cubic-bezier(.2, .7, .2, 1); --md-zoom: 0.45s;
     color: var(--md-ink); font-family: 'Source Serif 4', Georgia, serif;
   }
   .m-atelier *{ box-sizing: border-box; }
@@ -11,258 +13,304 @@
   .m-atelier .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 16px 56px; }
   .m-atelier [hidden]{ display: none !important; }
   .m-atelier ::selection{ background: rgba(212, 175, 55, 0.35); color: #fff7e6; }
+  .md-sr{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  .md-head{ text-align: center; padding: 10px 0 18px; }
-  .md-title{ font-family: 'Cinzel', Georgia, serif; font-size: clamp(2rem, 5.4vw, 3.1rem); line-height: 1.05; margin: 0 0 12px; color: #f6eddc; font-weight: 700; text-wrap: balance; }
-  .md-sub{ max-width: 66ch; margin: 0 auto; color: #cfc0a8; line-height: 1.6; font-size: 1.04rem; text-wrap: pretty; }
+  .md-head{ text-align: center; padding: 0 0 12px; }
+  .md-title-row{ display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 0 6px; }
+  .md-title{ font-family: 'Cinzel', Georgia, serif; font-size: clamp(1.8rem, 3.4vw, 2.4rem); line-height: 1.05; margin: 0; color: #f6eddc; font-weight: 700; text-wrap: balance; }
+  .md-sub{ max-width: 66ch; margin: 0 auto; color: #cfc0a8; line-height: 1.6; font-size: 1rem; text-wrap: pretty; }
+  .md-help-b{ flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1.5px solid var(--md-gold); border-radius: 50%; background: transparent; color: #f2d474 !important; font: 700 1.25rem 'Cinzel', Georgia, serif; cursor: pointer; transition: background 0.2s; }
+  .md-help-b:hover{ background: rgba(212, 175, 55, 0.16); }
+  .md-help-b:focus-visible{ outline: 2px solid #f2d474; outline-offset: 3px; }
 
   /* masa: suprafață închisă, cu fibra lemnului abia sugerată */
-  .md-board{ position: relative; padding: 22px 22px 24px; border: 1px solid rgba(212, 175, 55, 0.32);
+  .md-board{ position: relative; padding: 16px 18px 18px; border: 1px solid rgba(212, 175, 55, 0.32);
     background:
       repeating-linear-gradient(92deg, rgba(255, 236, 200, 0.018) 0 2px, transparent 2px 9px),
       radial-gradient(120% 90% at 50% 0%, #2a2219 0%, #1b1713 55%, #141210 100%);
     box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 230, 180, 0.06); }
 
-  /* ---------- axa timpului ---------- */
-  .md-tl-scroll{ margin: 0 -6px; padding: 0 6px; }
-  .md-tl{ --lanes: 1; position: relative; height: calc(96px + var(--lanes) * 46px); min-height: 150px; margin: 0 14px; outline: none; touch-action: manipulation; }
-  .md-axis{ position: absolute; left: 0; right: 0; bottom: 42px; height: 2px; background: linear-gradient(90deg, rgba(212,175,55,0.9), rgba(212,175,55,0.55)); }
-  .md-tick{ position: absolute; bottom: 36px; width: 1px; height: 14px; background: rgba(230, 215, 195, 0.45); }
-  .md-tick em{ position: absolute; top: 18px; left: 50%; transform: translateX(-50%); font: 0.72rem 'JetBrains Mono', monospace; font-style: normal; color: var(--md-dim); white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .md-tick.brk{ background: none; width: 10px; margin-left: -5px; border-left: 1px solid rgba(230,215,195,0.45); border-right: 1px solid rgba(230,215,195,0.45); transform: skewX(-18deg); }
-  .md-tick.brk em{ transform: translateX(-50%) skewX(18deg); }
-  .md-tick.att{ width: 2px; margin-left: -1px; background: #e0626c; }
-  .md-tick.att em{ color: #f0a0a6; font-weight: 700; }
-  .md-band{ position: absolute; bottom: 43px; top: 6px; background: linear-gradient(180deg, rgba(212,175,55,0.02), rgba(212,175,55,0.13)); border-left: 1px dashed rgba(212,175,55,0.45); border-right: 1px dashed rgba(212,175,55,0.45); pointer-events: none; }
-  .md-band span{ position: absolute; top: 4px; left: 6px; font: 700 0.64rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(229,193,88,0.85); white-space: nowrap; }
-  .md-tl.armed{ cursor: crosshair; }
-  .md-tl.armed .md-axis, .md-tl.drop .md-axis{ box-shadow: 0 0 0 3px rgba(212,175,55,0.14); }
-  .md-tl:focus-visible{ outline: 2px solid var(--md-gold2); outline-offset: 6px; }
-  .md-cursor{ position: absolute; top: 0; bottom: 36px; width: 2px; margin-left: -1px; background: #f2d474; pointer-events: none; }
-  .md-cursor b{ position: absolute; bottom: 100%; left: 50%; transform: translate(-50%, -2px); padding: 2px 7px; background: #f2d474; color: #1b1712; font: 700 0.78rem 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  /* ---------- deasupra axei: înapoi la axa completă + ce faci acum ---------- */
+  .md-tl-head{ display: flex; align-items: center; gap: 12px; min-height: 38px; margin: 0 4px 14px; }
+  .md-back{ display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 6px 14px; border: 1px solid rgba(229, 193, 88, 0.6); background: rgba(212, 175, 55, 0.08); color: #f2d474 !important; font: 600 0.92rem 'Source Serif 4', Georgia, serif; cursor: pointer; transition: background 0.2s; }
+  .md-back:hover{ background: rgba(212, 175, 55, 0.18); }
+  .md-back:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
+  .md-tl-note{ margin: 0; color: #d8cab2; font-size: 0.95rem; font-style: italic; }
 
-  .md-pins{ position: absolute; inset: 0 0 42px 0; pointer-events: none; }
+  /* ---------- axa: o panglică de pergament ---------- */
+  .md-tl{ --lanes: 1; position: relative; height: calc(112px + var(--lanes) * 46px); min-height: 160px; margin: 0 8px; outline: none; touch-action: manipulation; color: var(--md-perg-ink); }
+  .md-tl:focus-visible .md-ribbon-w{ filter: drop-shadow(0 0 2px #f2d474) drop-shadow(0 0 2px #f2d474) drop-shadow(0 10px 14px rgba(0, 0, 0, 0.55)); }
+  .md-ribbon-w{ position: absolute; inset: -8px -10px; pointer-events: none; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.55)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5)); }
+  .md-ribbon{ position: absolute; inset: 0;
+    background:
+      radial-gradient(40% 70% at 12% 40%, rgba(150, 100, 40, 0.16), transparent 70%),
+      radial-gradient(30% 60% at 78% 70%, rgba(150, 100, 40, 0.14), transparent 70%),
+      radial-gradient(22% 50% at 52% 15%, rgba(120, 80, 30, 0.1), transparent 70%),
+      repeating-linear-gradient(0deg, rgba(110, 80, 40, 0.04) 0 1px, transparent 1px 4px),
+      linear-gradient(180deg, #ecdfbd, #ddca9f 60%, #cfb885); }
+  .md-tl.armed{ cursor: pointer; }
+
+  /* epocile: zone mari; una deschisă se lărgește, celelalte se strâng */
+  .md-eras{ position: absolute; inset: 0 0 40px 0; }
+  .md-era{ position: absolute; top: 0; bottom: 0; left: calc(var(--p) * 100%); width: calc(var(--w) * 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 6px 6px 30px; overflow: hidden; text-align: center; background: var(--t); border-left: 1px dashed rgba(90, 60, 20, 0.4); cursor: pointer; transition: left var(--md-zoom) var(--md-ease), width var(--md-zoom) var(--md-ease), top var(--md-zoom) var(--md-ease), height var(--md-zoom) var(--md-ease), background 0.2s; }
+  .md-era.e0{ --t: rgba(160, 40, 31, 0.11); border-left: 0; }
+  .md-era.e1{ --t: rgba(150, 110, 40, 0.09); }
+  .md-era.e2{ --t: rgba(110, 95, 55, 0.07); }
+  .md-era.e3{ --t: rgba(80, 105, 75, 0.08); }
+  .md-era.e4{ --t: rgba(70, 85, 125, 0.08); }
+  .md-era b{ font: 700 1.02rem/1.15 'Cinzel', Georgia, serif; color: var(--md-perg-ink); text-wrap: balance; }
+  .md-era.e0 b{ color: #8e1f19; }
+  .md-era small{ font: italic 0.86rem 'Source Serif 4', Georgia, serif; color: var(--md-perg-dim); font-variant-numeric: lining-nums; }
+  .md-era i{ display: none; font: 600 0.72rem/1.15 'Source Serif 4', Georgia, serif; font-style: normal; color: var(--md-perg-dim); }
+  .md-era::after{ content: ''; position: absolute; inset: 0; background: rgba(255, 250, 235, 0.3); opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+  @media (hover: hover){ .md-era:not(.open):hover::after{ opacity: 1; } }
+  .md-era.kf{ box-shadow: inset 0 0 0 3px #7a5410; }
+  .md-era.kf::after, .md-tl.drop .md-era.dwell::after{ opacity: 1; }
+  .md-era.dwell::before{ content: ''; position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; background: #7a5410; transform-origin: left; animation: md-dwell 0.38s linear both; }
+  @keyframes md-dwell{ from{ transform: scaleX(0); } }
+  .md-tl.zoomed .md-era{ padding: 8px 4px 30px; }
+  .md-tl.zoomed .md-era:not(.open) b, .md-tl.zoomed .md-era:not(.open) small{ display: none; }
+  .md-tl.zoomed .md-era:not(.open) i{ display: block; }
+  .md-era.open{ flex-direction: row; align-items: baseline; justify-content: flex-start; gap: 10px; padding: 8px 12px 30px; cursor: crosshair; background: rgba(255, 248, 225, 0.22); }
+  .md-era.open b{ font-size: 0.95rem; }
+  .md-era.open small{ font-size: 0.82rem; }
+  .md-tl.done .md-era b, .md-tl.done .md-era small{ opacity: 0.4; }
+
+  .md-axis{ position: absolute; left: 0; right: 0; bottom: 40px; height: 3px; background: linear-gradient(180deg, #6a4a17, #3a280c); box-shadow: 0 1px 0 rgba(255, 245, 220, 0.5); }
+  .md-tl.armed .md-axis, .md-tl.drop .md-axis{ box-shadow: 0 0 0 3px rgba(122, 84, 16, 0.25); }
+
+  /* gradațiile și anii-reper: doar în epoca deschisă */
+  .md-ticks{ position: absolute; inset: 0; pointer-events: none; }
+  .md-tick{ position: absolute; left: calc(var(--p) * 100%); bottom: 32px; width: 1px; height: 12px; background: #4a3416; opacity: 0; transition: left var(--md-zoom) var(--md-ease), top var(--md-zoom) var(--md-ease), opacity 0.3s; }
+  .md-tick.edge{ height: 18px; bottom: 30px; }
+  .md-tick em{ position: absolute; top: 15px; left: 50%; transform: translateX(-50%); font: 600 0.78rem 'Source Serif 4', Georgia, serif; font-style: normal; color: var(--md-perg-ink); white-space: nowrap; font-variant-numeric: lining-nums tabular-nums; }
+  .md-tick.edge em{ top: 21px; }
+  .md-tl[data-zoom="0"] .md-tick[data-era="0"], .md-tl[data-zoom="1"] .md-tick[data-era="1"], .md-tl[data-zoom="2"] .md-tick[data-era="2"],
+  .md-tl[data-zoom="3"] .md-tick[data-era="3"], .md-tl[data-zoom="4"] .md-tick[data-era="4"]{ opacity: 1; }
+  .md-scl{ display: none; }
+  /* 453: un sigiliu de ceară roșie pe axă, la vedere și pe axa completă */
+  .md-tick.att{ opacity: 1; width: 2px; height: 14px; bottom: 34px; margin-left: -1px; background: #8e1f19; }
+  .md-tick.att::after{ content: ''; position: absolute; left: 50%; bottom: -9px; width: 15px; height: 15px; transform: translateX(-50%) rotate(-12deg); border-radius: 52% 46% 50% 47%; background: radial-gradient(circle at 36% 34%, #f39aa1 0 12%, #c8323f 42%, #7b1420 100%); box-shadow: 0 0 0 2px rgba(123, 20, 32, 0.35), 0 2px 4px rgba(0, 0, 0, 0.5); }
+  .md-tick.att em{ top: auto; bottom: 18px; padding: 1px 6px; background: rgba(236, 223, 189, 0.92); color: #8e1f19; font: 700 0.78rem 'Source Serif 4', Georgia, serif; opacity: 0; transition: opacity 0.3s; }
+  .md-tl[data-zoom="0"] .md-tick.att em{ opacity: 1; }
+
+  /* ---------- pinii: sursele de pe axă ---------- */
+  .md-pins{ position: absolute; inset: 0 0 40px 0; pointer-events: none; }
   .md-pin-g{ position: absolute; inset: 0; }
-  .md-pin{ position: absolute; bottom: calc(10px + var(--lane) * 46px); width: 40px; height: 40px; margin-left: -20px; padding: 0; border: 2px solid var(--c); border-radius: 50%; overflow: hidden; background: var(--md-paper); color: var(--md-paper-ink); cursor: pointer; pointer-events: auto; box-shadow: 0 6px 14px rgba(0,0,0,0.5); transition: transform 0.2s; }
-  .md-pin img{ width: 100%; height: 100%; object-fit: cover; display: block; }
-  .md-pin .md-book{ width: 26px; height: 20px; margin-top: 1px; }
-  .md-pin:hover, .md-pin.sel{ transform: scale(1.14); }
-  .md-pin.sel{ box-shadow: 0 0 0 3px rgba(242,212,116,0.5), 0 6px 14px rgba(0,0,0,0.5); }
-  .md-pin:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
-  .md-miss{ position: absolute; bottom: -3px; height: 8px; border-bottom: 2px solid var(--c); border-left: 1px solid var(--c); border-right: 1px solid var(--c); opacity: 0.85; }
-  .md-guess{ position: absolute; bottom: -8px; width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%; background: var(--c); }
-  .md-arc{ position: absolute; bottom: 4px; height: 18px; border: 2px dashed rgba(229,193,88,0.6); border-bottom: 0; border-radius: 18px 18px 0 0; }
-  .md-pin-g.fresh .md-pin{ animation: md-drop 0.55s cubic-bezier(.16,1,.3,1) both; }
+  .md-pin{ position: absolute; left: calc(var(--p) * 100%); bottom: calc(12px + var(--lane) * 46px); display: grid; place-items: center; width: 42px; height: 42px; margin-left: -21px; padding: 0; border: 2px solid var(--c); border-radius: 50%; overflow: visible; background: var(--md-paper); color: var(--md-paper-ink); cursor: pointer; pointer-events: auto; box-shadow: 0 0 0 1.5px rgba(40, 25, 8, 0.8), 0 6px 12px rgba(0, 0, 0, 0.45); transition: left 0.9s cubic-bezier(.45, 0, .2, 1), top 0.9s cubic-bezier(.45, 0, .2, 1), transform 0.2s; }
+  .md-tl.zooming .md-pin, .md-tl.zooming .md-clu{ transition-duration: var(--md-zoom), var(--md-zoom), 0.2s; }
+  .md-pin::before{ content: ''; position: absolute; inset: -5px; border-radius: 50%; }
+  .md-pin > img{ width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
+  .md-pin .md-book{ width: 26px; height: 20px; }
+  .md-pin.sel{ transform: scale(1.14); box-shadow: 0 0 0 3px #7a5410, 0 0 0 5px rgba(242, 212, 116, 0.8), 0 6px 14px rgba(0, 0, 0, 0.5); }
+  .md-pin:focus-visible{ outline: 3px solid #7a5410; outline-offset: 3px; }
+  .md-pin-lab{ display: none; position: absolute; top: calc(100% + 3px); left: 50%; transform: translateX(-50%); padding: 0 5px; background: #1b1713; font: 700 0.66rem 'Source Serif 4', Georgia, serif; color: #f6eddc; white-space: nowrap; }
+  .md-tl.answers .md-pin-lab, .md-clu-pop .md-pin-lab{ display: block; }
+  .md-miss{ position: absolute; left: calc(var(--p) * 100%); width: calc(var(--w) * 100%); bottom: -3px; height: 8px; border: 1px solid var(--c); border-top: 0; border-bottom-width: 2px; filter: brightness(0.62) saturate(1.4); transition: left var(--md-zoom) var(--md-ease), width var(--md-zoom) var(--md-ease), top var(--md-zoom) var(--md-ease), height var(--md-zoom) var(--md-ease); }
+  .md-guess{ position: absolute; left: calc(var(--p) * 100%); bottom: -8px; width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%; background: var(--c); filter: brightness(0.62) saturate(1.4); transition: left var(--md-zoom) var(--md-ease), top var(--md-zoom) var(--md-ease); }
+  .md-arc{ position: absolute; left: calc(var(--p) * 100%); width: calc(var(--w) * 100%); bottom: 4px; height: 18px; border: 2px dashed rgba(122, 84, 16, 0.6); border-bottom: 0; border-radius: 18px 18px 0 0; transition: left var(--md-zoom) var(--md-ease), width var(--md-zoom) var(--md-ease), top var(--md-zoom) var(--md-ease), height var(--md-zoom) var(--md-ease); }
+  .md-tl.answers .md-miss{ border-bottom-style: dashed; }
+  .md-dist{ position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); padding: 1px 7px; background: #1b1713; border: 1px solid currentColor; color: #f2d474; font: 700 0.74rem 'Source Serif 4', Georgia, serif; white-space: nowrap; filter: none; animation: md-dist 4s ease forwards; pointer-events: none; }
+  @keyframes md-dist{ 0%{ opacity: 0; } 25%{ opacity: 1; } 80%{ opacity: 1; } 100%{ opacity: 0; } }
+  .md-pin-g.fresh .md-pin{ animation: md-drop 0.55s cubic-bezier(.16, 1, .3, 1) both; }
   .md-pin-g.fresh .md-miss, .md-pin-g.fresh .md-arc{ animation: md-fade 0.6s ease 0.25s both; }
   @keyframes md-drop{ from{ transform: translateY(-38px) scale(0.6); opacity: 0; } to{ transform: none; opacity: 1; } }
-  @keyframes md-fade{ from{ opacity: 0; } to{ opacity: 0.85; } }
+  @keyframes md-fade{ from{ opacity: 0; } }
 
-  .md-gap{ position: absolute; top: 4px; height: 26px; border: 1px solid rgba(224,98,108,0.75); border-bottom: 0; background: repeating-linear-gradient(135deg, rgba(224,98,108,0.10) 0 6px, transparent 6px 12px); display: flex; align-items: center; justify-content: center; animation: md-fade 0.8s ease both; }
-  .md-gap span{ padding: 0 8px; font: 700 0.74rem 'JetBrains Mono', monospace; color: #f4b3b8; white-space: nowrap; background: #1b1713; }
-  .md-tl.done .md-band span{ color: #f2d474; }
+  /* sursa abia așezată: se lipește cu o strălucire aurie dacă e aproape, se scutură dacă e departe */
+  .md-pend{ border-color: #f2d474; box-shadow: 0 0 0 1.5px rgba(40, 25, 8, 0.8), 0 0 0 4px rgba(242, 212, 116, 0.45), 0 6px 12px rgba(0, 0, 0, 0.45); }
+  .md-pend.snap{ animation: md-snap 0.32s cubic-bezier(.2, 1.4, .4, 1) both; }
+  .md-pend.snap::after{ content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 3px solid #f2d474; animation: md-ring 0.42s ease-out both; pointer-events: none; }
+  .md-pend.settle{ animation: md-settle 0.3s ease-out both; }
+  .md-pend.shake{ animation: md-shake 0.36s ease-in-out both; }
+  @keyframes md-snap{ 0%{ transform: translateY(-18px) scale(0.85); } 55%{ transform: scale(1.1); box-shadow: 0 0 0 3px #f2d474, 0 0 24px 8px rgba(242, 212, 116, 0.85); } 100%{ transform: none; } }
+  @keyframes md-ring{ from{ transform: scale(0.7); opacity: 1; } to{ transform: scale(1.7); opacity: 0; } }
+  @keyframes md-settle{ from{ transform: translateY(-14px); opacity: 0.4; } }
+  @keyframes md-shake{ 0%{ transform: translateY(-12px); } 35%{ transform: translateX(-6px); } 55%{ transform: translateX(5px); } 75%{ transform: translateX(-3px); } 100%{ transform: none; } }
 
-  .md-bar{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 18px; margin: 4px 14px 16px; padding-top: 12px; border-top: 1px solid var(--md-line); }
+  /* pinii înghesuiți: un cerc „×N” care se desface */
+  .md-clu{ position: absolute; left: calc(var(--p) * 100%); bottom: 12px; z-index: 2; transform: translateX(-50%); pointer-events: auto; transition: left var(--md-zoom) var(--md-ease), top var(--md-zoom) var(--md-ease); }
+  .md-clu-b{ position: relative; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 2px solid #8e1f19; border-radius: 50%; overflow: visible; background: var(--md-paper); color: var(--md-paper-ink); cursor: pointer; box-shadow: 4px -4px 0 -1px #cfb885, 4px -4px 0 1px rgba(142, 31, 25, 0.6), 0 6px 14px rgba(0, 0, 0, 0.45); }
+  .md-clu-b img{ width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+  .md-clu-b .md-book{ width: 26px; height: 20px; }
+  .md-clu-b b{ position: absolute; right: -10px; top: -10px; min-width: 24px; padding: 1px 5px; border-radius: 12px; background: #8e1f19; color: #fbe9e4; font: 700 0.74rem 'Source Serif 4', Georgia, serif; }
+  .md-clu-b:focus-visible{ outline: 3px solid #7a5410; outline-offset: 3px; }
+  .md-clu-pop{ position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%); display: none; gap: 8px; padding: 8px 10px 20px; background: rgba(20, 18, 15, 0.97); border: 1px solid rgba(212, 175, 55, 0.5); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55); }
+  .md-clu:hover .md-clu-pop, .md-clu:focus-within .md-clu-pop, .md-clu.open .md-clu-pop, .md-tl.answers .md-clu-pop{ display: flex; }
+  .md-clu-pop .md-pin{ position: relative; left: auto !important; top: auto !important; bottom: auto; margin: 0; flex: none; }
+
+  /* cursorul și umbra sursei, acolo unde o vei așeza */
+  .md-cursor{ position: absolute; left: calc(var(--p) * 100%); top: 0; bottom: 32px; width: 2px; margin-left: -1px; background: #7a5410; pointer-events: none; z-index: 3; }
+  .md-cursor b{ position: absolute; top: -26px; left: 50%; transform: translateX(-50%); padding: 2px 8px; background: #f2d474; color: #1b1712; font: 700 0.85rem 'Cinzel', Georgia, serif; white-space: nowrap; font-variant-numeric: lining-nums tabular-nums; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4); }
+  .md-cursor i{ position: absolute; bottom: 20px; left: 50%; display: grid; place-items: center; width: 42px; height: 42px; transform: translateX(-50%); border: 2px dashed #7a5410; border-radius: 50%; overflow: hidden; background: rgba(236, 223, 189, 0.8); opacity: 0.85; color: #6b4a24; }
+  .md-cursor i[hidden]{ display: none; }
+  .md-cursor i img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .md-cursor i .md-book{ width: 70%; height: 70%; }
+
+  /* finalul: secolele de tăcere, fără nicio imagine a hunilor */
+  .md-gap{ position: absolute; left: calc(var(--p) * 100%); width: calc(var(--w) * 100%); top: 0; bottom: 40px; z-index: 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px; overflow: hidden; border-left: 1px dashed rgba(50, 45, 70, 0.5); border-right: 1px dashed rgba(50, 45, 70, 0.5); background: repeating-linear-gradient(135deg, rgba(40, 40, 60, 0.07) 0 6px, transparent 6px 12px); pointer-events: none; animation: md-fade 0.8s ease both; }
+  .md-gap::before{ content: ''; position: absolute; inset: -20% -30%; background: radial-gradient(30% 45% at 25% 60%, rgba(70, 70, 95, 0.12), transparent 70%), radial-gradient(28% 40% at 62% 35%, rgba(70, 70, 95, 0.1), transparent 70%); animation: md-mist 16s ease-in-out infinite alternate; }
+  @keyframes md-mist{ to{ transform: translateX(14%); } }
+  .md-gap span{ position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 2px 10px; background: rgba(236, 223, 189, 0.88); text-align: center; }
+  .md-gap span b{ font: 700 1.05rem/1.1 'Cinzel', Georgia, serif; color: #2a2440; font-variant-numeric: lining-nums; }
+  .md-gap span small{ font: italic 0.78rem 'Source Serif 4', Georgia, serif; color: #4a4560; }
+
+  /* lumina răspunsului */
+  .md-tl::after{ content: ''; position: absolute; inset: -8px -10px; pointer-events: none; opacity: 0; }
+  .md-tl.md-ok::after{ box-shadow: inset 0 0 0 3px rgba(90, 150, 80, 0.9), inset 0 0 40px rgba(90, 150, 80, 0.3); animation: md-glow 1.2s ease-out; }
+  .md-tl.md-bad::after{ box-shadow: inset 0 0 0 3px rgba(170, 50, 55, 0.9), inset 0 0 40px rgba(170, 50, 55, 0.3); animation: md-glow 1.2s ease-out; }
+  @keyframes md-glow{ 0%{ opacity: 0; } 15%{ opacity: 1; } 100%{ opacity: 0; } }
+
+  /* reglajul fin, pe ecranele tactile */
+  .md-adjust{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; margin: 14px 8px 0; }
+  .md-adjust > button:not(.md-btn){ min-width: 48px; min-height: 44px; border: 1px solid rgba(212, 175, 55, 0.5); background: transparent; color: #f2d474; font: 700 0.92rem 'Source Serif 4', Georgia, serif; cursor: pointer; }
+  .md-adjust b{ min-width: 4ch; font: 700 1.3rem 'Cinzel', serif; color: #f6eddc; text-align: center; font-variant-numeric: lining-nums tabular-nums; }
+
+  /* ---------- bara: ce faci acum + progresul ---------- */
+  .md-bar{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 18px; margin: 16px 4px 14px; padding-top: 12px; border-top: 1px solid var(--md-line); }
   .md-hint{ margin: 0; color: #e8dcc6; font-size: 1rem; }
-  .md-score{ margin: 0; font: 700 0.8rem 'JetBrains Mono', monospace; color: var(--md-gold2); font-variant-numeric: tabular-nums; }
+  .md-progress{ display: flex; align-items: center; gap: 12px; }
+  .md-dots{ display: flex; gap: 5px; }
+  .md-dots i{ width: 12px; height: 12px; border: 1.5px solid rgba(229, 193, 88, 0.5); border-radius: 50%; transition: background 0.3s, border-color 0.3s; }
+  .md-dots i.pend{ border-color: #f2d474; background: radial-gradient(circle, #f2d474 0 30%, transparent 36%); }
+  .md-dots i.on.g3{ background: #f2d474; border-color: #f2d474; box-shadow: 0 0 6px rgba(242, 212, 116, 0.55); }
+  .md-dots i.on.g2{ background: #c9a13a; border-color: #c9a13a; }
+  .md-dots i.on.g1{ background: #86662a; border-color: #86662a; }
+  .md-dots i.on.g0{ background: rgba(229, 193, 88, 0.14); border-color: rgba(229, 193, 88, 0.35); }
+  .md-dots i.pop{ animation: md-dotpop 0.45s cubic-bezier(.2, 1.6, .4, 1); }
+  @keyframes md-dotpop{ 50%{ transform: scale(1.6); } }
+  .md-score{ position: relative; margin: 0; min-width: 7ch; font: 700 0.95rem 'Cinzel', Georgia, serif; color: var(--md-gold2); font-variant-numeric: lining-nums tabular-nums; }
+  .md-score.bump{ animation: md-bump 0.6s ease; }
+  @keyframes md-bump{ 40%{ transform: scale(1.15); color: #f2d474; } }
+  .md-plus{ position: absolute; right: 0; top: -20px; font: 700 1rem 'Cinzel', serif; color: #8fbd82; animation: md-plus 1.5s ease-out forwards; pointer-events: none; }
+  .md-plus.zero{ color: #d8cab2; }
+  @keyframes md-plus{ from{ opacity: 0; transform: translateY(8px); } 20%{ opacity: 1; transform: none; } to{ opacity: 0; transform: translateY(-18px); } }
 
-  /* ---------- masa: sursele + lupa ---------- */
-  .md-desk{ display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 22px; align-items: start; }
-  .md-tray{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-  .md-card{ position: relative; aspect-ratio: 4 / 3; padding: 0; border: 0; background: #0f0e0d; cursor: grab; box-shadow: 0 10px 22px rgba(0,0,0,0.5); transition: transform 0.25s cubic-bezier(.2,.7,.2,1), box-shadow 0.25s, opacity 0.25s; }
-  .md-card:nth-child(3n+1){ transform: rotate(-1.4deg); } .md-card:nth-child(3n+2){ transform: rotate(1deg); } .md-card:nth-child(4n){ transform: rotate(-0.6deg); }
-  .md-card img{ width: 100%; height: 100%; object-fit: cover; display: block; border: 5px solid #efe4cc; pointer-events: none; }
-  .md-card:hover{ transform: translateY(-4px) rotate(0); box-shadow: 0 16px 30px rgba(0,0,0,0.55); }
-  .md-card.sel{ transform: translateY(-4px) rotate(0); box-shadow: 0 0 0 3px #f2d474, 0 16px 30px rgba(0,0,0,0.55); }
-  .md-card:focus-visible{ outline: 2px solid #f2d474; outline-offset: 4px; }
+  /* ---------- masa de lemn și documentele de pe ea ---------- */
+  .md-desk{ display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+  .md-tray{ display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px 14px; padding: 20px 18px 22px; border: 1px solid #1d130a;
+    background:
+      radial-gradient(120% 80% at 30% 0%, rgba(255, 210, 150, 0.08), transparent 60%),
+      repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 6px, rgba(255, 220, 170, 0.035) 6px 7px, transparent 7px 13px),
+      repeating-linear-gradient(180deg, transparent 0 120px, rgba(0, 0, 0, 0.3) 120px 122px, rgba(255, 220, 170, 0.05) 122px 123px),
+      linear-gradient(180deg, #4a3020, #3a2517 60%, #2f1f10);
+    box-shadow: inset 0 2px 0 rgba(255, 220, 170, 0.08), inset 0 0 40px rgba(0, 0, 0, 0.55), 0 10px 24px rgba(0, 0, 0, 0.4); }
+  .md-card{ position: relative; aspect-ratio: 4 / 3; padding: 0; border: 0; background: none; cursor: grab; transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--r, 0deg)); transition: transform 0.28s var(--md-ease), box-shadow 0.28s, filter 0.28s, opacity 0.2s; }
+  /* fotografiile și stampele: ramă albă și umbră de hârtie fotografică */
+  .md-card:not(.txt){ padding: 5px; background: #f5f0e4; box-shadow: 0 12px 18px rgba(0, 0, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.6); }
+  .md-card img{ width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; outline: 1px solid rgba(60, 45, 25, 0.25); outline-offset: -1px; }
+  /* izvoarele scrise: foi de hârtie veche cu margini rupte (umbra urmează conturul) */
+  .md-card.txt{ filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.55)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45)); }
+  @media (hover: hover){
+    .md-card:hover{ z-index: 2; transform: translate(var(--dx, 0px), calc(var(--dy, 0px) - 8px)) rotate(0deg) scale(1.06); }
+    .md-card:not(.txt):hover{ box-shadow: 0 26px 34px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.5); }
+    .md-card.txt:hover{ filter: drop-shadow(0 22px 16px rgba(0, 0, 0, 0.55)) drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4)); }
+  }
+  .md-card.sel, .fx-move .m-atelier .md-card.sel, .md-card.lifted{ z-index: 2; transform: translate(var(--dx, 0px), calc(var(--dy, 0px) - 8px)) rotate(0deg) scale(1.06); outline: 3px solid #f2d474; outline-offset: 3px; }
+  .md-card:not(.txt).sel, .fx-move .m-atelier .md-card:not(.txt).sel{ box-shadow: 0 26px 34px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.5); }
+  .fx-move .m-atelier .md-card.txt.sel{ box-shadow: none; }
+  .md-card.txt.sel{ filter: drop-shadow(0 22px 16px rgba(0, 0, 0, 0.55)) drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4)); }
+  .md-card.lifted{ opacity: 0.45; outline-style: dashed; }
+  .md-card:focus-visible{ outline: 3px solid #f2d474; outline-offset: 4px; }
   .md-card.done{ cursor: pointer; }
   .md-card.done img, .md-card.done .md-paper{ filter: saturate(0.35) brightness(0.62); }
-  .md-paper{ display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 100%; height: 100%; padding: 8px; background: linear-gradient(160deg, #efe3c8, #ddcba6); color: var(--md-paper-ink); text-align: center; }
-  /* izvoarele cu o pagină de manuscris: pagina pe fundal, titlul pe o bandă de pergament (rămâne vizibilă, ca jocul să fie corect) */
-  .md-paper.ms{ justify-content: flex-end; padding: 0; background: #e6d3ab center 30% / cover no-repeat; background-blend-mode: multiply; }
-  .md-paper.ms.strip{ background-size: 100% auto; background-position: center 30%; }
-  .md-ms-band{ display: block; width: 100%; padding: 5px 6px 6px; background: rgba(239, 227, 200, 0.95); border-top: 1px solid rgba(42, 31, 18, 0.35); color: var(--md-paper-ink); text-align: center; }
-  .md-ms-band small{ display: block; font: 700 0.64rem/1.2 'Cinzel', serif; }
-  .md-ms-band i{ display: block; font-size: 0.7rem; line-height: 1.2; opacity: 0.8; }
-  .md-ghost .md-ms-band i{ display: none; }
-  .md-insp-paper.ms{ padding: 14px 16px 18px; }
-  .md-insp-page{ width: 100%; max-height: 240px; margin-bottom: 6px; overflow: hidden; border: 1px solid rgba(42, 31, 18, 0.3); background: #e6d3ab; }
-  .md-insp-page img{ display: block; width: 100%; mix-blend-mode: multiply; }
-  .md-insp-paper.ms small{ margin-top: 6px; font-size: 0.72rem; line-height: 1.4; opacity: 0.75; }
+  .md-paper{ display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 100%; height: 100%; padding: 10px 8px; color: var(--md-paper-ink); text-align: center;
+    background:
+      radial-gradient(55% 45% at 82% 86%, rgba(140, 90, 30, 0.2), transparent 70%),
+      radial-gradient(40% 35% at 14% 18%, rgba(140, 90, 30, 0.13), transparent 70%),
+      linear-gradient(160deg, #f0e3c3, #dcc69a); }
   .md-paper b{ font: 700 0.8rem/1.15 'Cinzel', serif; }
   .md-paper i{ font-size: 0.74rem; line-height: 1.2; opacity: 0.8; }
   .md-book{ width: 38px; height: 28px; color: #6b4a24; flex: none; }
-  .md-stamp{ position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-9deg); padding: 3px 9px; border: 2px solid var(--c); color: var(--c); font: 700 0.68rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; background: rgba(15, 13, 11, 0.72); animation: md-stamp 0.35s cubic-bezier(.16,1,.3,1) both; }
+  .md-paper.qt{ justify-content: space-between; padding: 0; }
+  .md-paper.qt q{ display: -webkit-box; padding: 12px 11px 0; font: italic 0.74rem/1.35 'Source Serif 4', Georgia, serif; color: #3a2a16; text-align: left; overflow: hidden; -webkit-line-clamp: 4; -webkit-box-orient: vertical; quotes: '„' '”'; }
+  .md-paper.ms{ justify-content: flex-end; padding: 0; background-color: #e6d3ab; background-position: center 30%; background-size: cover; background-repeat: no-repeat; background-blend-mode: multiply; }
+  .md-paper.ms.strip{ background-size: 100% auto; }
+  .md-ms-band{ display: block; width: 100%; padding: 4px 5px 8px; background: rgba(239, 227, 200, 0.95); border-top: 1px solid rgba(42, 31, 18, 0.35); color: var(--md-paper-ink); text-align: center; }
+  .md-ms-band small{ display: block; font: 700 0.62rem/1.15 'Cinzel', serif; }
+  .md-ms-band i{ display: block; font-size: 0.68rem; line-height: 1.15; opacity: 0.8; }
+  .md-stamp{ position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-9deg); padding: 3px 9px; border: 2px solid var(--c); color: var(--c); font: 700 0.68rem 'Source Serif 4', Georgia, serif; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; background: rgba(15, 13, 11, 0.78); animation: md-stamp 0.35s cubic-bezier(.16, 1, .3, 1) both; }
   @keyframes md-stamp{ from{ transform: translate(-50%, -50%) rotate(-9deg) scale(1.8); opacity: 0; } to{ transform: translate(-50%, -50%) rotate(-9deg); opacity: 1; } }
 
-  .md-ghost{ position: fixed; left: 0; top: 0; z-index: 900; width: 100px; height: 76px; pointer-events: none; box-shadow: 0 22px 40px rgba(0,0,0,0.6); }
-  .md-ghost img{ width: 100%; height: 100%; object-fit: cover; border: 4px solid #efe4cc; display: block; }
-  .md-ghost.txt .md-paper{ padding: 4px; } .md-ghost .md-paper b{ font-size: 0.66rem; } .md-ghost .md-paper i{ display: none; }
+  .md-ghost{ position: fixed; left: 0; top: 0; z-index: 900; width: 110px; height: 82px; pointer-events: none; }
+  .md-ghost:not(.txt){ padding: 4px; background: #f5f0e4; box-shadow: 0 26px 40px rgba(0, 0, 0, 0.6); }
+  .md-ghost.txt{ filter: drop-shadow(0 24px 18px rgba(0, 0, 0, 0.6)); }
+  .md-ghost img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .md-ghost .md-paper{ padding: 4px; } .md-ghost .md-paper b{ font-size: 0.66rem; } .md-ghost .md-paper i, .md-ghost .md-ms-band i{ display: none; }
+  .md-ghost .md-paper.qt q{ -webkit-line-clamp: 2; font-size: 0.6rem; padding: 6px 6px 0; }
   .m-atelier.md-dragging, .m-atelier.md-dragging *{ cursor: grabbing !important; user-select: none; }
 
-  .md-insp{ position: sticky; top: calc(var(--nav-h, 0px) + 16px); min-height: 280px; background: var(--md-s1); border: 1px solid var(--md-line); }
-  .md-insp-empty{ display: grid; place-items: center; gap: 12px; padding: 40px 28px; text-align: center; color: var(--md-dim); }
-  .md-insp-empty svg{ width: 54px; height: 54px; color: rgba(212,175,55,0.65); }
-  .md-insp-empty p{ margin: 0; max-width: 34ch; line-height: 1.55; }
+  /* ---------- sursa aleasă, de aproape ---------- */
+  .md-insp{ position: sticky; top: calc(var(--nav-h, 0px) + 16px); min-height: 220px; max-height: calc(100vh - var(--nav-h, 44px) - 32px); overflow-y: auto; background: var(--md-s1); border: 1px solid var(--md-line); }
+  .md-insp-empty{ display: grid; place-items: center; gap: 12px; padding: 40px 24px; text-align: center; color: var(--md-dim); }
+  .md-insp-empty svg{ width: 54px; height: 54px; color: rgba(212, 175, 55, 0.65); }
+  .md-insp-empty p{ margin: 0; max-width: 30ch; line-height: 1.55; }
+  .md-link{ min-height: 44px; padding: 8px 12px; border: 0; background: none; color: var(--md-gold2) !important; font: 600 0.95rem 'Source Serif 4', Georgia, serif; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .md-link:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
   .md-zoom{ position: relative; background: #0d0c0b; cursor: zoom-in; overflow: hidden; }
-  .md-zoom img{ display: block; width: 100%; max-height: 340px; object-fit: contain; }
-  .md-lens{ position: absolute; width: 140px; height: 140px; margin: -70px 0 0 -70px; border-radius: 50%; border: 2px solid #f2d474; background-repeat: no-repeat; box-shadow: 0 10px 26px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(0,0,0,0.4); pointer-events: none; }
-  .md-insp-paper{ display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 26px 22px; background: linear-gradient(160deg, #efe3c8, #d9c69f); color: var(--md-paper-ink); text-align: center; }
-  .md-insp-paper .md-book{ width: 64px; height: 48px; }
-  .md-insp-paper b{ font: 700 1.2rem 'Cinzel', serif; }
-  .md-insp-paper i{ font-size: 0.95rem; }
-  .md-insp-paper p{ margin: 6px 0 0; font-size: 1rem; line-height: 1.5; }
-  .md-insp-body{ padding: 16px 18px 18px; }
-  .md-q{ margin: 0 0 6px; font: 700 1.1rem 'Cinzel', serif; color: #f6eddc; }
-  .md-how{ margin: 0; color: var(--md-dim); font-size: 0.9rem; line-height: 1.5; }
-  .md-name{ margin: 0 0 8px; font: 700 1.08rem/1.25 'Cinzel', serif; color: #f6eddc; text-wrap: balance; }
-  .md-name span{ font: 700 0.8rem 'JetBrains Mono', monospace; color: var(--md-gold2); white-space: nowrap; }
-  .md-verdict{ margin: 0 0 10px; font-size: 0.9rem; color: #d8cab2; }
-  .md-verdict b{ color: var(--c); }
-  .md-clue{ margin: 0 0 14px; line-height: 1.6; color: #e6d7c3; }
-  .md-btn{ display: inline-flex; align-items: center; min-height: 42px; padding: 10px 18px; border: 1px solid var(--md-gold); background: var(--md-gold); color: #17140e !important; font: 700 0.9rem 'Cinzel', serif; cursor: pointer; transition: background 0.2s, transform 0.2s; }
-  .md-btn:hover{ background: #f2d474; transform: translateY(-1px); }
-  .md-btn:focus-visible{ outline: 2px solid #f2d474; outline-offset: 3px; }
-
-  .md-end{ padding: 22px 20px 20px; outline: none; }
-  .md-big{ margin: 0; font: 700 3rem/1 'Cinzel', serif; color: #f6eddc; font-variant-numeric: tabular-nums; }
-  .md-big span{ font-size: 1.3rem; color: var(--md-dim); }
-  .md-rank{ margin: 6px 0 12px; font: 700 1.05rem 'Cinzel', serif; color: var(--md-gold2); }
-  .md-scale{ margin: -6px 0 12px; font-size: 0.86rem; line-height: 1.5; color: var(--md-dim); }
-  .md-sum{ margin: 0 0 10px; line-height: 1.6; }
-  .md-end ul{ margin: 0 0 16px; padding-left: 18px; display: grid; gap: 6px; line-height: 1.55; color: #d8cab2; }
-
-  .md-cls{ display: grid; gap: 8px; margin: 10px 0 8px; }
-  .md-cls button{ display: grid; gap: 2px; text-align: left; min-height: 48px; padding: 9px 14px; border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); background: color-mix(in srgb, var(--c) 8%, transparent); cursor: pointer; transition: background 0.2s, border-color 0.2s; }
-  .md-cls button b{ font: 700 0.95rem 'Cinzel', serif; color: var(--c); }
-  .md-cls button span{ font-size: 0.86rem; color: var(--md-dim); }
-  .md-cls button:hover{ border-color: var(--c); background: color-mix(in srgb, var(--c) 16%, transparent); }
-  .md-cls button:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
-
-  @media (max-width: 900px){
-    .md-desk{ grid-template-columns: 1fr; }
-    .md-insp{ position: static; order: -1; min-height: 0; }
-    .md-tray{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  }
-  @media (max-width: 640px){
-    .md-board{ padding: 14px 10px 16px; }
-    .md-tl-scroll{ padding-bottom: 6px; }
-    .md-tl{ margin: 0 4px; }
-    .md-tick.minor em{ display: none; }
-    .md-tick em{ font-size: 0.64rem; }
-    .md-tick.att em{ font-size: 0.62rem; }
-    .md-pin{ width: 30px; height: 30px; margin-left: -15px; bottom: calc(8px + var(--lane) * 34px); }
-    .md-tl{ height: calc(90px + var(--lanes) * 34px); }
-    .md-band span{ font-size: 0.56rem; }
-    .md-tray{ gap: 10px; }
-    .md-zoom img{ max-height: 240px; }
-  }
-  @media (hover: none){ .md-kbd{ display: none; } }
-  @media (prefers-reduced-motion: reduce){
-    .m-atelier *{ animation: none !important; transition: none !important; }
-  }
-
-  /* straturile epocilor, ca la o săpătură: deasupra axei o nuanță, dedesubt „pământul” */
-  .md-strata{ position: absolute; inset: 0; pointer-events: none; }
-  .md-era{ position: absolute; top: 0; bottom: 0; background: linear-gradient(180deg, transparent 15%, var(--t) 100%); border-left: 1px solid rgba(230, 215, 195, 0.07); }
-  .md-era::after{ content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 41px; background: radial-gradient(circle, rgba(255, 240, 210, 0.07) 0 1px, transparent 1.4px) 0 0 / 9px 7px, radial-gradient(circle, rgba(0, 0, 0, 0.25) 0 1px, transparent 1.6px) 4px 3px / 11px 9px, var(--s); border-top: 1px solid rgba(0, 0, 0, 0.35); }
-  .md-era em{ position: absolute; top: 6px; left: 8px; font: 700 0.6rem 'JetBrains Mono', monospace; font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(230, 215, 195, 0.42); white-space: nowrap; }
-  .md-era.e0{ --t: rgba(212, 175, 55, 0.06); --s: #33291b; border-left: 0; }
-  .md-era.e0 em{ display: none; }
-  .md-era.e1{ --t: rgba(170, 115, 70, 0.08); --s: #2e2219; }
-  .md-era.e2{ --t: rgba(140, 100, 80, 0.08); --s: #291f19; }
-  .md-era.e3{ --t: rgba(110, 100, 95, 0.08); --s: #221c19; }
-  .md-tick em{ text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
-  .md-tl.done .md-era.e1 em, .md-tl.done .md-era.e2 em{ opacity: 0; }
-
-  /* finalul: anii fără nicio imagine a hunilor, ca o ceață peste axă */
-  .md-gap{ top: 0; bottom: 42px; height: auto; overflow: hidden; align-items: flex-start; padding-top: 8px; border: 0; border-left: 1px dashed rgba(205, 205, 215, 0.4); border-right: 1px dashed rgba(205, 205, 215, 0.4);
-    background: linear-gradient(90deg, rgba(160, 160, 172, 0.04), rgba(160, 160, 172, 0.17) 18%, rgba(160, 160, 172, 0.2) 50%, rgba(160, 160, 172, 0.17) 82%, rgba(160, 160, 172, 0.04)); }
-  .md-gap::before{ content: ''; position: absolute; inset: -20% -30%; background: radial-gradient(30% 45% at 25% 60%, rgba(215, 215, 225, 0.16), transparent 70%), radial-gradient(28% 40% at 62% 35%, rgba(215, 215, 225, 0.13), transparent 70%), radial-gradient(25% 50% at 85% 70%, rgba(215, 215, 225, 0.12), transparent 70%); animation: md-mist 16s ease-in-out infinite alternate; pointer-events: none; }
-  @keyframes md-mist{ to{ transform: translateX(14%); } }
-  .md-gap span{ position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 0; background: none; text-align: center; }
-  .md-gap span b{ font: 700 1.05rem/1.1 'Cinzel', serif; color: #ecebf2; letter-spacing: 0.02em; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); font-variant-numeric: lining-nums; }
-  .md-gap span small{ font: 0.66rem 'JetBrains Mono', monospace; color: #c4c3cf; letter-spacing: 0.06em; }
-  @media (max-width: 640px){ .md-era em{ display: none; } .md-gap span b{ font-size: 0.82rem; } .md-gap span small{ display: none; } }
-
-  /* ---------- Masa istoricului, după recenzie ---------- */
-  /* totul încape pe un ecran: antet scurt, cinci cărți pe rând, panoul din dreapta derulează în el însuși */
-  #mod-atelier{ padding-block: 52px 28px; }
-  .md-head{ padding: 0 0 12px; }
-  .md-title{ font-size: clamp(1.8rem, 3.4vw, 2.4rem); margin: 0 0 6px; }
-  .md-sub{ font-size: 1rem; }
-  .md-board{ padding: 16px 18px 18px; }
-  .md-bar{ margin-bottom: 12px; padding-top: 8px; }
-  .md-tray{ grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
-  .md-card img{ border-width: 4px; }
-  .md-insp{ max-height: calc(100vh - var(--nav-h, 44px) - 32px); overflow-y: auto; }
-  .md-zoom img{ max-height: 260px; }
-  /* epocile, colorate pe toată axa, cu numele lizibile */
-  .md-era{ background: var(--t); }
-  .md-era.e0{ --t: rgba(212, 175, 55, 0.1); }
-  .md-era.e1{ --t: rgba(196, 120, 72, 0.11); }
-  .md-era.e2{ --t: rgba(130, 150, 100, 0.1); }
-  .md-era.e3{ --t: rgba(110, 130, 170, 0.11); }
-  .md-era em{ font-size: 0.7rem; color: rgba(240, 228, 205, 0.78); }
-  .md-era.e0 em{ display: block; left: auto; right: 8px; }
-  /* sursele scrise fără manuscris: un citat pe pergament */
-  .md-paper.qt{ justify-content: space-between; padding: 0; background: linear-gradient(160deg, #efe3c8, #d9c69f); }
-  .md-paper.qt q{ display: block; padding: 10px 10px 0; font: italic 0.74rem/1.35 'Source Serif 4', Georgia, serif; color: #3a2a16; text-align: left; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; quotes: '„' '”'; }
-  .md-ghost .md-paper.qt q{ -webkit-line-clamp: 2; font-size: 0.6rem; padding: 5px 6px 0; }
-  .md-insp-paper.qt blockquote{ margin: 0 0 4px; font: italic 1.08rem/1.55 'Source Serif 4', Georgia, serif; color: #2a1f12; }
-  .md-insp-paper.qt small{ margin-bottom: 8px; font-size: 0.74rem; opacity: 0.75; }
-  /* lupa, la vedere */
-  .md-zbtn{ position: absolute; right: 8px; bottom: 8px; display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 4px 10px; border: 1px solid rgba(242, 212, 116, 0.7); background: rgba(14, 13, 11, 0.85); color: #f2d474; font: 600 0.82rem 'Source Serif 4', Georgia, serif; cursor: pointer; }
+  .md-zoom img{ display: block; width: 100%; max-height: 220px; object-fit: contain; }
+  .md-lens{ position: absolute; width: 140px; height: 140px; margin: -70px 0 0 -70px; border-radius: 50%; border: 2px solid #f2d474; background-repeat: no-repeat; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.4); pointer-events: none; }
+  .md-zbtn{ position: absolute; right: 8px; bottom: 8px; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 4px 10px; border: 1px solid rgba(242, 212, 116, 0.7); background: rgba(14, 13, 11, 0.85); color: #f2d474; font: 600 0.82rem 'Source Serif 4', Georgia, serif; cursor: pointer; }
   .md-zbtn svg{ width: 15px; height: 15px; }
   .md-zbtn:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
   .md-ztip{ position: absolute; left: 8px; bottom: 8px; padding: 3px 8px; background: rgba(14, 13, 11, 0.8); font-size: 0.74rem; color: #e6d7c3; pointer-events: none; transition: opacity 0.3s; }
   .md-zoom:hover .md-ztip{ opacity: 0; }
-  @media (hover: none){ .md-ztip{ display: none; } }
   .md-zoom.zoomed{ max-height: 340px; overflow: auto; cursor: grab; }
   .md-zoom.zoomed img{ width: 220%; max-width: none; max-height: none; }
   .md-zoom.zoomed .md-lens, .md-zoom.zoomed .md-ztip{ display: none !important; }
   .md-zoom.zoomed .md-zbtn{ position: sticky; float: right; margin: -42px 8px 8px 0; }
-  /* indiciul */
-  .md-hintb{ margin-top: 10px; min-height: 36px; padding: 6px 12px; border: 1px dashed rgba(229, 193, 88, 0.6); background: transparent; color: var(--md-gold2); font: 600 0.88rem 'Source Serif 4', Georgia, serif; cursor: pointer; }
+  .md-insp-paper{ display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 22px 20px; color: var(--md-paper-ink); text-align: center;
+    background: radial-gradient(55% 45% at 85% 90%, rgba(140, 90, 30, 0.16), transparent 70%), linear-gradient(160deg, #efe3c8, #d9c69f); }
+  .md-insp-paper .md-book{ width: 64px; height: 48px; }
+  .md-insp-paper b{ font: 700 1.2rem 'Cinzel', serif; }
+  .md-insp-paper i{ font-size: 0.95rem; }
+  .md-insp-paper p{ margin: 6px 0 0; font-size: 1rem; line-height: 1.5; }
+  .md-insp-paper.ms{ padding: 14px 16px 18px; }
+  .md-insp-page{ width: 100%; max-height: 170px; margin-bottom: 6px; overflow: hidden; border: 1px solid rgba(42, 31, 18, 0.3); background: #e6d3ab; }
+  .md-insp-page img{ display: block; width: 100%; mix-blend-mode: multiply; }
+  .md-insp-paper.ms small{ margin-top: 6px; font-size: 0.72rem; line-height: 1.4; opacity: 0.75; }
+  .md-insp-paper.qt blockquote{ margin: 0 0 4px; font: italic 1.08rem/1.55 'Source Serif 4', Georgia, serif; color: #2a1f12; }
+  .md-insp-paper.qt small{ margin-bottom: 8px; font-size: 0.74rem; opacity: 0.75; }
+  .md-ink span{ display: inline-block; animation: md-ink 0.5s ease both; animation-delay: calc(var(--i) * 45ms); }
+  @keyframes md-ink{ from{ opacity: 0; transform: translateY(3px); color: #a07a1c; } }
+  .md-insp-body{ padding: 12px 16px 14px; }
+  .md-q{ margin: 0 0 4px; font: 700 1.1rem 'Cinzel', serif; color: #f6eddc; }
+  .md-how{ margin: 0; color: var(--md-dim); font-size: 0.9rem; line-height: 1.5; }
+  .md-to-axis{ margin-top: 10px; }
+  .md-name{ margin: 0 0 8px; font: 700 1.08rem/1.25 'Cinzel', serif; color: #f6eddc; text-wrap: balance; }
+  .md-name span{ font: 700 0.86rem 'Source Serif 4', Georgia, serif; color: var(--md-gold2); white-space: nowrap; }
+  .md-verdict{ margin: 0 0 10px; font-size: 0.9rem; color: #d8cab2; }
+  .md-verdict b{ color: var(--c); }
+  .md-clue{ margin: 0 0 14px; line-height: 1.6; color: #e6d7c3; }
+  .md-hintb{ margin-top: 10px; min-height: 44px; padding: 6px 12px; border: 1px dashed rgba(229, 193, 88, 0.6); background: transparent; color: var(--md-gold2) !important; font: 600 0.9rem 'Source Serif 4', Georgia, serif; cursor: pointer; }
   .md-hintb:hover{ border-style: solid; }
+  .md-hintb:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
   .md-hintx{ margin: 10px 0 0; padding: 8px 10px; border-left: 3px solid var(--md-gold2); background: rgba(229, 193, 88, 0.08); font-size: 0.92rem; line-height: 1.5; color: #f0e2c6; }
   .md-hintx b{ color: var(--md-gold2); }
-  /* pinul alunecă spre anul real; distanța se scrie pe linie; scorul sare */
-  .md-pin{ transition: left 0.9s cubic-bezier(.45, 0, .2, 1), transform 0.2s; }
-  .md-dist{ position: absolute; bottom: 8px; transform: translateX(-50%); padding: 1px 7px; background: #1b1713; border: 1px solid var(--c); color: var(--c); font: 700 0.72rem 'JetBrains Mono', monospace; white-space: nowrap; animation: md-dist 4s ease forwards; pointer-events: none; }
-  @keyframes md-dist{ 0%{ opacity: 0; } 25%{ opacity: 1; } 80%{ opacity: 1; } 100%{ opacity: 0; } }
-  .md-score{ position: relative; }
-  .md-score.bump{ animation: md-bump 0.6s ease; }
-  @keyframes md-bump{ 40%{ transform: scale(1.18); color: #f2d474; } }
-  .md-plus{ position: absolute; right: 0; top: -20px; font: 700 1rem 'Cinzel', serif; color: #8fbd82; animation: md-plus 1.5s ease-out forwards; pointer-events: none; }
-  .md-plus.zero{ color: #e0626c; }
-  @keyframes md-plus{ from{ opacity: 0; transform: translateY(8px); } 20%{ opacity: 1; transform: none; } to{ opacity: 0; transform: translateY(-18px); } }
-  /* pinii înghesuiți: un cerc „×N” care se desface */
-  .md-clu{ position: absolute; bottom: 10px; z-index: 2; transform: translateX(-50%); pointer-events: auto; }
-  .md-clu-b{ position: relative; width: 44px; height: 44px; padding: 0; border: 2px solid #e0626c; border-radius: 50%; overflow: visible; background: var(--md-paper); cursor: pointer; box-shadow: 4px -4px 0 -1px #1b1713, 4px -4px 0 1px rgba(224, 98, 108, 0.6), 0 6px 14px rgba(0, 0, 0, 0.5); }
-  .md-clu-b img{ width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
-  .md-clu-b b{ position: absolute; right: -10px; top: -10px; min-width: 24px; padding: 1px 5px; border-radius: 12px; background: #e0626c; color: #1b1712; font: 700 0.72rem 'JetBrains Mono', monospace; }
-  .md-clu-b:focus-visible{ outline: 2px solid #f2d474; outline-offset: 3px; }
-  .md-clu-pop{ position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%); display: none; gap: 8px; padding: 8px 10px 20px; background: rgba(20, 18, 15, 0.97); border: 1px solid rgba(212, 175, 55, 0.5); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55); }
-  .md-clu:hover .md-clu-pop, .md-clu:focus-within .md-clu-pop, .md-clu.open .md-clu-pop, .md-tl.answers .md-clu-pop{ display: flex; }
-  .md-clu-pop .md-pin{ position: relative; left: auto !important; bottom: auto; margin: 0; flex: none; overflow: visible; }
-  .md-clu-pop .md-pin img{ border-radius: 50%; }
-  /* răspunsurile pe axă: anul real sub fiecare pin */
-  .md-pin{ overflow: visible; }
-  .md-pin > img{ border-radius: 50%; }
-  .md-pin-lab{ display: none; position: absolute; top: calc(100% + 3px); left: 50%; transform: translateX(-50%); padding: 0 4px; background: #1b1713; font: 700 0.62rem 'JetBrains Mono', monospace; color: #f6eddc; white-space: nowrap; }
-  .md-tl.answers .md-pin-lab, .md-clu-pop .md-pin-lab{ display: block; }
-  .md-tl.answers .md-miss{ opacity: 1; border-bottom-style: dashed; }
-  /* reglajul fin, pe ecranele tactile */
-  .md-adjust{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; margin: 6px 14px 0; }
-  .md-adjust[hidden]{ display: none; }
-  .md-adjust > button:not(.md-btn){ min-width: 48px; min-height: 42px; border: 1px solid rgba(212, 175, 55, 0.5); background: transparent; color: #f2d474; font: 700 0.86rem 'JetBrains Mono', monospace; }
-  .md-adjust b{ min-width: 4ch; font: 700 1.3rem 'Cinzel', serif; color: #f6eddc; text-align: center; font-variant-numeric: lining-nums tabular-nums; }
-  /* finalul: scara rangurilor și rezumatul pe categorii */
+  .md-cls{ display: grid; gap: 6px; margin: 8px 0 6px; }
+  .md-cls button{ display: grid; gap: 2px; min-height: 44px; padding: 6px 12px; text-align: left; border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); background: color-mix(in srgb, var(--c) 8%, transparent); cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+  .md-cls button b{ font: 700 0.95rem 'Cinzel', serif; color: var(--c); }
+  .md-cls button span{ font-size: 0.86rem; color: var(--md-dim); }
+  .md-cls button:hover{ border-color: var(--c); background: color-mix(in srgb, var(--c) 16%, transparent); }
+  .md-cls button:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
+  .md-btn{ display: inline-flex; align-items: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--md-gold); background: var(--md-gold); color: #17140e !important; font: 700 0.9rem 'Cinzel', serif; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+  .md-btn:hover{ background: #f2d474; transform: translateY(-1px); }
+  .md-btn:focus-visible{ outline: 2px solid #f2d474; outline-offset: 3px; }
+  .md-btn.ghost{ background: transparent; color: var(--md-gold2) !important; }
+  .md-btn.ghost:hover{ background: rgba(212, 175, 55, 0.12); }
+
+  /* finalul: scorul, scara rangurilor, rezumatul pe categorii, certificatul */
+  .md-end{ padding: 22px 20px 20px; outline: none; }
+  .md-big{ margin: 0; font: 700 3rem/1 'Cinzel', serif; color: #f6eddc; font-variant-numeric: tabular-nums; }
+  .md-big span{ font-size: 1.3rem; color: var(--md-dim); }
+  .md-rank{ margin: 6px 0 12px; font: 700 1.05rem 'Cinzel', serif; color: var(--md-gold2); }
+  .md-sum{ margin: 0 0 10px; line-height: 1.6; }
+  .md-end ul{ margin: 0 0 16px; padding-left: 18px; display: grid; gap: 6px; line-height: 1.55; color: #d8cab2; }
   .md-ladder{ margin: 4px 0 14px; }
   .md-lad-track{ position: relative; height: 10px; margin: 26px 0 8px; background: rgba(230, 215, 195, 0.12); }
   .md-lad-track i{ display: block; height: 100%; background: linear-gradient(90deg, #8f6d1d, #f2d474); }
-  .md-lad-track em{ position: absolute; bottom: calc(100% + 4px); transform: translateX(-50%); padding: 1px 7px; background: #f2d474; color: #17140e; font: 700 0.74rem 'JetBrains Mono', monospace; font-style: normal; white-space: nowrap; }
-  .md-ladder ol{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .md-lad-track em{ position: absolute; bottom: calc(100% + 4px); transform: translateX(-50%); padding: 1px 7px; background: #f2d474; color: #17140e; font: 700 0.76rem 'Source Serif 4', Georgia, serif; font-style: normal; white-space: nowrap; }
+  .md-ladder ol{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
   .md-ladder li{ padding: 6px 8px; border: 1px solid var(--md-line); color: var(--md-dim); font-size: 0.8rem; line-height: 1.3; }
   .md-ladder li b{ display: block; font: 700 0.82rem 'Cinzel', serif; }
   .md-ladder li.on{ border-color: rgba(212, 175, 55, 0.45); color: #e6d7c3; }
@@ -272,71 +320,105 @@
   .md-cats li{ padding: 7px 10px; border-left: 3px solid var(--c); background: rgba(230, 215, 195, 0.04); font-size: 0.86rem; }
   .md-cats b{ display: block; color: var(--c); font-weight: 700; }
   .md-end-btns{ display: flex; flex-wrap: wrap; gap: 8px; }
-  .md-btn.ghost{ background: transparent; color: var(--md-gold2) !important; }
-  .md-btn.ghost:hover{ background: rgba(212, 175, 55, 0.12); }
   .md-shared{ margin: 8px 0 0; font-size: 0.8rem; color: var(--md-dim); word-break: break-word; }
   .md-shared:empty{ display: none; }
-  @media (max-width: 900px){
-    .md-tray{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .md-insp{ max-height: none; }
-    /* pe telefon, axa stă lipită sus cât timp alegi */
-    .md-tl-scroll{ position: sticky; top: var(--nav-h, 44px); z-index: 6; margin: 0 -10px; padding: 6px 10px 4px; background: #1d1813; box-shadow: 0 10px 18px rgba(0, 0, 0, 0.45); }
-  }
-  @media (max-width: 640px){
-    .md-tray{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .md-ladder ol, .md-cats{ grid-template-columns: 1fr 1fr; }
-    .md-clu-b{ width: 34px; height: 34px; }
-  }
-  @media (prefers-reduced-motion: reduce){ .md-pin{ transition: none; } .md-dist, .md-score.bump, .md-plus{ animation: none; } }
-  #mod-atelier{ padding-top: 40px; }
-  .md-zoom img{ max-height: 200px; }
-  .md-insp-body{ padding: 12px 16px 14px; }
-  .md-cls{ gap: 6px; margin: 8px 0 6px; }
-  .md-cls button{ min-height: 40px; padding: 6px 12px; }
-  .md-q{ margin-bottom: 4px; }
-  .md-insp-paper.ms .md-insp-page{ max-height: 170px; }
-  @media (max-width: 900px){ .md-zoom img{ max-height: 240px; } }
-  .md-tl.done .md-era.e0 em{ opacity: 0; }
-  @media (max-width: 640px){ .md-era em, .md-era.e0 em{ display: none; } }
-
-  /* ---------- axa ca o riglă de alamă ---------- */
-  .md-axis{ height: 3px; bottom: 41px; background: linear-gradient(180deg, #f8e7a4, #c9a13a 55%, #7d5f17); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.6); overflow: hidden; }
-  .md-axis::after{ content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 18%; background: linear-gradient(90deg, transparent, rgba(255, 250, 225, 0.95), transparent); transform: translateX(-100%); animation: md-sheen 9s ease-in-out 1.5s infinite; }
-  @keyframes md-sheen{ 0%{ transform: translateX(-100%); } 22%, 100%{ transform: translateX(560%); } }
-  .md-ruler{ position: absolute; bottom: 44px; height: 6px; pointer-events: none; background: repeating-linear-gradient(90deg, rgba(229, 193, 88, 0.55) 0 1px, transparent 1px calc(100% / var(--n))); }
-  .md-scl{ position: absolute; bottom: 52px; font: italic 0.7rem 'Source Serif 4', Georgia, serif; color: rgba(229, 193, 88, 0.72); white-space: nowrap; pointer-events: none; }
-  .md-tick.brk{ cursor: help; }
-  /* 453: un sigiliu de ceară roșie pe axă */
-  .md-tick.att::after{ content: ''; position: absolute; left: 50%; bottom: -1px; width: 15px; height: 15px; transform: translateX(-50%) rotate(-12deg); border-radius: 52% 46% 50% 47%; background: radial-gradient(circle at 36% 34%, #f39aa1 0 12%, #c8323f 42%, #7b1420 100%); box-shadow: 0 0 0 2px rgba(123, 20, 32, 0.35), 0 2px 4px rgba(0, 0, 0, 0.6); }
-  /* umbra sursei, acolo unde o vei așeza */
-  .md-cursor i{ position: absolute; bottom: 10px; left: 50%; width: 42px; height: 42px; transform: translateX(-50%); border: 2px dashed #f2d474; border-radius: 50%; overflow: hidden; background: rgba(27, 23, 19, 0.7); opacity: 0.75; color: #e5c158; }
-  .md-cursor i[hidden]{ display: none; }
-  .md-cursor i img{ width: 100%; height: 100%; object-fit: cover; display: block; }
-  .md-cursor i .md-book{ width: 70%; height: 70%; margin: 15%; display: block; }
-  /* citatul din inspector, scris cu cerneală */
-  .md-ink span{ display: inline-block; animation: md-ink 0.5s ease both; animation-delay: calc(var(--i) * 45ms); }
-  @keyframes md-ink{ from{ opacity: 0; transform: translateY(3px); color: #a07a1c; } }
-  @media (max-width: 900px){ .md-scl{ display: none; } }
-  @media (prefers-reduced-motion: reduce){ .md-axis::after{ animation: none; display: none; } .md-ink span{ animation-name: md-ink-fade; } }
-  @keyframes md-ink-fade{ from{ opacity: 0; } }
-
-  /* ---------- a treia recenzie: cum se joacă și lumina răspunsului ---------- */
-  .md-insp-empty .md-how-h{ margin: 4px 0 8px; font: 700 0.95rem 'Cinzel', Georgia, serif; letter-spacing: 0.06em; color: #f2d474; }
-  .md-how{ counter-reset: md; margin: 0; padding: 0; list-style: none; text-align: left; }
-  .md-how li{ counter-increment: md; position: relative; margin: 0 0 10px; padding-left: 38px; font-size: 0.92rem; line-height: 1.5; color: #e6d7c3; }
-  .md-how li::before{ content: counter(md); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 26px; height: 26px; border: 1.5px solid #c9a13a; border-radius: 50%; font: 700 0.85rem 'Cinzel', serif; color: #f2d474; }
-  .md-how b{ color: #f6eddc; }
-  .md-how-f{ margin: 4px 0 0; font-size: 0.82rem; color: var(--md-dim); text-align: left; }
-  .md-tl::after{ content: ''; position: absolute; inset: -6px -14px; pointer-events: none; opacity: 0; border-radius: 4px; }
-  .md-tl.md-ok::after{ box-shadow: inset 0 0 0 2px rgba(143, 189, 130, 0.8), inset 0 0 40px rgba(143, 189, 130, 0.25); animation: md-glow 1.2s ease-out; }
-  .md-tl.md-bad::after{ box-shadow: inset 0 0 0 2px rgba(224, 98, 108, 0.8), inset 0 0 40px rgba(224, 98, 108, 0.25); animation: md-glow 1.2s ease-out; }
-  @keyframes md-glow{ 0%{ opacity: 0; } 15%{ opacity: 1; } 100%{ opacity: 0; } }
-
-  /* certificatul */
   .md-cert-box{ margin: 12px 0 0; padding: 12px 14px; border: 1px solid rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.05); }
   .md-cert-box label{ display: block; margin-bottom: 6px; font-size: 0.86rem; color: #e6d7c3; }
   .md-cert-row{ display: flex; flex-wrap: wrap; gap: 8px; }
-  .md-cert-row input{ flex: 1 1 180px; min-height: 42px; padding: 8px 10px; border: 1px solid rgba(212, 175, 55, 0.5); background: #14110d; color: #f6eddc; font: 1rem 'Source Serif 4', Georgia, serif; }
+  .md-cert-row input{ flex: 1 1 180px; min-height: 44px; padding: 8px 10px; border: 1px solid rgba(212, 175, 55, 0.5); background: #14110d; color: #f6eddc; font: 1rem 'Source Serif 4', Georgia, serif; }
   .md-cert-row input:focus-visible{ outline: 2px solid #f2d474; outline-offset: 1px; }
   #md-cert-out img{ display: block; width: 100%; margin: 12px 0 8px; border: 1px solid rgba(212, 175, 55, 0.5); }
   #md-cert-out a{ display: inline-flex; text-decoration: none; }
+
+  /* ---------- „Cum se joacă”: fereastra și turul ---------- */
+  .md-modal{ position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 16px; background: rgba(8, 7, 6, 0.76); animation: md-fade 0.2s ease both; }
+  .md-modal-box{ position: relative; width: min(780px, 100%); max-height: calc(100vh - 32px); overflow: auto; padding: 26px 26px 20px; background: linear-gradient(160deg, #241e17, #17140f); border: 1px solid rgba(212, 175, 55, 0.5); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6); }
+  .md-modal-x{ position: absolute; top: 6px; right: 6px; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: #e6d7c3; font-size: 1.7rem; line-height: 1; cursor: pointer; }
+  .md-modal-x:focus-visible{ outline: 2px solid #f2d474; outline-offset: -4px; }
+  .md-modal-k{ margin: 0 0 16px; font: 700 1.3rem 'Cinzel', Georgia, serif; color: #f2d474; text-align: center; }
+  .md-steps{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+  .md-steps li{ display: none; position: relative; flex-direction: column; align-items: center; gap: 8px; padding: 20px 14px 18px; text-align: center; border: 1px solid rgba(212, 175, 55, 0.28); background: rgba(212, 175, 55, 0.04); }
+  .md-steps li.on{ display: flex; }
+  .md-steps svg{ width: 64px; height: 48px; color: #e5c158; }
+  .md-steps b{ font: 700 1rem 'Cinzel', Georgia, serif; color: #f6eddc; }
+  .md-steps li > span:last-child{ font-size: 0.94rem; line-height: 1.5; color: #e6d7c3; }
+  .md-step-n{ position: absolute; top: 10px; left: 10px; display: grid; place-items: center; width: 26px; height: 26px; border: 1.5px solid #c9a13a; border-radius: 50%; font: 700 0.85rem 'Cinzel', serif; color: #f2d474; }
+  .md-modal.tour .md-steps{ grid-template-columns: minmax(0, 1fr); max-width: 440px; margin: 0 auto; }
+  .md-modal.tour .md-steps li.on{ animation: md-stepin 0.3s var(--md-ease) both; }
+  @keyframes md-stepin{ from{ opacity: 0; transform: translateX(14px); } }
+  .md-modal-f{ margin: 14px 0 0; font-size: 0.88rem; color: var(--md-dim); text-align: center; }
+  .md-modal-nav{ display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 16px; }
+  .md-modal-pips{ display: flex; gap: 8px; }
+  .md-modal-pips i{ width: 8px; height: 8px; border-radius: 50%; background: rgba(229, 193, 88, 0.3); }
+  .md-modal-pips i.on{ background: #f2d474; }
+
+  /* ---------- ecrane medii: o singură coloană, axa rămâne orizontală ---------- */
+  @media (max-width: 900px){
+    .md-desk{ grid-template-columns: 1fr; }
+    .md-insp{ position: static; order: -1; min-height: 0; max-height: none; }
+    .md-tray{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .md-zoom img{ max-height: 260px; }
+  }
+
+  /* ---------- telefon: axa verticală, cărțile într-o tavă care se derulează ---------- */
+  @media (max-width: 767px){
+    #mod-atelier{ padding-top: 28px; }
+    .md-board{ display: flex; flex-direction: column; padding: 12px 10px 14px; }
+    .md-bar{ order: 1; margin: 0 0 12px; padding-top: 0; border-top: 0; }
+    .md-desk{ order: 2; gap: 12px; }
+    .md-top{ order: 3; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--md-line); }
+    .md-insp{ order: 0; }
+    .md-tray{ display: flex; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; gap: 16px; padding: 18px 16px 20px; margin: 0 -10px; }
+    .md-card{ flex: 0 0 132px; scroll-snap-align: center; }
+    .md-zoom img{ max-height: 300px; }
+    .md-back{ min-height: 44px; }
+    .md-tl-head{ flex-wrap: wrap; margin: 0 0 12px; }
+    .md-dots{ gap: 4px; }
+    .md-dots i{ width: 10px; height: 10px; }
+    .md-steps{ grid-template-columns: minmax(0, 1fr); }
+    .md-modal-box{ padding: 22px 16px 16px; }
+    .md-ladder ol, .md-cats{ grid-template-columns: 1fr 1fr; }
+    .md-top, .md-insp{ scroll-margin-top: calc(var(--nav-h, 44px) + 10px); }
+    .md-insp-empty{ padding: 18px 16px; gap: 6px; }
+    .md-insp-empty svg{ display: none; }
+    .md-adjust{ position: sticky; bottom: 0; z-index: 6; margin: 12px -10px 0; padding: 10px; background: #1d1813; box-shadow: 0 -8px 18px rgba(0, 0, 0, 0.45); }
+  }
+
+  /* axa verticală: epocile sunt fâșii late, cea atinsă se extinde în înălțime */
+  .md-tl.vert{ margin: 0 4px; min-height: 0; transition: height var(--md-zoom) var(--md-ease); }
+  .md-tl.vert .md-ribbon-w{ inset: -6px -6px; }
+  .md-tl.vert .md-eras{ inset: 0; }
+  .md-tl.vert .md-era{ left: 0; right: 0; width: auto; top: calc(var(--p) * 100%); height: calc(var(--w) * 100%); flex-direction: column; align-items: flex-end; justify-content: center; padding: 6px 14px 6px 90px; text-align: right; border-left: 0; border-top: 1px dashed rgba(90, 60, 20, 0.4); }
+  .md-tl.vert .md-era.e0{ border-top: 0; }
+  .md-tl.vert.zoomed .md-era{ padding: 4px 12px 4px 90px; }
+  .md-tl.vert .md-era.open{ flex-direction: column; align-items: flex-end; justify-content: flex-start; gap: 0; padding-top: 8px; }
+  .md-tl.vert.zoomed .md-era:not(.open) i{ font-size: 0.8rem; }
+  .md-tl.vert .md-era.dwell::before{ display: none; }
+  .md-tl.vert .md-axis{ left: 72px; right: auto; top: 0; bottom: 0; width: 3px; height: auto; }
+  .md-tl.vert .md-tick{ left: 62px; top: calc(var(--p) * 100%); bottom: auto; width: 12px; height: 1px; }
+  .md-tl.vert .md-tick.edge{ left: 58px; width: 18px; height: 1px; }
+  .md-tl.vert .md-tick em, .md-tl.vert .md-tick.edge em{ top: 50%; left: auto; right: 16px; transform: translateY(-50%); }
+  .md-tl.vert .md-tick.edge em{ right: 22px; }
+  .md-tl.vert .md-tick.att{ left: 66px; width: 14px; height: 2px; margin: -1px 0 0; }
+  .md-tl.vert .md-tick.att::after{ left: 50%; top: 50%; bottom: auto; transform: translate(-50%, -50%) rotate(-12deg); }
+  .md-tl.vert .md-tick.att em{ left: 22px; right: auto; bottom: auto; top: 50%; transform: translateY(-50%); }
+  .md-tl.vert .md-pins{ inset: 0 0 0 73px; }
+  .md-tl.vert .md-pin{ left: calc(14px + var(--lane) * 42px); top: calc(var(--p) * 100%); bottom: auto; width: 36px; height: 36px; margin: -18px 0 0 0; }
+  .md-tl.vert .md-pin .md-book{ width: 22px; height: 17px; }
+  .md-tl.vert .md-miss{ left: -5px; top: calc(var(--p) * 100%); width: 8px; height: calc(var(--w) * 100%); bottom: auto; border: 1px solid var(--c); border-left: 0; border-right-width: 2px; }
+  .md-tl.vert .md-guess{ left: -4.5px; top: calc(var(--p) * 100%); bottom: auto; margin: -4.5px 0 0 0; }
+  .md-tl.vert .md-arc{ left: -2px; top: calc(var(--p) * 100%); width: 16px; height: calc(var(--w) * 100%); bottom: auto; border: 2px dashed rgba(122, 84, 16, 0.6); border-left: 0; border-radius: 0 16px 16px 0; }
+  .md-tl.vert .md-dist{ left: 14px; top: 50%; bottom: auto; transform: translateY(-50%); }
+  .md-tl.vert .md-clu{ left: 14px; top: calc(var(--p) * 100%); bottom: auto; transform: translateY(-50%); }
+  .md-tl.vert .md-clu-pop{ bottom: auto; left: calc(100% + 10px); top: 50%; transform: translateY(-50%); flex-wrap: wrap; width: max-content; max-width: calc(100vw - 180px); }
+  .md-tl.vert .md-cursor{ left: 0; right: 0; width: auto; top: calc(var(--p) * 100%); bottom: auto; height: 2px; margin: -1px 0 0; }
+  .md-tl.vert .md-cursor b{ top: 50%; left: 2px; transform: translateY(-50%); }
+  .md-tl.vert .md-cursor i{ left: 88px; bottom: auto; top: 50%; transform: translateY(-50%); width: 38px; height: 38px; }
+  .md-tl.vert .md-gap{ left: 73px; right: 0; width: auto; top: calc(var(--p) * 100%); height: calc(var(--w) * 100%); bottom: auto; align-items: center; padding-top: 0; border: 0; border-top: 1px dashed rgba(50, 45, 70, 0.5); border-bottom: 1px dashed rgba(50, 45, 70, 0.5); }
+
+  @media (hover: none){ .md-kbd, .md-ztip{ display: none; } }
+  @media (prefers-reduced-motion: reduce){
+    .m-atelier *, .m-atelier *::before, .m-atelier *::after{ animation: none !important; transition: none !important; }
+    .m-atelier .md-ink span{ animation: md-fade 0.4s ease both !important; }
+    .m-atelier .md-modal{ animation: md-fade 0.2s ease both !important; }
+  }
