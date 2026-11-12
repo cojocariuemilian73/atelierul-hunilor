@@ -1,0 +1,76 @@
+  /* mod: module din articol (izvoarele ca tabel, miturile pe rânduri, fișele duelului) */
+
+  /* ---------- 1B) Izvoarele, față în față: un tabel comparativ ---------- */
+  .sc-wrap{ position: relative; margin: 22px 0 8px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: rgba(229, 193, 88, 0.4) transparent; }
+  .sc-wrap:focus-visible{ outline: 2px solid #e5c158; outline-offset: 4px; }
+  .sc-table{ width: 100%; min-width: 860px; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+  .sc-table col.sc-c0{ width: 128px; }
+  .sc-table th, .sc-table td{ padding: 12px 14px; vertical-align: top; text-align: left; border-top: 1px solid rgba(229, 193, 88, 0.16); font-size: 0.9rem; line-height: 1.5; color: var(--ink-dim); font-weight: 400; }
+  .sc-table p{ margin: 0 !important; }
+  .sc-table thead th{ padding-top: 14px; padding-bottom: 14px; border-top: 2px solid #e5c158; vertical-align: bottom; }
+  .sc-table thead th b{ display: block; font: 600 1.18rem/1.2 'Cormorant Garamond', serif; color: var(--ink); text-wrap: balance; }
+  .sc-table thead th small{ display: block; margin-top: 4px; font: 0.68rem/1.4 'JetBrains Mono', monospace; color: var(--ink-dim); }
+  .sc-table thead th.sc-c0{ border-top-color: rgba(229, 193, 88, 0.35); font: 700 0.66rem 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; }
+  .sc-table tbody th{ font: 700 0.7rem/1.4 'Cinzel', Georgia, serif; letter-spacing: 0.06em; text-transform: uppercase; color: #e5c158; }
+  .sc-table tbody tr:last-child > *{ border-bottom: 1px solid rgba(229, 193, 88, 0.16); }
+  .sc-table td .sc-gap{ display: block; }
+  .sc-table td .sc-w{ color: var(--ink); }
+  .sc-table td .sc-w span{ margin-right: 6px; color: #e5c158; }
+  /* prima coloană rămâne pe loc când tabelul se derulează pe orizontală */
+  .sc-table .sc-c0{ position: sticky; left: 0; z-index: 1; background: #16120e; }
+  .sc-table tbody th.sc-c0{ box-shadow: 1px 0 0 rgba(229, 193, 88, 0.16); }
+  .sc-hint{ display: none; margin: 6px 0 0; font: italic 0.82rem 'Source Serif 4', Georgia, serif; color: var(--ink-dim); }
+  @media (max-width: 900px){ .sc-hint{ display: block; } }
+  @media (max-width: 620px){
+    .sc-table{ min-width: 760px; }
+    .sc-table col.sc-c0{ width: 96px; }
+    .sc-table th, .sc-table td{ padding: 10px 10px; font-size: 0.86rem; }
+    .sc-table tbody th{ font-size: 0.62rem; }
+  }
+
+  /* ---------- 2B) Miturile: rânduri compacte, ștampila mare la verificare ---------- */
+  #page-acasa .mx-item{ grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'q btn'; gap: 6px 28px; align-items: center; margin: 0; padding: 16px 0; border-top: 1px solid rgba(229, 193, 88, 0.22); }
+  #page-acasa .mx-item:last-of-type{ border-bottom: 1px solid rgba(229, 193, 88, 0.22); }
+  #page-acasa .mx-head + .mx-item{ margin-top: 18px; }
+  #page-acasa .mx-item::before, #page-acasa .mx-item::after{ display: none; }
+  #page-acasa .mx-item .mx-ev{ display: none; }
+  #page-acasa .mx-meta{ margin: 0 0 4px; }
+  #page-acasa .mx-myth{ font-size: clamp(1.14rem, 1.5vw, 1.3rem); max-width: 60ch; }
+  #page-acasa .mx-btn{ justify-self: end; }
+  #page-acasa .mx-item.open{ grid-template-columns: minmax(0, 1fr); grid-template-areas: 'q' 'a'; padding: 18px 0 20px; }
+  #page-acasa .mx-item.open .mx-q{ padding: 0 clamp(120px, 15vw, 210px) 0 0; }
+  /* ștampila „Fals” stă mare, peste capătul mitului tăiat */
+  #page-acasa .mx-stamp{ right: 46px; top: 50%; bottom: auto; margin-top: -0.75em; font-size: clamp(1.4rem, 2.4vw, 2rem); padding: 2px 16px; }
+  #page-acasa .mx-a{ padding: 14px 0 0; border-left: 0; border-top: 1px solid rgba(229, 193, 88, 0.16); }
+  #page-acasa .mx-x{ top: 14px; right: 0; }
+  @media (max-width: 620px){
+    #page-acasa .mx-item{ grid-template-columns: 1fr; grid-template-areas: 'q' 'btn'; gap: 2px; padding: 14px 0; }
+    #page-acasa .mx-btn{ justify-self: start; }
+    #page-acasa .mx-item.open .mx-q{ padding: 0 44px 34px 0; }
+    #page-acasa .mx-stamp{ right: 0; top: auto; bottom: 0; margin-top: 0; font-size: 1.3rem; }
+  }
+
+  /* ---------- 4C) Attila și Aetius: portretul lângă nume, cinci puncte în loc de bare ---------- */
+  #page-acasa .duel.dk .duel-card{ display: grid; grid-template-columns: clamp(104px, 10vw, 148px) minmax(0, 1fr); grid-template-areas: 'img role' 'img name' 'img epi' 'cap cap' 'stats stats' 'lab lab' 'facts facts'; column-gap: 20px; align-content: start; }
+  #page-acasa .duel.dk .dc-img{ display: contents; }
+  #page-acasa .duel.dk .dc-img img{ grid-area: img; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+  #page-acasa .duel.dk .dc-img figcaption{ grid-area: cap; margin: 8px 0 0; font-size: 0.74rem; }
+  /* textul se strânge la mijlocul portretului: rolul jos în rândul lui, epitetul sus în al lui */
+  #page-acasa .duel.dk .dc-role{ grid-area: role; align-self: end; justify-self: start; }
+  #page-acasa .duel.dk h4{ grid-area: name; font-size: clamp(1.6rem, 2.4vw, 2.1rem); line-height: 1.1; }
+  #page-acasa .duel.dk .dc-epithet{ grid-area: epi; align-self: start; margin: 0; }
+  #page-acasa .duel.dk h4{ align-self: center; }
+  #page-acasa .duel.dk .dk-stats{ grid-area: stats; margin: 14px 0 12px; padding-top: 12px; }
+  #page-acasa .duel.dk .dk-label{ grid-area: lab; }
+  #page-acasa .duel.dk .dk-facts{ grid-area: facts; }
+  #page-acasa .duel.dk .dk-facts li{ margin-bottom: 5px; }
+  #page-acasa .dk-stat{ grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; align-items: center; gap: 0 14px; margin-bottom: 8px; }
+  #page-acasa .dk-stat dt{ grid-column: 1; grid-row: 1; }
+  #page-acasa .dk-stat em{ grid-column: 1; grid-row: 2; font-size: 0.78rem; }
+  #page-acasa .dk-bar{ grid-column: 2; grid-row: 1 / 3; display: flex; gap: 6px; height: auto; }
+  #page-acasa .dk-bar i{ width: 11px; height: 11px; border-radius: 50%; background: transparent; box-shadow: inset 0 0 0 1px rgba(229, 193, 88, 0.45); }
+  #page-acasa .dk-v3 i:nth-child(-n+3), #page-acasa .dk-v4 i:nth-child(-n+4), #page-acasa .dk-v5 i{ background: radial-gradient(circle at 35% 35%, #f8e19a, #c9a13a 70%); box-shadow: 0 0 5px rgba(242, 212, 116, 0.35); }
+  @media (max-width: 620px){
+    #page-acasa .duel.dk .duel-card{ grid-template-columns: 92px minmax(0, 1fr); column-gap: 14px; }
+  }
+  /* /mod */
