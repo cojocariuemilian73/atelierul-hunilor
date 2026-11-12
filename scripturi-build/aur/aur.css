@@ -37,17 +37,17 @@
   .gs[data-s="3"] .s1, .gs[data-s="3"] .s2, .gs[data-s="3"] .gs-labels .l1, .gs[data-s="3"] .gs-labels .l2{ opacity: 0.26; }
   .gs[data-s="1"] .gs-who.l1, .gs[data-s="2"] .gs-who.l2, .gs[data-s="3"] .gs-who.l3, .gs[data-s="3"] .gs-who.lm{ fill: #f2d474; }
   .gs-stacks, .gs-labels{ transition: opacity 0.5s, filter 0.5s; }
-  .gs[data-s="4"] .gs-stacks, .gs[data-s="4"] .gs-labels, .gs[data-s="4"] .gs-unit{ opacity: 0.1; }
-  .gs[data-s="5"] .gs-stacks{ filter: saturate(0.25) brightness(0.6); }
+  .gs[data-s="5"] .gs-stacks, .gs[data-s="5"] .gs-labels, .gs[data-s="5"] .gs-unit{ opacity: 0.1; }
+  .gs[data-s="4"] .gs-stacks{ filter: saturate(0.25) brightness(0.6); }
   .gs-stop{ opacity: 0; transition: opacity 0.5s 0.2s; }
-  .gs[data-s="5"] .gs-stop{ opacity: 1; }
+  .gs[data-s="4"] .gs-stop{ opacity: 1; }
   .gs-stop rect{ fill: rgba(18, 16, 14, 0.9); stroke: #e0626c; stroke-width: 1.5; }
   .gs-stop text{ font: 700 20px 'Cinzel', serif; fill: #f4a0a6; text-anchor: middle; }
   .gs-stop text.sm{ font: 13px 'JetBrains Mono', monospace; fill: #e6d7c3; }
   .gs-coins circle{ opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.2); transition: opacity 0.35s, transform 0.5s cubic-bezier(.16,1,.3,1); }
   .gs-coins circle.in{ opacity: 1; transform: none; }
   .gs-coins-lab{ font: 700 12px 'JetBrains Mono', monospace; fill: #f2d474; opacity: 0; transition: opacity 0.5s 0.6s; }
-  .gs[data-s="4"] .gs-coins-lab{ opacity: 1; }
+  .gs[data-s="5"] .gs-coins-lab{ opacity: 1; }
   @media (max-width: 860px){
     .gs-who{ display: none; } .gs-unit{ font-size: 15px; } .gs-lab{ font-size: 26px; }
     .gs-pin{ grid-template-columns: 1fr; gap: 14px; }
@@ -63,4 +63,4 @@
   }
   /* la 450, teancul de 2.100 crapă */
   .gs-crack{ fill: none; stroke: #2a1a08; stroke-width: 2.5; stroke-linejoin: round; stroke-dasharray: 1 2; stroke-dashoffset: 1.05; opacity: 0; }
-  .gs[data-s="5"] .gs-crack{ opacity: 0.9; stroke-dashoffset: 0; transition: stroke-dashoffset 0.7s cubic-bezier(.5, 0, .2, 1) 0.3s, opacity 0.1s 0.3s; }
+  .gs[data-s="4"] .gs-crack{ opacity: 0.9; stroke-dashoffset: 0; transition: stroke-dashoffset 0.7s cubic-bezier(.5, 0, .2, 1) 0.3s, opacity 0.1s 0.3s; }

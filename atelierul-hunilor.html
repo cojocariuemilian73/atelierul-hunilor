@@ -11,7 +11,7 @@
 <meta property="og:locale" content="ro_RO">
 <meta property="og:site_name" content="Atelierul Hunilor">
 <meta property="og:title" content="Atelierul Hunilor: Hunii și Marea Migrație a Popoarelor">
-<meta property="og:description" content="Articol cu note și bibliografie, cronologie, muzeu virtual, jocul „Attila și Marea Migrație” (o simulare în trei acte) și Izvoarele pe axă.">
+<meta property="og:description" content="Articol cu note și bibliografie, cronologie, muzeu virtual, jocul „Attila și Marea Migrație” (o simulare în trei acte) și Jocul izvoarelor.">
 <meta property="og:url" content="https://cojocariuemilian73.github.io/atelierul-hunilor/">
 <meta property="og:image" content="https://cojocariuemilian73.github.io/atelierul-hunilor/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -655,17 +655,17 @@
   .gs[data-s="3"] .s1, .gs[data-s="3"] .s2, .gs[data-s="3"] .gs-labels .l1, .gs[data-s="3"] .gs-labels .l2{ opacity: 0.26; }
   .gs[data-s="1"] .gs-who.l1, .gs[data-s="2"] .gs-who.l2, .gs[data-s="3"] .gs-who.l3, .gs[data-s="3"] .gs-who.lm{ fill: #f2d474; }
   .gs-stacks, .gs-labels{ transition: opacity 0.5s, filter 0.5s; }
-  .gs[data-s="4"] .gs-stacks, .gs[data-s="4"] .gs-labels, .gs[data-s="4"] .gs-unit{ opacity: 0.1; }
-  .gs[data-s="5"] .gs-stacks{ filter: saturate(0.25) brightness(0.6); }
+  .gs[data-s="5"] .gs-stacks, .gs[data-s="5"] .gs-labels, .gs[data-s="5"] .gs-unit{ opacity: 0.1; }
+  .gs[data-s="4"] .gs-stacks{ filter: saturate(0.25) brightness(0.6); }
   .gs-stop{ opacity: 0; transition: opacity 0.5s 0.2s; }
-  .gs[data-s="5"] .gs-stop{ opacity: 1; }
+  .gs[data-s="4"] .gs-stop{ opacity: 1; }
   .gs-stop rect{ fill: rgba(18, 16, 14, 0.9); stroke: #e0626c; stroke-width: 1.5; }
   .gs-stop text{ font: 700 20px 'EB Garamond', serif; fill: #f4a0a6; text-anchor: middle; }
   .gs-stop text.sm{ font: 13px 'Source Serif 4', Georgia, serif; fill: #e6d7c3; }
   .gs-coins circle{ opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.2); transition: opacity 0.35s, transform 0.5s cubic-bezier(.16,1,.3,1); }
   .gs-coins circle.in{ opacity: 1; transform: none; }
   .gs-coins-lab{ font: 700 12px 'Source Serif 4', Georgia, serif; fill: #f2d474; opacity: 0; transition: opacity 0.5s 0.6s; }
-  .gs[data-s="4"] .gs-coins-lab{ opacity: 1; }
+  .gs[data-s="5"] .gs-coins-lab{ opacity: 1; }
   @media (max-width: 860px){
     .gs-who{ display: none; } .gs-unit{ font-size: 15px; } .gs-lab{ font-size: 26px; }
     .gs-pin{ grid-template-columns: 1fr; gap: 14px; }
@@ -681,7 +681,7 @@
   }
   /* la 450, teancul de 2.100 crapă */
   .gs-crack{ fill: none; stroke: #2a1a08; stroke-width: 2.5; stroke-linejoin: round; stroke-dasharray: 1 2; stroke-dashoffset: 1.05; opacity: 0; }
-  .gs[data-s="5"] .gs-crack{ opacity: 0.9; stroke-dashoffset: 0; transition: stroke-dashoffset 0.7s cubic-bezier(.5, 0, .2, 1) 0.3s, opacity 0.1s 0.3s; }
+  .gs[data-s="4"] .gs-crack{ opacity: 0.9; stroke-dashoffset: 0; transition: stroke-dashoffset 0.7s cubic-bezier(.5, 0, .2, 1) 0.3s, opacity 0.1s 0.3s; }
   /* ---------- /AURUL HUNILOR ---------- */
   /* ---------- MAREA MIGRAȚIE: HARTĂ CU SĂGEȚI ---------- */
   .migr-wrap{ margin: 26px 0 10px; }
@@ -966,7 +966,7 @@
 
 
   /* ============ MODULE: ATELIERUL ISTORICULUI (.m-atelier) ============ */
-  /* Izvoarele pe axă ca birou de arhivă: axa e o panglică de pergament cu zoom pe epoci, sursele sunt documente pe o masă de lemn */
+  /* Jocul izvoarelor ca birou de arhivă: axa e o panglică de pergament cu zoom pe epoci, sursele sunt documente pe o masă de lemn */
   #mod-atelier{ padding-block: 40px 28px; }
   .m-atelier{
     --md-s1: #1d1813; --md-s2: #261f18; --md-line: rgba(230, 215, 195, 0.16);
@@ -2278,7 +2278,7 @@
   .fx-move .m-lab .viewer-object.tilt::after{ opacity: 1; }
   .fx-move .duel-card .dc-img img{ transition: transform 0.5s cubic-bezier(.2, .7, .2, 1), filter 0.3s; }
   .fx-move .duel-card .dc-img img.tilt{ transition-duration: 0.12s; filter: brightness(1.08) saturate(1.05); }
-  /* Izvoarele pe axă: sursele sunt împărțite pe masă, iar cea aleasă se ridică */
+  /* Jocul izvoarelor: sursele sunt împărțite pe masă, iar cea aleasă se ridică */
   .fx-move .md-deal .md-card{ animation: md-deal 0.6s cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--k) * 55ms); }
   @keyframes md-deal{ from{ opacity: 0; translate: 40px -70px; rotate: 9deg; } }
   .fx-move .md-card.sel{ transform: translateY(-9px) rotate(-1.5deg) scale(1.03); box-shadow: 0 0 0 3px #f2d474, 0 26px 40px rgba(0, 0, 0, 0.6); }
@@ -2384,7 +2384,7 @@
     /* modulele mari au aceeași lățime ca restul paginii, nu mai ies din coloană */
     #page-acasa #sec-cronologie, #page-acasa #sec-atlas, #page-acasa #sec-muzeu{ width: auto; margin-left: 0; }
     #page-acasa #sec-cronologie .wrap, #page-acasa #sec-atlas .wrap, #page-acasa #sec-muzeu .wrap{ max-width: none; }
-    /* Atlasul și Muzeul ies din coloană: toată lățimea ecranului, cu o margine mică pe laturi (ca Izvoarele pe axă) */
+    /* Atlasul și Muzeul ies din coloană: toată lățimea ecranului, cu o margine mică pe laturi (ca Jocul izvoarelor) */
     #page-acasa #sec-atlas, #page-acasa #sec-muzeu{ width: calc(100vw - 2 * clamp(16px, 3vw, 56px)); margin-left: calc(50% - 50vw + clamp(16px, 3vw, 56px)); }
     /* cele 8 obiecte din muzeu: trei pe rând, patru pe ecranele foarte late (altfel fiecare ar fi uriaș) */
     #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -2630,8 +2630,6 @@
   .to-atlas a{ display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 10px 18px; border: 1px solid rgba(229, 193, 88, 0.6); color: #f2d474; font: 600 1rem 'EB Garamond', serif; text-decoration: none; transition: background 0.2s, border-color 0.2s; }
   .to-atlas a:hover{ background: rgba(229, 193, 88, 0.1); border-color: #e5c158; }
   .to-atlas a:focus-visible{ outline: 2px solid #e5c158; outline-offset: 3px; }
-  /* meniul: linkul jocului rămâne doar pentru comutatorul de pagini */
-  #site-nav .st-game{ display: none !important; }
   /* prima literă: litera mare e desenată din atribut, ca textul să conțină litera o singură dată */
   .fx .lede .dc::before{ content: attr(data-l); }
   /* meniul încape și la 1024 px: mai puțin spațiu între capitole */
@@ -2748,31 +2746,54 @@
   @media (prefers-reduced-motion: reduce){ #site-nav .r7-bar{ transition: none; } }
   @media (max-width: 899px){ #site-nav .r7-bar{ display: none; } #site-nav.r7-slide .chap-bar a::before{ display: block; } }
   /* /r7 */
+  /* r8: recenzia 8 (portretele, rândul cu sursele, letrina, subtitlurile, muzeul pe 4 coloane) */
+  /* portretele lui Attila și Aetius: mari, lângă nume */
+  #page-acasa .duel.dk .duel-card{ grid-template-columns: clamp(150px, 16vw, 220px) minmax(0, 1fr); column-gap: 24px; }
+  @media (max-width: 620px){ #page-acasa .duel.dk .duel-card{ grid-template-columns: 120px minmax(0, 1fr); column-gap: 16px; } }
+  /* rândul cu sursele din deschidere: drept, deschis la culoare, cu umbră, peste o fâșie mai întunecată a frescei */
+  #page-acasa .hero .hero-src{ font-style: normal; font-size: 1rem; color: #f2e8d6; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 14px rgba(0, 0, 0, 0.8); }
+  #page-acasa .hero-scrim{ background: linear-gradient(90deg, rgba(12, 9, 6, 0.92) 0%, rgba(12, 9, 6, 0.74) 38%, rgba(12, 9, 6, 0.5) 72%, rgba(12, 9, 6, 0.42) 100%), linear-gradient(180deg, rgba(12, 9, 6, 0.5) 0%, rgba(12, 9, 6, 0.1) 34%, rgba(12, 9, 6, 0.72) 82%, rgba(12, 9, 6, 0.55) 100%) !important; }
+  /* letrina: granat, și la capătul animației */
+  #page-acasa .page-shell .lede::first-letter{ color: #8a2a1f; }
+  .fx #page-acasa .page-shell .lede .dc{ color: #8a2a1f; }
+  .fx #page-acasa .page-shell .lede.dc-in .dc{ animation: r8-dc 1.2s ease both; }
+  @keyframes r8-dc{ 0%{ color: transparent; -webkit-text-stroke: 1px rgba(138, 42, 31, 0); } 40%{ color: transparent; -webkit-text-stroke: 1px #8a2a1f; } 100%{ color: #8a2a1f; -webkit-text-stroke: 1px rgba(138, 42, 31, 0); } }
+  @media (prefers-reduced-motion: reduce){ .fx #page-acasa .page-shell .lede.dc-in .dc, .fx #page-acasa .page-shell .lede .dc{ animation: none; color: #8a2a1f; } }
+  /* subtitlurile din capitole: o treaptă mai mari decât textul */
+  #page-acasa .page-shell .sub-title{ font-size: 1.625rem; line-height: 1.2; margin-top: 1.4em; }
+  /* muzeul: 8 piese, 4 coloane (două rânduri pline); 2 pe ecranele medii, 1 pe telefon */
+  #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 1099px){ #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 620px){ #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: minmax(0, 1fr); } }
+  /* meniul pe ecranele medii: încap și „Mituri”, și cele două jocuri */
+  @media (max-width: 1279px){ #site-nav .st-pages a{ padding: 0 6px; } #site-nav .chap-bar a{ letter-spacing: 0.01em; } }
+  /* /r8 */
   /* ef: efecte (pergamentul imaginilor, călărețul de sub meniu) */
 
   /* ---------- D) călărețul de sub meniu: înaintează în ani pe măsură ce citești ---------- */
   /* banda stă lipită sub meniu; când meniul se ascunde la derulare, urcă la marginea de sus */
   .ef-ride{ position: fixed; left: 0; right: 0; top: 0; z-index: 139; height: 50px; pointer-events: none;
-    /* fundal plin, ca drumul să nu pară desenat peste imaginile de dedesubt */
-    background: #120e0a; border-bottom: 1px solid rgba(229, 193, 88, 0.16); box-shadow: 0 8px 14px -8px rgba(0, 0, 0, 0.6);
+    /* pergament, ca articolul de dedesubt; fundal plin, ca drumul să nu pară desenat peste imagini */
+    background: #efe4cc; border-bottom: 1px solid rgba(122, 87, 20, 0.35); box-shadow: 0 6px 12px -8px rgba(60, 40, 20, 0.35);
     opacity: 0; visibility: hidden; transform: translateY(var(--ef-ride-y, 54px)); transition: transform 0.2s ease, opacity 0.35s ease, visibility 0s linear 0.35s; }
   .ef-ride.on{ opacity: 1; visibility: visible; transition: transform 0.2s ease, opacity 0.35s ease; }
   .ef-rtrack{ position: absolute; left: 34px; right: 46px; top: 35px; height: 0; }
   /* drumul nu există dinainte: se trasează doar în urma călărețului */
-  .ef-rfill{ position: absolute; left: 0; top: -1px; width: 100%; height: 2px; background: linear-gradient(90deg, rgba(143, 109, 29, 0), #8f6d1d 18%, #e5c158 80%, #f2d474); box-shadow: 0 0 6px rgba(242, 212, 116, 0.35); transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
+  .ef-rfill{ position: absolute; left: 0; top: -1px; width: 100%; height: 2px; background: linear-gradient(90deg, rgba(122, 87, 20, 0), #7a5714 18%, #8a2a1f); box-shadow: none; transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
   /* reperele apar abia când ajunge la ele */
   .ef-rtick{ position: absolute; left: calc(var(--x, 0) * 100%); top: 0; width: 0; height: 0; opacity: 0; transform: scale(0.4); transition: opacity 0.35s ease, transform 0.35s cubic-bezier(.3, 1.6, .5, 1); }
   .ef-rtick.on{ opacity: 1; transform: none; }
-  .ef-rtick::before{ content: ''; position: absolute; left: -4px; top: -4px; width: 7px; height: 7px; background: #f2d474; transform: rotate(45deg); box-shadow: 0 0 8px rgba(242, 212, 116, 0.7); }
-  .ef-rtick b{ position: absolute; left: 0; top: 4px; transform: translateX(-50%); white-space: nowrap; font: 700 0.8125rem/1 'EB Garamond', Georgia, serif; letter-spacing: 0.04em; color: #e5c158; font-variant-numeric: lining-nums; }
+  .ef-rtick::before{ content: ''; position: absolute; left: -4px; top: -4px; width: 7px; height: 7px; background: #8a2a1f; transform: rotate(45deg); box-shadow: none; }
+  .ef-rtick b{ position: absolute; left: 0; top: 4px; transform: translateX(-50%); white-space: nowrap; font: 700 0.8125rem/1 'EB Garamond', Georgia, serif; letter-spacing: 0.04em; color: #7a5714; font-variant-numeric: lining-nums; transition: opacity 0.15s; }
+  .ef-rtick.near b{ opacity: 0; }
   /* la 476: un steag mic la capătul drumului */
-  .ef-rtick.last.on::after{ content: ''; position: absolute; left: 2px; top: -22px; width: 1.5px; height: 20px; background: #e5c158; }
-  .ef-rtick.last.on i{ position: absolute; left: 3px; top: -22px; width: 11px; height: 8px; background: #b3261e; clip-path: polygon(0 0, 100% 50%, 0 100%); transform-origin: 0 50%; animation: ef-flag 1.6s ease-in-out infinite; }
+  .ef-rtick.last.on::after{ content: ''; position: absolute; left: 2px; top: -22px; width: 1.5px; height: 20px; background: #7a5714; }
+  .ef-rtick.last.on i{ position: absolute; left: 3px; top: -22px; width: 11px; height: 8px; background: #8a2a1f; clip-path: polygon(0 0, 100% 50%, 0 100%); transform-origin: 0 50%; animation: ef-flag 1.6s ease-in-out infinite; }
   @keyframes ef-flag{ 50%{ transform: scaleX(0.75) skewY(6deg); } }
   .ef-rider{ position: absolute; left: 0; top: 0; width: 0; height: 0; will-change: transform; }
-  .ef-rider svg{ position: absolute; left: -20px; bottom: 0; width: 38px; height: 28px; overflow: visible; color: #e5c158; filter: drop-shadow(0 0 4px rgba(242, 212, 116, 0.35)); transition: transform 0.25s ease; }
+  .ef-rider svg{ position: absolute; left: -20px; bottom: 0; width: 38px; height: 28px; overflow: visible; color: #2b1d12; filter: none; transition: transform 0.25s ease; }
   .ef-ride.back .ef-rider svg{ transform: scaleX(-1); }
-  .ef-ryr{ position: absolute; left: 22px; bottom: 9px; padding: 1px 6px 2px; border: 1px solid rgba(229, 193, 88, 0.5); border-radius: 999px; background: rgba(12, 10, 8, 0.88); white-space: nowrap; font: 700 0.8125rem/1.2 'EB Garamond', Georgia, serif; letter-spacing: 0.03em; color: #f2d474; font-variant-numeric: lining-nums tabular-nums; }
+  .ef-ryr{ position: absolute; left: 22px; bottom: 9px; padding: 1px 6px 2px; border: 1px solid rgba(138, 42, 31, 0.45); border-radius: 999px; background: #f3ead7; white-space: nowrap; font: 700 0.8125rem/1.2 'EB Garamond', Georgia, serif; letter-spacing: 0.03em; color: #8a2a1f; font-variant-numeric: lining-nums tabular-nums; }
   .ef-ride.lft .ef-ryr{ left: auto; right: 22px; }
   /* galopul: picioarele și trupul se mișcă doar cât derulezi */
   .ef-rider .lg{ transform-box: fill-box; transform-origin: 50% 0; }
@@ -2819,12 +2840,13 @@
         <a href="#sec-atlas" data-sec="sec-atlas" class="toc-link">Atlas</a>
         <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități</a>
         <a href="#sec-muzeu" data-sec="sec-muzeu" class="toc-link">Muzeu</a>
+        <a href="#sec-mituri" data-sec="sec-mituri" class="toc-link">Mituri</a>
         <a href="#sec-glosar" data-sec="sec-glosar" data-also="biblio" class="toc-link">Surse</a>
       </div>
     </div>
     <div class="st-pages">
-      <a href="#mod-migratie" data-page class="st-game" hidden><span class="nav-long">Jocul: Attila și Marea Migrație</span></a>
-      <a href="#mod-atelier" data-page><span class="nav-long">Izvoarele pe axă</span><span class="nav-short" aria-hidden="true">Izvoarele</span></a>
+      <a href="#mod-migratie" data-page aria-label="Jocul: Attila și Marea Migrație"><span class="nav-long">Jocul</span><span class="nav-short" aria-hidden="true">Jocul</span></a>
+      <a href="#mod-atelier" data-page aria-label="Jocul izvoarelor"><span class="nav-long">Jocul izvoarelor</span><span class="nav-short" aria-hidden="true">Jocul 2</span></a>
       <button class="about-trigger" id="about-trigger" type="button" aria-label="Despre proiect"><svg class="nav-i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 7.2v4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="8" cy="4.8" r="1" fill="currentColor"/></svg><span class="nav-long">Despre proiect</span></button>
     </div>
   </div>
@@ -2842,7 +2864,7 @@
     <ul>
       <li><strong>Acasă / Articol</strong>: studiu academic cu note de subsol, cronologie și bibliografie.</li>
       <li><strong>Attila și Marea Migrație</strong>: un singur joc, în trei acte, pe harta reală a Europei (370–476), cu peste 1.800 de agenți. Actul I: ești Valens, Stilicho și Honorius. Actul II: ești Attila, în opt momente reale (435–452), cu aur, renume, loialitate, cavalerie și moștenire; alegerile tale mută hunii pe hartă și schimbă stabilitatea Imperiului. Actul III: ești Ardaric, la Nedao, apoi împăratul Leon I. Terenul e citit din hartă, drumurile sunt calculate cu algoritmul lui Dijkstra, iar la final îți compari lumea cu cea reală.</li>
-      <li><strong>Izvoarele pe axă</strong>: treisprezece surse despre huni (obiecte, izvoare scrise, o copie medievală, picturi) de așezat pe axa timpului și de clasificat: cât de multe sunt cu adevărat din epoca lui Attila.</li>
+      <li><strong>Jocul izvoarelor</strong>: treisprezece surse despre huni (obiecte, izvoare scrise, o copie medievală, picturi) de așezat pe axa timpului și de clasificat: cât de multe sunt cu adevărat din epoca lui Attila.</li>
       <li><strong>Atlasul Migrației</strong>: hartă interactivă cu rutele Marii Migrații, în pagina Acasă (capitolul 04 al articolului).</li>
       <li><strong>Muzeul virtual și miturile</strong>: artefacte hunice reale, explorabile pe fotografie (capitolul 06), și opt mituri despre huni, verificate cu izvoarele și genetica, și șapte fapte puțin cunoscute („Știai că…?”), la sfârșitul capitolelor de care țin.</li>
     </ul>
@@ -3030,7 +3052,7 @@
       <div class="gs" id="gold-story">
         <div class="gs-pin">
         <div class="gs-chart">
-          <svg viewBox="0 0 600 390" role="img" aria-label="Tributul anual în aur plătit hunilor de Imperiul Roman de Răsărit, ca teancuri de monede: 350 de livre (c. 422), 700 (435), 2.100 (447) plus 6.000 restanță, apoi nimic din 450." id="gs-svg">
+          <svg viewBox="0 0 600 390" role="img" aria-label="Tributul anual în aur plătit hunilor de Imperiul Roman de Răsărit, ca teancuri de monede: 350 de livre (c. 422), 700 (435), 2.100 (447) plus 6.000 restanță (trei teancuri de aceeași scară), apoi nimic din 450." id="gs-svg">
             <defs>
               <radialGradient id="gs-coin" cx="0.38" cy="0.35" r="0.7"><stop offset="0" stop-color="#fbe7a1"/><stop offset="0.55" stop-color="#d9b13c"/><stop offset="1" stop-color="#8a6a14"/></radialGradient>
             </defs>
@@ -3040,7 +3062,7 @@
               <text class="gs-lab l1" x="120" y="280">350</text><text class="gs-who l1" x="120" y="356">c. 422 · Rua</text>
               <text class="gs-lab l2" x="250" y="234">700</text><text class="gs-who l2" x="250" y="356">435 · Margus</text>
               <text class="gs-lab l3" x="380" y="50">2.100</text><text class="gs-who l3" x="380" y="356">447 · Anatolius</text>
-              <text class="gs-lab lm" x="510" y="248">+6.000</text><text class="gs-who lm" x="510" y="356">restanță, o dată</text>
+              <text class="gs-lab lm" x="510" y="64">+6.000</text><text class="gs-who lm" x="510" y="356">restanță, o dată</text>
             </g>
             <path class="gs-crack" d="M386 64 L378 96 L389 121 L376 158 L388 190 L379 228 L391 262 L381 300 L387 334" pathLength="1" aria-hidden="true"/>
             <g class="gs-stop" aria-hidden="true">
@@ -3058,8 +3080,8 @@
           <div class="gs-step" data-s="1"><p class="gs-yr">c. 422–430</p><h3>350 de livre pe an</h3><p>Sub regele Rua, hunii primesc 350 de livre de aur în fiecare an. Pentru Constantinopol, e prețul liniștii la Dunăre.</p></div>
           <div class="gs-step" data-s="2"><p class="gs-yr">c. 435</p><h3>Dublu: 700 de livre</h3><p>La Margus, Attila și Bleda obțin dublarea tributului și deschiderea târgurilor de la graniță.</p></div>
           <div class="gs-step" data-s="3"><p class="gs-yr">443 sau 447</p><h3>Triplu: 2.100 de livre, plus 6.000 restanță</h3><p>După două campanii în Balcani, tributul se triplează. Restanța trebuie plătită pe loc: senatorii își vând mobila și bijuteriile soțiilor, scrie Priscus.</p></div>
-          <div class="gs-step" data-s="4"><p class="gs-yr">în fiecare an</p><h3>Peste 151.000 de monede</h3><p>O livră romană avea 72 de solizi. Cele 2.100 de livre însemnau 151.200 de monede de aur, adică aproape 690 kg de aur pe an.</p></div>
-          <div class="gs-step" data-s="5"><p class="gs-yr">450</p><h3>Plata se oprește</h3><p>Noul împărat, Marcian, refuză tributul. Attila nu se mai întoarce spre Balcani: în 451 pornește spre Galia. Aurul a cumpărat timp pentru Răsărit, iar nota de plată a ajuns în Apus.</p></div>
+          <div class="gs-step" data-s="4"><p class="gs-yr">450</p><h3>Plata se oprește</h3><p>Noul împărat, Marcian, refuză tributul. Attila nu se mai întoarce spre Balcani: în 451 pornește spre Galia. Aurul a cumpărat timp pentru Răsărit, iar nota de plată a ajuns în Apus.</p></div>
+          <div class="gs-step" data-s="5"><p class="gs-yr">în fiecare an</p><h3>Peste 151.000 de monede</h3><p>O livră romană avea 72 de solizi. Cele 2.100 de livre însemnau 151.200 de monede de aur, adică aproape 690 kg de aur pe an.</p></div>
           <p class="gs-src">Cifrele: Priscus din Panium, fragmentele 2 și 9.3 (ed. R. C. Blockley, 1983). Greutatea: livra romană ≈ 327 g.</p>
         </div>
         </div>
@@ -3299,8 +3321,13 @@
 
 
 
-    <div class="mx mx-all-in-one" data-myths="0,1,3,13,4,10,11,14,7,8,2,5,6,9,12" data-title="Mituri despre huni, verificate cu sursele"></div>
     <!-- TEXTUL TĂU: un final personal (ce ai învățat, ce n-ai reușit să lămurești, ce ai citi mai departe). Scrie-l aici, într-un <section id="sec-final">. -->
+    <div class="ch-orn" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12H108M132 12H232"/><path class="d" d="M120 4l8 8-8 8-8-8z"/></svg></div>
+    <section id="sec-mituri">
+      <div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">07</span><h2 class="sec-title">Mituri verificate</h2></div>
+      <p class="sec-sub">Ce se spune adesea despre huni și ce arată, de fapt, izvoarele, arheologia și genetica.</p>
+      <div class="mx mx-all-in-one" data-myths="0,1,3,13,4,10,11,14,7,8,2,5,6,9,12" data-title="Opt mituri și șapte curiozități"></div>
+    </section>
   </article>
 
   <div class="cta-card">
@@ -3406,7 +3433,7 @@
 
 <footer class="site-final-footer">
   Proiect realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală”, Secțiunea I, Istorie.<br>
-  Trei pagini: articolul cu note și bibliografie (cu cronologie, atlas, muzeu virtual și mituri verificate), jocul „Attila și Marea Migrație” și Izvoarele pe axă.<br>
+  Trei pagini: articolul cu note și bibliografie (cu cronologie, atlas, muzeu virtual și mituri verificate), jocul „Attila și Marea Migrație” și Jocul izvoarelor.<br>
   Surse citate în note: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Iordanes, Prosper Tiro, Ieronim, Sozomen (iar în jocuri și la mituri Claudian, Codex Theodosianus, Hydatius, Marcellinus Comes, Orosius, Sidonius Apollinaris și Zosimus), precum și cercetări moderne (De Guignes, Kiessling, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Halsall, Goffart, Harhoiu, Neparáczki, Maróti).
 </footer>
 </div>
@@ -3429,7 +3456,7 @@
 <div class="wrap md">
   <header class="md-head">
     <div class="md-title-row">
-      <h1 class="md-title">Izvoarele pe axă</h1>
+      <h1 class="md-title">Jocul izvoarelor</h1>
       <button type="button" class="md-help-b" id="md-help-b" aria-haspopup="dialog" aria-controls="md-help" title="Cum se joacă"><span aria-hidden="true">?</span><span class="md-sr">Cum se joacă</span></button>
     </div>
     <p class="md-sub">Treisprezece surse despre huni: așază-le pe axa timpului și spune ce fel de sursă e fiecare.</p>
@@ -3880,6 +3907,7 @@
     var miTag = document.getElementById('mi-tag');
     var miTitle = document.getElementById('mi-title');
     var miDesc = document.getElementById('mi-desc');
+    if (!miTag || !miTitle || !miDesc) return;
     if (!miTag || !miTitle || !miDesc) return;
 
     function showMigr(i){
@@ -5585,7 +5613,7 @@
     $('md-again').addEventListener('click', reset);
     $('md-ans').addEventListener('click', function(){ var on = tl.classList.toggle('answers'); this.setAttribute('aria-pressed', on ? 'true' : 'false'); this.textContent = on ? 'Ascunde răspunsurile' : 'Vezi răspunsurile pe axă'; });
     $('md-share').addEventListener('click', function(){
-      var txt = 'Izvoarele pe axă: ' + rank + ', ' + score + ' din ' + max + ' puncte. ' + location.href.split('#')[0] + '#mod-atelier', out = $('md-shared');
+      var txt = 'Jocul izvoarelor: ' + rank + ', ' + score + ' din ' + max + ' puncte. ' + location.href.split('#')[0] + '#mod-atelier', out = $('md-shared');
       function ok(){ out.textContent = 'Copiat: ' + txt; }
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, function(){ out.textContent = txt; }); else out.textContent = txt;
     });
@@ -5648,7 +5676,7 @@
       g.fillText(new Date().toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' }), 120, H - 150);
       g.fillText(location.href.split('#')[0].replace(/^https?:\/\//, ''), 120, H - 112);
       var url = c.toDataURL('image/png');
-      $('md-cert-out').innerHTML = '<img src="' + url + '" alt="Certificatul tău: ' + esc(rank) + ', ' + sc + ' din ' + max + ' puncte"><a class="md-btn" download="certificat-izvoarele-pe-axa.png" href="' + url + '">Salvează imaginea</a>';
+      $('md-cert-out').innerHTML = '<img src="' + url + '" alt="Certificatul tău: ' + esc(rank) + ', ' + sc + ' din ' + max + ' puncte"><a class="md-btn" download="certificat-jocul-izvoarelor.png" href="' + url + '">Salvează imaginea</a>';
     }
   }
   // scara rangurilor, cu poziția ta
@@ -7269,13 +7297,12 @@
     for (var i = 0; i < n; i++) h += '<ellipse cx="' + x + '" cy="' + (336 - i * 6.6).toFixed(1) + '" rx="26" ry="6.5" ' + COIN + '/>';
     return h + '</g>';
   }
-  // restanța de 6.000 de livre: o grămadă de 120 de monede mai mici, pe 15 rânduri
+  // restanța de 6.000 de livre, la aceeași scară: 120 de monede, în trei teancuri de câte 40
   function mound(x){
     var h = '<g class="gs-stk sm">';
-    for (var r = 0; r < 15; r++) {
-      var n = 15 - r, w = 9.4;
-      for (var j = 0; j < n; j++) h += '<ellipse cx="' + (x - (n - 1) * w / 2 + j * w).toFixed(1) + '" cy="' + (336 - r * 5.5).toFixed(1) + '" rx="5.4" ry="2.6" ' + COIN + '/>';
-    }
+    [-46, 0, 46].forEach(function(dx){
+      for (var i = 0; i < 40; i++) h += '<ellipse cx="' + (x + dx) + '" cy="' + (336 - i * 6.6).toFixed(1) + '" rx="21" ry="5.4" ' + COIN + '/>';
+    });
     return h + '</g>';
   }
   document.getElementById('gs-stacks').innerHTML = stack('s1', 120, 7) + stack('s2', 250, 14) + stack('s3', 380, 42) + mound(510);
@@ -7289,7 +7316,7 @@
 
   // pașii: butoane cu anii, deasupra textului
   var steps = list('.gs-step');
-  var LAB = ['Începutul', 'c. 422', '435', '447', 'În monede', '450'];
+  var LAB = ['Începutul', 'c. 422', '435', '447', '450', 'În monede'];
   var nav = document.createElement('div');
   nav.className = 'gs-nav'; nav.setAttribute('role', 'group'); nav.setAttribute('aria-label', 'Pașii graficului');
   nav.innerHTML = steps.map(function(st, k){ return '<button type="button" data-s="' + st.getAttribute('data-s') + '" aria-pressed="false">' + (LAB[k] || st.getAttribute('data-s')) + '</button>'; }).join('');
@@ -7307,7 +7334,7 @@
     gs.setAttribute('data-s', s);
     steps.forEach(function(st){ st.classList.toggle('on', st.getAttribute('data-s') === s); });
     btns.forEach(function(b){ var on = b.getAttribute('data-s') === s; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
-    solidi(s === '4');
+    solidi(s === '5');
   }
   nav.addEventListener('click', function(e){
     var b = e.target.closest('button'); if (b) set(b.getAttribute('data-s'));
@@ -7331,7 +7358,7 @@
     var d = 0;
     list('.gs-stk').forEach(function(g, k){
       list('.gs-stk.' + g.classList[1] + ' ellipse').forEach(function(el, j){
-        el.style.transitionDelay = still ? '0ms' : (d + j * (k === 3 ? 4 : 22)) + 'ms';
+        el.style.transitionDelay = still ? '0ms' : (d + j * (k === 3 ? 7 : 22)) + 'ms';
         el.classList.add('in');
       });
       if (!still) count(LABS[k], d);
@@ -7637,7 +7664,7 @@
   function marks(){
     var joc = document.querySelector('.site-nav a[href="#mod-migratie"]'), masa = document.querySelector('.site-nav a[href="#mod-atelier"]');
     if (joc) { joc.classList.toggle('done', !!get('ah-joc')); if (get('ah-joc')) joc.title = 'Ai terminat jocul'; }
-    if (masa) { masa.classList.toggle('done', !!get('ah-masa')); if (get('ah-masa')) masa.title = 'Ai terminat Izvoarele pe axă: ' + get('ah-masa'); }
+    if (masa) { masa.classList.toggle('done', !!get('ah-masa')); if (get('ah-masa')) masa.title = 'Ai terminat Jocul izvoarelor: ' + get('ah-masa'); }
   }
   marks();
   document.addEventListener('ah-progres', marks);
@@ -7762,7 +7789,7 @@
       }, { passive: true });
     }
 
-    // Izvoarele pe axă: prima dată când vezi masa, sursele sunt împărțite una câte una
+    // Jocul izvoarelor: prima dată când vezi masa, sursele sunt împărțite una câte una
     var tray = document.getElementById('md-tray');
     once(tray, function(){
       var k = 0;
@@ -7950,6 +7977,33 @@
 })();
 </script>
 <script>
+/* r8: recenzia 8 */
+(function(){
+  // ---------- accesibilitatea: nicio imagine fără text alternativ, niciun titlu gol ----------
+  // ferestrele (Atlasul, mărirea imaginilor) își completează titlurile la deschidere; până atunci au un text implicit
+  var DEF = { 'mt-title': 'Detalii despre locul ales', 'mt-cap': 'Imagine din sursa istorică' };
+  function txt(el){ return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
+  function fix(){
+    Object.keys(DEF).forEach(function(id){ var el = document.getElementById(id); if (el && !txt(el)) el.textContent = DEF[id]; });
+    Array.prototype.forEach.call(document.querySelectorAll('.img-lightbox figcaption'), function(c){ if (!txt(c)) c.textContent = 'Imagine mărită'; });
+    Array.prototype.forEach.call(document.querySelectorAll('img'), function(img){
+      // ferestrele își schimbă imaginea la fiecare deschidere: textul lor se recalculează mereu
+      var live = img.matches('#mt-img, .img-lightbox img');
+      if (!live && (img.getAttribute('alt') || '').trim()) return;
+      var fig = img.closest('figure'), cap = fig && fig.querySelector('figcaption');
+      var lab = img.closest('[aria-label]'), now = img.closest('.mig-now-c');
+      var alt = (now && txt(now.querySelector('b'))) || txt(cap) || (lab && lab.getAttribute('aria-label')) || '';
+      if (img.id === 'mt-img') alt = txt(document.getElementById('mt-title'));
+      img.setAttribute('alt', alt || 'Imagine din articol');
+    });
+  }
+  fix();
+  var t = 0;
+  new MutationObserver(function(){ clearTimeout(t); t = setTimeout(fix, 120); })
+    .observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
+})();
+</script>
+<script>
 /* ef: efecte (pergamentul imaginilor, călărețul de sub meniu; cursorul tematic a fost scos în recenzia 7) */
 (function(){
   var doc = document.documentElement;
@@ -8042,8 +8096,12 @@
       if (u >= 1) ride.classList.remove('back');
       // spre capătul drumului, anul trece în stânga călărețului, ca să nu iasă din ecran;
       // întors înapoi, anul trece în stânga lui, dar numai dacă are loc acolo (lângă început rămâne în dreapta)
-      var rx = u * rideW;
-      ride.classList.toggle('lft', rx > rideW - 96 || (ride.classList.contains('back') && rx > 96));
+      var rx = u * rideW, pw = ryr.offsetWidth + 22;
+      var lft = rx > rideW - pw - 30 || (ride.classList.contains('back') && rx > pw + 8);
+      ride.classList.toggle('lft', lft);
+      // etichetele reperelor de lângă anul afișat se ascund, ca să nu se calce (de ex. 451 și 453 lângă 476)
+      var a0 = lft ? rx - pw - 6 : rx - 14, a1 = lft ? rx + 14 : rx + pw + 6;
+      Array.prototype.forEach.call(ticks, function(t, k){ var tx = REP[k].x * rideW; t.classList.toggle('near', tx > a0 - 16 && tx < a1 + 16); });
       lastU = u;
     }
 

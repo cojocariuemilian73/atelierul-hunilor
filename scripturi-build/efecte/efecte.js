@@ -90,8 +90,12 @@
       if (u >= 1) ride.classList.remove('back');
       // spre capătul drumului, anul trece în stânga călărețului, ca să nu iasă din ecran;
       // întors înapoi, anul trece în stânga lui, dar numai dacă are loc acolo (lângă început rămâne în dreapta)
-      var rx = u * rideW;
-      ride.classList.toggle('lft', rx > rideW - 96 || (ride.classList.contains('back') && rx > 96));
+      var rx = u * rideW, pw = ryr.offsetWidth + 22;
+      var lft = rx > rideW - pw - 30 || (ride.classList.contains('back') && rx > pw + 8);
+      ride.classList.toggle('lft', lft);
+      // etichetele reperelor de lângă anul afișat se ascund, ca să nu se calce (de ex. 451 și 453 lângă 476)
+      var a0 = lft ? rx - pw - 6 : rx - 14, a1 = lft ? rx + 14 : rx + pw + 6;
+      Array.prototype.forEach.call(ticks, function(t, k){ var tx = REP[k].x * rideW; t.classList.toggle('near', tx > a0 - 16 && tx < a1 + 16); });
       lastU = u;
     }
 

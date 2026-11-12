@@ -37,17 +37,24 @@ s = s.replace(/<dialog class="qr-dialog"[\s\S]*?<\/dialog>\n?/g, '');
 // linia din deschidere: rombul arată 453, moartea lui Attila
 s = s.replace('<p class="hero-years" aria-label="370–476">', '<p class="hero-years" aria-label="370–476; rombul marchează anul 453, moartea lui Attila">');
 
-// ---------- D) miturile, adunate într-un singur loc (după muzeu) ----------
+// ---------- D) miturile, adunate într-o secțiune proprie, „Mituri verificate” (după muzeu, cu intrare în meniu) ----------
 {
-  const groups = [...s.matchAll(/ *<div class="mx" data-myths="([\d,]+)" data-title="[^"]*"><\/div>\n/g)];
-  if (groups.length) {
+  // grupurile vechi (patru) sau blocul comun de dinainte de secțiune; ambele se mută în secțiunea „Mituri verificate”
+  const groups = [...s.matchAll(/ *<div class="mx(?: mx-all-in-one)?" data-myths="([\d,]+)" data-title="[^"]*"><\/div>\n/g)];
+  if (!s.includes('<section id="sec-mituri">') && groups.length) {
     const ids = groups.map(g => g[1]).join(',');
     groups.forEach(g => { s = s.replace(g[0], ''); });
     // sfârșitul articolului principal (atenție: „  </article>” apare și la capătul fișelor din duel)
     const at = s.indexOf('\n  </article>\n') + 1;
     if (at < 1) fail('sfârșitul articolului');
-    s = s.slice(0, at) + '    <div class="mx mx-all-in-one" data-myths="' + ids + '" data-title="Mituri despre huni, verificate cu sursele"></div>\n' + s.slice(at);
-  } else if (!s.includes('class="mx mx-all-in-one"')) fail('miturile');
+    s = s.slice(0, at) +
+      '    <div class="ch-orn" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12H108M132 12H232"/><path class="d" d="M120 4l8 8-8 8-8-8z"/></svg></div>\n' +
+      '    <section id="sec-mituri">\n' +
+      '      <div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">07</span><h2 class="sec-title">Mituri verificate</h2></div>\n' +
+      '      <p class="sec-sub">Ce se spune adesea despre huni și ce arată, de fapt, izvoarele, arheologia și genetica.</p>\n' +
+      '      <div class="mx mx-all-in-one" data-myths="' + ids + '" data-title="Opt mituri și șapte curiozități"></div>\n' +
+      '    </section>\n' + s.slice(at);
+  } else if (!s.includes('<section id="sec-mituri">')) fail('miturile');
 }
 // locurile pentru textele autorului (le scrie elevul; nu se văd pe site până nu sunt completate)
 if (!s.includes('<!-- TEXTUL TĂU')) {

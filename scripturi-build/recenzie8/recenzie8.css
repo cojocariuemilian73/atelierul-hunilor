@@ -1,0 +1,22 @@
+  /* r8: recenzia 8 (portretele, rândul cu sursele, letrina, subtitlurile, muzeul pe 4 coloane) */
+  /* portretele lui Attila și Aetius: mari, lângă nume */
+  #page-acasa .duel.dk .duel-card{ grid-template-columns: clamp(150px, 16vw, 220px) minmax(0, 1fr); column-gap: 24px; }
+  @media (max-width: 620px){ #page-acasa .duel.dk .duel-card{ grid-template-columns: 120px minmax(0, 1fr); column-gap: 16px; } }
+  /* rândul cu sursele din deschidere: drept, deschis la culoare, cu umbră, peste o fâșie mai întunecată a frescei */
+  #page-acasa .hero .hero-src{ font-style: normal; font-size: 1rem; color: #f2e8d6; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 14px rgba(0, 0, 0, 0.8); }
+  #page-acasa .hero-scrim{ background: linear-gradient(90deg, rgba(12, 9, 6, 0.92) 0%, rgba(12, 9, 6, 0.74) 38%, rgba(12, 9, 6, 0.5) 72%, rgba(12, 9, 6, 0.42) 100%), linear-gradient(180deg, rgba(12, 9, 6, 0.5) 0%, rgba(12, 9, 6, 0.1) 34%, rgba(12, 9, 6, 0.72) 82%, rgba(12, 9, 6, 0.55) 100%) !important; }
+  /* letrina: granat, și la capătul animației */
+  #page-acasa .page-shell .lede::first-letter{ color: #8a2a1f; }
+  .fx #page-acasa .page-shell .lede .dc{ color: #8a2a1f; }
+  .fx #page-acasa .page-shell .lede.dc-in .dc{ animation: r8-dc 1.2s ease both; }
+  @keyframes r8-dc{ 0%{ color: transparent; -webkit-text-stroke: 1px rgba(138, 42, 31, 0); } 40%{ color: transparent; -webkit-text-stroke: 1px #8a2a1f; } 100%{ color: #8a2a1f; -webkit-text-stroke: 1px rgba(138, 42, 31, 0); } }
+  @media (prefers-reduced-motion: reduce){ .fx #page-acasa .page-shell .lede.dc-in .dc, .fx #page-acasa .page-shell .lede .dc{ animation: none; color: #8a2a1f; } }
+  /* subtitlurile din capitole: o treaptă mai mari decât textul */
+  #page-acasa .page-shell .sub-title{ font-size: 1.625rem; line-height: 1.2; margin-top: 1.4em; }
+  /* muzeul: 8 piese, 4 coloane (două rânduri pline); 2 pe ecranele medii, 1 pe telefon */
+  #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 1099px){ #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 620px){ #page-acasa #sec-muzeu .artifact-grid{ grid-template-columns: minmax(0, 1fr); } }
+  /* meniul pe ecranele medii: încap și „Mituri”, și cele două jocuri */
+  @media (max-width: 1279px){ #site-nav .st-pages a{ padding: 0 6px; } #site-nav .chap-bar a{ letter-spacing: 0.01em; } }
+  /* /r8 */

@@ -8,8 +8,6 @@
   .to-atlas a{ display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 10px 18px; border: 1px solid rgba(229, 193, 88, 0.6); color: #f2d474; font: 600 1.05rem 'Cormorant Garamond', serif; text-decoration: none; transition: background 0.2s, border-color 0.2s; }
   .to-atlas a:hover{ background: rgba(229, 193, 88, 0.1); border-color: #e5c158; }
   .to-atlas a:focus-visible{ outline: 2px solid #e5c158; outline-offset: 3px; }
-  /* meniul: linkul jocului rămâne doar pentru comutatorul de pagini */
-  #site-nav .st-game{ display: none !important; }
   /* prima literă: litera mare e desenată din atribut, ca textul să conțină litera o singură dată */
   .fx .lede .dc::before{ content: attr(data-l); }
   /* meniul încape și la 1024 px: mai puțin spațiu între capitole */

@@ -1,7 +1,7 @@
 // Pagina Acasă / Articol, redesenată (din scripturi-build/acasa/):
 //  A) fundalul: fără „cutia” articolului, o coloană de lectură de 860 px direct pe un fundal cald; meta theme-color;
 //  B) un singur meniu sticky: „Atelierul Hunilor” (Acasă) · capitolele, fără numere (Glosarul și Bibliografia ca „Surse”) ·
-//     Izvoarele pe axă, Despre proiect (jocul are butonul din deschidere; linkul lui rămâne ascuns, pentru comutatorul de pagini);
+//     Mituri, Jocul, Jocul izvoarelor, Despre proiect;
 //     se ascunde la derularea în jos, revine la derularea în sus; pe telefon, un sertar; punct auriu la capitolele citite;
 //  C) hero-ul: pictura lui Rafael ca imagine (WebP, două mărimi), metadatele ca trei chip-uri, legenda în colț;
 //  D) titlul capitolului: numărul mare și titlul într-un singur bloc (fără eticheta repetată);
@@ -50,8 +50,9 @@ if (c0 >= 0) {
 }
 // capitolele, fără numere; Glosarul și Bibliografia sunt un singur item, „Surse” (activ în ambele)
 const CH = [['sec-origini', 'Origini'], ['sec-cronologie', 'Cronologie'], ['sec-migratie', 'Marea Migrație'], ['sec-atlas', 'Atlas'],
-  ['sec-personalitati', 'Personalități'], ['sec-muzeu', 'Muzeu'], ['sec-glosar', 'Surse', 'biblio']];
-CH.forEach(c => { if (!s.includes('id="' + c[0] + '"')) fail('capitolul ' + c[0]); });
+  ['sec-personalitati', 'Personalități'], ['sec-muzeu', 'Muzeu'], ['sec-mituri', 'Mituri'], ['sec-glosar', 'Surse', 'biblio']];
+// „Mituri” e o secțiune adăugată mai târziu (patch-recenzie-7.js), deci poate lipsi aici
+CH.forEach(c => { if (c[0] !== 'sec-mituri' && !s.includes('id="' + c[0] + '"')) fail('capitolul ' + c[0]); });
 const chapLinks = CH.map(c => '<a href="#' + c[0] + '" data-sec="' + c[0] + '"' + (c[2] ? ' data-also="' + c[2] + '"' : '') + ' class="toc-link">' + c[1] + '</a>');
 const NAV = `<nav class="site-nav" id="site-nav" aria-label="Navigare principală">
   <a class="st-brand" href="#page-acasa" data-page><span class="st-mark" aria-hidden="true"></span>Atelierul Hunilor</a>
@@ -62,8 +63,8 @@ const NAV = `<nav class="site-nav" id="site-nav" aria-label="Navigare principal�
       </div>
     </div>
     <div class="st-pages">
-      <a href="#mod-migratie" data-page class="st-game" hidden><span class="nav-long">Jocul: Attila și Marea Migrație</span></a>
-      <a href="#mod-atelier" data-page><span class="nav-long">Izvoarele pe axă</span><span class="nav-short" aria-hidden="true">Izvoarele</span></a>
+      <a href="#mod-migratie" data-page aria-label="Jocul: Attila și Marea Migrație"><span class="nav-long">Jocul</span><span class="nav-short" aria-hidden="true">Jocul</span></a>
+      <a href="#mod-atelier" data-page aria-label="Jocul izvoarelor"><span class="nav-long">Jocul izvoarelor</span><span class="nav-short" aria-hidden="true">Jocul 2</span></a>
       ${about}
     </div>
   </div>
