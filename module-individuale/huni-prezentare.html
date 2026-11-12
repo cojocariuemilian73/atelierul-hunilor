@@ -411,17 +411,17 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   .gs[data-s="3"] .s1, .gs[data-s="3"] .s2, .gs[data-s="3"] .gs-labels .l1, .gs[data-s="3"] .gs-labels .l2{ opacity: 0.26; }
   .gs[data-s="1"] .gs-who.l1, .gs[data-s="2"] .gs-who.l2, .gs[data-s="3"] .gs-who.l3, .gs[data-s="3"] .gs-who.lm{ fill: #f2d474; }
   .gs-stacks, .gs-labels{ transition: opacity 0.5s, filter 0.5s; }
-  .gs[data-s="4"] .gs-stacks, .gs[data-s="4"] .gs-labels, .gs[data-s="4"] .gs-unit{ opacity: 0.1; }
-  .gs[data-s="5"] .gs-stacks{ filter: saturate(0.25) brightness(0.6); }
+  .gs[data-s="5"] .gs-stacks, .gs[data-s="5"] .gs-labels, .gs[data-s="5"] .gs-unit{ opacity: 0.1; }
+  .gs[data-s="4"] .gs-stacks{ filter: saturate(0.25) brightness(0.6); }
   .gs-stop{ opacity: 0; transition: opacity 0.5s 0.2s; }
-  .gs[data-s="5"] .gs-stop{ opacity: 1; }
+  .gs[data-s="4"] .gs-stop{ opacity: 1; }
   .gs-stop rect{ fill: rgba(18, 16, 14, 0.9); stroke: #e0626c; stroke-width: 1.5; }
   .gs-stop text{ font: 700 20px 'Cinzel', serif; fill: #f4a0a6; text-anchor: middle; }
   .gs-stop text.sm{ font: 13px 'JetBrains Mono', monospace; fill: #e6d7c3; }
   .gs-coins circle{ opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.2); transition: opacity 0.35s, transform 0.5s cubic-bezier(.16,1,.3,1); }
   .gs-coins circle.in{ opacity: 1; transform: none; }
   .gs-coins-lab{ font: 700 12px 'JetBrains Mono', monospace; fill: #f2d474; opacity: 0; transition: opacity 0.5s 0.6s; }
-  .gs[data-s="4"] .gs-coins-lab{ opacity: 1; }
+  .gs[data-s="5"] .gs-coins-lab{ opacity: 1; }
   @media (max-width: 860px){
     .gs-who{ display: none; } .gs-unit{ font-size: 15px; } .gs-lab{ font-size: 26px; }
     .gs-pin{ grid-template-columns: 1fr; gap: 14px; }
@@ -437,7 +437,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   }
   /* la 450, teancul de 2.100 crapă */
   .gs-crack{ fill: none; stroke: #2a1a08; stroke-width: 2.5; stroke-linejoin: round; stroke-dasharray: 1 2; stroke-dashoffset: 1.05; opacity: 0; }
-  .gs[data-s="5"] .gs-crack{ opacity: 0.9; stroke-dashoffset: 0; transition: stroke-dashoffset 0.7s cubic-bezier(.5, 0, .2, 1) 0.3s, opacity 0.1s 0.3s; }
+  .gs[data-s="4"] .gs-crack{ opacity: 0.9; stroke-dashoffset: 0; transition: stroke-dashoffset 0.7s cubic-bezier(.5, 0, .2, 1) 0.3s, opacity 0.1s 0.3s; }
   /* ---------- /AURUL HUNILOR ---------- */
   /* ---------- MAREA MIGRAȚIE: HARTĂ CU SĂGEȚI ---------- */
   .migr-wrap{ margin: 26px 0 10px; }
@@ -867,7 +867,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
       <div class="gs" id="gold-story">
         <div class="gs-pin">
         <div class="gs-chart">
-          <svg viewBox="0 0 600 390" role="img" aria-label="Tributul anual în aur plătit hunilor de Imperiul Roman de Răsărit, ca teancuri de monede: 350 de livre (c. 422), 700 (435), 2.100 (447) plus 6.000 restanță, apoi nimic din 450." id="gs-svg">
+          <svg viewBox="0 0 600 390" role="img" aria-label="Tributul anual în aur plătit hunilor de Imperiul Roman de Răsărit, ca teancuri de monede: 350 de livre (c. 422), 700 (435), 2.100 (447) plus 6.000 restanță (trei teancuri de aceeași scară), apoi nimic din 450." id="gs-svg">
             <defs>
               <radialGradient id="gs-coin" cx="0.38" cy="0.35" r="0.7"><stop offset="0" stop-color="#fbe7a1"/><stop offset="0.55" stop-color="#d9b13c"/><stop offset="1" stop-color="#8a6a14"/></radialGradient>
             </defs>
@@ -877,7 +877,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
               <text class="gs-lab l1" x="120" y="280">350</text><text class="gs-who l1" x="120" y="356">c. 422 · Rua</text>
               <text class="gs-lab l2" x="250" y="234">700</text><text class="gs-who l2" x="250" y="356">435 · Margus</text>
               <text class="gs-lab l3" x="380" y="50">2.100</text><text class="gs-who l3" x="380" y="356">447 · Anatolius</text>
-              <text class="gs-lab lm" x="510" y="248">+6.000</text><text class="gs-who lm" x="510" y="356">restanță, o dată</text>
+              <text class="gs-lab lm" x="510" y="64">+6.000</text><text class="gs-who lm" x="510" y="356">restanță, o dată</text>
             </g>
             <path class="gs-crack" d="M386 64 L378 96 L389 121 L376 158 L388 190 L379 228 L391 262 L381 300 L387 334" pathLength="1" aria-hidden="true"/>
             <g class="gs-stop" aria-hidden="true">
@@ -895,8 +895,8 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
           <div class="gs-step" data-s="1"><p class="gs-yr">c. 422–430</p><h3>350 de livre pe an</h3><p>Sub regele Rua, hunii primesc 350 de livre de aur în fiecare an. Pentru Constantinopol, e prețul liniștii la Dunăre.</p></div>
           <div class="gs-step" data-s="2"><p class="gs-yr">c. 435</p><h3>Dublu: 700 de livre</h3><p>La Margus, Attila și Bleda obțin dublarea tributului și deschiderea târgurilor de la graniță.</p></div>
           <div class="gs-step" data-s="3"><p class="gs-yr">443 sau 447</p><h3>Triplu: 2.100 de livre, plus 6.000 restanță</h3><p>După două campanii în Balcani, tributul se triplează. Restanța trebuie plătită pe loc: senatorii își vând mobila și bijuteriile soțiilor, scrie Priscus.</p></div>
-          <div class="gs-step" data-s="4"><p class="gs-yr">în fiecare an</p><h3>Peste 151.000 de monede</h3><p>O livră romană avea 72 de solizi. Cele 2.100 de livre însemnau 151.200 de monede de aur, adică aproape 690 kg de aur pe an.</p></div>
-          <div class="gs-step" data-s="5"><p class="gs-yr">450</p><h3>Plata se oprește</h3><p>Noul împărat, Marcian, refuză tributul. Attila nu se mai întoarce spre Balcani: în 451 pornește spre Galia. Aurul a cumpărat timp pentru Răsărit, iar nota de plată a ajuns în Apus.</p></div>
+          <div class="gs-step" data-s="4"><p class="gs-yr">450</p><h3>Plata se oprește</h3><p>Noul împărat, Marcian, refuză tributul. Attila nu se mai întoarce spre Balcani: în 451 pornește spre Galia. Aurul a cumpărat timp pentru Răsărit, iar nota de plată a ajuns în Apus.</p></div>
+          <div class="gs-step" data-s="5"><p class="gs-yr">în fiecare an</p><h3>Peste 151.000 de monede</h3><p>O livră romană avea 72 de solizi. Cele 2.100 de livre însemnau 151.200 de monede de aur, adică aproape 690 kg de aur pe an.</p></div>
           <p class="gs-src">Cifrele: Priscus din Panium, fragmentele 2 și 9.3 (ed. R. C. Blockley, 1983). Greutatea: livra romană ≈ 327 g.</p>
         </div>
         </div>
@@ -1703,13 +1703,12 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     for (var i = 0; i < n; i++) h += '<ellipse cx="' + x + '" cy="' + (336 - i * 6.6).toFixed(1) + '" rx="26" ry="6.5" ' + COIN + '/>';
     return h + '</g>';
   }
-  // restanța de 6.000 de livre: o grămadă de 120 de monede mai mici, pe 15 rânduri
+  // restanța de 6.000 de livre, la aceeași scară: 120 de monede, în trei teancuri de câte 40
   function mound(x){
     var h = '<g class="gs-stk sm">';
-    for (var r = 0; r < 15; r++) {
-      var n = 15 - r, w = 9.4;
-      for (var j = 0; j < n; j++) h += '<ellipse cx="' + (x - (n - 1) * w / 2 + j * w).toFixed(1) + '" cy="' + (336 - r * 5.5).toFixed(1) + '" rx="5.4" ry="2.6" ' + COIN + '/>';
-    }
+    [-46, 0, 46].forEach(function(dx){
+      for (var i = 0; i < 40; i++) h += '<ellipse cx="' + (x + dx) + '" cy="' + (336 - i * 6.6).toFixed(1) + '" rx="21" ry="5.4" ' + COIN + '/>';
+    });
     return h + '</g>';
   }
   document.getElementById('gs-stacks').innerHTML = stack('s1', 120, 7) + stack('s2', 250, 14) + stack('s3', 380, 42) + mound(510);
@@ -1723,7 +1722,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
 
   // pașii: butoane cu anii, deasupra textului
   var steps = list('.gs-step');
-  var LAB = ['Începutul', 'c. 422', '435', '447', 'În monede', '450'];
+  var LAB = ['Începutul', 'c. 422', '435', '447', '450', 'În monede'];
   var nav = document.createElement('div');
   nav.className = 'gs-nav'; nav.setAttribute('role', 'group'); nav.setAttribute('aria-label', 'Pașii graficului');
   nav.innerHTML = steps.map(function(st, k){ return '<button type="button" data-s="' + st.getAttribute('data-s') + '" aria-pressed="false">' + (LAB[k] || st.getAttribute('data-s')) + '</button>'; }).join('');
@@ -1741,7 +1740,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     gs.setAttribute('data-s', s);
     steps.forEach(function(st){ st.classList.toggle('on', st.getAttribute('data-s') === s); });
     btns.forEach(function(b){ var on = b.getAttribute('data-s') === s; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
-    solidi(s === '4');
+    solidi(s === '5');
   }
   nav.addEventListener('click', function(e){
     var b = e.target.closest('button'); if (b) set(b.getAttribute('data-s'));
@@ -1765,7 +1764,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
     var d = 0;
     list('.gs-stk').forEach(function(g, k){
       list('.gs-stk.' + g.classList[1] + ' ellipse').forEach(function(el, j){
-        el.style.transitionDelay = still ? '0ms' : (d + j * (k === 3 ? 4 : 22)) + 'ms';
+        el.style.transitionDelay = still ? '0ms' : (d + j * (k === 3 ? 7 : 22)) + 'ms';
         el.classList.add('in');
       });
       if (!still) count(LABS[k], d);

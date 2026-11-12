@@ -9,13 +9,12 @@
     for (var i = 0; i < n; i++) h += '<ellipse cx="' + x + '" cy="' + (336 - i * 6.6).toFixed(1) + '" rx="26" ry="6.5" ' + COIN + '/>';
     return h + '</g>';
   }
-  // restanța de 6.000 de livre: o grămadă de 120 de monede mai mici, pe 15 rânduri
+  // restanța de 6.000 de livre, la aceeași scară: 120 de monede, în trei teancuri de câte 40
   function mound(x){
     var h = '<g class="gs-stk sm">';
-    for (var r = 0; r < 15; r++) {
-      var n = 15 - r, w = 9.4;
-      for (var j = 0; j < n; j++) h += '<ellipse cx="' + (x - (n - 1) * w / 2 + j * w).toFixed(1) + '" cy="' + (336 - r * 5.5).toFixed(1) + '" rx="5.4" ry="2.6" ' + COIN + '/>';
-    }
+    [-46, 0, 46].forEach(function(dx){
+      for (var i = 0; i < 40; i++) h += '<ellipse cx="' + (x + dx) + '" cy="' + (336 - i * 6.6).toFixed(1) + '" rx="21" ry="5.4" ' + COIN + '/>';
+    });
     return h + '</g>';
   }
   document.getElementById('gs-stacks').innerHTML = stack('s1', 120, 7) + stack('s2', 250, 14) + stack('s3', 380, 42) + mound(510);
@@ -29,7 +28,7 @@
 
   // pașii: butoane cu anii, deasupra textului
   var steps = list('.gs-step');
-  var LAB = ['Începutul', 'c. 422', '435', '447', 'În monede', '450'];
+  var LAB = ['Începutul', 'c. 422', '435', '447', '450', 'În monede'];
   var nav = document.createElement('div');
   nav.className = 'gs-nav'; nav.setAttribute('role', 'group'); nav.setAttribute('aria-label', 'Pașii graficului');
   nav.innerHTML = steps.map(function(st, k){ return '<button type="button" data-s="' + st.getAttribute('data-s') + '" aria-pressed="false">' + (LAB[k] || st.getAttribute('data-s')) + '</button>'; }).join('');
@@ -47,7 +46,7 @@
     gs.setAttribute('data-s', s);
     steps.forEach(function(st){ st.classList.toggle('on', st.getAttribute('data-s') === s); });
     btns.forEach(function(b){ var on = b.getAttribute('data-s') === s; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
-    solidi(s === '4');
+    solidi(s === '5');
   }
   nav.addEventListener('click', function(e){
     var b = e.target.closest('button'); if (b) set(b.getAttribute('data-s'));
@@ -71,7 +70,7 @@
     var d = 0;
     list('.gs-stk').forEach(function(g, k){
       list('.gs-stk.' + g.classList[1] + ' ellipse').forEach(function(el, j){
-        el.style.transitionDelay = still ? '0ms' : (d + j * (k === 3 ? 4 : 22)) + 'ms';
+        el.style.transitionDelay = still ? '0ms' : (d + j * (k === 3 ? 7 : 22)) + 'ms';
         el.classList.add('in');
       });
       if (!still) count(LABS[k], d);

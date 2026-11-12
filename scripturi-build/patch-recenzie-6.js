@@ -2,7 +2,7 @@
 //  A) deschiderea: fără butonul plutitor „Joacă pe telefon” (codul QR rămâne pe pagina jocului); rândul de sus doar cu
 //     numele concursului; o frază scurtă, care explică și intervalul (454 la Nedao, 476 în Apus); fără chipurile
 //     „Secțiune” și „Interval”; sursele ca un rând discret sub butoane; fresca mai întunecată;
-//  B) numele: „Masa istoricului” devine „Izvoarele pe axă”; cardul „Fii tu Attila” poartă numele jocului;
+//  B) numele: „Masa istoricului” devine „Jocul izvoarelor”; cardul „Fii tu Attila” poartă numele jocului;
 //  C) capitolul 03 fără cele două hărți (traseele sunt în Atlas), cu o trimitere spre Atlas; Atlasul își explică anul 455;
 //  D) fișele lui Attila și Aetius fără evaluările „orientative” (rămân faptele-cheie);
 //  E) Iordanes citat peste tot pe paragrafe (ed. Mommsen); nota 18 are și sursa pentru Dengizich (469);
@@ -36,8 +36,9 @@ swap('<p class="dek">Din stepele de dincolo de Volga, un popor de călăreți a 
 s = s.replace(/<button type="button" class="qr-fab"[\s\S]*?<\/button>\n/, '');
 
 // ---------- B) numele ----------
-s = s.split('Masa istoricului').join('Izvoarele pe axă');
-s = s.split('certificat-masa-istoricului.png').join('certificat-izvoarele-pe-axa.png');
+s = s.split('Masa istoricului').join('Jocul izvoarelor').split('Izvoarele pe axă').join('Jocul izvoarelor');
+s = s.split('certificat-izvoarele-pe-axa.png').join('certificat-jocul-izvoarelor.png');
+s = s.split('certificat-masa-istoricului.png').join('certificat-jocul-izvoarelor.png');
 swap('<p class="kicker">Componenta interactivă</p>\n      <h3>Fii tu Attila</h3>',
   '<p class="kicker">Jocul</p>\n      <h3>Attila și Marea Migrație</h3>', 'cardul jocului');
 swap('<a class="cta-btn" href="#mod-migratie">Joacă „Attila și Marea Migrație” →</a>', '<a class="cta-btn" href="#mod-migratie">Joacă acum →</a>', 'butonul cardului');
