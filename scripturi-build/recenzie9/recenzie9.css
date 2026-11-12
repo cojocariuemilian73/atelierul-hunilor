@@ -1,0 +1,5 @@
+  /* r9: recenzia 9 (miturile și „Știai că…?” prin capitole) */
+  /* grupurile mici din capitole: aerisite, cu titlul ca un subtitlu mic */
+  #page-acasa .page-shell .mx.mx-inline{ margin: clamp(28px, 4vw, 48px) 0; }
+  #page-acasa .page-shell .mx.mx-inline .mx-title{ font-size: 1.3125rem; }
+  /* /r9 */
