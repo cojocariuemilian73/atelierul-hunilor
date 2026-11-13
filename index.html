@@ -6,6 +6,8 @@
 <meta charset="utf-8">
 <meta name="color-scheme" content="only light">
 <meta name="darkreader-lock">
+<meta name="color-scheme" content="only light">
+<meta name="darkreader-lock">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atelierul Hunilor: Hunii și Marea Migrație a Popoarelor</title>
 <meta name="description" content="Site interactiv de istorie despre hunii lui Attila și Marea Migrație a Popoarelor: articol cu note și bibliografie, atlas, muzeu virtual cu artefacte reale, jocuri de decizie bazate pe izvoare și jocuri de gândire istorică.">
@@ -2777,6 +2779,39 @@
   /* grupurile mici din capitole: aerisite, cu titlul ca un subtitlu mic */
   #page-acasa .page-shell .mx.mx-inline{ margin: clamp(28px, 4vw, 48px) 0; }
   #page-acasa .page-shell .mx.mx-inline .mx-title{ font-size: 1.3125rem; }
+  /* fără „vitrine” negre: cronologia, graficul aurului, Atlasul și muzeul stau direct pe pergament */
+  html #page-acasa .hx, html #page-acasa .gs, html #page-acasa #sec-atlas, html #page-acasa #sec-muzeu{
+    --paper: #f3ead7; --paper-2: #ebe0c8; --paper-3: #e0d2b2;
+    --ink: #2b1d12; --ink-dim: #5a4632;
+    --line: rgba(70, 45, 25, 0.18); --line-strong: rgba(70, 45, 25, 0.38);
+    --accent: #8a2a1f; --accent-2: #7a5714; --accent-bg: #ead2cb; --accent2-bg: #e8dcbc;
+    --gold: #7a5714; --gold2: #7a5714; --red: #8a2a1f; --red2: #8a2a1f;
+    color: var(--ink); background: transparent !important;
+  }
+  html #page-acasa .hx, html #page-acasa .gs, html #page-acasa #sec-atlas, html #page-acasa #sec-muzeu{ padding-left: 0; padding-right: 0; }
+  html #page-acasa .hx .sec-sub, html #page-acasa #sec-atlas .sec-sub, html #page-acasa #sec-muzeu .sec-sub{ color: var(--ink-dim); }
+  /* cronologia: categoriile în tonuri închise, citibile pe crem (punctele de pe hartă rămân deschise) */
+  #page-acasa .hx [style*="--c:#e0626c"]:not(.hx-pt){ --c: #a3342a !important; }
+  #page-acasa .hx [style*="--c:#7ab0e8"]:not(.hx-pt){ --c: #2c5a8a !important; }
+  #page-acasa .hx [style*="--c:#e5c158"]:not(.hx-pt){ --c: #7a5714 !important; }
+  #page-acasa .hx [style*="--c:#8fbd82"]:not(.hx-pt){ --c: #3d6b2f !important; }
+  #page-acasa .hx [style*="--c:#b98ae6"]:not(.hx-pt), #page-acasa .hx [style*="--c:#c79bd9"]:not(.hx-pt){ --c: #6a3d8a !important; }
+  #page-acasa .hx .hx-mk.cur{ color: #f3ead7; box-shadow: 0 0 0 3px rgba(122, 87, 20, 0.25); }
+  #page-acasa .hx .hx-life em{ color: #8a2a1f; }
+  #page-acasa .hx .hx-life-r{ border-color: #8a2a1f !important; }
+  #page-acasa .hx .hx-where{ color: #7a5714; }
+  /* graficul aurului: cifrele și etichetele în bronz, panoul „plata se oprește” pe crem */
+  #page-acasa .gs .gs-lab, #page-acasa .gs .gs-coins-lab{ fill: #7a5714; }
+  #page-acasa .gs[data-s="1"] .gs-who.l1, #page-acasa .gs[data-s="2"] .gs-who.l2, #page-acasa .gs[data-s="3"] .gs-who.l3, #page-acasa .gs[data-s="3"] .gs-who.lm{ fill: #7a5714; }
+  #page-acasa .gs .gs-stop rect{ fill: #f3ead7; stroke: #8a2a1f; }
+  #page-acasa .gs .gs-stop text{ fill: #8a2a1f; }
+  #page-acasa .gs .gs-stop text.sm{ fill: #2b1d12; }
+  #page-acasa .gs .gs-nav button.on{ color: #f3ead7; }
+  #page-acasa .gs .gs-chart{ border-top-color: rgba(122, 87, 20, 0.3); }
+  /* Atlasul: butoanele de zoom și eticheta legendei */
+  #page-acasa #sec-atlas .zoom-btn{ background: #ebe0c8; color: #2b1d12; border: 1px solid rgba(70, 45, 25, 0.38); }
+  #page-acasa #sec-atlas .zoom-btn:hover{ background: #e0d2b2; }
+  #page-acasa #sec-atlas .panel-label, #page-acasa #sec-atlas .modal-tag{ color: #7a5714; }
   /* /r9 */
   /* ef: efecte (pergamentul imaginilor, călărețul de sub meniu) */
 
@@ -3916,6 +3951,7 @@
     var miTag = document.getElementById('mi-tag');
     var miTitle = document.getElementById('mi-title');
     var miDesc = document.getElementById('mi-desc');
+    if (!miTag || !miTitle || !miDesc) return;
     if (!miTag || !miTitle || !miDesc) return;
     if (!miTag || !miTitle || !miDesc) return;
     if (!miTag || !miTitle || !miDesc) return;
