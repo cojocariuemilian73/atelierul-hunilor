@@ -2,7 +2,7 @@
 //  A) două fonturi: EB Garamond (titluri și etichete, în locul lui Cormorant Garamond și Cinzel) și Source Serif 4 (text).
 //     JetBrains Mono iese peste tot,
 //     iar butoanele și câmpurile nu mai cad pe fontul sistemului (Arial), ci moștenesc fontul textului;
-//  B) o scară de opt mărimi: 13, 14, 16, 18, 21, 26, 34, 48 px. Orice mărime fixă (px sau rem) din CSS e mutată pe treapta
+//  B) o scară de opt mărimi: 13, 15, 17, 20, 26, 34, 48, 72 px. Orice mărime fixă (px sau rem) din CSS e mutată pe treapta
 //     cea mai apropiată, iar nimic nu coboară sub 13 px; mărimile relative mai mici de 1em devin max(13px, …em).
 //     Rămân neatinse: titlurile fluide (clamp), literele mari (≥ 1em) și textele din hărțile și graficele SVG,
 //     unde mărimea e în unitățile desenului, nu pe ecran.
@@ -15,7 +15,7 @@ const f = path.join(root, rel);
 const raw = fs.readFileSync(f, 'utf8'), crlf = raw.includes('\r\n');
 let s = raw.split('\r\n').join('\n');
 
-const STEPS = [13, 14, 16, 18, 21, 26, 34, 48];
+const STEPS = [13, 15, 17, 20, 26, 34, 48, 72];
 const MIN = 13;
 function snapPx(px){
   if (px < MIN) return MIN;

@@ -1,18 +1,22 @@
 (function(){
-  // fișele de verdict: mit · imagine · verdict; pe pagină alternează, o dată normal, o dată în oglindă
+  // fișele de verdict: mitul tăiat, verdictul într-un cuvânt și explicația, direct pe pergament;
+  // imaginea mică alternează, o dată la stânga, o dată la dreapta
   var D = window.R12 || {}, n = 0;
   function src(sel){ var el = document.querySelector(sel); return el ? (el.getAttribute('src') || el.currentSrc || '') : ''; }
   function card(k, title, first){
     var m = D[k]; if (!m) return '';
     var flip = n++ % 2 === 1, im = src(m.img);
-    return '<article class="vd' + (flip ? ' vd-flip' : '') + '" aria-label="Mit verificat: ' + m.myth.replace(/"/g, '&quot;') + '">' +
+    var fig = im ? '<figure class="vd-fig"><img src="' + im + '" alt="" loading="lazy"' + (m.pos ? ' style="object-position:' + m.pos + '"' : '') + '><figcaption>' + m.cap + '</figcaption></figure>' : '';
+    return '<article class="vd' + (flip ? ' vd-flip' : '') + (im ? '' : ' vd-noimg') + '" aria-label="Mit verificat">' +
       (first ? '<p class="vd-head"><i aria-hidden="true"></i>' + title + '</p>' : '') +
-      '<div class="vd-grid"><div class="vd-myth"><div class="vd-say"><p class="vd-k">Se spune că</p><p class="vd-q">' + m.myth + '</p></div>' +
-        '<div class="vd-from"><p class="vd-k">De unde vine</p><p>' + m.from + '</p></div></div>' +
-      '<figure class="vd-fig">' + (im ? '<img src="' + im + '" alt="" loading="lazy"' + (m.pos ? ' style="object-position:' + m.pos + '"' : '') + '>' : '') + '<figcaption>' + m.cap + '</figcaption></figure>' +
-      '<div class="vd-truth"><p class="vd-verdict"><small>Verdict</small><b>' + m.verdict + '</b></p>' +
-        '<div class="vd-izv"><p class="vd-k">Ce spun izvoarele</p><p>' + m.izv + '</p></div>' +
-        '<p class="vd-src">Sursa: ' + m.src + '</p></div></div>' +
+      '<div class="vd-body">' + fig +
+        '<div class="vd-text">' +
+          '<p class="vd-k">Se spune că</p>' +
+          '<p class="vd-q"><span class="vd-sr">Mit respins: </span><s>' + m.myth + '</s></p>' +
+          '<p class="vd-ans"><b class="vd-verdict">' + m.verdict + '.</b> ' + m.izv + '</p>' +
+          '<p class="vd-from"><span>De unde vine mitul:</span> ' + m.from + '</p>' +
+          '<p class="vd-src">Sursa: ' + m.src + '</p>' +
+        '</div></div>' +
     '</article>';
   }
   function draw(){

@@ -30,6 +30,12 @@ if ((s.match(/<div class="vd-group" data-myths="/g) || []).length !== 3) fail('g
   moves.reverse().forEach(function(x){ s = s.slice(0, x.at) + s.slice(x.at + x.len); s = s.slice(0, x.to) + '      ' + x.html + '\n' + s.slice(x.to); });
 }
 
+// rândul lui Hydatius din bibliografie primește o ancoră (fișa despre Leon I trimite la el; nu are notă proprie)
+if (!s.includes('<li id="izv-hydatius">')) {
+  if (!s.includes('<li><b>Hydatius</b>')) fail('Hydatius în bibliografie');
+  s = s.replace('<li><b>Hydatius</b>', '<li id="izv-hydatius"><b>Hydatius</b>');
+}
+
 // ---------- 2) datele: mitul și sursa din MYTHS, restul din recenzie12/fise.js ----------
 {
   const a = s.indexOf('var MYTHS = ['), b = s.indexOf('];', a);

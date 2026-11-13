@@ -61,7 +61,7 @@
     var rtrack = ride.querySelector('.ef-rtrack'), rfill = ride.querySelector('.ef-rfill'), rider = ride.querySelector('.ef-rider'),
         ryr = ride.querySelector('.ef-ryr'), ticks = ride.querySelectorAll('.ef-rtick');
     var siteNav = document.querySelector('.site-nav'), hero = home.querySelector('.hero');
-    var rideW = 0, heroEnd = 0, lastU = -1, lastYr = '', goT = null;
+    var rideW = 0, heroEnd = 0, rideStop = Infinity, lastU = -1, lastYr = '', goT = null;
     function navBottom(){ return siteNav && !siteNav.classList.contains('st-hide') ? siteNav.offsetHeight : 0; }
     // anul: crește între reperele din text (370 la început, apoi 375, 441, 451, 453, 476 la paragrafele lor)
     function yearAt(p){
@@ -75,7 +75,8 @@
     }
     function rideFrame(p){
       ride.style.setProperty('--ef-ride-y', navBottom() + 'px');
-      ride.classList.toggle('on', window.pageYOffset > heroEnd);
+      // bara se oprește după capitolul Personalități (drumul se termină la 476)
+      ride.classList.toggle('on', window.pageYOffset > heroEnd && window.pageYOffset < rideStop);
       var end = REP[REP.length - 1].raw || 1, u = Math.max(0, Math.min(1, p / end));
       rfill.style.transform = 'scaleX(' + u.toFixed(4) + ')';
       rider.style.transform = 'translateX(' + (u * rideW).toFixed(1) + 'px)';
@@ -122,6 +123,8 @@
       for (var k = n - 2; k >= 0; k--) REP[k].x = Math.min(REP[k].x, REP[k + 1].x - g);
       REP.forEach(function(r, k){ ticks[k].style.setProperty('--x', r.x.toFixed(4)); });
       heroEnd = hero ? Math.max(0, hero.getBoundingClientRect().bottom + sy - 160) : 0;
+      var pers = document.getElementById('sec-personalitati');
+      rideStop = pers ? pers.getBoundingClientRect().bottom + sy - H * 0.4 : Infinity;
       dirty = false;
     }
     function frame(){
