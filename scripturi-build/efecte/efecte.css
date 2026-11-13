@@ -4,9 +4,11 @@
   /* banda stă lipită sub meniu; când meniul se ascunde la derulare, urcă la marginea de sus */
   .ef-ride{ position: fixed; left: 0; right: 0; top: 0; z-index: 139; height: 50px; pointer-events: none;
     /* pergament, ca articolul de dedesubt; fundal plin, ca drumul să nu pară desenat peste imagini */
-    background: #efe4cc; border-bottom: 1px solid rgba(122, 87, 20, 0.35); box-shadow: 0 6px 12px -8px rgba(60, 40, 20, 0.35);
+    background: #efe4cc; border-bottom: 0; box-shadow: none;
     opacity: 0; visibility: hidden; transform: translateY(var(--ef-ride-y, 54px)); transition: transform 0.2s ease, opacity 0.35s ease, visibility 0s linear 0.35s; }
   .ef-ride.on{ opacity: 1; visibility: visible; transition: transform 0.2s ease, opacity 0.35s ease; }
+  /* trecerea spre pagină: banda se topește în pergament, fără linie și fără umbră */
+  .ef-ride::after{ content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 16px; background: linear-gradient(#efe4cc, rgba(243, 234, 215, 0)); pointer-events: none; }
   .ef-rtrack{ position: absolute; left: 34px; right: 46px; top: 35px; height: 0; }
   /* drumul nu există dinainte: se trasează doar în urma călărețului */
   .ef-rfill{ position: absolute; left: 0; top: -1px; width: 100%; height: 2px; background: linear-gradient(90deg, rgba(122, 87, 20, 0), #7a5714 18%, #8a2a1f); box-shadow: none; transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
@@ -25,7 +27,16 @@
   .ef-ride.back .ef-rider svg{ transform: scaleX(-1); }
   .ef-ryr{ position: absolute; left: 22px; bottom: 9px; padding: 1px 6px 2px; border: 1px solid rgba(138, 42, 31, 0.45); border-radius: 999px; background: #f3ead7; white-space: nowrap; font: 700 0.66rem/1.2 'Cinzel', Georgia, serif; letter-spacing: 0.03em; color: #8a2a1f; font-variant-numeric: lining-nums tabular-nums; }
   .ef-ride.lft .ef-ryr{ left: auto; right: 22px; }
-  /* galopul: picioarele și trupul se mișcă doar cât derulezi */
+  /* mersul: la pas cât stai (picioare, trup, coadă), la galop cât derulezi */
+  .ef-ride.on:not(.go) .ef-rider .lg-a{ animation: ef-walk 1.1s ease-in-out infinite; }
+  .ef-ride.on:not(.go) .ef-rider .lg-b{ animation: ef-walk 1.1s ease-in-out -0.55s infinite; }
+  .ef-ride.on:not(.go) .ef-rider .ef-body{ animation: ef-step 0.55s ease-in-out infinite; }
+  .ef-rider .ef-tail{ transform-box: fill-box; transform-origin: 100% 0; animation: ef-tail 1.4s ease-in-out infinite; }
+  .ef-ride.go .ef-rider .ef-tail{ animation-duration: 0.36s; }
+  @keyframes ef-walk{ 0%, 100%{ transform: rotate(11deg); } 50%{ transform: rotate(-11deg); } }
+  @keyframes ef-step{ 50%{ transform: translateY(-0.7px); } }
+  @keyframes ef-tail{ 50%{ transform: rotate(-14deg); } }
+  /* galopul: picioarele și trupul se mișcă repede cât derulezi */
   .ef-rider .lg{ transform-box: fill-box; transform-origin: 50% 0; }
   .ef-ride.go .ef-rider .lg-a{ animation: ef-leg 0.36s linear infinite; }
   .ef-ride.go .ef-rider .lg-b{ animation: ef-leg 0.36s linear -0.18s infinite; }
@@ -43,7 +54,7 @@
 
   @media (prefers-reduced-motion: reduce){
     .ef-ride, .ef-ride.on, .ef-rtick, .ef-rider svg{ transition: none; }
-    .ef-ride .ef-rider .lg, .ef-ride .ef-rider .ef-body, .ef-rtick.last.on i{ animation: none !important; }
+    .ef-ride .ef-rider .lg, .ef-ride .ef-rider .ef-body, .ef-ride .ef-rider .ef-tail, .ef-rtick.last.on i{ animation: none !important; }
     .ef-dot, .ef-ring, .ef-trail{ display: none !important; }
     .ef-parch.ef-wait, .ef-parch.ef-open{ clip-path: none; transition: none; }
     .ef-parch.ef-wait::before, .ef-parch.ef-open::before{ opacity: 0; transition: none; }

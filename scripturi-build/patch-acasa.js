@@ -62,8 +62,8 @@ const NAV = `<nav class="site-nav" id="site-nav" aria-label="Navigare principal�
       </div>
     </div>
     <div class="st-pages">
-      <a href="#mod-migratie" data-page aria-label="Jocul: Attila și Marea Migrație"><span class="nav-long">Jocul</span><span class="nav-short" aria-hidden="true">Jocul</span></a>
-      <a href="#mod-atelier" data-page aria-label="Jocul izvoarelor"><span class="nav-long">Jocul izvoarelor</span><span class="nav-short" aria-hidden="true">Jocul 2</span></a>
+      <a href="#mod-migratie" data-page aria-label="Jocul: Attila și Marea Migrație"><span class="nav-long">Attila</span><span class="nav-short" aria-hidden="true">Attila</span></a>
+      <a href="#mod-atelier" data-page aria-label="Jocul izvoarelor"><span class="nav-long">Izvoarele</span><span class="nav-short" aria-hidden="true">Izvoarele</span></a>
       ${about}
     </div>
   </div>
@@ -84,7 +84,9 @@ swap('var current = sections[0];', 'var current = null;', 'cuprins: începutul')
   const A = "a.classList.toggle('active', current && a.getAttribute('data-sec') === current.id);";
   const B1 = "var on = !!(current && a.getAttribute('data-sec') === current.id); a.classList.toggle('active', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');";
   const B = "var on = !!(current && (a.getAttribute('data-sec') === current.id || a.getAttribute('data-also') === current.id)); a.classList.toggle('active', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');";
-  if (s.includes(B1)) s = s.replace(B1, () => B); else swap(A, B, 'cuprins: activ');
+  const B2 = "var hp = document.getElementById('page-acasa'), on = !!(current && (!hp || hp.classList.contains('active')) && (a.getAttribute('data-sec') === current.id || a.getAttribute('data-also') === current.id)); a.classList.toggle('active', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');";
+  if (s.includes(B1)) s = s.replace(B1, () => B); else if (!s.includes(B2)) swap(A, B, 'cuprins: activ');
+  if (s.includes(B)) s = s.replace(B, () => B2);
 }
 
 // ---------- C) hero-ul: pictura ca imagine reală ----------

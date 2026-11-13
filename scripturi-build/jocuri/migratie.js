@@ -75,10 +75,19 @@
       text: 'Fugind din calea hunilor, zeci de mii de goți tervingi s-au strâns pe malul stâng al Dunării și cer să fie primiți în Imperiu.',
       src: 'Ammianus Marcellinus, Res Gestae 31.4–5',
       q: 'Comandanții au adunat toți câinii pe care i-au putut găsi și au dat câte unul pentru fiecare sclav; printre cei luați erau și fii de căpetenii.', qs: 'Ammianus Marcellinus, Res Gestae 31.4.11',
+      // ghidul (Priscus): replicile dinaintea întrebării și cine a decis în realitate
+      g: { who: 'Valens',
+        pre: ['Anul 376 e înainte de vremea mea. Știu ce s-a întâmplat din ce am citit la Ammianus.'], // DE VERIFICAT
+        ask: 'Tu ești împăratul Valens. Ce faci cu ei?' }, // DE VERIFICAT
       opts: [
-        { t: 'Îi primești și le asiguri hrană și pământ', fx: { stab: 5 }, set: { d1: 'A' }, map: ['Goții se așază în pace', '#8fbd82'] },
-        { t: 'Îi primești, dar îi lași pe mâna comandanților locali', real: true, fx: {}, set: { d1: 'B' }, map: ['Goții, înfometați, se răscoală', '#e0626c'], note: 'Ammianus scrie că Lupicinus și Maximus i-au înfometat și exploatat pe refugiați. Goții s-au răsculat.' },
-        { t: 'Închizi granița', fx: { stab: -3 }, set: { d1: 'C' }, map: ['Goții rămân blocați la Dunăre', '#e5c158'] }
+        { t: 'Îi primești și le asiguri hrană și pământ', fx: { stab: 5 }, set: { d1: 'A' }, map: ['Goții se așază în pace', '#8fbd82'],
+          cons: 'Goții trec Dunărea și primesc grâne și pământ în Tracia. Nu mai au de ce să se răscoale.', // DE VERIFICAT
+          why: 'refugiații devin aliați, nu dușmani' }, // DE VERIFICAT
+        { t: 'Îi primești, dar îi lași pe mâna comandanților locali', real: true, fx: {}, set: { d1: 'B' }, map: ['Goții, înfometați, se răscoală', '#e0626c'], note: 'Ammianus scrie că Lupicinus și Maximus i-au înfometat și exploatat pe refugiați. Goții s-au răsculat.',
+          cons: 'Goții trec Dunărea, dar ajung pe mâna lui Lupicinus și Maximus. Foamea și abuzurile îi împing spre revoltă.' }, // DE VERIFICAT
+        { t: 'Închizi granița', fx: { stab: -3 }, set: { d1: 'C' }, map: ['Goții rămân blocați la Dunăre', '#e5c158'],
+          cons: 'Goții rămân blocați pe malul stâng, între fluviu și hunii care înaintează. Granița ține, dar mulțimea de dincolo crește.', // DE VERIFICAT
+          why: 'o mulțime disperată așteaptă la graniță' } // DE VERIFICAT
       ] },
     { year: 402, id: 'd2', grp: 'vand', real2: 'Stilicho a adus trupele în Italia. În noaptea de 31 decembrie 406, vandalii, alanii și suebii au trecut Rinul.', pic: 'stilicho', at: [45.46, 9.19], place: 'Mediolanum', title: 'Rinul sau Italia?', who: 'Ești generalul Stilicho',
       text: 'Alaric și vizigoții au intrat în Italia. Ca s-o aperi, ai nevoie de trupele care păzesc granița de pe Rin.',
@@ -202,6 +211,54 @@
       ] }
   ];
   DECISIONS.sort(function(a, b){ return a.year - b.year; });
+  // Ghidul (Priscus): replicile dinaintea întrebării, întrebarea și, pentru fiecare variantă,
+  // ce urmează din ea (cons) și motivul schimbării de stabilitate sau de resurse (why), într-o jumătate de propoziție.
+  // Tot ce e în GUIDE e scris pentru joc: DE VERIFICAT.
+  var GUIDE = {
+    d2: { g: { who: 'Stilicho', pre: ['Anul 402. Nici atunci nu eram născut; povestea o știu din Claudian, poetul curții.'], ask: 'Tu ești generalul Stilicho. Ce faci cu trupele de pe Rin?' }, // DE VERIFICAT
+      o: [null,
+        ['Trupele rămân pe Rin, iar Italia se apără cu ce are. Alaric are mână liberă în nordul Italiei.', 'Italia rămâne fără apărare în fața lui Alaric'] ] }, // DE VERIFICAT
+    dh: { g: { who: 'Honorius', pre: ['Anul 409. Despre asediile Romei am citit la Zosimus și la Orosius.'], ask: 'Tu ești împăratul Honorius. Ce le răspunzi vizigoților?' }, // DE VERIFICAT
+      o: [null, [null, 'Imperiul cedează un ținut întreg'], [null, 'ajutorul întârzie, iar Italia așteaptă'] ] }, // DE VERIFICAT
+    d5: { g: { who: 'Ardaric', pre: ['Anul 454. Attila nu mai e; îl văzusem în viață cu doar cinci ani înainte.'], ask: 'Tu ești Ardaric, regele gepizilor. Ce faci?' }, // DE VERIFICAT
+      o: [[null, 'imperiul hunilor nu mai amenință granițele'],
+        ['Gepizii rămân alături de fiii lui Attila. Imperiul hunilor mai ține o vreme, dar neamurile se ceartă pe moștenire.'],
+        ['Gepizii pleacă spre apus și intră în slujba Romei. Hunii pierd unul dintre cele mai puternice neamuri supuse.', 'Roma câștigă un neam aliat'] ] }, // DE VERIFICAT
+    dl: { g: { who: 'Leon', pre: ['Anul 467. Vandalii lui Genseric stăpânesc acum marea dinspre Africa.'], ask: 'Tu ești împăratul Leon I. Ce faci?' }, // DE VERIFICAT
+      o: [null, [null, 'Răsăritul își păstrează aurul și corăbiile'], [null, 'Apusul rămâne singur în fața vandalilor'] ] }, // DE VERIFICAT
+    r1: { pre: ['Despre tratatul de la Margus am scris și eu, în istoria mea.'], // DE VERIFICAT
+      o: [['Romanii cedează: tributul se dublează, iar fugarii îți sunt predați.', 'tributul umple vistieria, iar neamurile văd că Roma plătește'],
+        ['Târgurile de la Dunăre se deschid. Negustorii, romani și huni, au acum interes ca pacea să țină.', 'comerțul leagă oamenii de tine, nu doar de pradă'],
+        ['Călăreții tăi trec Dunărea și se întorc cu pradă. Romanii învață că tratatele cu tine nu țin.', 'prada aduce aur, dar caii obosesc'] ] }, // DE VERIFICAT
+    r2: { o: [['Viminacium și Margus cad. Prada din orașele romane ajunge la căpeteniile tale.', 'prada îi mulțumește pe războinici, dar marșul obosește caii'],
+        ['Constantinopolul plătește puțin și nu predă episcopul. Căpeteniile se întreabă dacă mai ești de temut.', 'o cerere refuzată fără urmări îți scade renumele'],
+        ['Călăreții tăi luptă pentru Roma de Apus și sunt plătiți în aur. Unii se întreabă însă al cui om ești.', 'soldă bună, dar neamurile nu se văd răsplătite de tine'] ] }, // DE VERIFICAT
+    r3: { o: [['Rămâi singurul rege. Toate darurile trec acum prin mâna ta, dar oamenii lui Bleda nu uită.', 'puterea întreagă crește teama, dar unii se îndepărtează'],
+        ['Tu și Bleda domniți mai departe împreună. Darurile se împart, iar neamurile au doi stăpâni de care țin.', 'puterea împărțită costă aur, dar leagă mai mulți oameni de imperiu'],
+        ['Sfetnici ca Onegesius conduc în numele tău. Imperiul începe să stea pe oameni, nu doar pe tine.', 'puterea împărțită clădește o moștenire'] ] }, // DE VERIFICAT
+    r4: { o: [['Asediul se lungește, iar romanii reclădesc zidurile din mers. Caii mor lângă un oraș pe care nu-l poți lua.', 'un asediu lung consumă cavaleria'],
+        ['Pustiești Tracia, iar Constantinopolul cere pace. Tributul promis e cel mai mare de până acum.', 'aurul tributului ajunge la toate căpeteniile'],
+        ['Solii se înțeleg fără luptă. Primești mai puțin aur, dar caii se odihnesc.', 'pacea cruță caii, dar aduce mai puțin aur'] ] }, // DE VERIFICAT
+    r5: { pre: ['Pe aceasta am văzut-o cu ochii mei: eram în solia lui Maximin, la curtea ta.'], // DE VERIFICAT
+      o: [['Vigilas e prins cu aurul mitei asupra faptei. Toată lumea află că la Constantinopol s-a pus la cale uciderea ta.', 'ai prins un complot: renumele tău crește'],
+        ['Solii sunt executați. Constantinopolul nu mai trimite tributul, iar aurul lipsește.', 'fără soli, fără tribut'],
+        ['Taci, iar tributul vine mai departe. Dar Edeco și ceilalți văd că un complot rămâne nepedepsit.', 'tăcerea pare slăbiciune'] ] }, // DE VERIFICAT
+    r6: { o: [['Îți strângi armata spre apus, cu inelul Honoriei drept pretext. Drumul e lung, iar pășunile, tot mai rare.', 'marșul spre Galia obosește caii'],
+        ['Pornești spre Răsărit, dar Marcian nu cedează ușor. Câștigi puțin aur dintr-o campanie grea.', 'o campanie lungă, cu pradă puțină'],
+        ['Rămâi în Câmpia Panonică. Caii se refac, dar războinicii fără pradă își cer darurile.', 'fără pradă, darurile se plătesc din vistierie'] ] }, // DE VERIFICAT
+    r7: { o: [['Lupți până noaptea, pe câmp deschis. Pierderile sunt grele de ambele părți.', 'cavaleria se pierde în luptă'],
+        ['Te închizi în cercul de căruțe. Coaliția nu atacă, iar tu scapi cu armata.', 'retragerea salvează oameni, dar îți știrbește renumele'],
+        ['Pleci înaintea bătăliei, cu prada strânsă în Galia. Dușmanii spun că Attila a fugit.', 'prada e întreagă, dar renumele suferă'] ] }, // DE VERIFICAT
+    r8: { o: [['Mergi spre Roma prin Italia înfometată. Boala și foamea îți răresc armata.', 'foametea și boala lovesc oamenii și caii'],
+        ['Primești solia papei și te retragi cu prada. Pleci din Italia ca un învingător.', 'prada din Italia ajunge acasă'],
+        ['Te întorci în grabă să-ți aperi ținuturile de trupele lui Marcian. Neamurile văd că le aperi casele.', 'aperi neamurile, dar lași Italia neatinsă'] ] } // DE VERIFICAT
+  };
+  DECISIONS.forEach(function(d){
+    var G = GUIDE[d.id]; if (!G) return;
+    if (G.g) d.g = G.g;
+    if (G.pre) d.gpre = G.pre;
+    (G.o || []).forEach(function(x, i){ if (!x || !d.opts[i]) return; if (x[0]) d.opts[i].cons = x[0]; if (x[1]) d.opts[i].why = x[1]; });
+  });
   var METERS = [
     { k: 'aur', label: 'Aur', c: '#e5c158', hint: 'tributul și prada din care Attila își răsplătește războinicii' },
     { k: 'prestigiu', label: 'Renume', c: '#e0626c', hint: 'teama și respectul pe care le inspiră' },
@@ -290,6 +347,15 @@
   root.innerHTML =
     '<div class="mig-main">' +
       '<div class="mig-stage">' +
+        // bara de sus: stabilitatea Imperiului și resursele lui Attila, cu iconițe și cifre; „Jurnal” deschide deciziile
+        '<div class="mig-bar" id="mig-bar">' +
+          '<div class="mig-stab" title="Stabilitatea Imperiului roman"><span class="mig-bl">' + ico('stab') + '<span class="mig-bl-t">Imperiul</span> <b id="mig-stab-v">70</b></span><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
+          '<div class="mig-att" id="mig-att" hidden><span class="mig-bl-h">Attila</span>' + METERS.map(function(m){ return '<div class="jg-meter" id="mig-m-' + m.k + '" style="--c:' + m.c + '" title="' + m.label + ': ' + m.hint + '"><label><span>' + ico(m.k) + '<span class="mig-bl-t">' + m.label + '</span></span> <b>0</b></label><div class="jg-bar"><i></i></div><span class="jg-delta"></span></div>'; }).join('') + '</div>' +
+          '<span class="mig-bar-sp"></span>' +
+          '<button class="mig-jbtn" id="mig-jbtn" type="button" aria-expanded="false" aria-controls="mig-jpop">Jurnal <b id="mig-jn">0</b></button>' +
+          '<div class="mig-jpop" id="mig-jpop" hidden><p class="mig-side-h">Deciziile tale</p><ol class="mig-log" id="mig-log"></ol></div>' +
+        '</div>' +
+        '<div class="mig-now" id="mig-now" hidden></div>' +
         '<div class="mig-news" id="mig-news" aria-live="polite"><b id="mig-news-y">370</b><p id="mig-news-t">Stepa de la nord de Marea Neagră: hunii trec Volga.</p><small id="mig-news-s"></small></div>' +
         '<div class="mig-view">' +
         '<canvas id="mig-canvas" width="' + CW + '" height="' + CH + '" role="img" aria-label="Simularea Marii Migrații: puncte colorate reprezintă popoarele care se deplasează pe harta Europei între 370 și 476"></canvas>' +
@@ -307,6 +373,8 @@
         '<ul class="mig-legend" id="mig-legend" aria-label="Popoarele: apasă pe unul ca să-l vezi doar pe el">' + GROUPS.map(function(g, k){ return '<li><button type="button" class="mig-solo" data-g="' + k + '" aria-pressed="false" title="Vezi doar: ' + g.name + '"><i style="background:' + g.color + '"></i>' + g.name.split(',')[0] + '</button><small id="mig-where-' + g.id + '" hidden></small></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
         '<div class="mig-tip" id="mig-tip" hidden></div><div class="mig-fiche" id="mig-fiche" role="dialog" aria-label="Fișa poporului" hidden></div>' +
         '<div class="mig-over" id="mig-over"></div>' +
+        // banda ghidului: peste marginea de jos a hărții (marea și Africa); pe telefon, sub hartă
+        '<div class="mig-guide" id="mig-guide" role="region" aria-label="Priscus, ghidul jocului" hidden></div>' +
         '<div class="mig-replay" id="mig-replay" hidden><button class="mig-ib" id="mig-rp-play" type="button" aria-label="Pornește reluarea" title="Pornește reluarea"></button>' +
           '<input type="range" id="mig-rp" min="' + T0 + '" max="' + T1 + '" step="1" value="' + T1 + '" aria-label="Anul reluării"><b id="mig-rp-y">' + T1 + '</b>' +
           '<span class="mig-rp-key"><i class="solid"></i>drumul tău <i></i>drumul real</span></div>' +
@@ -327,12 +395,6 @@
         '<div class="mig-tl" id="mig-tl" aria-label="Cronologia simulării: deciziile și evenimentele"></div>' +
         '<div class="mig-tlpop" id="mig-tlpop" hidden></div>' +
       '</div>' +
-      '<aside class="mig-side">' +
-        '<div class="mig-now" id="mig-now"></div>' +
-        '<div class="mig-stab"><p class="mig-side-h"><span>' + ico('stab') + 'Stabilitatea Imperiului</span> <b id="mig-stab-v">70</b></p><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
-        '<div class="mig-att" id="mig-att" hidden><p class="mig-side-h">Imperiul lui Attila</p>' + METERS.map(function(m){ return '<div class="jg-meter" id="mig-m-' + m.k + '" style="--c:' + m.c + '" title="' + m.label + ': ' + m.hint + '"><label><span>' + ico(m.k) + m.label + '</span> <b>0</b></label><div class="jg-bar"><i></i></div><span class="jg-delta"></span></div>'; }).join('') + '</div>' +
-        '<div><p class="mig-side-h">Deciziile tale</p><ol class="mig-log" id="mig-log"></ol></div>' +
-      '</aside>' +
     '</div>';
 
   var cv = document.getElementById('mig-canvas'), ctx = cv.getContext('2d', { alpha: false });
@@ -504,7 +566,7 @@
   function reset(){
     nowIx = -1; arrows = []; chist = GROUPS.map(function(){ return []; }); chT = T0; lastArr = GROUPS.map(function(){ return -99; }); cacc = GROUPS.map(function(){ return { n: 0, x: 0, y: 0, vx: 0, vy: 0, k: '', t: T0 }; });
     seed = 20260; rnd = mulberry(seed); t = T0; stab = 70; eventIx = 0; decIx = 0; crossings = { dunare: 0, rin: 0 }; log = []; finished = false;
-    choice = {}; att = Object.assign({}, ATT0); attPicks = []; revolted = false;
+    choice = {}; att = Object.assign({}, ATT0); attPicks = []; revolted = false; gepGone = false; endTalked = false; newsY = T0;
     buildPlans();
     var k = 0;
     GROUPS.forEach(function(g, gi){
@@ -821,6 +883,7 @@
       ctx.globalAlpha = 1;
     });
     // momentele istorice, pe locul lor
+    drawGone();
     pulses = pulses.filter(function(p){ return now - p.t0 < 4200; });
     pulses.forEach(function(p){
       var k = (now - p.t0) / 4200, q5 = W2C(p.x, p.y);
@@ -831,6 +894,13 @@
       ctx.drawImage(ps.c, Math.round(Math.max(4, Math.min(CW - ps.w - 4, pc[0] - ps.w / 2))), Math.round(Math.max(4, Math.min(CH - ps.h - 4, pc[1] - ps.h / 2))));
       ctx.globalAlpha = 1;
     });
+  }
+  function drawGone(){
+    if (!gepGone || noFx || t >= 453.3) return;
+    var c = W2C.apply(null, centroid('gep'));
+    ctx.save(); ctx.setLineDash([7, 6]); ctx.lineWidth = 2.5; ctx.strokeStyle = '#e0626c'; ctx.beginPath(); ctx.arc(c[0], c[1], 38, 0, 7); ctx.stroke(); ctx.restore();
+    var sp = labelSprite('Desprinși de Attila', '#ffd9d4', 12, 0.5); // DE VERIFICAT
+    ctx.drawImage(sp.c, Math.round(Math.max(4, Math.min(CW - sp.w - 4, c[0] - sp.w / 2))), Math.round(Math.min(CH - sp.h - 4, c[1] + 44)));
   }
   // harta nu se desenează când nu e pe ecran; se redesenează când revine
   var visible = true, dirty = false;
@@ -930,6 +1000,7 @@
     if (go) go.disabled = !ready; if (au) au.disabled = !ready;
     var gfs = document.getElementById('mig-go-fs'); if (gfs) gfs.disabled = !ready;
     document.getElementById('mig-play').disabled = !ready || finished;
+    if (ready && go && document.activeElement === document.body) go.focus({ preventScroll: true });
     if (pr) pr.textContent = ready ? '' : 'Se pregătește harta: se calculează drumurile popoarelor (' + Math.round(prepDone / prepTotal * 100) + '%)…';
   }
   function setPlayLabel(){ var b = document.getElementById('mig-play'); b.innerHTML = running ? ICON.pause + '<span>Pauză</span>' : ICON.play + '<span>' + (finished ? 'Final' : t > T0 + 0.01 ? 'Continuă' : 'Pornește') + '</span>'; b.setAttribute('aria-pressed', running ? 'true' : 'false'); }
@@ -963,6 +1034,23 @@
     }
     return false;
   }
+  // ca skipped(), dar pentru deciziile viitoare: o rundă din apus nu dispare cât timp alegerea din 450 nu s-a făcut
+  function skipLater(d){ return (d.kind === 'att' && (revolted || (d.west && choice.r6 && choice.r6 !== 'A'))) || (d.id === 'dh' && choice.d1 === 'A') || (d.id === 'dl' && choice.d2 === 'B'); }
+  function skipWhy(d){
+    if (d.kind === 'att' && revolted) return 'neamurile supuse s-au răsculat, iar domnia lui Attila s-a încheiat'; // DE VERIFICAT
+    if (d.kind === 'att') return 'Attila nu mai pornește spre apus'; // DE VERIFICAT
+    if (d.id === 'dh') return 'goții s-au așezat în pace, iar Alaric nu mai ajunge să asedieze Roma'; // DE VERIFICAT
+    if (d.id === 'dl') return 'vandalii n-au trecut Rinul, deci nu ajung nici în Africa'; // DE VERIFICAT
+    return '';
+  }
+  function pendingAfter(d){ return DECISIONS.filter(function(x){ return x.year > d.year && x.kind !== 'act' && !skipLater(x); }); }
+  // după alegere: Priscus spune explicit ce nu mai are loc și de ce
+  function skipLines(before){
+    var gone = before.filter(skipLater), by = {};
+    gone.forEach(function(x){ var w = skipWhy(x); (by[w] = by[w] || []).push(x.title + ' (' + Math.floor(x.year) + ')'); });
+    return Object.keys(by).map(function(w){ var l = by[w]; return { k: 'Ce nu mai are loc', t: (l.length > 1 ? 'Din cauza asta nu mai au loc ' + l.slice(0, -1).join(', ') + ' și ' + l[l.length - 1] : 'Din cauza asta nu mai are loc ' + l[0]) + '. Motivul: ' + w + '.' }; }); // DE VERIFICAT
+  }
+  function roundNo(d){ return { n: attPicks.length + 1, of: attPicks.length + ROUNDS.filter(function(r){ return r.year >= d.year && !skipLater(r); }).length }; }
   function skipped(d){ return (d.kind === 'att' && (revolted || (d.west && choice.r6 !== 'A'))) || (d.id === 'dh' && choice.d1 === 'A') || (d.id === 'dl' && choice.d2 === 'B'); }
   // stabilitatea pe drumul istoric: aceleași calcule, cu alegerile din istorie
   function histStab(){
@@ -979,8 +1067,9 @@
     var m = /^((?:c\. )?\d{3}(?: \(sau \d{3}\))?) · (.*)$/.exec(text);
     news(m ? m[1] : String(Math.floor(t)), m ? m[2] : text, src || '');
   }
+  var newsY = 370;
   function news(y, text, src){
-    var b = document.getElementById('mig-news');
+    var b = document.getElementById('mig-news'); newsY = parseInt(String(y).replace(/^c\. /, ''), 10) || Math.floor(t); b.classList.remove('stale');
     document.getElementById('mig-news-y').textContent = y; document.getElementById('mig-news-t').textContent = text; document.getElementById('mig-news-s').textContent = src;
     b.classList.remove('in'); void b.offsetWidth; b.classList.add('in');
   }
@@ -1052,8 +1141,84 @@
   var holdUntil = 0;
   function onCont(fn){ var b = document.getElementById('mig-cont'); b.addEventListener('click', function(){ over.className = 'mig-over'; over.innerHTML = ''; fn(); if (t >= 434.8 && t < 453.3) holdUntil = performance.now() + 2600; play(); document.getElementById('mig-play').focus({ preventScroll: true }); }); b.focus({ preventScroll: true }); }
 
+  // =====================================================================
+  // Ghidul: Priscus din Panium povestește în banda de sub hartă.
+  // Cel mult două propoziții pe ecran; clic, Enter sau „Mai departe” trec la replica următoare.
+  // Citatele din izvoare au alt stil (italic, ghilimele, trimitere), ca să nu se confunde cu vocea ghidului.
+  // =====================================================================
+  var gEl = document.getElementById('mig-guide'), gSeen = false, gMode = '';
+  // silueta: un bust simplu, cu barbă și mantie de diplomat, și un sul în mână
+  var PRISCUS = '<svg class="mig-g-pic" viewBox="0 0 48 56" aria-hidden="true"><circle cx="24" cy="14" r="8.5" fill="currentColor"/>' +
+    '<path d="M16.6 17.5c.6 6.2 3.8 9.6 7.4 9.6s6.8-3.4 7.4-9.6c-1.6 1.6-4.2 2.4-7.4 2.4s-5.8-.8-7.4-2.4z" fill="currentColor" opacity=".72"/>' +
+    '<path d="M4 56c1-14 8.5-23 20-23s19 9 20 23z" fill="currentColor"/><path d="M14 38l10 18 10-18" fill="none" stroke="#f3ead7" stroke-width="1.6" stroke-linejoin="round" opacity=".7"/>' +
+    '<rect x="29" y="41" width="12" height="5" rx="2.5" transform="rotate(-24 35 43.5)" fill="#f3ead7" stroke="currentColor" stroke-width="1.4"/></svg>';
+  function gQuote(q, c){ return '<blockquote class="mig-g-q"><p>„' + q + '”</p><cite>' + c + ' · traducere adaptată</cite></blockquote>'; }
+  function gView(on){ var v = root.querySelector('.mig-view'); if (v) v.classList.toggle('g-on', on); }
+  function gClose(){ gEl.hidden = true; gEl.innerHTML = ''; gMode = ''; gView(false); }
+  // say(replici, { act: html pentru ultimul ecran, bind: funcție după afișarea lui, mode })
+  // o replică: { t: text } sau { q: citat, c: trimitere }, cu opțional k (eticheta mică) și html (după text)
+  function split2(lines){
+    var out = [];
+    lines.forEach(function(L){
+      if (!L.t || L.q) { out.push(L); return; }
+      var ss = L.t.split(/(?<=[.!?…])\s+(?=[A-ZĂÂÎȘȚ„])/);
+      if (ss.length <= 2) { out.push(L); return; }
+      for (var i = 0; i < ss.length; i += 2) { var x = Object.assign({}, L, { t: ss.slice(i, i + 2).join(' ') }); if (i + 2 < ss.length) delete x.html; else if (i) delete x.k; out.push(x); }
+    });
+    return out;
+  }
+  function say(lines, opt){
+    lines = split2(lines);
+    opt = opt || {}; var i = 0, first = !gSeen;
+    gSeen = true; gMode = opt.mode || 'talk'; gEl.hidden = false; gView(true);
+    function show(){
+      var L = lines[i], last = i === lines.length - 1;
+      gEl.innerHTML = '<div class="mig-g-who">' + PRISCUS + '<b>Priscus</b><small>din Panium</small></div>' +
+        '<div class="mig-g-body">' + (first ? '<p class="mig-g-note">Ghidul e o reconstituire; citatele marcate sunt din izvoare.</p>' : '') +
+        '<div class="mig-g-say" aria-live="polite">' + (L.k ? '<p class="mig-g-k">' + L.k + '</p>' : '') + (L.q ? gQuote(L.q, L.c) : '<p class="mig-g-t">' + L.t + '</p>') + (L.html || '') + '</div>' +
+        '<div class="mig-g-act">' + (last && opt.act != null ? opt.act : '<button class="mig-g-next" id="mig-g-next" type="button">Mai departe <span aria-hidden="true">›</span></button>') +
+        (lines.length > 1 ? '<span class="mig-g-n" aria-hidden="true">' + (i + 1) + ' / ' + lines.length + '</span>' : '') + '</div></div>';
+      var nb = document.getElementById('mig-g-next');
+      if (nb) { nb.addEventListener('click', next); nb.focus({ preventScroll: true }); }
+      if (last && opt.bind) opt.bind();
+      // banda are derulare (telefon): variantele de răspuns trebuie să se vadă fără căutare
+      var chx = gEl.querySelector('.mig-g-ch'); gEl.scrollTop = chx && gEl.scrollHeight > gEl.clientHeight ? Math.max(0, chx.offsetTop - gEl.offsetTop - 70) : 0;
+    }
+    function next(){ if (i < lines.length - 1) { i++; show(); } else if (opt.done) opt.done(); }
+    // clic pe text = replica următoare (nu și pe ultimul ecran, unde sunt butoanele)
+    gEl.onclick = function(e){ if (i < lines.length - 1 && e.target.closest('.mig-g-say')) next(); };
+    show();
+  }
+  // decizia în bandă: Priscus povestește, pune întrebarea, iar variantele sunt răspunsurile;
+  // după alegere, trei ecrane: ce urmează din alegerea ta, „În realitate…”, citatul din izvor
+  function guideDecide(d){
+    var g = d.g || { who: '', ask: d.who + '. Ce faci?' }, ch = '<div class="jg-choices mig-g-ch">' + d.opts.map(function(o, i){ return '<button class="jg-choice" type="button" data-i="' + i + '"><i>' + 'ABC'[i] + '</i><span>' + o.t + '</span></button>'; }).join('') + '</div>';
+    var lines = (g.pre || []).map(function(t){ return { t: t }; }).concat([{ k: Math.floor(d.year) + ' · ' + d.place, t: d.text + (d.more ? ' ' + d.more() : '') }, { k: d.title, t: g.ask, html: '<p class="jg-src">Sursa: ' + d.src + '</p>' }]);
+    say(lines, { mode: 'dec', act: ch, bind: function(){
+      Array.prototype.forEach.call(gEl.querySelectorAll('.mig-g-ch .jg-choice'), function(b){ b.addEventListener('click', function(){ picked(+b.getAttribute('data-i')); }); });
+      var fb = gEl.querySelector('.mig-g-ch .jg-choice'); if (fb) fb.focus({ preventScroll: true });
+    } });
+    function picked(i){
+      var o = d.opts[i], before = stab, pend = pendingAfter(d); apply(d, o); var ds = Math.round(stab - before);
+      sfx('pick'); floatStab(ds); mapEffect(d, o); flash(ds > 0 ? true : ds < 0 ? false : null);
+      var fx = ds ? '<p class="mig-g-fx ' + (ds > 0 ? 'up' : 'down') + '"><b>Stabilitatea Imperiului ' + (ds > 0 ? '+' : '−') + Math.abs(ds) + '</b>' + (o.why ? ' · ' + o.why : '') + '</p>' : '';
+      var steps = [
+        { k: 'Alegerea ta: ' + o.t.charAt(0).toLowerCase() + o.t.slice(1), t: o.cons || o.note || 'Alegerea ta schimbă drumul popoarelor (scenariu ipotetic).', html: fx },
+        { k: 'În realitate…', t: g.who + (o.real ? ' a ales la fel' : ' a ales altfel') + (d.real2.indexOf(g.who + ' ') === 0 ? ': ' + d.real2.slice(g.who.length + 1) : '. ' + d.real2) } // DE VERIFICAT: „X a ales la fel / altfel”
+      ];
+      if (d.q) steps.push({ k: 'Din izvor', q: d.q, c: d.qs });
+      steps = steps.concat(skipLines(pend));
+      say(steps, { act: '<button class="jg-btn" id="mig-cont" type="button">Continuă →</button>', bind: function(){
+        var b = document.getElementById('mig-cont');
+        b.addEventListener('click', function(){ gClose(); play(); document.getElementById('mig-play').focus({ preventScroll: true }); });
+        b.focus({ preventScroll: true });
+      } });
+    }
+  }
+
   function decide(d){
     pause();
+    if (!auto && d.kind !== 'act') news(d.yl || String(Math.floor(d.year)), d.title + ' · ' + d.place, d.src || '');
     if (d.at) pulse(d.at, d.place, d.kind === 'att' ? '#e0626c' : null);
     if (!auto && d.kind !== 'act') sfx('dec');
     if (auto) { var o = d.opts.filter(function(x){ return x.real; })[0]; apply(d, o); if (d.kind === 'att') toast(d.yl + ' · ' + d.title + ': ' + o.t.charAt(0).toLowerCase() + o.t.slice(1), d.src); if (d.kind === 'act') toast(d.title); setTimeout(play, 700); return; }
@@ -1062,7 +1227,8 @@
       return d.id === 'a2' ? actCard('II', '435', 'Ești Attila', 'Regele hunilor · opt momente reale, 435–452', 'attila', function(){ actDialog(d); })
         : actCard('III', '453', 'După Attila', 'Ești Ardaric, regele gepizilor, apoi împăratul Leon I', 'apahida', function(){ actDialog(d); });
     }
-    if (d.kind === 'att') return roundDialog(d);
+    if (d.kind === 'att') return guideRound(d);
+    return guideDecide(d);
     over.className = frameCls(d.at);
     over.innerHTML = '<div class="mig-dec" role="dialog" aria-modal="true" aria-labelledby="mig-dt">' + picHtml(d.pic) + '<h3 id="mig-dt"><span class="mig-yr">' + Math.floor(d.year) + '</span>' + d.title + '</h3><p class="mig-who">' + d.who + '</p><p>' + d.text + (d.more ? ' <b>' + d.more() + '</b>' : '') + '</p>' +
       '<div class="jg-choices">' + d.opts.map(function(o, i){ return '<button class="jg-choice" type="button" data-i="' + i + '"><i>' + 'ABC'[i] + '</i><span>' + o.t + '</span></button>'; }).join('') + '</div>' +
@@ -1094,7 +1260,7 @@
       h = picHtml(d.pic) + '<h3 id="mig-dt"><span class="mig-yr">434</span>' + d.title + '</h3><p class="mig-who">Regele Rua a murit · opt momente reale, 435–452</p>' +
         '<p>Hunii stăpânesc acum Câmpia Panonică. De aici înainte nu mai ești de partea Romei: ești Attila. Opt momente din istoria hunilor, la fiecare trei decizii; după fiecare afli ce s-a întâmplat în realitate și din ce izvor știm. Alegerile tale mută hunii pe hartă și schimbă stabilitatea Imperiului.</p>' +
         '<p class="mig-note">Etichetele arată schimbarea totală după fiecare rundă, cu darurile pentru războinici (aur −' + UPKEEP + ') incluse.</p><ul class="jg-how">' + METERS.map(function(m){ return '<li><b style="color:' + m.c + '">' + ico(m.k) + m.label + '</b>' + m.hint.charAt(0).toUpperCase() + m.hint.slice(1) + (/[.…]$/.test(m.hint) ? '' : '.') + '</li>'; }).join('') + '</ul>' +
-        '<p>După fiecare rundă, războinicii trebuie răsplătiți: aurul scade cu ' + UPKEEP + '. Dacă loialitatea neamurilor supuse coboară la 10, se răscoală înainte de vreme. Și gândește-te din timp: ce rămâne din imperiu după tine?</p>';
+        '<p>După fiecare rundă, războinicii trebuie răsplătiți: aurul scade cu ' + UPKEEP + '. Sub 35 de loialitate, neamurile supuse murmură; sub 20, gepizii se desprind; la 10, se răscoală înainte de vreme. Când aurul scade sub 15, nu mai poți alege variantele care costă aur. Sub 30 de cavalerie, marșurile spre apus devin grele. Și gândește-te din timp: ce rămâne din imperiu după tine?</p>'; // DE VERIFICAT: pragurile, în explicația Actului II
       btn = 'Începe domnia →';
     } else {
       var v = verdict();
@@ -1121,6 +1287,51 @@
   function flash(good){
     var v = root.querySelector('.mig-view'); if (!v || good === null) return;
     v.classList.remove('fx-good', 'fx-bad'); void v.offsetWidth; v.classList.add(good ? 'fx-good' : 'fx-bad');
+  }
+  // Pragurile resurselor lui Attila (B6): loialitate sub 35, avertisment; sub 20, gepizii se desprind pe hartă;
+  // aur sub 15, variantele care costă aur nu se pot alege; cavalerie sub 30, avertisment la marșurile spre apus.
+  // Răscoala de la 10 rămâne ca înainte.
+  var LOW = { loial: 35, gone: 20, aur: 15, cai: 30 }, gepGone = false;
+  function fxLine(fx, why){
+    var ks = METERS.filter(function(m){ return fx && fx[m.k]; });
+    return ks.length ? '<p class="mig-g-fx">' + ks.map(function(m){ var v = fx[m.k]; return '<b class="' + (v > 0 ? 'up' : 'down') + '">' + m.label + ' ' + (v > 0 ? '+' : '−') + Math.abs(v) + '</b>'; }).join(' · ') + (why ? ' · ' + why : '') + '</p>' : '';
+  }
+  function guideRound(d){
+    var rn = roundNo(d), poorNow = att.aur < LOW.aur, warn = [];
+    if (att.loial < LOW.loial && att.loial >= LOW.gone) warn.push({ k: 'Neamurile murmură', t: 'Loialitatea neamurilor supuse e ' + att.loial + '. Sub 20, unele se desprind; la 10, se răscoală.' }); // DE VERIFICAT
+    if (att.cai < LOW.cai && (d.west || d.id === 'r6')) warn.push({ k: 'Caii sunt sleiți', t: 'Cavaleria a ajuns la ' + att.cai + '. Departe de pășunile stepei, caii slăbesc și mai mult.' }); // DE VERIFICAT
+    if (poorNow && d.opts.some(function(o){ return o.fx && o.fx.aur < 0; })) warn.push({ k: 'Vistieria e goală', t: 'Ai doar ' + att.aur + ' aur. Ce costă aur nu mai poți alege acum.' }); // DE VERIFICAT
+    var ch = '<div class="jg-choices mig-g-ch">' + d.opts.map(function(o, i){ var no = poorNow && o.fx && o.fx.aur < 0;
+      return '<button class="jg-choice" type="button" data-i="' + i + '"' + (no ? ' disabled aria-describedby="mig-g-poor"' : '') + '><i>' + 'ABC'[i] + '</i><span>' + o.t + fxHint(o.fx) + (no ? '<small class="mig-g-off" id="mig-g-poor">Nu ai destul aur</small>' : '') + '</span></button>'; }).join('') + '</div>';
+    var lines = (d.gpre || []).map(function(t){ return { t: t }; }).concat([{ k: d.yl + ' · ' + d.place, t: d.text }], warn,
+      [{ k: d.title + ' · runda ' + rn.n + ' din ' + rn.of, t: 'Ce faci, Attila?', html: '<p class="jg-src">Săgețile arată încotro împinge fiecare alegere. Cifrele le afli după.</p>' }]); // DE VERIFICAT: „Ce faci, Attila?”
+    say(lines, { mode: 'dec', act: ch, bind: function(){
+      Array.prototype.forEach.call(gEl.querySelectorAll('.mig-g-ch .jg-choice'), function(b){ b.addEventListener('click', function(){ picked(+b.getAttribute('data-i')); }); });
+      var fb = gEl.querySelector('.mig-g-ch .jg-choice:not(:disabled)'); if (fb) fb.focus({ preventScroll: true });
+    } });
+    function picked(i){
+      var o = d.opts[i], pend = pendingAfter(d), r = apply(d, o), last = !ROUNDS.some(function(x){ return x.year > d.year && !skipLater(x); });
+      sfx('pick'); floatStab(o.sim && o.sim.stab);
+      var sum = METERS.reduce(function(a, m){ return a + (r.delta[m.k] || 0); }, 0); flash(revolted ? false : sum > 0 ? true : sum < 0 ? false : null);
+      var ss = o.sim && o.sim.stab;
+      var fx = fxLine(o.fx, o.why) + '<p class="mig-g-fx"><b class="down">Aur −' + UPKEEP + '</b> · darurile pentru războinici</p>' + // DE VERIFICAT
+        (r.poor ? '<p class="mig-g-fx"><b class="down">Loialitate −10</b> · aurul nu mai ajunge pentru darurile căpeteniilor</p>' : '') +
+        (ss ? '<p class="mig-g-fx"><b class="' + (ss > 0 ? 'up' : 'down') + '">Imperiul roman ' + (ss > 0 ? '+' : '−') + Math.abs(ss) + '</b> · ' + (ss > 0 ? 'o grijă mai puțin pentru Roma' : 'Roma plătește prețul') + '</p>' : ''); // DE VERIFICAT
+      var steps = [{ k: 'Alegerea ta: ' + o.t.charAt(0).toLowerCase() + o.t.slice(1), t: o.cons || 'Alegerea ta schimbă drumul hunilor (scenariu ipotetic).', html: fx }];
+      if (revolted) steps.push({ k: 'Răscoala', t: 'Neamurile supuse se răscoală. Domnia ta se încheie aici, iar hunii se întorc în Câmpia Panonică.' });
+      else if (att.loial < LOW.gone && !gepGone) {
+        gepGone = true; var gc = centroid('gep'); pulses.push({ x: gc[0], y: gc[1] - 14, text: 'Gepizii se desprind de Attila', color: '#e0626c', t0: performance.now() }); if (!idleRaf) idleRaf = requestAnimationFrame(idle); // DE VERIFICAT
+        steps.push({ k: 'Gepizii se desprind', t: 'Loialitatea a scăzut sub 20. Gepizii lui Ardaric nu mai ascultă de tine și își văd de drumul lor.' }); // DE VERIFICAT
+      }
+      steps.push({ k: 'În realitate…', t: (/^Attila /.test(d.real) ? (o.real ? 'La fel ca tine, ' : 'Altfel decât tine, ') + d.real : (o.real ? 'Attila a ales la fel. ' : 'Attila a ales altfel. ') + d.real) }); // DE VERIFICAT: „Attila a ales la fel / altfel”
+      if (d.q) steps.push({ k: 'Din izvor', q: d.q, c: d.qs });
+      steps = steps.concat(skipLines(pend));
+      say(steps, { act: '<button class="jg-btn" id="mig-cont" type="button">' + (revolted || last ? 'Mai departe →' : 'Spre runda următoare →') + '</button>', bind: function(){
+        var b = document.getElementById('mig-cont');
+        b.addEventListener('click', function(){ gClose(); if (t >= 434.8 && t < 453.3) holdUntil = performance.now() + 2600; play(); document.getElementById('mig-play').focus({ preventScroll: true }); });
+        b.focus({ preventScroll: true });
+      } });
+    }
   }
   function roundDialog(d){
     var n = ROUNDS.indexOf(d) + 1;
@@ -1171,7 +1382,7 @@
     renderLog(); markTimeline(d, o.real);
   }
   function renderLog(){
-    var el = document.getElementById('mig-log');
+    var el = document.getElementById('mig-log'), jn = document.getElementById('mig-jn'); if (jn) jn.textContent = log.length;
     el.innerHTML = log.length ? log.map(function(l){ return '<li class="' + (l.real ? '' : 'alt') + (l.att ? ' att' : '') + '"><b>' + l.y + ' · ' + l.title + '</b><span>' + l.t + '</span><em>' + (l.real ? 'ca în istorie' : 'altă istorie') + '</em></li>'; }).join('') : '<li class="empty">Deciziile tale apar aici, pe măsură ce le iei.</li>';
   }
 
@@ -1224,7 +1435,7 @@
       el.querySelector('b').textContent = att[m.k]; el.querySelector('.jg-bar i').style.width = att[m.k] + '%';
       el.classList.toggle('low', m.k !== 'most' && att[m.k] < 20);
       var d = fx && fx[m.k], dl = el.querySelector('.jg-delta');
-      if (d) { dl.textContent = (d > 0 ? '+' : '') + d; dl.className = 'jg-delta'; void dl.offsetWidth; dl.className = 'jg-delta show ' + (d > 0 ? 'up' : 'down'); }
+      if (d) { dl.textContent = (d > 0 ? '+' : '') + d; dl.className = 'jg-delta'; void dl.offsetWidth; dl.className = 'jg-delta show ' + (d > 0 ? 'up' : 'down'); el.classList.remove('chg'); void el.offsetWidth; el.classList.add('chg'); }
     });
   }
   var nowIx = -1;
@@ -1239,6 +1450,7 @@
     updateNow();
     var ab = document.getElementById('mig-att'); if (ab && ab.hidden !== (t < 434.8)) updateAtt();
     document.getElementById('mig-year').textContent = Math.min(T1, Math.floor(t));
+    var nb = document.getElementById('mig-news'); if (nb) nb.classList.toggle('stale', !finished && t - newsY > 6);
     document.getElementById('mig-stab-v').textContent = Math.round(stab);
     var sb = document.getElementById('mig-stab'); sb.style.width = stab + '%'; sb.style.background = stab < 35 ? '#e0626c' : stab < 60 ? '#e5c158' : '#8fbd82';
     var p = pct(Math.min(T1, t)), fill = document.getElementById('mig-tl-fill'), head = document.getElementById('mig-tl-head');
@@ -1289,13 +1501,28 @@
   cv.addEventListener('click', function(ev){ var gi = nearestGroup(ev); if (gi < 0) { fEl.hidden = true; return; } fiche(gi); });
   cv.addEventListener('mouseleave', function(){ tip.hidden = true; });
 
+  var SAME_KM = 400, endTalked = false;   // pragul pentru „același loc” când regiunea are același nume
+  // bilanțul lui Priscus, înainte de hărți și de tabel (B8)
+  function endTalk(){
+    var nr = log.filter(function(l){ return l.real; }).length, alt = log.filter(function(l){ return !l.real; });
+    var big = null;
+    GROUPS.forEach(function(g){ var c = centroid(g.id), h = HIST[g.id][HIST[g.id].length - 1], hp = proj(h[1], h[2]), km = Math.hypot(c[0] - hp[0], c[1] - hp[1]) * KM; if (!big || km > big.km) big = { g: g, km: km, a: regionOf(c), b: regionOf(hp) }; });
+    var L = [{ k: '476 · Bilanțul', t: nr === log.length ? 'Am ajuns în 476. Ai ales de fiecare dată ca în istorie.' : 'Am ajuns în 476. Ai ales ca în istorie în ' + nr + ' din ' + log.length + ' decizii.' }]; // DE VERIFICAT
+    if (alt.length) L.push({ k: 'Unde ai ales altfel', t: 'Ai ales altfel la ' + alt.slice(0, 3).map(function(l){ return l.title + ' (' + (String(l.y).match(/\d{3}/) || [''])[0] + ')'; }).join(', ') + (alt.length > 3 ? ' și încă ' + (alt.length - 3) + (alt.length - 3 === 1 ? ' decizie' : ' decizii') : '') + '.' }); // DE VERIFICAT
+    L.push(big && big.km > 150 ? { k: 'Ce s-a schimbat cel mai mult', t: 'Pe hartă, cea mai mare diferență o au ' + big.g.name.split(',')[0].toLowerCase() + ': în lumea ta sunt în ' + big.a + ', în realitate erau în ' + big.b + '.' } // DE VERIFICAT
+      : { k: 'Pe hartă', t: 'Popoarele au ajuns aproape acolo unde erau și în realitate.' }); // DE VERIFICAT
+    say(L, { mode: 'end', act: '<button class="jg-btn" id="mig-cont" type="button">Vezi cele două hărți →</button>', bind: function(){ // DE VERIFICAT
+      var b = document.getElementById('mig-cont'); b.addEventListener('click', function(){ gClose(); finish(); }); b.focus({ preventScroll: true });
+    } });
+  }
   function finish(){
     pause(); if (!finished) rec(); finished = true; t = T1; showCompare = true; updateHud(); draw(); setPlayLabel();
     if (!auto) try { localStorage.setItem('ah-joc', '1'); document.dispatchEvent(new CustomEvent('ah-progres')); } catch (e) {}
     // drumul fiecărui popor, an de an (centrul grupului), pentru reluare
     cpath = GROUPS.map(function(g, gi){ var r = ranges[gi]; return snaps.map(function(a){ var sx = 0, sy = 0; for (var i = r.start; i < r.end; i++) { sx += a[i]; sy += a[N + i]; } return W2C(sx / g.n, sy / g.n); }); });
-    var ttl = titles(allRealOf(), verdict()), shots = worldShots();
     news('476', 'Sfârșitul Imperiului Roman de Apus.', '');
+    if (!endTalked) { endTalked = true; document.getElementById('mig-play').disabled = true; document.documentElement.classList.remove('mig-playing'); return endTalk(); }
+    var ttl = titles(allRealOf(), verdict()), shots = worldShots();
     document.getElementById('mig-play').disabled = true;
     var allReal = allRealOf(), v = verdict();
     var far = [];
@@ -1303,7 +1530,7 @@
       var c = centroid(g.id), h = HIST[g.id][HIST[g.id].length - 1], hp = proj(h[1], h[2]);
       var km = Math.round(Math.hypot(c[0] - hp[0], c[1] - hp[1]) * KM / 50) * 50;
       if (km > 300) far.push(g.name.split(',')[0].toLowerCase() + ' au ajuns la ~' + km.toLocaleString('ro-RO') + ' km');
-      return '<tr><td><i style="background:' + g.color + '"></i>' + g.name + '</td><td>' + regionOf(c) + '</td><td>' + regionOf(hp) + '</td><td class="num">' + (km <= 150 ? 'același loc' : '~' + km.toLocaleString('ro-RO') + ' km') + '</td></tr>';
+      return '<tr><td><i style="background:' + g.color + '"></i>' + g.name + '</td><td>' + regionOf(c) + '</td><td>' + regionOf(hp) + '</td><td class="num">' + (km <= 150 || (regionOf(c) === regionOf(hp) && km <= SAME_KM) ? 'același loc' : '~' + km.toLocaleString('ro-RO') + ' km') + '</td></tr>';
     }).join('');
     var hs = Math.round(histStab()), st = Math.round(stab), dst = st - hs;
     document.documentElement.classList.remove('mig-playing');
@@ -1359,6 +1586,14 @@
     if (choice.d5 === 'C') L.push({ n: 'Ardaric pribeagul', d: 'Ca Ardaric, ți-ai dus neamul spre apus.' });
     if (choice.dl === 'B') L.push({ n: 'Leon împăciuitorul', d: 'Ca Leon I, ai făcut pace cu vandalii: fără dezastrul de la Capul Bon.' });
     if (!L.length) L.push({ n: 'Cronicarul unei alte istorii', d: 'Câteva alegeri diferite au fost de ajuns ca popoarele să o ia pe alte drumuri.' });
+    // titlul principal: nu primul care se potrivește (adesea decizia din 376), ci cel care spune cel mai mult despre tot drumul
+    var alt = log.filter(function(l){ return !l.real; }).length;
+    if (!allReal) {
+      var W = { 'Attila întemeietorul': 9, 'Attila cel părăsit': 9, 'Attila al Răsăritului': 8, 'Attila la porțile Romei': 7, 'Salvatorul Romei': 7, 'Străjerul Rinului': 7, 'Ardaric cel credincios': 6, 'Leon împăciuitorul': 6, 'Asediatorul Constantinopolului': 5, 'Attila cel răbdător': 5, 'Ardaric pribeagul': 4, 'Paznicul Dunării': 3, 'Împăratul primitor': 3 };
+      L.sort(function(a, b){ return (W[b.n] || 0) - (W[a.n] || 0); });
+      if (alt >= Math.ceil(log.length / 2) && L.length >= 3) L.unshift({ n: 'Cel care a rescris istoria', d: 'Ai ales altfel în ' + alt + ' din ' + log.length + ' decizii. Cele mai mari schimbări: „' + L[0].n + '” și „' + L[1].n + '”.' }); // DE VERIFICAT
+      else if (L.length > 1) L[0] = { n: L[0].n, d: L[0].d + ' Ai ales altfel în ' + alt + ' din ' + log.length + ' decizii.' }; // DE VERIFICAT
+    }
     return L;
   }
 
@@ -1428,7 +1663,7 @@
     document.getElementById('mig-save').focus({ preventScroll: true });
   }
   function playing(on){ document.documentElement.classList.toggle('mig-playing', on); }
-  function restart(){ replayShow(false); if (fEl) fEl.hidden = true; news('370', 'Stepa de la nord de Marea Neagră: hunii trec Volga.', ''); over.className = 'mig-over'; over.innerHTML = ''; showCompare = false; pulses = []; document.getElementById('mig-play').disabled = !ready; reset(); resetTimeline(); setPlayLabel(); }
+  function restart(){ gClose(); replayShow(false); if (fEl) fEl.hidden = true; news('370', 'Stepa de la nord de Marea Neagră: hunii trec Volga.', ''); over.className = 'mig-over'; over.innerHTML = ''; showCompare = false; pulses = []; document.getElementById('mig-play').disabled = !ready; reset(); resetTimeline(); setPlayLabel(); }
 
   // pornirea: Actul I începe cu cartea lui de titlu; „Privește ca film” merge direct, la 4×
   function setSpeed(v){
@@ -1436,24 +1671,26 @@
     b.textContent = speed + '×'; b.classList.toggle('on', speed > 1); b.setAttribute('aria-label', 'Viteza: ' + speed + '×. Apasă ca s-o schimbi');
   }
   function start(a){ auto = a; restart(); playing(true); setSpeed(a ? 4 : 1); if (a) play(); else actCard('I', '370', 'Roma în fața valului', 'Ești împăratul Valens · hunii împing goții spre Dunăre', 'valens', play); }
+  // intrarea: Priscus spune două replici; un singur buton mare „Începe”, iar filmul și ecranul complet rămân linkuri mici
   function intro(){
-    var fsb = document.getElementById('mig-fs'), mob = window.matchMedia('(max-width: 700px)').matches && fsb && !fsb.hidden;
-    over.className = 'mig-over show';
-    over.innerHTML = '<div class="mig-dec mig-intro" role="dialog" aria-modal="true" aria-labelledby="mig-it"><h3 id="mig-it">Attila și Marea Migrație</h3>' +
-      '<p class="mig-who">370–476 · trei acte · o hartă reală</p>' +
-      '<p>Sute de puncte sunt popoare în mișcare. Istoria se oprește din când în când și decizi tu.</p>' +
-      '<ol class="mig-acts"><li><b>Actul I, 370–434: Roma în fața valului.</b> Ești împăratul Valens, generalul Stilicho și împăratul Honorius.</li><li><b>Actul II, 435–452: ești Attila.</b> Opt momente reale; hunii merg pe hartă unde îi trimiți.</li><li><b>Actul III, 453–476: după Attila.</b> Ești Ardaric, regele gepizilor, apoi împăratul Leon I.</li></ol>' +
-      '<p>Cercurile punctate arată <b>unde erau popoarele în realitate</b>.</p>' +
-      '<p class="mig-note mig-keys">Tastatura: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> pentru alegeri, <kbd>Enter</kbd> ca să continui, <kbd>Spațiu</kbd> pentru pauză.</p>' +
-      (mob ? '<p class="mig-note">Pe telefon, harta e mică: joacă pe ecran complet, cu telefonul întors.</p>' : '') +
-      '<div class="mig-end-btns mig-go-row">' + (mob ? '<button class="jg-btn" id="mig-go-fs" type="button">' + ICON.play + 'Pornește pe ecran complet</button><button class="mig-link" id="mig-go" type="button">sau joacă fără ecran complet</button>'
-        : '<button class="jg-btn" id="mig-go" type="button">' + ICON.play + 'Pornește jocul</button>') + '<button class="jg-btn ghost mig-film" id="mig-auto" type="button">' + ICON.play + 'Privește ca film<small>istoria reală, singură, de 4 ori mai repede</small></button></div>' +
-      '<p class="mig-prep" id="mig-prep" aria-live="polite"></p></div>';
-    prepUi();
-    document.getElementById('mig-go').addEventListener('click', function(){ start(false); });
-    document.getElementById('mig-auto').addEventListener('click', function(){ start(true); });
-    var gf = document.getElementById('mig-go-fs');
-    if (gf) gf.addEventListener('click', function(){ document.getElementById('mig-fs').click(); start(false); });
+    over.className = 'mig-over'; over.innerHTML = '';
+    var fsb = document.getElementById('mig-fs'), fsOk = fsb && !fsb.hidden;
+    say([
+      { t: 'Sunt Priscus din Panium. În 449 am mers cu solia împăratului la curtea lui Attila și am scris ce am văzut.' }, // DE VERIFICAT
+      { t: 'Îți arăt cum s-au mutat popoarele Europei între 370 și 476. Din când în când, istoria se oprește, iar tu hotărăști ce urmează.' } // DE VERIFICAT
+    ], { mode: 'intro',
+      act: '<button class="jg-btn mig-g-go" id="mig-go" type="button">' + ICON.play + 'Începe</button>' +
+        '<span class="mig-g-links"><button class="mig-link" id="mig-auto" type="button">Privește ca film</button>' + (fsOk ? '<button class="mig-link" id="mig-go-fs" type="button">Ecran complet</button>' : '') + '</span>' +
+        '<p class="mig-prep" id="mig-prep" aria-live="polite"></p>',
+      bind: function(){
+        prepUi();
+        var go = document.getElementById('mig-go');
+        go.addEventListener('click', function(){ gClose(); start(false); });
+        document.getElementById('mig-auto').addEventListener('click', function(){ gClose(); start(true); });
+        var gf = document.getElementById('mig-go-fs');
+        if (gf) gf.addEventListener('click', function(){ gClose(); document.getElementById('mig-fs').click(); start(false); });
+        if (!go.disabled) go.focus({ preventScroll: true });
+      } });
   }
 
   // =====================================================================
@@ -1461,8 +1698,8 @@
   // =====================================================================
   document.getElementById('mig-play').addEventListener('click', function(){
     if (finished) return;
-    if (over.querySelector('.mig-intro')) { auto = false; restart(); play(); return; }
-    if (over.querySelector('[aria-modal]')) return;
+    if (gMode === 'intro') { if (!ready) return; gClose(); auto = false; restart(); playing(true); play(); return; }
+    if (gMode || over.querySelector('[aria-modal]')) return;
     if (running) pause(); else play();
   });
   // ecran complet: harta și dialogurile ocupă tot ecranul; pe telefon încercăm și orientarea orizontală
@@ -1478,6 +1715,18 @@
     function onFs(){ var on = !!(document.fullscreenElement || document.webkitFullscreenElement); var lb = on ? 'Ieși din ecran complet' : 'Ecran complet'; btn.setAttribute('aria-label', lb); btn.title = lb; bgKey = ''; labelCache = {}; setTimeout(function(){ draw(); }, 60); }
     document.addEventListener('fullscreenchange', onFs); document.addEventListener('webkitfullscreenchange', onFs);
   })();
+  // „Jurnal”: deciziile luate până acum, într-un panou mic sub bară
+  (function(){
+    var jb = document.getElementById('mig-jbtn'), jp = document.getElementById('mig-jpop');
+    function setJ(on){ jp.hidden = !on; jb.setAttribute('aria-expanded', on ? 'true' : 'false'); jb.classList.toggle('on', on); }
+    jb.addEventListener('click', function(e){ e.stopPropagation(); setJ(jp.hidden); });
+    jp.addEventListener('click', function(e){ e.stopPropagation(); });
+    document.addEventListener('click', function(){ if (!jp.hidden) setJ(false); });
+    jp.addEventListener('keydown', function(e){ if (e.key === 'Escape') { setJ(false); jb.focus(); } });
+    jb.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !jp.hidden) setJ(false); });
+  })();
+  // Escape pe intrare: ca înainte, închide prezentarea și lasă harta pregătită
+  gEl.addEventListener('keydown', function(e){ if (e.key === 'Escape' && gMode === 'intro') { e.preventDefault(); restart(); document.getElementById('mig-play').focus(); } });
   document.getElementById('mig-rp').addEventListener('input', function(){ replayPlay(false); replayGo(+this.value); });
   document.getElementById('mig-rp-play').addEventListener('click', function(){ if (replayRaf) replayPlay(false); else { if (replayY === null) replayGo(T0); replayPlay(true); } });
   document.getElementById('mig-reset').addEventListener('click', function(){ pause(); auto = false; restart(); intro(); });
@@ -1522,11 +1771,14 @@
     // 1, 2, 3 sau A, B, C aleg varianta din fereastra deschisă
     var tg = e.target && e.target.closest ? e.target : document.body;
     var k = '123'.indexOf(e.key) + 1 || 'abc'.indexOf((e.key || '').toLowerCase()) + 1;
-    if (k && over.classList.contains('show') && !tg.closest('input, textarea, select')) {
-      var ch = over.querySelectorAll('.jg-choice:not(:disabled)');
-      if (ch[k - 1]) { e.preventDefault(); ch[k - 1].click(); return; }
+    var inG = !gEl.hidden && gEl.querySelector('.jg-choice:not(:disabled)');
+    if (k && (inG || over.classList.contains('show')) && !tg.closest('input, textarea, select')) {
+      var ch = inG ? gEl.querySelectorAll('.jg-choice') : over.querySelectorAll('.jg-choice:not(:disabled)');
+      if (ch[k - 1]) { e.preventDefault(); if (!ch[k - 1].disabled) ch[k - 1].click(); return; }
     }
     if (tg.closest('input, button, textarea, select')) return;
+    // Enter, cu focusul în afara butoanelor: replica următoare a ghidului
+    if (e.key === 'Enter' && !gEl.hidden) { var nb = gEl.querySelector('#mig-g-next, #mig-cont, #mig-go:not(:disabled)'); if (nb) { e.preventDefault(); nb.click(); return; } }
     if (e.key === ' ') { e.preventDefault(); document.getElementById('mig-play').click(); }
   });
   over.addEventListener('keydown', function(e){

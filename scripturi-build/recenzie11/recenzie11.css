@@ -1,0 +1,32 @@
+  /* r11: recenzia 11 (copertă scurtă, Originile hunilor, Muzeul aliniat, două fonturi) */
+  /* coperta: titlu, perioada, o frază, două butoane */
+  #page-acasa #acasa .title{ font: 600 clamp(2.6rem, 6vw, 4.75rem)/1.02 'EB Garamond', Georgia, serif; letter-spacing: -0.005em; }
+  #page-acasa #acasa .hero-years{ display: block; margin: 12px 0 0; font: 600 1.125rem 'Source Serif 4', Georgia, serif; letter-spacing: 0.08em; color: #8a2a1f; font-variant-numeric: lining-nums; }
+  #page-acasa #acasa .dek{ max-width: 36ch; margin-top: 14px; font-size: 1.25rem; line-height: 1.5; }
+  /* creditul picturii: un rând mic imediat sub imagine */
+  #page-acasa #acasa + .hero-credit{ position: static !important; inset: auto !important; display: block; max-width: none; margin: 6px 0 0 !important; padding: 0 clamp(16px, 4vw, 48px) !important; border: 0 !important; background: none !important; text-align: right; font: normal 0.8125rem/1.4 'Source Serif 4', Georgia, serif !important; color: #5a4632 !important; text-shadow: none !important; }
+  /* intrarea în capitolul 01: 40 px între copertă și titlu, apoi direct textul */
+  #page-acasa #sec-origini{ padding-top: 18px !important; margin-top: 0 !important; }
+  /* Muzeul: aceeași înălțime pentru fiecare fotografie, titlurile pe același rând, creditul imediat după descriere */
+  #page-acasa #sec-muzeu .artifact-card .viewer-stage{ height: 300px; width: min(100%, calc(300px * (var(--ar)))); aspect-ratio: auto !important; margin: 0 auto; }
+  #page-acasa #sec-muzeu .artifact-card .artifact-credit{ margin-top: 6px !important; }
+  @media (max-width: 760px){ #page-acasa #sec-muzeu .artifact-card .viewer-stage{ height: 240px; width: min(100%, calc(240px * (var(--ar)))); } }
+  /* două fonturi: EB Garamond rămâne la titluri (pagină, capitole, subtitluri) și la cifrele și citatele mari;
+     meniul, butoanele, legendele, etichetele și interfața jocurilor trec pe Source Serif 4 */
+  html body .site-nav a:not(.st-brand), html body .site-nav a:not(.st-brand) *, html body .toc-link, html body .st-menu,
+  html body button, html body .hero-btn, html body .cta-btn, html body .md-btn, html body .jg-btn, html body .mig-link, html body .gs-nav button, html body .hx-step, html body .hx-step *,
+  html body figcaption, html body figcaption b, html body th b, html body th.sc-c0, html body .dk-label, html body .dl-row b, html body .gl-row dt, html body .ef-rtick b, html body .ef-ryr,
+  html body .r9n-unit, html body .r9n-tag, html body .to-atlas a, html body span.l, html body .cal-label, html body .gs-yr, html body .panel-label, html body .dc-role, html body .r10-band-label,
+  html body .artifact-kind, html body .kicker, html body .artifact-credit, html body .lab-how{ font-family: 'Source Serif 4', Georgia, serif !important; }
+  /* butoanele: scrise normal, fără majuscule integrale */
+  html body button, html body .hero-btn, html body .cta-btn, html body .md-btn, html body .jg-btn, html body .site-nav a:not(.st-brand), html body .toc-link, html body .st-menu span{ text-transform: none !important; letter-spacing: 0.01em !important; }
+  html body .hero-btn, html body .cta-btn, html body .md-btn, html body .jg-btn{ font-weight: 600 !important; }
+  /* acțiunea principală: granat, peste tot */
+  html body .hero-btn.primary, html body .cta-btn, html body .md-btn:not(.ghost), html body .jg-btn:not(.ghost){ background: #8a2a1f !important; border-color: #8a2a1f !important; color: #f3ead7 !important; }
+  html body .hero-btn.primary:hover, html body .cta-btn:hover, html body .md-btn:not(.ghost):hover, html body .jg-btn:not(.ghost):hover{ background: #6f2118 !important; }
+  html body .md-btn.ghost, html body .jg-btn.ghost{ background: transparent !important; border: 1px solid rgba(70, 45, 25, 0.45) !important; color: #2b1d12 !important; }
+  /* titlurile fișelor pe același rând: eticheta de deasupra are mereu înălțimea a două rânduri */
+  #page-acasa #sec-muzeu .artifact-card .artifact-kind{ display: flex; align-items: flex-end; justify-content: center; min-height: 2.6em; margin-bottom: 0; }
+  html body #site-nav #toc-row .toc-link, html body #site-nav .st-pages a{ font-family: 'Source Serif 4', Georgia, serif !important; text-transform: none !important; }
+  @media (max-width: 760px){ #page-acasa #sec-origini{ padding-top: 0 !important; } }
+  /* /r11 */

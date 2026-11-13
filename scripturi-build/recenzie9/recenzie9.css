@@ -35,4 +35,27 @@
   #page-acasa #sec-atlas .zoom-btn{ background: #ebe0c8; color: #2b1d12; border: 1px solid rgba(70, 45, 25, 0.38); }
   #page-acasa #sec-atlas .zoom-btn:hover{ background: #e0d2b2; }
   #page-acasa #sec-atlas .panel-label, #page-acasa #sec-atlas .modal-tag{ color: #7a5714; }
+  /* cronologia: fără bara „Viața lui Attila · Domnia” */
+  #page-acasa .hx .hx-life{ display: none; }
+  /* „Știai că…?”: note pe margine, înguste, lângă paragraful lor; textul întreg, fără „Citește mai mult” */
+  #page-acasa .page-shell .r9-note{ float: right; clear: right; box-sizing: border-box; width: 260px; margin: 6px 0 18px 28px; padding: 2px 0 4px 16px; border-left: 2px solid #8a2a1f; background: none; }
+  #page-acasa .page-shell .r9-note.r9-in{ float: none; width: auto; margin: 16px 0 4px; grid-column: 1 / -1; }
+  #page-acasa .page-shell .r9-note p{ margin: 0; }
+  #page-acasa .page-shell .r9-note .r9n-tag{ margin-bottom: 6px; font: 600 0.8125rem 'Source Serif 4', Georgia, serif; letter-spacing: 0.08em; text-transform: uppercase; color: #8a2a1f; }
+  #page-acasa .page-shell .r9-note .r9n-num{ font: 600 3rem/1 'EB Garamond', Georgia, serif; color: #8a2a1f; font-variant-numeric: lining-nums; }
+  #page-acasa .page-shell .r9-note .r9n-unit{ margin: 2px 0 10px; font: 500 1rem 'EB Garamond', Georgia, serif; color: #5a4632; }
+  #page-acasa .page-shell .r9-note .r9n-title{ margin-bottom: 10px; font: italic 500 1.625rem/1.15 'EB Garamond', Georgia, serif; color: #8a2a1f; }
+  #page-acasa .page-shell .r9-note .r9n-text{ margin-bottom: 8px; font-size: 0.9375rem; line-height: 1.55; color: #2b1d12; text-align: left; }
+  #page-acasa .page-shell .r9-note .r9n-src{ font-size: 0.8125rem; line-height: 1.45; color: #5a4632; }
+  #page-acasa .page-shell .r9-note .r9n-src a{ color: #8a2a1f; }
+  /* citatul de lângă o notă se îngustează lângă ea (nu trece pe sub ea); tabelul cu izvoarele începe sub notă */
+  #page-acasa .page-shell .r9-note + .pq{ display: flow-root; }
+  #page-acasa #sec-origini .src-compare{ clear: both; }
+  @media (max-width: 760px){ #page-acasa .page-shell .r9-note{ float: none; width: auto; margin: 22px 0; } }
+  /* logoul: în loc de romb, fibula-cicadă (bijuterie hunică) */
+  #site-nav .st-mark, .st-mark{ width: 18px; height: 22px; transform: none; border: 0; border-radius: 0; background: #e5c158;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M12 3c2 0 3 1.6 3 3.4V9l3.5 2-3.5 1.2V17c0 2-1.4 4-3 4s-3-2-3-4v-4.8L5.5 11 9 9V6.4C9 4.6 10 3 12 3z'/%3E%3Cpath d='M12 9v11M9.5 6.5h5'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M12 3c2 0 3 1.6 3 3.4V9l3.5 2-3.5 1.2V17c0 2-1.4 4-3 4s-3-2-3-4v-4.8L5.5 11 9 9V6.4C9 4.6 10 3 12 3z'/%3E%3Cpath d='M12 9v11M9.5 6.5h5'/%3E%3C/svg%3E") center / contain no-repeat; }
+  /* legenda picturii: fără fâșie, cu o linie bronz, literele drepte */
+  #page-acasa .hero-credit{ background: none !important; padding: 0 0 0 9px !important; border-left: 2px solid #b8975a; font-style: normal !important; color: #f2e8d6 !important; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 0, 0, 0.7); }
   /* /r9 */

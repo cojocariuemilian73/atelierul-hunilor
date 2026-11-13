@@ -1,0 +1,37 @@
+  /* r12: recenzia 12 (fișele de verdict: mit · imagine · verdict, o dată normal, o dată în oglindă) */
+  #page-acasa .vd-group{ display: grid; gap: 18px; margin: clamp(28px, 4vw, 44px) 0; clear: both; }
+  #page-acasa .vd{ padding: 18px clamp(16px, 2.4vw, 26px) 20px; background: #f3ead7; border: 1px solid rgba(70, 45, 25, 0.16); border-radius: 6px; box-shadow: 0 1px 2px rgba(60, 40, 20, 0.06); color: #2b1d12; }
+  #page-acasa .vd-head{ display: flex; align-items: center; gap: 12px; margin: 0 0 16px; font: 500 1.125rem 'Source Serif 4', Georgia, serif; color: #8a2a1f; }
+  #page-acasa .vd-head i{ flex: none; width: 9px; height: 9px; background: #8a2a1f; transform: rotate(45deg); }
+  #page-acasa .vd-head::after{ content: ''; flex: 1; height: 1px; background: rgba(138, 42, 31, 0.3); }
+  #page-acasa .vd-grid{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(200px, 0.95fr) minmax(0, 1fr); grid-template-areas: "myth fig truth"; gap: 22px; align-items: stretch; }
+  #page-acasa .vd-flip .vd-grid{ grid-template-areas: "truth fig myth"; }
+  #page-acasa .vd p{ margin: 0; }
+  #page-acasa .vd-k{ margin: 0 0 4px !important; font: 500 0.9375rem 'Source Serif 4', Georgia, serif; color: #8a2a1f; }
+  /* mitul */
+  #page-acasa .vd-myth{ grid-area: myth; display: flex; flex-direction: column; justify-content: space-between; gap: 18px; }
+  #page-acasa .vd-say{ padding: 2px 0 10px 16px; border-left: 3px solid #8a2a1f; }
+  #page-acasa .vd-flip .vd-say{ padding: 2px 16px 10px 0; border-left: 0; border-right: 3px solid #8a2a1f; }
+  #page-acasa .vd-q{ font: italic 500 clamp(1.375rem, 2.1vw, 1.75rem)/1.28 'EB Garamond', Georgia, serif; color: #2b1d12; }
+  #page-acasa .vd-from{ padding: 12px 14px; background: #e8dcc2; border-radius: 3px; }
+  #page-acasa .vd-from .vd-k{ color: #5a4632; }
+  #page-acasa .vd-from p:last-child{ font-size: 1rem; line-height: 1.45; color: #2b1d12; }
+  /* imaginea */
+  #page-acasa .vd-fig{ grid-area: fig; display: flex; flex-direction: column; gap: 8px; margin: 0; }
+  #page-acasa .vd-fig img{ display: block; width: 100%; height: 240px; object-fit: cover; padding: 6px; background: #e0d2b2; border: 1px solid rgba(70, 45, 25, 0.25); box-sizing: border-box; }
+  #page-acasa .vd-fig figcaption{ font: italic 0.9375rem/1.4 'Source Serif 4', Georgia, serif !important; color: #5a4632; }
+  /* verdictul */
+  #page-acasa .vd-truth{ grid-area: truth; display: flex; flex-direction: column; gap: 14px; }
+  #page-acasa .vd-verdict{ padding: 12px 16px; background: #8a2a1f; border-radius: 4px; color: #f3ead7; }
+  #page-acasa .vd-verdict small{ display: block; font-size: 0.875rem; opacity: 0.85; }
+  #page-acasa .vd-verdict b{ display: block; font: 500 1.3125rem/1.25 'Source Serif 4', Georgia, serif; color: #fff7ea; }
+  #page-acasa .vd-izv p:last-child{ font-size: 1.0625rem; line-height: 1.5; font-weight: 500; color: #2b1d12; }
+  #page-acasa .vd-src{ margin-top: auto !important; padding-top: 10px; border-top: 1px solid rgba(70, 45, 25, 0.22); font-size: 0.9375rem; color: #5a4632; }
+  #page-acasa .vd-src a{ color: #8a2a1f; }
+  @media (max-width: 860px){
+    #page-acasa .vd-grid, #page-acasa .vd-flip .vd-grid{ grid-template-columns: 1fr; grid-template-areas: "myth" "truth" "fig"; gap: 16px; }
+    #page-acasa .vd-flip .vd-say{ padding: 2px 0 10px 16px; border-right: 0; border-left: 3px solid #8a2a1f; }
+    #page-acasa .vd-myth{ gap: 12px; }
+    #page-acasa .vd-fig img{ height: 200px; }
+  }
+  /* /r12 */
