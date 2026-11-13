@@ -420,3 +420,42 @@
     .m-atelier .md-ink span{ animation: md-fade 0.4s ease both !important; }
     .m-atelier .md-modal{ animation: md-fade 0.2s ease both !important; }
   }
+  /* ghid: Priscus în banda de sub progres (scris deja pentru tema crem) */
+  #md-guide{ display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 18px; align-items: start; margin: 0 0 14px; padding: 14px 18px 16px; background: #f3ead7; border-top: 2px solid #8a2a1f; border-bottom: 1px solid rgba(70, 45, 25, 0.18); color: #2b1d12; }
+  #md-guide[hidden]{ display: none; }
+  #md-guide .md-g-who{ display: grid; justify-items: center; text-align: center; line-height: 1.2; }
+  #md-guide .md-g-pic{ width: 54px; height: 63px; margin-bottom: 4px; color: #7a5714; }
+  #md-guide .md-g-who b{ font: 600 1rem 'EB Garamond', Georgia, serif; color: #2b1d12; }
+  #md-guide .md-g-who small{ font-size: 0.8125rem; color: #5a4632; }
+  #md-guide .md-g-body{ min-width: 0; }
+  #md-guide .md-g-note{ margin: 0 0 8px; font-size: 0.8125rem; font-style: italic; color: #5a4632; }
+  #md-guide .md-g-say{ animation: md-g-in 0.35s ease both; }
+  @keyframes md-g-in{ from{ opacity: 0; transform: translateY(4px); } to{ opacity: 1; transform: none; } }
+  #md-guide .md-g-k{ margin: 0 0 4px; font: 600 0.8125rem 'Source Serif 4', Georgia, serif; letter-spacing: 0.06em; text-transform: uppercase; color: #8a2a1f; }
+  #md-guide .md-g-k:empty{ display: none; }
+  #md-guide .md-g-t{ max-width: 72ch; margin: 0; font: 500 1.125rem/1.5 'Source Serif 4', Georgia, serif; color: #2b1d12; }
+  #md-guide .md-g-act{ display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 10px; }
+  #md-guide .md-g-act:empty{ display: none; }
+  #md-guide .md-g-next{ min-height: 44px; padding: 8px 18px; background: #f3ead7; border: 1px solid #8a2a1f; color: #8a2a1f; font: 600 1rem 'Source Serif 4', Georgia, serif; cursor: pointer; }
+  #md-guide .md-g-next:hover{ background: #ead2cb; }
+  #md-guide .md-g-next:focus-visible{ outline: 2px solid #8a2a1f; outline-offset: 3px; }
+  #md-guide .md-g-n{ margin-left: auto; font-size: 0.8125rem; color: #5a4632; font-variant-numeric: tabular-nums; }
+  #md-guide ~ .md-desk .md-clue-g{ font-style: italic; color: #5a4632; }
+  @media (max-width: 760px){
+    #md-guide{ grid-template-columns: 52px minmax(0, 1fr); gap: 10px; max-height: 33vh; overflow-y: auto; padding: 10px 12px 12px; }
+    #md-guide .md-g-pic{ width: 38px; height: 44px; }
+    #md-guide .md-g-who small{ display: none; }
+    #md-guide .md-g-t{ font-size: 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce){ #md-guide .md-g-say{ animation: none; } }
+  /* C4: cele patru tipuri, pe două coloane, ca să încapă fără derulare */
+  @media (min-width: 560px){ .md-cls{ grid-template-columns: 1fr 1fr; } .md-cls button{ align-content: start; } }
+  /* C8: rezultatul pe toată lățimea, deasupra mesei */
+  .md-endw[hidden]{ display: none; }
+  .md-endw{ margin: 0 0 18px; padding: clamp(18px, 3vw, 34px); background: #f3ead7; border: 1px solid rgba(70, 45, 25, 0.22); color: #2b1d12; }
+  .md-endw .md-end{ max-width: none; }
+  .md-endw .md-end-h{ margin: 0; font: 600 clamp(2.1rem, 5vw, 3.4rem)/1.05 'EB Garamond', Georgia, serif; color: #8a2a1f; font-variant-numeric: lining-nums; }
+  .md-endw .md-end-sub{ max-width: 60ch; margin: 8px 0 18px; font-size: 1.125rem; color: #5a4632; }
+  @media (min-width: 900px){ .md-endw .md-end{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4px 36px; } .md-endw .md-end > *{ grid-column: 1 / -1; } .md-endw .md-end > .md-cats, .md-endw .md-end > .md-sum{ grid-column: auto; } }
+  .md-endw .md-cats li b{ color: #2b1d12 !important; }
+  .md-endw .md-cats li span{ color: #5a4632 !important; }

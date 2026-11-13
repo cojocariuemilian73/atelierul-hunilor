@@ -21,6 +21,8 @@ const fail = m => { console.error(rel + ': ' + m); process.exit(1); };
 function swap(a, b, what){ const n = s.split(a).length - 1; if (n === 1) { s = s.replace(a, () => b); return; } if (s.includes(b)) return; fail(what + ' (' + n + ')'); }
 
 // ---------- modul luminos: browserele cu „mod întunecat forțat” (Chrome/Edge, Dark Reader) nu mai recolorează pagina ----------
+// o singură pereche de etichete (versiunile vechi ale scriptului le dublau la fiecare rulare)
+s = s.replace(/<meta name="color-scheme" content="only light">\n<meta name="darkreader-lock">\n/g, '');
 swap('<meta charset="utf-8">\n', '<meta charset="utf-8">\n<meta name="color-scheme" content="only light">\n<meta name="darkreader-lock">\n', 'modul luminos');
 
 // ---------- stilurile și scriptul ----------

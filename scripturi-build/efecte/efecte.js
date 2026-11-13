@@ -33,8 +33,9 @@
     if (!REP.length) return;
 
     // ---------- D) călărețul de sub meniu: merge de la 370 la 476 pe măsură ce citești ----------
-    // un hun călare, cu arcul în mână; picioarele calului (.lg) galopează doar cât derulezi
-    var LEG = function(x, c){ return '<path class="lg ' + c + '" d="M' + x + ' 17.6 L' + x + ' 27.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'; };
+    // un hun călare, cu arcul în mână; calul merge la pas cât stai și galopează cât derulezi
+    // fiecare picior are genunchi (două segmente), ca mersul să pară mers, nu bețe care se leagănă
+    var LEG = function(x, c){ return '<path class="lg ' + c + '" d="M' + x + ' 17.6 L' + (x + 1.1) + ' 22.6 L' + (x - 0.4) + ' 27.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>'; };
     var SVG = '<svg viewBox="0 0 38 28" aria-hidden="true" focusable="false">' +
       '<g opacity="0.55">' + LEG(24.8, 'lg-b') + LEG(12.6, 'lg-a') + '</g>' + LEG(23, 'lg-a') + LEG(10.6, 'lg-b') +
       '<g class="ef-body" fill="currentColor">' +
@@ -42,7 +43,7 @@
         '<polygon points="22,13 27,5.5 30.5,6.5 26.5,15.5"/>' +
         '<polygon points="27,4.5 31,4 35.5,7.5 34.5,9.5 30,8.2"/>' +
         '<polygon points="28.4,4.8 29,2.2 30.2,4.5"/>' +
-        '<path d="M8.7 12.8 Q5.2 13.8 4.4 19.6 Q6.6 16.6 9.2 15.4 Z"/>' +
+        '<path class="ef-tail" d="M8.7 12.8 Q5.2 13.8 4.4 19.6 Q6.6 16.6 9.2 15.4 Z"/>' +
         '<path d="M16 11.4 L18.6 16.6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>' +
         '<polygon points="15.2,11.6 17.2,4 19.7,4.4 18.7,11.9"/>' +
         '<circle cx="18.6" cy="2.4" r="1.75"/>' +
@@ -84,7 +85,7 @@
         ride.classList.toggle('back', u < lastU);
         if (!reduced() && u > 0 && u < 1) {
           ride.classList.add('go'); clearTimeout(goT);
-          goT = setTimeout(function(){ ride.classList.remove('go'); }, 200);
+          goT = setTimeout(function(){ ride.classList.remove('go'); }, 320);
         }
       }
       if (u >= 1) ride.classList.remove('back');

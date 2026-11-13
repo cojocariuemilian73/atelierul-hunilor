@@ -1,6 +1,7 @@
 // Recenzia 9: miturile și „Știai că…?” împărțite prin capitole, lângă textul de care țin; la final nu mai rămâne niciunul.
 //  - fără secțiunea „Mituri verificate” (și fără intrarea ei din meniu, scoasă în patch-acasa.js);
-//  - șase grupuri mici: originea, viața în șa, izvoarele, aurul, Attila, Bazinul Carpatic;
+//  - patru grupuri mici de mituri: originea, izvoarele, Attila, Bazinul Carpatic;
+//  - cele șapte „Știai că…?” sunt note pe margine, fiecare singură, lângă paragraful ei (două în fișele muzeului);
 //  - contorul „0 din N verificate” și „Verifică toate” apar doar la grupurile cu cel puțin două mituri.
 // Folosire: node scripturi-build/patch-recenzie-9.js (după patch-recenzie-8.js, înainte de patch-efecte.js).
 // Se poate rula de mai multe ori.
@@ -29,24 +30,54 @@ function swap(a, b, what){ const n = s.split(a).length - 1; if (n === 1) { s = s
   s = s.replace(/ *<div class="mx(?: mx-all-in-one)?" data-myths="[\d,]+" data-title="[^"]*"><\/div>\n/g, '');
 }
 
-// ---------- 2) grupurile, în capitole ----------
+// ---------- 2) grupurile de mituri, în capitole (se refac de fiecare dată) ----------
+s = s.replace(/ *<div class="mx mx-inline" data-myths="[\d,]+" data-title="[^"]*"><\/div>\n/g, '');
+const put = (at, html, what) => { if (at < 0) fail(what); s = s.slice(0, at) + html + s.slice(at); };
 const G = (ids, title) => '      <div class="mx mx-inline" data-myths="' + ids + '" data-title="' + title + '"></div>\n';
-if (!s.includes('class="mx mx-inline"')) {
-  const put = (at, html, what) => { if (at < 0) fail(what); s = s.slice(0, at) + html + s.slice(at); };
-  // Origini: după „Teoria legăturii cu Xiongnu” (înaintea rândului cu Neuville)
-  { const i = s.indexOf('<img class="img-parchment" id="img-neuville"'); put(i < 0 ? -1 : s.lastIndexOf('      <div class="sr-row', i), G('3,0,2', 'Mituri despre origine'), 'locul: originea'); }
-  // Origini: după citatul despre viața în șa, înaintea tabelului cu izvoarele
-  put(s.indexOf('      <div class="src-compare sr-reveal">'), G('13,9,12', 'Știai că…? Viața în șa'), 'locul: viața în șa');
-  // Origini: după „Izvoarele, față în față”, la capătul capitolului
-  { const i = s.indexOf('<div class="src-compare sr-reveal">'); put(i < 0 ? -1 : s.indexOf('    </section>\n', i), G('1,6', 'Mituri despre izvoare'), 'locul: izvoarele'); }
-  // Marea Migrație: după graficul cu monede
-  { const i = s.indexOf('      <!-- aur:end -->\n'); put(i < 0 ? -1 : i + '      <!-- aur:end -->\n'.length, G('10,11,14', 'Știai că…? Aurul tributului'), 'locul: aurul'); }
-  // Personalități: după duel și Câmpiile Catalaunice
-  put(s.indexOf('      <h3 class="sub-title">Consecințe de lungă durată</h3>'), G('8,7,5', 'Mituri despre Attila'), 'locul: Attila');
-  // Personalități: după „Ecoul în spațiul carpato-danubiano-pontic” și precizarea despre obiectele „hunice”
-  { const i = s.indexOf('<p class="source-caution"><b>O precizare necesară.</b>'); put(i < 0 ? -1 : s.indexOf('    </section>\n', i), G('4', 'Un mit despre Bazinul Carpatic'), 'locul: Bazinul Carpatic'); }
+// Origini: după „Teoria legăturii cu Xiongnu” (înaintea rândului cu Neuville)
+{ const i = s.indexOf('<img class="img-parchment" id="img-neuville"'); put(i < 0 ? -1 : s.lastIndexOf('      <div class="sr-row', i), G('3,0,2', 'Ce se spune despre originea hunilor'), 'locul: originea'); }
+// Origini: după „Izvoarele, față în față”, la capătul capitolului
+{ const i = s.indexOf('<div class="src-compare sr-reveal">'); put(i < 0 ? -1 : s.indexOf('    </section>\n', i), G('1,6', 'Ce se spune despre izvoare'), 'locul: izvoarele'); }
+// Personalități: după duel și Câmpiile Catalaunice
+put(s.indexOf('      <h3 class="sub-title">Consecințe de lungă durată</h3>'), G('8,7', 'Ce se spune și ce se știe'), 'locul: Attila');
+// (mitul despre Bazinul Carpatic e întrebarea din banda de la Gherăseni, în patch-recenzie-10.js)
+if ((s.match(/class="mx mx-inline"/g) || []).length !== 3) fail('grupurile de mituri');
+
+// ---------- 2b) „Știai că…?”: note pe margine, fiecare singură, lângă paragraful ei ----------
+{
+  const a = s.indexOf('var MYTHS = ['), b = s.indexOf('];', a);
+  if (a < 0 || b < 0) fail('lista MYTHS');
+  const MY = eval(s.slice(a + 'var MYTHS = '.length, b + 1));
+  const note = (k, cls) => {
+    const m = MY[k]; if (!m || !m.fact) fail('faptul ' + k);
+    const n = m.num.match(/^([\d.,\/]+)\s+(.*)$/);
+    const head = n ? '<p class="r9n-num">' + n[1] + '</p><p class="r9n-unit">' + n[2] + '</p>' : '<p class="r9n-title">' + m.num + '</p>';
+    const src = m.src ? '<p class="r9n-src">Sursa: ' + m.src.replace(/nota (\d+)/g, '<a class="mx-note" href="#note-$1">nota $1</a>') + '</p>' : '';
+    return '<aside class="r9-note' + (cls ? ' ' + cls : '') + '" aria-label="Știai că…? ' + m.num.replace(/["„”]/g, '') + '"><p class="r9n-tag">Știai că…?</p>' + head + '<p class="r9n-text">' + m.truth + '</p>' + src + '</aside>';
+  };
+  // curățenie: notele și dicționarul muzeului se refac de fiecare dată
+  s = s.replace(/ *<aside class="r9-note[^"]*"[\s\S]*?<\/aside>\n/g, '');
+  s = s.replace(/<div class="r9-facts">\n([\s\S]*?)<\/div>\n/, '$1');
+  s = s.replace(/<script id="r9-notes">[\s\S]*?<\/script>\n/, '');
+  const before = (anchor, k, what) => { const i = s.indexOf(anchor); if (i < 0) fail(what); const ls = s.lastIndexOf('\n', i) + 1; put(ls, s.slice(ls, i).replace(/\S/g, '') + note(k) + '\n', what); };
+  // Origini: lângă paragraful despre arcul compozit și, la un ecran mai jos, lângă citatul lui Priscus despre tratativele
+  // purtate călare (paragraful lui Ammianus e chiar lângă cel despre arc, așa că cele două note s-ar fi lipit)
+  before('<p>Avantajul lor în luptă venea din <b>arcul recurbat compozit</b>', 9, 'nota: săgeți de os');
+  before('<!-- pq:start --><figure class="pq"><blockquote><p>Socotind că nu se cuvine să coboare de pe cai', 13, 'nota: zi și noapte călare');
+  // Marea Migrație: lângă imaginea solidului și imediat după graficul cu monede
+  before('<figure class="sr-fig sr-fig-inline"><img id="img-solidus"', 14, 'nota: 1/72 de livră');
+  { const e = '      <!-- aur:end -->\n', i = s.indexOf(e); put(i < 0 ? -1 : i + e.length, '      ' + note(10) + '\n', 'nota: 500 de solizi'); }
+  // Personalități: în fișa lui Attila, ca notă pe margine lângă faptele-cheie (un rând cu două coloane)
+  { const i = s.indexOf('<ul class="dk-facts">'), j = i < 0 ? -1 : s.indexOf('</ul>\n', i); if (j < 0) fail('nota: sabia lui Marte');
+    const e = j + '</ul>\n'.length;
+    s = s.slice(0, i) + '<div class="r9-facts">\n' + s.slice(i, e) + '          ' + note(5, 'r9-in r9-side') + '\n</div>\n' + s.slice(e); }
+  // Muzeu: în fișele Solidului lui Teodosie și Spathei (fișele se construiesc în script, deci notele merg într-un dicționar)
+  const NOTES = { 'Solidul lui Teodosie al II-lea': note(11, 'r9-in'), 'Spatha hunică': note(12, 'r9-in') };
+  put(s.indexOf('</head>'), '<script id="r9-notes">\nwindow.R9_NOTES = ' + JSON.stringify(NOTES).replace(/<\//g, '<\\/') + ';\n</script>\n', 'nota: muzeul');
+  swap("      '<p class=\"artifact-desc\">' + art.desc + '</p>' +\n",
+    "      '<p class=\"artifact-desc\">' + art.desc + '</p>' + ((window.R9_NOTES || {})[art.name] || '') +\n", 'nota: fișele muzeului');
+  if ((s.match(/<aside class="r9-note/g) || []).length !== 5) fail('notele pe margine');
 }
-if ((s.match(/class="mx mx-inline"/g) || []).length !== 6) fail('grupurile de mituri');
 
 // ---------- 3) contorul doar la grupurile cu cel puțin două mituri ----------
 swap("      '<p class=\"mx-count\"><b>0</b> din ' + ids.length + ' verificate</p>' +\n      '<button type=\"button\" class=\"mx-all\">Verifică toate</button>';",

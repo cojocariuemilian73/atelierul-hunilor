@@ -1,6 +1,6 @@
 // Pune la zi, în paginile publicate, stilurile jocurilor (jocuri.css), scriptul simulării (migratie.js)
 // și scriptul jocului Imperiul lui Attila (imperiu.js).
-// Folosire: node scripturi-build/splice-jocuri.js
+// Folosire: node scripturi-build/splice-jocuri.js [fișiere…] (fără argumente: toate paginile de mai jos)
 const fs = require('fs');
 const path = require('path');
 const root = path.join(__dirname, '..');
@@ -13,7 +13,8 @@ const MIG_JS = rd('migratie.js').replace(/\n+$/, '').replace('/*__JOC_IMAGINI__*
 const IMP_JS = rd('imperiu.js').replace(/\n+$/, '');
 const MARK = '  /* ============ MODULE: JOCURILE';
 const END = '  /* ============ MODULE: ATLASUL MIGRAȚIEI (.m-atlas) ============ */';
-const files = ['index.html', 'atelierul-hunilor.html', 'module-individuale/imperiul-lui-attila.html', 'module-individuale/simularea-marii-migratii.html'];
+const ARG = process.argv.slice(2);
+const files = ARG.length ? ARG : ['index.html', 'atelierul-hunilor.html', 'module-individuale/imperiul-lui-attila.html', 'module-individuale/simularea-marii-migratii.html'];
 
 for (const rel of files) {
   const f = path.join(root, rel);
