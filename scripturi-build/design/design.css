@@ -86,16 +86,16 @@
   }
 
   /* ---------- butoane: principal (granat) și secundar (contur) ---------- */
-  #page-acasa .hero-btn, #page-acasa .cta-btn, #page-acasa .lab-how, .ds-btn{ display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--sp-24); border-radius: var(--radius); box-shadow: none; text-shadow: none; background-image: none; font: 600 var(--fs-17)/1 'Source Serif 4', Georgia, serif; text-transform: none; letter-spacing: 0; transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease; transform: none !important; }
-  #page-acasa .hero-btn.primary, #page-acasa .cta-btn{ background: var(--garnet); color: var(--paper); border: 1px solid var(--garnet); }
-  #page-acasa .hero-btn.primary:hover, #page-acasa .cta-btn:hover{ background: #5E1717; border-color: #5E1717; color: var(--paper); }
+  #page-acasa .cta-btn, #page-acasa .lab-how, .ds-btn{ display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--sp-24); border-radius: var(--radius); box-shadow: none; text-shadow: none; background-image: none; font: 600 var(--fs-17)/1 'Source Serif 4', Georgia, serif; text-transform: none; letter-spacing: 0; transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease; transform: none !important; }
+  #page-acasa .cta-btn{ background: var(--garnet); color: var(--paper); border: 1px solid var(--garnet); }
+  #page-acasa .cta-btn:hover{ background: #5E1717; border-color: #5E1717; color: var(--paper); }
 
   /* ---------- răspunsul comenzilor la apăsare ---------- */
   @media (prefers-reduced-motion: no-preference){
-    :is(#page-acasa .hero-btn, #page-acasa .cta-btn, .jg-btn, .md-btn, .st-menu, .hx-nav button, .gs-nav button){
+    :is(#page-acasa .cta-btn, .jg-btn, .md-btn, .st-menu, .hx-nav button, .gs-nav button){
       transition: scale 140ms var(--ease-out-ui), background-color 150ms ease, border-color 150ms ease, color 150ms ease;
     }
-    :is(#page-acasa .hero-btn, #page-acasa .cta-btn, .jg-btn, .md-btn, .st-menu, .hx-nav button, .gs-nav button):active:not(:disabled){ scale: .97; }
+    :is(#page-acasa .cta-btn, .jg-btn, .md-btn, .st-menu, .hx-nav button, .gs-nav button):active:not(:disabled){ scale: .97; }
     #page-acasa .hx-era{ transition: background-color 150ms ease, color 150ms ease; }
   }
   @media (hover: hover) and (pointer: fine){
@@ -113,75 +113,149 @@
 
   /* ---------- coperta ---------- */
   html body #page-acasa .hero{
+    --fresca-x: 55%;
+    --fresca-y: 0%;
+    --fresca-edge: clamp(45px, 14vw, 240px);
+    isolation: isolate;
     display: grid;
-    align-items: center;
-    min-height: clamp(440px, 62svh, 640px);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(clamp(345px, 60svh, 650px), auto) auto;
+    align-items: stretch;
+    width: min(100%, 1740px) !important;
+    margin: 0 auto !important;
+    padding-bottom: 8px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
     background: var(--paper);
   }
-  html body #page-acasa .hero :is(.hero-bg, .hero-scrim){ inset: 0 0 0 42%; -webkit-mask-image: none !important; mask-image: none !important; }
-  #page-acasa .hero-bg{ transform: none !important; }
-  #page-acasa .hero-img{ object-position: 54% 42%; }
-  #page-acasa .hero-scrim{
+  #page-acasa .hero-inner{ display: contents; }
+
+  /* Cele trei straturi se estompează împreună. Titlul și comenzile nu sunt mascate. */
+  html body #page-acasa .hero :is(.hero-bg, .hero-scrim, .hero-foreground){
+    position: absolute;
+    grid-area: 1 / 1 / 2 / 2;
+    inset: 0;
+    width: auto;
+    height: auto;
+    transform: none !important;
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent, #000 var(--fresca-edge), #000 calc(100% - var(--fresca-edge)), transparent),
+      linear-gradient(180deg, transparent, #000 16%, #000 61%, transparent);
+    mask-image:
+      linear-gradient(90deg, transparent, #000 var(--fresca-edge), #000 calc(100% - var(--fresca-edge)), transparent),
+      linear-gradient(180deg, transparent, #000 16%, #000 61%, transparent);
+    mask-composite: intersect;
     pointer-events: none;
-    background: linear-gradient(90deg, var(--paper), rgba(243, 234, 215, 0.2) 28%, transparent 46%),
-      linear-gradient(0deg, var(--paper), transparent 28%) !important;
   }
-  html body #page-acasa .hero-inner{
-    width: 100%;
-    max-width: calc(var(--wrap) + 2 * var(--gutter));
-    box-sizing: border-box;
-    padding: var(--sp-64) var(--gutter);
+  #page-acasa .hero-img{
+    object-position: var(--fresca-x) var(--fresca-y);
+    filter: saturate(.94) brightness(.85);
   }
-  #page-acasa .hero .title{
-    max-width: 9.5ch;
-    margin: 0;
-    font: 600 clamp(3rem, 5.9vw, 5.25rem)/0.99 'EB Garamond', Georgia, serif !important;
-    letter-spacing: -0.025em;
+  #page-acasa .hero-foreground{ display: none; }
+  @supports (width: 1cqw){
+    #page-acasa .hero :is(.hero-bg, .hero-foreground){
+      container-type: size;
+    }
+    #page-acasa .hero-foreground{
+      display: block;
+      z-index: 3;
+    }
+    #page-acasa .hero :is(.hero-bg, .hero-foreground) .hero-img{
+      inset: var(--fresca-y) auto auto var(--fresca-x);
+      width: max(100cqw, calc(100cqh * 1310 / 700));
+      height: max(100cqh, calc(100cqw * 700 / 1310));
+      max-width: none;
+      translate: calc(-1 * var(--fresca-x)) calc(-1 * var(--fresca-y));
+    }
+    #page-acasa .hero-foreground .hero-img{
+      /* Decupajul urmărește coifurile. Se pierde înainte să ajungă la marginile scenei. */
+      mask-image:
+        linear-gradient(90deg, transparent 36%, #000 40%, #000 56%, transparent 61%),
+        linear-gradient(180deg, #000 33%, transparent 49%);
+      mask-composite: intersect;
+      clip-path: polygon(0% 51.14%, 33.05% 44%, 36.49% 40.29%, 38.4% 30.57%, 39.08% 28.71%, 39.85% 27.29%, 40.69% 26.86%, 40.99% 25.14%, 40.99% 23.57%, 41.6% 21.29%, 41.91% 21.57%, 42.37% 20.43%, 42.75% 22.57%, 42.6% 25%, 43.51% 26.29%, 43.44% 27.43%, 43.82% 27.71%, 44.27% 26%, 45.11% 25.71%, 45.88% 26.43%, 46.49% 29.71%, 47.02% 30.29%, 48.02% 30%, 48.17% 28.43%, 48.63% 26.57%, 49.16% 25.43%, 50% 25.14%, 51.07% 23.57%, 51.98% 24.14%, 51.68% 25.43%, 52.44% 25.43%, 51.6% 27.14%, 51.07% 29.29%, 52.29% 30.71%, 53.51% 31.86%, 54.35% 31.29%, 55.04% 29%, 55.34% 27.43%, 55.88% 27.14%, 56.87% 28.71%, 56.95% 31%, 58.32% 34%, 59.69% 34.29%, 61.68% 34.86%, 64.73% 35.29%, 68.32% 37.29%, 73.74% 47.14%, 100% 57.71%, 100% 100%, 0% 100%);
+    }
+  }
+  html body #page-acasa .hero .hero-scrim{
+    z-index: 1;
+    background: radial-gradient(ellipse 64% 47% at 50% 25%, #21171156, #21171124 64%, transparent 100%) !important;
+  }
+  html body #page-acasa #acasa .title{
+    grid-area: 1 / 1;
+    position: relative;
+    align-self: start;
+    z-index: 2;
+    max-width: none;
+    margin: clamp(30px, 4.9svh, 54px) clamp(12px, 4vw, 56px) 0;
+    padding: 0;
+    font: 600 clamp(3rem, min(9vw, 13svh), 9rem)/.89 'EB Garamond', Georgia, serif !important;
+    letter-spacing: -.035em;
+    text-align: center;
     text-wrap: balance;
+    color: #fff4de !important;
+    text-shadow: 0 3px 18px #24180fc2;
   }
-  #page-acasa .hero-years{ font-variant-numeric: lining-nums tabular-nums; }
-  #page-acasa .hero .dek{ max-width: 32ch; font-size: var(--fs-20); line-height: 1.5; }
+  #page-acasa .hero-title-prefix{
+    display: block;
+    margin-bottom: .23em;
+    font-size: .43em;
+    letter-spacing: -.022em;
+    line-height: 1;
+  }
+  #page-acasa .hero-end{
+    grid-area: 2 / 1;
+    position: relative;
+    z-index: 4;
+    width: min(calc(100% - 2 * var(--gutter)), var(--wrap));
+    margin: -20px auto 0;
+  }
+  #page-acasa #acasa .hero-years{
+    margin: 0 0 var(--sp-8);
+    color: #79521b !important;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  #page-acasa #acasa .dek{
+    max-width: 47ch;
+    margin: 0;
+    font-size: var(--fs-17);
+    line-height: 1.45;
+    color: var(--ink) !important;
+  }
   html body #page-acasa #acasa + .hero-credit{
-    width: 100%;
-    max-width: calc(var(--wrap) + 2 * var(--gutter));
+    width: min(calc(100% - 2 * var(--gutter)), var(--wrap));
+    max-width: none;
     box-sizing: border-box;
-    margin-inline: auto !important;
-    padding-inline: var(--gutter) !important;
+    margin: var(--sp-16) auto var(--sp-24) !important;
+    padding-inline: 0 !important;
   }
-  @media (max-width: 760px){
-    html body #page-acasa .hero{ min-height: 0; }
-    html body #page-acasa .hero :is(.hero-bg, .hero-scrim){ inset: 0 0 auto; height: clamp(180px, 46vw, 320px); }
-    #page-acasa .hero-img{ object-position: 56% 43%; }
-    #page-acasa .hero-scrim{ background: linear-gradient(0deg, var(--paper), transparent 36%) !important; }
-    html body #page-acasa .hero-inner{ padding: calc(clamp(180px, 46vw, 320px) - 4px) var(--gutter) var(--sp-24); }
-    #page-acasa .hero .title{ max-width: 12ch; font-size: clamp(2.45rem, 8.9vw, 3.7rem) !important; }
-    #page-acasa .hero .dek{ font-size: var(--fs-17); }
-    #page-acasa .hero-cta{ display: grid; grid-template-columns: minmax(0, 1fr); }
-    #page-acasa .hero-cta .hero-btn{ justify-content: center; }
+  @media (max-width: 540px){
+    html body #page-acasa .hero{
+      --fresca-x: 51%;
+      --fresca-edge: 11%;
+      grid-template-rows: minmax(clamp(325px, 56svh, 435px), auto) auto;
+    }
+    html body #page-acasa #acasa .title{
+      margin-top: clamp(32px, 6.6svh, 59px);
+      margin-inline: 12px;
+      font-size: clamp(1.65rem, 9.25vw, 3.1rem) !important;
+      white-space: nowrap;
+    }
+    #page-acasa .hero-title-prefix{ font-size: .64em; }
   }
 
   @media (prefers-reduced-motion: no-preference){
     #page-acasa .hero-img{
-      transform-origin: 54% 42%;
-      animation: fresca-apropiere 1.8s cubic-bezier(.22, 1, .36, 1) both;
+      transform-origin: var(--fresca-x) var(--fresca-y);
+      animation: fresca-apropiere 1.15s var(--ease-out-ui) both;
     }
-    #page-acasa .hero-inner > :is(.title, .hero-years, .dek, .hero-cta){
-      animation: coperta-intrare 540ms cubic-bezier(.22, 1, .36, 1) both;
-    }
-    #page-acasa .hero-inner > .hero-years{ animation-delay: 55ms; }
-    #page-acasa .hero-inner > .dek{ animation-delay: 115ms; }
-    #page-acasa .hero-inner > .hero-cta{ animation-delay: 185ms; }
-    #page-acasa .hero-inner > .hero-cta:focus-within{ animation: none; }
+    #page-acasa .hero .title{ animation: coperta-intrare 460ms var(--ease-out-ui) both; }
+    #page-acasa .hero-end{ animation: coperta-intrare 420ms var(--ease-out-ui) 100ms both; }
   }
+  @keyframes fresca-apropiere{ from{ transform: scale(1.025); } }
+  @keyframes coperta-intrare{ from{ opacity: .74; translate: 0 6px; } }
 
-  @keyframes fresca-apropiere{
-    from{ opacity: 0.64; transform: scale(1.055); }
-    to{ opacity: 1; transform: scale(1); }
-  }
-  @keyframes coperta-intrare{
-    from{ opacity: 0; translate: 0 9px; }
-    to{ opacity: 1; translate: 0 0; }
-  }
+
 
   /* ---------- modulele articolului pe același pergament ---------- */
   html body #page-acasa :is(#sec-cronologie, .hx, .gs, #sec-atlas, #sec-muzeu){
@@ -398,7 +472,6 @@
   #page-acasa .gs .gs-stop rect{ fill: var(--paper); stroke: var(--garnet); }
   #page-acasa .gs .gs-stop text{ fill: var(--garnet); }
   #page-acasa .gs .gs-stop .sm, #page-acasa .gs .gs-coins-lab{ fill: var(--ink); }
-  #page-acasa .hero{ width: auto !important; max-width: 100%; margin-left: 0 !important; margin-right: 0 !important; }
 
   /* Textul și fotografiile articolului sunt vizibile imediat. */
   #page-acasa .r7-rv, #page-acasa .r7-rv:not(.r7-in){ opacity: 1; transform: none; transition: none; }

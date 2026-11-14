@@ -3901,16 +3901,16 @@
   }
 
   /* ---------- butoane: principal (granat) și secundar (contur) ---------- */
-  #page-acasa .hero-btn, #page-acasa .cta-btn, #page-acasa .lab-how, .ds-btn{ display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--sp-24); border-radius: var(--radius); box-shadow: none; text-shadow: none; background-image: none; font: 600 var(--fs-17)/1 'Source Serif 4', Georgia, serif; text-transform: none; letter-spacing: 0; transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease; transform: none !important; }
-  #page-acasa .hero-btn.primary, #page-acasa .cta-btn{ background: var(--garnet); color: var(--paper); border: 1px solid var(--garnet); }
-  #page-acasa .hero-btn.primary:hover, #page-acasa .cta-btn:hover{ background: #5E1717; border-color: #5E1717; color: var(--paper); }
+  #page-acasa .cta-btn, #page-acasa .lab-how, .ds-btn{ display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--sp-24); border-radius: var(--radius); box-shadow: none; text-shadow: none; background-image: none; font: 600 var(--fs-17)/1 'Source Serif 4', Georgia, serif; text-transform: none; letter-spacing: 0; transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease; transform: none !important; }
+  #page-acasa .cta-btn{ background: var(--garnet); color: var(--paper); border: 1px solid var(--garnet); }
+  #page-acasa .cta-btn:hover{ background: #5E1717; border-color: #5E1717; color: var(--paper); }
 
   /* ---------- răspunsul comenzilor la apăsare ---------- */
   @media (prefers-reduced-motion: no-preference){
-    :is(#page-acasa .hero-btn, #page-acasa .cta-btn, .jg-btn, .md-btn, .st-menu, .hx-nav button, .gs-nav button){
+    :is(#page-acasa .cta-btn, .jg-btn, .md-btn, .st-menu, .hx-nav button, .gs-nav button){
       transition: scale 140ms var(--ease-out-ui), background-color 150ms ease, border-color 150ms ease, color 150ms ease;
     }
-    :is(#page-acasa .hero-btn, #page-acasa .cta-btn, .jg-btn, .md-btn, .st-menu, .hx-nav button, .gs-nav button):active:not(:disabled){ scale: .97; }
+    :is(#page-acasa .cta-btn, .jg-btn, .md-btn, .st-menu, .hx-nav button, .gs-nav button):active:not(:disabled){ scale: .97; }
     #page-acasa .hx-era{ transition: background-color 150ms ease, color 150ms ease; }
   }
   @media (hover: hover) and (pointer: fine){
@@ -3928,75 +3928,149 @@
 
   /* ---------- coperta ---------- */
   html body #page-acasa .hero{
+    --fresca-x: 55%;
+    --fresca-y: 0%;
+    --fresca-edge: clamp(45px, 14vw, 240px);
+    isolation: isolate;
     display: grid;
-    align-items: center;
-    min-height: clamp(440px, 62svh, 640px);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(clamp(345px, 60svh, 650px), auto) auto;
+    align-items: stretch;
+    width: min(100%, 1740px) !important;
+    margin: 0 auto !important;
+    padding-bottom: 8px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
     background: var(--paper);
   }
-  html body #page-acasa .hero :is(.hero-bg, .hero-scrim){ inset: 0 0 0 42%; -webkit-mask-image: none !important; mask-image: none !important; }
-  #page-acasa .hero-bg{ transform: none !important; }
-  #page-acasa .hero-img{ object-position: 54% 42%; }
-  #page-acasa .hero-scrim{
+  #page-acasa .hero-inner{ display: contents; }
+
+  /* Cele trei straturi se estompează împreună. Titlul și comenzile nu sunt mascate. */
+  html body #page-acasa .hero :is(.hero-bg, .hero-scrim, .hero-foreground){
+    position: absolute;
+    grid-area: 1 / 1 / 2 / 2;
+    inset: 0;
+    width: auto;
+    height: auto;
+    transform: none !important;
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent, #000 var(--fresca-edge), #000 calc(100% - var(--fresca-edge)), transparent),
+      linear-gradient(180deg, transparent, #000 16%, #000 61%, transparent);
+    mask-image:
+      linear-gradient(90deg, transparent, #000 var(--fresca-edge), #000 calc(100% - var(--fresca-edge)), transparent),
+      linear-gradient(180deg, transparent, #000 16%, #000 61%, transparent);
+    mask-composite: intersect;
     pointer-events: none;
-    background: linear-gradient(90deg, var(--paper), rgba(243, 234, 215, 0.2) 28%, transparent 46%),
-      linear-gradient(0deg, var(--paper), transparent 28%) !important;
   }
-  html body #page-acasa .hero-inner{
-    width: 100%;
-    max-width: calc(var(--wrap) + 2 * var(--gutter));
-    box-sizing: border-box;
-    padding: var(--sp-64) var(--gutter);
+  #page-acasa .hero-img{
+    object-position: var(--fresca-x) var(--fresca-y);
+    filter: saturate(.94) brightness(.85);
   }
-  #page-acasa .hero .title{
-    max-width: 9.5ch;
-    margin: 0;
-    font: 600 clamp(3rem, 5.9vw, 5.25rem)/0.99 'EB Garamond', Georgia, serif !important;
-    letter-spacing: -0.025em;
+  #page-acasa .hero-foreground{ display: none; }
+  @supports (width: 1cqw){
+    #page-acasa .hero :is(.hero-bg, .hero-foreground){
+      container-type: size;
+    }
+    #page-acasa .hero-foreground{
+      display: block;
+      z-index: 3;
+    }
+    #page-acasa .hero :is(.hero-bg, .hero-foreground) .hero-img{
+      inset: var(--fresca-y) auto auto var(--fresca-x);
+      width: max(100cqw, calc(100cqh * 1310 / 700));
+      height: max(100cqh, calc(100cqw * 700 / 1310));
+      max-width: none;
+      translate: calc(-1 * var(--fresca-x)) calc(-1 * var(--fresca-y));
+    }
+    #page-acasa .hero-foreground .hero-img{
+      /* Decupajul urmărește coifurile. Se pierde înainte să ajungă la marginile scenei. */
+      mask-image:
+        linear-gradient(90deg, transparent 36%, #000 40%, #000 56%, transparent 61%),
+        linear-gradient(180deg, #000 33%, transparent 49%);
+      mask-composite: intersect;
+      clip-path: polygon(0% 51.14%, 33.05% 44%, 36.49% 40.29%, 38.4% 30.57%, 39.08% 28.71%, 39.85% 27.29%, 40.69% 26.86%, 40.99% 25.14%, 40.99% 23.57%, 41.6% 21.29%, 41.91% 21.57%, 42.37% 20.43%, 42.75% 22.57%, 42.6% 25%, 43.51% 26.29%, 43.44% 27.43%, 43.82% 27.71%, 44.27% 26%, 45.11% 25.71%, 45.88% 26.43%, 46.49% 29.71%, 47.02% 30.29%, 48.02% 30%, 48.17% 28.43%, 48.63% 26.57%, 49.16% 25.43%, 50% 25.14%, 51.07% 23.57%, 51.98% 24.14%, 51.68% 25.43%, 52.44% 25.43%, 51.6% 27.14%, 51.07% 29.29%, 52.29% 30.71%, 53.51% 31.86%, 54.35% 31.29%, 55.04% 29%, 55.34% 27.43%, 55.88% 27.14%, 56.87% 28.71%, 56.95% 31%, 58.32% 34%, 59.69% 34.29%, 61.68% 34.86%, 64.73% 35.29%, 68.32% 37.29%, 73.74% 47.14%, 100% 57.71%, 100% 100%, 0% 100%);
+    }
+  }
+  html body #page-acasa .hero .hero-scrim{
+    z-index: 1;
+    background: radial-gradient(ellipse 64% 47% at 50% 25%, #21171156, #21171124 64%, transparent 100%) !important;
+  }
+  html body #page-acasa #acasa .title{
+    grid-area: 1 / 1;
+    position: relative;
+    align-self: start;
+    z-index: 2;
+    max-width: none;
+    margin: clamp(30px, 4.9svh, 54px) clamp(12px, 4vw, 56px) 0;
+    padding: 0;
+    font: 600 clamp(3rem, min(9vw, 13svh), 9rem)/.89 'EB Garamond', Georgia, serif !important;
+    letter-spacing: -.035em;
+    text-align: center;
     text-wrap: balance;
+    color: #fff4de !important;
+    text-shadow: 0 3px 18px #24180fc2;
   }
-  #page-acasa .hero-years{ font-variant-numeric: lining-nums tabular-nums; }
-  #page-acasa .hero .dek{ max-width: 32ch; font-size: var(--fs-20); line-height: 1.5; }
+  #page-acasa .hero-title-prefix{
+    display: block;
+    margin-bottom: .23em;
+    font-size: .43em;
+    letter-spacing: -.022em;
+    line-height: 1;
+  }
+  #page-acasa .hero-end{
+    grid-area: 2 / 1;
+    position: relative;
+    z-index: 4;
+    width: min(calc(100% - 2 * var(--gutter)), var(--wrap));
+    margin: -20px auto 0;
+  }
+  #page-acasa #acasa .hero-years{
+    margin: 0 0 var(--sp-8);
+    color: #79521b !important;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  #page-acasa #acasa .dek{
+    max-width: 47ch;
+    margin: 0;
+    font-size: var(--fs-17);
+    line-height: 1.45;
+    color: var(--ink) !important;
+  }
   html body #page-acasa #acasa + .hero-credit{
-    width: 100%;
-    max-width: calc(var(--wrap) + 2 * var(--gutter));
+    width: min(calc(100% - 2 * var(--gutter)), var(--wrap));
+    max-width: none;
     box-sizing: border-box;
-    margin-inline: auto !important;
-    padding-inline: var(--gutter) !important;
+    margin: var(--sp-16) auto var(--sp-24) !important;
+    padding-inline: 0 !important;
   }
-  @media (max-width: 760px){
-    html body #page-acasa .hero{ min-height: 0; }
-    html body #page-acasa .hero :is(.hero-bg, .hero-scrim){ inset: 0 0 auto; height: clamp(180px, 46vw, 320px); }
-    #page-acasa .hero-img{ object-position: 56% 43%; }
-    #page-acasa .hero-scrim{ background: linear-gradient(0deg, var(--paper), transparent 36%) !important; }
-    html body #page-acasa .hero-inner{ padding: calc(clamp(180px, 46vw, 320px) - 4px) var(--gutter) var(--sp-24); }
-    #page-acasa .hero .title{ max-width: 12ch; font-size: clamp(2.45rem, 8.9vw, 3.7rem) !important; }
-    #page-acasa .hero .dek{ font-size: var(--fs-17); }
-    #page-acasa .hero-cta{ display: grid; grid-template-columns: minmax(0, 1fr); }
-    #page-acasa .hero-cta .hero-btn{ justify-content: center; }
+  @media (max-width: 540px){
+    html body #page-acasa .hero{
+      --fresca-x: 51%;
+      --fresca-edge: 11%;
+      grid-template-rows: minmax(clamp(325px, 56svh, 435px), auto) auto;
+    }
+    html body #page-acasa #acasa .title{
+      margin-top: clamp(32px, 6.6svh, 59px);
+      margin-inline: 12px;
+      font-size: clamp(1.65rem, 9.25vw, 3.1rem) !important;
+      white-space: nowrap;
+    }
+    #page-acasa .hero-title-prefix{ font-size: .64em; }
   }
 
   @media (prefers-reduced-motion: no-preference){
     #page-acasa .hero-img{
-      transform-origin: 54% 42%;
-      animation: fresca-apropiere 1.8s cubic-bezier(.22, 1, .36, 1) both;
+      transform-origin: var(--fresca-x) var(--fresca-y);
+      animation: fresca-apropiere 1.15s var(--ease-out-ui) both;
     }
-    #page-acasa .hero-inner > :is(.title, .hero-years, .dek, .hero-cta){
-      animation: coperta-intrare 540ms cubic-bezier(.22, 1, .36, 1) both;
-    }
-    #page-acasa .hero-inner > .hero-years{ animation-delay: 55ms; }
-    #page-acasa .hero-inner > .dek{ animation-delay: 115ms; }
-    #page-acasa .hero-inner > .hero-cta{ animation-delay: 185ms; }
-    #page-acasa .hero-inner > .hero-cta:focus-within{ animation: none; }
+    #page-acasa .hero .title{ animation: coperta-intrare 460ms var(--ease-out-ui) both; }
+    #page-acasa .hero-end{ animation: coperta-intrare 420ms var(--ease-out-ui) 100ms both; }
   }
+  @keyframes fresca-apropiere{ from{ transform: scale(1.025); } }
+  @keyframes coperta-intrare{ from{ opacity: .74; translate: 0 6px; } }
 
-  @keyframes fresca-apropiere{
-    from{ opacity: 0.64; transform: scale(1.055); }
-    to{ opacity: 1; transform: scale(1); }
-  }
-  @keyframes coperta-intrare{
-    from{ opacity: 0; translate: 0 9px; }
-    to{ opacity: 1; translate: 0 0; }
-  }
+
 
   /* ---------- modulele articolului pe același pergament ---------- */
   html body #page-acasa :is(#sec-cronologie, .hx, .gs, #sec-atlas, #sec-muzeu){
@@ -4213,7 +4287,6 @@
   #page-acasa .gs .gs-stop rect{ fill: var(--paper); stroke: var(--garnet); }
   #page-acasa .gs .gs-stop text{ fill: var(--garnet); }
   #page-acasa .gs .gs-stop .sm, #page-acasa .gs .gs-coins-lab{ fill: var(--ink); }
-  #page-acasa .hero{ width: auto !important; max-width: 100%; margin-left: 0 !important; margin-right: 0 !important; }
 
   /* Textul și fotografiile articolului sunt vizibile imediat. */
   #page-acasa .r7-rv, #page-acasa .r7-rv:not(.r7-in){ opacity: 1; transform: none; transition: none; }
@@ -4367,12 +4440,11 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     <div class="hero-bg"><img id="hero-img" class="hero-img" src="media/eead897b5651.webp" srcset="media/65411b2540b6.webp 900w, media/eead897b5651.webp 1310w" sizes="100vw" width="1310" height="700" alt="Fresca lui Rafael: papa Leon cel Mare și Attila, cu Roma în fundal." loading="eager" fetchpriority="high" decoding="async"></div>
     <div class="hero-scrim"></div>
     <div class="hero-inner">
-      <h1 class="title">Hunii și Marea Migrație</h1>
-      <p class="hero-years">370–476</p>
-      <p class="dek">Sosirea hunilor împinge goții spre Dunăre și schimbă echilibrul la granițele Romei.</p>
-      <div class="hero-cta">
-        <a class="hero-btn primary" href="#sec-origini">Citește articolul</a>
-        <a class="hero-btn" href="#mod-migratie">Joacă simularea</a>
+      <h1 class="title"><span class="hero-title-prefix">Hunii și</span> Marea Migrație</h1>
+      <div class="hero-foreground" aria-hidden="true"><img class="hero-img" src="media/eead897b5651.webp" srcset="media/65411b2540b6.webp 900w, media/eead897b5651.webp 1310w" sizes="100vw" width="1310" height="700" alt="" loading="eager" decoding="async"></div>
+      <div class="hero-end">
+        <p class="hero-years">370–476</p>
+        <p class="dek">Sosirea hunilor împinge goții spre Dunăre și schimbă echilibrul la granițele Romei.</p>
       </div>
     </div>
   </section>
@@ -10173,5 +10245,239 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
   })();
 })();
 </script>
+<!-- drum-huni:start -->
+<style>
+/* Stratul cartografic ocupă numai porțiunea de articol, după copertă. */
+#page-acasa{position:relative;isolation:isolate}
+#page-acasa .page-shell,#page-acasa .site-final-footer{position:relative;z-index:1}
+#huni-journey{
+  position:absolute;inset-inline:0;top:var(--journey-top,0);height:var(--journey-height,0);
+  z-index:0;pointer-events:none;
+  --ink-map:#743c22;
+  --side:clamp(45px,calc((100% - 1070px) / 2),290px);
+}
+#huni-journey .journey-camera{
+  position:sticky;top:0;width:100%;height:100vh;height:100svh;overflow:hidden;
+  mask-image:linear-gradient(90deg,#000 0%,#0008 var(--side),#0001 34%,#0001 66%,#0008 calc(100% - var(--side)),#000 100%);
+}
+#huni-journey .journey-relief{
+  position:absolute;inset:-9% -4%;
+  background:center 53%/cover no-repeat var(--journey-map);
+  filter:grayscale(1) sepia(.54) contrast(1.6);
+  mix-blend-mode:multiply;
+  opacity:.42;
+  transform:translate3d(0,var(--journey-pan,0px),0);
+}
+#huni-journey .journey-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(#6f5c4726 1px,transparent 1px),linear-gradient(90deg,#6f5c4726 1px,transparent 1px);
+  background-size:96px 96px;
+  mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent);
+  opacity:.4;
+}
+#huni-journey .journey-drawing{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;color:var(--ink-map)}
+#huni-journey .journey-strokes{
+  mask-image:linear-gradient(90deg,#000 0%,#000 calc(var(--side) - 36px),#0002 38%,#0002 62%,#000 calc(100% - var(--side) + 36px),#000);
+}
+#huni-journey .journey-ghost{fill:none;stroke:currentColor;stroke-width:1.6;stroke-dasharray:2 7;stroke-linecap:round;opacity:.48}
+#huni-journey .journey-paper{fill:none;stroke:#ecd9af;stroke-width:7;stroke-linecap:round;opacity:.9}
+#huni-journey .journey-ink{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;opacity:.9}
+#huni-journey .journey-stop circle{fill:#f3ead7;stroke:currentColor;stroke-width:1.35}
+#huni-journey .journey-stop .journey-core{fill:currentColor}
+#huni-journey .journey-stop text{
+  fill:#704325;paint-order:stroke;stroke:#f3ead7;stroke-width:4;stroke-linejoin:round;
+  font:700 14px 'EB Garamond',Georgia,serif;
+}
+#huni-journey .journey-stop .journey-date{font-size:11px;letter-spacing:.07em}
+#huni-journey .journey-stop{opacity:.61}
+#huni-journey .journey-stop.is-past{opacity:1}
+#huni-journey .journey-position{fill:#78351f;stroke:#f3ead7;stroke-width:2px}
+#page-acasa .journey-caption{margin:7px 0 16px;color:#664b2f;font:.82rem/1.4 'Source Serif 4',Georgia,serif}
+#page-acasa .journey-caption a{color:#6f281c;text-underline-offset:2px}
+@media(max-width:1359px){
+  #huni-journey .journey-stop text{display:none}
+  #huni-journey .journey-stop circle{r:4}
+  #huni-journey .journey-stop .journey-core{r:1.4}
+}
+@media(max-width:600px){
+  #huni-journey .journey-camera{mask-image:linear-gradient(90deg,#000a 0%,#0001 19%,#0000 50%,#0001 81%,#000a 100%)}
+  #huni-journey .journey-strokes{mask-image:linear-gradient(90deg,#000 0 4%,#0001 17% 83%,#000 96% 100%)}
+  #huni-journey .journey-paper{stroke-width:3.5}
+  #huni-journey .journey-ink{stroke-width:1.6}
+}
+@media(prefers-reduced-motion:reduce){
+  #huni-journey .journey-relief{transform:none}
+  #huni-journey .journey-position{display:none}
+}
+@media print{#huni-journey,#page-acasa .journey-caption{display:none}}
+</style>
+<template id="huni-journey-template">
+  <div id="huni-journey" aria-hidden="true">
+    <div class="journey-camera"><div class="journey-relief"></div><div class="journey-grid"></div></div>
+    <svg class="journey-drawing" xmlns="http://www.w3.org/2000/svg" focusable="false">
+      <defs><clipPath id="journey-reveal"><rect width="100%" height="100%"></rect></clipPath></defs>
+      <g class="journey-strokes">
+        <path class="journey-ghost"></path>
+        <g clip-path="url(#journey-reveal)">
+          <path class="journey-paper"></path>
+          <path class="journey-ink"></path>
+          <circle class="journey-position" r="5"></circle>
+        </g>
+      </g>
+      <g class="journey-stops"></g>
+    </svg>
+  </div>
+</template>
+<script>
+(() => {
+  const page = document.getElementById('page-acasa');
+  const shell = page.querySelector('.page-shell');
+  const column = shell.querySelector('.main-col');
+  const footer = page.querySelector('.site-final-footer');
+  const cover = document.getElementById('acasa');
+  const origin = document.getElementById('sec-origini');
+  const caption = document.createElement('p');
+  caption.className = 'journey-caption';
+  caption.innerHTML = 'Traseu schematic prin articol · Pentru detalii, vezi <a href="#sec-atlas">Atlasul migrației</a>.';
+  origin.querySelector('.sec-head').after(caption);
+  const endCredit = caption.cloneNode(false);
+  endCredit.innerHTML = 'Relief: <a href="https://commons.wikimedia.org/wiki/File:Europe_relief_laea_location_map.jpg">Alexrk2, Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.';
+  footer.prepend(endCredit);
+  shell.before(document.getElementById('huni-journey-template').content.cloneNode(true));
+  const layer = document.getElementById('huni-journey');
+  const atlasMap = document.querySelector('image.base-map[href]');
+  if(atlasMap) layer.style.setProperty('--journey-map', 'url("' + atlasMap.getAttribute('href') + '")');
+  const drawing = layer.querySelector('svg');
+  const routes = layer.querySelectorAll('path');
+  const clip = layer.querySelector('clipPath rect');
+  const pointer = layer.querySelector('.journey-position');
+  const stops = layer.querySelector('.journey-stops');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const stages = [
+    { selector:'#sec-origini', side:1, year:'c. 370', name:'Spre vest de Don', inset:118 },
+    { selector:'#sec-cronologie', side:-1, year:'376', name:'Dunărea', inset:140 },
+    { selector:'#sec-migratie', side:1, year:'Anii 420–430', name:'Câmpia Panonică', inset:130 },
+    { selector:'#sec-atlas', side:-1, year:'451', name:'Galia', inset:124 },
+    { selector:'#sec-personalitati', side:1, year:'452', name:'Italia', inset:118 },
+    { selector:'#sec-muzeu', side:-1, name:'Urme ale epocii', inset:150 },
+    { selector:'#sec-glosar', side:1, inset:68 },
+    { selector:'#biblio', side:-1, name:'Izvoare și mărturii', inset:100 }
+  ];
+  let geometry = null;
+  let pending = false;
+  let dirty = true;
+
+  function fromSvg(tag, attrs, text){
+    const item = document.createElementNS('http://www.w3.org/2000/svg',tag);
+    for(const [name,value] of Object.entries(attrs)) item.setAttribute(name,value);
+    if(text) item.textContent = text;
+    return item;
+  }
+
+  function rebuild(){
+    const pageBox = page.getBoundingClientRect();
+    const columnBox = column.getBoundingClientRect();
+    if(!columnBox.width) { geometry = null; return; }
+    const shellBox = shell.getBoundingClientRect();
+    const footerBox = footer.getBoundingClientRect();
+    const top = Math.max(shellBox.top,cover.getBoundingClientRect().bottom);
+    const height = Math.ceil(footerBox.bottom-top);
+    const width = page.clientWidth;
+    if(height<=0 || width<=0) return;
+    layer.style.setProperty('--journey-top',(top-pageBox.top)+'px');
+    layer.style.setProperty('--journey-height',height+'px');
+    drawing.setAttribute('viewBox','0 0 '+width+' '+height);
+    const columnLeft = columnBox.left-pageBox.left;
+    const left = Math.max(11,Math.min(columnLeft-16,columnLeft*.54));
+    const right = width-left;
+    const span = right-left;
+    const limit = width>1240 ? 32 : 6;
+    const nodes = stages.map(stage => {
+      const box = document.querySelector(stage.selector).getBoundingClientRect();
+      return {...stage,x:stage.side<0?left:right,y:box.top-top+Math.min(stage.inset,box.height*.6)};
+    });
+    const points = [{x:right-limit,y:0}];
+    for(const node of [...nodes,{x:left+limit,y:height-12}]){
+      const prev = points.at(-1);
+      const delta = node.y-prev.y;
+      if(delta>530){
+        const swings = Math.ceil(delta/430);
+        for(let step=1;step<swings;step++){
+          const t = step/swings;
+          const cross = Math.abs(node.x-prev.x)>span*.5;
+          const eased = t*t*(3-2*t);
+          const x = cross ? prev.x+(node.x-prev.x)*eased :
+            prev.x+Math.sin(t*Math.PI*3)*limit*.62;
+          points.push({x,y:prev.y+delta*t});
+        }
+      }
+      points.push(node);
+    }
+    const lead = points[0];
+    let d = 'M '+lead.x+' '+lead.y;
+    for(let i=1;i<points.length;i++){
+      const prev=points[i-1], next=points[i];
+      const old=points[i-2]||prev, future=points[i+1]||next;
+      const dy=(next.y-prev.y)*.38;
+      const entry=prev.x+(next.x-old.x)*.15;
+      const leave=next.x-(future.x-prev.x)*.15;
+      d+=' C '+entry+' '+(prev.y+dy)+' '+leave+' '+(next.y-dy)+' '+next.x+' '+next.y;
+    }
+    routes.forEach(path=>path.setAttribute('d',d));
+    stops.replaceChildren();
+    for(const node of nodes.filter(item=>item.name)){
+      const stop=fromSvg('g',{class:'journey-stop',transform:'translate('+node.x+' '+node.y+')'});
+      stop.append(fromSvg('circle',{r:8}),fromSvg('circle',{r:2.65,class:'journey-core'}));
+      if(node.year) stop.append(fromSvg('text',{'text-anchor':'middle',y:-17,class:'journey-date'},node.year));
+      stop.append(fromSvg('text',{'text-anchor':'middle',y:29},node.name));
+      stops.append(stop);
+      node.marker=stop;
+    }
+    geometry={height,nodes,length:routes[0].getTotalLength()};
+  }
+
+  function update(){
+    pending=false;
+    if(dirty){rebuild();dirty=false}
+    if(!geometry || !page.getClientRects().length) return;
+    const {height,nodes,length}=geometry;
+    const offset=layer.getBoundingClientRect().top;
+    const viewport = document.documentElement.clientHeight;
+    const endApproach = Math.max(0,Math.min(1,2-(height+offset)/viewport));
+    const drawLine = viewport*(.69+.31*endApproach);
+    if(offset>=innerHeight || offset+height<=0) return;
+    const y=Math.min(height,Math.max(0,drawLine-offset));
+    clip.setAttribute('height',motion.matches?height:y+7);
+    pointer.style.visibility=y<1||y>=height-12?'hidden':'visible';
+    if(!motion.matches && y>0 && y<height-12){
+      let lo=0,hi=length;
+      for(let step=0;step<15;step++){
+        const mid=(lo+hi)/2;
+        if(routes[0].getPointAtLength(mid).y<y) lo=mid;else hi=mid;
+      }
+      const p=routes[0].getPointAtLength((lo+hi)/2);
+      pointer.setAttribute('cx',p.x);
+      pointer.setAttribute('cy',p.y);
+      layer.style.setProperty('--journey-pan',(40-80*y/height)+'px');
+    }
+    for(const node of nodes) node.marker?.classList.toggle('is-past',motion.matches||node.y<=y);
+  }
+  function schedule(layout=false){
+    if(layout) dirty=true;
+    if(pending) return;
+    pending=true;
+    requestAnimationFrame(update);
+  }
+  const observer=new ResizeObserver(()=>schedule(true));
+  observer.observe(page);
+  observer.observe(shell);
+  for(const stage of stages) observer.observe(document.querySelector(stage.selector));
+  window.addEventListener('resize',()=>schedule(true));
+  window.addEventListener('scroll',()=>schedule(),{passive:true});
+  motion.addEventListener('change',()=>schedule());
+  schedule(true);
+})();
+</script>
+<!-- drum-huni:end -->
 </body>
 </html>
