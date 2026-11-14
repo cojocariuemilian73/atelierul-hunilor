@@ -19,7 +19,7 @@ function swap(a, b, what){ const n = s.split(a).length - 1; if (n === 1) { s = s
   const a = s.indexOf('    <div class="hero-inner">\n'), b = a < 0 ? -1 : s.indexOf('    </div>\n  </section>', a);
   if (a < 0 || b < 0) fail('coperta');
   const INNER = '    <div class="hero-inner">\n' +
-    '      <h1 class="title"><span class="hero-title-prefix">Hunii și</span> Marea Migrație</h1>\n' +
+    '      <h1 class="title"><span class="hero-title-prefix">Hunii și</span> <span class="hero-title-main">Marea Migrație</span></h1>\n' +
     '      <div class="hero-end">\n' +
     '        <p class="hero-years">370–476</p>\n' +
     '        <p class="dek">Sosirea hunilor împinge goții spre Dunăre și schimbă echilibrul la granițele Romei.</p>\n' +
