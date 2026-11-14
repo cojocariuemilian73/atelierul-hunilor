@@ -8,13 +8,13 @@
 <meta name="darkreader-lock">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atelierul Hunilor: Hunii și Marea Migrație a Popoarelor</title>
-<meta name="description" content="Site interactiv de istorie despre hunii lui Attila și Marea Migrație a Popoarelor: articol cu note și bibliografie, atlas, muzeu virtual cu artefacte reale, jocuri de decizie bazate pe izvoare și jocuri de gândire istorică.">
+<meta name="description" content="Site interactiv de istorie despre hunii lui Attila și Marea Migrație a Popoarelor: articol cu note și bibliografie, atlas, fotografii adnotate ale pieselor arheologice, jocuri de decizie bazate pe izvoare și jocuri de gândire istorică.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%23141210%22%2F%3E%3Cpath%20d%3D%22M20%208c22%208%2022%2040%200%2048%22%20fill%3D%22none%22%20stroke%3D%22%23e5c158%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M20%208v48%22%20stroke%3D%22%23e5c158%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M12%2032h40M46%2026l7%206-7%206%22%20fill%3D%22none%22%20stroke%3D%22%23f2d474%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ro_RO">
 <meta property="og:site_name" content="Atelierul Hunilor">
 <meta property="og:title" content="Atelierul Hunilor: Hunii și Marea Migrație a Popoarelor">
-<meta property="og:description" content="Articol cu note și bibliografie, cronologie, muzeu virtual, jocul „Attila și Marea Migrație” (o simulare în trei acte) și Jocul izvoarelor.">
+<meta property="og:description" content="Articol cu note și bibliografie, cronologie, fotografii adnotate, jocul „Attila și Marea Migrație” (o simulare în trei acte) și Jocul izvoarelor.">
 <meta property="og:url" content="https://cojocariuemilian73.github.io/atelierul-hunilor/">
 <meta property="og:image" content="https://cojocariuemilian73.github.io/atelierul-hunilor/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -4335,6 +4335,124 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
   background: #f3ead7;
 }
 </style>
+<style id="photo-points-style">
+/* Punctele sunt ancorate de suprafața fotografiei, nu de legendă. */
+.photo-points{
+  position: relative;
+  isolation: isolate;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.photo-points img{
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+.sr-fig .photo-points img,
+#page-acasa .page-shell .photo-points img{
+  border: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  max-height: none;
+  object-fit: contain;
+}
+.photo-point{
+  position: absolute;
+  z-index: 1;
+  left: var(--point-x);
+  top: var(--point-y);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  translate: -50% -50%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.photo-point::after{
+  content: '';
+  width: 13px;
+  height: 13px;
+  border: 2px solid #fff4de;
+  border-radius: 50%;
+  background: #912c26;
+  box-shadow: 0 0 0 1px #541911;
+}
+.photo-point:is(:hover,:focus-visible){ z-index: 2; }
+.photo-point:is(:hover,:focus-visible)::after{ background: #b33e31; }
+.photo-point:focus-visible{ outline: 2px solid #fff4de; outline-offset: -4px; }
+.page-shell .sr-row.cap-over .sr-fig:has(.photo-points) figcaption{
+  position: static;
+  padding: 0;
+  margin-top: 8px;
+  background: transparent;
+}
+.photo-hint{
+  display: block;
+  margin-top: 6px;
+  color: #772c22;
+  font-style: normal;
+  font-weight: 600;
+}
+.photo-evidence{
+  margin: 24px auto;
+  max-width: 530px;
+}
+.photo-evidence .photo-points{ max-width: min(100%, 400px); }
+.photo-evidence #img-arc{ max-width: 290px; }
+.photo-evidence #img-apahida{ max-width: 175px; }
+.photo-evidence figcaption{ margin-top: 10px; line-height: 1.5; }
+.photo-evidence figcaption small{ display: block; margin-top: 5px; }
+.photo-evidence-pair{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 40px;
+  margin-block: 24px;
+  align-items: start;
+}
+.photo-evidence-pair .photo-evidence{ width: 100%; margin-block: 0; }
+.photo-detail{
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(480px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  padding: 17px 22px 22px;
+  border: 1px solid #a98e62;
+  border-block-start: 3px solid #792c22;
+  background: #f4ead7;
+  color: #2b1d12;
+}
+.photo-detail::backdrop{ background: #2f251b8c; }
+.photo-detail form{ display: flex; justify-content: end; margin: 0 0 8px; }
+.photo-detail button{
+  min-height: 44px;
+  padding: 7px 12px;
+  border: 1px solid #ae9069;
+  background: transparent;
+  color: #792c22;
+  font: inherit;
+  cursor: pointer;
+}
+.photo-detail button:focus-visible{ outline: 2px solid #792c22; outline-offset: 2px; }
+.photo-detail h2{ margin: 0 0 8px; font: 600 clamp(1.45rem,4vw,2rem)/1.1 'EB Garamond',Georgia,serif; }
+.photo-detail p{ margin: 0; line-height: 1.55; }
+@media(max-width: 630px){
+  .photo-evidence-pair{ grid-template-columns: minmax(0, 1fr); }
+  .sr-media .sr-fig + .sr-fig:has(.photo-points){ display: block; }
+  #page-acasa .gold-context .sr-fig-inline:has(.photo-points){
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #page-acasa .gold-context .sr-fig-inline .photo-points{ width: min(65%, 172px); margin-inline: 0; }
+}
+@media print{.photo-point,.photo-hint,.photo-detail{ display: none !important; }}
+</style>
 </head>
 <body>
 <a class="skip-to-main" href="#site-main">Sari la conținut</a>
@@ -4351,7 +4469,6 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
         <a href="#sec-migratie" data-sec="sec-migratie" class="toc-link">Marea Migrație</a>
         <a href="#sec-atlas" data-sec="sec-atlas" class="toc-link">Atlas</a>
         <a href="#sec-personalitati" data-sec="sec-personalitati" class="toc-link">Personalități</a>
-        <a href="#sec-muzeu" data-sec="sec-muzeu" class="toc-link">Muzeu</a>
         <a href="#biblio" data-sec="biblio" data-also="sec-glosar" class="toc-link">Surse</a>
       </div>
     </div>
@@ -4378,7 +4495,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
       <li><strong>Attila și Marea Migrație</strong>: un singur joc, în trei acte, pe o hartă fizică a Europei (370–476), cu peste 1.800 de agenți. Actul I: ești Valens, Stilicho și Honorius. Actul II: ești Attila, în opt momente reale (435–452), cu aur, renume, loialitate, cavalerie și moștenire; alegerile tale mută hunii pe hartă și schimbă stabilitatea Imperiului. Actul III: ești Ardaric, la Nedao, apoi împăratul Leon I. Terenul e citit din hartă, drumurile sunt calculate cu algoritmul lui Dijkstra, iar la final compari pozițiile din joc cu repere istorice estimate.</li>
       <li><strong>Jocul izvoarelor</strong>: cincisprezece surse despre huni (obiecte, izvoare scrise, o copie medievală, picturi) de așezat pe axa timpului și de clasificat: cât de multe sunt cu adevărat din epoca lui Attila.</li>
       <li><strong>Atlasul Migrației</strong>: hartă interactivă cu rutele Marii Migrații, în pagina Acasă (capitolul 04 al articolului).</li>
-      <li><strong>Muzeul virtual și miturile</strong>: fotografii de obiecte și o reconstituire de arc (capitolul 06), șapte mituri despre huni și șapte casete „Știai că…?”.</li>
+      <li><strong>Fotografii adnotate și mituri</strong>: obiectele sunt prezentate în articol, lângă pasajele relevante. Punctele roșii explică detaliile pieselor.</li>
     </ul>
     <p>Navighezi cu meniul de sus sau cu butoanele „Pagina anterioară / următoare” de jos.</p>
 
@@ -4406,7 +4523,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
 
     <h3>Despre imagini</h3>
     <ul>
-      <li><strong>Fotografiile din Muzeu</strong> prezintă piese din colecții publice și o reconstituire de arc. Creditele sunt sub fiecare fișă.</li>
+      <li><strong>Fotografiile pieselor din articol</strong> prezintă piese din colecții publice și o reconstituire de arc. Creditele sunt sub fiecare fotografie.</li>
       <li><strong>Imaginile din antetele modulelor</strong> sunt opere de artă reale, în domeniul public: fresca lui Rafael <em>Întâlnirea lui Leon cel Mare cu Attila</em> (1514) și gravura lui J. N. Geiger <em>Hunii în luptă cu alanii</em> (c. 1873). Sunt interpretări artistice târzii, nu surse despre secolul al V-lea.</li>
       <li><strong>Ilustrațiile din articol, joc și atlas</strong> sunt tot documente reale, fiecare cu autorul, data și licența în legendă: miniaturi medievale (<em>Cronica pictată de la Viena</em>, c. 1360; <em>Spieghel Historiael</em>, c. 1330), picturi și gravuri din secolul al XIX-lea (Delacroix, Paczka, de Neuville, Trenk) și fotografii (Zidurile lui Teodosie, un solid al lui Teodosie al II-lea, craniul deformat de la Mözs). Picturile sunt interpretări artistice târzii, nu surse despre secolul al V-lea.</li>
       <li><strong>Harta istorică din articol</strong> (Ptolemeu–Porro, 1596) este reprodusă de pe Wikimedia Commons, cu licența afișată.</li>
@@ -4418,7 +4535,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     <ul>
       <li>HTML5 cu <code>lang="ro"</code>, <code>charset</code> și <code>viewport</code> declarate; CSS3 fără preprocesor</li>
       <li>Layout responsive (mobil, tabletă, desktop), testat pe lățimi de la 375px în sus</li>
-      <li>Reper <code>&lt;main&gt;</code>, etichete pentru hărțile SVG și acces de la tastatură la fișele de pe axa cronologiei și la punctele Muzeului</li>
+      <li>Reper <code>&lt;main&gt;</code>, etichete pentru hărțile SVG și acces de la tastatură la fișele de pe axa cronologiei și la punctele de pe fotografii</li>
       <li>Preferința pentru mișcare redusă este preluată din setările browserului</li>
     </ul>
 
@@ -4494,6 +4611,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
       <p>Avantajul lor în luptă venea din <b>arcul recurbat compozit</b>, construit din lemn, os și tendoane, și din <b>tragerea partă</b>, adică arcașul călare putea ochi și trage înapoi în plină retragere. Combinate cu tactica retragerii false, care atrăgea inamicul într-o urmărire dezordonată, aceste elemente transformau fiecare ciocnire într-o ambuscadă potențială.</p>
         </div>
       </div>
+      <figure class="photo-evidence"><div class="photo-points"><img id="img-arc" src="media/5876970b5971.webp" width="1126" height="1200" alt="Reconstituirea unui arc compozit hunic, expusă într-o vitrină de muzeu: arc asimetric, cu dublă curbură, având brațul superior placat cu foiță de aur." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Placarea cu aur, simbol de rang" data-title="Placarea cu aur, simbol de rang" data-detail="Porțiunea aurită de pe brațul superior nu are rol tehnic: arcurile placate cu foiță de aur, descoperite la Jakuszowice (Polonia) și Bátaszék (Ungaria), marcau statutul politic al purtătorului. Arma era și însemn de putere, nu doar unealtă de luptă." style="--point-x:50%;--point-y:31%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Capătul recurbat (siyah)" data-title="Capătul recurbat (siyah)" data-detail="Capetele rigide, întoarse invers față de curbura arcului, funcționau ca niște pârghii: măreau brusc tensiunea în ultima parte a tragerii. De aici viteza mare a săgeții, la un arc suficient de scurt încât să fie mânuit din șa." style="--point-x:77%;--point-y:13%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Brațe asimetrice" data-title="Brațe asimetrice" data-detail="Brațul inferior este mai scurt decât cel superior, o soluție care permitea tragerea comodă de pe cal, fără ca arcul să lovească gâtul animalului la coborârea mâinii." style="--point-x:21%;--point-y:60%"></button></div><figcaption><strong>Arcul compozit hunic</strong>. Reconstituirea arcului reflex din mormântul princiar de la Jakuszowice (Polonia), cu brațele placate cu foiță de aur: arma care a definit cavaleria hunică. <small>Muzeul Arheologic din Cracovia · foto: <a href="https://commons.wikimedia.org/wiki/File:02019_0565_Reflexbogen%2C_F%C3%BCrsten-Grab_von_Jakuszowice.jpg">Silar</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> (decupaj).</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure>
 
                   <div class="diagram ptol-map" role="img" aria-label="Hartă ptolemeică a Sarmației Europene, gravată de Girolamo Porro în 1596, pe care sunt marcate poporul Chuni, bastarnii, roxolanii, fluviul Tanais și Mæotis.">
         <svg viewBox="270 400 1020 680" xmlns="http://www.w3.org/2000/svg"><image href="media/8fe3c130f871.webp" x="0" y="0" width="1600" height="1200"/><circle class="map-pt main" cx="665" cy="852" r="15"/><text x="665" y="908" text-anchor="middle" class="map-pt-label main">Chuni</text><circle class="map-pt" cx="464" cy="872" r="11"/><text x="464" y="918" text-anchor="middle" class="map-pt-label">Bastarnæ</text><circle class="map-pt" cx="982" cy="631" r="11"/><text x="982" y="609" text-anchor="middle" class="map-pt-label">Roxolani</text><circle class="map-pt" cx="955" cy="580" r="11"/><text x="955" y="558" text-anchor="middle" class="map-pt-label">Tanais (Don)</text><circle class="map-pt" cx="1060" cy="765" r="11"/><text x="1060" y="811" text-anchor="middle" class="map-pt-label">Mæotis (Azov)</text></svg>
@@ -4561,7 +4679,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
         </div>
       </div>
       <div class="gold-context">
-        <figure class="sr-fig sr-fig-inline"><img id="img-solidus" src="media/d31adc2b2981.webp" alt="Solid de aur al împăratului Teodosie al II-lea, avers cu bustul împăratului." loading="lazy"><figcaption><b>Solid de aur al lui Teodosie al II-lea</b> (441–450; domnia: 408–450), inv. MNS/A/22212. Foto: <a href="https://commons.wikimedia.org/wiki/File:Solidus_of_Theodosius_II.jpg">Grzegorz Solecki și Arkadiusz Piętak / Muzeul Național din Szczecin</a>, <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</figcaption></figure>
+        <figure class="sr-fig sr-fig-inline"><div class="photo-points"><img id="img-solidus" src="media/d31adc2b2981.webp" alt="Solid de aur al împăratului Teodosie al II-lea, avers cu bustul împăratului." loading="lazy" width="700" height="700"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Bustul împăratului" data-title="Bustul împăratului" data-detail="Teodosie al II-lea e înfățișat din față, cu coif și diademă de perle, ținând o lance pe umăr: imaginea unui împărat-războinic, deși el nu a condus niciodată personal o campanie." style="--point-x:50%;--point-y:40%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Inscripția" data-title="Inscripția" data-detail="De jur împrejur se citește D N THEODOSIVS P F AVG: „Stăpânul nostru Teodosie, pios și fericit, Augustus”. Formula e aceeași pe toate monedele imperiale ale epocii." style="--point-x:27%;--point-y:38%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Scutul" data-title="Scutul" data-detail="Împăratul ține un scut decorat cu un călăreț care își străpunge dușmanul: un mesaj de victorie, plătit, ironic, chiar dușmanilor pe care Imperiul nu-i putea învinge." style="--point-x:50%;--point-y:73%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Greutatea fixă" data-title="Greutatea fixă" data-detail="Solidul cântărea 1/72 dintr-o livră romană, adică aproximativ 4,5 g de aur aproape pur. Valoarea lui stabilă l-a făcut moneda de referință a lumii mediteraneene timp de secole." style="--point-x:89%;--point-y:55%"></button></div><figcaption><b>Solid de aur al lui Teodosie al II-lea</b> (441–450; domnia: 408–450), inv. MNS/A/22212. Foto: <a href="https://commons.wikimedia.org/wiki/File:Solidus_of_Theodosius_II.jpg">Grzegorz Solecki și Arkadiusz Piętak / Muzeul Național din Szczecin</a>, <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>. <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure>
         <aside class="r9-note" aria-label="Știai că…? 1/72 de livră"><p class="r9n-tag">Știai că…?</p><p class="r9n-num">1/72</p><p class="r9n-unit">de livră</p><p class="r9n-text">Aurul era prin excelență bunul împăratului. Solidul, introdus de Constantin cel Mare, avea greutate fixă (1/72 dintr-o livră), iar Valentinian I și Valens au impus, după 366, ca aurul strâns din taxe să fie topit în lingouri de puritate garantată, sub controlul lui comes sacrarum largitionum. Tributul cerut de Attila lovea deci direct autoritatea și prestigiul imperial, nu doar vistieria.</p><p class="r9n-src">Sursa: Codex Theodosianus 12.6.12–13</p></aside>
       </div>
 
@@ -4796,6 +4914,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
         <div class="duel-lives" role="img" aria-label="Viețile lor, alături: Aetius, c. 391–454; Attila, c. 406–453. S-au înfruntat la Câmpiile Catalaunice, în 451."><div class="dl-row aetius"><b>Aetius</b><span class="dl-track"><i style="left:4.41%;width:calc(97.06% - 4.41%)"></i></span><em>c. 391–454</em></div><div class="dl-row attila"><b>Attila</b><span class="dl-track"><i style="left:26.47%;width:calc(95.59% - 26.47%)"></i><i class="r" style="left:67.65%;width:calc(95.59% - 67.65%)"></i></span><em>c. 406–453</em></div><div class="dl-axis"><span class="dl-track"><small style="left:17.65%">400</small><small style="left:47.06%">420</small><small style="left:76.47%">440</small><span class="dl-451" style="left:92.65%"><small>451 · Câmpiile Catalaunice</small></span></span></div><p class="dl-key"><span class="k1"></span>viața <span class="k2"></span>domnia lui Attila (434–453)</p></div>
         <aside class="r9-note r9-in r9-side" aria-label="Știai că…? Sabia lui Marte"><p class="r9n-tag">Știai că…?</p><p class="r9n-title">„Sabia lui Marte”</p><p class="r9n-text">Mormintele princiare, ca cel de la Jakuszowice, păstrează săbii lungi cu mânerul placat cu aur și granate, adevărate însemne de rang. Iar Iordanes (Getica, 183, după Priscus) povestește că Attila își sprijinea autoritatea pe „sabia lui Marte”, găsită de un păstor: sabia era și simbol al puterii, nu doar armă.</p><p class="r9n-src">Sursa: Iordanes, Getica 183; Godłowski 1991 (Jakuszowice)</p></aside>
       </div>
+      <figure class="photo-evidence"><div class="photo-points"><img id="img-spatha" src="media/f88f2b033787.webp" width="3347" height="2211" alt="Sabie lungă de fier, cu lama dreaptă și gardă scurtă, având mânerul acoperit cu o piesă de aur decorată cu granate montate în celule." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Mânerul placat cu aur și granate" data-title="Mânerul placat cu aur și granate" data-detail="Ca și arcurile poleite, mânerele de sabie placate cu aur și pietre semiprețioase marcau rangul purtătorului: sabia era, alături de arc, celălalt obiect cu valoare aproape sacră a elitei hunice." style="--point-x:77%;--point-y:38%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Lama de fier, cu două tăișuri" data-title="Lama de fier, cu două tăișuri" data-detail="Lama dreaptă, lungă, cu două tăișuri, e cea a spathei, arma de rang a întregii Europe a epocii, nu doar a hunilor. Ce o face „princiară” nu e forma lamei, ci garnitura de aur și granate a mânerului." style="--point-x:36%;--point-y:41%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Garda scurtă" data-title="Garda scurtă" data-detail="O gardă minimală, abia vizibilă, tipică armelor gândite pentru viteză și pentru lupta călare, nu pentru scrimă de infanterie cu paradă lată." style="--point-x:75%;--point-y:81%"></button></div><figcaption><strong>Spatha hunică</strong>. Sabie din mormântul princiar de la Jakuszowice, cu două tăișuri și mâner decorat cu aur și granate. Piesa ilustrează armele de rang ale epocii. Legenda „Sabiei lui Marte” vine dintr-un izvor scris. <small>Muzeul Arheologic din Cracovia · foto: <a href="https://commons.wikimedia.org/wiki/File:02019_0555_%282%29_Die_Spatha%2C_F%C3%BCrsten-Grab_von_Jakuszowice.jpg">Silar</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure>
       <!-- pq:start --><figure class="pq"><blockquote><p>O luptă cumplită, schimbătoare, crudă și îndârjită, cum n-a mai povestit nimeni din vechime.</p></blockquote><figcaption><b>Iordanes</b>, Getica 207, despre Câmpiile Catalaunice (451) · traducere adaptată</figcaption></figure><!-- pq:end -->
 
       <div class="sr-row sr-reveal">
@@ -4804,6 +4923,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
       <p>La Câmpiile Catalaunice, ostrogoții, vasali ai lui Attila, au luptat de partea hunilor, în timp ce vizigoții, cei dintâi fugari din calea acestora, s-au aliat cu Roma pentru a-i opri<sup class="fn" data-n="17">17</sup>. Attila moare în 453. În jurul anului 454, la Nedao, răscoala popoarelor supuse înfrânge fiii lui Attila și destramă hegemonia hunică. Sfârșitul nu e imediat. Dengizich, unul dintre fiii lui Attila, mai luptă cu Bizanțul până în 469<sup class="fn" data-n="18">18</sup>.</p>
         </div>
       </div>
+      <figure class="photo-evidence"><div class="photo-points"><img id="img-apahida" src="media/d02d4a25989e.webp" width="600" height="1250" alt="Ornament în formă de vultur, cu aripile strânse, acoperit cu plăcuțe de granat roșu montate în celule de aur." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Capul de vultur" data-title="Capul de vultur" data-detail="Ciocul curbat și ochiul rotund fac din piesă un vultur, pasăre a puterii, frecventă în arta elitelor germanice și stepice ale epocii." style="--point-x:58%;--point-y:12%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Pieptul cu solzi" data-title="Pieptul cu solzi" data-detail="Pieptul e lucrat în tehnica cloisonné: sute de plăcuțe de granat tăiate exact pe forma celulelor de aur. Stilul policrom s-a răspândit în Europa tocmai prin lumea dominată de huni." style="--point-x:45%;--point-y:45%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Aripile" data-title="Aripile" data-detail="Aripile au celule în formă de săgeată, umplute tot cu granate. Pe șa, perechea de vulturi strălucea în soare și arăta de departe rangul călărețului." style="--point-x:18%;--point-y:45%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Ghearele" data-title="Ghearele" data-detail="Picioarele se termină în granate mari, șlefuite. Piesa arată bogăția unui principe gepid după prăbușirea imperiului hunic: o elită care moștenea gustul și tehnicile epocii lui Attila." style="--point-x:46%;--point-y:90%"></button></div><figcaption><strong>Vulturul de la Apahida</strong>. Garnitură de șa în formă de vultur, din tezaurul unui principe gepid descoperit la Apahida (jud. Cluj). Gepizii fuseseră supuși lui Attila; după moartea lui, regele lor Ardaric a condus răscoala de la Nedao (c. 454). <small>Muzeul Național de Istorie a României · foto: <a href="https://commons.wikimedia.org/wiki/File:Saddle_fittings_of_a_Gepid_prince_-_Apahida.jpg">Cristian Chirita, montaj James Steakley</a> (decupaj), <a href="https://commons.wikimedia.org/wiki/File:Saddle_fittings_of_a_Gepid_prince_-_Apahida.jpg#GNU_Free_Documentation_License">GFDL 1.2 sau ulterior</a>.</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure>
 
       <div class="vd-group" data-myths="8,7" data-title="Ce se spune și ce se știe"></div>
       <div class="sr-row sr-reveal">
@@ -4820,16 +4940,16 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
       </div>
 
       <div class="sr-row sr-reveal">
-        <div class="sr-media"><figure class="sr-fig"><img id="img-pietroasa" src="media/d06b1198a4df.webp" alt="Planșă litografiată: vase și podoabe de aur din tezaurul de la Pietroasa, pe o draperie roșie." loading="lazy"><figcaption><b>Tezaurul de la Pietroasa</b> („Cloșca cu puii de aur”), planșă de H. Trenk din monografia lui Alexandru Odobescu (1889–1900). Tezaur gotic, îngropat probabil sub presiunea sosirii hunilor. Domeniu public.</figcaption></figure><figure class="sr-fig"><img id="img-diadema" src="media/a5a6da80d540.webp" alt="Diademă hunică din foiță de aur, montată pe un suport de expunere: bandă lată acoperită cu rânduri de plăcuțe de granat roșu montate în celule, cu o piatră rotundă centrală și bordură aurie perlată." loading="lazy"><figcaption><b>Diadema de la Gherăseni</b> (jud. Buzău), prima jumătate a sec. V, Muzeul Județean Buzău. Foto: Laci3, CC0.</figcaption></figure></div>
+        <div class="sr-media"><figure class="sr-fig"><img id="img-pietroasa" src="media/d06b1198a4df.webp" alt="Planșă litografiată: vase și podoabe de aur din tezaurul de la Pietroasa, pe o draperie roșie." loading="lazy"><figcaption><b>Tezaurul de la Pietroasa</b> („Cloșca cu puii de aur”), planșă de H. Trenk din monografia lui Alexandru Odobescu (1889–1900). Tezaur gotic, îngropat probabil sub presiunea sosirii hunilor. Domeniu public.</figcaption></figure><figure class="sr-fig"><div class="photo-points"><img id="img-diadema" src="media/a5a6da80d540.webp" alt="Diademă hunică din foiță de aur, montată pe un suport de expunere: bandă lată acoperită cu rânduri de plăcuțe de granat roșu montate în celule, cu o piatră rotundă centrală și bordură aurie perlată." loading="lazy" width="1300" height="884"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Piatra centrală (cabochon)" data-title="Piatra centrală (cabochon)" data-detail="O piatră rotundă, șlefuită în cabochon (rotunjită, fără fațete), marchează mijlocul diademei. De la ea pornesc, simetric, celelalte pietre." style="--point-x:49%;--point-y:35%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Almandinele à cabochon" data-title="Almandinele à cabochon" data-detail="Pietre roșii de almandină (un tip de granat), șlefuite rotunjit și prinse fiecare în montura ei de aur, „à cabochon”: stilul policrom răspândit în Bazinul Carpatic în perioada hunică. Spre deosebire de tehnica cloisonné, în care plăcuțele de granat sunt tăiate pe forma celulelor (ca la vulturul de la Apahida), aici pietrele sunt rotunjite. Analiza antropologică a scheletului din mormânt a arătat un craniu deformat artificial." style="--point-x:27%;--point-y:48%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Urmele de asamblare" data-title="Urmele de asamblare" data-detail="Foița de aur nu e dintr-o singură bucată: se văd cusăturile unde segmentele separate au fost îmbinate. Diadema era montată pe un suport perisabil (piele sau textil), care nu s-a păstrat." style="--point-x:66%;--point-y:34%"></button></div><figcaption><b>Diadema de la Gherăseni</b> (jud. Buzău), prima jumătate a sec. V, Muzeul Județean Buzău. Foto: Laci3, CC0. <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure></div>
         <div class="sr-text">
       <h3 class="sub-title">Ecoul în spațiul carpato-danubiano-pontic</h3>
       <p>Campaniile lui Uldin și Attila lovesc cetăți romane de la sud de Dunăre. În 408, Uldin cucerește <em>Castra Martis</em> (Dacia Ripensis), identificată tradițional cu <a href="https://vidin.government.bg/en/kula-municipality">Kula, în Bulgaria</a><sup class="fn" data-n="19">19</sup>. Campaniile din anii 440 lovesc <a href="https://whc.unesco.org/en/tentativelists/6475">Viminacium</a> și <a href="https://narodnimuzejnis.rs/wp-content/uploads/2015/07/katalog-jagodin-mala1.pdf">Naissus (Niš)</a>, ambele în Serbia de azi.</p>
       <p>La nord de Dunăre, descoperirile din România de azi documentează legăturile cu lumea romană și cu elitele epocii hunice. Aur roman ajuns dincolo de graniță a fost descoperit la <b>Dolhești</b> (Moldova), iar la <b>Șimleul Silvaniei</b> (Transilvania) au apărut două tezaure spectaculoase, alcătuite în principal din medalioane imperiale de aur și podoabe, atribuite unei elite din epoca migrațiilor din secolele IV–V<sup class="fn" data-n="20">20</sup>. Cazane hunice de bronz au fost semnalate și pe teritoriul României<sup class="fn" data-n="21">21</sup>, obiecte cunoscute și în alte părți ale Bazinului Carpatic. Cea mai celebră piesă a epocii, <b>tezaurul de la Pietroasa</b> („Cloșca cu puii de aur”), a fost atribuit unei elite gotice<sup class="fn" data-n="22">22</sup>. Îl pomenim aici pentru că a fost probabil îngropat de o elită germanică sub presiunea evenimentelor declanșate de sosirea hunilor.</p>
-      <p>Cea mai grăitoare piesă descoperită pe teritoriul României este însă <b>diadema de la Gherăseni</b> (județul Buzău), expusă și explorabilă în detaliu în modulul <a href="#sec-muzeu">Muzeul virtual</a> al acestui site. Găsită în 1965 la Grindul Cremenea, într-un mormânt de înhumație din prima jumătate a secolului al V-lea, are o bandă de aur împodobită cu granate roșii, în stilul policrom al epocii. Analiza antropologică a arătat că scheletul aparținea unei femei cu <b>craniul deformat artificial</b>, o practică documentată și în alte cimitire ale epocii. Piesa face parte din patrimoniul Muzeului Județean Buzău și are analogii în stepa eurasiatică și în Europa Centrală<sup class="fn" data-n="23">23</sup>.</p>
+      <p>Cea mai grăitoare piesă descoperită pe teritoriul României este însă <b>diadema de la Gherăseni</b> (județul Buzău) (<a href="#img-diadema">vezi detaliile fotografiei</a>). Găsită în 1965 la Grindul Cremenea, într-un mormânt de înhumație din prima jumătate a secolului al V-lea, are o bandă de aur împodobită cu granate roșii, în stilul policrom al epocii. Analiza antropologică a arătat că scheletul aparținea unei femei cu <b>craniul deformat artificial</b>, o practică documentată și în alte cimitire ale epocii. Piesa face parte din patrimoniul Muzeului Județean Buzău și are analogii în stepa eurasiatică și în Europa Centrală<sup class="fn" data-n="23">23</sup>.</p>
         </div>
       </div>
       <section class="r10-band" aria-label="O precizare necesară">
-        <figure class="r10-band-img"><img id="img-craniu" src="media/fcaf2ca68aa3.webp" alt="Craniu uman alungit prin deformare artificială, expus pe un suport de muzeu." loading="lazy"><figcaption><b>Craniu deformat artificial</b>, din cimitirul de la Mözs (Ungaria), sec. V, Muzeul Național Maghiar: un alt exemplu al practicii documentate la Gherăseni. Foto: Ceoil, CC0.</figcaption></figure>
+        <figure class="r10-band-img"><div class="photo-points"><img id="img-craniu" src="media/fcaf2ca68aa3.webp" alt="Craniu uman alungit prin deformare artificială, expus pe un suport de muzeu." loading="lazy" width="800" height="1067"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Bolta alungită" data-title="Bolta alungită" data-detail="Forma nu e naturală: în primii ani de viață, capul copilului era strâns cu bandaje, iar craniul, încă moale, creștea în sus și în spate. Practica e atestată la popoarele din sfera hunică, dar și la germanici și alani." style="--point-x:52%;--point-y:13%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Fruntea înaltă și îngustă" data-title="Fruntea înaltă și îngustă" data-detail="Presiunea bandajelor pe frunte și pe ceafă împingea creșterea spre creștet. Rezultatul era vizibil toată viața: un semn de apartenență la elită, care nu putea fi ascuns sau imitat la maturitate." style="--point-x:50%;--point-y:31%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Fața, neschimbată" data-title="Fața, neschimbată" data-detail="Deformarea modifica doar bolta craniului; orbitele și oasele feței rămân normale. Cercetările moderne nu au găsit dovezi că practica afecta inteligența celor care o purtau." style="--point-x:36%;--point-y:52%"></button></div><figcaption><b>Craniu deformat artificial</b>, din cimitirul de la Mözs (Ungaria), sec. V, Muzeul Național Maghiar: un alt exemplu al practicii documentate la Gherăseni. Foto: Ceoil, CC0. <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure>
         <div class="r10-band-text">
           <p class="r10-band-label">Ce se spune</p>
           <p class="r10-band-q"><i class="r10-x" aria-hidden="true"></i>„Sosirea hunilor a însemnat o înlocuire totală a populației din Bazinul Carpatic”</p>
@@ -4839,23 +4959,9 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
           <p class="r10-band-src">Sursa: Maróti et al. 2022 (<a class="mx-note" href="#note-6">nota 6</a>)</p>
         </div>
       </section>
+      <div class="photo-evidence-pair"><figure class="photo-evidence"><div class="photo-points"><img id="img-diadema-stepa" src="media/cfd242ed0277.webp" width="900" height="628" alt="Diademă ovală cu granate roșii montate în celule, decor de triunghiuri din granule și zeci de tuburi metalice dispuse ca niște raze." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Granatele în celule" data-title="Granatele în celule" data-detail="Pietrele roșii sunt granate (almandine), tăiate și montate fiecare în celula ei de metal. E același stil policrom ca la diadema de la Gherăseni, dovada unei mode comune elitei din tot spațiul dominat de huni." style="--point-x:50%;--point-y:23%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Triunghiurile din granule" data-title="Triunghiurile din granule" data-detail="Câmpul dintre pietre e acoperit cu triunghiuri formate din bobițe minuscule de metal, lipite una câte una: tehnica granulației, care cerea o mare îndemânare." style="--point-x:42%;--point-y:45%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Tuburile ca niște raze" data-title="Tuburile ca niște raze" data-detail="Zecile de tuburi și pandantive dispuse în jur dădeau diademei aspectul unui soare. Mișcându-se odată cu purtătoarea, ele străluceau și sunau ușor." style="--point-x:86%;--point-y:45%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="O piesă din răsărit" data-title="O piesă din răsărit" data-detail="Diademe cu elemente asemănătoare sunt cunoscute din stepa eurasiatică până în Europa Centrală. Asemănările ajută la compararea tehnicii și a podoabelor de rang." style="--point-x:33%;--point-y:86%"></button></div><figcaption><strong>Diadema de la Verhne-Pogromnoe</strong>. Diademă hunică din argint și bronz, cu granate, descoperită în cimitirul de la Verhne-Pogromnoe (regiunea Volgograd), pe drumul hunilor spre Europa. Ermitajul de Stat, Sankt Petersburg, inv. 1953-30. <small>Ermitajul de Stat, Sankt Petersburg · foto: <a href="https://commons.wikimedia.org/wiki/File:Hermitage_hall_033_-_02.jpg">Netelo</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure><figure class="photo-evidence"><div class="photo-points"><img id="img-cazan" src="media/c88b11f33f9e.webp" width="1200" height="949" alt="Vitrină de muzeu cu trei fragmente de bronz dintr-un cazan hunic: o bucată de buză cu nervuri orizontale, o toartă masivă cu proeminențe în formă de ciupercă și un fragment mic, alături de eticheta expoziției." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Buza cu nervuri orizontale" data-title="Buza cu nervuri orizontale" data-detail="Fragment de buză cu nervuri orizontale în relief, element decorativ tipic al cazanelor hunice. Piesa provine de la Milotice nad Opavou și este împrumutată de la muzeul din Bruntál." style="--point-x:45%;--point-y:25%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Toarta „în formă de ciupercă”" data-title="Toarta „în formă de ciupercă”" data-detail="Toartele masive, cu proeminențe în formă de ciupercă, sunt elementul de diagnostic care deosebește cazanele hunice de cele scitice sau sarmatice anterioare. Fragmentul provine de la Razová și este din cupru." style="--point-x:84%;--point-y:30%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Fragment de la Úvalno" data-title="Fragment de la Úvalno" data-detail="Bucată mică, împrumutată de la Muzeul Municipal din Krnov. Cazanele hunice apar rareori întregi: cele mai multe au fost găsite fragmentar sau îngropate izolat, adesea lângă râuri, posibil ca depuneri rituale." style="--point-x:69%;--point-y:69%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Eticheta expoziției" data-title="Eticheta expoziției" data-detail="Eticheta originală a vitrinei: „Nálezy z doby stěhování národů / Zlomky hunského kotle”: Descoperiri din epoca migrațiilor / Fragmente de cazan hunic, cu proveniența fiecărei piese. Lăsată intenționat vizibilă, ca dovadă a contextului muzeal." style="--point-x:16%;--point-y:84%"></button></div><figcaption><strong>Cazanul hunic de bronz</strong>. Fragmente din cazane hunice descoperite la Úvalno, Milotice nad Opavou și Razová (Silezia cehă). Cazanul turnat dintr-o bucată este piesa cea mai caracteristică a arheologiei hunice. <small>Slezské zemské muzeum, Opava · foto: <a href="https://commons.wikimedia.org/wiki/File:Hunsk%C3%A9_kotle,_Slezsk%C3%A9_zemsk%C3%A9_muzeum,_Opava,_Moravskoslezsk%C3%BD_kraj_01.jpg">Karel Frydrýšek (Fry72)</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> (decupaj).</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure></div>
     </section>
 
-    <div class="ch-orn" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12H108M132 12H232"/><path class="d" d="M120 4l8 8-8 8-8-8z"/></svg></div>
-    <section id="sec-muzeu" class="m-lab lab-in-article">
-      <div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">06</span><h2 class="sec-title">Muzeul Hunilor</h2></div>
-      <p class="sec-sub">Opt fișe despre epoca hunilor, cu fotografii ale pieselor din colecții muzeale și ale unui arc reconstituit.</p>
-      <p class="lab-how"><span class="lab-dot" aria-hidden="true"></span>Apasă pe punctele roșii pentru detalii.</p>
-      <div class="wrap">
-        <div class="frame">
-      <div class="artifact-grid" id="artifact-grid"></div>
-    </div>
-      </div>
-      <div class="hs-popover" id="hs-popover">
-  <p class="hp-title" id="hp-title"></p>
-  <p id="hp-desc"></p>
-</div>
-    </section>
 
 
 
@@ -4872,13 +4978,13 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
   </div>
 
   <section id="sec-glosar">
-    <div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">07</span><h2 class="sec-title">Glosar</h2></div>
+    <div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">06</span><h2 class="sec-title">Glosar</h2></div>
     <p class="sec-sub">Termenii de specialitate din articol. În text sunt subliniați cu puncte: treci cu mouse-ul peste ei sau atinge-i ca să vezi definiția.</p>
     <dl class="gl-list" id="gl-list"></dl>
   </section>
 
   <section id="biblio">
-    <div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">08</span><h2 class="sec-title">Surse și note</h2></div>
+    <div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">07</span><h2 class="sec-title">Surse și note</h2></div>
     <h3 class="sub-title">Note de subsol</h3>
     <ol class="biblio">
       <li id="note-1">Ptolemeu, <em>Geografia</em>, 3.5.10. <a class="back" href="#sec-origini">↩</a></li>
@@ -4966,7 +5072,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
 
 <footer class="site-final-footer">
   Proiect realizat individual pentru Concursul Național „Istorie și societate în dimensiune virtuală”, Secțiunea I, Istorie.<br>
-  Trei pagini: articolul cu note și bibliografie (cu cronologie, atlas, muzeu virtual și mituri verificate), jocul „Attila și Marea Migrație” și Jocul izvoarelor.<br>
+  Trei pagini: articolul cu note și bibliografie (cu cronologie, atlas, fotografii adnotate și mituri verificate), jocul „Attila și Marea Migrație” și Jocul izvoarelor.<br>
   Surse citate în note: Ptolemeu, Ammianus Marcellinus, Priscus din Panium, Procopius, Agathias, Iordanes, Prosper Tiro, Ieronim, Sozomen (iar în jocuri și la mituri Claudian, Codex Theodosianus, Hydatius, Marcellinus Comes, Orosius, Sidonius Apollinaris și Zosimus), precum și cercetări moderne (De Guignes, Kiessling, Bivar, Spuler, Maenchen-Helfen, Gibbon, Heather, Halsall, Goffart, Harhoiu, Neparáczki, Maróti).
 </footer>
 </div>
@@ -5501,7 +5607,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
 
   // Click (or Enter) on an article image opens it larger, with its caption; lb-zoom: the image can be zoomed and panned.
   (function initLightbox(){
-    var imgs = document.querySelectorAll('.fig-gallery img, .dc-img img, .sr-fig img, .fig-map img');
+    var imgs = document.querySelectorAll('.fig-gallery img, .dc-img img, .sr-fig img, .fig-map img, .photo-evidence img, .photo-points img');
     if (!imgs.length) return;
     var box = document.createElement('div');
     box.className = 'img-lightbox';
@@ -5855,280 +5961,6 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
   // ============================================================
 
   /**
-   * @typedef {Object} ArtifactHotspot
-   * @property {number} x - poziție orizontală, procent (0-100)
-   * @property {number} y - poziție verticală, procent (0-100)
-   * @property {string} title
-   * @property {string} desc
-   */
-  /**
-   * @typedef {Object} Artifact
-   * @property {string} name
-   * @property {string} desc
-   * @property {string} svg - marcaj SVG inline al obiectului
-   * @property {ArtifactHotspot[]} hotspots
-   */
-  /** @type {Artifact[]} */
-  var ARTIFACTS = [
-    {
-      "name": "Arcul compozit hunic",
-      "kind": "Reconstituire de muzeu",
-      "desc": "Reconstituirea arcului reflex din mormântul princiar de la Jakuszowice (Polonia), cu brațele placate cu foiță de aur: arma care a definit cavaleria hunică.",
-      "credit": "Muzeul Arheologic din Cracovia · foto: <a href=\"https://commons.wikimedia.org/wiki/File:02019_0565_Reflexbogen%2C_F%C3%BCrsten-Grab_von_Jakuszowice.jpg\">Silar</a>, <a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a> (decupaj)",
-      "alt": "Reconstituirea unui arc compozit hunic, expusă într-o vitrină de muzeu: arc asimetric, cu dublă curbură, având brațul superior placat cu foiță de aur.",
-      "ratio": "1126 / 1200",
-      "img": "media/5876970b5971.webp",
-      "hotspots": [
-        {
-          "x": 50,
-          "y": 31,
-          "title": "Placarea cu aur, simbol de rang",
-          "desc": "Porțiunea aurită de pe brațul superior nu are rol tehnic: arcurile placate cu foiță de aur, descoperite la Jakuszowice (Polonia) și Bátaszék (Ungaria), marcau statutul politic al purtătorului. Arma era și însemn de putere, nu doar unealtă de luptă."
-        },
-        {
-          "x": 77,
-          "y": 13,
-          "title": "Capătul recurbat (siyah)",
-          "desc": "Capetele rigide, întoarse invers față de curbura arcului, funcționau ca niște pârghii: măreau brusc tensiunea în ultima parte a tragerii. De aici viteza mare a săgeții, la un arc suficient de scurt încât să fie mânuit din șa."
-        },
-        {
-          "x": 21,
-          "y": 60,
-          "title": "Brațe asimetrice",
-          "desc": "Brațul inferior este mai scurt decât cel superior, o soluție care permitea tragerea comodă de pe cal, fără ca arcul să lovească gâtul animalului la coborârea mâinii."
-        }
-      ]
-    },
-    {
-      "name": "Cazanul hunic de bronz",
-      "kind": "Fragmente originale",
-      "desc": "Fragmente din cazane hunice descoperite la Úvalno, Milotice nad Opavou și Razová (Silezia cehă). Cazanul turnat dintr-o bucată este piesa cea mai caracteristică a arheologiei hunice.",
-      "credit": "Slezské zemské muzeum, Opava · foto: <a href=\"https://commons.wikimedia.org/wiki/File:Hunsk%C3%A9_kotle,_Slezsk%C3%A9_zemsk%C3%A9_muzeum,_Opava,_Moravskoslezsk%C3%BD_kraj_01.jpg\">Karel Frydrýšek (Fry72)</a>, <a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a> (decupaj)",
-      "alt": "Vitrină de muzeu cu trei fragmente de bronz dintr-un cazan hunic: o bucată de buză cu nervuri orizontale, o toartă masivă cu proeminențe în formă de ciupercă și un fragment mic, alături de eticheta expoziției.",
-      "ratio": "1200 / 949",
-      "img": "media/c88b11f33f9e.webp",
-      "hotspots": [
-        {
-          "x": 45,
-          "y": 25,
-          "title": "Buza cu nervuri orizontale",
-          "desc": "Fragment de buză cu nervuri orizontale în relief, element decorativ tipic al cazanelor hunice. Piesa provine de la Milotice nad Opavou și este împrumutată de la muzeul din Bruntál."
-        },
-        {
-          "x": 84,
-          "y": 30,
-          "title": "Toarta „în formă de ciupercă”",
-          "desc": "Toartele masive, cu proeminențe în formă de ciupercă, sunt elementul de diagnostic care deosebește cazanele hunice de cele scitice sau sarmatice anterioare. Fragmentul provine de la Razová și este din cupru."
-        },
-        {
-          "x": 69,
-          "y": 69,
-          "title": "Fragment de la Úvalno",
-          "desc": "Bucată mică, împrumutată de la Muzeul Municipal din Krnov. Cazanele hunice apar rareori întregi: cele mai multe au fost găsite fragmentar sau îngropate izolat, adesea lângă râuri, posibil ca depuneri rituale."
-        },
-        {
-          "x": 16,
-          "y": 84,
-          "title": "Eticheta expoziției",
-          "desc": "Eticheta originală a vitrinei: „Nálezy z doby stěhování národů / Zlomky hunského kotle”: Descoperiri din epoca migrațiilor / Fragmente de cazan hunic, cu proveniența fiecărei piese. Lăsată intenționat vizibilă, ca dovadă a contextului muzeal."
-        }
-      ]
-    },
-    {
-      "name": "Diadema de la Gherăseni",
-      "kind": "Piesă originală · descoperire din România",
-      "desc": "Diademă din foiță de aur cu incrustații de granat, descoperită în 1965 la Gherăseni (jud. Buzău), într-un mormânt din prima jumătate a secolului al V-lea. Muzeul Județean Buzău, inv. 42263.",
-      "credit": "Muzeul Județean Buzău · foto Laci3, CC0, Wikimedia Commons",
-      "alt": "Diademă hunică din foiță de aur, montată pe un suport de expunere: bandă lată acoperită cu rânduri de plăcuțe de granat roșu montate în celule, cu o piatră rotundă centrală și bordură aurie perlată.",
-      "ratio": "1300 / 884",
-      "img": "media/a5a6da80d540.webp",
-      "hotspots": [
-        {
-          "x": 49,
-          "y": 35,
-          "title": "Piatra centrală (cabochon)",
-          "desc": "O piatră rotundă, șlefuită în cabochon (rotunjită, fără fațete), marchează mijlocul diademei. De la ea pornesc, simetric, celelalte pietre."
-        },
-        {
-          "x": 27,
-          "y": 48,
-          "title": "Almandinele à cabochon",
-          "desc": "Pietre roșii de almandină (un tip de granat), șlefuite rotunjit și prinse fiecare în montura ei de aur, „à cabochon”: stilul policrom răspândit în Bazinul Carpatic în perioada hunică. Spre deosebire de tehnica cloisonné, în care plăcuțele de granat sunt tăiate pe forma celulelor (ca la vulturul de la Apahida), aici pietrele sunt rotunjite. Analiza antropologică a scheletului din mormânt a arătat un craniu deformat artificial."
-        },
-        {
-          "x": 66,
-          "y": 34,
-          "title": "Urmele de asamblare",
-          "desc": "Foița de aur nu e dintr-o singură bucată: se văd cusăturile unde segmentele separate au fost îmbinate. Diadema era montată pe un suport perisabil (piele sau textil), care nu s-a păstrat."
-        }
-      ]
-    },
-    {
-      "name": "Spatha hunică",
-      "kind": "Piesă originală · mormânt princiar",
-      "desc": "Sabie lungă de fier, cu două tăișuri (spatha), cu garda și mânerul placate cu aur și incrustate cu granate, din același mormânt princiar de la Jakuszowice (Polonia) ca arcul compozit expus alături.",
-      "credit": "Muzeul Arheologic din Cracovia · foto: <a href=\"https://commons.wikimedia.org/wiki/File:02019_0555_%282%29_Die_Spatha%2C_F%C3%BCrsten-Grab_von_Jakuszowice.jpg\">Silar</a>, <a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>",
-      "alt": "Sabie lungă de fier, cu lama dreaptă și gardă scurtă, având mânerul acoperit cu o piesă de aur decorată cu granate montate în celule.",
-      "ratio": "3347 / 2211",
-      "img": "media/f88f2b033787.webp",
-      "hotspots": [
-        {
-          "x": 77,
-          "y": 38,
-          "title": "Mânerul placat cu aur și granate",
-          "desc": "Ca și arcurile poleite, mânerele de sabie placate cu aur și pietre semiprețioase marcau rangul purtătorului: sabia era, alături de arc, celălalt obiect cu valoare aproape sacră a elitei hunice."
-        },
-        {
-          "x": 36,
-          "y": 41,
-          "title": "Lama de fier, cu două tăișuri",
-          "desc": "Lama dreaptă, lungă, cu două tăișuri, e cea a spathei, arma de rang a întregii Europe a epocii, nu doar a hunilor. Ce o face „princiară” nu e forma lamei, ci garnitura de aur și granate a mânerului."
-        },
-        {
-          "x": 75,
-          "y": 81,
-          "title": "Garda scurtă",
-          "desc": "O gardă minimală, abia vizibilă, tipică armelor gândite pentru viteză și pentru lupta călare, nu pentru scrimă de infanterie cu paradă lată."
-        }
-      ]
-    },
-    {
-      "name": "Craniu deformat artificial",
-      "kind": "Piesă originală · sec. V",
-      "desc": "Craniu din cimitirul de la Mözs (Ungaria), din a doua treime a secolului al V-lea, perioada stăpânirii hunice. Muzeul Național Maghiar, Budapesta.",
-      "credit": "Muzeul Național Maghiar · foto Ceoil, CC0, Wikimedia Commons",
-      "alt": "Craniu uman cu bolta mult alungită în sus, expus pe un suport transparent de muzeu.",
-      "ratio": "800 / 1067",
-      "img": "media/72a4d41571a9.webp",
-      "hotspots": [
-        {
-          "x": 52,
-          "y": 13,
-          "title": "Bolta alungită",
-          "desc": "Forma nu e naturală: în primii ani de viață, capul copilului era strâns cu bandaje, iar craniul, încă moale, creștea în sus și în spate. Practica e atestată la popoarele din sfera hunică, dar și la germanici și alani."
-        },
-        {
-          "x": 50,
-          "y": 31,
-          "title": "Fruntea înaltă și îngustă",
-          "desc": "Presiunea bandajelor pe frunte și pe ceafă împingea creșterea spre creștet. Rezultatul era vizibil toată viața: un semn de apartenență la elită, care nu putea fi ascuns sau imitat la maturitate."
-        },
-        {
-          "x": 36,
-          "y": 52,
-          "title": "Fața, neschimbată",
-          "desc": "Deformarea modifica doar bolta craniului; orbitele și oasele feței rămân normale. Cercetările moderne nu au găsit dovezi că practica afecta inteligența celor care o purtau."
-        }
-      ]
-    },
-    {
-      "name": "Solidul lui Teodosie al II-lea",
-      "kind": "Monedă de aur originală · 441–450",
-      "desc": "Piesa a fost bătută în anii 441–450, în timpul domniei lui Teodosie al II-lea (408–450). Romanii foloseau astfel de monede pentru plăți în aur.",
-      "credit": "Inv. MNS/A/22212 · foto: <a href=\"https://commons.wikimedia.org/wiki/File:Solidus_of_Theodosius_II.jpg\">Grzegorz Solecki și Arkadiusz Piętak / Muzeul Național din Szczecin</a>, <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0</a>",
-      "alt": "Monedă de aur uzată, cu bustul frontal al unui împărat cu coif și o inscripție circulară.",
-      "ratio": "700 / 700",
-      "img": "media/e61d1be7e856.webp",
-      "hotspots": [
-        {
-          "x": 50,
-          "y": 40,
-          "title": "Bustul împăratului",
-          "desc": "Teodosie al II-lea e înfățișat din față, cu coif și diademă de perle, ținând o lance pe umăr: imaginea unui împărat-războinic, deși el nu a condus niciodată personal o campanie."
-        },
-        {
-          "x": 27,
-          "y": 38,
-          "title": "Inscripția",
-          "desc": "De jur împrejur se citește D N THEODOSIVS P F AVG: „Stăpânul nostru Teodosie, pios și fericit, Augustus”. Formula e aceeași pe toate monedele imperiale ale epocii."
-        },
-        {
-          "x": 50,
-          "y": 73,
-          "title": "Scutul",
-          "desc": "Împăratul ține un scut decorat cu un călăreț care își străpunge dușmanul: un mesaj de victorie, plătit, ironic, chiar dușmanilor pe care Imperiul nu-i putea învinge."
-        },
-        {
-          "x": 89,
-          "y": 55,
-          "title": "Greutatea fixă",
-          "desc": "Solidul cântărea 1/72 dintr-o livră romană, adică aproximativ 4,5 g de aur aproape pur. Valoarea lui stabilă l-a făcut moneda de referință a lumii mediteraneene timp de secole."
-        }
-      ]
-    },
-    {
-      "name": "Diadema de la Verhne-Pogromnoe",
-      "kind": "Piesă originală · sf. sec. IV–V",
-      "desc": "Diademă hunică din argint și bronz, cu granate, descoperită în cimitirul de la Verhne-Pogromnoe (regiunea Volgograd), pe drumul hunilor spre Europa. Ermitajul de Stat, Sankt Petersburg, inv. 1953-30.",
-      "credit": "Ermitajul de Stat, Sankt Petersburg · foto: <a href=\"https://commons.wikimedia.org/wiki/File:Hermitage_hall_033_-_02.jpg\">Netelo</a>, <a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>",
-      "alt": "Diademă ovală cu granate roșii montate în celule, decor de triunghiuri din granule și zeci de tuburi metalice dispuse ca niște raze.",
-      "ratio": "900 / 628",
-      "img": "media/cfd242ed0277.webp",
-      "hotspots": [
-        {
-          "x": 50,
-          "y": 23,
-          "title": "Granatele în celule",
-          "desc": "Pietrele roșii sunt granate (almandine), tăiate și montate fiecare în celula ei de metal. E același stil policrom ca la diadema de la Gherăseni, dovada unei mode comune elitei din tot spațiul dominat de huni."
-        },
-        {
-          "x": 42,
-          "y": 45,
-          "title": "Triunghiurile din granule",
-          "desc": "Câmpul dintre pietre e acoperit cu triunghiuri formate din bobițe minuscule de metal, lipite una câte una: tehnica granulației, care cerea o mare îndemânare."
-        },
-        {
-          "x": 86,
-          "y": 45,
-          "title": "Tuburile ca niște raze",
-          "desc": "Zecile de tuburi și pandantive dispuse în jur dădeau diademei aspectul unui soare. Mișcându-se odată cu purtătoarea, ele străluceau și sunau ușor."
-        },
-        {
-          "x": 33,
-          "y": 86,
-          "title": "O piesă din răsărit",
-          "desc": "Diademe cu elemente asemănătoare sunt cunoscute din stepa eurasiatică până în Europa Centrală. Asemănările ajută la compararea tehnicii și a podoabelor de rang."
-        }
-      ]
-    },
-    {
-      "name": "Vulturul de la Apahida",
-      "kind": "Piesă originală · descoperire din România · a doua jumătate a sec. V",
-      "desc": "Garnitură de șa în formă de vultur, din tezaurul unui principe gepid descoperit la Apahida (jud. Cluj). Gepizii fuseseră supuși lui Attila; după moartea lui, regele lor Ardaric a condus răscoala de la Nedao (c. 454).",
-      "credit": "Muzeul Național de Istorie a României · foto: <a href=\"https://commons.wikimedia.org/wiki/File:Saddle_fittings_of_a_Gepid_prince_-_Apahida.jpg\">Cristian Chirita, montaj James Steakley</a> (decupaj), <a href=\"https://commons.wikimedia.org/wiki/File:Saddle_fittings_of_a_Gepid_prince_-_Apahida.jpg#GNU_Free_Documentation_License\">GFDL 1.2 sau ulterior</a>",
-      "alt": "Ornament în formă de vultur, cu aripile strânse, acoperit cu plăcuțe de granat roșu montate în celule de aur.",
-      "ratio": "600 / 1250",
-      "img": "media/d02d4a25989e.webp",
-      "hotspots": [
-        {
-          "x": 58,
-          "y": 12,
-          "title": "Capul de vultur",
-          "desc": "Ciocul curbat și ochiul rotund fac din piesă un vultur, pasăre a puterii, frecventă în arta elitelor germanice și stepice ale epocii."
-        },
-        {
-          "x": 45,
-          "y": 45,
-          "title": "Pieptul cu solzi",
-          "desc": "Pieptul e lucrat în tehnica cloisonné: sute de plăcuțe de granat tăiate exact pe forma celulelor de aur. Stilul policrom s-a răspândit în Europa tocmai prin lumea dominată de huni."
-        },
-        {
-          "x": 18,
-          "y": 45,
-          "title": "Aripile",
-          "desc": "Aripile au celule în formă de săgeată, umplute tot cu granate. Pe șa, perechea de vulturi strălucea în soare și arăta de departe rangul călărețului."
-        },
-        {
-          "x": 46,
-          "y": 90,
-          "title": "Ghearele",
-          "desc": "Picioarele se termină în granate mari, șlefuite. Piesa arată bogăția unui principe gepid după prăbușirea imperiului hunic: o elită care moștenea gustul și tehnicile epocii lui Attila."
-        }
-      ]
-    }
-  ];
-
-  /**
    * @typedef {Object} MythFact
    * @property {string} myth
    * @property {string} truth
@@ -6220,87 +6052,6 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
   ];
 
   // ============================================================
-
-  // ============================================================
-  // MODULE 1: Fotografii de artefact adnotate: randare DOM
-  // ============================================================
-
-  function renderArtifactCard(art, index){
-    var card = document.createElement('div');
-    card.className = 'artifact-card';
-    card.innerHTML =
-      '<div class="viewer-stage" id="stage-' + index + '" style="--ar: ' + art.ratio + '">' +
-        '<div class="viewer-object" id="obj-' + index + '">' +
-          '<div class="viewer-face front"><img loading="lazy" src="' + art.img + '" alt="' + art.alt + '"/></div>' +
-        '</div>' +
-      '</div>' +
-      '<p class="artifact-kind">' + art.kind + '</p>' +
-      '<h3>' + art.name + '</h3>' +
-      '<p class="artifact-desc">' + art.desc + '</p>' + ((window.R9_NOTES || {})[art.name] || '') +
-      '<p class="artifact-credit">' + art.credit + '</p>';
-    return card;
-  }
-
-  function showPopover(popoverEl, x, y, title, desc){
-    document.getElementById('hp-title').textContent = title;
-    document.getElementById('hp-desc').textContent = desc;
-    popoverEl.classList.add('show');
-    var pw = popoverEl.offsetWidth || 260;
-    var left = Math.min(x, window.innerWidth - pw - 16);
-    popoverEl.style.left = Math.max(16, left) + 'px';
-    var ph = popoverEl.offsetHeight;
-    var below = y + 14;
-    var top = below + ph + 12 <= window.innerHeight ? below : y - ph - 14;
-    popoverEl.style.top = Math.max(12, Math.min(top, window.innerHeight - ph - 12)) + 'px';
-  }
-
-  function initArtifactViewer(art, index, popoverEl){
-    var stage = document.getElementById('stage-' + index);
-    var obj = document.getElementById('obj-' + index);
-
-    var faceEl = stage.querySelector('.viewer-face.front');
-
-    art.hotspots.forEach(function(hs){
-      var dot = document.createElement('div');
-      dot.className = 'hotspot';
-      dot.style.left = hs.x + '%';
-      dot.style.top = hs.y + '%';
-      dot.setAttribute('role', 'button');
-      dot.setAttribute('tabindex', '0');
-      dot.setAttribute('aria-label', hs.title);
-      dot.addEventListener('click', function(e){
-        e.stopPropagation();
-        showPopover(popoverEl, e.clientX, e.clientY, hs.title, hs.desc);
-      });
-      dot.addEventListener('keydown', function(e){
-        if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
-        e.preventDefault();
-        e.stopPropagation();
-        var r = dot.getBoundingClientRect();
-        showPopover(popoverEl, r.left + r.width / 2, r.bottom, hs.title, hs.desc);
-      });
-      faceEl.appendChild(dot);
-    });
-
-  }
-
-  function initArtifactModule(){
-    var grid = document.getElementById('artifact-grid');
-    var popoverEl = document.getElementById('hs-popover');
-
-    ARTIFACTS.forEach(function(art, index){
-      grid.appendChild(renderArtifactCard(art, index));
-    });
-    ARTIFACTS.forEach(function(art, index){
-      initArtifactViewer(art, index, popoverEl);
-    });
-
-    document.addEventListener('click', function(e){
-      if (!e.target.closest('.hotspot') && !e.target.closest('.hs-popover')) {
-        popoverEl.classList.remove('show');
-      }
-    });
-  }
 
   // ============================================================
   // MODULE 2: Mit vs. Adevăr: randare DOM
@@ -6431,7 +6182,6 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
   // Pornire
   // ============================================================
 
-  initArtifactModule();
   initMythModule();
 })();
 
@@ -6534,23 +6284,6 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
 })();
 </script>
 
-<script>
-/* hs-popover-scroll */
-(function(){
-  var pop = document.getElementById('hs-popover');
-  if (!pop) return;
-  document.addEventListener('scroll', function(){ if (pop.classList.contains('show') && !pop.contains(document.activeElement)) pop.classList.remove('show'); }, { passive: true, capture: true });
-  // tastatura: fereastra primește focusul, iar Escape o închide și întoarce focusul pe punct
-  pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-labelledby', 'hp-title'); pop.tabIndex = -1;
-  var lastDot = null;
-  document.addEventListener('keydown', function(e){
-    var dot = e.target.closest && e.target.closest('.hotspot');
-    if (dot && (e.key === 'Enter' || e.key === ' ')) { lastDot = dot; setTimeout(function(){ if (pop.classList.contains('show')) pop.focus({ preventScroll: true }); }, 0); }
-    if (e.key === 'Escape' && pop.classList.contains('show')) { pop.classList.remove('show'); if (lastDot) lastDot.focus({ preventScroll: true }); }
-  }, true);
-  pop.addEventListener('focusout', function(e){ if (!pop.contains(e.relatedTarget)) { pop.classList.remove('show'); } });
-})();
-</script>
 <script>
 (function(){
   var root = document.getElementById('mod-atelier');
@@ -7671,7 +7404,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     { year: 454.6, cond: function(){ return choice.d5 === 'B'; }, t: '454 · Fără Nedao: neamurile rămân sub fiii lui Attila (scenariu ipotetic)' },
     { year: 454.6, cond: function(){ return choice.d5 === 'C'; }, t: '454 · Gepizii pleacă spre apus; neamurile rămase se răscoală fără ei (scenariu ipotetic)' },
     { year: 468.4, at: [37.08, 11.04], place: 'Capul Bon', cond: function(){ return choice.dl === 'A'; }, t: '468 · La Capul Bon, vandalii dau foc flotei romane', src: 'Procopius, Războaiele III.6; Marcellinus Comes, Chronicon, anii 467–468', fx: { stab: -8 } },
-    { year: 470, at: [46.8, 23.6], place: 'Apahida', cond: function(){ return choice.d5 === 'A'; }, check: 'gep', t: 'c. 470 · Un principe gepid e îngropat la Apahida, lângă Cluj, cu podoabe de aur', src: 'vezi Muzeul, capitolul 06' },
+    { year: 470, at: [46.8, 23.6], place: 'Apahida', cond: function(){ return choice.d5 === 'A'; }, check: 'gep', t: 'c. 470 · Un principe gepid e îngropat la Apahida, lângă Cluj, cu podoabe de aur', src: 'vezi garnitura de șa de la Apahida, în articol' },
     { year: 476, at: [44.42, 12.2], place: 'Ravenna', t: '476 · Ultimul împărat al Apusului, Romulus Augustulus, este înlăturat' }
   ];
 
@@ -9393,7 +9126,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     rows.forEach(function(r){
       var media = r.querySelector('.sr-media'), text = r.querySelector('.sr-text');
       if (!media || !text) return;
-      var imgs = Array.prototype.slice.call(media.querySelectorAll('.sr-fig img'));
+      var imgs = Array.prototype.slice.call(media.querySelectorAll('.sr-fig img:not(.photo-points img)'));
       r.classList.remove('cap-over');
       imgs.forEach(function(i){ i.style.maxHeight = ''; });
       if (!wide.matches || !text.offsetHeight) return;
@@ -9938,7 +9671,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
 
   // ---------- textul și imaginile apar la derulare, o singură dată ----------
   var page = document.getElementById('page-acasa');
-  var VITR = '.hx, .gs, #sec-atlas, #sec-muzeu';
+  var VITR = '.hx, .gs, #sec-atlas';
   function once(els, cls, margin){
     if (!hasIO || still) { els.forEach(function(e){ e.classList.add(cls); }); return; }
     var io = new IntersectionObserver(function(en){
@@ -9960,10 +9693,6 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     once(rv.filter(function(e){ return !e.classList.contains('r7-in'); }), 'r7-in');
     once(Array.prototype.slice.call(page.querySelectorAll('.pq')), 'r7-in', '0px 0px -20% 0px');
   }
-
-  // ---------- muzeul: punctele roșii pulsează până la primul clic ----------
-  var muz = document.getElementById('sec-muzeu');
-  if (muz) muz.addEventListener('click', function(e){ if (e.target.closest('.hotspot')) muz.classList.add('r7-hs-seen'); });
 
   // ---------- meniul: linia aurie alunecă la capitolul curent ----------
   var nav = document.getElementById('site-nav'), row = document.getElementById('toc-row');
@@ -10245,6 +9974,26 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
   })();
 })();
 </script>
+<dialog id="photo-detail" class="photo-detail" aria-labelledby="photo-detail-title"><form method="dialog"><button type="submit" autofocus>Închide</button></form><h2 id="photo-detail-title"></h2><p class="photo-detail-text"></p></dialog>
+<script>
+(() => {
+  const dialog = document.getElementById('photo-detail');
+  const title = document.getElementById('photo-detail-title');
+  const text = dialog.querySelector('.photo-detail-text');
+  document.addEventListener('click', event => {
+    const point = event.target.closest('.photo-point');
+    if (point) {
+      title.textContent = point.dataset.title;
+      text.textContent = point.dataset.detail;
+      dialog.showModal();
+    } else if (event.target === dialog) {
+      const box = dialog.getBoundingClientRect();
+      if (event.clientX < box.left || event.clientX > box.right ||
+          event.clientY < box.top || event.clientY > box.bottom) dialog.close();
+    }
+  });
+})();
+</script>
 <!-- drum-huni:start -->
 <style>
 /* Stratul cartografic ocupă numai porțiunea de articol, după copertă. */
@@ -10359,7 +10108,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     { selector:'#sec-migratie', side:1, year:'Anii 420–430', name:'Câmpia Panonică', inset:130 },
     { selector:'#sec-atlas', side:-1, year:'451', name:'Galia', inset:124 },
     { selector:'#sec-personalitati', side:1, year:'452', name:'Italia', inset:118 },
-    { selector:'#sec-muzeu', side:-1, name:'Urme ale epocii', inset:150 },
+    { selector:'#img-apahida', side:-1, name:'Urme ale epocii', inset:85 },
     { selector:'#sec-glosar', side:1, inset:68 },
     { selector:'#biblio', side:-1, name:'Izvoare și mărturii', inset:100 }
   ];
