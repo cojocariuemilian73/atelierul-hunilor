@@ -1,5 +1,5 @@
   /* ============ MODULE: ATELIERUL ISTORICULUI (.m-atelier) ============ */
-  /* Masa istoricului ca birou de arhivă: axa e o panglică de pergament cu zoom pe epoci, sursele sunt documente pe o masă de lemn */
+  /* Axa de pergament și sursele așezate direct pe fundalul paginii. */
   #mod-atelier{ padding-block: 40px 28px; }
   .m-atelier{
     --md-s1: #1d1813; --md-s2: #261f18; --md-line: rgba(230, 215, 195, 0.16);
@@ -183,33 +183,19 @@
   .md-plus.zero{ color: #d8cab2; }
   @keyframes md-plus{ from{ opacity: 0; transform: translateY(8px); } 20%{ opacity: 1; transform: none; } to{ opacity: 0; transform: translateY(-18px); } }
 
-  /* ---------- masa de lemn și documentele de pe ea ---------- */
+  /* ---------- sursele de pe masă ---------- */
   .md-desk{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 440px); gap: 24px; align-items: start; }
   /* pe ecranele late încap mai multe surse pe rând */
-  .md-tray{ display: grid; grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); gap: 16px 14px; padding: 20px 18px 22px; border: 1px solid #1d130a;
-    background:
-      radial-gradient(120% 80% at 30% 0%, rgba(255, 210, 150, 0.08), transparent 60%),
-      repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 6px, rgba(255, 220, 170, 0.035) 6px 7px, transparent 7px 13px),
-      repeating-linear-gradient(180deg, transparent 0 120px, rgba(0, 0, 0, 0.3) 120px 122px, rgba(255, 220, 170, 0.05) 122px 123px),
-      linear-gradient(180deg, #4a3020, #3a2517 60%, #2f1f10);
-    box-shadow: inset 0 2px 0 rgba(255, 220, 170, 0.08), inset 0 0 40px rgba(0, 0, 0, 0.55), 0 10px 24px rgba(0, 0, 0, 0.4); }
-  .md-card{ position: relative; aspect-ratio: 4 / 3; padding: 0; border: 0; background: none; cursor: grab; transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--r, 0deg)); transition: transform 0.28s var(--md-ease), box-shadow 0.28s, filter 0.28s, opacity 0.2s; }
-  /* fotografiile și stampele: ramă albă și umbră de hârtie fotografică */
-  .md-card:not(.txt){ padding: 5px; background: #f5f0e4; box-shadow: 0 12px 18px rgba(0, 0, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.6); }
-  .md-card img{ width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; outline: 1px solid rgba(60, 45, 25, 0.25); outline-offset: -1px; }
-  /* izvoarele scrise: foi de hârtie veche cu margini rupte (umbra urmează conturul) */
-  .md-card.txt{ filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.55)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45)); }
+  .md-tray{ display: grid; grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); gap: 16px 14px; padding: 12px; }
+  .md-card{ position: relative; aspect-ratio: 4 / 3; padding: 0; border: 0; background: none; cursor: grab; transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--r, 0deg)); transition: transform 0.28s var(--md-ease), opacity 0.2s; }
+  .md-card img{ width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
   @media (hover: hover){
     .md-card:hover{ z-index: 2; transform: translate(var(--dx, 0px), calc(var(--dy, 0px) - 8px)) rotate(0deg) scale(1.06); }
-    .md-card:not(.txt):hover{ box-shadow: 0 26px 34px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.5); }
-    .md-card.txt:hover{ filter: drop-shadow(0 22px 16px rgba(0, 0, 0, 0.55)) drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4)); }
   }
   .md-card.sel, .fx-move .m-atelier .md-card.sel, .md-card.lifted{ z-index: 2; transform: translate(var(--dx, 0px), calc(var(--dy, 0px) - 8px)) rotate(0deg) scale(1.06); outline: 3px solid #f2d474; outline-offset: 3px; }
-  .md-card:not(.txt).sel, .fx-move .m-atelier .md-card:not(.txt).sel{ box-shadow: 0 26px 34px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.5); }
-  .fx-move .m-atelier .md-card.txt.sel{ box-shadow: none; }
-  .md-card.txt.sel{ filter: drop-shadow(0 22px 16px rgba(0, 0, 0, 0.55)) drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4)); }
   .md-card.lifted{ opacity: 0.45; outline-style: dashed; }
-  .md-card:focus-visible{ outline: 3px solid #f2d474; outline-offset: 4px; }
+  #mod-atelier .md-card.sel{ outline: 2px solid #8a2a1f; outline-offset: 2px; }
+  #mod-atelier .md-card:focus-visible{ outline: 2px solid #7a5410; outline-offset: 3px; }
   .md-card.done{ cursor: pointer; }
   .md-card.done img, .md-card.done .md-paper{ filter: saturate(0.35) brightness(0.62); }
   .md-paper{ display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 100%; height: 100%; padding: 10px 8px; color: var(--md-paper-ink); text-align: center;
@@ -239,13 +225,13 @@
   .m-atelier.md-dragging, .m-atelier.md-dragging *{ cursor: grabbing !important; user-select: none; }
 
   /* ---------- sursa aleasă, de aproape ---------- */
-  .md-insp{ position: sticky; top: calc(var(--nav-h, 0px) + 16px); min-height: 220px; max-height: calc(100vh - var(--nav-h, 44px) - 32px); overflow-y: auto; background: var(--md-s1); border: 1px solid var(--md-line); }
+  .md-insp{ position: sticky; top: calc(var(--nav-h, 0px) + 16px); min-height: 220px; max-height: calc(100vh - var(--nav-h, 44px) - 32px); overflow-y: auto; }
   .md-insp-empty{ display: grid; place-items: center; gap: 12px; padding: 40px 24px; text-align: center; color: var(--md-dim); }
   .md-insp-empty svg{ width: 54px; height: 54px; color: rgba(212, 175, 55, 0.65); }
   .md-insp-empty p{ margin: 0; max-width: 30ch; line-height: 1.55; }
   .md-link{ min-height: 44px; padding: 8px 12px; border: 0; background: none; color: var(--md-gold2) !important; font: 600 0.95rem 'Source Serif 4', Georgia, serif; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
   .md-link:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
-  .md-zoom{ position: relative; background: #0d0c0b; cursor: zoom-in; overflow: hidden; }
+  .md-zoom{ position: relative; cursor: zoom-in; overflow: hidden; }
   .md-zoom img{ display: block; width: 100%; max-height: 220px; object-fit: contain; }
   .md-lens{ position: absolute; width: 140px; height: 140px; margin: -70px 0 0 -70px; border-radius: 50%; border: 2px solid #f2d474; background-repeat: no-repeat; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.4); pointer-events: none; }
   .md-zbtn{ position: absolute; right: 8px; bottom: 8px; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 4px 10px; border: 1px solid rgba(242, 212, 116, 0.7); background: rgba(14, 13, 11, 0.85); color: #f2d474; font: 600 0.82rem 'Source Serif 4', Georgia, serif; cursor: pointer; }
@@ -257,14 +243,13 @@
   .md-zoom.zoomed img{ width: 220%; max-width: none; max-height: none; }
   .md-zoom.zoomed .md-lens, .md-zoom.zoomed .md-ztip{ display: none !important; }
   .md-zoom.zoomed .md-zbtn{ position: sticky; float: right; margin: -42px 8px 8px 0; }
-  .md-insp-paper{ display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 22px 20px; color: var(--md-paper-ink); text-align: center;
-    background: radial-gradient(55% 45% at 85% 90%, rgba(140, 90, 30, 0.16), transparent 70%), linear-gradient(160deg, #efe3c8, #d9c69f); }
+  .md-insp-paper{ display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 22px 20px; color: var(--md-paper-ink); text-align: center; }
   .md-insp-paper .md-book{ width: 64px; height: 48px; }
   .md-insp-paper b{ font: 700 1.2rem 'Cinzel', serif; }
   .md-insp-paper i{ font-size: 0.95rem; }
   .md-insp-paper p{ margin: 6px 0 0; font-size: 1rem; line-height: 1.5; }
   .md-insp-paper.ms{ padding: 14px 16px 18px; }
-  .md-insp-page{ width: 100%; max-height: 170px; margin-bottom: 6px; overflow: hidden; border: 1px solid rgba(42, 31, 18, 0.3); background: #e6d3ab; }
+  .md-insp-page{ width: 100%; max-height: 170px; margin-bottom: 6px; overflow: hidden; }
   .md-insp-page img{ display: block; width: 100%; mix-blend-mode: multiply; }
   .md-insp-paper.ms small{ margin-top: 6px; font-size: 0.72rem; line-height: 1.4; opacity: 0.75; }
   .md-insp-paper.qt blockquote{ margin: 0 0 4px; font: italic 1.08rem/1.55 'Source Serif 4', Georgia, serif; color: #2a1f12; }
@@ -538,8 +523,6 @@
       min-width: 0;
       transform: none;
     }
-    #mod-atelier .md-tray .md-card.sel{ outline: 2px solid #8a2a1f; outline-offset: 2px; }
-    #mod-atelier .md-tray .md-card:focus-visible{ outline-color: #7a5410; }
     #mod-atelier .md-tray .md-paper{ padding: 4px; line-height: 1.1; }
     #mod-atelier .md-tray .md-paper .md-book{ width: 25px; height: 19px; }
     #mod-atelier .md-tray .md-paper.qt q{ padding: 0 2px; font-size: .72rem; -webkit-line-clamp: 3; }

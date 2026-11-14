@@ -979,7 +979,7 @@
 
 
   /* ============ MODULE: ATELIERUL ISTORICULUI (.m-atelier) ============ */
-  /* Jocul izvoarelor ca birou de arhivă: axa e o panglică de pergament cu zoom pe epoci, sursele sunt documente pe o masă de lemn */
+  /* Axa de pergament și sursele așezate direct pe fundalul paginii. */
   #mod-atelier{ padding-block: 40px 28px; }
   .m-atelier{
     --md-s1: #1d1813; --md-s2: #261f18; --md-line: rgba(230, 215, 195, 0.16);
@@ -1163,33 +1163,19 @@
   .md-plus.zero{ color: #d8cab2; }
   @keyframes md-plus{ from{ opacity: 0; transform: translateY(8px); } 20%{ opacity: 1; transform: none; } to{ opacity: 0; transform: translateY(-18px); } }
 
-  /* ---------- masa de lemn și documentele de pe ea ---------- */
+  /* ---------- sursele de pe masă ---------- */
   .md-desk{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 440px); gap: 24px; align-items: start; }
   /* pe ecranele late încap mai multe surse pe rând */
-  .md-tray{ display: grid; grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); gap: 16px 14px; padding: 20px 18px 22px; border: 1px solid #1d130a;
-    background:
-      radial-gradient(120% 80% at 30% 0%, rgba(255, 210, 150, 0.08), transparent 60%),
-      repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 6px, rgba(255, 220, 170, 0.035) 6px 7px, transparent 7px 13px),
-      repeating-linear-gradient(180deg, transparent 0 120px, rgba(0, 0, 0, 0.3) 120px 122px, rgba(255, 220, 170, 0.05) 122px 123px),
-      linear-gradient(180deg, #4a3020, #3a2517 60%, #2f1f10);
-    box-shadow: inset 0 2px 0 rgba(255, 220, 170, 0.08), inset 0 0 40px rgba(0, 0, 0, 0.55), 0 10px 24px rgba(0, 0, 0, 0.4); }
-  .md-card{ position: relative; aspect-ratio: 4 / 3; padding: 0; border: 0; background: none; cursor: grab; transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--r, 0deg)); transition: transform 0.28s var(--md-ease), box-shadow 0.28s, filter 0.28s, opacity 0.2s; }
-  /* fotografiile și stampele: ramă albă și umbră de hârtie fotografică */
-  .md-card:not(.txt){ padding: 5px; background: #f5f0e4; box-shadow: 0 12px 18px rgba(0, 0, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.6); }
-  .md-card img{ width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; outline: 1px solid rgba(60, 45, 25, 0.25); outline-offset: -1px; }
-  /* izvoarele scrise: foi de hârtie veche cu margini rupte (umbra urmează conturul) */
-  .md-card.txt{ filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.55)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45)); }
+  .md-tray{ display: grid; grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); gap: 16px 14px; padding: 12px; }
+  .md-card{ position: relative; aspect-ratio: 4 / 3; padding: 0; border: 0; background: none; cursor: grab; transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--r, 0deg)); transition: transform 0.28s var(--md-ease), opacity 0.2s; }
+  .md-card img{ width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
   @media (hover: hover){
     .md-card:hover{ z-index: 2; transform: translate(var(--dx, 0px), calc(var(--dy, 0px) - 8px)) rotate(0deg) scale(1.06); }
-    .md-card:not(.txt):hover{ box-shadow: 0 26px 34px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.5); }
-    .md-card.txt:hover{ filter: drop-shadow(0 22px 16px rgba(0, 0, 0, 0.55)) drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4)); }
   }
   .md-card.sel, .fx-move .m-atelier .md-card.sel, .md-card.lifted{ z-index: 2; transform: translate(var(--dx, 0px), calc(var(--dy, 0px) - 8px)) rotate(0deg) scale(1.06); outline: 3px solid #f2d474; outline-offset: 3px; }
-  .md-card:not(.txt).sel, .fx-move .m-atelier .md-card:not(.txt).sel{ box-shadow: 0 26px 34px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.5); }
-  .fx-move .m-atelier .md-card.txt.sel{ box-shadow: none; }
-  .md-card.txt.sel{ filter: drop-shadow(0 22px 16px rgba(0, 0, 0, 0.55)) drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4)); }
   .md-card.lifted{ opacity: 0.45; outline-style: dashed; }
-  .md-card:focus-visible{ outline: 3px solid #f2d474; outline-offset: 4px; }
+  #mod-atelier .md-card.sel{ outline: 2px solid #8a2a1f; outline-offset: 2px; }
+  #mod-atelier .md-card:focus-visible{ outline: 2px solid #7a5410; outline-offset: 3px; }
   .md-card.done{ cursor: pointer; }
   .md-card.done img, .md-card.done .md-paper{ filter: saturate(0.35) brightness(0.62); }
   .md-paper{ display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 100%; height: 100%; padding: 10px 8px; color: var(--md-paper-ink); text-align: center;
@@ -1219,13 +1205,13 @@
   .m-atelier.md-dragging, .m-atelier.md-dragging *{ cursor: grabbing !important; user-select: none; }
 
   /* ---------- sursa aleasă, de aproape ---------- */
-  .md-insp{ position: sticky; top: calc(var(--nav-h, 0px) + 16px); min-height: 220px; max-height: calc(100vh - var(--nav-h, 44px) - 32px); overflow-y: auto; background: var(--md-s1); border: 1px solid var(--md-line); }
+  .md-insp{ position: sticky; top: calc(var(--nav-h, 0px) + 16px); min-height: 220px; max-height: calc(100vh - var(--nav-h, 44px) - 32px); overflow-y: auto; }
   .md-insp-empty{ display: grid; place-items: center; gap: 12px; padding: 40px 24px; text-align: center; color: var(--md-dim); }
   .md-insp-empty svg{ width: 54px; height: 54px; color: rgba(212, 175, 55, 0.65); }
   .md-insp-empty p{ margin: 0; max-width: 30ch; line-height: 1.55; }
   .md-link{ min-height: 44px; padding: 8px 12px; border: 0; background: none; color: var(--md-gold2) !important; font: 600 0.9375rem 'Source Serif 4', Georgia, serif; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
   .md-link:focus-visible{ outline: 2px solid #f2d474; outline-offset: 2px; }
-  .md-zoom{ position: relative; background: #0d0c0b; cursor: zoom-in; overflow: hidden; }
+  .md-zoom{ position: relative; cursor: zoom-in; overflow: hidden; }
   .md-zoom img{ display: block; width: 100%; max-height: 220px; object-fit: contain; }
   .md-lens{ position: absolute; width: 140px; height: 140px; margin: -70px 0 0 -70px; border-radius: 50%; border: 2px solid #f2d474; background-repeat: no-repeat; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.4); pointer-events: none; }
   .md-zbtn{ position: absolute; right: 8px; bottom: 8px; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 4px 10px; border: 1px solid rgba(242, 212, 116, 0.7); background: rgba(14, 13, 11, 0.85); color: #f2d474; font: 600 0.8125rem 'Source Serif 4', Georgia, serif; cursor: pointer; }
@@ -1237,14 +1223,13 @@
   .md-zoom.zoomed img{ width: 220%; max-width: none; max-height: none; }
   .md-zoom.zoomed .md-lens, .md-zoom.zoomed .md-ztip{ display: none !important; }
   .md-zoom.zoomed .md-zbtn{ position: sticky; float: right; margin: -42px 8px 8px 0; }
-  .md-insp-paper{ display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 22px 20px; color: var(--md-paper-ink); text-align: center;
-    background: radial-gradient(55% 45% at 85% 90%, rgba(140, 90, 30, 0.16), transparent 70%), linear-gradient(160deg, #efe3c8, #d9c69f); }
+  .md-insp-paper{ display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 22px 20px; color: var(--md-paper-ink); text-align: center; }
   .md-insp-paper .md-book{ width: 64px; height: 48px; }
   .md-insp-paper b{ font: 700 1.25rem 'EB Garamond', serif; }
   .md-insp-paper i{ font-size: 0.9375rem; }
   .md-insp-paper p{ margin: 6px 0 0; font-size: 0.9375rem; line-height: 1.5; }
   .md-insp-paper.ms{ padding: 14px 16px 18px; }
-  .md-insp-page{ width: 100%; max-height: 170px; margin-bottom: 6px; overflow: hidden; border: 1px solid rgba(42, 31, 18, 0.3); background: #e6d3ab; }
+  .md-insp-page{ width: 100%; max-height: 170px; margin-bottom: 6px; overflow: hidden; }
   .md-insp-page img{ display: block; width: 100%; mix-blend-mode: multiply; }
   .md-insp-paper.ms small{ margin-top: 6px; font-size: 0.8125rem; line-height: 1.4; opacity: 0.75; }
   .md-insp-paper.qt blockquote{ margin: 0 0 4px; font: italic 1.0625rem/1.55 'Source Serif 4', Georgia, serif; color: #2a1f12; }
@@ -1518,8 +1503,6 @@
       min-width: 0;
       transform: none;
     }
-    #mod-atelier .md-tray .md-card.sel{ outline: 2px solid #8a2a1f; outline-offset: 2px; }
-    #mod-atelier .md-tray .md-card:focus-visible{ outline-color: #7a5410; }
     #mod-atelier .md-tray .md-paper{ padding: 4px; line-height: 1.1; }
     #mod-atelier .md-tray .md-paper .md-book{ width: 25px; height: 19px; }
     #mod-atelier .md-tray .md-paper.qt q{ padding: 0 2px; font-size: 0.8125rem; -webkit-line-clamp: 3; }
@@ -3408,16 +3391,8 @@
   .md-hint{ color: #392a1c; }
   .md-plus{ color: #4d3b2b; }
   .md-plus.zero{ color: #402f21; }
-  .md-tray{ background:
-      radial-gradient(120% 80% at 30% 0%, rgba(255, 210, 150, 0.08), transparent 60%),
-      repeating-linear-gradient(90deg, rgba(243, 234, 215, 0.13) 0 1px, transparent 1px 6px, rgba(255, 220, 170, 0.035) 6px 7px, transparent 7px 13px),
-      repeating-linear-gradient(180deg, transparent 0 120px, rgba(243, 234, 215, 0.3) 120px 122px, rgba(255, 220, 170, 0.05) 122px 123px),
-      linear-gradient(180deg, #e0d2b3, #e5d7bb 60%, #e8dcc2); box-shadow: inset 0 2px 0 rgba(255, 220, 170, 0.08), inset 0 0 40px rgba(60, 40, 20, 0.18), 0 10px 24px rgba(60, 40, 20, 0.14); }
-  .md-card:not(.txt){ box-shadow: 0 12px 18px rgba(60, 40, 20, 0.18), 0 2px 4px rgba(60, 40, 20, 0.18); }
-  .md-card:not(.txt).sel, .fx-move .m-atelier .md-card:not(.txt).sel{ box-shadow: 0 26px 34px rgba(60, 40, 20, 0.18), 0 4px 8px rgba(60, 40, 20, 0.175); }
   .md-stamp{ background: rgba(238, 228, 206, 0.78); }
   .md-ghost:not(.txt){ box-shadow: 0 26px 40px rgba(60, 40, 20, 0.18); }
-  .md-zoom{ background: #efe5cf; }
   .md-lens{ box-shadow: 0 10px 26px rgba(60, 40, 20, 0.18), inset 0 0 0 1px rgba(60, 40, 20, 0.14); }
   .md-zbtn{ background: rgba(239, 228, 207, 0.85); color: #786011; }
   .md-ztip{ background: rgba(239, 228, 207, 0.8); color: #3a2a1d; }
@@ -3576,9 +3551,6 @@
   html:not(#x) .jg{ --s1: #ebdfc7; --s2: #e8dcc2; --s3: #e5d8bc; }
   .mig-stage, .imp-map{ background: #eee4cd !important; }
   #page-acasa ~ .site-final-footer, .site-final-footer{ --accent-bg: #38281b; --accent2-bg: #3b2b1e; }
-  @media (hover: hover){
-  .md-card:not(.txt):hover{ box-shadow: 0 26px 34px rgba(60, 40, 20, 0.18), 0 4px 8px rgba(60, 40, 20, 0.175); }
-  }
   @media (max-width: 767px){
   .md-adjust{ background: #ebdfc7; box-shadow: 0 -8px 18px rgba(60, 40, 20, 0.158); }
   .st-menu{ color: #786011; }
@@ -3984,8 +3956,8 @@
     #page-acasa .hero-foreground .hero-img{
       /* Decupajul urmărește coifurile. Se pierde înainte să ajungă la marginile scenei. */
       mask-image:
-        linear-gradient(90deg, transparent 36%, #000 40%, #000 56%, transparent 61%),
-        linear-gradient(180deg, #000 33%, transparent 49%);
+        linear-gradient(90deg, transparent 34%, #000 39%, #000 59%, transparent 67%),
+        linear-gradient(180deg, #000 36%, transparent 44%);
       mask-composite: intersect;
       clip-path: polygon(0% 51.14%, 33.05% 44%, 36.49% 40.29%, 38.4% 30.57%, 39.08% 28.71%, 39.85% 27.29%, 40.69% 26.86%, 40.99% 25.14%, 40.99% 23.57%, 41.6% 21.29%, 41.91% 21.57%, 42.37% 20.43%, 42.75% 22.57%, 42.6% 25%, 43.51% 26.29%, 43.44% 27.43%, 43.82% 27.71%, 44.27% 26%, 45.11% 25.71%, 45.88% 26.43%, 46.49% 29.71%, 47.02% 30.29%, 48.02% 30%, 48.17% 28.43%, 48.63% 26.57%, 49.16% 25.43%, 50% 25.14%, 51.07% 23.57%, 51.98% 24.14%, 51.68% 25.43%, 52.44% 25.43%, 51.6% 27.14%, 51.07% 29.29%, 52.29% 30.71%, 53.51% 31.86%, 54.35% 31.29%, 55.04% 29%, 55.34% 27.43%, 55.88% 27.14%, 56.87% 28.71%, 56.95% 31%, 58.32% 34%, 59.69% 34.29%, 61.68% 34.86%, 64.73% 35.29%, 68.32% 37.29%, 73.74% 47.14%, 100% 57.71%, 100% 100%, 0% 100%);
     }
@@ -4000,7 +3972,7 @@
     align-self: start;
     z-index: 2;
     max-width: none;
-    margin: clamp(36px, 5.8svh, 64px) clamp(12px, 4vw, 56px) 0;
+    margin: clamp(48px, 7.8svh, 84px) clamp(12px, 4vw, 56px) 0;
     padding: 0;
     font: 600 clamp(3rem, min(9vw, 13svh), 9rem)/.89 'EB Garamond', Georgia, serif !important;
     letter-spacing: -.035em;
@@ -4052,7 +4024,7 @@
       grid-template-rows: minmax(clamp(325px, 56svh, 435px), auto) auto;
     }
     html body #page-acasa #acasa .title{
-      margin-top: clamp(32px, 6.6svh, 59px);
+      margin-top: clamp(38px, 7.7svh, 66px);
       margin-inline: 12px;
       font-size: clamp(1.65rem, 9.25vw, 3.1rem) !important;
     }
@@ -4243,6 +4215,98 @@
     }
     #page-acasa .vd-group:has(> .vd:nth-of-type(3):last-child) .vd + .vd{ border-top: 0; }
   }
+  #page-acasa .vd-group.vd-research{
+    padding: var(--sp-24) 0 var(--sp-16);
+    border-top: 0;
+  }
+  #page-acasa .vd-research-head{
+    margin: 0;
+    padding-bottom: var(--sp-16);
+    border-bottom: 1px solid var(--line);
+    font: 600 clamp(1.8rem, 3.1vw, 2.65rem)/1.05 'EB Garamond', Georgia, serif;
+    letter-spacing: -.02em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  #page-acasa .vd-research-head::before{
+    display: block;
+    width: 40px;
+    height: 2px;
+    margin-bottom: var(--sp-16);
+    background: var(--garnet);
+    content: '';
+  }
+  #page-acasa .vd-research-grid{
+    display: grid;
+    gap: var(--sp-24) clamp(24px, 2.8vw, var(--sp-40));
+    margin-top: var(--sp-24);
+  }
+  #page-acasa .vd-research-card{
+    display: grid;
+    align-content: start;
+    row-gap: 12px;
+    min-width: 0;
+  }
+  #page-acasa .vd-research-card :is(h4, p, figure){ margin: 0; }
+  html #page-acasa .page-shell .vd-research .vd-research-fig img{
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.92;
+    object-fit: cover;
+    border: 0 !important;
+    padding: 0;
+    background: transparent;
+  }
+  #page-acasa .vd-research-fig figcaption{
+    margin-top: var(--sp-8);
+    font: 400 var(--fs-13)/1.35 'Source Serif 4', Georgia, serif;
+    color: var(--ink-2);
+  }
+  #page-acasa .vd-research-card h4{
+    align-self: start;
+    font: 600 clamp(1.55rem, 2.4vw, 2.15rem)/1.06 'EB Garamond', Georgia, serif;
+    letter-spacing: -.02em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  #page-acasa .vd-research-answer{ font-size: var(--fs-17); line-height: 1.58; }
+  #page-acasa .vd-research-answer b{ color: var(--garnet); }
+  #page-acasa :is(.vd-research-myth, .vd-evidence p){ color: var(--ink-2); font-size: var(--fs-15); line-height: 1.5; }
+  #page-acasa .vd-research-myth s{ text-decoration-color: var(--garnet); }
+  #page-acasa .vd-evidence{ align-self: start; border-top: 1px solid var(--line); }
+  #page-acasa .vd-evidence summary{
+    width: fit-content;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--garnet);
+    font-weight: 600;
+    list-style: none;
+    cursor: pointer;
+  }
+  #page-acasa .vd-evidence summary::-webkit-details-marker{ display: none; }
+  #page-acasa .vd-evidence summary::after{
+    width: 6px;
+    height: 6px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    rotate: 45deg;
+    translate: 0 -2px;
+    content: '';
+  }
+  #page-acasa .vd-evidence[open] summary::after{ rotate: 225deg; translate: 0 2px; }
+  #page-acasa .vd-evidence summary:focus-visible{ outline: 2px solid var(--garnet); outline-offset: 3px; }
+  #page-acasa .vd-evidence p + p{ margin-top: var(--sp-8); }
+  @media (min-width: 820px){
+    #page-acasa .vd-research-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #page-acasa .vd-research-card{ grid-row: span 5; grid-template-rows: subgrid; }
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #page-acasa .vd-evidence[open] > div{ animation: vd-evidence-in 180ms ease-out both; }
+    @keyframes vd-evidence-in { from{ opacity: .45; } }
+  }
+
   @media (max-width: 1023px){
     #page-acasa .duel.dk{ grid-template-columns: minmax(0, 1fr); }
     #page-acasa .duel.dk .duel-card{ grid-template-columns: minmax(0, 190px) minmax(0, 1fr); }
@@ -4288,6 +4352,7 @@
   #page-acasa .gs .gs-stop text{ fill: var(--garnet); }
   #page-acasa .gs .gs-stop .sm, #page-acasa .gs .gs-coins-lab{ fill: var(--ink); }
 
+
   /* Textul și fotografiile articolului sunt vizibile imediat. */
   #page-acasa .r7-rv, #page-acasa .r7-rv:not(.r7-in){ opacity: 1; transform: none; transition: none; }
   #page-acasa .fw-host .fw{ display: inline; opacity: 1 !important; animation: none !important; }
@@ -4300,7 +4365,7 @@
 window.R9_NOTES = {"Solidul lui Teodosie al II-lea":"<aside class=\"r9-note r9-in\" aria-label=\"Știai că…? 1.439 de solizi\"><p class=\"r9n-tag\">Știai că…?<\/p><p class=\"r9n-num\">1.439<\/p><p class=\"r9n-unit\">de solizi<\/p><p class=\"r9n-text\">Descoperirile arheologice arată o circulație mai largă a aurului în societatea hunică: tezaurul de la Szikáncs, lângă Tisa, cuprinde 1.439 de solizi, dintre care 1.405 ai lui Teodosie al II-lea. Asta înseamnă aproape exact 20 de livre romane (72 de solizi la livră), probabil o plată rotundă ajunsă din tribut în mâinile unui membru al elitei, nu în vistieria lui Attila.<\/p><p class=\"r9n-src\">Sursa: Bíró-Sey 1976 (tezaurul de la Szikáncs)<\/p><\/aside>","Spatha hunică":"<aside class=\"r9-note r9-in\" aria-label=\"Știai că…? Puține armuri\"><p class=\"r9n-tag\">Știai că…?<\/p><p class=\"r9n-title\">Puține armuri<\/p><p class=\"r9n-text\">Izvoarele îi descriu mai ales ca arcași călare, care atacau de la distanță, iar în mormintele hunice s-au găsit puține piese de armură. Zalele și coifurile apar totuși la elite, adesea luate de la romani. Cât de des purtau hunii armură e încă discutat de istorici.<\/p><p class=\"r9n-src\">Sursa: Maenchen-Helfen 1973, capitolul despre război<\/p><\/aside>"};
 </script>
 <script id="r12-data">
-window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-asiatică, sosit dintr-o singură migrație.","src":"Neparáczki et al. 2019; Maróti et al. 2022 (<a class=\"mx-note\" href=\"#note-6\">nota 6<\/a>)","verdict":"Simplist","izv":"Indivizii analizați din Bazinul Carpatic au ascendențe diverse. Iordanes enumeră mai multe grupuri care au luptat în armata lui Attila.","from":"Gravura lui de Neuville înfățișează călăreții ca un grup uniform, cu arme și veșminte asemănătoare.","img":"#img-neuville","cap":"Neuville, 1869: o imagine a călăreților huni dintr-o carte de istorie a Franței."},"1":{"myth":"Ammianus Marcellinus descrie hunii ca fiind aproape non-umani la înfățișare, o relatare obiectivă a unui popor „monstruos”.","src":"Ammianus Marcellinus, Res Gestae 31.2 (<a class=\"mx-note\" href=\"#note-8\">nota 8<\/a>)","verdict":"Exagerat","izv":"Ammianus îi compară pe huni cu animale și cu figuri cioplite grosolan. Oasele din morminte nu pot confirma portretul pe care îl face.","from":"Portretul scris de Ammianus este una dintre primele descrieri ample păstrate despre huni.","img":"#img-ms-ammianus","pos":"50% 20%","cap":"Res Gestae 31.2, despre huni, într-o copie din secolul al IX-lea."},"2":{"myth":"Craniile deformate artificial găsite în morminte din epocă dovedesc, prin ele însele, apartenența etnică hunică.","src":"<a class=\"mx-note\" href=\"#note-23\">nota 23<\/a> (Gherăseni); Knipper et al. 2020 (Mözs)","verdict":"Greșit","izv":"Craniile alungite prin bandajare apar în comunități diferite. La Mözs, practica a fost preluată și de oameni crescuți în regiune.","from":"Craniile alungite apar în morminte din epoca hunică, inclusiv în cimitirul de la Mözs, în Ungaria.","img":"#img-craniu","cap":"Craniu deformat artificial, sec. V."},"3":{"myth":"Legătura dintre huni și Xiongnu din China antică e doar o coincidență de nume, fără nicio bază reală.","src":"Maróti et al. 2022; Neparáczki et al. 2019 (<a class=\"mx-note\" href=\"#note-6\">nota 6<\/a>)","verdict":"Pripit","izv":"Studiul din 2025 a găsit legături genealogice directe între unii indivizi din Bazinul Carpatic și membri ai elitei Xiongnu târzii.","from":"Asemănarea numelor a fost invocată încă din secolul al XVIII-lea. Studiul ADN-ului vechi permite astăzi verificarea unor legături de familie.","img":"img[alt^=\"Coroană de aur cu un vultur\"]","cap":"Coroana de aur de la Aluchaideng, piesă Xiongnu, sec. IV–III î.Hr."},"6":{"myth":"Sursele romane vorbesc doar despre războinici; femeile hunice nu apar în istorie.","src":"Priscus, fr. 8, partea 10 (Müller) (<a class=\"mx-note\" href=\"#note-11\">nota 11<\/a>)","verdict":"Fals","izv":"Priscus povestește cum Kreka, soția lui Attila, a primit solia romană în casa ei, iar văduva lui Bleda le-a dat găzduire în satul pe care îl conducea.","from":"Relatarea unei solii arată și viața de la curte. Priscus descrie două episoade de găzduire.","img":"img[alt^=\"Diademă ovală cu granate roșii\"]","cap":"Diadema de la Verhne-Pogromnoe, sf. sec. IV–V: podoaba unei femei din elită."},"7":{"myth":"Se cunoaște exact locul unde a fost înmormântat Attila.","src":"Iordanes, Getica 158 și 256–258","verdict":"Necunoscut","izv":"Iordanes scrie că Attila a fost îngropat noaptea, iar cei care au săpat groapa au fost uciși, ca locul să rămână secret. Mormântul nu a fost găsit nici astăzi.","from":"Povestea râului abătut peste mormânt se spune des, dar ea vine de la înmormântarea lui Alaric.","img":"#img-moartea","cap":"Paczka, 1884: o interpretare a morții lui Attila."},"8":{"myth":"Attila s-a oprit înaintea Romei, în 452, exclusiv din respect pentru intervenția Papei Leon I.","src":"Prosper Tiro și <a class=\"mx-note\" href=\"#izv-hydatius\">Hydatius<\/a>, anul 452","verdict":"Nu chiar","izv":"Solia papei a avut loc. Dar Hydatius scrie că armata hunică era lovită de foame și de boli, iar trupele lui Marcian atacau între timp dincolo de Dunăre.","from":"Prosper consemnează întâlnirea cu solii. În fresca lui Rafael apar și apostolii Petru și Pavel.","img":"#hero-img","pos":"30% 45%","cap":"Rafael, 1514: mitul, pictat la peste o mie de ani după întâlnire."}};
+window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-asiatică, sosit dintr-o singură migrație.","src":"<a class=\"mx-note\" href=\"#note-17\">Iordanes, <i>Getica<\/i> (nota 17)<\/a>. <a class=\"mx-note\" href=\"#note-6\">Studii genetice (nota 6)<\/a>.","verdict":"Simplist","question":"Cine lupta în armata lui Attila?","answer":"Mai multe grupuri.","shortMyth":"hunii aveau cu toții aceeași origine","pos":"50% 37%","izv":"Iordanes le enumeră în relatarea sa. Indivizii analizați din Bazinul Carpatic au ascendențe diverse.","from":"Gravura lui de Neuville înfățișează călăreții ca un grup uniform, cu arme și veșminte asemănătoare.","img":"#img-neuville","cap":"Călăreți huni · Alphonse de Neuville, 1869"},"1":{"myth":"Ammianus Marcellinus descrie hunii ca fiind aproape non-umani la înfățișare, o relatare obiectivă a unui popor „monstruos”.","src":"Ammianus Marcellinus, Res Gestae 31.2 (<a class=\"mx-note\" href=\"#note-8\">nota 8<\/a>)","verdict":"Exagerat","izv":"Ammianus îi compară pe huni cu animale și cu figuri cioplite grosolan. Oasele din morminte nu pot confirma portretul pe care îl face.","from":"Portretul scris de Ammianus este una dintre primele descrieri ample păstrate despre huni.","img":"#img-ms-ammianus","pos":"50% 20%","cap":"Res Gestae 31.2, despre huni, într-o copie din secolul al IX-lea."},"2":{"myth":"Craniile deformate artificial găsite în morminte din epocă dovedesc, prin ele însele, apartenența etnică hunică.","src":"<a href=\"https://doi.org/10.1371/journal.pone.0231760\">Knipper și colab., <i>PLOS ONE<\/i>, 2020<\/a>.","verdict":"Greșit","question":"Ce ne spun craniile alungite?","answer":"Practica era răspândită în comunități diferite.","shortMyth":"forma craniului dovedește originea hunică","pos":"50% 28%","izv":"La Mözs a fost preluată și de oameni crescuți în regiune.","from":"Craniile alungite apar în morminte din epoca hunică, inclusiv în cimitirul de la Mözs, în Ungaria.","img":"#img-craniu","cap":"Craniu alungit prin bandajare · Ceoil, CC0"},"3":{"myth":"Legătura dintre huni și Xiongnu din China antică e doar o coincidență de nume, fără nicio bază reală.","src":"<a class=\"mx-note\" href=\"#note-6\">Gnecchi-Ruscone și colab., <i>PNAS<\/i>, 2025 (nota 6)<\/a>.","verdict":"Pripit","question":"Ce legătură aveau hunii cu Xiongnu?","answer":"Există legături de familie.","shortMyth":"asemănarea numelor e doar o coincidență","pos":"50% 41%","izv":"Studiul din 2025 a găsit legături genealogice directe între unii indivizi din Bazinul Carpatic și membri ai elitei Xiongnu târzii.","from":"Asemănarea numelor a fost invocată încă din secolul al XVIII-lea. Studiul ADN-ului vechi permite astăzi verificarea unor legături de familie.","img":"img[alt^=\"Coroană de aur cu un vultur\"]","cap":"Coroana Xiongnu de la Aluchaideng · Gary Todd, CC0"},"6":{"myth":"Sursele romane vorbesc doar despre războinici; femeile hunice nu apar în istorie.","src":"Priscus, fr. 8, partea 10 (Müller) (<a class=\"mx-note\" href=\"#note-11\">nota 11<\/a>)","verdict":"Fals","izv":"Priscus povestește cum Kreka, soția lui Attila, a primit solia romană în casa ei, iar văduva lui Bleda le-a dat găzduire în satul pe care îl conducea.","from":"Relatarea unei solii arată și viața de la curte. Priscus descrie două episoade de găzduire.","img":"img[alt^=\"Diademă ovală cu granate roșii\"]","cap":"Diadema de la Verhne-Pogromnoe, sf. sec. IV–V: podoaba unei femei din elită."},"7":{"myth":"Se cunoaște exact locul unde a fost înmormântat Attila.","src":"Iordanes, Getica 158 și 256–258","verdict":"Necunoscut","izv":"Iordanes scrie că Attila a fost îngropat noaptea, iar cei care au săpat groapa au fost uciși, ca locul să rămână secret. Mormântul nu a fost găsit nici astăzi.","from":"Povestea râului abătut peste mormânt se spune des, dar ea vine de la înmormântarea lui Alaric.","img":"#img-moartea","cap":"Paczka, 1884: o interpretare a morții lui Attila."},"8":{"myth":"Attila s-a oprit înaintea Romei, în 452, exclusiv din respect pentru intervenția Papei Leon I.","src":"Prosper Tiro și <a class=\"mx-note\" href=\"#izv-hydatius\">Hydatius<\/a>, anul 452","verdict":"Nu chiar","izv":"Solia papei a avut loc. Dar Hydatius scrie că armata hunică era lovită de foame și de boli, iar trupele lui Marcian atacau între timp dincolo de Dunăre.","from":"Prosper consemnează întâlnirea cu solii. În fresca lui Rafael apar și apostolii Petru și Pavel.","img":"#hero-img","pos":"30% 45%","cap":"Rafael, 1514: mitul, pictat la peste o mie de ani după întâlnire."}};
 </script>
 <style id="corecturi-predare">
 #page-acasa .hx-era b{ white-space: normal; overflow: visible; }
@@ -9977,12 +10042,27 @@ html body #page-acasa .m-atlas .year-badge{
   // fișele de verdict: mitul tăiat, verdictul într-un cuvânt și explicația, direct pe pergament;
   // imaginea mică alternează, o dată la stânga, o dată la dreapta
   var D = window.R12 || {}, n = 0;
-  function src(sel){ var el = document.querySelector(sel); return el ? (el.getAttribute('src') || el.currentSrc || '') : ''; }
+  function figure(m, cls){
+    var image = document.querySelector(m.img);
+    var src = image && (image.getAttribute('src') || image.currentSrc);
+    if (!src) return '';
+    var pos = m.pos ? ' style="object-position:' + m.pos + '"' : '';
+    return '<figure class="' + cls + '"><img src="' + src + '" alt="" loading="lazy"' + pos + '><figcaption>' + m.cap + '</figcaption></figure>';
+  }
+  function researchCard(k){
+    var m = D[k];
+    return '<article class="vd-research-card" aria-labelledby="vd-question-' + k + '">' +
+      figure(m, 'vd-research-fig') +
+      '<h4 id="vd-question-' + k + '">' + m.question + '</h4>' +
+      '<p class="vd-research-answer"><b>' + m.answer + '</b> ' + m.izv + '</p>' +
+      '<p class="vd-research-myth"><span class="vd-sr">Mit respins. </span>Se spune că <s>' + m.shortMyth + '</s>.</p>' +
+      '<details class="vd-evidence"><summary>Vezi dovada</summary><div><p>' + m.from + '</p><p>' + m.src + '</p></div></details>' +
+      '</article>';
+  }
   function card(k){
     var m = D[k]; if (!m) return '';
-    var flip = n++ % 2 === 1, im = src(m.img);
-    var fig = im ? '<figure class="vd-fig"><img src="' + im + '" alt="" loading="lazy"' + (m.pos ? ' style="object-position:' + m.pos + '"' : '') + '><figcaption>' + m.cap + '</figcaption></figure>' : '';
-    return '<article class="vd' + (flip ? ' vd-flip' : '') + (im ? '' : ' vd-noimg') + '" aria-label="Mit verificat">' +
+    var flip = n++ % 2 === 1, fig = figure(m, 'vd-fig');
+    return '<article class="vd' + (flip ? ' vd-flip' : '') + (fig ? '' : ' vd-noimg') + '" aria-label="Mit verificat">' +
       '<div class="vd-body">' + fig +
         '<div class="vd-text">' +
           '<p class="vd-k">Se spune că</p>' +
@@ -9997,8 +10077,14 @@ html body #page-acasa .m-atlas .year-badge{
     n = 0;
     Array.prototype.forEach.call(document.querySelectorAll('.vd-group[data-myths]'), function(g){
       var t = g.getAttribute('data-title');
-      g.innerHTML = '<h3 class="vd-head"><i aria-hidden="true"></i>' + t + '</h3>' +
-        g.getAttribute('data-myths').split(',').map(card).join('');
+      var ids = g.getAttribute('data-myths').split(',');
+      if (ids.every(function(k){ return D[k] && D[k].question; })) {
+        g.classList.add('vd-research');
+        g.innerHTML = '<h3 class="vd-research-head">' + t + '</h3><div class="vd-research-grid">' +
+          ids.map(researchCard).join('') + '</div>';
+      } else {
+        g.innerHTML = '<h3 class="vd-head"><i aria-hidden="true"></i>' + t + '</h3>' + ids.map(card).join('');
+      }
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', draw); else draw();
