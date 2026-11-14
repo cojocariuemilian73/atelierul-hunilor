@@ -14,19 +14,26 @@ let s = raw.split('\r\n').join('\n');
 const fail = m => { console.error(rel + ': ' + m); process.exit(1); };
 function swap(a, b, what){ const n = s.split(a).length - 1; if (n === 1) { s = s.replace(a, () => b); return; } if (s.includes(b)) return; fail(what + ' (' + n + ')'); }
 
-// ---------- 1) coperta: titlu, perioada, o frază, două butoane; creditul sub imagine ----------
+// ---------- 1) coperta: titlu, perioada, o frază și creditul sub imagine ----------
 {
   const a = s.indexOf('    <div class="hero-inner">\n'), b = a < 0 ? -1 : s.indexOf('    </div>\n  </section>', a);
   if (a < 0 || b < 0) fail('coperta');
   const INNER = '    <div class="hero-inner">\n' +
-    '      <h1 class="title">Hunii și Marea Migrație</h1>\n' +
-    '      <p class="hero-years">370–476</p>\n' +
-    '      <p class="dek">Sosirea hunilor împinge goții spre Dunăre și schimbă echilibrul la granițele Romei.</p>\n' +
-    '      <div class="hero-cta">\n' +
-    '        <a class="hero-btn primary" href="#sec-origini">Citește articolul</a>\n' +
-    '        <a class="hero-btn" href="#mod-migratie">Joacă simularea</a>\n' +
+    '      <h1 class="title"><span class="hero-title-prefix">Hunii și</span> Marea Migrație</h1>\n' +
+    '      <div class="hero-end">\n' +
+    '        <p class="hero-years">370–476</p>\n' +
+    '        <p class="dek">Sosirea hunilor împinge goții spre Dunăre și schimbă echilibrul la granițele Romei.</p>\n' +
     '      </div>\n';
-  s = s.slice(0, a) + INNER + s.slice(b);
+  // Aceeași frescă și același srcset: conturul din CSS aduce câțiva călăreți în fața titlului.
+  const scene = s.slice(s.indexOf('<section id="acasa" class="hero">'), a);
+  const photo = scene.match(/<img id="hero-img" class="hero-img"[^>]*>/)?.[0];
+  if (!photo) fail('imaginea copertei');
+  const foreground = photo.replace('id="hero-img" class="hero-img"', 'class="hero-img"')
+    .replace(/ alt="[^"]*"/, ' alt=""').replace(' fetchpriority="high"', '');
+  const layered = INNER.replace('      <div class="hero-end">', () =>
+    '      <div class="hero-foreground" aria-hidden="true">' + foreground + '</div>\n' +
+    '      <div class="hero-end">');
+  s = s.slice(0, a) + layered + s.slice(b);
   // creditul picturii: imediat sub imagine, nu peste ea
   const cr = s.match(/    <p class="hero-credit">[^\n]*<\/p>\n/);
   if (cr) { s = s.replace(cr[0], ''); const e = s.indexOf('    </div>\n  </section>', s.indexOf('<section id="acasa" class="hero">')) + '    </div>\n  </section>\n'.length; s = s.slice(0, e) + cr[0].replace('    <p class="hero-credit">', '  <p class="hero-credit">') + s.slice(e); }
