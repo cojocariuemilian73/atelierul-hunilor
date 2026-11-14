@@ -161,6 +161,35 @@ replace("if (e.key === 'Escape' && aboutOverlay && aboutOverlay.classList.contai
   "if (e.key === 'Escape' && aboutOverlay && aboutOverlay.classList.contains('active')) { e.preventDefault(); closeAbout(); }");
 replace('<div class="timebar">', '<div class="timebar"><label class="timebar-label" for="time-slider">Anul pe hartă</label>');
 replace(' id="time-slider" aria-label="Selectează anul pe cronologie"', ' id="time-slider"');
+// Axa Atlasului păstrează glisorul nativ și oferă patru repere selectabile.
+replace('      <div class="timebar"><label class="timebar-label" for="time-slider">Anul pe hartă</label>\n        <div class="timebar-row">\n          <span class="year-badge mono" id="year-badge">370 d.Hr.</span>',
+  '      <div class="timebar">\n        <div class="timebar-heading">\n          <label class="timebar-label" for="time-slider">Anul pe hartă</label>\n          <span class="year-badge mono" id="year-badge">370 d.Hr.</span>\n        </div>');
+replace('class="time-slider" id="time-slider">\n        </div>\n        <p class="era-label"',
+  'class="time-slider" id="time-slider">\n' +
+  '        <div class="time-ticks" role="group" aria-label="Repere pe axa Atlasului">\n' +
+  [370, 410, 434, 455].map(year => '          <button type="button" class="time-tick" data-year="' + year + '" style="--at:' + ((year - 370) / 85 * 100).toFixed(2) + '%" aria-pressed="' + (year === 370) + '">' + year + '</button>').join('\n') + '\n' +
+  '        </div>\n        <p class="era-label"');
+replace("    var eraLabel = document.getElementById('era-label');",
+  "    var eraLabel = document.getElementById('era-label');\n" +
+  "    var yearTicks = slider.closest('.timebar').querySelectorAll('.time-tick');");
+replace("      yearBadge.textContent = year + ' d.Hr.';",
+  "      yearBadge.textContent = year + ' d.Hr.';\n" +
+  "      slider.setAttribute('aria-valuetext', year + ' după Hristos');\n" +
+  "      yearTicks.forEach(function(tick){ tick.setAttribute('aria-pressed', String(Number(tick.dataset.year) === year)); });");
+replace("    slider.addEventListener('input', update);",
+  "    slider.addEventListener('input', update);\n" +
+  "    yearTicks.forEach(function(tick){\n" +
+  "      tick.addEventListener('click', function(){ slider.value = tick.dataset.year; update(); });\n" +
+  "    });");
+
+// Bara de navigare dintre pagini nu apare la Jocul izvoarelor.
+replace("  var prevBtn = document.getElementById('site-prev');",
+  "  var pager = document.querySelector('.site-pager');\n" +
+  "  var prevBtn = document.getElementById('site-prev');");
+replace("    prevBtn.disabled = index === 0;",
+  "    pager.hidden = PAGE_IDS[index] === 'mod-atelier';\n" +
+  "    prevBtn.disabled = index === 0;");
+
 replace("    popoverEl.style.top = (y + 14) + 'px';",
   "    var ph = popoverEl.offsetHeight;\n    var below = y + 14;\n    var top = below + ph + 12 <= window.innerHeight ? below : y - ph - 14;\n    popoverEl.style.top = Math.max(12, Math.min(top, window.innerHeight - ph - 12)) + 'px';");
 

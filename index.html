@@ -624,8 +624,6 @@
   .gs{ position: relative; margin: 24px 0 40px; }
   .gs-pin{ display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(20px, 3vw, 40px); align-items: center; }
   .gs-chart{ grid-column: 1; grid-row: 1; padding: 16px; border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--ink) 3%, transparent); }
-  .gs-chart{ position: relative; }
-  .gs-trigger{ position: absolute; inset: 54% auto auto 0; width: 1px; height: 1px; pointer-events: none; }
   .gs-replay{
     display: block; min-height: 44px; margin: 0 0 0 auto; padding: 0 8px;
     color: var(--accent); background: transparent; border: 1px solid var(--line-strong);
@@ -654,10 +652,11 @@
 
   .gs-base{ stroke: color-mix(in srgb, var(--ink) 22%, transparent); stroke-width: 1; }
   .gs-unit{ font: 12px 'Source Serif 4', Georgia, serif; fill: var(--ink-dim); text-anchor: middle; transition: opacity 0.4s; }
-  /* teancurile cad o dată, la prima vedere, și rămân; butoanele doar scot unul în față */
-  .gs-stk ellipse{ opacity: 0; transform: translateY(-150px); transition: transform 0.6s cubic-bezier(.3,1.3,.5,1), opacity 0.15s; }
-  .gs-stk ellipse.in{ opacity: 1; transform: none; }
-  .gs-reset .gs-stk ellipse{ transition: none; }
+  .gs-stk ellipse{
+    --gs-fall: clamp(0, calc((var(--gs-drop, 0) - var(--gs-delay, 0)) * 3.4), 1);
+    transform: translateY(calc(-150px * (1 - var(--gs-fall))));
+    opacity: clamp(0, calc(var(--gs-fall) * 6), 1);
+  }
   .gs-lab{ font: 600 22px 'EB Garamond', serif; fill: #f2d474; text-anchor: middle; font-variant-numeric: lining-nums; opacity: 0; transition: opacity 0.4s; }
   .gs-lab.lm{ font-size: 18px; }
   .gs-who{ font: 12px 'Source Serif 4', Georgia, serif; fill: var(--ink-dim); text-anchor: middle; opacity: 0; transition: opacity 0.4s, fill 0.3s; }
@@ -689,8 +688,8 @@
   }
   @media (prefers-reduced-motion: reduce){
     .gs-replay{ display: none; }
-    /* monedele nu mai cad, doar apar */
-    .gs-stk ellipse, .gs-coins circle{ transform: none; transition: opacity 0.3s; }
+    .gs-stk ellipse{ transform: none; opacity: 1; }
+    .gs-coins circle{ transform: none; transition: opacity 0.3s; }
     .gs-lab, .gs-who, .gs-stop, .gs-coins-lab, .gs-stacks, .gs-stk{ transition-duration: 0.2s; }
     .gs-step.on{ animation: none; }
   }
@@ -4304,9 +4303,150 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
 </script>
 <style id="corecturi-predare">
 #page-acasa .hx-era b{ white-space: normal; overflow: visible; }
-#page-acasa .time-slider{ height: 36px; }
-#page-acasa .time-slider::-webkit-slider-thumb{ width: 28px; height: 28px; }
-#page-acasa .time-slider::-moz-range-thumb{ width: 28px; height: 28px; }
+/* Atlas: bara hărții folosește culorile axei și pe ecranele înguste. */
+#page-acasa .m-atlas .map-area{
+  scrollbar-width: thin;
+  scrollbar-color: #8b513b #e5d6b6;
+}
+
+/* Atlas: anul selectat și scara glisorului. */
+#page-acasa .m-atlas .timebar{
+  --atlas-ink: #792e23;
+  --atlas-tick: #8c724d;
+  --atlas-thumb: 16px;
+  margin: 20px 0 0;
+  padding: 12px 0 0;
+  border-block-start: 1px solid #a98c5f;
+}
+#page-acasa .m-atlas .timebar-heading{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+}
+#page-acasa .m-atlas .timebar-label{
+  margin: 0;
+  color: #5c462d;
+  font-weight: 600;
+}
+html body #page-acasa .m-atlas .year-badge{
+  padding: 0;
+  min-width: 0;
+  background: transparent !important;
+  text-align: end;
+  color: var(--atlas-ink) !important;
+  font: 700 clamp(1.45rem, 3vw, 2rem)/1.05 'EB Garamond', Georgia, serif !important;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+#page-acasa .m-atlas .time-slider{
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  opacity: 1;
+  cursor: ew-resize;
+}
+#page-acasa .m-atlas .time-slider::-webkit-slider-runnable-track{
+  height: 2px;
+  background: linear-gradient(to right, var(--atlas-ink) var(--fill, 0%), var(--atlas-tick) var(--fill, 0%));
+}
+#page-acasa .m-atlas .time-slider::-moz-range-track{
+  height: 2px;
+  background: linear-gradient(to right, var(--atlas-ink) var(--fill, 0%), var(--atlas-tick) var(--fill, 0%));
+}
+#page-acasa .m-atlas .time-slider::-webkit-slider-thumb{
+  box-sizing: border-box;
+  width: var(--atlas-thumb);
+  height: var(--atlas-thumb);
+  margin-top: -7px;
+  border: 2px solid #edcb89;
+  border-radius: 1px;
+  background: var(--atlas-ink);
+  box-shadow: 0 0 0 1px var(--atlas-ink);
+  transform: rotate(45deg);
+  cursor: grab;
+}
+#page-acasa .m-atlas .time-slider::-moz-range-thumb{
+  box-sizing: border-box;
+  width: var(--atlas-thumb);
+  height: var(--atlas-thumb);
+  border: 2px solid #edcb89;
+  border-radius: 1px;
+  background: var(--atlas-ink);
+  box-shadow: 0 0 0 1px var(--atlas-ink);
+  transform: rotate(45deg);
+  cursor: grab;
+}
+#page-acasa .m-atlas .time-slider:active::-webkit-slider-thumb{ cursor: grabbing; }
+#page-acasa .m-atlas .time-slider:active::-moz-range-thumb{ cursor: grabbing; }
+#page-acasa .m-atlas .time-ticks{
+  position: relative;
+  height: 40px;
+  margin: -10px calc(var(--atlas-thumb) / 2 + 2px) 0;
+  pointer-events: none;
+}
+#page-acasa .m-atlas .time-tick{
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: var(--at);
+  translate: -50% 0;
+  min-height: 40px;
+  padding: 1px 7px 0;
+  border: 0;
+  background: transparent;
+  color: #604b31;
+  font: 600 .83rem/1 'Source Serif 4', Georgia, serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  cursor: pointer;
+  pointer-events: auto;
+}
+#page-acasa .m-atlas .time-tick::before{
+  display: block;
+  width: 1px;
+  height: 6px;
+  margin: 0 auto 5px;
+  background: var(--atlas-tick);
+  content: '';
+}
+#page-acasa .m-atlas .time-tick:first-child{ translate: -8px 0; }
+#page-acasa .m-atlas .time-tick:last-child{ translate: calc(-100% + 8px) 0; }
+#page-acasa .m-atlas .time-tick:first-child::before{ margin-inline-start: 0; }
+#page-acasa .m-atlas .time-tick:last-child::before{ margin-inline-end: 0; }
+#page-acasa .m-atlas .time-tick:is(:hover,[aria-pressed="true"]){
+  color: var(--atlas-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+#page-acasa .m-atlas :is(.time-slider,.time-tick):focus-visible{
+  outline: 2px solid var(--atlas-ink);
+  outline-offset: 2px;
+}
+#page-acasa .m-atlas .timebar .era-label{
+  margin: 2px 0 0;
+  padding-inline-start: 12px;
+  border-inline-start: 1px solid var(--atlas-tick);
+  color: #60472e;
+  text-align: start;
+  line-height: 1.4;
+}
+@media (forced-colors: active){
+  #page-acasa .m-atlas .time-slider{
+    appearance: auto;
+    accent-color: auto;
+  }
+  #page-acasa .m-atlas .time-slider::-webkit-slider-runnable-track{ background: ButtonText; }
+  #page-acasa .m-atlas .time-slider::-moz-range-track{ background: ButtonText; }
+  #page-acasa .m-atlas .time-slider::-webkit-slider-thumb{ background: Highlight; border-color: Canvas; }
+  #page-acasa .m-atlas .time-slider::-moz-range-thumb{ background: Highlight; border-color: Canvas; }
+}
+
+.site-pager[hidden]{ display: none; }
 
 #page-acasa .m-lab .hotspot::after{
   content: '';
@@ -4409,6 +4549,31 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
 .photo-evidence #img-apahida{ max-width: 175px; }
 .photo-evidence figcaption{ margin-top: 10px; line-height: 1.5; }
 .photo-evidence figcaption small{ display: block; margin-top: 5px; }
+/* Fotografiile însoțesc pasajul sau nota de care țin. */
+.photo-evidence--inline{
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 20px;
+  align-items: center;
+  max-width: none;
+  margin: 20px 0 0;
+}
+.sr-media > .photo-evidence--inline{ margin: 0; }
+.photo-evidence--inline .photo-points{ width: 100%; justify-self: start; margin: 0; }
+.photo-evidence--inline .photo-points:has(#img-apahida){ max-width: 175px; }
+.photo-evidence--inline figcaption{ margin: 0; }
+.photo-evidence--inline:has(#img-apahida){
+  grid-template-columns: minmax(0, 175px) minmax(0, 1fr);
+}
+#page-acasa .duel-context > .duel-lives:has(+ .photo-evidence--sword){ grid-column: 1 / -1; }
+#page-acasa .duel-context > .photo-evidence--sword{
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+.photo-evidence--sword .photo-points{ width: 100%; max-width: 100%; margin-inline: 0; }
+#page-acasa .duel-context > .photo-evidence--sword + .r9-note{ align-self: center; }
+
 .photo-evidence-pair{
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4444,6 +4609,12 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
 .photo-detail h2{ margin: 0 0 8px; font: 600 clamp(1.45rem,4vw,2rem)/1.1 'EB Garamond',Georgia,serif; }
 .photo-detail p{ margin: 0; line-height: 1.55; }
 @media(max-width: 630px){
+  .photo-evidence--inline,
+  .photo-evidence--inline:has(#img-apahida){
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .photo-evidence--inline .photo-points:has(#img-arc){ max-width: 240px; }
   .photo-evidence-pair{ grid-template-columns: minmax(0, 1fr); }
   .sr-media .sr-fig + .sr-fig:has(.photo-points){ display: block; }
   #page-acasa .gold-context .sr-fig-inline:has(.photo-points){
@@ -4602,7 +4773,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
 
       <div class="vd-group" data-myths="3,0,2" data-title="Ce se spune despre originea hunilor"></div>
       <div class="sr-row sr-reveal">
-        <div class="sr-media"><figure class="sr-fig"><img class="img-parchment" id="img-neuville" src="media/7e79371c2b2d.jpg" alt="Ilustrație: călăreți huni cu arcuri, în galop, în plină bătălie." loading="lazy"><figcaption>Alphonse de Neuville, <b><i>Hunii la bătălia de la Châlons</i></b> (1869), din <i>Istoria Franței</i> a lui Guizot: arcașii călare, așa cum și-i imagina secolul al XIX-lea. Domeniu public.</figcaption></figure></div>
+        <div class="sr-media"><figure class="sr-fig"><img class="img-parchment" id="img-neuville" src="media/7e79371c2b2d.jpg" alt="Ilustrație: călăreți huni cu arcuri, în galop, în plină bătălie." loading="lazy"><figcaption>Alphonse de Neuville, <b><i>Hunii la bătălia de la Châlons</i></b> (1869), din <i>Istoria Franței</i> a lui Guizot: arcașii călare, așa cum și-i imagina secolul al XIX-lea. Domeniu public.</figcaption></figure><figure class="photo-evidence photo-evidence--inline"><div class="photo-points"><img id="img-arc" src="media/5876970b5971.webp" width="1126" height="1200" alt="Reconstituirea unui arc compozit hunic, expusă într-o vitrină de muzeu: arc asimetric, cu dublă curbură, având brațul superior placat cu foiță de aur." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Placarea cu aur, simbol de rang" data-title="Placarea cu aur, simbol de rang" data-detail="Porțiunea aurită de pe brațul superior nu are rol tehnic: arcurile placate cu foiță de aur, descoperite la Jakuszowice (Polonia) și Bátaszék (Ungaria), marcau statutul politic al purtătorului. Arma era și însemn de putere, nu doar unealtă de luptă." style="--point-x:50%;--point-y:31%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Capătul recurbat (siyah)" data-title="Capătul recurbat (siyah)" data-detail="Capetele rigide, întoarse invers față de curbura arcului, funcționau ca niște pârghii: măreau brusc tensiunea în ultima parte a tragerii. De aici viteza mare a săgeții, la un arc suficient de scurt încât să fie mânuit din șa." style="--point-x:77%;--point-y:13%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Brațe asimetrice" data-title="Brațe asimetrice" data-detail="Brațul inferior este mai scurt decât cel superior, o soluție care permitea tragerea comodă de pe cal, fără ca arcul să lovească gâtul animalului la coborârea mâinii." style="--point-x:21%;--point-y:60%"></button></div><figcaption><strong>Arcul compozit hunic</strong>. Reconstituirea arcului reflex din mormântul princiar de la Jakuszowice (Polonia), cu brațele placate cu foiță de aur: arma care a definit cavaleria hunică. <small>Muzeul Arheologic din Cracovia · foto: <a href="https://commons.wikimedia.org/wiki/File:02019_0565_Reflexbogen%2C_F%C3%BCrsten-Grab_von_Jakuszowice.jpg">Silar</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> (decupaj).</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure></div>
         <div class="sr-text">
       <h3 class="sub-title">Viața nomadă și arta războiului</h3>
       <p>Cea mai vie descriere a vieții hunilor o lasă Ammianus Marcellinus. El vorbește despre un popor fără așezări fixe sau agricultură, care își petrece existența călare, se hrănește cu rădăcini sălbatice și carne pe care, după autor, o încălzeau între coapse și spatele calului, și își poartă familiile în care acoperite<sup class="fn" data-n="8">8</sup>.</p>
@@ -4611,7 +4782,6 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
       <p>Avantajul lor în luptă venea din <b>arcul recurbat compozit</b>, construit din lemn, os și tendoane, și din <b>tragerea partă</b>, adică arcașul călare putea ochi și trage înapoi în plină retragere. Combinate cu tactica retragerii false, care atrăgea inamicul într-o urmărire dezordonată, aceste elemente transformau fiecare ciocnire într-o ambuscadă potențială.</p>
         </div>
       </div>
-      <figure class="photo-evidence"><div class="photo-points"><img id="img-arc" src="media/5876970b5971.webp" width="1126" height="1200" alt="Reconstituirea unui arc compozit hunic, expusă într-o vitrină de muzeu: arc asimetric, cu dublă curbură, având brațul superior placat cu foiță de aur." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Placarea cu aur, simbol de rang" data-title="Placarea cu aur, simbol de rang" data-detail="Porțiunea aurită de pe brațul superior nu are rol tehnic: arcurile placate cu foiță de aur, descoperite la Jakuszowice (Polonia) și Bátaszék (Ungaria), marcau statutul politic al purtătorului. Arma era și însemn de putere, nu doar unealtă de luptă." style="--point-x:50%;--point-y:31%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Capătul recurbat (siyah)" data-title="Capătul recurbat (siyah)" data-detail="Capetele rigide, întoarse invers față de curbura arcului, funcționau ca niște pârghii: măreau brusc tensiunea în ultima parte a tragerii. De aici viteza mare a săgeții, la un arc suficient de scurt încât să fie mânuit din șa." style="--point-x:77%;--point-y:13%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Brațe asimetrice" data-title="Brațe asimetrice" data-detail="Brațul inferior este mai scurt decât cel superior, o soluție care permitea tragerea comodă de pe cal, fără ca arcul să lovească gâtul animalului la coborârea mâinii." style="--point-x:21%;--point-y:60%"></button></div><figcaption><strong>Arcul compozit hunic</strong>. Reconstituirea arcului reflex din mormântul princiar de la Jakuszowice (Polonia), cu brațele placate cu foiță de aur: arma care a definit cavaleria hunică. <small>Muzeul Arheologic din Cracovia · foto: <a href="https://commons.wikimedia.org/wiki/File:02019_0565_Reflexbogen%2C_F%C3%BCrsten-Grab_von_Jakuszowice.jpg">Silar</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> (decupaj).</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure>
 
                   <div class="diagram ptol-map" role="img" aria-label="Hartă ptolemeică a Sarmației Europene, gravată de Girolamo Porro în 1596, pe care sunt marcate poporul Chuni, bastarnii, roxolanii, fluviul Tanais și Mæotis.">
         <svg viewBox="270 400 1020 680" xmlns="http://www.w3.org/2000/svg"><image href="media/8fe3c130f871.webp" x="0" y="0" width="1600" height="1200"/><circle class="map-pt main" cx="665" cy="852" r="15"/><text x="665" y="908" text-anchor="middle" class="map-pt-label main">Chuni</text><circle class="map-pt" cx="464" cy="872" r="11"/><text x="464" y="918" text-anchor="middle" class="map-pt-label">Bastarnæ</text><circle class="map-pt" cx="982" cy="631" r="11"/><text x="982" y="609" text-anchor="middle" class="map-pt-label">Roxolani</text><circle class="map-pt" cx="955" cy="580" r="11"/><text x="955" y="558" text-anchor="middle" class="map-pt-label">Tanais (Don)</text><circle class="map-pt" cx="1060" cy="765" r="11"/><text x="1060" y="811" text-anchor="middle" class="map-pt-label">Mæotis (Azov)</text></svg>
@@ -4687,7 +4857,6 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
       <div class="gs" id="gold-story">
         <div class="gs-pin">
         <div class="gs-chart">
-          <span class="gs-trigger" aria-hidden="true"></span>
           <svg viewBox="0 0 600 390" role="img" aria-label="Tributul anual în aur plătit hunilor de Imperiul Roman de Răsărit, ca teancuri de monede: 350 de livre (c. 422), 700 (anii 430), 2.100 (443 sau 447) plus 6.000 restanță (trei teancuri de aceeași scară), apoi nimic din 450." id="gs-svg">
             <defs>
               <radialGradient id="gs-coin" cx="0.38" cy="0.35" r="0.7"><stop offset="0" stop-color="#fbe7a1"/><stop offset="0.55" stop-color="#d9b13c"/><stop offset="1" stop-color="#8a6a14"/></radialGradient>
@@ -4828,10 +4997,17 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
       <p class="map-swipe-hint">← glisează harta →</p>
       <p class="map-credit">Hartă de bază: <i>Europe relief laea location map</i>, <a href="https://commons.wikimedia.org/wiki/File:Europe_relief_laea_location_map.jpg">Alexrk2, Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. Traseele, zonele și marcajele sunt adăugate peste ea.</p>
 
-      <div class="timebar"><label class="timebar-label" for="time-slider">Anul pe hartă</label>
-        <div class="timebar-row">
+      <div class="timebar">
+        <div class="timebar-heading">
+          <label class="timebar-label" for="time-slider">Anul pe hartă</label>
           <span class="year-badge mono" id="year-badge">370 d.Hr.</span>
+        </div>
           <input type="range" min="370" max="455" step="1" value="370" class="time-slider" id="time-slider">
+        <div class="time-ticks" role="group" aria-label="Repere pe axa Atlasului">
+          <button type="button" class="time-tick" data-year="370" style="--at:0.00%" aria-pressed="true">370</button>
+          <button type="button" class="time-tick" data-year="410" style="--at:47.06%" aria-pressed="false">410</button>
+          <button type="button" class="time-tick" data-year="434" style="--at:75.29%" aria-pressed="false">434</button>
+          <button type="button" class="time-tick" data-year="455" style="--at:100.00%" aria-pressed="false">455</button>
         </div>
         <p class="era-label" id="era-label">Înaintea expansiunii hunice: stepa pontică sub alte popoare</p>
       </div>
@@ -4912,18 +5088,18 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
 
       <div class="duel-context">
         <div class="duel-lives" role="img" aria-label="Viețile lor, alături: Aetius, c. 391–454; Attila, c. 406–453. S-au înfruntat la Câmpiile Catalaunice, în 451."><div class="dl-row aetius"><b>Aetius</b><span class="dl-track"><i style="left:4.41%;width:calc(97.06% - 4.41%)"></i></span><em>c. 391–454</em></div><div class="dl-row attila"><b>Attila</b><span class="dl-track"><i style="left:26.47%;width:calc(95.59% - 26.47%)"></i><i class="r" style="left:67.65%;width:calc(95.59% - 67.65%)"></i></span><em>c. 406–453</em></div><div class="dl-axis"><span class="dl-track"><small style="left:17.65%">400</small><small style="left:47.06%">420</small><small style="left:76.47%">440</small><span class="dl-451" style="left:92.65%"><small>451 · Câmpiile Catalaunice</small></span></span></div><p class="dl-key"><span class="k1"></span>viața <span class="k2"></span>domnia lui Attila (434–453)</p></div>
+        <figure class="photo-evidence photo-evidence--sword"><div class="photo-points"><img id="img-spatha" src="media/f88f2b033787.webp" width="3347" height="2211" alt="Sabie lungă de fier, cu lama dreaptă și gardă scurtă, având mânerul acoperit cu o piesă de aur decorată cu granate montate în celule." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Mânerul placat cu aur și granate" data-title="Mânerul placat cu aur și granate" data-detail="Ca și arcurile poleite, mânerele de sabie placate cu aur și pietre semiprețioase marcau rangul purtătorului: sabia era, alături de arc, celălalt obiect cu valoare aproape sacră a elitei hunice." style="--point-x:77%;--point-y:38%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Lama de fier, cu două tăișuri" data-title="Lama de fier, cu două tăișuri" data-detail="Lama dreaptă, lungă, cu două tăișuri, e cea a spathei, arma de rang a întregii Europe a epocii, nu doar a hunilor. Ce o face „princiară” nu e forma lamei, ci garnitura de aur și granate a mânerului." style="--point-x:36%;--point-y:41%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Garda scurtă" data-title="Garda scurtă" data-detail="O gardă minimală, abia vizibilă, tipică armelor gândite pentru viteză și pentru lupta călare, nu pentru scrimă de infanterie cu paradă lată." style="--point-x:75%;--point-y:81%"></button></div><figcaption><strong>Spatha hunică</strong>. Sabie din mormântul princiar de la Jakuszowice, cu două tăișuri și mâner decorat cu aur și granate. Piesa ilustrează armele de rang ale epocii. Legenda „Sabiei lui Marte” vine dintr-un izvor scris. <small>Muzeul Arheologic din Cracovia · foto: <a href="https://commons.wikimedia.org/wiki/File:02019_0555_%282%29_Die_Spatha%2C_F%C3%BCrsten-Grab_von_Jakuszowice.jpg">Silar</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure>
         <aside class="r9-note r9-in r9-side" aria-label="Știai că…? Sabia lui Marte"><p class="r9n-tag">Știai că…?</p><p class="r9n-title">„Sabia lui Marte”</p><p class="r9n-text">Mormintele princiare, ca cel de la Jakuszowice, păstrează săbii lungi cu mânerul placat cu aur și granate, adevărate însemne de rang. Iar Iordanes (Getica, 183, după Priscus) povestește că Attila își sprijinea autoritatea pe „sabia lui Marte”, găsită de un păstor: sabia era și simbol al puterii, nu doar armă.</p><p class="r9n-src">Sursa: Iordanes, Getica 183; Godłowski 1991 (Jakuszowice)</p></aside>
       </div>
-      <figure class="photo-evidence"><div class="photo-points"><img id="img-spatha" src="media/f88f2b033787.webp" width="3347" height="2211" alt="Sabie lungă de fier, cu lama dreaptă și gardă scurtă, având mânerul acoperit cu o piesă de aur decorată cu granate montate în celule." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Mânerul placat cu aur și granate" data-title="Mânerul placat cu aur și granate" data-detail="Ca și arcurile poleite, mânerele de sabie placate cu aur și pietre semiprețioase marcau rangul purtătorului: sabia era, alături de arc, celălalt obiect cu valoare aproape sacră a elitei hunice." style="--point-x:77%;--point-y:38%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Lama de fier, cu două tăișuri" data-title="Lama de fier, cu două tăișuri" data-detail="Lama dreaptă, lungă, cu două tăișuri, e cea a spathei, arma de rang a întregii Europe a epocii, nu doar a hunilor. Ce o face „princiară” nu e forma lamei, ci garnitura de aur și granate a mânerului." style="--point-x:36%;--point-y:41%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Garda scurtă" data-title="Garda scurtă" data-detail="O gardă minimală, abia vizibilă, tipică armelor gândite pentru viteză și pentru lupta călare, nu pentru scrimă de infanterie cu paradă lată." style="--point-x:75%;--point-y:81%"></button></div><figcaption><strong>Spatha hunică</strong>. Sabie din mormântul princiar de la Jakuszowice, cu două tăișuri și mâner decorat cu aur și granate. Piesa ilustrează armele de rang ale epocii. Legenda „Sabiei lui Marte” vine dintr-un izvor scris. <small>Muzeul Arheologic din Cracovia · foto: <a href="https://commons.wikimedia.org/wiki/File:02019_0555_%282%29_Die_Spatha%2C_F%C3%BCrsten-Grab_von_Jakuszowice.jpg">Silar</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure>
       <!-- pq:start --><figure class="pq"><blockquote><p>O luptă cumplită, schimbătoare, crudă și îndârjită, cum n-a mai povestit nimeni din vechime.</p></blockquote><figcaption><b>Iordanes</b>, Getica 207, despre Câmpiile Catalaunice (451) · traducere adaptată</figcaption></figure><!-- pq:end -->
 
       <div class="sr-row sr-reveal">
         <div class="sr-media"><figure class="sr-fig"><img class="img-parchment" id="img-moartea" src="media/52619d2f40c4.jpg" alt="Pictură: Attila zace mort pe un pat, sub un baldachin roșu." loading="lazy"><figcaption>Ferenc Paczka, <b><i>Moartea lui Attila</i></b> (1884, detaliu). Iordanes, după Priscus, scrie că Attila a murit în noaptea nunții, de o hemoragie. Domeniu public.</figcaption></figure></div>
         <div class="sr-text">
       <p>La Câmpiile Catalaunice, ostrogoții, vasali ai lui Attila, au luptat de partea hunilor, în timp ce vizigoții, cei dintâi fugari din calea acestora, s-au aliat cu Roma pentru a-i opri<sup class="fn" data-n="17">17</sup>. Attila moare în 453. În jurul anului 454, la Nedao, răscoala popoarelor supuse înfrânge fiii lui Attila și destramă hegemonia hunică. Sfârșitul nu e imediat. Dengizich, unul dintre fiii lui Attila, mai luptă cu Bizanțul până în 469<sup class="fn" data-n="18">18</sup>.</p>
+          <figure class="photo-evidence photo-evidence--inline"><div class="photo-points"><img id="img-apahida" src="media/d02d4a25989e.webp" width="600" height="1250" alt="Ornament în formă de vultur, cu aripile strânse, acoperit cu plăcuțe de granat roșu montate în celule de aur." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Capul de vultur" data-title="Capul de vultur" data-detail="Ciocul curbat și ochiul rotund fac din piesă un vultur, pasăre a puterii, frecventă în arta elitelor germanice și stepice ale epocii." style="--point-x:58%;--point-y:12%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Pieptul cu solzi" data-title="Pieptul cu solzi" data-detail="Pieptul e lucrat în tehnica cloisonné: sute de plăcuțe de granat tăiate exact pe forma celulelor de aur. Stilul policrom s-a răspândit în Europa tocmai prin lumea dominată de huni." style="--point-x:45%;--point-y:45%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Aripile" data-title="Aripile" data-detail="Aripile au celule în formă de săgeată, umplute tot cu granate. Pe șa, perechea de vulturi strălucea în soare și arăta de departe rangul călărețului." style="--point-x:18%;--point-y:45%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Ghearele" data-title="Ghearele" data-detail="Picioarele se termină în granate mari, șlefuite. Piesa arată bogăția unui principe gepid după prăbușirea imperiului hunic: o elită care moștenea gustul și tehnicile epocii lui Attila." style="--point-x:46%;--point-y:90%"></button></div><figcaption><strong>Vulturul de la Apahida</strong>. Garnitură de șa în formă de vultur, din tezaurul unui principe gepid descoperit la Apahida (jud. Cluj). Gepizii fuseseră supuși lui Attila; după moartea lui, regele lor Ardaric a condus răscoala de la Nedao (c. 454). <small>Muzeul Național de Istorie a României · foto: <a href="https://commons.wikimedia.org/wiki/File:Saddle_fittings_of_a_Gepid_prince_-_Apahida.jpg">Cristian Chirita, montaj James Steakley</a> (decupaj), <a href="https://commons.wikimedia.org/wiki/File:Saddle_fittings_of_a_Gepid_prince_-_Apahida.jpg#GNU_Free_Documentation_License">GFDL 1.2 sau ulterior</a>.</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure>
         </div>
       </div>
-      <figure class="photo-evidence"><div class="photo-points"><img id="img-apahida" src="media/d02d4a25989e.webp" width="600" height="1250" alt="Ornament în formă de vultur, cu aripile strânse, acoperit cu plăcuțe de granat roșu montate în celule de aur." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Capul de vultur" data-title="Capul de vultur" data-detail="Ciocul curbat și ochiul rotund fac din piesă un vultur, pasăre a puterii, frecventă în arta elitelor germanice și stepice ale epocii." style="--point-x:58%;--point-y:12%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Pieptul cu solzi" data-title="Pieptul cu solzi" data-detail="Pieptul e lucrat în tehnica cloisonné: sute de plăcuțe de granat tăiate exact pe forma celulelor de aur. Stilul policrom s-a răspândit în Europa tocmai prin lumea dominată de huni." style="--point-x:45%;--point-y:45%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Aripile" data-title="Aripile" data-detail="Aripile au celule în formă de săgeată, umplute tot cu granate. Pe șa, perechea de vulturi strălucea în soare și arăta de departe rangul călărețului." style="--point-x:18%;--point-y:45%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Ghearele" data-title="Ghearele" data-detail="Picioarele se termină în granate mari, șlefuite. Piesa arată bogăția unui principe gepid după prăbușirea imperiului hunic: o elită care moștenea gustul și tehnicile epocii lui Attila." style="--point-x:46%;--point-y:90%"></button></div><figcaption><strong>Vulturul de la Apahida</strong>. Garnitură de șa în formă de vultur, din tezaurul unui principe gepid descoperit la Apahida (jud. Cluj). Gepizii fuseseră supuși lui Attila; după moartea lui, regele lor Ardaric a condus răscoala de la Nedao (c. 454). <small>Muzeul Național de Istorie a României · foto: <a href="https://commons.wikimedia.org/wiki/File:Saddle_fittings_of_a_Gepid_prince_-_Apahida.jpg">Cristian Chirita, montaj James Steakley</a> (decupaj), <a href="https://commons.wikimedia.org/wiki/File:Saddle_fittings_of_a_Gepid_prince_-_Apahida.jpg#GNU_Free_Documentation_License">GFDL 1.2 sau ulterior</a>.</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure>
 
       <div class="vd-group" data-myths="8,7" data-title="Ce se spune și ce se știe"></div>
       <div class="sr-row sr-reveal">
@@ -5781,6 +5957,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     var slider = document.getElementById('time-slider');
     var yearBadge = document.getElementById('year-badge');
     var eraLabel = document.getElementById('era-label');
+    var yearTicks = slider.closest('.timebar').querySelectorAll('.time-tick');
     var zoneEarly = document.getElementById('zone-early');
     var zoneMax = document.getElementById('zone-max');
     var zoneLate = document.getElementById('zone-late');
@@ -5812,6 +5989,8 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     function update(){
       var year = parseInt(slider.value, 10);
       yearBadge.textContent = year + ' d.Hr.';
+      slider.setAttribute('aria-valuetext', year + ' după Hristos');
+      yearTicks.forEach(function(tick){ tick.setAttribute('aria-pressed', String(Number(tick.dataset.year) === year)); });
       eraLabel.textContent = eraText(year);
       setSliderFill();
 
@@ -5839,6 +6018,9 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     }
 
     slider.addEventListener('input', update);
+    yearTicks.forEach(function(tick){
+      tick.addEventListener('click', function(){ slider.value = tick.dataset.year; update(); });
+    });
     update();
 
   }
@@ -6201,6 +6383,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
   var PAGE_ALIAS = { 'mod-game': 'mod-migratie' };
   var pages = PAGE_IDS.map(function(id){ return document.getElementById(id); });
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.site-nav a[data-page]'));
+  var pager = document.querySelector('.site-pager');
   var prevBtn = document.getElementById('site-prev');
   var nextBtn = document.getElementById('site-next');
   var countEl = document.getElementById('site-page-count');
@@ -6214,6 +6397,7 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     current = index;
     pages.forEach(function(p, i){ if (p) p.classList.toggle('active', i === index); });
     navLinks.forEach(function(a, i){ a.classList.toggle('current', i === index); if (i === index) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    pager.hidden = PAGE_IDS[index] === 'mod-atelier';
     prevBtn.disabled = index === 0;
     prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
     nextBtn.disabled = index === pages.length - 1;
@@ -9049,71 +9233,94 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     var b = e.target.closest('button'); if (b) set(b.getAttribute('data-s'));
   });
 
-  // la prima vedere teancurile cad o dată, unul după altul, iar cifrele numără de la 0
-  var LABS = list('.gs-lab').map(function(t){ return { el: t, txt: t.textContent, v: +t.textContent.replace(/[^0-9]/g, '') }; });
-  var stacks = list('.gs-stk').map(function(g){ return Array.prototype.slice.call(g.querySelectorAll('ellipse')); });
-  var dropRun = 0;
+  // Derularea controlează cât a căzut din fiecare teanc. Reluarea folosește aceeași secvență.
+  var chart = gs.querySelector('.gs-chart svg');
+  var labels = list('.gs-lab').map(function(el){
+    return { el: el, text: el.textContent, value: Number(el.textContent.replace(/[^0-9]/g, '')) };
+  });
+  var stackStarts = [0, .16, .33, .53];
+  var progress = -1;
+  var frame = 0;
+  var replayStart = null;
 
-  function count(L, wait, run){
-    var t0 = 0, pre = L.txt.charAt(0) === '+' ? '+' : '';
-    L.el.textContent = pre + '0';
-    function step(ts){
-      if (run !== dropRun) return;
-      if (!t0) t0 = ts + wait;
-      var k = Math.max(0, Math.min(1, (ts - t0) / 700)), v = Math.round(L.v * (1 - Math.pow(1 - k, 3)));
-      L.el.textContent = pre + v.toLocaleString('ro-RO');
-      if (k < 1) requestAnimationFrame(step); else L.el.textContent = L.txt;
-    }
-    requestAnimationFrame(step);
+  list('.gs-stk').forEach(function(group, index){
+    var stack = group.querySelectorAll('ellipse');
+    var stagger = index === 3 ? .16 : .18;
+    stack.forEach(function(coin, i){
+      var delay = stackStarts[index] + stagger * i / Math.max(1, stack.length - 1);
+      coin.style.setProperty('--gs-delay', delay.toFixed(3));
+    });
+  });
+
+  function clamp(value){ return Math.min(1, Math.max(0, value)); }
+
+  function paint(value){
+    if (value === progress) return;
+    progress = value;
+    gs.style.setProperty('--gs-drop', value);
+    gs.classList.toggle('gs-in', value > 0);
+    var hideReplay = motion.matches || (value < 1 && replay.hidden);
+    if (replay.hidden !== hideReplay) replay.hidden = hideReplay;
+    labels.forEach(function(label, index){
+      var amount = clamp((value - stackStarts[index]) / .32);
+      var number = Math.round(label.value * amount);
+      var prefix = label.text.charAt(0) === '+' ? '+' : '';
+      var text = amount === 1 ? label.text : prefix + number.toLocaleString('ro-RO');
+      if (label.el.textContent !== text) label.el.textContent = text;
+    });
   }
-  function drop(){
-    var run = ++dropRun, still = motion.matches;
-    gs.classList.add('gs-reset');
-    stacks.forEach(function(stack){
-      stack.forEach(function(el){
-        el.style.transitionDelay = '0ms';
-        el.classList.toggle('in', still);
-      });
-    });
-    // Fixează poziția de plecare înainte de a reporni tranzițiile.
-    getComputedStyle(stacks[0][0]).transform;
-    gs.classList.remove('gs-reset');
-    gs.classList.add('gs-in');
-    replay.hidden = still;
-    stacks.forEach(function(stack, k){
-      var delay = still ? 0 : k * 380;
-      stack.forEach(function(el, j){
-        el.style.transitionDelay = still ? '0ms' : (delay + j * (k === 3 ? 7 : 22)) + 'ms';
-        el.classList.add('in');
-      });
-      if (still) LABS[k].el.textContent = LABS[k].txt;
-      else count(LABS[k], delay, run);
-    });
+
+  function draw(now){
+    frame = 0;
+    if (motion.matches) {
+      replayStart = null;
+      paint(1);
+      replay.hidden = true;
+      return;
+    }
+    if (replayStart !== null) {
+      var elapsed = clamp((now - replayStart) / 1800);
+      paint(elapsed);
+      if (elapsed < 1) schedule();
+      else replayStart = null;
+      return;
+    }
+    var rect = chart.getBoundingClientRect();
+    if (!rect.height) return;
+    var viewport = document.documentElement.clientHeight;
+    var travel = Math.min(365, Math.max(150, rect.height * .72));
+    paint(clamp((viewport * .78 - rect.top) / travel));
+  }
+
+  function schedule(){
+    if (!frame) frame = requestAnimationFrame(draw);
   }
 
   set('0');
   replay.addEventListener('click', function(){
+    if (motion.matches) return;
     set('0');
-    drop();
+    replayStart = performance.now();
+    paint(0);
+    schedule();
   });
-  var observer;
-  function observe(){
-    if (observer) observer.disconnect();
-    if (motion.matches || !('IntersectionObserver' in window)) { drop(); return; }
-    if (gs.classList.contains('gs-in')) {
-      replay.hidden = false;
-      return;
-    }
-    observer = new IntersectionObserver(function(entries){
-      if (!entries.some(function(entry){ return entry.isIntersecting; })) return;
-      observer.disconnect();
-      drop();
-    }, { rootMargin: '-54px 0px -104px 0px' });
-    observer.observe(gs.querySelector('.gs-trigger'));
+  function motionChange(){
+    replayStart = null;
+    replay.hidden = true;
+    schedule();
   }
-  if (motion.addEventListener) motion.addEventListener('change', observe);
-  else if (motion.addListener) motion.addListener(observe);
-  observe();
+  if (motion.addEventListener) motion.addEventListener('change', motionChange);
+  else if (motion.addListener) motion.addListener(motionChange);
+  window.addEventListener('scroll', function(){ if (replayStart === null) schedule(); }, { passive: true });
+  window.addEventListener('resize', schedule);
+  window.addEventListener('load', schedule, { once: true });
+  if ('ResizeObserver' in window) {
+    var observer = new ResizeObserver(schedule);
+    observer.observe(chart);
+    var articlePage = gs.closest('.site-page');
+    if (articlePage) observer.observe(articlePage);
+  }
+  schedule();
 })();
 </script>
 <script>

@@ -71,6 +71,31 @@
 .photo-evidence #img-apahida{ max-width: 175px; }
 .photo-evidence figcaption{ margin-top: 10px; line-height: 1.5; }
 .photo-evidence figcaption small{ display: block; margin-top: 5px; }
+/* Fotografiile însoțesc pasajul sau nota de care țin. */
+.photo-evidence--inline{
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 20px;
+  align-items: center;
+  max-width: none;
+  margin: 20px 0 0;
+}
+.sr-media > .photo-evidence--inline{ margin: 0; }
+.photo-evidence--inline .photo-points{ width: 100%; justify-self: start; margin: 0; }
+.photo-evidence--inline .photo-points:has(#img-apahida){ max-width: 175px; }
+.photo-evidence--inline figcaption{ margin: 0; }
+.photo-evidence--inline:has(#img-apahida){
+  grid-template-columns: minmax(0, 175px) minmax(0, 1fr);
+}
+#page-acasa .duel-context > .duel-lives:has(+ .photo-evidence--sword){ grid-column: 1 / -1; }
+#page-acasa .duel-context > .photo-evidence--sword{
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+.photo-evidence--sword .photo-points{ width: 100%; max-width: 100%; margin-inline: 0; }
+#page-acasa .duel-context > .photo-evidence--sword + .r9-note{ align-self: center; }
+
 .photo-evidence-pair{
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -106,6 +131,12 @@
 .photo-detail h2{ margin: 0 0 8px; font: 600 clamp(1.45rem,4vw,2rem)/1.1 'EB Garamond',Georgia,serif; }
 .photo-detail p{ margin: 0; line-height: 1.55; }
 @media(max-width: 630px){
+  .photo-evidence--inline,
+  .photo-evidence--inline:has(#img-apahida){
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .photo-evidence--inline .photo-points:has(#img-arc){ max-width: 240px; }
   .photo-evidence-pair{ grid-template-columns: minmax(0, 1fr); }
   .sr-media .sr-fig + .sr-fig:has(.photo-points){ display: block; }
   #page-acasa .gold-context .sr-fig-inline:has(.photo-points){

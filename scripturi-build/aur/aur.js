@@ -53,69 +53,92 @@
     var b = e.target.closest('button'); if (b) set(b.getAttribute('data-s'));
   });
 
-  // la prima vedere teancurile cad o dată, unul după altul, iar cifrele numără de la 0
-  var LABS = list('.gs-lab').map(function(t){ return { el: t, txt: t.textContent, v: +t.textContent.replace(/[^0-9]/g, '') }; });
-  var stacks = list('.gs-stk').map(function(g){ return Array.prototype.slice.call(g.querySelectorAll('ellipse')); });
-  var dropRun = 0;
+  // Derularea controlează cât a căzut din fiecare teanc. Reluarea folosește aceeași secvență.
+  var chart = gs.querySelector('.gs-chart svg');
+  var labels = list('.gs-lab').map(function(el){
+    return { el: el, text: el.textContent, value: Number(el.textContent.replace(/[^0-9]/g, '')) };
+  });
+  var stackStarts = [0, .16, .33, .53];
+  var progress = -1;
+  var frame = 0;
+  var replayStart = null;
 
-  function count(L, wait, run){
-    var t0 = 0, pre = L.txt.charAt(0) === '+' ? '+' : '';
-    L.el.textContent = pre + '0';
-    function step(ts){
-      if (run !== dropRun) return;
-      if (!t0) t0 = ts + wait;
-      var k = Math.max(0, Math.min(1, (ts - t0) / 700)), v = Math.round(L.v * (1 - Math.pow(1 - k, 3)));
-      L.el.textContent = pre + v.toLocaleString('ro-RO');
-      if (k < 1) requestAnimationFrame(step); else L.el.textContent = L.txt;
-    }
-    requestAnimationFrame(step);
+  list('.gs-stk').forEach(function(group, index){
+    var stack = group.querySelectorAll('ellipse');
+    var stagger = index === 3 ? .16 : .18;
+    stack.forEach(function(coin, i){
+      var delay = stackStarts[index] + stagger * i / Math.max(1, stack.length - 1);
+      coin.style.setProperty('--gs-delay', delay.toFixed(3));
+    });
+  });
+
+  function clamp(value){ return Math.min(1, Math.max(0, value)); }
+
+  function paint(value){
+    if (value === progress) return;
+    progress = value;
+    gs.style.setProperty('--gs-drop', value);
+    gs.classList.toggle('gs-in', value > 0);
+    var hideReplay = motion.matches || (value < 1 && replay.hidden);
+    if (replay.hidden !== hideReplay) replay.hidden = hideReplay;
+    labels.forEach(function(label, index){
+      var amount = clamp((value - stackStarts[index]) / .32);
+      var number = Math.round(label.value * amount);
+      var prefix = label.text.charAt(0) === '+' ? '+' : '';
+      var text = amount === 1 ? label.text : prefix + number.toLocaleString('ro-RO');
+      if (label.el.textContent !== text) label.el.textContent = text;
+    });
   }
-  function drop(){
-    var run = ++dropRun, still = motion.matches;
-    gs.classList.add('gs-reset');
-    stacks.forEach(function(stack){
-      stack.forEach(function(el){
-        el.style.transitionDelay = '0ms';
-        el.classList.toggle('in', still);
-      });
-    });
-    // Fixează poziția de plecare înainte de a reporni tranzițiile.
-    getComputedStyle(stacks[0][0]).transform;
-    gs.classList.remove('gs-reset');
-    gs.classList.add('gs-in');
-    replay.hidden = still;
-    stacks.forEach(function(stack, k){
-      var delay = still ? 0 : k * 380;
-      stack.forEach(function(el, j){
-        el.style.transitionDelay = still ? '0ms' : (delay + j * (k === 3 ? 7 : 22)) + 'ms';
-        el.classList.add('in');
-      });
-      if (still) LABS[k].el.textContent = LABS[k].txt;
-      else count(LABS[k], delay, run);
-    });
+
+  function draw(now){
+    frame = 0;
+    if (motion.matches) {
+      replayStart = null;
+      paint(1);
+      replay.hidden = true;
+      return;
+    }
+    if (replayStart !== null) {
+      var elapsed = clamp((now - replayStart) / 1800);
+      paint(elapsed);
+      if (elapsed < 1) schedule();
+      else replayStart = null;
+      return;
+    }
+    var rect = chart.getBoundingClientRect();
+    if (!rect.height) return;
+    var viewport = document.documentElement.clientHeight;
+    var travel = Math.min(365, Math.max(150, rect.height * .72));
+    paint(clamp((viewport * .78 - rect.top) / travel));
+  }
+
+  function schedule(){
+    if (!frame) frame = requestAnimationFrame(draw);
   }
 
   set('0');
   replay.addEventListener('click', function(){
+    if (motion.matches) return;
     set('0');
-    drop();
+    replayStart = performance.now();
+    paint(0);
+    schedule();
   });
-  var observer;
-  function observe(){
-    if (observer) observer.disconnect();
-    if (motion.matches || !('IntersectionObserver' in window)) { drop(); return; }
-    if (gs.classList.contains('gs-in')) {
-      replay.hidden = false;
-      return;
-    }
-    observer = new IntersectionObserver(function(entries){
-      if (!entries.some(function(entry){ return entry.isIntersecting; })) return;
-      observer.disconnect();
-      drop();
-    }, { rootMargin: '-54px 0px -104px 0px' });
-    observer.observe(gs.querySelector('.gs-trigger'));
+  function motionChange(){
+    replayStart = null;
+    replay.hidden = true;
+    schedule();
   }
-  if (motion.addEventListener) motion.addEventListener('change', observe);
-  else if (motion.addListener) motion.addListener(observe);
-  observe();
+  if (motion.addEventListener) motion.addEventListener('change', motionChange);
+  else if (motion.addListener) motion.addListener(motionChange);
+  window.addEventListener('scroll', function(){ if (replayStart === null) schedule(); }, { passive: true });
+  window.addEventListener('resize', schedule);
+  window.addEventListener('load', schedule, { once: true });
+  if ('ResizeObserver' in window) {
+    var observer = new ResizeObserver(schedule);
+    observer.observe(chart);
+    var articlePage = gs.closest('.site-page');
+    if (articlePage) observer.observe(articlePage);
+  }
+  schedule();
 })();

@@ -55,12 +55,59 @@ function annotateExisting(html, id) {
     (_, caption, end) => caption + ' ' + instruction + end
   );
 }
-function afterRow(html, marker, markup) {
+function rowEnd(html, marker) {
   const start = html.indexOf(marker);
   const end = start < 0 ? -1 : html.indexOf('\n      </div>', start);
   if (end < 0) throw new Error('Lipsește pasajul pentru ' + marker);
-  const insert = end + '\n      </div>'.length;
+  return end;
+}
+function afterRow(html, marker, markup) {
+  const insert = rowEnd(html, marker) + '\n      </div>'.length;
   return html.slice(0, insert) + '\n      ' + markup + html.slice(insert);
+}
+
+// Articolul separat poate conține deja fotografiile dintr-un build anterior.
+function arrangePhotos(html) {
+  const figureStart = '<figure class="photo-evidence">';
+  const inline = markup => markup.replace(figureStart, '<figure class="photo-evidence photo-evidence--inline">');
+  function move(id, place) {
+    const start = html.indexOf(figureStart + '<div class="photo-points"><img id="' + id + '"');
+    if (start < 0) return;
+    const close = html.indexOf('</figure>', start);
+    if (close < 0) throw new Error('Lipsește sfârșitul fotografiei ' + id);
+    const end = close + '</figure>'.length;
+    const markup = html.slice(start, end);
+    const line = html.lastIndexOf('\n', start);
+    html = html.slice(0, line) + html.slice(end);
+    html = place(markup);
+  }
+  move('img-arc', markup => {
+    const mediaEnd = '</figure></div>';
+    const engraving = html.indexOf('id="img-neuville"');
+    const end = engraving < 0 ? -1 : html.indexOf(mediaEnd, engraving);
+    if (end < 0) throw new Error('Lipsește gravura despre cavalerie.');
+    const insert = end + '</figure>'.length;
+    return html.slice(0, insert) + inline(markup) + html.slice(insert);
+  });
+  move('img-apahida', markup => {
+    const death = html.indexOf('id="img-moartea"');
+    const insert = html.lastIndexOf('\n        </div>', rowEnd(html, 'id="img-moartea"'));
+    if (insert < death) throw new Error('Lipsește textul despre Nedao.');
+    return html.slice(0, insert) + '\n          ' + inline(markup) + html.slice(insert);
+  });
+  move('img-spatha', markup => {
+    const context = html.indexOf('class="duel-context"');
+    if (context < 0) {
+      const row = html.lastIndexOf('      <div class="sr-row', html.indexOf('id="img-moartea"'));
+      if (row < 0) throw new Error('Lipsește rândul despre moartea lui Attila.');
+      return html.slice(0, row) + '      ' + inline(markup) + '\n' + html.slice(row);
+    }
+    const note = html.indexOf('\n        <aside', context);
+    if (note < 0 || note >= rowEnd(html, 'class="duel-context"')) throw new Error('Lipsește nota despre Sabia lui Marte.');
+    const sword = markup.replace(figureStart, '<figure class="photo-evidence photo-evidence--sword">');
+    return html.slice(0, note) + '\n        ' + sword + html.slice(note);
+  });
+  return html;
 }
 function addPhotos(html) {
   for (const id of ['img-diadema', 'img-craniu', 'img-solidus']) {
@@ -122,7 +169,7 @@ main = main.replace(viewer, '').replace('  initArtifactModule();\n', '')
   .replace(/  \/\/ ---------- muzeul: punctele roșii pulsează până la primul clic ----------\n  var muz = [^\n]*\n  if \(muz\)[^\n]*\n\n/, '')
   .replace("media.querySelectorAll('.sr-fig img')", "media.querySelectorAll('.sr-fig img:not(.photo-points img)')")
   .replace("var VITR = '.hx, .gs, #sec-atlas, #sec-muzeu';", "var VITR = '.hx, .gs, #sec-atlas';");
-write(mainFile, addPhotos(main));
+write(mainFile, arrangePhotos(addPhotos(main)));
 
 const oldSource = 'vezi Muzeul, capitolul 06';
 if (exists(simulation)) write(simulation, read(simulation).replaceAll(oldSource, 'vezi garnitura de șa de la Apahida, în articol'));
@@ -136,5 +183,5 @@ if (exists(standalone)) {
   } else {
     article = article.replace(addedStyle, () => styleTag);
   }
-  write(standalone, article);
+  write(standalone, arrangePhotos(article));
 }
