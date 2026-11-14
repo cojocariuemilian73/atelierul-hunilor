@@ -188,6 +188,51 @@ replace("        var isBattle = m.classList.contains('battle') || m.classList.co
 replace(/\.m-atlas \.(?:vt-btn[^{}]*|view-toggles)\{[^{}]*\}/g, '');
 replace(/\/\*\s*\/?r\d+(?:-relight)?(?::[^*]*)?\s*\*\//g, '');
 
+// Grupăm portretele cu biografiile și imaginile cu explicațiile lor.
+{
+  replace(/^ {6}(<aside class="r9-note" aria-label="Știai că…\? Zi și noapte călare">[^\n]+<\/aside>)\n {6}(<!-- pq:start --><figure class="pq"><blockquote><p>Socotind că[^\n]+<!-- pq:end -->)/gm,
+    (_, note, quote) => [
+      '      <div class="margus-context">',
+      '        ' + quote,
+      '        ' + note,
+      '      </div>'
+    ].join('\n'));
+
+  const gold = html.match(/^ +(<aside class="r9-note" aria-label="Știai că…\? 1\/72 de livră">[^\n]+<\/aside>)\n +(<figure class="sr-fig sr-fig-inline"><img id="img-solidus"[^\n]+<\/figure>)\n        <\/div>\n      <\/div>\n\n      <!-- aur:start -->/m);
+  if (!gold) throw new Error('Lipsește nota sau imaginea solidului.');
+  const [, note, figure] = gold;
+  replace(gold[0], () => [
+    '        </div>',
+    '      </div>',
+    '      <div class="gold-context">',
+    '        ' + figure,
+    '        ' + note,
+    '      </div>',
+    '',
+    '      <!-- aur:start -->'
+  ].join('\n'));
+
+  const weapon = html.match(/^ +<div class="r9-facts">\n([\s\S]*?<\/ul>)\n +(<aside class="r9-note r9-in r9-side"[^\n]+<\/aside>)\n<\/div>/m);
+  if (!weapon) throw new Error('Lipsește nota „Sabia lui Marte”.');
+  replace(weapon[0], () => '          ' + weapon[1].trim());
+
+  const profile = /^( +<article class="duel-card (?:attila|aetius) dk-card">)\n( +<figure class="dc-img">[^\n]+<\/figure>)\n([\s\S]+?^ +<\/ul>)\n( +<\/article>)/gm;
+  if ([...html.matchAll(profile)].length !== 2) throw new Error('Lipsesc fișele celor două personalități.');
+  replace(profile, (_, start, portrait, details, end) => [
+    start, portrait, '          <div class="dk-profile">',
+    details.split('\n').map(line => '  ' + line).join('\n'),
+    '          </div>', end
+  ].join('\n'));
+
+  replace(/^      (<div class="duel-lives"[^\n]+)\n/gm, (_, timeline) => [
+    '      <div class="duel-context">',
+    '        ' + timeline,
+    '        ' + weapon[2],
+    '      </div>',
+    ''
+  ].join('\n'));
+}
+
 replace('  html:not(#x) .m-lab{ --parchment: #16120e; --parchment-2: #1d1813; --parchment-3: #2b241b; }', '');
 const style = fs.readFileSync(path.join(__dirname, 'predare.css'), 'utf8');
 replace('</head>', '<style id="corecturi-predare">\n' + style + '</style>\n</head>');

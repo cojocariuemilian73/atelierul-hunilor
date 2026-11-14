@@ -3,12 +3,11 @@
   // imaginea mică alternează, o dată la stânga, o dată la dreapta
   var D = window.R12 || {}, n = 0;
   function src(sel){ var el = document.querySelector(sel); return el ? (el.getAttribute('src') || el.currentSrc || '') : ''; }
-  function card(k, title, first){
+  function card(k){
     var m = D[k]; if (!m) return '';
     var flip = n++ % 2 === 1, im = src(m.img);
     var fig = im ? '<figure class="vd-fig"><img src="' + im + '" alt="" loading="lazy"' + (m.pos ? ' style="object-position:' + m.pos + '"' : '') + '><figcaption>' + m.cap + '</figcaption></figure>' : '';
     return '<article class="vd' + (flip ? ' vd-flip' : '') + (im ? '' : ' vd-noimg') + '" aria-label="Mit verificat">' +
-      (first ? '<p class="vd-head"><i aria-hidden="true"></i>' + title + '</p>' : '') +
       '<div class="vd-body">' + fig +
         '<div class="vd-text">' +
           '<p class="vd-k">Se spune că</p>' +
@@ -23,7 +22,8 @@
     n = 0;
     Array.prototype.forEach.call(document.querySelectorAll('.vd-group[data-myths]'), function(g){
       var t = g.getAttribute('data-title');
-      g.innerHTML = g.getAttribute('data-myths').split(',').map(function(k, i){ return card(k, t, i === 0); }).join('');
+      g.innerHTML = '<h3 class="vd-head"><i aria-hidden="true"></i>' + t + '</h3>' +
+        g.getAttribute('data-myths').split(',').map(card).join('');
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', draw); else draw();

@@ -3713,6 +3713,130 @@
   #page-acasa .vd-head{ font: 600 var(--fs-20)/1.3 'EB Garamond', Georgia, serif; color: var(--ink); }
   #page-acasa .vd-head i{ background: var(--garnet); }
 
+  /* ---------- portretele și faptele-cheie ---------- */
+  #page-acasa .duel.dk .duel-card{
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-areas: 'img profile';
+    align-items: start;
+    gap: var(--sp-24);
+  }
+  #page-acasa .duel.dk .dc-img{ grid-area: img; display: block; margin: 0; }
+  #page-acasa .duel.dk .dc-img figcaption{ margin: var(--sp-8) 0 0; }
+  #page-acasa .duel.dk .dk-profile{ grid-area: profile; min-width: 0; }
+  #page-acasa .duel.dk .dk-profile h3{
+    font-size: clamp(1.75rem, 3vw, 2.25rem) !important;
+    margin: 0 0 4px;
+  }
+  #page-acasa .duel.dk .dk-label{ margin-top: var(--sp-8); padding-top: var(--sp-8); }
+  #page-acasa .duel.dk .dk-facts li{ font-size: var(--fs-15); color: var(--ink); }
+  #page-acasa .duel-context, #page-acasa .gold-context{
+    display: grid;
+    align-items: start;
+    column-gap: var(--sp-40);
+    row-gap: var(--sp-24);
+    margin-block: var(--sp-24) var(--sp-40);
+  }
+  #page-acasa .duel-context{
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    padding-block-start: var(--sp-24);
+    border-top: 1px solid var(--line);
+  }
+  #page-acasa .duel-context .duel-lives{ max-width: none; margin: 0; padding-block: 0; border: 0; }
+  #page-acasa .page-shell :is(.duel-context, .gold-context) .r9-note{
+    float: none;
+    grid-column: auto;
+    width: auto;
+    max-width: none;
+    margin: 0;
+  }
+
+  /* ---------- solidul și explicația greutății lui ---------- */
+  #page-acasa .gold-context{
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+  }
+  #page-acasa .gold-context .sr-fig-inline{
+    grid-template-columns: clamp(104px, 12vw, 164px) minmax(0, 1fr);
+    gap: var(--sp-16);
+    margin: 0;
+  }
+  #page-acasa .gold-context .r9n-num, #page-acasa .gold-context .r9n-unit{
+    display: inline-block;
+    vertical-align: baseline;
+  }
+  #page-acasa .page-shell .gold-context .r9-note .r9n-unit{ margin-inline-start: var(--sp-8); }
+  #page-acasa .gold-context + .gs{ margin-block-start: var(--sp-24); }
+
+  /* ---------- harta și izvoarele din capitolul despre origini ---------- */
+  #sec-origini .diagram.ptol-map{
+    max-width: none;
+    margin: var(--sp-24) 0;
+  }
+  #sec-origini .ptol-map figcaption{
+    padding-inline: 0;
+    border: 0;
+    background: transparent;
+  }
+  #sec-origini .margus-context{
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: var(--sp-16) clamp(24px, 3vw, var(--sp-40));
+    align-items: center;
+    margin-block: var(--sp-24);
+  }
+  #sec-origini .margus-context .pq{ max-width: none; margin: 0; }
+  #page-acasa #sec-origini .margus-context .r9-note{
+    float: none;
+    max-width: none;
+    width: auto;
+    margin: 0;
+  }
+  #sec-origini .margus-context + .src-compare{ margin-block-start: var(--sp-24); }
+  #page-acasa #sec-origini .src-compare .sub-title{ margin-block-start: 0; }
+  @media (max-width: 760px){
+    #sec-origini .margus-context{ grid-template-columns: minmax(0, 1fr); }
+  }
+
+  /* ---------- grupurile de mituri ---------- */
+  #page-acasa .vd-group{ border-block: 1px solid var(--line); }
+  #page-acasa .vd-group .vd-head{ grid-column: 1 / -1; margin: var(--sp-16) 0 0; }
+  #page-acasa .vd-group .vd{ border: 0; }
+  #page-acasa .vd-group .vd + .vd{ border-top: 1px solid var(--line); }
+  @media (min-width: 820px){
+    #page-acasa .vd-group:has(> .vd:nth-of-type(2):last-child){
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--sp-40);
+    }
+    #page-acasa .vd-group:has(> .vd:nth-of-type(2):last-child) .vd + .vd{ border-top: 0; }
+  }
+  @media (min-width: 960px){
+    #page-acasa .vd-group:has(> .vd:nth-of-type(3):last-child){
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: clamp(24px, 2.8vw, var(--sp-40));
+    }
+    #page-acasa .vd-group:has(> .vd:nth-of-type(3):last-child) .vd + .vd{ border-top: 0; }
+  }
+  @media (max-width: 1023px){
+    #page-acasa .duel.dk{ grid-template-columns: minmax(0, 1fr); }
+    #page-acasa .duel.dk .duel-card{ grid-template-columns: minmax(0, 190px) minmax(0, 1fr); }
+  }
+  @media (max-width: 860px){
+    #page-acasa .duel-context, #page-acasa .gold-context{ grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 520px){
+    #page-acasa .duel.dk .duel-card{ grid-template-columns: minmax(0, 1fr); grid-template-areas: 'img' 'profile'; gap: var(--sp-16); }
+    #page-acasa .duel.dk .dc-img{
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      align-items: start;
+      gap: var(--sp-16);
+    }
+    #page-acasa .duel.dk .dc-img :is(img, figcaption){ grid-area: auto; margin: 0; }
+    #page-acasa .gold-context .sr-fig-inline{ grid-template-columns: 96px minmax(0, 1fr); }
+  }
+
   /* ---------- mărimile rămase în afara scării ---------- */
   #page-acasa .domino-list li, #page-acasa .cascade .cs-step, #page-acasa .gl-row dd, #page-acasa .gl-row dt, #page-acasa .gl{ font-size: var(--fs-17); line-height: 1.6; }
   html body #page-acasa .gs .gs-step h3{ font: 600 var(--fs-26)/1.2 'EB Garamond', Georgia, serif !important; }
@@ -3953,8 +4077,10 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
         <figcaption>Harta Sarmației Europene după Ptolemeu, gravată de Girolamo Porro (Veneția, 1596). Pe ea apare chiar numele <b>Chuni</b>, lângă Amadoca și Borysthenes (Nipru), între bastarni și roxolani, adică exact localizarea din Geografia 3.5.10, nu pe malul Mării Azov, cum se repetă adesea. Imagine în domeniul public (Wikimedia Commons).</figcaption>
       </div>
 
-      <aside class="r9-note" aria-label="Știai că…? Zi și noapte călare"><p class="r9n-tag">Știai că…?</p><p class="r9n-title">Zi și noapte călare</p><p class="r9n-text">Ammianus și Zosimus scriu că hunii luptau, se sfătuiau, mâncau și chiar dormeau pe cal. Sidonius Apollinaris îi descrie ca și cum omul și calul ar fi crescut împreună. Exagerarea literară există, dar arată cât de străină le părea romanilor această viață călare.</p><p class="r9n-src">Sursa: Ammianus 31.2.6 (<a class="mx-note" href="#note-8">nota 8</a>); Zosimus 4.20; Sidonius Apollinaris, Carmina 2</p></aside>
-      <!-- pq:start --><figure class="pq"><blockquote><p>Socotind că nu se cuvine să coboare de pe cai, barbarii au ținut sfatul călare; iar romanii, ca să nu se arate mai prejos, au vorbit și ei tot din șa.</p></blockquote><figcaption><b>Priscus</b>, fr. 2, despre tratatul de la Margus (c. 435) · traducere adaptată</figcaption></figure><!-- pq:end -->
+      <div class="margus-context">
+        <!-- pq:start --><figure class="pq"><blockquote><p>Socotind că nu se cuvine să coboare de pe cai, barbarii au ținut sfatul călare; iar romanii, ca să nu se arate mai prejos, au vorbit și ei tot din șa.</p></blockquote><figcaption><b>Priscus</b>, fr. 2, despre tratatul de la Margus (c. 435) · traducere adaptată</figcaption></figure><!-- pq:end -->
+        <aside class="r9-note" aria-label="Știai că…? Zi și noapte călare"><p class="r9n-tag">Știai că…?</p><p class="r9n-title">Zi și noapte călare</p><p class="r9n-text">Ammianus și Zosimus scriu că hunii luptau, se sfătuiau, mâncau și chiar dormeau pe cal. Sidonius Apollinaris îi descrie ca și cum omul și calul ar fi crescut împreună. Exagerarea literară există, dar arată cât de străină le părea romanilor această viață călare.</p><p class="r9n-src">Sursa: Ammianus 31.2.6 (<a class="mx-note" href="#note-8">nota 8</a>); Zosimus 4.20; Sidonius Apollinaris, Carmina 2</p></aside>
+      </div>
       <div class="src-compare sr-reveal">
         <h3 class="sub-title">Izvoarele, față în față</h3>
         <p class="sc-lead">Tabelul compară câteva exemple de izvoare scrise, descoperiri arheologice și cercetări genetice. Fiecare răspunde la alte întrebări despre huni.</p>
@@ -4009,9 +4135,11 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
         <li><b>Spre Balcani, împotriva Răsăritului</b>: campaniile din 441–447 lovesc direct Imperiul Roman de Răsărit, devastând provinciile dunărene până aproape de zidurile Constantinopolului și impunând tributul care avea să ajungă la 2.100 de livre de aur.</li>
         <li><b>Spre Apus, în 451–452</b>: marea campanie a lui Attila în Galia (oprită la Câmpiile Catalaunice) și invazia Italiei din anul următor, ultimele două lovituri directe date de huni Imperiului, înainte de prăbușirea rapidă a hegemoniei lor.</li>
       </ol>
-      <aside class="r9-note" aria-label="Știai că…? 1/72 de livră"><p class="r9n-tag">Știai că…?</p><p class="r9n-num">1/72</p><p class="r9n-unit">de livră</p><p class="r9n-text">Aurul era prin excelență bunul împăratului. Solidul, introdus de Constantin cel Mare, avea greutate fixă (1/72 dintr-o livră), iar Valentinian I și Valens au impus, după 366, ca aurul strâns din taxe să fie topit în lingouri de puritate garantată, sub controlul lui comes sacrarum largitionum. Tributul cerut de Attila lovea deci direct autoritatea și prestigiul imperial, nu doar vistieria.</p><p class="r9n-src">Sursa: Codex Theodosianus 12.6.12–13</p></aside>
-      <figure class="sr-fig sr-fig-inline"><img id="img-solidus" src="media/d31adc2b2981.webp" alt="Solid de aur al împăratului Teodosie al II-lea, avers cu bustul împăratului." loading="lazy"><figcaption><b>Solid de aur al lui Teodosie al II-lea</b> (441–450; domnia: 408–450), inv. MNS/A/22212. Foto: <a href="https://commons.wikimedia.org/wiki/File:Solidus_of_Theodosius_II.jpg">Grzegorz Solecki și Arkadiusz Piętak / Muzeul Național din Szczecin</a>, <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</figcaption></figure>
         </div>
+      </div>
+      <div class="gold-context">
+        <figure class="sr-fig sr-fig-inline"><img id="img-solidus" src="media/d31adc2b2981.webp" alt="Solid de aur al împăratului Teodosie al II-lea, avers cu bustul împăratului." loading="lazy"><figcaption><b>Solid de aur al lui Teodosie al II-lea</b> (441–450; domnia: 408–450), inv. MNS/A/22212. Foto: <a href="https://commons.wikimedia.org/wiki/File:Solidus_of_Theodosius_II.jpg">Grzegorz Solecki și Arkadiusz Piętak / Muzeul Național din Szczecin</a>, <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</figcaption></figure>
+        <aside class="r9-note" aria-label="Știai că…? 1/72 de livră"><p class="r9n-tag">Știai că…?</p><p class="r9n-num">1/72</p><p class="r9n-unit">de livră</p><p class="r9n-text">Aurul era prin excelență bunul împăratului. Solidul, introdus de Constantin cel Mare, avea greutate fixă (1/72 dintr-o livră), iar Valentinian I și Valens au impus, după 366, ca aurul strâns din taxe să fie topit în lingouri de puritate garantată, sub controlul lui comes sacrarum largitionum. Tributul cerut de Attila lovea deci direct autoritatea și prestigiul imperial, nu doar vistieria.</p><p class="r9n-src">Sursa: Codex Theodosianus 12.6.12–13</p></aside>
       </div>
 
       <!-- aur:start -->
@@ -4211,34 +4339,38 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
       <div class="duel dk">
         <article class="duel-card attila dk-card">
           <figure class="dc-img"><img class="img-parchment" id="img-attila" src="media/d7faf17b3d03.webp" alt="Miniatură medievală: Attila cu coroană și sabie, într-o inițială decorată." loading="lazy"><figcaption>Attila în <i>Cronica pictată de la Viena</i> (c. 1360): o imagine medievală, nu un portret. Domeniu public.</figcaption></figure>
-          <p class="dc-role">Regele hunilor</p>
-          <h3>Attila</h3>
-          <p class="dc-epithet">„Flagellum Dei”, Biciul lui Dumnezeu<sup class="fn" data-n="15">15</sup></p>
-          <p class="dk-label">Fapte-cheie</p>
-          <div class="r9-facts">
-<ul class="dk-facts">
-            <li>Conduce imperiul hunic singur din 445 d.Hr., după înlăturarea fratelui său, Bleda.</li>
-            <li>Devastează Balcanii (441–447) și obține tribut anual uriaș de la Constantinopol.</li>
-            <li>Invadează Galia (451) și Italia (452); moare în 453, în noaptea nunții cu Ildico.</li>
-          </ul>
-          <aside class="r9-note r9-in r9-side" aria-label="Știai că…? Sabia lui Marte"><p class="r9n-tag">Știai că…?</p><p class="r9n-title">„Sabia lui Marte”</p><p class="r9n-text">Mormintele princiare, ca cel de la Jakuszowice, păstrează săbii lungi cu mânerul placat cu aur și granate, adevărate însemne de rang. Iar Iordanes (Getica, 183, după Priscus) povestește că Attila își sprijinea autoritatea pe „sabia lui Marte”, găsită de un păstor: sabia era și simbol al puterii, nu doar armă.</p><p class="r9n-src">Sursa: Iordanes, Getica 183; Godłowski 1991 (Jakuszowice)</p></aside>
-</div>
+          <div class="dk-profile">
+            <p class="dc-role">Regele hunilor</p>
+            <h3>Attila</h3>
+            <p class="dc-epithet">„Flagellum Dei”, Biciul lui Dumnezeu<sup class="fn" data-n="15">15</sup></p>
+            <p class="dk-label">Fapte-cheie</p>
+            <ul class="dk-facts">
+              <li>Conduce imperiul hunic singur din 445 d.Hr., după înlăturarea fratelui său, Bleda.</li>
+              <li>Devastează Balcanii (441–447) și obține tribut anual uriaș de la Constantinopol.</li>
+              <li>Invadează Galia (451) și Italia (452); moare în 453, în noaptea nunții cu Ildico.</li>
+            </ul>
+          </div>
         </article>
         <article class="duel-card aetius dk-card">
           <figure class="dc-img"><img class="img-parchment" id="img-catalaunice" src="media/9e6d0b25e4ea.jpg" alt="Miniatură medievală: două armate de cavaleri se ciocnesc călare." loading="lazy"><figcaption>Bătălia de la Câmpiile Catalaunice în <i>Spieghel Historiael</i> al lui Jacob van Maerlant (c. 1330). Domeniu public.</figcaption></figure>
-          <p class="dc-role">Generalul roman</p>
-          <h3>Flavius Aetius</h3>
-          <p class="dc-epithet">„Ultimul dintre romani”<sup class="fn" data-n="16">16</sup></p>
-          <p class="dk-label">Fapte-cheie</p>
-          <ul class="dk-facts">
-            <li>În tinerețe a fost ostatic la curtea hunilor, așa că știa lumea hunică din interior, un avantaj rar printre romanii vremii.</li>
-            <li>Formează, în 451, coaliția care îl oprește pe Attila la Câmpiile Catalaunice, cu romani, vizigoți, franci, burgunzi și alani.</li>
-            <li>Este ucis chiar de împăratul Valentinian III, în 454, la trei ani după victoria sa cea mai mare.</li>
-          </ul>
+          <div class="dk-profile">
+            <p class="dc-role">Generalul roman</p>
+            <h3>Flavius Aetius</h3>
+            <p class="dc-epithet">„Ultimul dintre romani”<sup class="fn" data-n="16">16</sup></p>
+            <p class="dk-label">Fapte-cheie</p>
+            <ul class="dk-facts">
+              <li>În tinerețe a fost ostatic la curtea hunilor, așa că știa lumea hunică din interior, un avantaj rar printre romanii vremii.</li>
+              <li>Formează, în 451, coaliția care îl oprește pe Attila la Câmpiile Catalaunice, cu romani, vizigoți, franci, burgunzi și alani.</li>
+              <li>Este ucis chiar de împăratul Valentinian III, în 454, la trei ani după victoria sa cea mai mare.</li>
+            </ul>
+          </div>
         </article>
       </div>
 
-      <div class="duel-lives" role="img" aria-label="Viețile lor, alături: Aetius, c. 391–454; Attila, c. 406–453. S-au înfruntat la Câmpiile Catalaunice, în 451."><div class="dl-row aetius"><b>Aetius</b><span class="dl-track"><i style="left:4.41%;width:calc(97.06% - 4.41%)"></i></span><em>c. 391–454</em></div><div class="dl-row attila"><b>Attila</b><span class="dl-track"><i style="left:26.47%;width:calc(95.59% - 26.47%)"></i><i class="r" style="left:67.65%;width:calc(95.59% - 67.65%)"></i></span><em>c. 406–453</em></div><div class="dl-axis"><span class="dl-track"><small style="left:17.65%">400</small><small style="left:47.06%">420</small><small style="left:76.47%">440</small><span class="dl-451" style="left:92.65%"><small>451 · Câmpiile Catalaunice</small></span></span></div><p class="dl-key"><span class="k1"></span>viața <span class="k2"></span>domnia lui Attila (434–453)</p></div>
+      <div class="duel-context">
+        <div class="duel-lives" role="img" aria-label="Viețile lor, alături: Aetius, c. 391–454; Attila, c. 406–453. S-au înfruntat la Câmpiile Catalaunice, în 451."><div class="dl-row aetius"><b>Aetius</b><span class="dl-track"><i style="left:4.41%;width:calc(97.06% - 4.41%)"></i></span><em>c. 391–454</em></div><div class="dl-row attila"><b>Attila</b><span class="dl-track"><i style="left:26.47%;width:calc(95.59% - 26.47%)"></i><i class="r" style="left:67.65%;width:calc(95.59% - 67.65%)"></i></span><em>c. 406–453</em></div><div class="dl-axis"><span class="dl-track"><small style="left:17.65%">400</small><small style="left:47.06%">420</small><small style="left:76.47%">440</small><span class="dl-451" style="left:92.65%"><small>451 · Câmpiile Catalaunice</small></span></span></div><p class="dl-key"><span class="k1"></span>viața <span class="k2"></span>domnia lui Attila (434–453)</p></div>
+        <aside class="r9-note r9-in r9-side" aria-label="Știai că…? Sabia lui Marte"><p class="r9n-tag">Știai că…?</p><p class="r9n-title">„Sabia lui Marte”</p><p class="r9n-text">Mormintele princiare, ca cel de la Jakuszowice, păstrează săbii lungi cu mânerul placat cu aur și granate, adevărate însemne de rang. Iar Iordanes (Getica, 183, după Priscus) povestește că Attila își sprijinea autoritatea pe „sabia lui Marte”, găsită de un păstor: sabia era și simbol al puterii, nu doar armă.</p><p class="r9n-src">Sursa: Iordanes, Getica 183; Godłowski 1991 (Jakuszowice)</p></aside>
+      </div>
       <!-- pq:start --><figure class="pq"><blockquote><p>O luptă cumplită, schimbătoare, crudă și îndârjită, cum n-a mai povestit nimeni din vechime.</p></blockquote><figcaption><b>Iordanes</b>, Getica 207, despre Câmpiile Catalaunice (451) · traducere adaptată</figcaption></figure><!-- pq:end -->
 
       <div class="sr-row sr-reveal">
@@ -9373,12 +9505,11 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
   // imaginea mică alternează, o dată la stânga, o dată la dreapta
   var D = window.R12 || {}, n = 0;
   function src(sel){ var el = document.querySelector(sel); return el ? (el.getAttribute('src') || el.currentSrc || '') : ''; }
-  function card(k, title, first){
+  function card(k){
     var m = D[k]; if (!m) return '';
     var flip = n++ % 2 === 1, im = src(m.img);
     var fig = im ? '<figure class="vd-fig"><img src="' + im + '" alt="" loading="lazy"' + (m.pos ? ' style="object-position:' + m.pos + '"' : '') + '><figcaption>' + m.cap + '</figcaption></figure>' : '';
     return '<article class="vd' + (flip ? ' vd-flip' : '') + (im ? '' : ' vd-noimg') + '" aria-label="Mit verificat">' +
-      (first ? '<p class="vd-head"><i aria-hidden="true"></i>' + title + '</p>' : '') +
       '<div class="vd-body">' + fig +
         '<div class="vd-text">' +
           '<p class="vd-k">Se spune că</p>' +
@@ -9393,7 +9524,8 @@ window.R12 = {"0":{"myth":"Hunii erau un popor unitar, de origine exclusiv est-a
     n = 0;
     Array.prototype.forEach.call(document.querySelectorAll('.vd-group[data-myths]'), function(g){
       var t = g.getAttribute('data-title');
-      g.innerHTML = g.getAttribute('data-myths').split(',').map(function(k, i){ return card(k, t, i === 0); }).join('');
+      g.innerHTML = '<h3 class="vd-head"><i aria-hidden="true"></i>' + t + '</h3>' +
+        g.getAttribute('data-myths').split(',').map(card).join('');
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', draw); else draw();
