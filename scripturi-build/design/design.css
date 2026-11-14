@@ -249,6 +249,130 @@
   #page-acasa .vd-head{ font: 600 var(--fs-20)/1.3 'EB Garamond', Georgia, serif; color: var(--ink); }
   #page-acasa .vd-head i{ background: var(--garnet); }
 
+  /* ---------- portretele și faptele-cheie ---------- */
+  #page-acasa .duel.dk .duel-card{
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-areas: 'img profile';
+    align-items: start;
+    gap: var(--sp-24);
+  }
+  #page-acasa .duel.dk .dc-img{ grid-area: img; display: block; margin: 0; }
+  #page-acasa .duel.dk .dc-img figcaption{ margin: var(--sp-8) 0 0; }
+  #page-acasa .duel.dk .dk-profile{ grid-area: profile; min-width: 0; }
+  #page-acasa .duel.dk .dk-profile h3{
+    font-size: clamp(1.75rem, 3vw, 2.25rem) !important;
+    margin: 0 0 4px;
+  }
+  #page-acasa .duel.dk .dk-label{ margin-top: var(--sp-8); padding-top: var(--sp-8); }
+  #page-acasa .duel.dk .dk-facts li{ font-size: var(--fs-15); color: var(--ink); }
+  #page-acasa .duel-context, #page-acasa .gold-context{
+    display: grid;
+    align-items: start;
+    column-gap: var(--sp-40);
+    row-gap: var(--sp-24);
+    margin-block: var(--sp-24) var(--sp-40);
+  }
+  #page-acasa .duel-context{
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    padding-block-start: var(--sp-24);
+    border-top: 1px solid var(--line);
+  }
+  #page-acasa .duel-context .duel-lives{ max-width: none; margin: 0; padding-block: 0; border: 0; }
+  #page-acasa .page-shell :is(.duel-context, .gold-context) .r9-note{
+    float: none;
+    grid-column: auto;
+    width: auto;
+    max-width: none;
+    margin: 0;
+  }
+
+  /* ---------- solidul și explicația greutății lui ---------- */
+  #page-acasa .gold-context{
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+  }
+  #page-acasa .gold-context .sr-fig-inline{
+    grid-template-columns: clamp(104px, 12vw, 164px) minmax(0, 1fr);
+    gap: var(--sp-16);
+    margin: 0;
+  }
+  #page-acasa .gold-context .r9n-num, #page-acasa .gold-context .r9n-unit{
+    display: inline-block;
+    vertical-align: baseline;
+  }
+  #page-acasa .page-shell .gold-context .r9-note .r9n-unit{ margin-inline-start: var(--sp-8); }
+  #page-acasa .gold-context + .gs{ margin-block-start: var(--sp-24); }
+
+  /* ---------- harta și izvoarele din capitolul despre origini ---------- */
+  #sec-origini .diagram.ptol-map{
+    max-width: none;
+    margin: var(--sp-24) 0;
+  }
+  #sec-origini .ptol-map figcaption{
+    padding-inline: 0;
+    border: 0;
+    background: transparent;
+  }
+  #sec-origini .margus-context{
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: var(--sp-16) clamp(24px, 3vw, var(--sp-40));
+    align-items: center;
+    margin-block: var(--sp-24);
+  }
+  #sec-origini .margus-context .pq{ max-width: none; margin: 0; }
+  #page-acasa #sec-origini .margus-context .r9-note{
+    float: none;
+    max-width: none;
+    width: auto;
+    margin: 0;
+  }
+  #sec-origini .margus-context + .src-compare{ margin-block-start: var(--sp-24); }
+  #page-acasa #sec-origini .src-compare .sub-title{ margin-block-start: 0; }
+  @media (max-width: 760px){
+    #sec-origini .margus-context{ grid-template-columns: minmax(0, 1fr); }
+  }
+
+  /* ---------- grupurile de mituri ---------- */
+  #page-acasa .vd-group{ border-block: 1px solid var(--line); }
+  #page-acasa .vd-group .vd-head{ grid-column: 1 / -1; margin: var(--sp-16) 0 0; }
+  #page-acasa .vd-group .vd{ border: 0; }
+  #page-acasa .vd-group .vd + .vd{ border-top: 1px solid var(--line); }
+  @media (min-width: 820px){
+    #page-acasa .vd-group:has(> .vd:nth-of-type(2):last-child){
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--sp-40);
+    }
+    #page-acasa .vd-group:has(> .vd:nth-of-type(2):last-child) .vd + .vd{ border-top: 0; }
+  }
+  @media (min-width: 960px){
+    #page-acasa .vd-group:has(> .vd:nth-of-type(3):last-child){
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: clamp(24px, 2.8vw, var(--sp-40));
+    }
+    #page-acasa .vd-group:has(> .vd:nth-of-type(3):last-child) .vd + .vd{ border-top: 0; }
+  }
+  @media (max-width: 1023px){
+    #page-acasa .duel.dk{ grid-template-columns: minmax(0, 1fr); }
+    #page-acasa .duel.dk .duel-card{ grid-template-columns: minmax(0, 190px) minmax(0, 1fr); }
+  }
+  @media (max-width: 860px){
+    #page-acasa .duel-context, #page-acasa .gold-context{ grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 520px){
+    #page-acasa .duel.dk .duel-card{ grid-template-columns: minmax(0, 1fr); grid-template-areas: 'img' 'profile'; gap: var(--sp-16); }
+    #page-acasa .duel.dk .dc-img{
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      align-items: start;
+      gap: var(--sp-16);
+    }
+    #page-acasa .duel.dk .dc-img :is(img, figcaption){ grid-area: auto; margin: 0; }
+    #page-acasa .gold-context .sr-fig-inline{ grid-template-columns: 96px minmax(0, 1fr); }
+  }
+
   /* ---------- mărimile rămase în afara scării ---------- */
   #page-acasa .domino-list li, #page-acasa .cascade .cs-step, #page-acasa .gl-row dd, #page-acasa .gl-row dt, #page-acasa .gl{ font-size: var(--fs-17); line-height: 1.6; }
   html body #page-acasa .gs .gs-step h3{ font: 600 var(--fs-26)/1.2 'EB Garamond', Georgia, serif !important; }
