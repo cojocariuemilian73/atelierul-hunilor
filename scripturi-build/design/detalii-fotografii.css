@@ -1,0 +1,116 @@
+/* Punctele sunt ancorate de suprafața fotografiei, nu de legendă. */
+.photo-points{
+  position: relative;
+  isolation: isolate;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.photo-points img{
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+.sr-fig .photo-points img,
+#page-acasa .page-shell .photo-points img{
+  border: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  max-height: none;
+  object-fit: contain;
+}
+.photo-point{
+  position: absolute;
+  z-index: 1;
+  left: var(--point-x);
+  top: var(--point-y);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  translate: -50% -50%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.photo-point::after{
+  content: '';
+  width: 13px;
+  height: 13px;
+  border: 2px solid #fff4de;
+  border-radius: 50%;
+  background: #912c26;
+  box-shadow: 0 0 0 1px #541911;
+}
+.photo-point:is(:hover,:focus-visible){ z-index: 2; }
+.photo-point:is(:hover,:focus-visible)::after{ background: #b33e31; }
+.photo-point:focus-visible{ outline: 2px solid #fff4de; outline-offset: -4px; }
+.page-shell .sr-row.cap-over .sr-fig:has(.photo-points) figcaption{
+  position: static;
+  padding: 0;
+  margin-top: 8px;
+  background: transparent;
+}
+.photo-hint{
+  display: block;
+  margin-top: 6px;
+  color: #772c22;
+  font-style: normal;
+  font-weight: 600;
+}
+.photo-evidence{
+  margin: 24px auto;
+  max-width: 530px;
+}
+.photo-evidence .photo-points{ max-width: min(100%, 400px); }
+.photo-evidence #img-arc{ max-width: 290px; }
+.photo-evidence #img-apahida{ max-width: 175px; }
+.photo-evidence figcaption{ margin-top: 10px; line-height: 1.5; }
+.photo-evidence figcaption small{ display: block; margin-top: 5px; }
+.photo-evidence-pair{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 40px;
+  margin-block: 24px;
+  align-items: start;
+}
+.photo-evidence-pair .photo-evidence{ width: 100%; margin-block: 0; }
+.photo-detail{
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(480px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  padding: 17px 22px 22px;
+  border: 1px solid #a98e62;
+  border-block-start: 3px solid #792c22;
+  background: #f4ead7;
+  color: #2b1d12;
+}
+.photo-detail::backdrop{ background: #2f251b8c; }
+.photo-detail form{ display: flex; justify-content: end; margin: 0 0 8px; }
+.photo-detail button{
+  min-height: 44px;
+  padding: 7px 12px;
+  border: 1px solid #ae9069;
+  background: transparent;
+  color: #792c22;
+  font: inherit;
+  cursor: pointer;
+}
+.photo-detail button:focus-visible{ outline: 2px solid #792c22; outline-offset: 2px; }
+.photo-detail h2{ margin: 0 0 8px; font: 600 clamp(1.45rem,4vw,2rem)/1.1 'EB Garamond',Georgia,serif; }
+.photo-detail p{ margin: 0; line-height: 1.55; }
+@media(max-width: 630px){
+  .photo-evidence-pair{ grid-template-columns: minmax(0, 1fr); }
+  .sr-media .sr-fig + .sr-fig:has(.photo-points){ display: block; }
+  #page-acasa .gold-context .sr-fig-inline:has(.photo-points){
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #page-acasa .gold-context .sr-fig-inline .photo-points{ width: min(65%, 172px); margin-inline: 0; }
+}
+@media print{.photo-point,.photo-hint,.photo-detail{ display: none !important; }}

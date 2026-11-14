@@ -1,4 +1,4 @@
-// Regenerates all five standalone pages in module-individuale/ from the same
+// Regenerates standalone pages in module-individuale/ from the same
 // build/ sources as the combined page, so they can never drift from it again
 // (three of them were still the very first version of the project).
 // Run after assemble.js:  node scripturi-build/build-standalone.js
@@ -12,10 +12,9 @@ const MODULES = [
   { mod: 'game',    file: 'huni-migratia.html',   title: 'Campania Hunilor' },
   { mod: 'embassy', file: 'solia-la-attila.html', title: 'Solia la Attila' },
   { mod: 'atlas',   file: 'atlas-hunic.html',     title: 'Atlasul Migrației Hunice' },
-  { mod: 'lab',     file: 'laborator-muzeu.html', title: 'Muzeul Hunilor' },
 ];
 // In a standalone page, links to other modules point to their standalone files.
-const LINKS = { '#mod-game': 'huni-migratia.html', '#mod-embassy': 'solia-la-attila.html', '#mod-atlas': 'atlas-hunic.html', '#mod-lab': 'laborator-muzeu.html', '#page-acasa': 'huni-prezentare.html' };
+const LINKS = { '#mod-game': 'huni-migratia.html', '#mod-embassy': 'solia-la-attila.html', '#mod-atlas': 'atlas-hunic.html', '#mod-lab': 'huni-prezentare.html#sec-personalitati', '#page-acasa': 'huni-prezentare.html' };
 
 for (const m of MODULES) {
   let css = fs.readFileSync(path.join(B, m.mod + '.css'), 'utf8');
