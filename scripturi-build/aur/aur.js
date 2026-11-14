@@ -28,7 +28,7 @@
 
   // pașii: butoane cu anii, deasupra textului
   var steps = list('.gs-step');
-  var LAB = ['Începutul', 'c. 422', '435', '447', '450', 'În monede'];
+  var LAB = ['Începutul', 'c. 422', 'anii 430', '443 / 447', '450', 'În monede'];
   var nav = document.createElement('div');
   nav.className = 'gs-nav'; nav.setAttribute('role', 'group'); nav.setAttribute('aria-label', 'Pașii graficului');
   nav.innerHTML = steps.map(function(st, k){ return '<button type="button" data-s="' + st.getAttribute('data-s') + '" aria-pressed="false">' + (LAB[k] || st.getAttribute('data-s')) + '</button>'; }).join('');

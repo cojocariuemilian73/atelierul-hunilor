@@ -1,0 +1,31 @@
+#page-acasa .hx-era b{ white-space: normal; overflow: visible; }
+#page-acasa .time-slider{ height: 36px; }
+#page-acasa .time-slider::-webkit-slider-thumb{ width: 28px; height: 28px; }
+#page-acasa .time-slider::-moz-range-thumb{ width: 28px; height: 28px; }
+
+#page-acasa .m-lab .hotspot::after{
+  content: '';
+  position: absolute;
+  inset: -13px;
+  border-radius: 50%;
+}
+#page-acasa .m-lab .hs-popover{
+  box-sizing: border-box;
+  max-width: min(260px, calc(100vw - 32px));
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+}
+
+.skip-to-main{
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  transform: translateY(calc(-100% - 8px));
+}
+.skip-to-main:focus{
+  transform: none;
+  padding: 8px 12px;
+  color: #2b1d12;
+  background: #f3ead7;
+}

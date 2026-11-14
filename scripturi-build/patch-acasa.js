@@ -50,7 +50,7 @@ if (c0 >= 0) {
 }
 // capitolele, fără numere; Glosarul și Bibliografia sunt un singur item, „Surse” (activ în ambele)
 const CH = [['sec-origini', 'Origini'], ['sec-cronologie', 'Cronologie'], ['sec-migratie', 'Marea Migrație'], ['sec-atlas', 'Atlas'],
-  ['sec-personalitati', 'Personalități'], ['sec-muzeu', 'Muzeu'], ['sec-glosar', 'Surse', 'biblio']];
+  ['sec-personalitati', 'Personalități'], ['sec-muzeu', 'Muzeu'], ['biblio', 'Surse', 'sec-glosar']];
 CH.forEach(c => { if (!s.includes('id="' + c[0] + '"')) fail('capitolul ' + c[0]); });
 const chapLinks = CH.map(c => '<a href="#' + c[0] + '" data-sec="' + c[0] + '"' + (c[2] ? ' data-also="' + c[2] + '"' : '') + ' class="toc-link">' + c[1] + '</a>');
 const NAV = `<nav class="site-nav" id="site-nav" aria-label="Navigare principală">
