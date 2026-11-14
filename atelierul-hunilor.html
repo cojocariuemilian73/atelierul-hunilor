@@ -3901,10 +3901,12 @@
     --fresca-x: 55%;
     --fresca-y: 0%;
     --fresca-edge: clamp(45px, 14vw, 240px);
+    --fresca-row: clamp(345px, 60svh, 650px);
+    --fresca-height: max(var(--fresca-row), calc(min(100vw, 1740px) * 700 / 1310));
     isolation: isolate;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(clamp(345px, 60svh, 650px), auto) auto;
+    grid-template-rows: minmax(var(--fresca-row), auto) auto;
     align-items: stretch;
     width: min(100%, 1740px) !important;
     margin: 0 auto !important;
@@ -3954,10 +3956,10 @@
       translate: calc(-1 * var(--fresca-x)) calc(-1 * var(--fresca-y));
     }
     #page-acasa .hero-foreground .hero-img{
-      /* Decupajul urmărește coifurile. Se pierde înainte să ajungă la marginile scenei. */
+      /* Siluetele călăreților acoperă baza titlului și se pierd treptat în frescă. */
       mask-image:
-        linear-gradient(90deg, transparent 34%, #000 39%, #000 59%, transparent 67%),
-        linear-gradient(180deg, #000 36%, transparent 44%);
+        linear-gradient(90deg, transparent 33%, #000 38%, #000 61%, transparent 68%),
+        linear-gradient(180deg, #000 39%, transparent 48%);
       mask-composite: intersect;
       clip-path: polygon(0% 51.14%, 33.05% 44%, 36.49% 40.29%, 38.4% 30.57%, 39.08% 28.71%, 39.85% 27.29%, 40.69% 26.86%, 40.99% 25.14%, 40.99% 23.57%, 41.6% 21.29%, 41.91% 21.57%, 42.37% 20.43%, 42.75% 22.57%, 42.6% 25%, 43.51% 26.29%, 43.44% 27.43%, 43.82% 27.71%, 44.27% 26%, 45.11% 25.71%, 45.88% 26.43%, 46.49% 29.71%, 47.02% 30.29%, 48.02% 30%, 48.17% 28.43%, 48.63% 26.57%, 49.16% 25.43%, 50% 25.14%, 51.07% 23.57%, 51.98% 24.14%, 51.68% 25.43%, 52.44% 25.43%, 51.6% 27.14%, 51.07% 29.29%, 52.29% 30.71%, 53.51% 31.86%, 54.35% 31.29%, 55.04% 29%, 55.34% 27.43%, 55.88% 27.14%, 56.87% 28.71%, 56.95% 31%, 58.32% 34%, 59.69% 34.29%, 61.68% 34.86%, 64.73% 35.29%, 68.32% 37.29%, 73.74% 47.14%, 100% 57.71%, 100% 100%, 0% 100%);
     }
@@ -3972,7 +3974,8 @@
     align-self: start;
     z-index: 2;
     max-width: none;
-    margin: clamp(48px, 7.8svh, 84px) clamp(12px, 4vw, 56px) 0;
+    /* Ancorăm titlul de înălțimea frescei și când imaginea se decupează. */
+    margin: calc(var(--fresca-height) * .175 - .4em) clamp(12px, 4vw, 56px) 0;
     padding: 0;
     font: 600 clamp(3rem, min(9vw, 13svh), 9rem)/.89 'EB Garamond', Georgia, serif !important;
     letter-spacing: -.035em;
@@ -4024,11 +4027,12 @@
       grid-template-rows: minmax(clamp(325px, 56svh, 435px), auto) auto;
     }
     html body #page-acasa #acasa .title{
-      margin-top: clamp(38px, 7.7svh, 66px);
+      margin-top: clamp(42px, 8.15svh, 69px);
       margin-inline: 12px;
       font-size: clamp(1.65rem, 9.25vw, 3.1rem) !important;
     }
     #page-acasa .hero-title-prefix{ font-size: .64em; }
+    #page-acasa .hero-foreground{ opacity: .86; }
   }
 
   @media (prefers-reduced-motion: no-preference){
