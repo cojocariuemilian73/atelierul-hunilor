@@ -187,12 +187,11 @@
     align-self: start;
     z-index: 2;
     max-width: none;
-    margin: clamp(30px, 4.9svh, 54px) clamp(12px, 4vw, 56px) 0;
+    margin: clamp(36px, 5.8svh, 64px) clamp(12px, 4vw, 56px) 0;
     padding: 0;
     font: 600 clamp(3rem, min(9vw, 13svh), 9rem)/.89 'EB Garamond', Georgia, serif !important;
     letter-spacing: -.035em;
     text-align: center;
-    text-wrap: balance;
     color: #fff4de !important;
     text-shadow: 0 3px 18px #24180fc2;
   }
@@ -202,6 +201,10 @@
     font-size: .43em;
     letter-spacing: -.022em;
     line-height: 1;
+  }
+  #page-acasa .hero-title-main{
+    display: block;
+    white-space: nowrap;
   }
   #page-acasa .hero-end{
     grid-area: 2 / 1;
@@ -239,7 +242,6 @@
       margin-top: clamp(32px, 6.6svh, 59px);
       margin-inline: 12px;
       font-size: clamp(1.65rem, 9.25vw, 3.1rem) !important;
-      white-space: nowrap;
     }
     #page-acasa .hero-title-prefix{ font-size: .64em; }
   }
