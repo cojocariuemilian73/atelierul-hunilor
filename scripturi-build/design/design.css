@@ -171,8 +171,8 @@
     #page-acasa .hero-foreground .hero-img{
       /* Decupajul urmărește coifurile. Se pierde înainte să ajungă la marginile scenei. */
       mask-image:
-        linear-gradient(90deg, transparent 36%, #000 40%, #000 56%, transparent 61%),
-        linear-gradient(180deg, #000 33%, transparent 49%);
+        linear-gradient(90deg, transparent 34%, #000 39%, #000 59%, transparent 67%),
+        linear-gradient(180deg, #000 36%, transparent 44%);
       mask-composite: intersect;
       clip-path: polygon(0% 51.14%, 33.05% 44%, 36.49% 40.29%, 38.4% 30.57%, 39.08% 28.71%, 39.85% 27.29%, 40.69% 26.86%, 40.99% 25.14%, 40.99% 23.57%, 41.6% 21.29%, 41.91% 21.57%, 42.37% 20.43%, 42.75% 22.57%, 42.6% 25%, 43.51% 26.29%, 43.44% 27.43%, 43.82% 27.71%, 44.27% 26%, 45.11% 25.71%, 45.88% 26.43%, 46.49% 29.71%, 47.02% 30.29%, 48.02% 30%, 48.17% 28.43%, 48.63% 26.57%, 49.16% 25.43%, 50% 25.14%, 51.07% 23.57%, 51.98% 24.14%, 51.68% 25.43%, 52.44% 25.43%, 51.6% 27.14%, 51.07% 29.29%, 52.29% 30.71%, 53.51% 31.86%, 54.35% 31.29%, 55.04% 29%, 55.34% 27.43%, 55.88% 27.14%, 56.87% 28.71%, 56.95% 31%, 58.32% 34%, 59.69% 34.29%, 61.68% 34.86%, 64.73% 35.29%, 68.32% 37.29%, 73.74% 47.14%, 100% 57.71%, 100% 100%, 0% 100%);
     }
@@ -187,7 +187,7 @@
     align-self: start;
     z-index: 2;
     max-width: none;
-    margin: clamp(36px, 5.8svh, 64px) clamp(12px, 4vw, 56px) 0;
+    margin: clamp(48px, 7.8svh, 84px) clamp(12px, 4vw, 56px) 0;
     padding: 0;
     font: 600 clamp(3rem, min(9vw, 13svh), 9rem)/.89 'EB Garamond', Georgia, serif !important;
     letter-spacing: -.035em;
@@ -239,7 +239,7 @@
       grid-template-rows: minmax(clamp(325px, 56svh, 435px), auto) auto;
     }
     html body #page-acasa #acasa .title{
-      margin-top: clamp(32px, 6.6svh, 59px);
+      margin-top: clamp(38px, 7.7svh, 66px);
       margin-inline: 12px;
       font-size: clamp(1.65rem, 9.25vw, 3.1rem) !important;
     }
@@ -430,6 +430,98 @@
     }
     #page-acasa .vd-group:has(> .vd:nth-of-type(3):last-child) .vd + .vd{ border-top: 0; }
   }
+  #page-acasa .vd-group.vd-research{
+    padding: var(--sp-24) 0 var(--sp-16);
+    border-top: 0;
+  }
+  #page-acasa .vd-research-head{
+    margin: 0;
+    padding-bottom: var(--sp-16);
+    border-bottom: 1px solid var(--line);
+    font: 600 clamp(1.8rem, 3.1vw, 2.65rem)/1.05 'EB Garamond', Georgia, serif;
+    letter-spacing: -.02em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  #page-acasa .vd-research-head::before{
+    display: block;
+    width: 40px;
+    height: 2px;
+    margin-bottom: var(--sp-16);
+    background: var(--garnet);
+    content: '';
+  }
+  #page-acasa .vd-research-grid{
+    display: grid;
+    gap: var(--sp-24) clamp(24px, 2.8vw, var(--sp-40));
+    margin-top: var(--sp-24);
+  }
+  #page-acasa .vd-research-card{
+    display: grid;
+    align-content: start;
+    row-gap: 12px;
+    min-width: 0;
+  }
+  #page-acasa .vd-research-card :is(h4, p, figure){ margin: 0; }
+  html #page-acasa .page-shell .vd-research .vd-research-fig img{
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.92;
+    object-fit: cover;
+    border: 0 !important;
+    padding: 0;
+    background: transparent;
+  }
+  #page-acasa .vd-research-fig figcaption{
+    margin-top: var(--sp-8);
+    font: 400 var(--fs-13)/1.35 'Source Serif 4', Georgia, serif;
+    color: var(--ink-2);
+  }
+  #page-acasa .vd-research-card h4{
+    align-self: start;
+    font: 600 clamp(1.55rem, 2.4vw, 2.15rem)/1.06 'EB Garamond', Georgia, serif;
+    letter-spacing: -.02em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  #page-acasa .vd-research-answer{ font-size: var(--fs-17); line-height: 1.58; }
+  #page-acasa .vd-research-answer b{ color: var(--garnet); }
+  #page-acasa :is(.vd-research-myth, .vd-evidence p){ color: var(--ink-2); font-size: var(--fs-15); line-height: 1.5; }
+  #page-acasa .vd-research-myth s{ text-decoration-color: var(--garnet); }
+  #page-acasa .vd-evidence{ align-self: start; border-top: 1px solid var(--line); }
+  #page-acasa .vd-evidence summary{
+    width: fit-content;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--garnet);
+    font-weight: 600;
+    list-style: none;
+    cursor: pointer;
+  }
+  #page-acasa .vd-evidence summary::-webkit-details-marker{ display: none; }
+  #page-acasa .vd-evidence summary::after{
+    width: 6px;
+    height: 6px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    rotate: 45deg;
+    translate: 0 -2px;
+    content: '';
+  }
+  #page-acasa .vd-evidence[open] summary::after{ rotate: 225deg; translate: 0 2px; }
+  #page-acasa .vd-evidence summary:focus-visible{ outline: 2px solid var(--garnet); outline-offset: 3px; }
+  #page-acasa .vd-evidence p + p{ margin-top: var(--sp-8); }
+  @media (min-width: 820px){
+    #page-acasa .vd-research-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #page-acasa .vd-research-card{ grid-row: span 5; grid-template-rows: subgrid; }
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #page-acasa .vd-evidence[open] > div{ animation: vd-evidence-in 180ms ease-out both; }
+    @keyframes vd-evidence-in { from{ opacity: .45; } }
+  }
+
   @media (max-width: 1023px){
     #page-acasa .duel.dk{ grid-template-columns: minmax(0, 1fr); }
     #page-acasa .duel.dk .duel-card{ grid-template-columns: minmax(0, 190px) minmax(0, 1fr); }
@@ -474,6 +566,7 @@
   #page-acasa .gs .gs-stop rect{ fill: var(--paper); stroke: var(--garnet); }
   #page-acasa .gs .gs-stop text{ fill: var(--garnet); }
   #page-acasa .gs .gs-stop .sm, #page-acasa .gs .gs-coins-lab{ fill: var(--ink); }
+
 
   /* Textul și fotografiile articolului sunt vizibile imediat. */
   #page-acasa .r7-rv, #page-acasa .r7-rv:not(.r7-in){ opacity: 1; transform: none; transition: none; }
