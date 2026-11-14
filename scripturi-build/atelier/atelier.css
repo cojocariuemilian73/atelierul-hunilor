@@ -471,3 +471,160 @@
   }
 
   .md-ms-band{ font-size: 0.8125rem; line-height: 1.2; padding: 4px 6px; }
+
+  /* Pe laptop, axa, toate sursele și răspunsurile rămân în același cadru. */
+  @media (min-width: 901px){
+    #mod-atelier{ padding-top: 10px; }
+    #mod-atelier .wrap.md{ padding: 0 clamp(20px, 3vw, 48px) 12px; }
+    #mod-atelier .md-head{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px 24px;
+      padding-bottom: 4px;
+      text-align: left;
+    }
+    #mod-atelier .md-title-row{ flex: none; gap: 12px; margin: 0; }
+    #mod-atelier .md-title{ font-size: clamp(1.55rem, 2.4vw, 2.15rem); }
+    #mod-atelier .md-sub{ margin: 0; max-width: 58ch; font-size: .875rem; line-height: 1.4; }
+    #mod-atelier .md-board:not(:has(.md-endw:not([hidden]))){
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      grid-template-rows: auto auto auto 1fr;
+      grid-template-areas: "axis axis" "progress progress" "sources inspect" "guide inspect";
+      gap: 6px 20px;
+      align-items: start;
+    }
+    #mod-atelier .md-board:not(:has(.md-endw:not([hidden]))) .md-desk{ display: contents; }
+    #mod-atelier .md-top{ grid-area: axis; min-width: 0; }
+    #mod-atelier .md-tl-head{ min-height: 32px; margin: 0 0 5px; }
+    #mod-atelier .md-back{ min-height: 32px; padding-block: 3px; }
+    #mod-atelier .md-tl{ height: calc(62px + var(--lanes) * 30px); min-height: 92px; }
+    #mod-atelier :is(.md-eras, .md-pins, .md-axis){ bottom: 31px; }
+    #mod-atelier .md-era{ padding-bottom: 16px; }
+    #mod-atelier .md-era.open{ padding-bottom: 8px; }
+    #mod-atelier .md-tick{ bottom: 25px; }
+    #mod-atelier .md-tick.edge{ bottom: 23px; }
+    #mod-atelier .md-tick.att{ bottom: 25px; }
+    #mod-atelier .md-tick em{ top: 11px; }
+    #mod-atelier .md-tick.edge em{ top: 15px; }
+    #mod-atelier .md-tick.att em{ top: auto; }
+    #mod-atelier .md-pin{
+      bottom: calc(8px + var(--lane) * 30px);
+      width: 30px;
+      height: 30px;
+      margin-left: -15px;
+    }
+    #mod-atelier .md-clu{ bottom: 8px; }
+    #mod-atelier .md-clu-pop .md-pin{ bottom: auto; margin: 0; }
+    #mod-atelier .md-top{ display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+    #mod-atelier .md-tl{ grid-column: 1 / -1; grid-row: 2; }
+    #mod-atelier .md-adjust{ grid-column: 2; grid-row: 1; margin: 0 0 5px 8px; }
+    #mod-atelier .md-adjust > button{ min-height: 34px; padding-block: 4px; }
+    #mod-atelier .md-adjust > button:not(.md-btn){ min-width: 36px; min-height: 34px; }
+    #mod-atelier .md-bar{ grid-area: progress; margin: 0; padding: 4px 0 0; border: 0; }
+    #mod-atelier .md-hint{ margin: 0; }
+    #mod-atelier .md-tray{
+      grid-area: sources;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      min-width: 0;
+      margin: 0;
+      padding: 10px;
+    }
+    #mod-atelier .md-tray .md-card{
+      height: clamp(49px, 8.8vh, 92px);
+      aspect-ratio: auto;
+      min-width: 0;
+      transform: none;
+    }
+    #mod-atelier .md-tray .md-card.sel{ outline: 2px solid #8a2a1f; outline-offset: 2px; }
+    #mod-atelier .md-tray .md-card:focus-visible{ outline-color: #7a5410; }
+    #mod-atelier .md-tray .md-paper{ padding: 4px; line-height: 1.1; }
+    #mod-atelier .md-tray .md-paper .md-book{ width: 25px; height: 19px; }
+    #mod-atelier .md-tray .md-paper.qt q{ padding: 0 2px; font-size: .72rem; -webkit-line-clamp: 3; }
+    #mod-atelier .md-tray .md-stamp{ max-width: 100%; white-space: normal; padding: 2px 3px; font-size: .6rem; color: #5a3025; border-color: #895944; background: #f5eddd; }
+    #mod-atelier #md-guide{
+      grid-area: guide;
+      grid-template-columns: 48px minmax(0, 1fr);
+      gap: 10px;
+      margin: 0;
+      padding: 8px 10px;
+    }
+    #mod-atelier #md-guide .md-g-pic{ width: 29px; height: 34px; margin-bottom: 2px; }
+    #mod-atelier #md-guide .md-g-who b{ font-size: .875rem; }
+    #mod-atelier #md-guide .md-g-who small{ display: none; }
+    #mod-atelier #md-guide .md-g-note{ margin-bottom: 3px; }
+    #mod-atelier #md-guide .md-g-t{ font-size: .94rem; line-height: 1.35; }
+    #mod-atelier #md-guide .md-g-act{ margin-top: 5px; }
+    #mod-atelier #md-guide .md-g-next{ min-height: 32px; padding: 4px 9px; font-size: .875rem; }
+    #mod-atelier .md-insp{
+      grid-area: inspect;
+      position: static;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      align-items: start;
+      min-height: 0;
+      max-height: none;
+      overflow: visible;
+    }
+    #mod-atelier .md-insp-empty{ grid-column: 1 / -1; padding: 25px 12px; }
+    #mod-atelier .md-zoom{
+      display: grid;
+      place-items: center;
+      align-self: stretch;
+      min-height: 124px;
+      max-height: clamp(160px, 36vh, 320px);
+    }
+    #mod-atelier .md-cursor{ bottom: 25px; }
+    #mod-atelier .md-cursor i{ width: 30px; height: 30px; bottom: 10px; }
+    #mod-atelier .md-zoom img{ width: auto; max-width: 100%; max-height: clamp(160px, 36vh, 320px); }
+    #mod-atelier .md-zoom.zoomed{ display: block; }
+    #mod-atelier .md-zoom.zoomed img{ width: 220%; max-width: none; max-height: none; }
+    #mod-atelier .md-ztip{ display: none; }
+    #mod-atelier .md-insp-paper{
+      max-height: clamp(155px, 40vh, 350px);
+      overflow: auto;
+      overscroll-behavior: contain;
+      padding: 10px;
+    }
+    #mod-atelier .md-insp-page{ flex: none; max-height: clamp(62px, 13vh, 130px); }
+    #mod-atelier .md-insp-paper :is(p, .md-ink){ font-size: .94rem; line-height: 1.4; }
+    #mod-atelier .md-insp-body{ min-width: 0; padding: 10px 12px; }
+    #mod-atelier .md-q{ font-size: 1rem; line-height: 1.3; }
+    #mod-atelier .md-how{ font-size: .875rem; line-height: 1.35; }
+    #mod-atelier .md-cls{ grid-template-columns: 1fr; gap: 4px; margin: 6px 0; }
+    #mod-atelier .md-cls button{ min-height: 40px; padding: 5px 8px; line-height: 1.2; }
+    #mod-atelier .md-cls button b{ font-size: .875rem; color: #492719; }
+    #mod-atelier .md-cls button span{ font-size: .78rem; }
+    #mod-atelier :is(.md-verdict, .md-clue){ margin-bottom: 6px; }
+    #mod-atelier .md-name span{ white-space: normal; }
+    #mod-atelier .md-insp-body #md-next{ padding: 5px 9px; min-height: 40px; }
+    #mod-atelier .md-endw:not([hidden]) ~ .md-desk .md-insp{ grid-template-columns: 1fr; }
+    #mod-atelier.active:not(:has(.md-endw:not([hidden]))) ~ .site-pager{ display: none; }
+  }
+
+  @media (min-width: 1160px){
+    #mod-atelier .md-cls{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 901px) and (max-height: 680px){
+    #mod-atelier .md-tray{ gap: 6px; padding: 7px; }
+    #mod-atelier .md-tray .md-card{ height: clamp(44px, 7.8vh, 55px); }
+    #mod-atelier #md-guide{ padding-block: 6px; }
+    #mod-atelier #md-guide .md-g-body{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 9px; }
+    #mod-atelier #md-guide .md-g-note{ grid-column: 1 / -1; margin: 0; }
+    #mod-atelier #md-guide .md-g-act{ display: grid; align-self: center; gap: 2px; margin: 0; }
+    #mod-atelier #md-guide .md-g-act:empty{ display: none; }
+    #mod-atelier #md-guide .md-g-n{ margin-inline: auto; }
+    #mod-atelier #md-guide .md-g-k{ margin-bottom: 2px; }
+    #mod-atelier #md-guide .md-g-t{ line-height: 1.3; }
+  }
+
+  @media (min-width: 901px) and (max-width: 1159px) and (max-height: 680px){
+    #mod-atelier .md-tl-head{ margin-bottom: 3px; }
+    #mod-atelier .md-tray .md-card{ height: 44px; }
+    #mod-atelier #md-guide{ grid-template-columns: 40px minmax(0, 1fr); gap: 6px; }
+    #mod-atelier #md-guide .md-g-next{ padding-inline: 5px; font-size: .8125rem; }
+    #mod-atelier #md-guide .md-g-t{ line-height: 1.25; }
+  }
