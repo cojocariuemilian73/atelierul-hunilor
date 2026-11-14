@@ -99,7 +99,7 @@
   var LAST = ERAS.length - 1;
   function grad(e){ return e.b <= YB ? 25 : 50; }
   var zoom = -1, kEra = 0, vert = false, zt = 0;
-  var mqV = window.matchMedia('(max-width: 767px)'), mqC = window.matchMedia('(pointer: coarse)'), mqR = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var mqV = window.matchMedia('(max-width: 767px)'), mqC = window.matchMedia('(pointer: coarse)'), mqR = window.matchMedia('(prefers-reduced-motion: reduce)'), mqDesk = window.matchMedia('(min-width: 901px)');
   function weights(){
     return ERAS.map(function(e, k){
       if (zoom < 0) return vert ? 1 : [1.25, 1, 1, 1, 1.1][k];
@@ -201,10 +201,10 @@
 
   function renderTray(){
     tray.innerHTML = items.map(function(it){
-      var p = placed[it.id] && placed[it.id].cls ? placed[it.id] : null, k = KIND[it.kind], r = rng(hash(it.id));
+      var p = placed[it.id], done = p && p.cls, k = KIND[it.kind], r = rng(hash(it.id));
       var lay = '--r:' + (r() * 8 - 4).toFixed(2) + 'deg;--dx:' + (r() * 8 - 4).toFixed(1) + 'px;--dy:' + (r() * 6 - 3).toFixed(1) + 'px';
-      return '<button type="button" role="listitem" style="' + lay + '" class="md-card' + (isPaper(it) ? ' txt' : '') + (p ? ' done' : '') + (sel === it.id ? ' sel' : '') + '" data-id="' + it.id + '" aria-pressed="' + (sel === it.id) + '" aria-label="' + esc(p ? it.name + ', așezată' : (it.qt ? 'Fragment de text, încă neașezat' : isPaper(it) ? (it.faceNote || 'Pagină de manuscris, încă neașezată') : it.imageLabel + ', încă neașezată')) + '">' +
-        cardFace(it) + (p ? '<span class="md-stamp" style="--c:' + k.c + '">' + k.stamp + '</span>' : '') + '</button>';
+      return '<button type="button" style="' + lay + '" class="md-card' + (isPaper(it) ? ' txt' : '') + (done ? ' done' : p ? ' pending' : '') + (sel === it.id ? ' sel' : '') + '" data-id="' + it.id + '" aria-pressed="' + (sel === it.id) + '" aria-label="' + esc(done ? it.name + ', așezată' : p ? 'Sursă așezată în ' + p.guess + ', de clasificat' : (it.qt ? 'Fragment de text, încă neașezat' : isPaper(it) ? (it.faceNote || 'Pagină de manuscris, încă neașezată') : it.imageLabel + ', încă neașezată')) + '">' +
+        cardFace(it) + (p ? '<span class="md-stamp" style="--c:' + (done ? k.c : '#895944') + '">' + (done ? k.stamp : 'De clasificat') + '</span>' : '') + '</button>';
     }).join('');
   }
 
@@ -240,15 +240,21 @@
       var dd = dist(p.guess, it), off = p.guess - it.year, offTxt = it.approximate && dd < 25 ? 'aproape de reperul de pe axă' : dd === 0 ? (it.y0 != null ? 'în interval' : 'exact') : dd <= 10 ? 'aproape exact' : (off > 0 ? 'cu ' + ani(dd) + ' prea târziu' : 'cu ' + ani(dd) + ' prea devreme');
       body = '<h3 class="md-name">' + esc(it.name) + ' <span>' + esc(it.label) + '</span></h3>' +
         '<p class="md-verdict" style="--c:' + k.c + '"><b>' + k.stamp + '</b>' + (p.cls === it.kind ? ' · tip corect +1' : ' · tu ai spus: ' + KIND[p.cls].stamp.toLowerCase()) + ' · ai ales ' + p.guess + ', ' + offTxt + (p.hint ? ' · indiciu −1' : '') + ' · <b>+' + gained(it, p) + '</b></p>' +
-        '<p class="md-clue md-clue-g">Citește mai jos ce spune Priscus despre ea.</p>';
+        '<p class="md-clue md-clue-g">Priscus îți povestește mai multe despre sursă.</p>';
       var next = nextFree(it.id);
       if (next) body += '<button class="md-btn" type="button" id="md-next">Următoarea sursă</button>';
     }
     insp.innerHTML = media + '<div class="md-insp-body">' + body + '</div>';
     if (it.kind !== 'txt') lens();
+    var paper = insp.querySelector('.md-insp-paper');
+    if (paper && paper.scrollHeight > paper.clientHeight) paper.tabIndex = 0;
     var zb = $('md-zbtn'); if (zb) zb.addEventListener('click', function(){ var z = $('md-zoom'), on = z.classList.toggle('zoomed'); zb.setAttribute('aria-pressed', on ? 'true' : 'false'); zb.querySelector('span').textContent = on ? 'Micșorează' : 'Mărește'; });
     var hb = $('md-hintb'); if (hb) hb.addEventListener('click', function(){ hintUsed[it.id] = true; inspect(it); });
-    var nb = $('md-next'); if (nb) nb.addEventListener('click', function(){ select(nextFree(it.id)); if (vert) insp.scrollIntoView({ behavior: mqR.matches ? 'auto' : 'smooth', block: 'start' }); });
+    var nb = $('md-next'); if (nb) nb.addEventListener('click', function(){
+      select(nextFree(it.id));
+      if (vert) insp.scrollIntoView({ behavior: mqR.matches ? 'auto' : 'smooth', block: 'start' });
+      else if (armedNow()) tl.focus({ preventScroll: true });
+    });
     var ta = $('md-to-axis'); if (ta) ta.addEventListener('click', function(){ root.querySelector('.md-top').scrollIntoView({ behavior: mqR.matches ? 'auto' : 'smooth', block: 'start' }); });
     Array.prototype.forEach.call(insp.querySelectorAll('.md-cls button'), function(b){
       b.addEventListener('click', function(){ classify(it.id, b.getAttribute('data-k')); });
@@ -322,7 +328,7 @@
 
   function nextFree(from){
     var ix = 0; for (var k = 0; k < items.length; k++) if (items[k].id === from) ix = k;
-    for (var j = 1; j <= items.length; j++) { var it = items[(ix + j) % items.length]; if (!placed[it.id]) return it.id; }
+    for (var j = 1; j <= items.length; j++) { var it = items[(ix + j) % items.length]; if (!placed[it.id] || !placed[it.id].cls) return it.id; }
     return null;
   }
 
@@ -335,7 +341,8 @@
       var r = img.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
       if (x < 0 || y < 0 || x > r.width || y > r.height) { L.hidden = true; return; }
       L.hidden = false;
-      L.style.left = x + 'px'; L.style.top = y + 'px';
+      var frame = box.getBoundingClientRect();
+      L.style.left = (e.clientX - frame.left) + 'px'; L.style.top = (e.clientY - frame.top) + 'px';
       L.style.backgroundImage = 'url("' + img.src + '")';
       L.style.backgroundSize = (r.width * Z) + 'px ' + (r.height * Z) + 'px';
       L.style.backgroundPosition = (-(x * Z - 70)) + 'px ' + (-(y * Z - 70)) + 'px';
@@ -445,7 +452,7 @@
     });
   }
   function renderPins(fresh){
-    var len = (vert ? tl.clientHeight : tl.clientWidth) || 800, size = vert ? 36 : (len < 500 ? 30 : 42), lanes = [];
+    var len = (vert ? tl.clientHeight : tl.clientWidth) || 800, size = vert ? 36 : (mqDesk.matches || len < 500 ? 30 : 42), lanes = [];
     var list = items.filter(function(it){ return placed[it.id] && placed[it.id].cls; }).sort(function(a, b){ return a.year - b.year; });
     // grupurile de cel puțin trei pini aproape unul de altul devin un singur cerc „×N”, care se desface la mouse sau la atingere
     var clu = {}, runs = [], cur = [];
@@ -483,7 +490,7 @@
     tl.style.setProperty('--lanes', maxLane + 1);
   }
 
-  // 13 puncte care se umplu, în ordinea în care așezi sursele, și scorul alături
+  // Punctele se umplu, în ordinea în care așezi sursele, și scorul alături
   function updateScore(g){
     var n = items.filter(function(x){ return placed[x.id] && placed[x.id].cls; }).length, el = $('md-score'), dots = $('md-dots');
     el.textContent = score + (score === 1 ? ' punct' : ' puncte');
@@ -576,18 +583,22 @@
     var c = e.target.closest('.md-card'); if (!c) return;
     if (drag && drag.moved) return;
     select(c.getAttribute('data-id'));
-    if (c.classList.contains('done')) return;
+    if (!armedNow()) return;
     // de la tastatură: după Enter pe carte, focusul trece pe axă
-    if (e.detail === 0) { tl.focus({ preventScroll: true }); tl.scrollIntoView({ block: 'nearest', behavior: 'auto' }); return; }
+    if (e.detail === 0) {
+      tl.focus({ preventScroll: true });
+      if (!mqDesk.matches) tl.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+      return;
+    }
     // pe ecrane înguste, dar cu axa orizontală, axa e deasupra mesei: urcăm la ea
-    if (!vert && window.matchMedia('(max-width: 900px)').matches) {
+    if (!vert && !mqDesk.matches) {
       var top = tl.getBoundingClientRect().top + window.pageYOffset - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 0) - 60;
       window.scrollTo({ top: top, behavior: mqR.matches ? 'auto' : 'smooth' });
     }
   });
   tray.addEventListener('pointerdown', function(e){
     var c = e.target.closest('.md-card');
-    if (!c || e.pointerType === 'touch' || e.button !== 0 || c.classList.contains('done')) return;
+    if (!c || e.pointerType === 'touch' || e.button !== 0 || placed[c.getAttribute('data-id')]) return;
     drag = { id: c.getAttribute('data-id'), x: e.clientX, y: e.clientY, moved: false, ghost: null };
   });
   function clearDwell(){ if (dwell) { clearTimeout(dwell.t); var el = tl.querySelector('.md-era.dwell'); if (el) el.classList.remove('dwell'); dwell = null; } }

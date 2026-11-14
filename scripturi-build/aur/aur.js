@@ -34,11 +34,12 @@
   nav.innerHTML = steps.map(function(st, k){ return '<button type="button" data-s="' + st.getAttribute('data-s') + '" aria-pressed="false">' + (LAB[k] || st.getAttribute('data-s')) + '</button>'; }).join('');
   steps[0].parentNode.insertBefore(nav, steps[0]);
   var btns = list('.gs-nav button'), cur = '';
-  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var replay = gs.querySelector('.gs-replay');
 
   // monedele de solizi apar doar la pasul lor, de la stânga la dreapta
   var COINS = list('.gs-coins circle');
-  function solidi(on){ COINS.forEach(function(el, k){ el.style.transitionDelay = on && !still ? (k * 4) + 'ms' : '0ms'; el.classList.toggle('in', on); }); }
+  function solidi(on){ COINS.forEach(function(el, k){ el.style.transitionDelay = on && !motion.matches ? (k * 4) + 'ms' : '0ms'; el.classList.toggle('in', on); }); }
 
   function set(s){
     if (s === cur) return;
@@ -54,10 +55,14 @@
 
   // la prima vedere teancurile cad o dată, unul după altul, iar cifrele numără de la 0
   var LABS = list('.gs-lab').map(function(t){ return { el: t, txt: t.textContent, v: +t.textContent.replace(/[^0-9]/g, '') }; });
-  function count(L, wait){
+  var stacks = list('.gs-stk').map(function(g){ return Array.prototype.slice.call(g.querySelectorAll('ellipse')); });
+  var dropRun = 0;
+
+  function count(L, wait, run){
     var t0 = 0, pre = L.txt.charAt(0) === '+' ? '+' : '';
     L.el.textContent = pre + '0';
     function step(ts){
+      if (run !== dropRun) return;
       if (!t0) t0 = ts + wait;
       var k = Math.max(0, Math.min(1, (ts - t0) / 700)), v = Math.round(L.v * (1 - Math.pow(1 - k, 3)));
       L.el.textContent = pre + v.toLocaleString('ro-RO');
@@ -66,24 +71,51 @@
     requestAnimationFrame(step);
   }
   function drop(){
+    var run = ++dropRun, still = motion.matches;
+    gs.classList.add('gs-reset');
+    stacks.forEach(function(stack){
+      stack.forEach(function(el){
+        el.style.transitionDelay = '0ms';
+        el.classList.toggle('in', still);
+      });
+    });
+    // Fixează poziția de plecare înainte de a reporni tranzițiile.
+    getComputedStyle(stacks[0][0]).transform;
+    gs.classList.remove('gs-reset');
     gs.classList.add('gs-in');
-    var d = 0;
-    list('.gs-stk').forEach(function(g, k){
-      list('.gs-stk.' + g.classList[1] + ' ellipse').forEach(function(el, j){
-        el.style.transitionDelay = still ? '0ms' : (d + j * (k === 3 ? 7 : 22)) + 'ms';
+    replay.hidden = still;
+    stacks.forEach(function(stack, k){
+      var delay = still ? 0 : k * 380;
+      stack.forEach(function(el, j){
+        el.style.transitionDelay = still ? '0ms' : (delay + j * (k === 3 ? 7 : 22)) + 'ms';
         el.classList.add('in');
       });
-      if (!still) count(LABS[k], d);
-      d += still ? 0 : 380;
+      if (still) LABS[k].el.textContent = LABS[k].txt;
+      else count(LABS[k], delay, run);
     });
   }
 
   set('0');
-  if (still || !('IntersectionObserver' in window)) { drop(); return; }
-  var io = new IntersectionObserver(function(entries){
-    if (!entries[0].isIntersecting) return;
-    io.disconnect();
+  replay.addEventListener('click', function(){
+    set('0');
     drop();
-  }, { threshold: 0.35 });
-  io.observe(gs.querySelector('.gs-chart'));
+  });
+  var observer;
+  function observe(){
+    if (observer) observer.disconnect();
+    if (motion.matches || !('IntersectionObserver' in window)) { drop(); return; }
+    if (gs.classList.contains('gs-in')) {
+      replay.hidden = false;
+      return;
+    }
+    observer = new IntersectionObserver(function(entries){
+      if (!entries.some(function(entry){ return entry.isIntersecting; })) return;
+      observer.disconnect();
+      drop();
+    }, { rootMargin: '-54px 0px -104px 0px' });
+    observer.observe(gs.querySelector('.gs-trigger'));
+  }
+  if (motion.addEventListener) motion.addEventListener('change', observe);
+  else if (motion.addListener) motion.addListener(observe);
+  observe();
 })();

@@ -347,18 +347,40 @@
   root.innerHTML =
     '<div class="mig-main">' +
       '<div class="mig-stage">' +
-        // bara de sus: stabilitatea Imperiului și resursele lui Attila, cu iconițe și cifre; „Jurnal” deschide deciziile
+        '<div class="mig-now" id="mig-now" hidden></div>' +
+        '<div class="mig-view">' +
+        '<canvas id="mig-canvas" width="' + CW + '" height="' + CH + '" role="img" aria-label="Simularea Marii Migrații: puncte colorate reprezintă popoarele care se deplasează pe harta Europei între 370 și 476"></canvas>' +
+        '<div class="mig-hud" role="group" aria-label="Comenzile simulării">' +
+          '<div class="mig-command-start">' +
+          '<div class="mig-year" aria-live="off"><b id="mig-year">370</b></div>' +
+          '<button class="mig-play" id="mig-play" type="button" aria-pressed="false">Pornește</button>' +
+          '<button class="mig-ib mig-spd" id="mig-spd" type="button" aria-label="Viteza: 1×. Apasă ca s-o schimbi" title="Viteza">1×</button>' +
+          '</div>' +
+          '<div class="mig-command-end">' +
+          '<button class="mig-ib mig-fs" id="mig-fs" type="button" aria-label="Ecran complet" title="Ecran complet">' + SVG('M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10') + '</button>' +
+          '<details class="mig-tools" id="mig-tools"><summary>Comenzi</summary>' +
+            '<div class="mig-tools-panel">' +
+              '<div class="mig-tool-actions">' +
+          '<button class="mig-ib" id="mig-snd" type="button" aria-pressed="true" aria-label="Sunet" title="Sunet"></button>' +
+          '<button class="mig-ib" id="mig-reset" type="button" aria-label="De la capăt" title="De la capăt">' + SVG('M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1') + '</button>' +
+          '<button class="mig-ib" id="mig-lay" type="button" aria-label="Straturi" title="Straturi" aria-expanded="false" aria-controls="mig-pop">' + SVG('M8 2l6 3-6 3-6-3zM2 8l6 3 6-3M2 11l6 3 6-3') + '</button>' +
+              '</div>' +
         '<div class="mig-bar" id="mig-bar">' +
           '<div class="mig-stab" title="Stabilitatea Imperiului roman"><span class="mig-bl">' + ico('stab') + '<span class="mig-bl-t">Imperiul</span> <b id="mig-stab-v">70</b></span><div class="jg-bar"><i id="mig-stab" style="width:70%"></i></div></div>' +
           '<div class="mig-att" id="mig-att" hidden><span class="mig-bl-h">Attila</span>' + METERS.map(function(m){ return '<div class="jg-meter" id="mig-m-' + m.k + '" style="--c:' + m.c + '" title="' + m.label + ': ' + m.hint + '"><label><span>' + ico(m.k) + '<span class="mig-bl-t">' + m.label + '</span></span> <b>0</b></label><div class="jg-bar"><i></i></div><span class="jg-delta"></span></div>'; }).join('') + '</div>' +
-          '<span class="mig-bar-sp"></span>' +
           '<button class="mig-jbtn" id="mig-jbtn" type="button" aria-expanded="false" aria-controls="mig-jpop">Jurnal <b id="mig-jn">0</b></button>' +
           '<div class="mig-jpop" id="mig-jpop" hidden><p class="mig-side-h">Deciziile tale</p><ol class="mig-log" id="mig-log"></ol></div>' +
         '</div>' +
-        '<div class="mig-now" id="mig-now" hidden></div>' +
+
+            '</div>' +
+          '</details>' +
+          '<details class="mig-history" id="mig-history"><summary>Cronologie</summary><div class="mig-history-panel">' +
+        '<div class="mig-tl" id="mig-tl" aria-label="Cronologia simulării: deciziile și evenimentele"></div>' +
+        '<div class="mig-tlpop" id="mig-tlpop" hidden></div>' +
+          '</div></details>' +
+          '</div>' +
+        '</div>' +
         '<div class="mig-news" id="mig-news" aria-live="polite"><b id="mig-news-y">370</b><p id="mig-news-t">În jurul anului 370, hunii îi atacă pe alanii din zona Donului. Traseul de pe hartă este reconstituit.</p><small id="mig-news-s"></small></div>' +
-        '<div class="mig-view">' +
-        '<canvas id="mig-canvas" width="' + CW + '" height="' + CH + '" role="img" aria-label="Simularea Marii Migrații: puncte colorate reprezintă popoarele care se deplasează pe harta Europei între 370 și 476"></canvas>' +
         '<div class="mig-pop" id="mig-pop" hidden>' +
           '<p class="mig-pop-h">Straturi</p><div class="mig-layers">' +
             '<label><input type="checkbox" data-l="real" checked> Lumea reală (reper)</label>' +
@@ -373,27 +395,13 @@
         '<ul class="mig-legend" id="mig-legend" aria-label="Popoarele: apasă pe unul ca să-l vezi doar pe el">' + GROUPS.map(function(g, k){ return '<li><button type="button" class="mig-solo" data-g="' + k + '" aria-pressed="false" title="Vezi doar: ' + g.name + '"><i style="background:' + g.color + '"></i>' + g.name.split(',')[0] + '</button><small id="mig-where-' + g.id + '" hidden></small></li>'; }).join('') + '<li><i class="ghost"></i>Unde erau în realitate</li></ul>' +
         '<div class="mig-tip" id="mig-tip" hidden></div><div class="mig-fiche" id="mig-fiche" role="dialog" aria-label="Fișa poporului" hidden></div>' +
         '<div class="mig-over" id="mig-over"></div>' +
-        // banda ghidului: peste marginea de jos a hărții (marea și Africa); pe telefon, sub hartă
+        // replicile sunt așezate pe rând la stânga și la dreapta
         '<div class="mig-guide" id="mig-guide" role="region" aria-label="Priscus, ghidul jocului" hidden></div>' +
         '<div class="mig-replay" id="mig-replay" hidden><button class="mig-ib" id="mig-rp-play" type="button" aria-label="Pornește reluarea" title="Pornește reluarea"></button>' +
           '<input type="range" id="mig-rp" min="' + T0 + '" max="' + T1 + '" step="1" value="' + T1 + '" aria-label="Anul reluării"><b id="mig-rp-y">' + T1 + '</b>' +
           '<span class="mig-rp-key"><i class="solid"></i>drumul tău <i></i>traseu de referință</span></div>' +
         '<span class="mig-credit">Hartă: <a href="https://commons.wikimedia.org/wiki/File:Europe_relief_laea_location_map.jpg">Alexrk2, Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> (adaptată)</span>' +
-        '<div class="mig-rotate" id="mig-rotate"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="15" y="6" width="18" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M8 30a16 16 0 0 0 14 12M40 18A16 16 0 0 0 26 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M22 42l-4 2 1-4M26 6l4-2-1 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Întoarce telefonul: pe orizontală, harta e de trei ori mai mare.</p><button type="button" class="mig-link" id="mig-rot-x">Continuă așa</button></div>' +
         '</div>' +
-        '<div class="mig-hud">' +
-          '<div class="mig-year" aria-live="off"><b id="mig-year">370</b></div>' +
-          '<button class="mig-play" id="mig-play" type="button" aria-pressed="false">Pornește</button>' +
-          '<button class="mig-ib mig-spd" id="mig-spd" type="button" aria-label="Viteza: 1×. Apasă ca s-o schimbi" title="Viteza">1×</button>' +
-          '<span class="mig-hud-sp"></span>' +
-          '<button class="mig-ib" id="mig-snd" type="button" aria-pressed="true" aria-label="Sunet" title="Sunet"></button>' +
-          '<button class="mig-ib" id="mig-reset" type="button" aria-label="De la capăt" title="De la capăt">' + SVG('M3.2 8a4.8 4.8 0 1 0 1.5-3.5M3 2.2v3.1h3.1') + '</button>' +
-          '<button class="mig-ib" id="mig-lay" type="button" aria-label="Straturi" title="Straturi" aria-expanded="false" aria-controls="mig-pop">' + SVG('M8 2l6 3-6 3-6-3zM2 8l6 3 6-3M2 11l6 3 6-3') + '</button>' +
-          '<button class="mig-ib mig-fs" id="mig-fs" type="button" aria-label="Ecran complet" title="Ecran complet">' + SVG('M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10') + '</button>' +
-        '</div>' +
-
-        '<div class="mig-tl" id="mig-tl" aria-label="Cronologia simulării: deciziile și evenimentele"></div>' +
-        '<div class="mig-tlpop" id="mig-tlpop" hidden></div>' +
       '</div>' +
     '</div>';
 
@@ -998,7 +1006,6 @@
   function prepUi(){
     var go = document.getElementById('mig-go'), au = document.getElementById('mig-auto'), pr = document.getElementById('mig-prep');
     if (go) go.disabled = !ready; if (au) au.disabled = !ready;
-    var gfs = document.getElementById('mig-go-fs'); if (gfs) gfs.disabled = !ready;
     document.getElementById('mig-play').disabled = !ready || finished;
     if (ready && go && document.activeElement === document.body) go.focus({ preventScroll: true });
     if (pr) pr.textContent = ready ? '' : 'Se pregătește harta: se calculează drumurile popoarelor (' + Math.round(prepDone / prepTotal * 100) + '%)…';
@@ -1142,11 +1149,11 @@
   function onCont(fn){ var b = document.getElementById('mig-cont'); b.addEventListener('click', function(){ over.className = 'mig-over'; over.innerHTML = ''; fn(); if (t >= 434.8 && t < 453.3) holdUntil = performance.now() + 2600; play(); document.getElementById('mig-play').focus({ preventScroll: true }); }); b.focus({ preventScroll: true }); }
 
   // =====================================================================
-  // Ghidul: Priscus din Panium povestește în banda de sub hartă.
+  // Ghidul lui Priscus își schimbă partea la fiecare replică.
   // Cel mult două propoziții pe ecran; clic, Enter sau „Mai departe” trec la replica următoare.
   // Citatele din izvoare au alt stil (italic, ghilimele, trimitere), ca să nu se confunde cu vocea ghidului.
   // =====================================================================
-  var gEl = document.getElementById('mig-guide'), gSeen = false, gMode = '';
+  var gEl = document.getElementById('mig-guide'), gSeen = false, gMode = '', guideTurn = 0;
   // silueta: un bust simplu, cu barbă și mantie de diplomat, și un sul în mână
   var PRISCUS = '<svg class="mig-g-pic" viewBox="0 0 48 56" aria-hidden="true"><circle cx="24" cy="14" r="8.5" fill="currentColor"/>' +
     '<path d="M16.6 17.5c.6 6.2 3.8 9.6 7.4 9.6s6.8-3.4 7.4-9.6c-1.6 1.6-4.2 2.4-7.4 2.4s-5.8-.8-7.4-2.4z" fill="currentColor" opacity=".72"/>' +
@@ -1173,6 +1180,7 @@
     gSeen = true; gMode = opt.mode || 'talk'; gEl.hidden = false; gView(true);
     function show(){
       var L = lines[i], last = i === lines.length - 1;
+      gEl.dataset.side = guideTurn++ % 2 === 0 ? 'left' : 'right';
       gEl.innerHTML = '<div class="mig-g-who">' + PRISCUS + '<b>Priscus</b><small>din Panium</small></div>' +
         '<div class="mig-g-body">' + (first ? '<p class="mig-g-note">Ghidul e o reconstituire; citatele marcate sunt din izvoare.</p>' : '') +
         '<div class="mig-g-say" aria-live="polite">' + (L.k ? '<p class="mig-g-k">' + L.k + '</p>' : '') + (L.q ? gQuote(L.q, L.c) : '<p class="mig-g-t">' + L.t + '</p>') + (L.html || '') + '</div>' +
@@ -1404,6 +1412,7 @@
   }
   function resetTimeline(){ buildTimeline(); tlHide(); }
   var tlPop = document.getElementById('mig-tlpop'), tlPin = null;
+  document.getElementById('mig-history').addEventListener('toggle', function(){ if (!this.open) tlHide(); });
   function tlHide(){ tlPop.hidden = true; tlPin = null; }
   function tlInfo(el, full){
     var di = el.getAttribute('data-d'), ei = el.getAttribute('data-e'), h;
@@ -1416,8 +1425,7 @@
       h = '<small>Eveniment' + (e.cond ? ', depinde de deciziile tale' : '') + '</small><b>' + (seen ? e.t : Math.floor(e.year) + ' · ?') + '</b>' + (full && seen && e.src ? '<p>Sursa: ' + e.src + '</p>' : '');
     }
     tlPop.innerHTML = h; tlPop.hidden = false;
-    var sr = root.querySelector('.mig-stage').getBoundingClientRect(), r = el.getBoundingClientRect(), w = tlPop.offsetWidth;
-    tlPop.style.left = Math.max(6, Math.min(sr.width - w - 6, r.left - sr.left + r.width / 2 - w / 2)) + 'px';
+
   }
   function tlItem(ev){ return ev.target.closest && ev.target.closest('[data-d], [data-e]'); }
   tlEl.addEventListener('mouseover', function(ev){ var el = tlItem(ev); if (el && !tlPin) tlInfo(el, false); });
@@ -1671,7 +1679,7 @@
     document.getElementById('mig-save').focus({ preventScroll: true });
   }
   function playing(on){ document.documentElement.classList.toggle('mig-playing', on); }
-  function restart(){ gClose(); replayShow(false); if (fEl) fEl.hidden = true; news('370', 'În jurul anului 370, hunii îi atacă pe alanii din zona Donului. Traseul de pe hartă este reconstituit.', ''); over.className = 'mig-over'; over.innerHTML = ''; showCompare = false; pulses = []; document.getElementById('mig-play').disabled = !ready; reset(); resetTimeline(); setPlayLabel(); }
+  function restart(){ guideTurn = 0; gClose(); replayShow(false); if (fEl) fEl.hidden = true; news('370', 'În jurul anului 370, hunii îi atacă pe alanii din zona Donului. Traseul de pe hartă este reconstituit.', ''); over.className = 'mig-over'; over.innerHTML = ''; showCompare = false; pulses = []; document.getElementById('mig-play').disabled = !ready; reset(); resetTimeline(); setPlayLabel(); }
 
   // pornirea: Actul I începe cu cartea lui de titlu; „Privește ca film” merge direct, la 4×
   function setSpeed(v){
@@ -1679,24 +1687,21 @@
     b.textContent = speed + '×'; b.classList.toggle('on', speed > 1); b.setAttribute('aria-label', 'Viteza: ' + speed + '×. Apasă ca s-o schimbi');
   }
   function start(a){ auto = a; restart(); playing(true); setSpeed(a ? 4 : 1); if (a) play(); else actCard('I', '370', 'Roma în fața valului', 'Ești împăratul Valens · hunii împing goții spre Dunăre', 'valens', play); }
-  // intrarea: Priscus spune două replici; un singur buton mare „Începe”, iar filmul și ecranul complet rămân linkuri mici
+  // intrarea: Priscus spune două replici înainte de simulare.
   function intro(){
     over.className = 'mig-over'; over.innerHTML = '';
-    var fsb = document.getElementById('mig-fs'), fsOk = fsb && !fsb.hidden;
     say([
       { t: 'Sunt Priscus din Panium. În 449 am mers cu solia împăratului la curtea lui Attila și am scris ce am văzut.' },
       { t: 'Îți arăt cum s-au mutat popoarele Europei între 370 și 476. Din când în când, istoria se oprește, iar tu hotărăști ce urmează.' }
     ], { mode: 'intro',
       act: '<button class="jg-btn mig-g-go" id="mig-go" type="button">' + ICON.play + 'Începe</button>' +
-        '<span class="mig-g-links"><button class="mig-link" id="mig-auto" type="button">Privește ca film</button>' + (fsOk ? '<button class="mig-link" id="mig-go-fs" type="button">Ecran complet</button>' : '') + '</span>' +
+        '<span class="mig-g-links"><button class="mig-link" id="mig-auto" type="button">Privește ca film</button></span>' +
         '<p class="mig-prep" id="mig-prep" aria-live="polite"></p>',
       bind: function(){
         prepUi();
         var go = document.getElementById('mig-go');
-        go.addEventListener('click', function(){ gClose(); start(false); });
-        document.getElementById('mig-auto').addEventListener('click', function(){ gClose(); start(true); });
-        var gf = document.getElementById('mig-go-fs');
-        if (gf) gf.addEventListener('click', function(){ gClose(); document.getElementById('mig-fs').click(); start(false); });
+        go.addEventListener('click', function(){ openGameScreen(); start(false); });
+        document.getElementById('mig-auto').addEventListener('click', function(){ openGameScreen(); start(true); });
         if (!go.disabled) go.focus({ preventScroll: true });
       } });
   }
@@ -1706,23 +1711,85 @@
   // =====================================================================
   document.getElementById('mig-play').addEventListener('click', function(){
     if (finished) return;
-    if (gMode === 'intro') { if (!ready) return; gClose(); auto = false; restart(); playing(true); play(); return; }
+    if (gMode === 'intro') { if (!ready) return; openGameScreen(); start(false); return; }
     if (gMode || over.querySelector('[aria-modal]')) return;
     if (running) pause(); else play();
   });
-  // ecran complet: harta și dialogurile ocupă tot ecranul; pe telefon încercăm și orientarea orizontală
-  (function(){
-    var btn = document.getElementById('mig-fs'), stage = root.querySelector('.mig-stage');
-    var req = stage.requestFullscreen || stage.webkitRequestFullscreen;
-    if (!req) { btn.hidden = true; return; }
-    btn.addEventListener('click', function(){
-      if (document.fullscreenElement || document.webkitFullscreenElement) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; }
-      var r = req.call(stage);
-      if (r && r.then) r.then(function(){ if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(function(){}); }).catch(function(){});
+  // Pagina poate ocupa fereastra și când browserul refuză ecranul complet.
+  var stage = root.querySelector('.mig-stage'), screenButton = document.getElementById('mig-fs');
+  var gamePage = document.getElementById('mod-migratie');
+  var requestScreen = stage.requestFullscreen || stage.webkitRequestFullscreen;
+  var isNativeScreen = function(){ return (document.fullscreenElement || document.webkitFullscreenElement) === stage; };
+  function updateScreen(){
+    var expanded = isNativeScreen() || stage.classList.contains('mig-expanded');
+    var label = expanded ? 'Ieși din ecran complet' : 'Ecran complet';
+    screenButton.setAttribute('aria-label', label);
+    screenButton.setAttribute('aria-pressed', String(expanded));
+    screenButton.title = label;
+    bgKey = ''; labelCache = {};
+    if (ready && !running) requestAnimationFrame(draw);
+  }
+  function setExpanded(on){
+    stage.classList.toggle('mig-expanded', on);
+    document.documentElement.classList.toggle('mig-window', on);
+    updateScreen();
+  }
+  function openGameScreen(){
+    if (isNativeScreen()) return;
+    setExpanded(true);
+    if (!requestScreen || navigator.userActivation && !navigator.userActivation.isActive) return;
+    try {
+      var result = requestScreen.call(stage);
+      if (result && result.catch) result.catch(function(){});
+    } catch (error) { /* jocul este deja extins în fereastră */ }
+  }
+  function closeGameScreen(){
+    setExpanded(false);
+    var exit = document.exitFullscreen || document.webkitExitFullscreen;
+    if (isNativeScreen() && exit) {
+      var result = exit.call(document);
+      if (result && result.catch) result.catch(function(){});
+    }
+  }
+  function onFullscreenChange(){ setExpanded(false); }
+  screenButton.addEventListener('click', function(){
+    if (isNativeScreen() || stage.classList.contains('mig-expanded')) closeGameScreen();
+    else openGameScreen();
+  });
+  document.addEventListener('fullscreenchange', onFullscreenChange);
+  document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+  if (gamePage){
+    gamePage.addEventListener('mig-enter', function(e){
+      if (e.detail) openGameScreen();
+      else setExpanded(true);
     });
-    function onFs(){ var on = !!(document.fullscreenElement || document.webkitFullscreenElement); var lb = on ? 'Ieși din ecran complet' : 'Ecran complet'; btn.setAttribute('aria-label', lb); btn.title = lb; bgKey = ''; labelCache = {}; setTimeout(function(){ draw(); }, 60); }
-    document.addEventListener('fullscreenchange', onFs); document.addEventListener('webkitfullscreenchange', onFs);
-  })();
+    if (gamePage.classList.contains('active')) setExpanded(true);
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !e.defaultPrevented && stage.classList.contains('mig-expanded')) closeGameScreen();
+  });
+  root.addEventListener('click', function(e){
+    if (e.target.closest('.mig-culise')) closeGameScreen();
+  });
+  var flyouts = root.querySelectorAll('.mig-hud details');
+  flyouts.forEach(function(menu){
+    menu.addEventListener('toggle', function(){
+      if (!menu.open) return;
+      flyouts.forEach(function(other){ if (other !== menu) other.open = false; });
+    });
+    menu.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && menu.open) {
+        e.preventDefault();
+        menu.open = false;
+        menu.querySelector('summary').focus();
+      }
+    });
+  });
+  document.addEventListener('click', function(e){
+    if (e.target.closest('.mig-pop')) return;
+    flyouts.forEach(function(menu){ if (!menu.contains(e.target)) menu.open = false; });
+  });
+
   // „Jurnal”: deciziile luate până acum, într-un panou mic sub bară
   (function(){
     var jb = document.getElementById('mig-jbtn'), jp = document.getElementById('mig-jpop');
@@ -1751,7 +1818,6 @@
     if (!running) draw();
   });
   document.getElementById('mig-snd').addEventListener('click', function(){ setSound(!AU.on); if (AU.on && running) auAmbient(true); });
-  document.getElementById('mig-rot-x').addEventListener('click', function(){ document.getElementById('mig-rotate').classList.add('off'); });
   Array.prototype.forEach.call(root.querySelectorAll('.mig-layers input'), function(cb){
     cb.addEventListener('change', function(){ layers[cb.getAttribute('data-l')] = cb.checked; if (!running) draw(); });
   });
@@ -1808,7 +1874,7 @@
   });
   document.addEventListener('visibilitychange', function(){ if (document.hidden && running) pause(); if (AU.ctx) { if (document.hidden) AU.ctx.suspend(); else if (AU.amb) AU.ctx.resume(); } });
   var page = document.getElementById('mod-migratie');
-  if (page && 'MutationObserver' in window) new MutationObserver(function(){ if (!page.classList.contains('active')) { if (running) pause(); playing(false); auAmbient(false); } }).observe(page, { attributes: true, attributeFilter: ['class'] });
+  if (gamePage && 'MutationObserver' in window) new MutationObserver(function(){ if (!gamePage.classList.contains('active')) { if (running) pause(); playing(false); auAmbient(false); closeGameScreen(); } }).observe(gamePage, { attributes: true, attributeFilter: ['class'] });
 
   // =====================================================================
   // 12. Încărcarea hărții de bază

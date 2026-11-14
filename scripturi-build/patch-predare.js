@@ -153,6 +153,8 @@ replace("function openAbout(){ aboutOverlay.classList.add('active'); }",
   "function openAbout(){ aboutOverlay.classList.add('active'); if (aboutClose) aboutClose.focus({ preventScroll: true }); }");
 replace("function closeAbout(){ aboutOverlay.classList.remove('active'); }",
   "function closeAbout(){ aboutOverlay.classList.remove('active'); if (aboutTrigger) aboutTrigger.focus({ preventScroll: true }); }");
+replace("    current = index;\n    pages.forEach", "    var enteringGame = index !== current && PAGE_IDS[index] === 'mod-migratie';\n    current = index;\n    pages.forEach");
+replace("    if (record !== false && window.history && window.history.pushState) {", "    if (enteringGame) pages[index].dispatchEvent(new CustomEvent('mig-enter', { detail: record !== false }));\n    if (record !== false && window.history && window.history.pushState) {");
 replace('    window.scrollTo(0, 0);', "    var anchor = record === false && index === 0 ? document.getElementById(location.hash.slice(1)) : null;\n    if (anchor && pages[0].contains(anchor)) anchor.scrollIntoView({ behavior: 'instant' });\n    else window.scrollTo({ top: 0, behavior: 'instant' });");
 replace("'#' + PAGE_IDS[startIndex]", "location.hash || '#' + PAGE_IDS[startIndex]");
 replace("if (e.key === 'Escape' && aboutOverlay && aboutOverlay.classList.contains('active')) closeAbout();",
