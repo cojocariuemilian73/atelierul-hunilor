@@ -14,7 +14,7 @@
           '<p class="vd-k">Se spune că</p>' +
           '<p class="vd-q"><span class="vd-sr">Mit respins: </span><s>' + m.myth + '</s></p>' +
           '<p class="vd-ans"><b class="vd-verdict">' + m.verdict + '.</b> ' + m.izv + '</p>' +
-          '<p class="vd-from"><span>De unde vine mitul:</span> ' + m.from + '</p>' +
+          '<p class="vd-from"><span>Context</span> ' + m.from + '</p>' +
           '<p class="vd-src">Sursa: ' + m.src + '</p>' +
         '</div></div>' +
     '</article>';

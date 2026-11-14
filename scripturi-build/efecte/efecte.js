@@ -122,7 +122,7 @@
       REP[n - 1].x = 1;
       for (var k = n - 2; k >= 0; k--) REP[k].x = Math.min(REP[k].x, REP[k + 1].x - g);
       REP.forEach(function(r, k){ ticks[k].style.setProperty('--x', r.x.toFixed(4)); });
-      heroEnd = hero ? Math.max(0, hero.getBoundingClientRect().bottom + sy - 160) : 0;
+      heroEnd = hero ? Math.max(0, hero.getBoundingClientRect().bottom + sy) : 0;
       var pers = document.getElementById('sec-personalitati');
       rideStop = pers ? pers.getBoundingClientRect().bottom + sy - H * 0.4 : Infinity;
       dirty = false;

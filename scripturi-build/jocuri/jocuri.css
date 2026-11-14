@@ -589,3 +589,14 @@
   #mig-root .mig-g-fx b.up{ color: #3d6b2f; } #mig-root .mig-g-fx b.down{ color: #a3342a; }
   /* telefonul: la variante, doar iconița și săgețile; fără rândul cu sursa */
   @media (max-width: 760px){ #mig-root .mig-g-ch .mig-fxh em{ font-size: 0; } #mig-root .mig-g-ch .mig-fxh em b{ font-size: 0.8125rem; } #mig-root .mig-g-say .jg-src{ display: none; } #mig-root .mig-g-ch .jg-choice{ font-size: 0.9375rem; line-height: 1.35; } }
+
+  .mig-table tbody th{ font: inherit; font-weight: 700; letter-spacing: normal; text-transform: none; color: inherit; }
+  .mig-table tbody th i{ display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 7px; vertical-align: middle; }
+
+  @media (max-width: 560px){
+    .mig-end .mig-table{ table-layout: fixed; }
+    .mig-end .mig-table :is(th, td){ padding-inline: 4px; overflow-wrap: anywhere; }
+    .mig-end .mig-table th:first-child{ width: 28%; }
+    .mig-end .mig-table th:last-child{ width: 22%; }
+    .mig-end .mig-table td.num{ white-space: normal; }
+  }

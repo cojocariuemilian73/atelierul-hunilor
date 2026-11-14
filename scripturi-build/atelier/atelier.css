@@ -132,7 +132,7 @@
   .md-clu-b .md-book{ width: 26px; height: 20px; }
   .md-clu-b b{ position: absolute; right: -10px; top: -10px; min-width: 24px; padding: 1px 5px; border-radius: 12px; background: #8e1f19; color: #fbe9e4; font: 700 0.74rem 'Source Serif 4', Georgia, serif; }
   .md-clu-b:focus-visible{ outline: 3px solid #7a5410; outline-offset: 3px; }
-  .md-clu-pop{ position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%); display: none; gap: 8px; padding: 8px 10px 20px; background: rgba(20, 18, 15, 0.97); border: 1px solid rgba(212, 175, 55, 0.5); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55); }
+  .md-clu-pop{ position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(calc(-50% + var(--shift, 0px))); display: none; gap: 8px; padding: 8px 10px 20px; background: rgba(20, 18, 15, 0.97); border: 1px solid rgba(212, 175, 55, 0.5); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55); }
   .md-clu:hover .md-clu-pop, .md-clu:focus-within .md-clu-pop, .md-clu.open .md-clu-pop, .md-tl.answers .md-clu-pop{ display: flex; }
   .md-clu-pop .md-pin{ position: relative; left: auto !important; top: auto !important; bottom: auto; margin: 0; flex: none; }
 
@@ -459,3 +459,15 @@
   @media (min-width: 900px){ .md-endw .md-end{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4px 36px; } .md-endw .md-end > *{ grid-column: 1 / -1; } .md-endw .md-end > .md-cats, .md-endw .md-end > .md-sum{ grid-column: auto; } }
   .md-endw .md-cats li b{ color: #2b1d12 !important; }
   .md-endw .md-cats li span{ color: #5a4632 !important; }
+
+  .md-endw .md-big, .md-bar .md-score{ color: #553611; }
+  .md-endw .md-big span{ color: #584537; }
+
+  @media (max-width: 767px){
+    .md-tl.vert .md-clu{ right: 0; pointer-events: none; }
+    .md-tl.vert .md-clu-b, .md-tl.vert .md-clu-pop{ pointer-events: auto; }
+    .md-tl.vert .md-clu-pop{ box-sizing: border-box; left: 54px; right: 0; width: auto; max-width: none; gap: 22px 8px; }
+    .md-tl.vert .md-pin-lab{ width: max-content; max-width: 44px; white-space: normal; overflow-wrap: anywhere; }
+  }
+
+  .md-ms-band{ font-size: 0.8125rem; line-height: 1.2; padding: 4px 6px; }

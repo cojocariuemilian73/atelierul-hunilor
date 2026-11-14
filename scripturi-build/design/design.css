@@ -1,27 +1,33 @@
   /* ds: stratul final de design (o publicație de istorie: mai puține chenare, mai mult spațiu). Aici se definesc o singură dată culorile, scara tipografică, spațierea și lățimea. */
   :root, html[data-theme], html[data-theme] body{
     --paper: #F3EAD7; --paper-2: #EADFC6; --ink: #2B1D12; --ink-2: #5A4632; --line: #C9B899; --garnet: #7A1F1F; --gold: #B8892B;
-    --night: #16120E; --night-2: #211B15; --night-ink: #E6D7C3; --night-ink-2: #B9A88F; --night-line: #4A3E31;
     --fs-13: 0.8125rem; --fs-15: 0.9375rem; --fs-17: 1.0625rem; --fs-20: 1.25rem; --fs-26: 1.625rem; --fs-34: 2.125rem; --fs-48: 3rem; --fs-72: 4.5rem;
     --sp-8: 8px; --sp-16: 16px; --sp-24: 24px; --sp-40: 40px; --sp-64: 64px; --sp-96: 96px;
-    --wrap: 1120px; --gutter: 24px; --radius: 2px;
+    --wrap: 1120px; --gutter: clamp(16px, 3vw, 24px); --radius: 2px;
+    --ease-out-ui: cubic-bezier(.23, 1, .32, 1);
     /* variabilele vechi trimit la cele noi */
     --paper-3: var(--paper-2); --ink-dim: var(--ink-2); --line-strong: var(--line); --accent: var(--garnet); --accent-2: var(--ink-2);
     --accent-bg: var(--paper-2); --accent2-bg: var(--paper-2); --shadow: transparent; --red: var(--garnet); --red2: var(--garnet);
   }
   html, body{ background: var(--paper); color: var(--ink); }
   body{ font-family: 'Source Serif 4', Georgia, serif; }
+  ::selection{ color: var(--paper); background-color: var(--garnet); }
 
   /* ---------- lățimea comună ---------- */
   #page-acasa .page-shell{ max-width: calc(var(--wrap) + 2 * var(--gutter)); margin-left: auto; margin-right: auto; padding-left: var(--gutter); padding-right: var(--gutter); box-sizing: border-box; display: block; }
   #page-acasa .main-col{ max-width: var(--wrap); width: 100%; margin: 0 auto; }
+  html body #page-acasa #sec-cronologie{ width: auto; max-width: none; margin-inline: 0; }
   #page-acasa .main-col > article > section, #page-acasa .main-col > section, #page-acasa .main-col > .cta-card{ max-width: none; width: auto; margin-left: 0; margin-right: 0; }
-  #page-acasa .main-col > article > section + section, #page-acasa .main-col > section{ margin-top: var(--sp-96); }
+  #page-acasa .main-col > article > section + section, #page-acasa .main-col > section{ margin-top: clamp(56px, 8vw, var(--sp-96)); }
+  @media (max-width: 760px){
+    html body #page-acasa .page-shell{ padding-inline: var(--gutter); }
+    #page-acasa .ch-orn{ margin-top: var(--sp-40); }
+  }
 
   /* ---------- tipografie ---------- */
   #page-acasa article p, #page-acasa #sec-glosar p, #page-acasa #biblio p{ font-size: var(--fs-17); line-height: 1.65; }
   #page-acasa article > section > p, #page-acasa .sr-text > p, #page-acasa .sr-text li{ max-width: 68ch !important; }
-  #page-acasa .sec-title{ font: 600 var(--fs-34)/1.15 'EB Garamond', Georgia, serif; color: var(--ink); letter-spacing: 0; }
+  #page-acasa .sec-title{ font: 600 clamp(2rem, 3.3vw, 2.75rem)/1.08 'EB Garamond', Georgia, serif; color: var(--ink); letter-spacing: -0.015em; text-wrap: balance; }
   #page-acasa .chapter-num{ font: 400 var(--fs-13)/1 'Source Serif 4', Georgia, serif; letter-spacing: 0.12em; color: var(--ink-2); }
   #page-acasa .sub-title{ font: 600 var(--fs-26)/1.2 'EB Garamond', Georgia, serif; color: var(--ink); letter-spacing: 0; margin: var(--sp-40) 0 var(--sp-16); }
   #page-acasa .sec-sub{ font-size: var(--fs-20); line-height: 1.5; color: var(--ink-2); max-width: 68ch; }
@@ -83,8 +89,18 @@
   #page-acasa .hero-btn, #page-acasa .cta-btn, #page-acasa .lab-how, .ds-btn{ display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--sp-24); border-radius: var(--radius); box-shadow: none; text-shadow: none; background-image: none; font: 600 var(--fs-17)/1 'Source Serif 4', Georgia, serif; text-transform: none; letter-spacing: 0; transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease; transform: none !important; }
   #page-acasa .hero-btn.primary, #page-acasa .cta-btn{ background: var(--garnet); color: var(--paper); border: 1px solid var(--garnet); }
   #page-acasa .hero-btn.primary:hover, #page-acasa .cta-btn:hover{ background: #5E1717; border-color: #5E1717; color: var(--paper); }
-  html body #page-acasa .hero .hero-btn:not(.primary){ background: transparent; color: var(--night-ink); border: 1px solid var(--line); }
-  html body #page-acasa .hero .hero-btn:not(.primary):hover{ background: rgba(230, 215, 195, 0.12); color: #fff; }
+
+  /* ---------- răspunsul comenzilor la apăsare ---------- */
+  @media (prefers-reduced-motion: no-preference){
+    :is(#page-acasa .hero-btn, #page-acasa .cta-btn, .jg-btn, .md-btn, .st-menu, .hx-nav button, .gs-nav button){
+      transition: scale 140ms var(--ease-out-ui), background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+    }
+    :is(#page-acasa .hero-btn, #page-acasa .cta-btn, .jg-btn, .md-btn, .st-menu, .hx-nav button, .gs-nav button):active:not(:disabled){ scale: .97; }
+    #page-acasa .hx-era{ transition: background-color 150ms ease, color 150ms ease; }
+  }
+  @media (hover: hover) and (pointer: fine){
+    #page-acasa .hx-era:hover{ background-color: var(--paper-2); }
+  }
 
   /* ---------- meniul ---------- */
   .site-nav{ box-shadow: none !important; background-image: none !important; }
@@ -95,49 +111,122 @@
   .site-nav .st-pages a.active, .site-nav .st-pages a[aria-current="page"]{ color: var(--ink); box-shadow: inset 0 -2px 0 var(--garnet); }
   .ef-ride::after{ display: none !important; }
 
-  /* ---------- hero ---------- */
-  #page-acasa .hero-scrim{ background: rgba(22, 18, 14, 0.62) !important; }
-  html body #page-acasa .hero-bg, html body #page-acasa .hero-scrim{ -webkit-mask-image: none !important; mask-image: none !important; }
-  html body #page-acasa .hero{ background: var(--night); }
-  html body #page-acasa .hero .title, html body #page-acasa .hero .title *, html body #page-acasa .hero .hero-years, html body #page-acasa .hero .dek{ text-shadow: none !important; color: var(--night-ink) !important; -webkit-text-fill-color: currentColor; }
-  #page-acasa .hero .title{ font: 600 var(--fs-72)/1.02 'EB Garamond', Georgia, serif !important; }
-  #page-acasa .hero-years{ font: 400 var(--fs-20)/1.3 'Source Serif 4', Georgia, serif; letter-spacing: 0.08em; }
-  #page-acasa .hero .dek{ font-size: var(--fs-20); line-height: 1.5; }
-  #page-acasa .hero-credit{ font-size: var(--fs-13); color: var(--ink-2); max-width: calc(var(--wrap) + 2 * var(--gutter)); margin-left: auto; margin-right: auto; padding: var(--sp-8) var(--gutter) 0; box-sizing: border-box; }
-  @media (max-width: 760px){ #page-acasa .hero .title{ font-size: var(--fs-48); } }
-
-  /* ---------- vitrinele întunecate: cronologia, monedele, atlasul, muzeul ---------- */
-  html body #page-acasa #sec-cronologie, html body #page-acasa .gs, html body #page-acasa #sec-atlas, html body #page-acasa #sec-muzeu{
-    background: var(--night) !important; color: var(--night-ink) !important; padding: var(--sp-40) !important; border: 0 !important; border-radius: var(--radius); box-shadow: none !important; box-sizing: border-box; }
-  html body #page-acasa .gs{ margin: var(--sp-40) 0; }
-  /* atlasul și muzeul au aceeași lățime ca textul (nu mai ies din coloană) */
-  html body #page-acasa #sec-atlas, html body #page-acasa #sec-muzeu{ width: auto !important; max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; left: auto !important; transform: none !important; }
-  html body #page-acasa #sec-cronologie .gs, html body #page-acasa #sec-cronologie .hx{ padding: 0 !important; background: none !important; }
-  /* textul din vitrine moștenește culoarea deschisă; legendele și creditele în tonul secundar */
-  html body #page-acasa :is(#sec-cronologie, .gs, #sec-atlas, #sec-muzeu) :is(div, p, span, li, dt, dd, h2, h3, h4, b, em, i, small, strong, label, figcaption, a, button, td, th):not(.hx-mk):not(.fn):not(.mx-note){ color: inherit !important; -webkit-text-fill-color: currentColor; }
-  html body #page-acasa :is(#sec-cronologie, .gs, #sec-atlas, #sec-muzeu) :is(.sec-sub, .chapter-num, .artifact-credit, .map-credit, .gs-src, .hx-folio, .panel-label, .artifact-kind, small, .modal-tag){ color: var(--night-ink-2) !important; }
-  html body #page-acasa :is(#sec-cronologie, .gs, #sec-atlas, #sec-muzeu) :is(.fn, .mx-note, a:not([class])){ color: #E0A49A !important; }
-  html body #page-acasa :is(#sec-cronologie, .gs, #sec-atlas, #sec-muzeu) :is(.legend-box, .zoom-btn, .r9-note, .r9-side, .hx-tip, .hs-popover, .lab-how, .gs-nav button, .hx-nav button){ background: var(--night-2) !important; border-color: var(--night-line) !important; box-shadow: none !important; }
-  html body #page-acasa :is(#sec-cronologie, .gs, #sec-atlas, #sec-muzeu) :is(.gs-nav button.on, .hx-nav button.on){ background: var(--garnet) !important; border-color: var(--garnet) !important; }
-  html body #page-acasa :is(#sec-cronologie, .gs, #sec-atlas, #sec-muzeu) .r9-note, html body #page-acasa :is(#sec-cronologie, .gs, #sec-atlas, #sec-muzeu) .r9-side{ background: none !important; border-left-color: var(--garnet) !important; }
-  /* cronologia: categoriile în tonurile deschise, citibile pe noapte */
-  html body #page-acasa .hx [style*="--c:#e0626c"]:not(.hx-pt){ --c: #E0857A !important; }
-  html body #page-acasa .hx [style*="--c:#7ab0e8"]:not(.hx-pt){ --c: #8DB8E6 !important; }
-  html body #page-acasa .hx [style*="--c:#e5c158"]:not(.hx-pt){ --c: #D9B45A !important; }
-  html body #page-acasa .hx [style*="--c:#8fbd82"]:not(.hx-pt){ --c: #9CC38F !important; }
-  html body #page-acasa .hx [style*="--c:#b98ae6"]:not(.hx-pt), html body #page-acasa .hx [style*="--c:#c79bd9"]:not(.hx-pt){ --c: #C3A2E0 !important; }
-  /* graficul aurului: etichetele desenate, deschise pe noapte */
-  html body #page-acasa .gs .gs-lab, html body #page-acasa .gs .gs-coins-lab, html body #page-acasa .gs .gs-who, html body #page-acasa .gs text{ fill: var(--night-ink-2) !important; }
-  html body #page-acasa .gs .gs-stop rect{ fill: var(--night-2) !important; stroke: var(--gold) !important; }
-  html body #page-acasa .gs .gs-stop text{ fill: var(--night-ink) !important; }
-  @media (max-width: 760px){
-    html body #page-acasa #sec-cronologie, html body #page-acasa .gs, html body #page-acasa #sec-atlas, html body #page-acasa #sec-muzeu{ padding: var(--sp-24) !important; }
+  /* ---------- coperta ---------- */
+  html body #page-acasa .hero{
+    display: grid;
+    align-items: center;
+    min-height: clamp(440px, 62svh, 640px);
+    background: var(--paper);
   }
+  html body #page-acasa .hero :is(.hero-bg, .hero-scrim){ inset: 0 0 0 42%; -webkit-mask-image: none !important; mask-image: none !important; }
+  #page-acasa .hero-bg{ transform: none !important; }
+  #page-acasa .hero-img{ object-position: 54% 42%; }
+  #page-acasa .hero-scrim{
+    pointer-events: none;
+    background: linear-gradient(90deg, var(--paper), rgba(243, 234, 215, 0.2) 28%, transparent 46%),
+      linear-gradient(0deg, var(--paper), transparent 28%) !important;
+  }
+  html body #page-acasa .hero-inner{
+    width: 100%;
+    max-width: calc(var(--wrap) + 2 * var(--gutter));
+    box-sizing: border-box;
+    padding: var(--sp-64) var(--gutter);
+  }
+  #page-acasa .hero .title{
+    max-width: 9.5ch;
+    margin: 0;
+    font: 600 clamp(3rem, 5.9vw, 5.25rem)/0.99 'EB Garamond', Georgia, serif !important;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  #page-acasa .hero-years{ font-variant-numeric: lining-nums tabular-nums; }
+  #page-acasa .hero .dek{ max-width: 32ch; font-size: var(--fs-20); line-height: 1.5; }
+  html body #page-acasa #acasa + .hero-credit{
+    width: 100%;
+    max-width: calc(var(--wrap) + 2 * var(--gutter));
+    box-sizing: border-box;
+    margin-inline: auto !important;
+    padding-inline: var(--gutter) !important;
+  }
+  @media (max-width: 760px){
+    html body #page-acasa .hero{ min-height: 0; }
+    html body #page-acasa .hero :is(.hero-bg, .hero-scrim){ inset: 0 0 auto; height: clamp(180px, 46vw, 320px); }
+    #page-acasa .hero-img{ object-position: 56% 43%; }
+    #page-acasa .hero-scrim{ background: linear-gradient(0deg, var(--paper), transparent 36%) !important; }
+    html body #page-acasa .hero-inner{ padding: calc(clamp(180px, 46vw, 320px) - 4px) var(--gutter) var(--sp-24); }
+    #page-acasa .hero .title{ max-width: 12ch; font-size: clamp(2.45rem, 8.9vw, 3.7rem) !important; }
+    #page-acasa .hero .dek{ font-size: var(--fs-17); }
+    #page-acasa .hero-cta{ display: grid; grid-template-columns: minmax(0, 1fr); }
+    #page-acasa .hero-cta .hero-btn{ justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    #page-acasa .hero-img{
+      transform-origin: 54% 42%;
+      animation: fresca-apropiere 1.8s cubic-bezier(.22, 1, .36, 1) both;
+    }
+    #page-acasa .hero-inner > :is(.title, .hero-years, .dek, .hero-cta){
+      animation: coperta-intrare 540ms cubic-bezier(.22, 1, .36, 1) both;
+    }
+    #page-acasa .hero-inner > .hero-years{ animation-delay: 55ms; }
+    #page-acasa .hero-inner > .dek{ animation-delay: 115ms; }
+    #page-acasa .hero-inner > .hero-cta{ animation-delay: 185ms; }
+    #page-acasa .hero-inner > .hero-cta:focus-within{ animation: none; }
+  }
+
+  @keyframes fresca-apropiere{
+    from{ opacity: 0.64; transform: scale(1.055); }
+    to{ opacity: 1; transform: scale(1); }
+  }
+  @keyframes coperta-intrare{
+    from{ opacity: 0; translate: 0 9px; }
+    to{ opacity: 1; translate: 0 0; }
+  }
+
+  /* ---------- modulele articolului pe același pergament ---------- */
+  html body #page-acasa :is(#sec-cronologie, .hx, .gs, #sec-atlas, #sec-muzeu){
+    background: transparent !important;
+    color: var(--ink);
+    padding-inline: 0;
+    border: 0;
+    box-shadow: none;
+  }
+  #page-acasa #sec-cronologie .hx{ padding: 0; }
+  #page-acasa .gs{ margin: var(--sp-40) 0; }
+  html body #page-acasa :is(#sec-atlas, #sec-muzeu){
+    width: auto !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    left: auto !important;
+    transform: none !important;
+  }
+  html body #page-acasa :is(#sec-atlas, #sec-muzeu) .frame,
+  html body #page-acasa .gs .gs-chart,
+  html body #page-acasa .hx-map svg{
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  #page-acasa :is(#sec-atlas, #sec-muzeu) .frame{ padding: 0; }
+  #page-acasa .gs .gs-chart{ padding-inline: 0; }
+  #page-acasa :is(#sec-atlas, #sec-muzeu) .frame::before{ display: none; }
+  #page-acasa :is(#sec-cronologie, .gs, #sec-atlas, #sec-muzeu) .sec-sub{ color: var(--ink-2); }
+  #page-acasa .hx-map svg use{ filter: saturate(.75); }
+  #page-acasa .hx :is(.hx-place, .hx-hun text){
+    fill: var(--ink);
+    stroke: var(--paper);
+  }
+  #page-acasa .hx :is(.hx-route, .hx-ring){ stroke: var(--garnet); }
+  #page-acasa .hx-era small{ color: var(--ink-2); opacity: 1; }
+  #page-acasa .timebar-label{ display: block; margin-bottom: 4px; font-size: var(--fs-15); color: var(--ink-2); }
+  #page-acasa .gs .gs-nav button.on{ background: var(--garnet); border-color: var(--garnet); color: var(--paper); }
+  #page-acasa .gs .gs-labels text{ fill: var(--ink-2); }
+  #page-acasa .gs .gs-unit{ fill: var(--ink-2); }
 
   /* ---------- muzeul: 4 / 2 / 1 coloane, imagini de aceeași înălțime ---------- */
   #page-acasa .artifact-grid{ display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: var(--sp-24) !important; }
   #page-acasa .artifact-card{ background: none !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; padding: 0 !important; }
-  #page-acasa .artifact-card .viewer-stage{ height: 220px !important; background: var(--night-2) !important; border: 1px solid var(--night-line); border-radius: 0; }
+  #page-acasa .artifact-card .viewer-stage{ height: 220px !important; background: transparent !important; border: 0; border-radius: 0; }
   @media (max-width: 1024px){ #page-acasa .artifact-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
   @media (max-width: 600px){ #page-acasa .artifact-grid{ grid-template-columns: minmax(0, 1fr) !important; } }
 
@@ -163,18 +252,34 @@
   /* ---------- mărimile rămase în afara scării ---------- */
   #page-acasa .domino-list li, #page-acasa .cascade .cs-step, #page-acasa .gl-row dd, #page-acasa .gl-row dt, #page-acasa .gl{ font-size: var(--fs-17); line-height: 1.6; }
   html body #page-acasa .gs .gs-step h3{ font: 600 var(--fs-26)/1.2 'EB Garamond', Georgia, serif !important; }
-  #page-acasa .duel-card h4{ font: 600 var(--fs-34)/1.15 'EB Garamond', Georgia, serif !important; }
-  html body #page-acasa .year-badge, html body #page-acasa .mono{ font-family: 'Source Serif 4', Georgia, serif !important; font-weight: 600; color: var(--night) !important; -webkit-text-fill-color: var(--night); background: var(--gold) !important; }
+  #page-acasa .duel-card h3{ font: 600 var(--fs-34)/1.15 'EB Garamond', Georgia, serif !important; }
+  html body #page-acasa .year-badge{ font-family: 'Source Serif 4', Georgia, serif !important; font-weight: 600; color: var(--ink) !important; background: var(--paper-2) !important; }
   /* meniul și coperta nu mai depășesc lățimea ferestrei (100vw includea bara de derulare) */
-  .site-nav{ width: auto !important; max-width: 100%; }
+  #site-nav.site-nav{ width: auto !important; max-width: 100%; margin-inline: 0; }
+  #site-nav .about-trigger{ min-width: 44px; min-height: 44px; }
+  @media (max-width: 360px){
+    #site-nav.site-nav{ gap: 8px; padding-inline: 8px; }
+    #site-nav .st-menu{ padding-inline: 8px; }
+    #site-nav .st-brand{ font-size: 0.875rem !important; gap: 6px; letter-spacing: 0 !important; }
+  }
+  :is(#page-acasa, #mod-migratie, #mod-atelier, #site-nav) :is(a, button, input, [tabindex]):focus-visible{
+    outline: 2px solid var(--garnet);
+    outline-offset: 3px;
+  }
+  #page-acasa .m-lab .hotspot:focus-visible{
+    outline-color: var(--paper);
+    box-shadow: 0 0 0 5px var(--garnet);
+  }
+  #page-acasa .gs .gs-nav button{ min-height: 44px; }
+  #page-acasa .gs .gs-stop rect{ fill: var(--paper); stroke: var(--garnet); }
+  #page-acasa .gs .gs-stop text{ fill: var(--garnet); }
+  #page-acasa .gs .gs-stop .sm, #page-acasa .gs .gs-coins-lab{ fill: var(--ink); }
   #page-acasa .hero{ width: auto !important; max-width: 100%; margin-left: 0 !important; margin-right: 0 !important; }
 
-  /* ---------- apariția la derulare: fade + 12 px, 400 ms, o dată ---------- */
-  #page-acasa .r7-rv{ transition: opacity 400ms ease, transform 400ms ease !important; }
-  #page-acasa .r7-rv:not(.r7-in){ opacity: 0; transform: translateY(12px); }
-  #page-acasa .r7-rv.r7-in{ opacity: 1; transform: none; }
+  /* Textul și fotografiile articolului sunt vizibile imediat. */
+  #page-acasa .r7-rv, #page-acasa .r7-rv:not(.r7-in){ opacity: 1; transform: none; transition: none; }
+  #page-acasa .fw-host .fw{ display: inline; opacity: 1 !important; animation: none !important; }
   @media (prefers-reduced-motion: reduce){
-    #page-acasa .r7-rv, #page-acasa .r7-rv:not(.r7-in){ opacity: 1 !important; transform: none !important; transition: none !important; }
     .site-nav .r7-bar, .site-nav *{ transition: none !important; }
   }
   /* /ds */

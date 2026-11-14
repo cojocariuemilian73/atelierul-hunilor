@@ -12,69 +12,70 @@
   // ---------------- sursele de pe masă ----------------
   // kind: 'obj' = obiect din epocă, 'txt' = izvor scris, 'img' = imagine făcută mai târziu
   var ITEMS = [
-    { id: 'solid', hint: 'Pe monedă e numele unui împărat roman: THEODOSIUS.', kind: 'obj', sel: '#img-solidus', year: 430, y0: 408, y1: 450, label: '408–450', name: 'Solid de aur al lui Teodosie al II-lea',
-      clue: 'Monedă bătută în timpul vieții lui Attila: cu astfel de monede s-a plătit tributul. Un obiect din epocă.' },
-    { id: 'craniu', hint: 'E un os adevărat, găsit într-un mormânt: o descoperire arheologică, nu un desen.', kind: 'obj', sel: '#img-craniu', year: 450, y0: 400, y1: 499, label: 'sec. V', name: 'Craniu deformat artificial',
+    { id: 'solid', imageLabel: 'Monedă de aur cu un bust și o inscripție', hint: 'Pe monedă e numele unui împărat roman: THEODOSIUS.', kind: 'obj', sel: '#img-solidus', year: 445, y0: 441, y1: 450, label: '441–450', name: 'Solid de aur al lui Teodosie al II-lea',
+      clue: 'Solidul MNS/A/22212 a fost bătut între 441 și 450, în timpul domniei lui Teodosie al II-lea (408–450). Tributul se plătea în aur, inclusiv în monede de acest tip.' },
+    { id: 'craniu', imageLabel: 'Craniu alungit, expus pe un suport', hint: 'E un os adevărat, găsit într-un mormânt: o descoperire arheologică, nu un desen.', kind: 'obj', sel: '#img-craniu', year: 450, y0: 400, y1: 499, label: 'sec. V', name: 'Craniu deformat artificial',
       clue: 'Os real, dintr-un cimitir din vremea stăpânirii hunice. Arată un obicei al epocii, nu și originea omului.' },
-    { id: 'ziduri', hint: 'Pietrele și cărămizile romane se văd și azi la Istanbul.', kind: 'obj', sel: '#img-ziduri', year: 447, y0: 413, y1: 447, label: '413 / 447', name: 'Zidurile Theodosiene',
+    { id: 'ziduri', imageLabel: 'Zid de piatră cu un turn și o poartă', hint: 'Pietrele și cărămizile romane se văd și azi la Istanbul.', kind: 'obj', sel: '#img-ziduri', year: 447, y0: 413, y1: 447, label: '413 / 447', name: 'Zidurile lui Teodosie',
       clue: 'Ridicate în 413 și refăcute în 447, când Attila amenința Constantinopolul. Monument din epocă, fotografiat azi.' },
     { id: 'ammianus', hint: 'Ammianus a fost ofițer roman, contemporan cu sosirea hunilor.', kind: 'txt', ms: '#img-ms-ammianus', msNote: 'Pagina: Res gestae 31.2, despre huni, într-o copie din secolul al IX-lea (Codex Fuldensis, Biblioteca Apostolică Vaticană, Vat. lat. 1873) · domeniu public, Wikimedia Commons.', year: 390, ev: 375, label: 'c. 390', name: 'Ammianus Marcellinus', work: 'Res Gestae, cartea 31',
       about: 'Descrie sosirea hunilor, în 375.',
-      clue: 'Scrie la vreo 15 ani după eveniment, dar nu i-a văzut niciodată pe huni: preia povești și tipare vechi despre „barbari”.' },
-    { id: 'priscus', hint: 'Priscus a fost chiar în solia la curtea lui Attila, în 449.', kind: 'txt', qt: 'Când Vigilas s-a întors la curte, oamenii lui Attila l-au prins și i-au găsit în bagaje aurul adus pentru Edeco.', qtSrc: 'Priscus, relatarea soliei din 449', year: 475, ev: 449, label: 'după 472', name: 'Priscus din Panium', work: 'Istoria (fragmente)',
+      clue: 'Scrie la vreo 15 ani după eveniment, iar descrierea folosește tipare romane despre popoarele din afara imperiului.' },
+    { id: 'priscus', hint: 'Priscus a fost chiar în solia la curtea lui Attila, în 449.', kind: 'txt', qt: 'Când Vigilas s-a întors la curte, oamenii lui Attila l-au prins și i-au găsit în bagaje aurul adus pentru Edeco.', qtSrc: 'Priscus, fr. 8, partea 11 (numerotarea Müller)', year: 475, approximate: true, ev: 449, label: 'după 472', name: 'Priscus din Panium', work: 'Istoria (fragmente)',
       about: 'Povestește solia la curtea lui Attila, din 449.',
       clue: 'Martor ocular: a fost în solie. Cartea lui s-a pierdut; o cunoaștem doar din fragmente copiate de alții.' },
-    { id: 'iordanes', hint: 'Iordanes scrie la Constantinopol, în vremea împăratului Iustinian.', kind: 'txt', qt: 'Acolo puteai vedea gotul luptând cu sulița, gepidul dezlănțuit cu sabia, suevul pe jos, hunul cu arcul.', qtSrc: 'Iordanes, Getica 261', year: 551, ev: 453, label: '551', name: 'Iordanes', work: 'Getica',
-      about: 'Povestește moartea lui Attila, din 453.',
-      clue: 'Scrie la un secol după, dar rezumă cartea lui Priscus: un izvor târziu care păstrează unul timpuriu.' },
-    { id: 'codex', hint: 'Scrisul de mână pe pergament e al unui copist medieval, nu al autorului.', kind: 'copy', ms: '#img-ms-getica', strip: true, msNote: 'Pe imagine: începutul Geticii într-o altă copie, din secolul al IX-lea (Biblioteca Apostolică Vaticană, Pal. lat. 920, f. 49r) · domeniu public, Wikimedia Commons. Manuscrisul de la Heidelberg nu mai există: a ars în 1880.', year: 780, y0: 700, y1: 799, ev: 551, label: 'sec. VIII', name: 'Getica, manuscrisul de la Heidelberg', work: 'copie medievală a cărții lui Iordanes',
-      about: 'O pagină din Getica, cartea lui Iordanes despre goți și huni.', // DE VERIFICAT
-      after: 'după scrierea cărții', q: 'Textul e din 551. Când a fost scrisă pagina aceasta, cea mai veche cunoscută?', hq: 'în ce secol a fost scrisă pagina?', // DE VERIFICAT
-      clue: 'Cea mai veche copie cunoscută a Geticii, păstrată la Heidelberg, era din secolul al VIII-lea. A ars în 1880, în incendiul din casa istoricului Theodor Mommsen, care o împrumutase pentru ediția sa. Textul e din 551, dar orice izvor antic ajunge la noi prin copii: fiecare copist putea greși sau schimba ceva.' },
-    { id: 'catal', hint: 'Uită-te la armuri și la scuturile cu blazoane: sunt cavaleri medievali.', kind: 'img', sel: '#img-catalaunice', year: 1330, label: 'c. 1330', name: 'Bătălia de la Câmpiile Catalaunice',
+    { id: 'iordanes', hint: 'Iordanes scrie la Constantinopol, în vremea împăratului Iustinian.', kind: 'txt', qt: 'Acolo puteai vedea gotul luptând cu sulița, gepidul dezlănțuit cu sabia, suevul pe jos, hunul cu arcul.', qtSrc: 'Iordanes, Getica §261 (fragment adaptat)', year: 551, ev: 454, label: '551', name: 'Iordanes', work: 'Getica',
+      about: 'Descrie luptătorii de la Nedao, în jurul anului 454.',
+      clue: 'Iordanes scrie la aproape un secol după bătălia de la Nedao. Pasajul descrie armele și felul în care luptau mai multe dintre grupurile prezente.' },
+    { id: 'codex', hint: 'Caută data manuscrisului pierdut de la Heidelberg în prima parte a Evului Mediu.', kind: 'copy', ms: '#img-ms-getica', strip: true, msNote: 'Imagine: Biblioteca Apostolică Vaticană, Pal. lat. 920, f. 49r, sec. IX. Răspunsul privește manuscrisul de la Heidelberg.', year: 780, y0: 700, y1: 799, ev: 551, label: 'sec. VIII', name: 'Getica, manuscrisul de la Heidelberg', work: 'copie medievală a cărții lui Iordanes',
+      faceNote: 'Imagine: copie înrudită de la Vatican. Datează manuscrisul de la Heidelberg.',
+      about: 'Imaginea arată copia înrudită de la Vatican (Pal. lat. 920, f. 49r, sec. IX). Întrebarea privește manuscrisul de la Heidelberg.',
+      q: 'În ce secol a fost copiat manuscrisul de la Heidelberg?', hq: 'în ce secol a fost copiat manuscrisul de la Heidelberg?',
+      clue: 'Manuscrisul de la Heidelberg era din secolul al VIII-lea și a ars în 1880. Imaginea arată o altă copie, din secolul al IX-lea.' },
+    { id: 'catal', imageLabel: 'Miniatură cu două armate de cavaleri în luptă', hint: 'Uită-te la armuri și la scuturile cu blazoane: sunt cavaleri medievali.', kind: 'img', sel: '#img-catalaunice', year: 1330, label: 'c. 1330', name: 'Bătălia de la Câmpiile Catalaunice',
       clue: 'Miniatură dintr-o cronică flamandă: hunii apar drept cavaleri medievali, la aproape 900 de ani de bătălie.' },
-    { id: 'aquileia', hint: 'Coifurile și armurile pictate sunt cele din secolul pictorului, nu din al lui Attila.', kind: 'img', sel: '#img-aquileia', year: 1360, label: 'c. 1360', name: 'Attila asediază Aquileia',
+    { id: 'aquileia', imageLabel: 'Miniatură cu războinici asediind o cetate', hint: 'Coifurile și armurile pictate sunt cele din secolul pictorului, nu din al lui Attila.', kind: 'img', sel: '#img-aquileia', year: 1360, label: 'c. 1360', name: 'Attila asediază Aquileia',
       clue: 'Cronica pictată de la Viena: pictorul îi îmbracă pe huni în armurile secolului său.' },
-    { id: 'delacroix', hint: 'Culorile aprinse și mișcarea violentă sunt ale romantismului francez.', kind: 'img', sel: '#img-delacroix', year: 1842, y0: 1838, y1: 1847, label: '1838–1847', name: 'Attila și hoardele sale, de Delacroix',
+    { id: 'delacroix', imageLabel: 'Pictură cu un călăreț deasupra unei mulțimi', hint: 'Culorile aprinse și mișcarea violentă sunt ale romantismului francez.', kind: 'img', sel: '#img-delacroix', year: 1842, y0: 1838, y1: 1847, label: '1838–1847', name: 'Attila și hoardele sale, de Delacroix',
       clue: 'Imaginea romantică a „biciului lui Dumnezeu”, pictată cu aproape 1.400 de ani mai târziu.' },
-    { id: 'neuville', hint: 'E o gravură tipărită, ca ilustrațiile din cărțile de istorie ale secolului al XIX-lea.', kind: 'img', sel: '#img-neuville', year: 1869, label: '1869', name: 'Hunii la Châlons, de Neuville',
+    { id: 'neuville', imageLabel: 'Gravură cu arcași călare în galop', hint: 'E o gravură tipărită, ca ilustrațiile din cărțile de istorie ale secolului al XIX-lea.', kind: 'img', sel: '#img-neuville', year: 1869, label: '1869', name: 'Hunii la Châlons, de Neuville',
       clue: 'Gravură dintr-o istorie a Franței: arcașii călare, așa cum și-i imagina secolul al XIX-lea.' },
-    { id: 'geiger', hint: 'Stilul academic, cu trupuri și cai ca de muzeu, e al secolului al XIX-lea.', kind: 'img', sel: '#img-geiger', year: 1873, label: 'c. 1873', name: 'Hunii în luptă cu alanii, de Geiger',
+    { id: 'geiger', imageLabel: 'Gravură cu luptători călare și pe jos', hint: 'Stilul academic, cu trupuri și cai ca de muzeu, e al secolului al XIX-lea.', kind: 'img', sel: '#img-geiger', year: 1873, label: 'c. 1873', name: 'Hunii în luptă cu alanii, de Geiger',
       clue: 'O scenă imaginată la peste 1.400 de ani după evenimente.' },
-    { id: 'moartea', hint: 'Pictură în ulei, cu lumină de teatru: stilul secolului al XIX-lea.', kind: 'img', sel: '#img-moartea', year: 1884, label: '1884', name: 'Moartea lui Attila, de Paczka',
+    { id: 'moartea', imageLabel: 'Pictură cu oameni adunați în jurul unui pat', hint: 'Pictură în ulei, cu lumină de teatru: stilul secolului al XIX-lea.', kind: 'img', sel: '#img-moartea', year: 1884, label: '1884', name: 'Moartea lui Attila, de Paczka',
       clue: 'Iordanes povestește moartea din noaptea nunții; pictura e imaginea unei scene pe care pictorul n-a văzut-o.' }
   ];
-  // Priscus comentează fiecare carte după ce e așezată. Replica nouă (say) e scrisă pentru joc: DE VERIFICAT.
+  // Priscus comentează fiecare carte după ce e așezată. Replica nouă (say) e scrisă pentru joc.
   // Explicația existentă (clue) rămâne, spusă de el.
   var SAY = {
-    delacroix: 'Asta e pictată la aproape 1.400 de ani după mine. Pictorul n-a văzut niciun hun.', // DE VERIFICAT
-    solid: 'Cu monede ca aceasta plătea Roma tributul lui Attila. E chiar din vremea mea.', // DE VERIFICAT
-    craniu: 'Obiceiul acesta era la modă în vremea mea, la mai multe neamuri, nu doar la huni.', // DE VERIFICAT
-    ziduri: 'Zidurile acestea le știu: am trăit la Constantinopol, în umbra lor.', // DE VERIFICAT
-    ammianus: 'Ammianus a scris înaintea mea, dar n-a ajuns niciodată la huni. Ce știe, știe din auzite.', // DE VERIFICAT
-    priscus: 'Pe acesta îl recunosc: sunt chiar eu. Am scris ce am văzut în solia din 449.', // DE VERIFICAT
-    iordanes: 'Iordanes a scris la un secol după mine și a luat multe din cartea mea.', // DE VERIFICAT
-    codex: 'Cartea lui Iordanes n-a ajuns la tine direct: a trecut prin mâinile multor copiști.', // DE VERIFICAT
-    catal: 'Uită-te la armuri: sunt cavaleri din vremea pictorului, nu războinici din vremea mea.', // DE VERIFICAT
-    aquileia: 'Așa își închipuia un pictor de la Viena asediul. Coifurile sunt ale lui, nu ale noastre.', // DE VERIFICAT
-    neuville: 'O gravură pentru o carte de istorie, făcută la peste 1.400 de ani după bătălie.', // DE VERIFICAT
-    geiger: 'Trupuri ca de statuie și cai ca de muzeu: așa îi vedea pictorul, nu așa arătau.', // DE VERIFICAT
-    moartea: 'Nimeni n-a văzut ce s-a petrecut în noaptea aceea în cortul lui Attila. Pictorul, cu atât mai puțin.', // DE VERIFICAT
-    diadema: 'Aur și pietre roșii: așa se împodobeau nobilii în vremea mea, la huni și la goți deopotrivă.', // DE VERIFICAT
-    cazan: 'Cazanul era un obiect de preț la huni. Fragmentele acestea sunt chiar din vremea mea.' // DE VERIFICAT
+    delacroix: 'Asta e pictată la aproape 1.400 de ani după mine. Pictorul n-a văzut niciun hun.',
+    solid: 'Piesa a fost bătută între 441 și 450, în timpul domniei lui Teodosie al II-lea.',
+    craniu: 'Obiceiul acesta era la modă în vremea mea, la mai multe neamuri, nu doar la huni.',
+    ziduri: 'O inscripție de pe ziduri consemnează refacerea lor în mai puțin de două luni.',
+    ammianus: 'Ammianus a scris înaintea mea. În carte nu spune că i-ar fi întâlnit pe huni.',
+    priscus: 'Pe acesta îl recunosc: sunt chiar eu. Am scris ce am văzut în solia din 449.',
+    iordanes: 'Iordanes a scris la un secol după solia mea și citează relatarea mea în alte pasaje ale cărții.',
+    codex: 'Cartea lui Iordanes n-a ajuns la tine direct: a trecut prin mâinile multor copiști.',
+    catal: 'Uită-te la armuri: sunt cavaleri din vremea pictorului, nu războinici din vremea mea.',
+    aquileia: 'Așa își închipuia un pictor de la Viena asediul. Coifurile sunt ale lui, nu ale noastre.',
+    neuville: 'O gravură pentru o carte de istorie, făcută la peste 1.400 de ani după bătălie.',
+    geiger: 'Trupuri ca de statuie și cai ca de muzeu: așa îi vedea pictorul, nu așa arătau.',
+    moartea: 'Iordanes povestește moartea lui Attila în noaptea nunții. Pictorul a imaginat scena după mai bine de 1.400 de ani.',
+    diadema: 'Aur și pietre roșii: așa se împodobeau nobilii în vremea mea, la huni și la goți deopotrivă.',
+    cazan: 'Aceste fragmente de cazane din Silezia datează din secolele IV–V.'
   };
-  // C7: obiecte din epocă luate din muzeul site-ului (aceleași imagini). Datările și textele: DE VERIFICAT.
+  // C7: obiecte din epocă luate din muzeul site-ului (aceleași imagini). Datările și textele.
   ITEMS.push(
-    { id: 'diadema', hint: 'Aur cu pietre roșii prinse în metal: stilul policrom, la modă printre elitele secolului al V-lea.', kind: 'obj', sel: '#img-diadema', year: 425, y0: 400, y1: 450, label: 'sec. V', name: 'Diadema de la Gherăseni', // DE VERIFICAT
-      clue: 'Diadema de aur cu granate găsită la Gherăseni, în județul Buzău. Un obiect din epoca hunică; nu spune singur cine a purtat-o.' }, // DE VERIFICAT
-    { id: 'cazan', hint: 'Bronz turnat dintr-o bucată, găsit în pământ: o descoperire arheologică, nu un desen.', kind: 'obj', sel: 'img[alt^="Vitrină de muzeu cu trei fragmente de bronz"]', year: 425, y0: 375, y1: 470, label: 'sec. IV–V', name: 'Cazan hunic de bronz (fragmente)', // DE VERIFICAT
-      clue: 'Fragmente de cazane hunice din Silezia cehă. Cazanul turnat dintr-o bucată e piesa cea mai caracteristică a arheologiei hunice: un obiect din epocă.' } // DE VERIFICAT
+    { id: 'diadema', imageLabel: 'Diademă cu o piatră mare în centru', hint: 'Aur cu pietre roșii prinse în metal: stilul policrom, la modă printre elitele secolului al V-lea.', kind: 'obj', sel: '#img-diadema', year: 425, y0: 400, y1: 450, label: 'sec. V', name: 'Diadema de la Gherăseni',
+      clue: 'Diadema de aur cu granate găsită la Gherăseni, în județul Buzău. Un obiect din epoca hunică; nu spune singur cine a purtat-o.' },
+    { id: 'cazan', imageLabel: 'Vitrină cu trei fragmente de cazane din bronz', hint: 'Bronz turnat dintr-o bucată, găsit în pământ: o descoperire arheologică, nu un desen.', kind: 'obj', sel: 'img[alt^="Vitrină de muzeu cu trei fragmente de bronz"]', year: 425, y0: 375, y1: 470, label: 'sec. IV–V', name: 'Cazan hunic de bronz (fragmente)',
+      clue: 'Fragmente de cazane hunice din Silezia cehă. Cazanul turnat dintr-o bucată e piesa cea mai caracteristică a arheologiei hunice: un obiect din epocă.' }
   );
   var KIND = {
     obj: { stamp: 'Obiect din epocă', many: 'Obiecte din epocă', c: '#8fbd82' },
     txt: { stamp: 'Text antic', many: 'Texte antice', c: '#e5c158' },
     img: { stamp: 'Imagine târzie', many: 'Imagini târzii', c: '#e0626c' },
-    copy: { stamp: 'Copie târzie', many: 'Copii târzii', c: '#c79bd9' }
+    copy: { stamp: 'Copie târzie', many: 'Copii târzii', c: '#704081' }
   };
   // izvoarele scrise și copiile lor arată la fel pe masă: o carte
   function isPaper(it){ return it.kind === 'txt' || it.kind === 'copy'; }
@@ -193,7 +194,7 @@
   function cardFace(it){
     if (it.qt) return '<span class="md-paper qt" style="clip-path:' + tornOf(it.id) + '"><q>' + esc(it.qt) + '</q></span>';
     return isPaper(it)
-      ? (it.msrc ? '<span class="md-paper ms' + (it.strip ? ' strip' : '') + '" style="clip-path:' + tornOf(it.id) + ';background-image:url(' + it.msrc + ')"></span>'
+      ? (it.msrc ? '<span class="md-paper ms' + (it.strip ? ' strip' : '') + '" style="clip-path:' + tornOf(it.id) + ';background-image:url(' + it.msrc + ')">' + (it.faceNote ? '<span class="md-ms-band">' + esc(it.faceNote) + '</span>' : '') + '</span>'
         : '<span class="md-paper" style="clip-path:' + tornOf(it.id) + '">' + BOOK + '<b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i></span>')
       : '<img src="' + it.src + '" alt="" aria-hidden="true" draggable="false">';
   }
@@ -202,7 +203,7 @@
     tray.innerHTML = items.map(function(it){
       var p = placed[it.id] && placed[it.id].cls ? placed[it.id] : null, k = KIND[it.kind], r = rng(hash(it.id));
       var lay = '--r:' + (r() * 8 - 4).toFixed(2) + 'deg;--dx:' + (r() * 8 - 4).toFixed(1) + 'px;--dy:' + (r() * 6 - 3).toFixed(1) + 'px';
-      return '<button type="button" role="listitem" style="' + lay + '" class="md-card' + (isPaper(it) ? ' txt' : '') + (p ? ' done' : '') + (sel === it.id ? ' sel' : '') + '" data-id="' + it.id + '" aria-pressed="' + (sel === it.id) + '" aria-label="' + esc(p ? it.name + ', așezată' : (it.qt ? 'Fragment de text, încă neașezat' : isPaper(it) ? 'Pagină de manuscris, încă neașezată' : 'Imagine fără titlu, încă neașezată')) + '">' +
+      return '<button type="button" role="listitem" style="' + lay + '" class="md-card' + (isPaper(it) ? ' txt' : '') + (p ? ' done' : '') + (sel === it.id ? ' sel' : '') + '" data-id="' + it.id + '" aria-pressed="' + (sel === it.id) + '" aria-label="' + esc(p ? it.name + ', așezată' : (it.qt ? 'Fragment de text, încă neașezat' : isPaper(it) ? (it.faceNote || 'Pagină de manuscris, încă neașezată') : it.imageLabel + ', încă neașezată')) + '">' +
         cardFace(it) + (p ? '<span class="md-stamp" style="--c:' + k.c + '">' + k.stamp + '</span>' : '') + '</button>';
     }).join('');
   }
@@ -219,7 +220,7 @@
       : isPaper(it)
       ? (it.msrc ? '<div class="md-insp-paper ms"><div class="md-insp-page' + (it.strip ? ' strip' : '') + '"><img src="' + it.msrc + '" alt="' + esc(p ? it.msNote : 'Pagină de manuscris, încă neașezată') + '"></div>' + (p ? '<b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i>' : '') + '<p>' + esc(it.about) + '</p>' + (p ? '<small>' + esc(it.msNote) + '</small>' : '') + '</div>'
         : '<div class="md-insp-paper">' + BOOK + '<b>' + esc(it.name) + '</b><i>' + esc(it.work) + '</i><p>' + esc(it.about) + '</p></div>')
-      : '<div class="md-zoom" id="md-zoom"><img src="' + it.src + '" alt="' + esc(p ? it.name : 'Sursa selectată, încă fără titlu') + '" draggable="false"><span class="md-lens" id="md-lens" hidden></span>' +
+      : '<div class="md-zoom" id="md-zoom"><img src="' + it.src + '" alt="' + esc(p ? it.name : it.imageLabel) + '" draggable="false"><span class="md-lens" id="md-lens" hidden></span>' +
         '<button type="button" class="md-zbtn" id="md-zbtn" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 10l4 4M6.5 4.5v4M4.5 6.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Mărește</span></button><span class="md-ztip">Lupa: treci cu mouse-ul peste imagine</span></div>';
     var body;
     if (!p) {
@@ -236,11 +237,10 @@
           '<button type="button" data-k="copy" style="--c:' + KIND.copy.c + '"><b>Copie târzie a unui text</b><span>text antic, copiat de mână în Evul Mediu</span></button>' +
         '</div><p class="md-how">Un punct în plus dacă alegi corect. Abia apoi afli anul real.</p>';
     } else {
-      var dd = dist(p.guess, it), off = p.guess - it.year, offTxt = dd === 0 ? (it.y0 != null ? 'în interval' : 'exact') : dd <= 10 ? 'aproape exact' : (off > 0 ? 'cu ' + ani(dd) + ' prea târziu' : 'cu ' + ani(dd) + ' prea devreme');
-      var gapTxt = it.kind === 'img' ? ' La ' + ani(Math.round((it.year - 453) / 10) * 10) + ' după Attila.' : isPaper(it) ? ' La ' + ani(it.year - it.ev) + ' ' + (it.after || 'după eveniment') + '.' : '';
+      var dd = dist(p.guess, it), off = p.guess - it.year, offTxt = it.approximate && dd < 25 ? 'aproape de reperul de pe axă' : dd === 0 ? (it.y0 != null ? 'în interval' : 'exact') : dd <= 10 ? 'aproape exact' : (off > 0 ? 'cu ' + ani(dd) + ' prea târziu' : 'cu ' + ani(dd) + ' prea devreme');
       body = '<h3 class="md-name">' + esc(it.name) + ' <span>' + esc(it.label) + '</span></h3>' +
         '<p class="md-verdict" style="--c:' + k.c + '"><b>' + k.stamp + '</b>' + (p.cls === it.kind ? ' · tip corect +1' : ' · tu ai spus: ' + KIND[p.cls].stamp.toLowerCase()) + ' · ai ales ' + p.guess + ', ' + offTxt + (p.hint ? ' · indiciu −1' : '') + ' · <b>+' + gained(it, p) + '</b></p>' +
-        '<p class="md-clue md-clue-g">Priscus îți spune ce e cu ea, în banda lui.</p>';
+        '<p class="md-clue md-clue-g">Citește mai jos ce spune Priscus despre ea.</p>';
       var next = nextFree(it.id);
       if (next) body += '<button class="md-btn" type="button" id="md-next">Următoarea sursă</button>';
     }
@@ -297,26 +297,26 @@
   function guideIntro(){
     tour = seen() ? -1 : 0;
     say(tour === 0
-      ? [{ t: 'Hai să vedem ce ai reținut. Pe masă sunt ' + items.length + ' de surse despre huni, amestecate.' }, { t: 'Alege una, oricare. La prima te ajut eu.' }] // DE VERIFICAT
-      : [{ t: 'Hai să vedem ce ai reținut. Alege o sursă de pe masă și așaz-o pe axă.' }], { act: '' }); // DE VERIFICAT
+      ? [{ t: 'Hai să vedem ce ai reținut. Pe masă sunt ' + items.length + (items.length >= 20 ? ' de surse' : ' surse') + ' despre huni, amestecate.' }, { t: 'Alege una, oricare. La prima te ajut eu.' }]
+      : [{ t: 'Hai să vedem ce ai reținut. Alege o sursă de pe masă și așaz-o pe axă.' }], { act: '' });
   }
   function guideSelect(it){
     if (tour !== 0 || !it || placed[it.id]) return;
     tour = 1;
-    say([{ k: 'Pasul 1 · Așaz-o pe axă', t: 'Întâi gândește-te când a fost făcută. Atinge epoca pe axă ca s-o mărești, apoi anul; poți și să tragi cartea până acolo.' }, // DE VERIFICAT
-      { t: 'Cu cât ești mai aproape de anul real, cu atât primești mai multe puncte, până la trei.' + (it.hint ? ' Dacă nu știi, cere un indiciu, dar te costă un punct.' : '') }], { act: '' }); // DE VERIFICAT
+    say([{ k: 'Pasul 1 · Așaz-o pe axă', t: 'Întâi gândește-te când a fost făcută. Atinge epoca pe axă ca s-o mărești, apoi anul; poți și să tragi cartea până acolo.' },
+      { t: 'Cu cât ești mai aproape de anul real, cu atât primești mai multe puncte, până la trei.' + (it.hint ? ' Dacă nu știi, cere un indiciu, dar te costă un punct.' : '') }], { act: '' });
   }
   function guidePlace(){
     if (tour !== 1) return;
     tour = 2;
-    say([{ k: 'Pasul 2 · Ce fel de sursă e?', t: 'Acum spune ce fel de sursă ai în față: un obiect din vremea mea, un text antic, o copie făcută mai târziu sau o imagine târzie. Dacă alegi bine, mai primești un punct.' }], { act: '' }); // DE VERIFICAT
+    say([{ k: 'Pasul 2 · Ce fel de sursă e?', t: 'Acum spune ce fel de sursă ai în față: un obiect din vremea mea, un text antic, o copie făcută mai târziu sau o imagine târzie. Dacă alegi bine, mai primești un punct.' }], { act: '' });
   }
   function guideReact(it){
-    var p = placed[it.id], gap = it.kind === 'img' ? ' La ' + ani(Math.round((it.year - 453) / 10) * 10) + ' după Attila.' : isPaper(it) ? ' La ' + ani(it.year - it.ev) + ' ' + (it.after || 'după eveniment') + '.' : '';
+    var gap = it.kind === 'img' ? ' La ' + ani(Math.round((it.year - 453) / 10) * 10) + ' după Attila.' : '';
     var lines = [];
     if (SAY[it.id]) lines.push({ k: it.name + ' · ' + it.label, t: SAY[it.id] });
     lines.push({ k: SAY[it.id] ? '' : it.name + ' · ' + it.label, t: it.clue + gap });
-    if (tour === 2) { tour = 3; try { localStorage.setItem(TOUR, '1'); } catch (e) {} lines.push({ t: 'Asta e tot. De aici mergi singur; butonul „?” de sus îți arată regulile oricând.' }); } // DE VERIFICAT
+    if (tour === 2) { tour = 3; try { localStorage.setItem(TOUR, '1'); } catch (e) {} lines.push({ t: 'Asta e tot. De aici mergi singur; butonul „?” de sus îți arată regulile oricând.' }); }
     say(lines, { act: '' });
   }
 
@@ -433,6 +433,17 @@
   }
 
   function faceOf(it){ return isPaper(it) ? BOOK : '<img src="' + it.src + '" alt="" aria-hidden="true">'; }
+  function fitAnswerGroups(){
+    if (vert) return;
+    var axis = tl.getBoundingClientRect();
+    Array.prototype.forEach.call(pins.querySelectorAll('.md-clu-pop'), function(pop){
+      pop.style.removeProperty('--shift');
+      if (!pop.getClientRects().length) return;
+      var box = pop.getBoundingClientRect();
+      var shift = Math.max(0, axis.left - box.left) - Math.max(0, box.right - axis.right);
+      if (shift) pop.style.setProperty('--shift', shift + 'px');
+    });
+  }
   function renderPins(fresh){
     var len = (vert ? tl.clientHeight : tl.clientWidth) || 800, size = vert ? 36 : (len < 500 ? 30 : 42), lanes = [];
     var list = items.filter(function(it){ return placed[it.id] && placed[it.id].cls; }).sort(function(a, b){ return a.year - b.year; });
@@ -464,6 +475,7 @@
       return '<div class="md-pin-g" style="--lane:0"><button type="button" class="md-pin md-pend' + (isPaper(it) ? ' txt' : '') + (sel === it.id ? ' sel' : '') + (e ? ' ' + e : '') + '" data-id="' + it.id + '"' + posAttr(p.guess) + ' style="' + posStyle(p.guess) + '--c:#f2d474" aria-label="' + esc((isPaper(it) ? it.name : 'Sursa aleasă') + ', așezată în ' + p.guess + ', încă neclasificată') + '">' + faceOf(it) + '</button></div>';
     }).join('');
     pins.innerHTML = html + cluHtml + pend;
+    if (tl.classList.contains('answers')) fitAnswerGroups();
     // pinul nou pornește din anul ales și alunecă până la anul real
     var mv = pins.querySelector('.md-pin[data-to]');
     if (mv) requestAnimationFrame(function(){ requestAnimationFrame(function(){ mv.setAttribute('data-y', mv.getAttribute('data-to')); mv.style.setProperty('--p', pv(view(+mv.getAttribute('data-to')))); }); });
@@ -513,7 +525,7 @@
   tl.addEventListener('pointerleave', function(){ if (!drag && !adjustOn && document.activeElement !== tl) cursor.hidden = true; });
   tl.addEventListener('click', function(e){
     var cb = e.target.closest('.md-clu-b');
-    if (cb) { var open = cb.parentNode.classList.toggle('open'); cb.setAttribute('aria-expanded', open ? 'true' : 'false'); return; }
+    if (cb) { var open = cb.parentNode.classList.toggle('open'); cb.setAttribute('aria-expanded', open ? 'true' : 'false'); if (open) fitAnswerGroups(); return; }
     var pin = e.target.closest('.md-pin');
     if (pin) { select(pin.getAttribute('data-id')); return; }
     var v = frac(e), k = eraAt(v);
@@ -681,18 +693,18 @@
     sel = null; renderTray(); tl.classList.remove('armed'); tl.tabIndex = -1;
     inspectEmpty();
     var endEl = $('md-endw'); endEl.hidden = false;
-    endEl.innerHTML = '<div class="md-end"><h2 class="md-end-h">' + ani(firstImg - 453) + ' de tăcere</h2><p class="md-end-sub">De la moartea lui Attila până la prima imagine cunoscută a hunilor: niciun portret, nicio scenă.</p><p class="md-big">' + // DE VERIFICAT: subtitlul
+    endEl.innerHTML = '<div class="md-end"><h2 class="md-end-h">' + ani(firstImg - 453) + ' până la prima imagine din joc</h2><p class="md-end-sub">Comparația pornește de la moartea lui Attila în 453 și se oprește la cea mai veche ilustrație de pe această axă.</p><p class="md-big">' +
       '' + score + ' <span>/ ' + max + '</span></p><p class="md-rank">' + rank + '</p>' +
       ladder(max, rank) +
       '<ul class="md-cats">' + ['obj', 'txt', 'copy', 'img'].map(function(k){ var all = items.filter(function(it){ return it.kind === k; }), ok = all.filter(function(it){ return placed[it.id].cls === k; }).length; return all.length ? '<li style="--c:' + KIND[k].c + '"><b>' + KIND[k].many + '</b><span>' + ok + ' din ' + all.length + ' recunoscute</span></li>' : ''; }).join('') + '</ul>' +
-      '<p class="md-sum">Din ' + items.length + ' surse, doar ' + objs + ' obiecte și ' + txts + ' cărți sunt din Antichitate. Toate cele ' + late.length + ' imagini sunt făcute la peste ' + ani(Math.floor((firstImg - 453) / 100) * 100) + ' după Attila.' + (byId('codex') ? ' Iar copia Geticii arată o altă capcană: textul e din 551, dar îl citim dintr-un manuscris copiat de mână în secolul al VIII-lea.' : '') + '</p>' +
+      '<p class="md-sum">Din ' + items.length + ' surse, doar ' + objs + ' obiecte și ' + txts + ' cărți sunt din Antichitate. Toate cele ' + late.length + ' imagini sunt făcute la peste ' + ani(Math.floor((firstImg - 453) / 100) * 100) + ' după Attila.' + (byId('codex') ? ' Iar copia Geticii arată o altă capcană: textul e din 551, dar manuscrisul de la Heidelberg era din secolul al VIII-lea, iar imaginea arată o copie de la Vatican din secolul al IX-lea.' : '') + '</p>' +
       '<ul><li>Obiectele (monede, oase, ziduri) au existat în vremea hunilor, dar nu spun singure cine le-a folosit.</li>' +
       '<li>Nu se cunoaște niciun portret al lui Attila făcut în timpul vieții lui.</li>' +
-      '<li>O imagine târzie e și ea o sursă, dar despre epoca în care a fost făcută, nu despre huni: întreabă „când și pentru cine a fost făcută?”.</li></ul>' + // DE VERIFICAT
+      '<li>O imagine târzie e și ea o sursă, dar despre epoca în care a fost făcută, nu despre huni: întreabă „când și pentru cine a fost făcută?”.</li></ul>' +
       '<div class="md-end-btns"><button class="md-btn" type="button" id="md-ans" aria-pressed="false">Vezi răspunsurile pe axă</button><button class="md-btn" type="button" id="md-cert">Certificatul tău (imagine)</button><button class="md-btn ghost" type="button" id="md-share">Copiază rezultatul</button><button class="md-btn ghost" type="button" id="md-again">Așază din nou</button></div><p class="md-shared" id="md-shared" aria-live="polite"></p></div>';
     $('md-hint').textContent = 'Toate sursele sunt pe axă. Atinge o miniatură ca s-o revezi.';
     $('md-again').addEventListener('click', reset);
-    $('md-ans').addEventListener('click', function(){ var on = tl.classList.toggle('answers'); this.setAttribute('aria-pressed', on ? 'true' : 'false'); this.textContent = on ? 'Ascunde răspunsurile' : 'Vezi răspunsurile pe axă'; });
+    $('md-ans').addEventListener('click', function(){ var on = tl.classList.toggle('answers'); this.setAttribute('aria-pressed', on ? 'true' : 'false'); fitAnswerGroups(); this.textContent = on ? 'Ascunde răspunsurile' : 'Vezi răspunsurile pe axă'; });
     $('md-share').addEventListener('click', function(){
       var txt = 'Masa istoricului: ' + rank + ', ' + score + ' din ' + max + ' puncte. ' + location.href.split('#')[0] + '#mod-atelier', out = $('md-shared');
       function ok(){ out.textContent = 'Copiat: ' + txt; }
@@ -700,24 +712,11 @@
     });
     var end = endEl.querySelector('.md-end'); end.setAttribute('tabindex', '-1'); end.focus({ preventScroll: true });
     endEl.scrollIntoView({ behavior: mqR.matches ? 'auto' : 'smooth', block: 'start' });
-    countUp(endEl.querySelector('.md-big'), score);
-    say([{ k: ani(firstImg - 453) + ' de tăcere', t: 'De la moartea lui Attila au trecut ' + ani(firstImg - 453) + ' până la prima imagine a hunilor pe care o cunoaștem. Toate imaginile pictate de pe masă sunt făcute de oameni care nu i-au văzut niciodată pe huni.' }], { act: '' }); // DE VERIFICAT
+    say([{ k: ani(firstImg - 453) + ' până la prima imagine din joc', t: 'Cea mai veche ilustrație de pe axă a fost făcută la aproximativ ' + ani(firstImg - 453) + ' după moartea lui Attila.' }], { act: '' });
     try { localStorage.setItem('ah-masa', rank); document.dispatchEvent(new CustomEvent('ah-progres')); } catch (e) {}
     $('md-cert').addEventListener('click', function(){ certificate(rank, score, max, this); });
   }
 
-  // un număr dintr-un text urcă de la 0 la valoarea lui (fără mișcare pe ecran, doar cifre)
-  function countUp(el, to){
-    if (!el) return;
-    var txt = el.innerHTML, t0 = 0, re = new RegExp(fmt(to).replace('.', '\\.'));
-    function step(ts){
-      if (!t0) t0 = ts;
-      var k = Math.min(1, (ts - t0) / 1100);
-      el.innerHTML = k < 1 ? txt.replace(re, fmt(Math.round(to * (1 - Math.pow(1 - k, 3))))) : txt;
-      if (k < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
   // certificatul: desenat într-un canvas, ca imaginea să poată fi salvată sau trimisă
   function certificate(rank, sc, max, btn){
     var box = $('md-cert-box');

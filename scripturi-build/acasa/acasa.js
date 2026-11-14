@@ -31,9 +31,15 @@
     if (o) { show(); var a = links.querySelector('a.active') || links.querySelector('a'); if (a) a.focus({ preventScroll: true }); }
   }
   if (btn) btn.addEventListener('click', function(){ setOpen(!nav.classList.contains('open')); });
-  links.addEventListener('click', function(e){ if (mqM.matches && e.target.closest('a, button')) setOpen(false); });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && nav.classList.contains('open')) { setOpen(false); btn.focus(); } });
-  document.addEventListener('click', function(e){ if (nav.classList.contains('open') && !nav.contains(e.target)) setOpen(false); });
+  links.addEventListener('click', function(e){
+    if (mqM.matches && e.target.closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape' || e.defaultPrevented || !nav.classList.contains('open')) return;
+    setOpen(false);
+    btn.focus();
+  });
+  document.addEventListener('click', function(e){ if (nav.classList.contains('open') && !nav.contains(e.target) && !e.target.closest('.about-overlay')) setOpen(false); });
   on(mqM, function(){ setOpen(false); fit(); });
 
   // „↑ Cuprins” de după fiecare capitol: aduce bara înapoi (pe telefon, deschide sertarul)
