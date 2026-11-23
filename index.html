@@ -4695,6 +4695,69 @@ html body #page-acasa .m-atlas .year-badge{
 }
 @media print{.photo-point,.photo-hint,.photo-detail{ display: none !important; }}
 </style>
+<!-- ritm:start -->
+<style id="ritm">
+/* Ritmul paginii (23.11.2026): o singură distanță între capitole, valori pe grila de 4/8 px,
+   o singură mărime pentru textele mărunte și etichete de hartă lizibile. Inserat de patch-ordine-spatiere.js. */
+
+/* 1. Distanța dintre capitole: ornament → titlu, la fel peste tot */
+html body #page-acasa .ch-orn { margin-top: 64px !important; margin-bottom: 32px !important; }
+html body #page-acasa #sec-cronologie,
+html body #page-acasa #sec-migratie,
+html body #page-acasa #sec-atlas,
+html body #page-acasa #sec-personalitati { margin-top: 0 !important; padding-top: 32px !important; }
+html body #page-acasa #sec-glosar,
+html body #page-acasa #biblio { margin-top: 96px !important; padding-top: 0 !important; }
+
+/* 4. Spațieri rotunjite la grila de 4/8 px */
+html body #page-acasa article p { margin-bottom: 24px; }
+html body #page-acasa h3.sub-title { margin-top: 40px !important; }
+html body #page-acasa .vd-group { margin-top: 40px !important; margin-bottom: 40px !important; }
+html body #page-acasa .vd-body { gap: 24px !important; }
+html body #page-acasa .duel,
+html body #page-acasa .gs-pin,
+html body #page-acasa .margus-context { gap: 32px !important; }
+html body #page-acasa section.r10-band { padding: 32px !important; }
+html body #page-acasa .cascade li.cs-step { margin-bottom: 32px !important; }
+html body #page-acasa img.img-parchment { padding: 4px !important; }
+
+/* 3. Mărimi de font: textele mărunte pe 13 px, notele și bibliografia pe 14 px, titlurile pe treptele scării */
+html body #page-acasa small,
+html body #page-acasa .journey-caption,
+html body #page-acasa .time-tick { font-size: 13px !important; }
+html body #page-acasa ol.biblio li,
+html body #page-acasa ol.biblio li em,
+html body #page-acasa ol.biblio li b { font-size: 14px !important; line-height: 1.55 !important; }
+html body #page-acasa .vd-question h4,
+html body #page-acasa [id^="vd-question"] h4 { font-size: 26px !important; }
+html body #page-acasa #sec-personalitati .duel h3,
+html body #page-acasa h3.vd-research-head { font-size: 32px !important; }
+
+/* 2. Etichetele Atlasului: aceeași mărime pe ecran (11 px) la orice lățime.
+   --map-k = lățimea viewBox / lățimea afișată, calculată de scriptul din patch. */
+html body #page-acasa .map-svg .region-label,
+html body #page-acasa .map-svg .sea-label,
+html body #page-acasa .map-svg .m-label,
+html body #page-acasa .map-svg .route-label { font-size: calc(11px * var(--map-k, 1)) !important; }
+html body #page-acasa .map-svg .river-label { font-size: calc(10.5px * var(--map-k, 1)) !important; }
+
+@media (max-width: 720px) {
+  html body #page-acasa .ch-orn { margin-top: 48px !important; margin-bottom: 24px !important; }
+  html body #page-acasa #sec-cronologie,
+  html body #page-acasa #sec-migratie,
+  html body #page-acasa #sec-atlas,
+  html body #page-acasa #sec-personalitati { padding-top: 24px !important; }
+  html body #page-acasa #sec-glosar,
+  html body #page-acasa #biblio { margin-top: 64px !important; }
+  html body #page-acasa section.r10-band { padding: 24px 16px !important; }
+  /* „Știai că…?” aliniat la marginea textului */
+  html body #page-acasa .r9-note { margin-left: 0 !important; margin-right: 0 !important; }
+  /* pe telefon rămân regiunile și mările; râurile se ascund ca să nu se suprapună */
+  html body #page-acasa .map-svg .river-label { display: none !important; }
+}
+</style>
+<script id="ritm-js">(function(){function k(){document.querySelectorAll('.map-svg').forEach(function(s){var w=s.getBoundingClientRect().width,v=s.viewBox&&s.viewBox.baseVal;if(w>0&&v&&v.width)s.style.setProperty('--map-k',(v.width/w).toFixed(3));});}addEventListener('load',k);addEventListener('resize',k);if(window.ResizeObserver){var r=new ResizeObserver(k),seen=new WeakSet();function watch(){document.querySelectorAll('.map-svg').forEach(function(s){if(!seen.has(s)){seen.add(s);r.observe(s);}});k();}document.addEventListener('DOMContentLoaded',function(){watch();var t=0;new MutationObserver(function(){if(!t)t=setTimeout(function(){t=0;watch();},200);}).observe(document.body,{childList:true,subtree:true});});}})();</script>
+<!-- ritm:end -->
 </head>
 <body>
 <a class="skip-to-main" href="#site-main">Sari la conținut</a>
@@ -4906,6 +4969,7 @@ html body #page-acasa .m-atlas .year-badge{
       <p>Granița de pe Dunăre și Rin, <i>limes</i>-ul roman, nu mai putea fi închisă. După dezastrul de la Adrianopol (378), împăratul Teodosie I îi așază pe goți în Imperiu, în 382, ca <i>foederati</i>: aliați legați printr-un tratat, care primeau pământ și luptau pentru Roma sub propriii conducători.</p>
         </div>
       </div>
+      <!-- pq:start --><figure class="pq"><blockquote><p>Orașul care a cucerit lumea întreagă a fost cucerit el însuși.</p></blockquote><figcaption><b>Ieronim</b>, Scrisoarea 127, despre jefuirea Romei (410) · traducere adaptată</figcaption></figure><!-- pq:end -->
 
       <div class="sr-row sr-reveal">
         <div class="sr-media"><figure class="sr-fig"><img id="img-ziduri" src="media/b64ca18fab0a.jpg" alt="Zidurile lui Teodosie ale Constantinopolului, porțiune păstrată, cu un turn și o poartă." loading="lazy"><figcaption><b>Zidurile lui Teodosie</b> ale Constantinopolului, ridicate în 413 și refăcute în grabă în 447, după un cutremur, când armata lui Attila se apropia. Foto: <a href="https://commons.wikimedia.org/wiki/File:Theodosian_Walls_of_Constantinople%2C_Istanbul_%2837905571151%29.jpg">Carole Raddato</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</figcaption></figure></div>
@@ -4966,7 +5030,6 @@ html body #page-acasa .m-atlas .year-badge{
       <!-- aur:end -->
       <aside class="r9-note" aria-label="Știai că…? 500 de solizi"><p class="r9n-tag">Știai că…?</p><p class="r9n-num">500</p><p class="r9n-unit">de solizi</p><p class="r9n-text">Priscus povestește că Onegesius a eliberat-o pe soția lui Syllus pentru 500 de monede de aur. Copiii ei au fost trimiși împăratului roman ca dar.</p><p class="r9n-src">Sursa: Priscus, fr. 8, partea 10 (Müller) (<a class="mx-note" href="#note-11">nota 11</a>)</p></aside>
 
-      <!-- pq:start --><figure class="pq"><blockquote><p>Orașul care a cucerit lumea întreagă a fost cucerit el însuși.</p></blockquote><figcaption><b>Ieronim</b>, Scrisoarea 127, despre jefuirea Romei (410) · traducere adaptată</figcaption></figure><!-- pq:end -->
       <p class="to-atlas"><a href="#sec-atlas">Traseele vizigoților, ostrogoților, vandalilor și hunilor, an cu an: vezi Atlasul →</a></p>
       <p class="section-sources">Surse pentru traseele de pe hartă: trecerea Dunării de către vizigoți<sup class="fn" data-n="13">13</sup> și trecerea Rinului, consemnată de Prosper pentru vandali și alani<sup class="fn" data-n="14">14</sup>.</p>
     </section>
@@ -5135,8 +5198,8 @@ html body #page-acasa .m-atlas .year-badge{
             <p class="dc-epithet">„Flagellum Dei”, Biciul lui Dumnezeu<sup class="fn" data-n="15">15</sup></p>
             <p class="dk-label">Fapte-cheie</p>
             <ul class="dk-facts">
-              <li>Conduce imperiul hunic singur din 445 d.Hr., după înlăturarea fratelui său, Bleda.</li>
               <li>Devastează Balcanii (441–447) și obține tribut anual uriaș de la Constantinopol.</li>
+              <li>Conduce imperiul hunic singur din 445 d.Hr., după înlăturarea fratelui său, Bleda.</li>
               <li>Invadează Galia (451) și Italia (452); moare în 453, în noaptea nunții cu Ildico.</li>
             </ul>
           </div>
@@ -5174,19 +5237,6 @@ html body #page-acasa .m-atlas .year-badge{
 
       <div class="vd-group" data-myths="8,7" data-title="Ce se spune și ce se știe"></div>
       <div class="sr-row sr-reveal">
-        <div class="sr-media"><figure class="sr-fig"><img class="img-parchment" id="img-delacroix" src="media/789e943479ae.webp" alt="Pictură romantică: Attila călare, urmat de războinici, trece peste figuri care reprezintă Italia și artele." loading="lazy"><figcaption>Eugène Delacroix, <b><i>Attila și hoardele sale călcând Italia și artele</i></b> (1838–1847, detaliu), Palatul Bourbon, Paris: imaginea romantică a „biciului lui Dumnezeu”. Domeniu public.</figcaption></figure></div>
-        <div class="sr-text">
-      <h3 class="sub-title">Consecințe de lungă durată</h3>
-      <ol class="cascade" aria-label="Consecințele, ca un lanț de cauze și efecte">
-        <li class="cs-step" style="--k:0"><p class="it-year">476 d.Hr.</p><p>La doar 23 de ani după moartea lui Attila, ultimul împărat al Romei de Apus este detronat. E data convențională a căderii Imperiului Roman de Apus.</p></li>
-        <li class="cs-step" style="--k:1"><p class="it-year">493 d.Hr.</p><p>Ostrogoții, eliberați de sub tutela hunică, întemeiază sub Teodoric cel Mare un regat propriu în Italia.</p></li>
-        <li class="cs-step" style="--k:2"><p class="it-year">c. 500 d.Hr.</p><p>Vandalii în Africa de Nord, vizigoții în Hispania, francii în ascensiune în Galia; harta etnică a Europei occidentale e complet redesenată.</p></li>
-        <li class="cs-step" style="--k:3"><p class="it-year">Peste secole</p><p>Marea Migrație marchează, pentru istoriografia modernă, tranziția simbolică de la Antichitate la Evul Mediu timpuriu.</p></li>
-      </ol>
-        </div>
-      </div>
-
-      <div class="sr-row sr-reveal">
         <div class="sr-media"><figure class="sr-fig"><img id="img-pietroasa" src="media/d06b1198a4df.webp" alt="Planșă litografiată: vase și podoabe de aur din tezaurul de la Pietroasa, pe o draperie roșie." loading="lazy"><figcaption><b>Tezaurul de la Pietroasa</b> („Cloșca cu puii de aur”), planșă de H. Trenk din monografia lui Alexandru Odobescu (1889–1900). Tezaur gotic, îngropat probabil sub presiunea sosirii hunilor. Domeniu public.</figcaption></figure><figure class="sr-fig"><div class="photo-points"><img id="img-diadema" src="media/a5a6da80d540.webp" alt="Diademă hunică din foiță de aur, montată pe un suport de expunere: bandă lată acoperită cu rânduri de plăcuțe de granat roșu montate în celule, cu o piatră rotundă centrală și bordură aurie perlată." loading="lazy" width="1300" height="884"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Piatra centrală (cabochon)" data-title="Piatra centrală (cabochon)" data-detail="O piatră rotundă, șlefuită în cabochon (rotunjită, fără fațete), marchează mijlocul diademei. De la ea pornesc, simetric, celelalte pietre." style="--point-x:49%;--point-y:35%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Almandinele à cabochon" data-title="Almandinele à cabochon" data-detail="Pietre roșii de almandină (un tip de granat), șlefuite rotunjit și prinse fiecare în montura ei de aur, „à cabochon”: stilul policrom răspândit în Bazinul Carpatic în perioada hunică. Spre deosebire de tehnica cloisonné, în care plăcuțele de granat sunt tăiate pe forma celulelor (ca la vulturul de la Apahida), aici pietrele sunt rotunjite. Analiza antropologică a scheletului din mormânt a arătat un craniu deformat artificial." style="--point-x:27%;--point-y:48%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Urmele de asamblare" data-title="Urmele de asamblare" data-detail="Foița de aur nu e dintr-o singură bucată: se văd cusăturile unde segmentele separate au fost îmbinate. Diadema era montată pe un suport perisabil (piele sau textil), care nu s-a păstrat." style="--point-x:66%;--point-y:34%"></button></div><figcaption><b>Diadema de la Gherăseni</b> (jud. Buzău), prima jumătate a sec. V, Muzeul Județean Buzău. Foto: Laci3, CC0. <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure></div>
         <div class="sr-text">
       <h3 class="sub-title">Ecoul în spațiul carpato-danubiano-pontic</h3>
@@ -5207,6 +5257,19 @@ html body #page-acasa .m-atlas .year-badge{
         </div>
       </section>
       <div class="photo-evidence-pair"><figure class="photo-evidence"><div class="photo-points"><img id="img-diadema-stepa" src="media/cfd242ed0277.webp" width="900" height="628" alt="Diademă ovală cu granate roșii montate în celule, decor de triunghiuri din granule și zeci de tuburi metalice dispuse ca niște raze." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Granatele în celule" data-title="Granatele în celule" data-detail="Pietrele roșii sunt granate (almandine), tăiate și montate fiecare în celula ei de metal. E același stil policrom ca la diadema de la Gherăseni, dovada unei mode comune elitei din tot spațiul dominat de huni." style="--point-x:50%;--point-y:23%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Triunghiurile din granule" data-title="Triunghiurile din granule" data-detail="Câmpul dintre pietre e acoperit cu triunghiuri formate din bobițe minuscule de metal, lipite una câte una: tehnica granulației, care cerea o mare îndemânare." style="--point-x:42%;--point-y:45%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Tuburile ca niște raze" data-title="Tuburile ca niște raze" data-detail="Zecile de tuburi și pandantive dispuse în jur dădeau diademei aspectul unui soare. Mișcându-se odată cu purtătoarea, ele străluceau și sunau ușor." style="--point-x:86%;--point-y:45%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="O piesă din răsărit" data-title="O piesă din răsărit" data-detail="Diademe cu elemente asemănătoare sunt cunoscute din stepa eurasiatică până în Europa Centrală. Asemănările ajută la compararea tehnicii și a podoabelor de rang." style="--point-x:33%;--point-y:86%"></button></div><figcaption><strong>Diadema de la Verhne-Pogromnoe</strong>. Diademă hunică din argint și bronz, cu granate, descoperită în cimitirul de la Verhne-Pogromnoe (regiunea Volgograd), pe drumul hunilor spre Europa. Ermitajul de Stat, Sankt Petersburg, inv. 1953-30. <small>Ermitajul de Stat, Sankt Petersburg · foto: <a href="https://commons.wikimedia.org/wiki/File:Hermitage_hall_033_-_02.jpg">Netelo</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure><figure class="photo-evidence"><div class="photo-points"><img id="img-cazan" src="media/c88b11f33f9e.webp" width="1200" height="949" alt="Vitrină de muzeu cu trei fragmente de bronz dintr-un cazan hunic: o bucată de buză cu nervuri orizontale, o toartă masivă cu proeminențe în formă de ciupercă și un fragment mic, alături de eticheta expoziției." loading="lazy"><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Buza cu nervuri orizontale" data-title="Buza cu nervuri orizontale" data-detail="Fragment de buză cu nervuri orizontale în relief, element decorativ tipic al cazanelor hunice. Piesa provine de la Milotice nad Opavou și este împrumutată de la muzeul din Bruntál." style="--point-x:45%;--point-y:25%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Toarta „în formă de ciupercă”" data-title="Toarta „în formă de ciupercă”" data-detail="Toartele masive, cu proeminențe în formă de ciupercă, sunt elementul de diagnostic care deosebește cazanele hunice de cele scitice sau sarmatice anterioare. Fragmentul provine de la Razová și este din cupru." style="--point-x:84%;--point-y:30%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Fragment de la Úvalno" data-title="Fragment de la Úvalno" data-detail="Bucată mică, împrumutată de la Muzeul Municipal din Krnov. Cazanele hunice apar rareori întregi: cele mai multe au fost găsite fragmentar sau îngropate izolat, adesea lângă râuri, posibil ca depuneri rituale." style="--point-x:69%;--point-y:69%"></button><button type="button" class="photo-point" aria-haspopup="dialog" aria-label="Eticheta expoziției" data-title="Eticheta expoziției" data-detail="Eticheta originală a vitrinei: „Nálezy z doby stěhování národů / Zlomky hunského kotle”: Descoperiri din epoca migrațiilor / Fragmente de cazan hunic, cu proveniența fiecărei piese. Lăsată intenționat vizibilă, ca dovadă a contextului muzeal." style="--point-x:16%;--point-y:84%"></button></div><figcaption><strong>Cazanul hunic de bronz</strong>. Fragmente din cazane hunice descoperite la Úvalno, Milotice nad Opavou și Razová (Silezia cehă). Cazanul turnat dintr-o bucată este piesa cea mai caracteristică a arheologiei hunice. <small>Slezské zemské muzeum, Opava · foto: <a href="https://commons.wikimedia.org/wiki/File:Hunsk%C3%A9_kotle,_Slezsk%C3%A9_zemsk%C3%A9_muzeum,_Opava,_Moravskoslezsk%C3%BD_kraj_01.jpg">Karel Frydrýšek (Fry72)</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> (decupaj).</small> <span class="photo-hint">Apasă pe punctele roșii pentru detalii.</span></figcaption></figure></div>
+
+      <div class="sr-row sr-reveal">
+        <div class="sr-media"><figure class="sr-fig"><img class="img-parchment" id="img-delacroix" src="media/789e943479ae.webp" alt="Pictură romantică: Attila călare, urmat de războinici, trece peste figuri care reprezintă Italia și artele." loading="lazy"><figcaption>Eugène Delacroix, <b><i>Attila și hoardele sale călcând Italia și artele</i></b> (1838–1847, detaliu), Palatul Bourbon, Paris: imaginea romantică a „biciului lui Dumnezeu”. Domeniu public.</figcaption></figure></div>
+        <div class="sr-text">
+      <h3 class="sub-title">Consecințe de lungă durată</h3>
+      <ol class="cascade" aria-label="Consecințele, ca un lanț de cauze și efecte">
+        <li class="cs-step" style="--k:0"><p class="it-year">476 d.Hr.</p><p>La doar 23 de ani după moartea lui Attila, ultimul împărat al Romei de Apus este detronat. E data convențională a căderii Imperiului Roman de Apus.</p></li>
+        <li class="cs-step" style="--k:1"><p class="it-year">493 d.Hr.</p><p>Ostrogoții, eliberați de sub tutela hunică, întemeiază sub Teodoric cel Mare un regat propriu în Italia.</p></li>
+        <li class="cs-step" style="--k:2"><p class="it-year">c. 500 d.Hr.</p><p>Vandalii în Africa de Nord, vizigoții în Hispania, francii în ascensiune în Galia; harta etnică a Europei occidentale e complet redesenată.</p></li>
+        <li class="cs-step" style="--k:3"><p class="it-year">Peste secole</p><p>Marea Migrație marchează, pentru istoriografia modernă, tranziția simbolică de la Antichitate la Evul Mediu timpuriu.</p></li>
+      </ol>
+        </div>
+      </div>
     </section>
 
 

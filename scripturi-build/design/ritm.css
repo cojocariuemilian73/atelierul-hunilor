@@ -1,0 +1,58 @@
+/* Ritmul paginii (23.11.2026): o singură distanță între capitole, valori pe grila de 4/8 px,
+   o singură mărime pentru textele mărunte și etichete de hartă lizibile. Inserat de patch-ordine-spatiere.js. */
+
+/* 1. Distanța dintre capitole: ornament → titlu, la fel peste tot */
+html body #page-acasa .ch-orn { margin-top: 64px !important; margin-bottom: 32px !important; }
+html body #page-acasa #sec-cronologie,
+html body #page-acasa #sec-migratie,
+html body #page-acasa #sec-atlas,
+html body #page-acasa #sec-personalitati { margin-top: 0 !important; padding-top: 32px !important; }
+html body #page-acasa #sec-glosar,
+html body #page-acasa #biblio { margin-top: 96px !important; padding-top: 0 !important; }
+
+/* 4. Spațieri rotunjite la grila de 4/8 px */
+html body #page-acasa article p { margin-bottom: 24px; }
+html body #page-acasa h3.sub-title { margin-top: 40px !important; }
+html body #page-acasa .vd-group { margin-top: 40px !important; margin-bottom: 40px !important; }
+html body #page-acasa .vd-body { gap: 24px !important; }
+html body #page-acasa .duel,
+html body #page-acasa .gs-pin,
+html body #page-acasa .margus-context { gap: 32px !important; }
+html body #page-acasa section.r10-band { padding: 32px !important; }
+html body #page-acasa .cascade li.cs-step { margin-bottom: 32px !important; }
+html body #page-acasa img.img-parchment { padding: 4px !important; }
+
+/* 3. Mărimi de font: textele mărunte pe 13 px, notele și bibliografia pe 14 px, titlurile pe treptele scării */
+html body #page-acasa small,
+html body #page-acasa .journey-caption,
+html body #page-acasa .time-tick { font-size: 13px !important; }
+html body #page-acasa ol.biblio li,
+html body #page-acasa ol.biblio li em,
+html body #page-acasa ol.biblio li b { font-size: 14px !important; line-height: 1.55 !important; }
+html body #page-acasa .vd-question h4,
+html body #page-acasa [id^="vd-question"] h4 { font-size: 26px !important; }
+html body #page-acasa #sec-personalitati .duel h3,
+html body #page-acasa h3.vd-research-head { font-size: 32px !important; }
+
+/* 2. Etichetele Atlasului: aceeași mărime pe ecran (11 px) la orice lățime.
+   --map-k = lățimea viewBox / lățimea afișată, calculată de scriptul din patch. */
+html body #page-acasa .map-svg .region-label,
+html body #page-acasa .map-svg .sea-label,
+html body #page-acasa .map-svg .m-label,
+html body #page-acasa .map-svg .route-label { font-size: calc(11px * var(--map-k, 1)) !important; }
+html body #page-acasa .map-svg .river-label { font-size: calc(10.5px * var(--map-k, 1)) !important; }
+
+@media (max-width: 720px) {
+  html body #page-acasa .ch-orn { margin-top: 48px !important; margin-bottom: 24px !important; }
+  html body #page-acasa #sec-cronologie,
+  html body #page-acasa #sec-migratie,
+  html body #page-acasa #sec-atlas,
+  html body #page-acasa #sec-personalitati { padding-top: 24px !important; }
+  html body #page-acasa #sec-glosar,
+  html body #page-acasa #biblio { margin-top: 64px !important; }
+  html body #page-acasa section.r10-band { padding: 24px 16px !important; }
+  /* „Știai că…?” aliniat la marginea textului */
+  html body #page-acasa .r9-note { margin-left: 0 !important; margin-right: 0 !important; }
+  /* pe telefon rămân regiunile și mările; râurile se ascund ca să nu se suprapună */
+  html body #page-acasa .map-svg .river-label { display: none !important; }
+}
