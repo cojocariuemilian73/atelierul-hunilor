@@ -4741,6 +4741,20 @@ html body #page-acasa .map-svg .m-label,
 html body #page-acasa .map-svg .route-label { font-size: calc(11px * var(--map-k, 1)) !important; }
 html body #page-acasa .map-svg .river-label { font-size: calc(10.5px * var(--map-k, 1)) !important; }
 
+/* 5. Introducerile lungi (instrucțiuni) drepte, nu italice; italicul rămâne pentru subtitlurile scurte */
+html body #page-acasa #sec-cronologie .sec-sub,
+html body #page-acasa #sec-atlas .sec-sub { font-style: normal !important; }
+
+/* 6. Anii de pe axa Atlasului: țintă de cel puțin 44 px */
+/* lățimea vizibilă rămâne (anii stau sub gradații); se mărește doar zona invizibilă de apăsare */
+html body #page-acasa .time-tick::after { content: ""; position: absolute; inset: -2px -4px; }
+
+@media (max-width: 600px) {
+  /* traseul din fundal se estompează înainte de marginea textului (32 px), ca să nu treacă prin rânduri */
+  /* masca pe <g> nu are efect în Chrome; se pune pe elementul <svg> */
+  html body #huni-journey svg.journey-drawing { mask-image: linear-gradient(90deg,#000 0 2%,#0000 7.5% 92.5%,#000 98% 100%) !important; -webkit-mask-image: linear-gradient(90deg,#000 0 2%,#0000 7.5% 92.5%,#000 98% 100%) !important; }
+}
+
 @media (max-width: 720px) {
   html body #page-acasa .ch-orn { margin-top: 48px !important; margin-bottom: 24px !important; }
   html body #page-acasa #sec-cronologie,
@@ -5078,15 +5092,15 @@ html body #page-acasa .map-svg .river-label { font-size: calc(10.5px * var(--map
             <text class="region-label" x="76.5" y="498">HISPANIA</text>
             <text class="region-label" x="287.2" y="468.2" transform="rotate(52 287.2 468.2)">ITALIA</text>
             <text class="region-label" x="186" y="583.1">AFRICA</text>
-            <text class="region-label" x="257" y="331.4">GERMANIA</text>
+            <text class="region-label" x="273" y="331.4">GERMANIA</text>
             <text class="region-label" x="517.1" y="331.2">STEPA PONTICĂ</text>
-            <text class="region-label" x="518.2" y="486.6">IMPERIUL DE RĂSĂRIT</text>
+            <text class="region-label" x="518.2" y="507">IMPERIUL DE RĂSĂRIT</text>
             <text class="region-label" x="345.8" y="416.1">PANONIA</text>
             </g>
             <g id="layer-rivers">
             <text class="river-label" x="221" y="345.1" transform="rotate(-62 221 345.1)">Rin</text>
             <text class="river-label" x="416.8" y="436.1">Dunărea</text>
-            <text class="river-label" x="369.6" y="381" transform="rotate(-60 369.6 381)">Tisa</text>
+            <text class="river-label" x="382" y="410" transform="rotate(-60 382 410)">Tisa</text>
             <text class="river-label" x="550.6" y="303.7" transform="rotate(-35 550.6 303.7)">Don</text>
             <text class="river-label" x="601.3" y="260.4" transform="rotate(-70 601.3 260.4)">Volga</text>
             </g>

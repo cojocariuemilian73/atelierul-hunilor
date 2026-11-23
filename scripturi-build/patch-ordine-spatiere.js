@@ -67,6 +67,18 @@ if (iCons < iEcou) {
   html = html.slice(0, secEnd + 1) + '\n' + consBlock + html.slice(secEnd + 1);
 }
 
+// Etichete de pe Atlas care se suprapuneau (coordonate în unitățile hărții)
+const labelMoves = [
+  ['<text class="region-label" x="518.2" y="486.6">IMPERIUL DE RĂSĂRIT', '<text class="region-label" x="518.2" y="507">IMPERIUL DE RĂSĂRIT'], // sub Constantinopol
+  ['<text class="region-label" x="257" y="331.4">GERMANIA', '<text class="region-label" x="273" y="331.4">GERMANIA'],             // la dreapta Rinului
+  ['x="369.6" y="381" transform="rotate(-60 369.6 381)">Tisa', 'x="382" y="410" transform="rotate(-60 382 410)">Tisa'],       // sub Reședința lui Attila
+];
+for (const [from, to] of labelMoves) {
+  if (html.includes(to)) continue;
+  once(html, from, 'eticheta ' + from.slice(-12));
+  html = html.replace(from, to);
+}
+
 // Stratul de ritm: spațiere, tipografie, etichetele hărților
 const start = '<!-- ritm:start -->\n';
 const end = '<!-- ritm:end -->\n';
