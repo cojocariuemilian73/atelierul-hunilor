@@ -4983,6 +4983,24 @@ html body #page-acasa .time-tick::after { content: ""; position: absolute; inset
       <p>Granița de pe Dunăre și Rin, <i>limes</i>-ul roman, nu mai putea fi închisă. După dezastrul de la Adrianopol (378), împăratul Teodosie I îi așază pe goți în Imperiu, în 382, ca <i>foederati</i>: aliați legați printr-un tratat, care primeau pământ și luptau pentru Roma sub propriii conducători.</p>
         </div>
       </div>
+      <!-- domino:start -->
+<figure class="dmn" id="domino" aria-labelledby="dmn-title">
+  <figcaption class="dmn-head">
+    <p class="dmn-kicker">Efectul de domino</p>
+    <p class="dmn-title" id="dmn-title">Cum s-a propagat șocul de la Don până la Roma</p>
+  </figcaption>
+  <ol class="dmn-row">
+    <li class="dmn-step dmn-huni" style="--i:0"><span class="dmn-piece" aria-hidden="true"></span><span class="dmn-year">c. 370</span><b class="dmn-who">Hunii</b><span class="dmn-what">atacă alanii de la Don</span></li>
+    <li class="dmn-step" style="--i:1"><span class="dmn-piece" aria-hidden="true"></span><span class="dmn-year">c. 370</span><b class="dmn-who">Alanii</b><span class="dmn-what">sunt înfrânți; supraviețuitorii se aliază cu hunii</span></li>
+    <li class="dmn-step" style="--i:2"><span class="dmn-piece" aria-hidden="true"></span><span class="dmn-year">c. 375</span><b class="dmn-who">Ostrogoții</b><span class="dmn-what">regatul lui Ermanaric se prăbușește</span></li>
+    <li class="dmn-step" style="--i:3"><span class="dmn-piece" aria-hidden="true"></span><span class="dmn-year">376</span><b class="dmn-who">Vizigoții</b><span class="dmn-what">cer adăpost și trec Dunărea</span></li>
+    <li class="dmn-step dmn-roma" style="--i:4"><span class="dmn-piece" aria-hidden="true"></span><span class="dmn-year">378</span><b class="dmn-who">Imperiul</b><span class="dmn-what">armata lui Valens e zdrobită la Adrianopol</span></li>
+    <li class="dmn-step" style="--i:5"><span class="dmn-piece" aria-hidden="true"></span><span class="dmn-year">406</span><b class="dmn-who">Vandalii și alanii</b><span class="dmn-what">trec Rinul în Galia</span></li>
+    <li class="dmn-step dmn-roma" style="--i:6"><span class="dmn-piece" aria-hidden="true"></span><span class="dmn-year">410</span><b class="dmn-who">Roma</b><span class="dmn-what">jefuită de vizigoții lui Alaric</span></li>
+  </ol>
+  <p class="dmn-foot"><span>Surse: Ammianus Marcellinus 31.2–31.13 (<a href="#note-8">nota 8</a>), moartea lui Ermanaric (<a href="#note-9">nota 9</a>), Prosper (<a href="#note-14">nota 14</a>). Schemă simplificată: lanțul arată ordinea presiunilor, nu o migrație unică și planificată.</span><button type="button" class="dmn-replay">Reia animația</button></p>
+</figure>
+<!-- domino:end -->
       <!-- pq:start --><figure class="pq"><blockquote><p>Orașul care a cucerit lumea întreagă a fost cucerit el însuși.</p></blockquote><figcaption><b>Ieronim</b>, Scrisoarea 127, despre jefuirea Romei (410) · traducere adaptată</figcaption></figure><!-- pq:end -->
 
       <div class="sr-row sr-reveal">
@@ -10604,5 +10622,286 @@ html body #page-acasa .time-tick::after { content: ""; position: absolute; inset
 })();
 </script>
 <!-- drum-huni:end -->
+<!-- domino-prezentare:start -->
+<style id="domino-css">
+/* Efectul de domino: șapte piese care cad una peste alta când schema intră în ecran. */
+html body #page-acasa .dmn { margin: 48px 0 40px; padding: 0; border: 0; background: none; }
+html body #page-acasa .dmn-head { margin: 0 0 24px; padding: 0; text-align: left; font-style: normal; }
+html body #page-acasa .dmn-kicker { margin: 0 0 4px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #7a1c1c; font-weight: 600; }
+html body #page-acasa .dmn-head * { font-style: normal; }
+html body #page-acasa .dmn-title { margin: 0; font-size: 20px; line-height: 1.3; color: #2b1e16; font-weight: 600; }
+
+html body #page-acasa .dmn-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0 8px; position: relative; }
+/* linia de sol pe care stau piesele */
+html body #page-acasa .dmn-row::before { content: ""; position: absolute; left: 0; right: 0; top: 72px; height: 1px; background: #c9b48c; }
+html body #page-acasa .dmn-step { display: flex; flex-direction: column; align-items: flex-start; margin: 0; padding: 0; min-width: 0; }
+html body #page-acasa .dmn-step::before { content: none; }
+html body #page-acasa .dmn-piece {
+  display: block; width: 16px; height: 56px; margin: 16px 0 16px 8px; border-radius: 3px;
+  background: #5c4a38; box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+  transform-origin: 100% 100%;
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 320ms cubic-bezier(.3,.0,.2,1);
+  transition-delay: calc(var(--i) * 140ms);
+}
+html body #page-acasa .dmn-huni .dmn-piece { background: #7a1c1c; }
+html body #page-acasa .dmn-roma .dmn-piece { background: #b89242; }
+html body #page-acasa .dmn.is-fallen .dmn-piece { --tilt: 24deg; }
+/* ultima piesă cade de tot: nu mai e nimic după Roma */
+html body #page-acasa .dmn.is-fallen .dmn-step:last-child .dmn-piece { --tilt: 72deg; }
+
+html body #page-acasa .dmn-year { font-size: 13px; line-height: 1.4; color: #7a1c1c; font-weight: 600; font-variant-numeric: tabular-nums; }
+html body #page-acasa .dmn-who { display: block; margin: 4px 0 4px; font-size: 16px; line-height: 1.25; color: #2b1e16; font-weight: 600; }
+html body #page-acasa .dmn-what { font-size: 14px; line-height: 1.45; color: #5c4a38; }
+/* textele apar după ce cade piesa lor */
+html body #page-acasa .dmn-step .dmn-year,
+html body #page-acasa .dmn-step .dmn-who,
+html body #page-acasa .dmn-step .dmn-what { opacity: .35; transition: opacity 240ms ease-out; transition-delay: calc(var(--i) * 140ms + 160ms); }
+html body #page-acasa .dmn.is-fallen .dmn-step .dmn-year,
+html body #page-acasa .dmn.is-fallen .dmn-step .dmn-who,
+html body #page-acasa .dmn.is-fallen .dmn-step .dmn-what { opacity: 1; }
+
+html body #page-acasa .dmn-foot { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; margin: 24px 0 0; font-size: 13px; line-height: 1.45; color: #5c4a38; }
+html body #page-acasa .dmn-foot a { color: #6f281c; }
+html body #page-acasa .dmn-replay {
+  flex: none; min-height: 44px; padding: 0 16px; border: 1px solid #c9b48c; border-radius: 4px;
+  background: transparent; color: #7a1c1c; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background-color 160ms ease-out, transform 120ms ease-out;
+}
+html body #page-acasa .dmn-replay:hover { background: #efe4cc; }
+html body #page-acasa .dmn-replay:active { transform: scale(.97); }
+html body #page-acasa .dmn-replay:focus-visible { outline: 2px solid #7a1c1c; outline-offset: 2px; }
+
+/* Telefon și tabletă îngustă: lanțul devine vertical, piesele cad spre dreapta în coloana lor */
+@media (max-width: 860px) {
+  html body #page-acasa .dmn-row { grid-template-columns: 1fr; gap: 0; }
+  html body #page-acasa .dmn-row::before { top: 0; bottom: 0; left: 28px; right: auto; width: 1px; height: auto; }
+  html body #page-acasa .dmn-step { display: grid; grid-template-columns: 56px 1fr; grid-template-rows: auto auto auto; column-gap: 8px; align-items: start; padding: 8px 0; }
+  html body #page-acasa .dmn-piece { grid-row: 1 / span 3; width: 12px; height: 40px; margin: 4px 0 0 16px; transform-origin: 100% 100%; }
+  html body #page-acasa .dmn.is-fallen .dmn-piece { --tilt: 20deg; }
+  html body #page-acasa .dmn.is-fallen .dmn-step:last-child .dmn-piece { --tilt: 60deg; }
+  html body #page-acasa .dmn-year, html body #page-acasa .dmn-who, html body #page-acasa .dmn-what { grid-column: 2; }
+  html body #page-acasa .dmn-who { margin: 0; }
+  html body #page-acasa .dmn-foot { flex-direction: column; gap: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa .dmn-piece,
+  html body #page-acasa .dmn-step .dmn-year,
+  html body #page-acasa .dmn-step .dmn-who,
+  html body #page-acasa .dmn-step .dmn-what { transition: none !important; }
+  html body #page-acasa .dmn-replay { display: none; }
+}
+@media print {
+  html body #page-acasa .dmn-replay { display: none; }
+  html body #page-acasa .dmn-step .dmn-year, html body #page-acasa .dmn-step .dmn-who, html body #page-acasa .dmn-step .dmn-what { opacity: 1 !important; }
+}
+</style>
+<style id="prezentare-css">
+/* Mod prezentare: buton discret jos-stânga (doar pe ecrane de laptop) și bara de control jos, centrată. */
+.pz-open, .pz-hud button { font: inherit; cursor: pointer; }
+.pz-open {
+  position: fixed; left: 16px; bottom: 16px; z-index: 60;
+  display: none; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px;
+  border: 1px solid #c9b48c; border-radius: 4px; background: #f7f3e9; color: #2b1e16;
+  font-size: 14px; font-weight: 600; box-shadow: 0 1px 2px rgba(43,30,22,.12);
+  transition: background-color 160ms ease-out, transform 120ms ease-out, opacity 160ms ease-out;
+}
+.pz-open:hover { background: #efe4cc; }
+.pz-open:active { transform: scale(.97); }
+.pz-open span { color: #7a1c1c; font-size: 12px; }
+.pz-open kbd, .pz-hud kbd { font: inherit; font-size: 12px; font-weight: 600; padding: 0 4px; border: 1px solid #c9b48c; border-radius: 3px; color: #5c4a38; }
+.pz-open:focus-visible, .pz-hud button:focus-visible { outline: 2px solid #7a1c1c; outline-offset: 2px; }
+@media (min-width: 1024px) { .pz-open { display: inline-flex; } }
+html.pz-on .pz-open { opacity: 0; pointer-events: none; }
+
+.pz-hud {
+  position: fixed; left: 50%; bottom: 16px; z-index: 61; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px; padding: 8px;
+  border: 1px solid #c9b48c; border-radius: 6px; background: rgba(247,243,233,.97); color: #2b1e16;
+  box-shadow: 0 8px 24px rgba(43,30,22,.16);
+  animation: pz-in 200ms cubic-bezier(.2,.7,.2,1);
+}
+.pz-hud[hidden] { display: none; }
+@keyframes pz-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+.pz-hud p { margin: 0; }
+.pz-prev, .pz-next {
+  width: 44px; height: 44px; border: 1px solid #c9b48c; border-radius: 4px; background: transparent;
+  color: #7a1c1c; font-size: 24px; line-height: 1; transition: background-color 160ms ease-out, transform 120ms ease-out;
+}
+.pz-prev:hover:not(:disabled), .pz-next:hover:not(:disabled), .pz-close:hover { background: #efe4cc; }
+.pz-prev:active:not(:disabled), .pz-next:active:not(:disabled), .pz-close:active { transform: scale(.96); }
+.pz-prev:disabled, .pz-next:disabled { opacity: .35; cursor: default; }
+.pz-where { display: flex; flex-direction: column; min-width: 208px; padding: 0 8px; }
+.pz-step { font-size: 12px; font-weight: 600; color: #7a1c1c; font-variant-numeric: tabular-nums; }
+.pz-title { font-size: 16px; font-weight: 600; line-height: 1.25; }
+.pz-time { padding: 0 12px; border-left: 1px solid #e0d0ad; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; color: #5c4a38; }
+.pz-hud.is-warn .pz-time { color: #8a5a12; }
+.pz-hud.is-late .pz-time { color: #7a1c1c; }
+.pz-close { min-height: 44px; padding: 0 12px; border: 0; border-radius: 4px; background: transparent; color: #5c4a38; font-size: 14px; font-weight: 600; }
+@media (max-width: 720px) {
+  .pz-hud { left: 8px; right: 8px; transform: none; gap: 4px; animation: none; }
+  .pz-where { min-width: 0; flex: 1; }
+  .pz-time { padding: 0 4px; border: 0; font-size: 13px; }
+  .pz-close kbd { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .pz-hud { animation: none; } .pz-open, .pz-hud button { transition: none; } }
+@media print { .pz-open, .pz-hud { display: none !important; } }
+</style>
+<script id="domino-js">
+/* Efectul de domino: piesele cad o singură dată, când rândul lor ajunge în ecran. „Reia animația” le ridică și le lasă din nou. */
+(function () {
+  function init() {
+    var fig = document.getElementById('domino');
+    if (!fig) return;
+    var row = fig.querySelector('.dmn-row');
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function fall() { fig.classList.add('is-fallen'); }
+    if (reduce || !('IntersectionObserver' in window)) { fall(); }
+    else {
+      // urmărește chiar rândul de piese, nu toată figura, ca animația să înceapă când piesele se văd
+      var io = new IntersectionObserver(function (en) {
+        en.forEach(function (e) { if (e.isIntersecting) { fall(); io.disconnect(); } });
+      }, { threshold: 0.6 });
+      io.observe(row);
+    }
+    var btn = fig.querySelector('.dmn-replay');
+    if (btn) btn.addEventListener('click', function () {
+      fig.classList.remove('is-fallen');
+      // ridică piesele fără tranziție, apoi le lasă să cadă din nou
+      var pieces = fig.querySelectorAll('.dmn-piece, .dmn-year, .dmn-who, .dmn-what');
+      pieces.forEach(function (p) { p.style.transition = 'none'; });
+      void fig.offsetWidth;
+      pieces.forEach(function (p) { p.style.transition = ''; });
+      setTimeout(fall, 60);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<script id="prezentare-js">
+/* Mod prezentare: un tur prin opririle importante ale articolului, cu săgeți și cronometru (10–15 minute la concurs).
+   Pornire: tasta P sau butonul „Mod prezentare”. Ieșire: Esc sau „Ieșire”. */
+(function () {
+  var STOPS = [
+    { sel: '#acasa', t: 'Coperta' },
+    { sel: '#sec-origini', t: 'Originile hunilor' },
+    { sel: '#sec-cronologie', t: 'Cronologie interactivă' },
+    { sel: '#sec-migratie', t: 'Marea Migrație' },
+    { sel: '#domino', t: 'Efectul de domino' },
+    { sel: '#gold-story', t: 'Aurul: prețul păcii' },
+    { sel: '#sec-atlas', t: 'Atlasul migrației' },
+    { sel: '#sec-personalitati', t: 'Attila și Aetius' },
+    { text: 'Consecințe de lungă durată', t: 'Consecințe' },
+    { sel: '.cta-card', t: 'Jocul' },
+    { sel: '#biblio', t: 'Surse și note' }
+  ];
+  var BUDGET = 15 * 60, WARN = 10 * 60, LATE = 14 * 60;
+  var on = false, idx = 0, start = 0, tick = 0, hud, btnOpen, lblStep, lblTitle, lblTime;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function target(s) {
+    if (s.sel) return document.querySelector(s.sel);
+    var hs = document.querySelectorAll('#page-acasa h3');
+    for (var i = 0; i < hs.length; i++) if (hs[i].textContent.trim() === s.text) return hs[i].closest('.sr-row') || hs[i];
+    return null;
+  }
+  function headerOffset() {
+    // meniul se ascunde la derulare și poate reapărea la urcare; bara cu călărețul (.ef-ride) rămâne sus
+    var n = document.getElementById('site-nav'), r = document.querySelector('.ef-ride');
+    var h = Math.max(n ? n.offsetHeight : 0, r ? r.getBoundingClientRect().bottom : 0);
+    return Math.max(0, h) + 24;
+  }
+  function ensureHome() {
+    var home = document.getElementById('page-acasa');
+    if (home && !home.classList.contains('active')) location.hash = '#page-acasa';
+  }
+  function go(i) {
+    idx = Math.max(0, Math.min(STOPS.length - 1, i));
+    var el = target(STOPS[idx]);
+    lblStep.textContent = (idx + 1) + ' / ' + STOPS.length;
+    lblTitle.textContent = STOPS[idx].t;
+    hud.querySelector('.pz-prev').disabled = idx === 0;
+    hud.querySelector('.pz-next').disabled = idx === STOPS.length - 1;
+    if (!el) return;
+    var top = idx === 0 ? 0 : el.getBoundingClientRect().top + window.scrollY - headerOffset();
+    window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+  }
+  function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+  function updateTime() {
+    var s = Math.floor((Date.now() - start) / 1000);
+    lblTime.textContent = fmt(s) + ' / ' + fmt(BUDGET);
+    hud.classList.toggle('is-warn', s >= WARN && s < LATE);
+    hud.classList.toggle('is-late', s >= LATE);
+  }
+  function open() {
+    if (on) return;
+    ensureHome();
+    on = true; start = Date.now();
+    document.documentElement.classList.add('pz-on');
+    hud.hidden = false; btnOpen.setAttribute('aria-expanded', 'true');
+    updateTime(); tick = setInterval(updateTime, 1000);
+    go(0);
+    hud.querySelector('.pz-next').focus({ preventScroll: true });
+  }
+  function close() {
+    if (!on) return;
+    on = false; clearInterval(tick);
+    document.documentElement.classList.remove('pz-on');
+    hud.hidden = true; btnOpen.setAttribute('aria-expanded', 'false');
+    btnOpen.focus({ preventScroll: true });
+  }
+  function busy(e) {
+    var a = e.target;
+    if (a && (a.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))) return true;
+    // un dialog deschis (Despre proiect, lupa imaginilor, fișele) își păstrează tastele; cele ascunse cu CSS nu contează
+    var dl = document.querySelectorAll('dialog[open], [role="dialog"][aria-modal="true"]');
+    for (var i = 0; i < dl.length; i++) if (dl[i].getClientRects().length) return true;
+    var home = document.getElementById('page-acasa');
+    return home && !home.classList.contains('active') && on === false;
+  }
+  function onKey(e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (!on) {
+      if ((e.key === 'p' || e.key === 'P') && !busy(e)) { e.preventDefault(); open(); }
+      return;
+    }
+    if (busy(e)) return;
+    var k = e.key;
+    if (k === 'Escape') { e.preventDefault(); close(); }
+    else if (k === 'ArrowRight' || k === 'PageDown' || (k === ' ' && !/^(BUTTON|A)$/.test(e.target.tagName))) { e.preventDefault(); go(idx + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); go(idx - 1); }
+    else if (k === 'Home') { e.preventDefault(); go(0); }
+    else if (k === 'End') { e.preventDefault(); go(STOPS.length - 1); }
+  }
+  function build() {
+    btnOpen = document.createElement('button');
+    btnOpen.type = 'button'; btnOpen.className = 'pz-open';
+    btnOpen.setAttribute('aria-controls', 'pz-hud'); btnOpen.setAttribute('aria-expanded', 'false');
+    btnOpen.innerHTML = '<span aria-hidden="true">▶</span> Mod prezentare <kbd>P</kbd>';
+    btnOpen.addEventListener('click', open);
+
+    hud = document.createElement('div');
+    hud.id = 'pz-hud'; hud.className = 'pz-hud'; hud.hidden = true;
+    hud.setAttribute('role', 'region'); hud.setAttribute('aria-label', 'Mod prezentare');
+    hud.innerHTML =
+      '<button type="button" class="pz-prev" aria-label="Oprirea anterioară">‹</button>' +
+      '<p class="pz-where" aria-live="polite"><span class="pz-step"></span><span class="pz-title"></span></p>' +
+      '<button type="button" class="pz-next" aria-label="Oprirea următoare">›</button>' +
+      '<p class="pz-time" aria-label="Timp scurs din 15 minute"></p>' +
+      '<button type="button" class="pz-close">Ieșire <kbd>Esc</kbd></button>';
+    lblStep = hud.querySelector('.pz-step'); lblTitle = hud.querySelector('.pz-title'); lblTime = hud.querySelector('.pz-time');
+    hud.querySelector('.pz-prev').addEventListener('click', function () { go(idx - 1); });
+    hud.querySelector('.pz-next').addEventListener('click', function () { go(idx + 1); });
+    hud.querySelector('.pz-close').addEventListener('click', close);
+
+    document.body.appendChild(btnOpen);
+    document.body.appendChild(hud);
+    document.addEventListener('keydown', onKey);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
+})();
+</script>
+<!-- domino-prezentare:end -->
 </body>
 </html>
