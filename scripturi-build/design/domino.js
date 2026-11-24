@@ -3,7 +3,7 @@
   function init() {
     var fig = document.getElementById('domino');
     if (!fig) return;
-    var row = fig.querySelector('.dmn-row');
+    var row = fig.querySelector('.dmn-track') || fig.querySelector('.dmn-row');
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     function fall() { fig.classList.add('is-fallen'); }
     if (reduce || !('IntersectionObserver' in window)) { fall(); }
@@ -18,7 +18,7 @@
     if (btn) btn.addEventListener('click', function () {
       fig.classList.remove('is-fallen');
       // ridică piesele fără tranziție, apoi le lasă să cadă din nou
-      var pieces = fig.querySelectorAll('.dmn-piece, .dmn-year, .dmn-who, .dmn-what');
+      var pieces = fig.querySelectorAll('.dmn-piece, .dmn-step');
       pieces.forEach(function (p) { p.style.transition = 'none'; });
       void fig.offsetWidth;
       pieces.forEach(function (p) { p.style.transition = ''; });
