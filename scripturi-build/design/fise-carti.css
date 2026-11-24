@@ -1,0 +1,75 @@
+/* Cărțile cu mituri: față (mitul) și spate (ce arată izvoarele), în aceeași celulă de grilă, ca înălțimea să fie a feței mai lungi. */
+html body #page-acasa .vd-group.fc-done { margin: 56px 0; padding: 0; border: 0; background: none; }
+html body #page-acasa .fc-head { margin: 0 0 4px; font-size: 26px; line-height: 1.2; font-weight: 600; color: #2b1e16; }
+html body #page-acasa .fc-hint { margin: 0 0 24px; font-size: 15px; line-height: 1.5; color: #5c4a38; }
+html body #page-acasa .fc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: stretch; }
+
+html body #page-acasa .fc { perspective: 1400px; margin: 0; min-width: 0; }
+html body #page-acasa .fc-inner {
+  display: grid; height: 100%; transform-style: preserve-3d;
+  transition: transform 560ms cubic-bezier(.2,.7,.2,1);
+}
+html body #page-acasa .fc.is-flipped .fc-inner { transform: rotateY(180deg); }
+html body #page-acasa .fc-face {
+  grid-area: 1 / 1; display: flex; flex-direction: column; min-width: 0;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background: #f8f1e2; border: 1px solid #dcc9a3; border-radius: 6px; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(43,30,22,.08), 0 8px 20px rgba(43,30,22,.06);
+}
+html body #page-acasa .fc-back { transform: rotateY(180deg); background: #f2e7cf; border-color: #c9b48c; }
+
+html body #page-acasa .fc-fig { margin: 0; border: 0; padding: 0; background: #2b1e16; }
+html body #page-acasa .fc-fig img { display: block; width: 100%; height: 200px; object-fit: cover; border: 0; padding: 0; margin: 0; }
+html body #page-acasa .fc-fig figcaption { margin: 0; padding: 8px 16px; font-size: 13px; line-height: 1.4; color: #e9dcc2; background: #2b1e16; font-style: normal; text-align: left; }
+html body #page-acasa .fc-fig figcaption a, html body #page-acasa .fc-fig figcaption .cap-i { color: #f2d9a6; }
+
+html body #page-acasa .fc-body { display: flex; flex-direction: column; gap: 8px; flex: 1; padding: 20px 20px 16px; }
+html body #page-acasa .fc-question { margin: 0 0 4px; font-size: 22px !important; line-height: 1.25; font-weight: 600; color: #2b1e16; }
+html body #page-acasa .fc-k, html body #page-acasa .fc-stamp, html body #page-acasa .fc-label {
+  margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #7a1c1c;
+}
+html body #page-acasa .fc-myth { margin: 0; font-family: 'EB Garamond', Georgia, serif; font-style: italic; font-size: 22px; line-height: 1.35; color: #2b1e16; }
+html body #page-acasa .fc-myth-x { margin: 0; font-size: 15px; line-height: 1.45; color: #6b5640; }
+html body #page-acasa .fc-myth-x s { text-decoration-color: #8a2a1f; text-decoration-thickness: 1.5px; }
+html body #page-acasa .fc-stamp {
+  align-self: flex-start; padding: 2px 8px; border: 1.5px solid #8a2a1f; border-radius: 3px; transform: rotate(-2deg);
+}
+html body #page-acasa .fc-answer { margin: 4px 0 0; font-size: 16px; line-height: 1.55; color: #2b1e16; }
+html body #page-acasa .fc-answer b { display: block; margin-bottom: 4px; font-size: 20px; line-height: 1.25; color: #7a1c1c; }
+html body #page-acasa .fc-evidence { margin-top: 4px; padding-top: 12px; border-top: 1px solid #dcc9a3; }
+html body #page-acasa .fc-evidence p { margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: #4a3a2b; }
+html body #page-acasa .fc-evidence .fc-label { margin: 0; }
+html body #page-acasa .fc-src { margin: 4px 0 0; font-size: 13px; line-height: 1.45; color: #6b5640; }
+html body #page-acasa .fc a { color: #6f281c; }
+
+html body #page-acasa .fc-btn {
+  align-self: flex-start; margin-top: auto; min-height: 44px; padding: 0 16px;
+  border: 1px solid #8a2a1f; border-radius: 4px; background: transparent; color: #7a1c1c;
+  font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: background-color 160ms ease-out, color 160ms ease-out, transform 120ms ease-out;
+}
+html body #page-acasa .fc-front .fc-btn { background: #7a1c1c; color: #fbf3e4; }
+html body #page-acasa .fc-front .fc-btn:hover { background: #5f1414; }
+html body #page-acasa .fc-btn-back:hover { background: #efe4cc; }
+html body #page-acasa .fc-btn:active { transform: scale(.97); }
+html body #page-acasa .fc-btn:focus-visible { outline: 2px solid #7a1c1c; outline-offset: 3px; }
+html body #page-acasa .fc-front .fc-btn { margin-top: auto; }
+html body #page-acasa .fc-body > .fc-btn { margin-top: auto; }
+html body #page-acasa .fc-front .fc-body { justify-content: flex-start; }
+html body #page-acasa .fc-front .fc-myth + .fc-btn { margin-top: auto; }
+
+@media (max-width: 720px) {
+  html body #page-acasa .fc-grid { grid-template-columns: 1fr; gap: 16px; }
+  html body #page-acasa .fc-fig img { height: 180px; }
+  html body #page-acasa .fc-myth { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa .fc-inner { transition: none; transform: none !important; }
+  html body #page-acasa .fc-face { backface-visibility: visible; transform: none; }
+  html body #page-acasa .fc:not(.is-flipped) .fc-back, html body #page-acasa .fc.is-flipped .fc-front { visibility: hidden; }
+}
+@media print {
+  html body #page-acasa .fc-inner { transform: none !important; display: block; }
+  html body #page-acasa .fc-face { transform: none !important; backface-visibility: visible; }
+  html body #page-acasa .fc-btn { display: none; }
+}

@@ -1,39 +1,48 @@
-/* Efectul de domino: șapte piese care cad una peste alta când schema intră în ecran. */
+/* Efectul de domino: șapte piese apropiate care cad una peste alta; sub ele, cartonașele cu explicații.
+   Geometrie: piesa se rotește în jurul colțului din dreapta-jos până atinge piesa următoare: sin(θ) = spațiu / înălțime. */
 html body #page-acasa .dmn { margin: 48px 0 40px; padding: 0; border: 0; background: none; }
-html body #page-acasa .dmn-head { margin: 0 0 24px; padding: 0; text-align: left; font-style: normal; }
-html body #page-acasa .dmn-kicker { margin: 0 0 4px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #7a1c1c; font-weight: 600; }
+html body #page-acasa .dmn-head { margin: 0 0 24px; padding: 0; text-align: left; }
 html body #page-acasa .dmn-head * { font-style: normal; }
+html body #page-acasa .dmn-kicker { margin: 0 0 4px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #7a1c1c; font-weight: 600; }
 html body #page-acasa .dmn-title { margin: 0; font-size: 20px; line-height: 1.3; color: #2b1e16; font-weight: 600; }
 
-html body #page-acasa .dmn-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0 8px; position: relative; }
-/* linia de sol pe care stau piesele */
-html body #page-acasa .dmn-row::before { content: ""; position: absolute; left: 0; right: 0; top: 72px; height: 1px; background: #c9b48c; }
-html body #page-acasa .dmn-step { display: flex; flex-direction: column; align-items: flex-start; margin: 0; padding: 0; min-width: 0; }
-html body #page-acasa .dmn-step::before { content: none; }
-html body #page-acasa .dmn-piece {
-  display: block; width: 16px; height: 56px; margin: 16px 0 16px 8px; border-radius: 3px;
-  background: #5c4a38; box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
-  transform-origin: 100% 100%;
-  transform: rotate(var(--tilt, 0deg));
-  transition: transform 320ms cubic-bezier(.3,.0,.2,1);
-  transition-delay: calc(var(--i) * 140ms);
+/* pista cu piese: lățime 28, înălțime 104, spațiu 40 → θ = asin(40/104) ≈ 22.6° */
+html body #page-acasa .dmn-track {
+  --w: 28px; --h: 104px; --pitch: 68px; --tilt: 22.6deg;
+  position: relative; display: flex; justify-content: center; margin: 0 0 24px; padding: 16px 0 0;
 }
-html body #page-acasa .dmn-huni .dmn-piece { background: #7a1c1c; }
-html body #page-acasa .dmn-roma .dmn-piece { background: #b89242; }
-html body #page-acasa .dmn.is-fallen .dmn-piece { --tilt: 24deg; }
-/* ultima piesă cade de tot: nu mai e nimic după Roma */
-html body #page-acasa .dmn.is-fallen .dmn-step:last-child .dmn-piece { --tilt: 72deg; }
+html body #page-acasa .dmn-pieces { position: relative; width: calc(6 * var(--pitch) + var(--w) + var(--h)); height: var(--h); border-bottom: 2px solid #b9a27a; }
+html body #page-acasa .dmn-piece {
+  position: absolute; bottom: 0; left: calc(var(--i) * var(--pitch)); width: var(--w); height: var(--h);
+  display: flex; align-items: center; justify-content: center; border-radius: 4px;
+  background: #5c4a38; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), 0 2px 4px rgba(43,30,22,.18);
+  transform-origin: 100% 100%; transform: rotate(0deg);
+  transition: transform 300ms cubic-bezier(.55,0,1,.45);
+  transition-delay: calc(var(--i) * 260ms);
+}
+html body #page-acasa .dmn-piece > span { transform: rotate(-90deg); font-size: 13px; font-weight: 600; letter-spacing: .04em; color: #f3e8d2; white-space: nowrap; font-variant-numeric: tabular-nums; }
+html body #page-acasa .dmn-piece.dmn-huni { background: #7a1c1c; }
+html body #page-acasa .dmn-piece.dmn-roma { background: #b89242; }
+html body #page-acasa .dmn-piece.dmn-roma > span { color: #2b1e16; }
+html body #page-acasa .dmn.is-fallen .dmn-piece { transform: rotate(var(--tilt)); }
+/* ultima piesă nu mai are în ce să se sprijine: cade la pământ */
+html body #page-acasa .dmn.is-fallen .dmn-piece:last-child { transform: rotate(90deg); transition-timing-function: cubic-bezier(.55,0,.9,.6); }
 
+/* cartonașele */
+html body #page-acasa .dmn-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+html body #page-acasa .dmn-step {
+  display: flex; flex-direction: column; min-width: 0; margin: 0; padding: 12px;
+  background: #f8f1e2; border: 1px solid #dcc9a3; border-top: 3px solid #5c4a38; border-radius: 0 0 4px 4px;
+}
+html body #page-acasa .dmn-step::before { content: none; }
+html body #page-acasa .dmn-step.dmn-huni { border-top-color: #7a1c1c; }
+html body #page-acasa .dmn-step.dmn-roma { border-top-color: #b89242; }
 html body #page-acasa .dmn-year { font-size: 13px; line-height: 1.4; color: #7a1c1c; font-weight: 600; font-variant-numeric: tabular-nums; }
-html body #page-acasa .dmn-who { display: block; margin: 4px 0 4px; font-size: 16px; line-height: 1.25; color: #2b1e16; font-weight: 600; }
+html body #page-acasa .dmn-who { display: block; margin: 4px 0; font-size: 16px; line-height: 1.25; color: #2b1e16; font-weight: 600; }
 html body #page-acasa .dmn-what { font-size: 14px; line-height: 1.45; color: #5c4a38; }
-/* textele apar după ce cade piesa lor */
-html body #page-acasa .dmn-step .dmn-year,
-html body #page-acasa .dmn-step .dmn-who,
-html body #page-acasa .dmn-step .dmn-what { opacity: .35; transition: opacity 240ms ease-out; transition-delay: calc(var(--i) * 140ms + 160ms); }
-html body #page-acasa .dmn.is-fallen .dmn-step .dmn-year,
-html body #page-acasa .dmn.is-fallen .dmn-step .dmn-who,
-html body #page-acasa .dmn.is-fallen .dmn-step .dmn-what { opacity: 1; }
+/* un cartonaș se aprinde după ce cade piesa lui */
+html body #page-acasa .dmn-step { opacity: .45; transition: opacity 240ms ease-out; transition-delay: calc(var(--i) * 260ms + 220ms); }
+html body #page-acasa .dmn.is-fallen .dmn-step { opacity: 1; }
 
 html body #page-acasa .dmn-foot { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; margin: 24px 0 0; font-size: 13px; line-height: 1.45; color: #5c4a38; }
 html body #page-acasa .dmn-foot a { color: #6f281c; }
@@ -46,27 +55,28 @@ html body #page-acasa .dmn-replay:hover { background: #efe4cc; }
 html body #page-acasa .dmn-replay:active { transform: scale(.97); }
 html body #page-acasa .dmn-replay:focus-visible { outline: 2px solid #7a1c1c; outline-offset: 2px; }
 
-/* Telefon și tabletă îngustă: lanțul devine vertical, piesele cad spre dreapta în coloana lor */
-@media (max-width: 860px) {
-  html body #page-acasa .dmn-row { grid-template-columns: 1fr; gap: 0; }
-  html body #page-acasa .dmn-row::before { top: 0; bottom: 0; left: 28px; right: auto; width: 1px; height: auto; }
-  html body #page-acasa .dmn-step { display: grid; grid-template-columns: 56px 1fr; grid-template-rows: auto auto auto; column-gap: 8px; align-items: start; padding: 8px 0; }
-  html body #page-acasa .dmn-piece { grid-row: 1 / span 3; width: 12px; height: 40px; margin: 4px 0 0 16px; transform-origin: 100% 100%; }
-  html body #page-acasa .dmn.is-fallen .dmn-piece { --tilt: 20deg; }
-  html body #page-acasa .dmn.is-fallen .dmn-step:last-child .dmn-piece { --tilt: 60deg; }
-  html body #page-acasa .dmn-year, html body #page-acasa .dmn-who, html body #page-acasa .dmn-what { grid-column: 2; }
+@media (max-width: 1100px) {
+  html body #page-acasa .dmn-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+/* telefon: piese mai mici (16 × 60, spațiu 20 → θ ≈ 19.5°), cartonașele unul sub altul */
+@media (max-width: 720px) {
+  html body #page-acasa .dmn-track { --w: 16px; --h: 60px; --pitch: 36px; --tilt: 19.5deg; }
+  html body #page-acasa .dmn-piece > span { display: none; }
+  html body #page-acasa .dmn-row { grid-template-columns: 1fr; gap: 8px; }
+  html body #page-acasa .dmn-step { display: grid; grid-template-columns: 56px 1fr; column-gap: 8px; border-top-width: 1px; border-left: 3px solid #5c4a38; border-radius: 0 4px 4px 0; }
+  html body #page-acasa .dmn-step.dmn-huni { border-left-color: #7a1c1c; }
+  html body #page-acasa .dmn-step.dmn-roma { border-left-color: #b89242; }
+  html body #page-acasa .dmn-year { grid-row: 1 / span 2; }
   html body #page-acasa .dmn-who { margin: 0; }
+  html body #page-acasa .dmn-who, html body #page-acasa .dmn-what { grid-column: 2; }
   html body #page-acasa .dmn-foot { flex-direction: column; gap: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html body #page-acasa .dmn-piece,
-  html body #page-acasa .dmn-step .dmn-year,
-  html body #page-acasa .dmn-step .dmn-who,
-  html body #page-acasa .dmn-step .dmn-what { transition: none !important; }
+  html body #page-acasa .dmn-piece, html body #page-acasa .dmn-step { transition: none !important; }
   html body #page-acasa .dmn-replay { display: none; }
 }
 @media print {
   html body #page-acasa .dmn-replay { display: none; }
-  html body #page-acasa .dmn-step .dmn-year, html body #page-acasa .dmn-step .dmn-who, html body #page-acasa .dmn-step .dmn-what { opacity: 1 !important; }
+  html body #page-acasa .dmn-step { opacity: 1 !important; }
 }

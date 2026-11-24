@@ -1,0 +1,33 @@
+/* Fișele de izvor: una pe sursă, cu bara distanței față de evenimente. */
+html body #page-acasa .src-compare .sc-wrap[hidden] { display: none !important; }
+html body #page-acasa .si-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 24px 0 16px; }
+html body #page-acasa .si {
+  display: flex; flex-direction: column; gap: 16px; min-width: 0; margin: 0; padding: 20px;
+  background: #f8f1e2; border: 1px solid #dcc9a3; border-top: 3px solid #5c4a38; border-radius: 0 0 6px 6px;
+  box-shadow: 0 1px 2px rgba(43,30,22,.08);
+}
+html body #page-acasa .si-obj { border-top-color: #b89242; }
+html body #page-acasa .si-dna { border-top-color: #3f6b78; }
+html body #page-acasa .si-head { display: flex; flex-direction: column; gap: 4px; }
+html body #page-acasa .si-name { margin: 0; font-size: 22px !important; line-height: 1.2; font-weight: 600; letter-spacing: 0; text-transform: none; color: #2b1e16; }
+html body #page-acasa .si-name .gl { font: inherit; }
+html body #page-acasa .si-meta { margin: 0; font-size: 14px; line-height: 1.4; color: #6b5640; text-transform: none; letter-spacing: 0; }
+html body #page-acasa .si-label { margin: 0 0 4px; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #7a1c1c; }
+
+html body #page-acasa .si-track { position: relative; height: 8px; border-radius: 4px; background: #e6d8b9; overflow: hidden; }
+html body #page-acasa .si-track i { position: absolute; inset: 0 auto 0 0; width: var(--w, 0%); border-radius: 4px; background: #8a2a1f; }
+html body #page-acasa .si-dist.is-zero .si-track i { width: 8px; background: #4f7a3a; }
+html body #page-acasa .si-dist.is-modern .si-track i { background: repeating-linear-gradient(90deg, #3f6b78 0 6px, transparent 6px 10px); }
+html body #page-acasa .si-dist-v { margin: 6px 0 0; font-size: 14px; font-weight: 600; color: #2b1e16; }
+
+html body #page-acasa .si-type { display: flex; gap: 8px; align-items: baseline; margin: 0; padding: 8px 12px; border-radius: 4px; font-size: 15px; line-height: 1.45; background: #efe4cc; color: #2b1e16; }
+html body #page-acasa .si-type::before { content: "○"; color: #6b5640; }
+html body #page-acasa .si-type.is-yes::before { content: "●"; color: #7a1c1c; }
+html body #page-acasa .si-type.is-obj::before { content: "◆"; color: #8a6a1f; }
+html body #page-acasa .si-text { margin: 0; font-size: 15px; line-height: 1.55; color: #2b1e16; }
+html body #page-acasa .si-limit .si-text { color: #4a3a2b; }
+html body #page-acasa .si-limit { margin-top: auto; padding-top: 12px; border-top: 1px solid #dcc9a3; }
+@media (max-width: 720px) {
+  html body #page-acasa .si-grid { grid-template-columns: 1fr; gap: 16px; }
+  html body #page-acasa .si { padding: 16px; }
+}
