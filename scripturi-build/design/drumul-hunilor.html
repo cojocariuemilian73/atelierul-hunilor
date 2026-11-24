@@ -88,11 +88,9 @@
   const footer = page.querySelector('.site-final-footer');
   const cover = document.getElementById('acasa');
   const origin = document.getElementById('sec-origini');
-  const caption = document.createElement('p');
-  caption.className = 'journey-caption';
-  caption.innerHTML = 'Traseu schematic prin articol · Pentru detalii, vezi <a href="#sec-atlas">Atlasul migrației</a>.';
-  origin.querySelector('.sec-head').after(caption);
-  const endCredit = caption.cloneNode(false);
+  // nota de sub „Originile hunilor” a fost scoasă (24.11.2026); rămâne doar creditul reliefului, în subsol
+  const endCredit = document.createElement('p');
+  endCredit.className = 'journey-caption';
   endCredit.innerHTML = 'Relief: <a href="https://commons.wikimedia.org/wiki/File:Europe_relief_laea_location_map.jpg">Alexrk2, Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.';
   footer.prepend(endCredit);
   shell.before(document.getElementById('huni-journey-template').content.cloneNode(true));

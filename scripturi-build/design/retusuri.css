@@ -1,0 +1,55 @@
+/* Retușuri (24.11.2026): titlul copertei, harta lui Ptolemeu, craniul din fișă, citatele. Inserat de patch-retusuri.js. */
+
+/* Coperta: siluetele din față rămân, dar lasă literele să se citească */
+html body #acasa .hero-foreground { opacity: .5; }
+html body #acasa h1 .hero-title-main,
+html body #acasa h1 .hero-title-prefix { text-shadow: 0 2px 16px rgba(30, 16, 6, .55), 0 1px 2px rgba(30, 16, 6, .5); }
+
+/* Harta lui Ptolemeu: hartă + text alături, nu pe toată lățimea */
+html body #page-acasa .ptol-map {
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); grid-template-rows: 1fr auto auto auto 1fr;
+  column-gap: 32px; margin: 48px 0; border: 0 !important; background: none; overflow: visible;
+}
+html body #page-acasa .ptol-map > svg { grid-column: 1; grid-row: 1 / 6; align-self: center; }
+html body #page-acasa .ptol-map > .ptol-kicker { grid-column: 2; grid-row: 2; }
+html body #page-acasa .ptol-map > figcaption { grid-column: 2; grid-row: 3; }
+html body #page-acasa .ptol-map > .ptol-legend { grid-column: 2; grid-row: 4; }
+html body #page-acasa .ptol-map svg { border-radius: 4px; box-shadow: 0 1px 2px rgba(43,30,22,.12), 0 8px 24px rgba(43,30,22,.10); }
+html body #page-acasa .ptol-map .map-pt-label { font-size: 24px !important; }
+html body #page-acasa .ptol-map .map-pt-label.main { font-size: 30px !important; }
+html body #page-acasa .ptol-map figcaption {
+  margin: 0; padding: 0; border: 0 !important; background: none !important;
+  font-size: 16px; line-height: 1.6; color: #2b1e16; text-align: left;
+}
+html body #page-acasa .ptol-kicker { display: block; margin: 0 0 8px; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #7a1c1c; }
+html body #page-acasa .ptol-legend { list-style: none; margin: 24px 0 0; padding: 16px 0 0; border-top: 1px solid #e0d0ad; display: grid; gap: 12px; }
+html body #page-acasa .ptol-legend li { display: grid; grid-template-columns: 16px 1fr; gap: 8px; margin: 0; padding: 0; font-size: 15px; line-height: 1.5; color: #5c4a38; }
+html body #page-acasa .ptol-legend li::before { content: none; }
+html body #page-acasa .ptol-legend b { color: #2b1e16; }
+html body #page-acasa .pt-dot { width: 12px; height: 12px; margin-top: 5px; border-radius: 50%; border: 2px solid #f3ead7; box-shadow: 0 0 0 1px rgba(43,30,22,.25); }
+html body #page-acasa .pt-dot.gold { background: #c8861e; }
+html body #page-acasa .pt-dot.red { background: #8a1f1a; }
+@media (max-width: 900px) {
+  html body #page-acasa .ptol-map { grid-template-columns: 1fr; grid-template-rows: none; row-gap: 16px; }
+  html body #page-acasa .ptol-map > * { grid-column: 1 !important; grid-row: auto !important; }
+  html body #page-acasa .ptol-map > .ptol-kicker { margin-top: 8px; }
+}
+
+/* Craniul din fișa „Ce ne spun craniile alungite?”: se vede forma alungită, nu doar orbitele */
+html body #page-acasa img[alt^="Craniu alungit prin bandajare"] { object-position: 50% 8% !important; }
+
+/* Citatele: ghilimele închise; cele de sine stătătoare stau centrate, între două linii fine */
+html body #page-acasa figure.pq blockquote p::after { content: "”"; color: #8a2a1f; }
+html body #page-acasa section > figure.pq {
+  max-width: 760px; margin: 56px auto !important; padding: 32px 0 !important;
+  border-top: 1px solid #e0d0ad; border-bottom: 1px solid #e0d0ad; text-align: center;
+}
+html body #page-acasa section > figure.pq::before {
+  position: static !important; display: block; margin: 0 auto 8px; line-height: .6; font-size: 64px !important;
+}
+html body #page-acasa section > figure.pq blockquote { margin: 0 !important; padding: 0 !important; border: 0 !important; }
+html body #page-acasa section > figure.pq figcaption { margin-top: 16px; text-align: center; }
+@media (max-width: 720px) {
+  html body #page-acasa section > figure.pq { margin: 40px 0 !important; padding: 24px 0 !important; }
+  html body #page-acasa section > figure.pq::before { font-size: 48px !important; }
+}

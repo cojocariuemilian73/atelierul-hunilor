@@ -37,9 +37,11 @@
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var replay = gs.querySelector('.gs-replay');
 
-  // monedele de solizi apar doar la pasul lor, de la stânga la dreapta
+  // monedele de solizi apar doar la pasul lor
   var COINS = list('.gs-coins circle');
-  function solidi(on){ COINS.forEach(function(el, k){ el.style.transitionDelay = on && !motion.matches ? (k * 4) + 'ms' : '0ms'; el.classList.toggle('in', on); }); }
+  // cad de sus, ca într-un teanc: întâi rândul de jos, de la stânga la dreapta
+  var ROWS = Math.ceil(COINS.length / cols);
+  function solidi(on){ COINS.forEach(function(el, k){ var r = Math.floor(k / cols), c = k % cols, ord = (ROWS - 1 - r) * cols + c; el.style.transitionDelay = on && !motion.matches ? (ord * 7) + 'ms' : '0ms'; el.classList.toggle('in', on); }); }
 
   function set(s){
     if (s === cur) return;

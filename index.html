@@ -675,7 +675,7 @@
   .gs-stop rect{ fill: rgba(18, 16, 14, 0.9); stroke: #e0626c; stroke-width: 1.5; }
   .gs-stop text{ font: 700 20px 'EB Garamond', serif; fill: #f4a0a6; text-anchor: middle; }
   .gs-stop text.sm{ font: 13px 'Source Serif 4', Georgia, serif; fill: #e6d7c3; }
-  .gs-coins circle{ opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.2); transition: opacity 0.35s, transform 0.5s cubic-bezier(.16,1,.3,1); }
+  .gs-coins circle{ opacity: 0; transform-box: fill-box; transform-origin: center; transform: translateY(-260px); transition: opacity 0.12s ease-out, transform 0.46s cubic-bezier(.55,0,.8,.35); }
   .gs-coins circle.in{ opacity: 1; transform: none; }
   .gs-coins-lab{ font: 600 12px 'Source Serif 4', Georgia, serif; fill: #f2d474; opacity: 0; transition: opacity 0.5s 0.6s; }
   .gs[data-s="5"] .gs-coins-lab{ opacity: 1; }
@@ -4933,7 +4933,7 @@ html body #page-acasa .time-tick::after { content: ""; position: absolute; inset
 
                   <div class="diagram ptol-map" role="img" aria-label="Hartă ptolemeică a Sarmației Europene, gravată de Girolamo Porro în 1596, pe care sunt marcate poporul Chuni, bastarnii, roxolanii, fluviul Tanais și Mæotis.">
         <svg viewBox="270 400 1020 680" xmlns="http://www.w3.org/2000/svg"><image href="media/8fe3c130f871.webp" x="0" y="0" width="1600" height="1200"/><circle class="map-pt main" cx="665" cy="852" r="15"/><text x="665" y="908" text-anchor="middle" class="map-pt-label main">Chuni</text><circle class="map-pt" cx="464" cy="872" r="11"/><text x="464" y="918" text-anchor="middle" class="map-pt-label">Bastarnæ</text><circle class="map-pt" cx="982" cy="631" r="11"/><text x="982" y="609" text-anchor="middle" class="map-pt-label">Roxolani</text><circle class="map-pt" cx="955" cy="580" r="11"/><text x="955" y="558" text-anchor="middle" class="map-pt-label">Tanais (Don)</text><circle class="map-pt" cx="1060" cy="765" r="11"/><text x="1060" y="811" text-anchor="middle" class="map-pt-label">Mæotis (Azov)</text></svg>
-        <figcaption>Harta Sarmației Europene după Ptolemeu, gravată de Girolamo Porro (Veneția, 1596). Pe ea apare chiar numele <b>Chuni</b>, lângă Amadoca și Borysthenes (Nipru), între bastarni și roxolani, adică exact localizarea din Geografia 3.5.10, nu pe malul Mării Azov, cum se repetă adesea. Imagine în domeniul public (Wikimedia Commons).</figcaption>
+        <p class="ptol-kicker">Unde îi așază Ptolemeu?</p><figcaption>Harta Sarmației Europene după Ptolemeu, gravată de Girolamo Porro (Veneția, 1596). Pe ea apare chiar numele <b>Chuni</b>, lângă Amadoca și Borysthenes (Nipru), între bastarni și roxolani, adică exact localizarea din Geografia 3.5.10, nu pe malul Mării Azov, cum se repetă adesea. Imagine în domeniul public (Wikimedia Commons).</figcaption><ul class="ptol-legend"><li><span class="pt-dot gold" aria-hidden="true"></span><span><b>Chuni</b>: numele notat de Ptolemeu, la mijlocul secolului al II-lea.</span></li><li><span class="pt-dot red" aria-hidden="true"></span><span><b>Bastarnae, Roxolani</b>: vecinii între care îi așază Ptolemeu.</span></li><li><span class="pt-dot red" aria-hidden="true"></span><span><b>Tanais (Don), Mæotis (Azov)</b>: reperele lui Ammianus, care, cu aproximativ 240 de ani mai târziu, îi plasează pe huni dincolo de Meotida.</span></li></ul>
       </div>
 
       <div class="margus-context">
@@ -9383,9 +9383,11 @@ html body #page-acasa .time-tick::after { content: ""; position: absolute; inset
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var replay = gs.querySelector('.gs-replay');
 
-  // monedele de solizi apar doar la pasul lor, de la stânga la dreapta
+  // monedele de solizi apar doar la pasul lor
   var COINS = list('.gs-coins circle');
-  function solidi(on){ COINS.forEach(function(el, k){ el.style.transitionDelay = on && !motion.matches ? (k * 4) + 'ms' : '0ms'; el.classList.toggle('in', on); }); }
+  // cad de sus, ca într-un teanc: întâi rândul de jos, de la stânga la dreapta
+  var ROWS = Math.ceil(COINS.length / cols);
+  function solidi(on){ COINS.forEach(function(el, k){ var r = Math.floor(k / cols), c = k % cols, ord = (ROWS - 1 - r) * cols + c; el.style.transitionDelay = on && !motion.matches ? (ord * 7) + 'ms' : '0ms'; el.classList.toggle('in', on); }); }
 
   function set(s){
     if (s === cur) return;
@@ -10479,11 +10481,9 @@ html body #page-acasa .time-tick::after { content: ""; position: absolute; inset
   const footer = page.querySelector('.site-final-footer');
   const cover = document.getElementById('acasa');
   const origin = document.getElementById('sec-origini');
-  const caption = document.createElement('p');
-  caption.className = 'journey-caption';
-  caption.innerHTML = 'Traseu schematic prin articol · Pentru detalii, vezi <a href="#sec-atlas">Atlasul migrației</a>.';
-  origin.querySelector('.sec-head').after(caption);
-  const endCredit = caption.cloneNode(false);
+  // nota de sub „Originile hunilor” a fost scoasă (24.11.2026); rămâne doar creditul reliefului, în subsol
+  const endCredit = document.createElement('p');
+  endCredit.className = 'journey-caption';
   endCredit.innerHTML = 'Relief: <a href="https://commons.wikimedia.org/wiki/File:Europe_relief_laea_location_map.jpg">Alexrk2, Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.';
   footer.prepend(endCredit);
   shell.before(document.getElementById('huni-journey-template').content.cloneNode(true));
@@ -10903,5 +10903,64 @@ html.pz-on .pz-open { opacity: 0; pointer-events: none; }
 })();
 </script>
 <!-- domino-prezentare:end -->
+<!-- retusuri:start -->
+<style id="retusuri">
+/* Retușuri (24.11.2026): titlul copertei, harta lui Ptolemeu, craniul din fișă, citatele. Inserat de patch-retusuri.js. */
+
+/* Coperta: siluetele din față rămân, dar lasă literele să se citească */
+html body #acasa .hero-foreground { opacity: .5; }
+html body #acasa h1 .hero-title-main,
+html body #acasa h1 .hero-title-prefix { text-shadow: 0 2px 16px rgba(30, 16, 6, .55), 0 1px 2px rgba(30, 16, 6, .5); }
+
+/* Harta lui Ptolemeu: hartă + text alături, nu pe toată lățimea */
+html body #page-acasa .ptol-map {
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); grid-template-rows: 1fr auto auto auto 1fr;
+  column-gap: 32px; margin: 48px 0; border: 0 !important; background: none; overflow: visible;
+}
+html body #page-acasa .ptol-map > svg { grid-column: 1; grid-row: 1 / 6; align-self: center; }
+html body #page-acasa .ptol-map > .ptol-kicker { grid-column: 2; grid-row: 2; }
+html body #page-acasa .ptol-map > figcaption { grid-column: 2; grid-row: 3; }
+html body #page-acasa .ptol-map > .ptol-legend { grid-column: 2; grid-row: 4; }
+html body #page-acasa .ptol-map svg { border-radius: 4px; box-shadow: 0 1px 2px rgba(43,30,22,.12), 0 8px 24px rgba(43,30,22,.10); }
+html body #page-acasa .ptol-map .map-pt-label { font-size: 24px !important; }
+html body #page-acasa .ptol-map .map-pt-label.main { font-size: 30px !important; }
+html body #page-acasa .ptol-map figcaption {
+  margin: 0; padding: 0; border: 0 !important; background: none !important;
+  font-size: 16px; line-height: 1.6; color: #2b1e16; text-align: left;
+}
+html body #page-acasa .ptol-kicker { display: block; margin: 0 0 8px; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #7a1c1c; }
+html body #page-acasa .ptol-legend { list-style: none; margin: 24px 0 0; padding: 16px 0 0; border-top: 1px solid #e0d0ad; display: grid; gap: 12px; }
+html body #page-acasa .ptol-legend li { display: grid; grid-template-columns: 16px 1fr; gap: 8px; margin: 0; padding: 0; font-size: 15px; line-height: 1.5; color: #5c4a38; }
+html body #page-acasa .ptol-legend li::before { content: none; }
+html body #page-acasa .ptol-legend b { color: #2b1e16; }
+html body #page-acasa .pt-dot { width: 12px; height: 12px; margin-top: 5px; border-radius: 50%; border: 2px solid #f3ead7; box-shadow: 0 0 0 1px rgba(43,30,22,.25); }
+html body #page-acasa .pt-dot.gold { background: #c8861e; }
+html body #page-acasa .pt-dot.red { background: #8a1f1a; }
+@media (max-width: 900px) {
+  html body #page-acasa .ptol-map { grid-template-columns: 1fr; grid-template-rows: none; row-gap: 16px; }
+  html body #page-acasa .ptol-map > * { grid-column: 1 !important; grid-row: auto !important; }
+  html body #page-acasa .ptol-map > .ptol-kicker { margin-top: 8px; }
+}
+
+/* Craniul din fișa „Ce ne spun craniile alungite?”: se vede forma alungită, nu doar orbitele */
+html body #page-acasa img[alt^="Craniu alungit prin bandajare"] { object-position: 50% 8% !important; }
+
+/* Citatele: ghilimele închise; cele de sine stătătoare stau centrate, între două linii fine */
+html body #page-acasa figure.pq blockquote p::after { content: "”"; color: #8a2a1f; }
+html body #page-acasa section > figure.pq {
+  max-width: 760px; margin: 56px auto !important; padding: 32px 0 !important;
+  border-top: 1px solid #e0d0ad; border-bottom: 1px solid #e0d0ad; text-align: center;
+}
+html body #page-acasa section > figure.pq::before {
+  position: static !important; display: block; margin: 0 auto 8px; line-height: .6; font-size: 64px !important;
+}
+html body #page-acasa section > figure.pq blockquote { margin: 0 !important; padding: 0 !important; border: 0 !important; }
+html body #page-acasa section > figure.pq figcaption { margin-top: 16px; text-align: center; }
+@media (max-width: 720px) {
+  html body #page-acasa section > figure.pq { margin: 40px 0 !important; padding: 24px 0 !important; }
+  html body #page-acasa section > figure.pq::before { font-size: 48px !important; }
+}
+</style>
+<!-- retusuri:end -->
 </body>
 </html>
