@@ -428,7 +428,7 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   .gs-stop rect{ fill: rgba(18, 16, 14, 0.9); stroke: #e0626c; stroke-width: 1.5; }
   .gs-stop text{ font: 700 20px 'Cinzel', serif; fill: #f4a0a6; text-anchor: middle; }
   .gs-stop text.sm{ font: 13px 'JetBrains Mono', monospace; fill: #e6d7c3; }
-  .gs-coins circle{ opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.2); transition: opacity 0.35s, transform 0.5s cubic-bezier(.16,1,.3,1); }
+  .gs-coins circle{ opacity: 0; transform-box: fill-box; transform-origin: center; transform: translateY(-260px); transition: opacity 0.12s ease-out, transform 0.46s cubic-bezier(.55,0,.8,.35); }
   .gs-coins circle.in{ opacity: 1; transform: none; }
   .gs-coins-lab{ font: 700 12px 'JetBrains Mono', monospace; fill: #f2d474; opacity: 0; transition: opacity 0.5s 0.6s; }
   .gs[data-s="5"] .gs-coins-lab{ opacity: 1; }
@@ -1895,9 +1895,11 @@ body{ margin: 0; background: #121214; color: #e6d7c3; }
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var replay = gs.querySelector('.gs-replay');
 
-  // monedele de solizi apar doar la pasul lor, de la stânga la dreapta
+  // monedele de solizi apar doar la pasul lor
   var COINS = list('.gs-coins circle');
-  function solidi(on){ COINS.forEach(function(el, k){ el.style.transitionDelay = on && !motion.matches ? (k * 4) + 'ms' : '0ms'; el.classList.toggle('in', on); }); }
+  // cad de sus, ca într-un teanc: întâi rândul de jos, de la stânga la dreapta
+  var ROWS = Math.ceil(COINS.length / cols);
+  function solidi(on){ COINS.forEach(function(el, k){ var r = Math.floor(k / cols), c = k % cols, ord = (ROWS - 1 - r) * cols + c; el.style.transitionDelay = on && !motion.matches ? (ord * 7) + 'ms' : '0ms'; el.classList.toggle('in', on); }); }
 
   function set(s){
     if (s === cur) return;

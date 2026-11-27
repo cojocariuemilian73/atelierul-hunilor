@@ -719,9 +719,7 @@
     var gn = document.createElement('canvas'); gn.width = gn.height = 96; var gx = gn.getContext('2d'), gd = gx.createImageData(96, 96);
     for (var gi = 0; gi < gd.data.length; gi += 4) { var gv = 120 + Math.random() * 90; gd.data[gi] = gv; gd.data[gi + 1] = gv * 0.86; gd.data[gi + 2] = gv * 0.62; gd.data[gi + 3] = 16; }
     gx.putImageData(gd, 0, 0); b.fillStyle = b.createPattern(gn, 'repeat'); b.fillRect(0, 0, CW, CH);
-    // cadrul dublu, ca la hărțile vechi
-    b.strokeStyle = 'rgba(212, 175, 55, 0.55)'; b.lineWidth = 2; b.strokeRect(9, 9, CW - 18, CH - 18);
-    b.strokeStyle = 'rgba(212, 175, 55, 0.3)'; b.lineWidth = 1; b.strokeRect(15, 15, CW - 30, CH - 30);
+    // fără cadru dublu: harta stă liberă pe scena închisă a paginii (stratul editorial)
     // roza vânturilor, în colțul din dreapta jos
     (function(cx, cy, r){
       b.save(); b.translate(cx, cy); b.strokeStyle = 'rgba(242, 212, 116, 0.55)'; b.fillStyle = 'rgba(242, 212, 116, 0.32)'; b.lineWidth = 1.2;

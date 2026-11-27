@@ -14,17 +14,40 @@
     var grid = el('div', 'si-grid');
     grid.setAttribute('role', 'list');
 
+    // fiecare izvor are culoarea lui în antetul fișei
+    var TONES = ['#7a1c1c', '#8a5a1f', '#4a3a2b', '#9a7a2e', '#3f6b78'];
     Array.prototype.forEach.call(heads, function (th, k) {
       var kind = th.classList.contains('sc-obj') ? 'obj' : th.classList.contains('sc-dna') ? 'dna' : 'text';
       var card = el('article', 'si si-' + kind);
       card.setAttribute('role', 'listitem');
+      card.style.setProperty('--tone', TONES[k % TONES.length]);
+      var band = el('div', 'si-band');
+      band.setAttribute('aria-hidden', 'true');
+      band.appendChild(el('span', 'si-no', 'Fișa ' + (k < 9 ? '0' : '') + (k + 1)));
+      band.appendChild(el('span', 'si-kind', kind === 'text' ? 'Izvor scris' : kind === 'dna' ? 'Cercetare de laborator' : 'Izvor material'));
+      card.appendChild(band);
       var head = el('header', 'si-head');
       var name = el('h4', 'si-name'); var b = th.querySelector('b'); if (b) moveKids(b, name);
       var meta = el('p', 'si-meta'); var sm = th.querySelector('small'); if (sm) moveKids(sm, meta);
       head.appendChild(name); head.appendChild(meta);
       card.appendChild(head);
 
-      // distanța în timp: bară proporțională (0 = din epocă, plin = ~100 de ani)
+      // tipul sursei: o insignă scurtă, apoi formularea exactă din tabel
+      var typeCell = rowCells[1] && rowCells[1][k];
+      if (typeCell) {
+        var wp = typeCell.querySelector('.sc-w');
+        var yes = wp && wp.classList.contains('sc-w-yes'), obj = wp && wp.classList.contains('sc-w-obj');
+        var txt = (wp || typeCell).textContent;
+        var badge = yes ? 'Martor ocular' : obj ? (/modern/i.test(txt) ? 'Analiză modernă' : 'Dovadă din epocă')
+          : (/contemporan/i.test(txt) ? 'Contemporan, nu martor' : 'Nu a fost martor');
+        var t = el('div', 'si-type' + (yes ? ' is-yes' : obj ? ' is-obj' : ' is-no'));
+        t.appendChild(el('span', 'si-badge', badge));
+        var mark = wp && wp.querySelector('span[aria-hidden]'); if (mark) mark.remove();
+        t.appendChild(moveKids(wp || typeCell, el('p', 'si-type-t')));
+        card.appendChild(t);
+      }
+
+      // distanța în timp: o mică axă de la eveniment la ~100 de ani după, cu un punct pe ea
       var gapCell = rowCells[0] && rowCells[0][k];
       if (gapCell) {
         var g = gapCell.querySelector('.sc-gap');
@@ -33,20 +56,17 @@
         var modern = g && g.classList.contains('modern');
         var dist = el('div', 'si-dist' + (modern ? ' is-modern' : w === 0 ? ' is-zero' : ''));
         dist.appendChild(el('p', 'si-label', 'Distanța față de evenimente'));
-        var track = el('div', 'si-track'); track.setAttribute('aria-hidden', 'true');
-        var bar = el('i'); bar.style.setProperty('--w', (modern ? 100 : w) + '%'); track.appendChild(bar);
-        dist.appendChild(track);
+        var axis = el('div', 'si-axis'); axis.setAttribute('aria-hidden', 'true');
+        axis.appendChild(el('span', 'si-line'));
+        axis.appendChild(el('span', 'si-fill')).style.setProperty('--w', (modern ? 100 : w) + '%');
+        [[0, 'eveniment'], [50, '50 ani'], [100, modern ? 'azi' : '100 ani']].forEach(function (tk) {
+          var s = el('span', 'si-tick', '<small>' + tk[1] + '</small>'); s.style.left = tk[0] + '%'; axis.appendChild(s);
+        });
+        if (modern) axis.appendChild(el('span', 'si-break'));
+        axis.appendChild(el('span', 'si-dot')).style.left = (modern ? 100 : w) + '%';
+        dist.appendChild(axis);
         dist.appendChild(el('p', 'si-dist-v', label));
         card.appendChild(dist);
-      }
-      // tipul sursei
-      var typeCell = rowCells[1] && rowCells[1][k];
-      if (typeCell) {
-        var wp = typeCell.querySelector('.sc-w');
-        var t = el('p', 'si-type' + (wp && wp.classList.contains('sc-w-yes') ? ' is-yes' : wp && wp.classList.contains('sc-w-obj') ? ' is-obj' : ' is-no'));
-        var mark = wp && wp.querySelector('span[aria-hidden]'); if (mark) mark.remove();
-        moveKids(wp || typeCell, t);
-        card.appendChild(t);
       }
       // ce aflăm / limite
       [['Ce aflăm', 2, 'si-learn'], ['Limite', 3, 'si-limit']].forEach(function (d) {

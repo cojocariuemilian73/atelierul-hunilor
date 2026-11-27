@@ -6,27 +6,47 @@ html body #page-acasa .dmn-head * { font-style: normal; }
 html body #page-acasa .dmn-kicker { margin: 0 0 4px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #7a1c1c; font-weight: 600; }
 html body #page-acasa .dmn-title { margin: 0; font-size: 20px; line-height: 1.3; color: #2b1e16; font-weight: 600; }
 
-/* pista cu piese: lățime 28, înălțime 104, spațiu 40 → θ = asin(40/104) ≈ 22.6° */
+/* pista: piese de domino adevărate (fildeș, linie la mijloc, anul sus, puncte jos). Distanța dintre piese e aproape cât
+   înălțimea lor, ca în final să stea culcate, fiecare sprijinită de următoarea; unghiurile le calculează domino.js. */
 html body #page-acasa .dmn-track {
-  --w: 28px; --h: 104px; --pitch: 68px; --tilt: 22.6deg;
-  position: relative; display: flex; justify-content: center; margin: 0 0 24px; padding: 16px 0 0;
+  --w: 36px; --h: 88px; --pitch: 84px;
+  position: relative; display: flex; justify-content: center; margin: 0 0 24px; padding: 24px 0 6px; overflow: hidden;
 }
-html body #page-acasa .dmn-pieces { position: relative; width: calc(6 * var(--pitch) + var(--w) + var(--h)); height: var(--h); border-bottom: 2px solid #b9a27a; }
+html body #page-acasa .dmn-pieces { position: relative; flex: none; width: calc(6 * var(--pitch) + var(--w) + var(--h)); height: var(--h); }
+html body #page-acasa .dmn-pieces::after {
+  content: ""; position: absolute; left: -12px; right: -12px; bottom: -3px; height: 3px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #b9a27a 8%, #b9a27a 92%, transparent);
+}
 html body #page-acasa .dmn-piece {
   position: absolute; bottom: 0; left: calc(var(--i) * var(--pitch)); width: var(--w); height: var(--h);
-  display: flex; align-items: center; justify-content: center; border-radius: 4px;
-  background: #5c4a38; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), 0 2px 4px rgba(43,30,22,.18);
-  transform-origin: 100% 100%; transform: rotate(0deg);
-  transition: transform 300ms cubic-bezier(.55,0,1,.45);
-  transition-delay: calc(var(--i) * 260ms);
+  display: flex; flex-direction: column; box-sizing: border-box; border-radius: 6px;
+  border: 1px solid #a88f66;
+  background:
+    repeating-linear-gradient(8deg, rgba(122,96,60,.045) 0 1px, transparent 1px 5px),
+    linear-gradient(150deg, #fdf8ec 0%, #f3e8d0 55%, #e7d7b5 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), inset 0 -2px 0 rgba(120,92,55,.16), 0 2px 3px rgba(43,30,22,.22), 0 6px 10px rgba(43,30,22,.10);
+  transform-origin: 100% 100%; transform: rotate(0deg); will-change: transform;
+  --ink: #3a2a1d;
 }
-html body #page-acasa .dmn-piece > span { transform: rotate(-90deg); font-size: 13px; font-weight: 600; letter-spacing: .04em; color: #f3e8d2; white-space: nowrap; font-variant-numeric: tabular-nums; }
-html body #page-acasa .dmn-piece.dmn-huni { background: #7a1c1c; }
-html body #page-acasa .dmn-piece.dmn-roma { background: #b89242; }
-html body #page-acasa .dmn-piece.dmn-roma > span { color: #2b1e16; }
-html body #page-acasa .dmn.is-fallen .dmn-piece { transform: rotate(var(--tilt)); }
-/* ultima piesă nu mai are în ce să se sprijine: cade la pământ */
-html body #page-acasa .dmn.is-fallen .dmn-piece:last-child { transform: rotate(90deg); transition-timing-function: cubic-bezier(.55,0,.9,.6); }
+html body #page-acasa .dmn-piece.dmn-huni { --ink: #7a1c1c; border-color: #9b6a55; }
+html body #page-acasa .dmn-piece.dmn-roma { --ink: #7d5f1a; border-color: #b89242; }
+html body #page-acasa .dmn-half { position: relative; flex: 1; display: grid; place-items: center; }
+/* linia despărțitoare, cu știftul de alamă din mijloc */
+html body #page-acasa .dmn-top { border-bottom: 1.5px solid rgba(90,70,50,.55); }
+html body #page-acasa .dmn-top::after {
+  content: ""; position: absolute; left: 50%; bottom: -3.5px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f0d48a, #a07a2c 70%); box-shadow: 0 0 0 .5px rgba(60,40,20,.4);
+}
+/* anul e scris pe lungime: când piesa cade spre dreapta, se citește aproape orizontal */
+html body #page-acasa .dmn-y {
+  transform: rotate(-90deg); font-size: 14px; font-weight: 700; letter-spacing: .04em; color: var(--ink);
+  white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+html body #page-acasa .dmn-bot { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); padding: 6px 5px; box-sizing: border-box; }
+html body #page-acasa .dmn-pip {
+  grid-column: var(--c); grid-row: var(--r); width: 6px; height: 6px; border-radius: 50%; place-self: center;
+  background: var(--ink); box-shadow: inset 0 1px 1px rgba(0,0,0,.35), 0 .5px 0 rgba(255,255,255,.6);
+}
 
 /* cartonașele */
 html body #page-acasa .dmn-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
@@ -47,7 +67,7 @@ html body #page-acasa .dmn.is-fallen .dmn-step { opacity: 1; }
 html body #page-acasa .dmn-foot { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; margin: 24px 0 0; font-size: 13px; line-height: 1.45; color: #5c4a38; }
 html body #page-acasa .dmn-foot a { color: #6f281c; }
 html body #page-acasa .dmn-replay {
-  flex: none; min-height: 44px; padding: 0 16px; border: 1px solid #c9b48c; border-radius: 4px;
+  flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border: 1px solid #c9b48c; border-radius: 4px;
   background: transparent; color: #7a1c1c; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
   transition: background-color 160ms ease-out, transform 120ms ease-out;
 }
@@ -58,10 +78,14 @@ html body #page-acasa .dmn-replay:focus-visible { outline: 2px solid #7a1c1c; ou
 @media (max-width: 1100px) {
   html body #page-acasa .dmn-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
-/* telefon: piese mai mici (16 × 60, spațiu 20 → θ ≈ 19.5°), cartonașele unul sub altul */
+/* telefon: piese mai mici, aceleași proporții; cartonașele unul sub altul */
 @media (max-width: 720px) {
-  html body #page-acasa .dmn-track { --w: 16px; --h: 60px; --pitch: 36px; --tilt: 19.5deg; }
-  html body #page-acasa .dmn-piece > span { display: none; }
+  html body #page-acasa .dmn-track { --w: 18px; --h: 42px; --pitch: 40px; }
+  html body #page-acasa .dmn-piece { border-radius: 4px; }
+  html body #page-acasa .dmn-y { font-size: 10px; letter-spacing: 0; }
+  html body #page-acasa .dmn-bot { padding: 3px 2px; }
+  html body #page-acasa .dmn-pip { width: 3.5px; height: 3.5px; }
+  html body #page-acasa .dmn-top::after { display: none; }
   html body #page-acasa .dmn-row { grid-template-columns: 1fr; gap: 8px; }
   html body #page-acasa .dmn-step { display: grid; grid-template-columns: 56px 1fr; column-gap: 8px; border-top-width: 1px; border-left: 3px solid #5c4a38; border-radius: 0 4px 4px 0; }
   html body #page-acasa .dmn-step.dmn-huni { border-left-color: #7a1c1c; }
@@ -73,7 +97,7 @@ html body #page-acasa .dmn-replay:focus-visible { outline: 2px solid #7a1c1c; ou
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html body #page-acasa .dmn-piece, html body #page-acasa .dmn-step { transition: none !important; }
+  html body #page-acasa .dmn-step { transition: none !important; }
   html body #page-acasa .dmn-replay { display: none; }
 }
 @media print {
