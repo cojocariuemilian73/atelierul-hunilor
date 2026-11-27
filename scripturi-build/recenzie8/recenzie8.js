@@ -10,6 +10,8 @@
       // ferestrele își schimbă imaginea la fiecare deschidere: textul lor se recalculează mereu
       var live = img.matches('#mt-img, .img-lightbox img');
       if (!live && (img.getAttribute('alt') || '').trim()) return;
+      // copiile decorative (de exemplu fresca din fața titlului) rămân cu alt gol, ca să nu fie citite de două ori
+      if (img.closest('[aria-hidden="true"]') || img.getAttribute('role') === 'presentation') { img.setAttribute('alt', ''); return; }
       var fig = img.closest('figure'), cap = fig && fig.querySelector('figcaption');
       var lab = img.closest('[aria-label]'), now = img.closest('.mig-now-c');
       var alt = (now && txt(now.querySelector('b'))) || txt(cap) || (lab && lab.getAttribute('aria-label')) || '';

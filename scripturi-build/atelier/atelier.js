@@ -203,7 +203,7 @@
     tray.innerHTML = items.map(function(it){
       var p = placed[it.id], done = p && p.cls, k = KIND[it.kind], r = rng(hash(it.id));
       var lay = '--r:' + (r() * 8 - 4).toFixed(2) + 'deg;--dx:' + (r() * 8 - 4).toFixed(1) + 'px;--dy:' + (r() * 6 - 3).toFixed(1) + 'px';
-      return '<button type="button" style="' + lay + '" class="md-card' + (isPaper(it) ? ' txt' : '') + (done ? ' done' : p ? ' pending' : '') + (sel === it.id ? ' sel' : '') + '" data-id="' + it.id + '" aria-pressed="' + (sel === it.id) + '" aria-label="' + esc(done ? it.name + ', așezată' : p ? 'Sursă așezată în ' + p.guess + ', de clasificat' : (it.qt ? 'Fragment de text, încă neașezat' : isPaper(it) ? (it.faceNote || 'Pagină de manuscris, încă neașezată') : it.imageLabel + ', încă neașezată')) + '">' +
+      return '<button type="button" style="' + lay + '" class="md-card' + (isPaper(it) ? ' txt' : '') + (done ? ' done' : p ? ' pending' : '') + (sel === it.id ? ' sel' : '') + '" data-id="' + it.id + '" aria-pressed="' + (sel === it.id) + '" aria-label="' + esc(done ? it.name + ' (sursă așezată)' : p ? 'Sursă așezată în ' + p.guess + ', de clasificat' : (it.qt ? 'Fragment de text, încă neașezat' : isPaper(it) ? (it.faceNote || 'Pagină de manuscris, încă neașezată') : it.imageLabel + ' (sursă încă neașezată)')) + '">' +
         cardFace(it) + (p ? '<span class="md-stamp" style="--c:' + (done ? k.c : '#895944') + '">' + (done ? k.stamp : 'De clasificat') + '</span>' : '') + '</button>';
     }).join('');
   }
