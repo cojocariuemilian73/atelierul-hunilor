@@ -4939,7 +4939,8 @@ html body #page-acasa .time-tick::after { content: ""; position: absolute; inset
 
   <article>
 
-    <section id="sec-origini">
+    <section id="sec-drum" class="sc" aria-label="Drumul hunilor, 370–476"></section>
+<section id="sec-origini">
       <div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">01</span><h2 class="sec-title">Originile hunilor</h2></div>
 
       <div class="sr-row sr-reveal">
@@ -4994,8 +4995,7 @@ html body #page-acasa .time-tick::after { content: ""; position: absolute; inset
     </section>
 
     <div class="ch-orn" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12H108M132 12H232"/><path class="d" d="M120 4l8 8-8 8-8-8z"/></svg></div>
-    <section id="sec-drum" class="sc" aria-label="Drumul hunilor, 370–476"></section>
-<section id="sec-cronologie">
+    <section id="sec-cronologie">
       <div class="chapter-mark sec-head"><span class="chapter-num" aria-hidden="true">02</span><h2 class="sec-title">Cronologie interactivă</h2></div>
       <p class="sec-sub">Trage de-a lungul liniei sau apasă pe o epocă. Harta arată unde s-a petrecut fiecare eveniment și până unde ajunseseră hunii în acel an; alături afli ce s-a întâmplat. Poți apăsa și direct pe punctele de pe hartă.</p>
 
@@ -13888,15 +13888,16 @@ html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
 /* Drumul hunilor: scrollytelling pe hartă. Prefix: sc-. Pista exterioară dă lungimea, scena e lipită (sticky) de sus. */
 #sec-drum.sc {
   --sc-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --sc-bg: #16130f; --sc-text: #ece4d2; --sc-muted: #b9ae98; --sc-gold: #d6b25e; --sc-bronze: #a88a3c; --sc-rust: #c8714f;
-  --sc-line: rgba(236, 228, 210, .16);
+  /* pe pergament, ca restul paginii: text închis, bronz și teracotă */
+  --sc-bg: #f3eee3; --sc-text: #2b1d12; --sc-muted: #5f5044; --sc-gold: #85681f; --sc-bronze: #a88a3c; --sc-rust: #9a3f24;
+  --sc-line: rgba(52, 40, 29, .18);
   position: relative; display: none;
-  height: calc((var(--sc-n, 10) + 1.15) * 92vh);
+  height: calc((var(--sc-n, 10) + .6) * 72vh);
   margin: 0 0 72px; padding: 0 !important; max-width: none !important;
   font-variant-numeric: lining-nums tabular-nums;
 }
 #sec-drum.sc.sc-ready { display: block; }
-@supports (height: 1dvh) { #sec-drum.sc { height: calc((var(--sc-n, 10) + 1.15) * 92dvh); } }
+@supports (height: 1dvh) { #sec-drum.sc { height: calc((var(--sc-n, 10) + .6) * 72dvh); } }
 /* banda se întinde pe toată lățimea ferestrei, chiar dacă articolul e centrat */
 #page-acasa #sec-drum.sc { width: var(--sc-vw, 100vw); margin-left: calc(50% - var(--sc-vw, 100vw) / 2); }
 
@@ -13906,29 +13907,32 @@ html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
 }
 #sec-drum .sc-map { position: absolute; inset: 0; z-index: 0; }
 #sec-drum .sc-svg { display: block; width: 100%; height: 100%; }
-#sec-drum .sc-shade { fill: rgba(20, 16, 12, .34); }
+#sec-drum .sc-shade { fill: rgba(243, 238, 227, .22); }
+/* harta de relief în tonul paginii (sepia), cu marginile topite în pergament */
+#sec-drum .sc-svg use { filter: sepia(.42) saturate(.78) brightness(1.03); }
+#sec-drum .sc-map { -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 88%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 88%, transparent 100%); }
 #sec-drum .sc-route-next {
-  fill: none; stroke: rgba(236, 228, 210, .38); stroke-linecap: round; stroke-linejoin: round;
+  fill: none; stroke: rgba(52, 40, 29, .4); stroke-linecap: round; stroke-linejoin: round;
   stroke-width: calc(var(--sc-k, .5) * 1.6px); stroke-dasharray: calc(var(--sc-k, .5) * 3px) calc(var(--sc-k, .5) * 6px);
 }
 #sec-drum .sc-route-past {
-  fill: none; stroke: var(--sc-gold); stroke-linecap: round; stroke-linejoin: round; stroke-width: calc(var(--sc-k, .5) * 3.4px);
-  filter: drop-shadow(0 0 calc(var(--sc-k, .5) * 3px) rgba(20, 16, 12, .9));
+  fill: none; stroke: var(--sc-rust); stroke-linecap: round; stroke-linejoin: round; stroke-width: calc(var(--sc-k, .5) * 3.4px);
+  filter: drop-shadow(0 0 calc(var(--sc-k, .5) * 2.5px) rgba(243, 238, 227, .95));
 }
 
 /* reperele, în pixeli (nu se scalează cu harta) */
 #sec-drum .sc-marks { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 #sec-drum .sc-mk, #sec-drum .sc-here, #sec-drum .sc-label { position: absolute; left: 0; top: 0; will-change: transform; }
-#sec-drum .sc-mk { width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: rgba(236, 228, 210, .55); box-shadow: 0 0 0 2px rgba(20, 16, 12, .7); transition: background-color 220ms var(--sc-ease), opacity 220ms var(--sc-ease); }
+#sec-drum .sc-mk { width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: rgba(52, 40, 29, .45); box-shadow: 0 0 0 2px rgba(243, 238, 227, .9); transition: background-color 220ms var(--sc-ease), opacity 220ms var(--sc-ease); }
 #sec-drum .sc-mk.is-past { background: var(--sc-bronze); }
 #sec-drum :is(.sc-mk, .sc-here, .sc-label).is-off { opacity: 0; }
-#sec-drum .sc-here { width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--sc-rust); box-shadow: 0 0 0 2px var(--sc-gold), 0 0 0 5px rgba(20, 16, 12, .75); }
-#sec-drum .sc-here-ring { position: absolute; inset: -6px; border-radius: 50%; border: 1.5px solid var(--sc-gold); opacity: 0; }
+#sec-drum .sc-here { width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--sc-rust); box-shadow: 0 0 0 3px #f3eee3, 0 0 0 4.5px var(--sc-rust); }
+#sec-drum .sc-here-ring { position: absolute; inset: -6px; border-radius: 50%; border: 1.5px solid var(--sc-rust); opacity: 0; }
 #sec-drum .sc-here.sc-ping .sc-here-ring { animation: sc-ping 1100ms var(--sc-ease) 2; }
 @keyframes sc-ping { 0% { opacity: .9; transform: scale(.6); } 100% { opacity: 0; transform: scale(2.2); } }
 #sec-drum .sc-label {
   padding: 3px 9px; white-space: nowrap;
-  font: 600 .9rem/1.4 'Source Sans 3', system-ui, sans-serif; color: #f6ecd2; background: rgba(20, 16, 12, .82); border-radius: 2px;
+  font: 600 .9rem/1.4 'Source Sans 3', system-ui, sans-serif; color: #2b1d12; background: rgba(246, 241, 230, .94); border-radius: 2px; box-shadow: 0 0 0 1px rgba(52, 40, 29, .16);
 }
 
 /* titlul secțiunii și panoul narativ, decalate pe o margine */
@@ -13939,8 +13943,8 @@ html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
 /* sub panou, fundal plin (nicio linie nu trece prin text); apoi se estompează spre hartă */
 #sec-drum .sc-scene { --sc-col: calc(min(440px, 36vw) + clamp(24px, 5vw, 80px) + 28px); }
 #sec-drum .sc-scene::before, #sec-drum .sc-scene::after { width: calc(var(--sc-col) + min(22vw, 300px)); }
-#sec-drum .sc-scene::before { left: 0; background: linear-gradient(90deg, var(--sc-bg) 0, var(--sc-bg) var(--sc-col), rgba(22, 19, 15, 0) 100%); }
-#sec-drum .sc-scene::after { right: 0; background: linear-gradient(270deg, var(--sc-bg) 0, var(--sc-bg) var(--sc-col), rgba(22, 19, 15, 0) 100%); }
+#sec-drum .sc-scene::before { left: 0; background: linear-gradient(90deg, var(--sc-bg) 0, var(--sc-bg) var(--sc-col), rgba(243, 238, 227, 0) 100%); }
+#sec-drum .sc-scene::after { right: 0; background: linear-gradient(270deg, var(--sc-bg) 0, var(--sc-bg) var(--sc-col), rgba(243, 238, 227, 0) 100%); }
 #sec-drum .sc-scene[data-side="left"]::before, #sec-drum .sc-scene[data-side="right"]::after { opacity: 1; }
 
 #sec-drum .sc-intro, #sec-drum .sc-panel { position: absolute; z-index: 3; width: min(440px, 36vw); }
@@ -13955,7 +13959,7 @@ html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
 #sec-drum .sc-year { font: 500 clamp(3rem, 5.4vw, 4.5rem)/1 'EB Garamond', Georgia, serif; color: var(--sc-gold); letter-spacing: -.01em; }
 #sec-drum .sc-n { font: .9rem 'Source Sans 3', system-ui, sans-serif; color: var(--sc-muted); }
 #sec-drum .sc-place { margin: 0 0 8px; font: 600 .95rem/1.4 'Source Sans 3', system-ui, sans-serif; color: var(--sc-rust); }
-#sec-drum .sc-title { margin: 0 0 12px; font: 600 clamp(1.6rem, 2.4vw, 2rem)/1.15 'EB Garamond', Georgia, serif; color: #f6ecd2; text-wrap: balance; }
+#sec-drum .sc-title { margin: 0 0 12px; font: 600 clamp(1.6rem, 2.4vw, 2rem)/1.15 'EB Garamond', Georgia, serif; color: #221911; text-wrap: balance; }
 #sec-drum .sc-story { margin: 0 0 14px; font: 1.06rem/1.62 'Source Sans 3', system-ui, sans-serif; color: var(--sc-text); max-width: 42ch; }
 #sec-drum .sc-sig { margin: 0; padding-left: 14px; box-shadow: inset 2px 0 0 var(--sc-rust); font: italic 1.06rem/1.5 'EB Garamond', Georgia, serif; color: var(--sc-muted); max-width: 40ch; }
 #sec-drum .sc-panel.sc-in > * { animation: sc-in 220ms var(--sc-ease) both; }
@@ -13974,19 +13978,19 @@ html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
   font: 600 .9rem/1.2 'Source Sans 3', system-ui, sans-serif; color: var(--sc-muted); white-space: nowrap;
   box-shadow: inset 0 1px 0 transparent; transition: color 180ms var(--sc-ease), box-shadow 180ms var(--sc-ease);
 }
-#sec-drum .sc-yr.is-past { color: #d8ccb2; }
-#sec-drum .sc-yr:hover { color: #f6ecd2; box-shadow: inset 0 2px 0 rgba(214, 178, 94, .6); }
-#sec-drum .sc-yr.is-on { color: var(--sc-gold); box-shadow: inset 0 2px 0 var(--sc-rust); }
+#sec-drum .sc-yr.is-past { color: #4a3c30; }
+#sec-drum .sc-yr:hover { color: #221911; box-shadow: inset 0 2px 0 rgba(133, 104, 31, .6); }
+#sec-drum .sc-yr.is-on { color: var(--sc-rust); box-shadow: inset 0 2px 0 var(--sc-rust); }
 #sec-drum .sc-yr:focus-visible, #sec-drum .sc-credit a:focus-visible { outline: 2px solid var(--sc-gold); outline-offset: 2px; }
 
 #sec-drum .sc-credit {
   position: absolute; z-index: 3; left: clamp(24px, 5vw, 80px); bottom: 84px; margin: 0; max-width: min(440px, 36vw); text-align: left;
-  font: .75rem/1.4 'Source Sans 3', system-ui, sans-serif; color: var(--sc-muted); text-shadow: 0 0 6px rgba(18, 15, 11, .95);
+  font: .75rem/1.4 'Source Sans 3', system-ui, sans-serif; color: var(--sc-muted); text-shadow: none;
 }
 #sec-drum .sc-credit a { color: var(--sc-muted) !important; text-decoration: underline; text-underline-offset: 2px; }
 #sec-drum .sc-scene[data-side="right"] .sc-credit { left: auto; right: clamp(24px, 5vw, 80px); }
 /* praful de stepă: peste hartă, sub text */
-#sec-drum .sc-scene > .pr-dust { z-index: 1; mix-blend-mode: screen; }
+#sec-drum .sc-scene > .pr-dust { display: none; }
 
 /* ---------- telefon și tabletă îngustă: harta sus, panoul dedesubt ---------- */
 @media (max-width: 899.98px) {
@@ -14022,13 +14026,13 @@ html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
 /* contrast sub axă și sub credit: o estompare, nu o cutie */
 #sec-drum .sc-axis::before {
   content: ''; position: absolute; z-index: -1; left: -50vw; right: -50vw; top: -56px; bottom: -24px; pointer-events: none;
-  background: linear-gradient(0deg, rgba(18, 15, 11, .94) 0%, rgba(18, 15, 11, .8) 55%, rgba(18, 15, 11, 0) 100%);
+  background: linear-gradient(0deg, rgba(243, 238, 227, .97) 0%, rgba(243, 238, 227, .88) 55%, rgba(243, 238, 227, 0) 100%);
 }
 #sec-drum .sc-credit { text-shadow: none; }
 @media (min-width: 900px) { #sec-drum .sc-credit { bottom: 80px; z-index: 4; } }
 @media (max-width: 899.98px) {
   #sec-drum .sc-axis::before { left: 0; right: 0; top: -14px; bottom: -6px; background: var(--sc-bg); }
-  #sec-drum .sc-credit { padding: 2px 6px; background: rgba(18, 15, 11, .72); }
+  #sec-drum .sc-credit { padding: 2px 6px; background: rgba(243, 238, 227, .88); }
 }
 </style>
 <script id="runda5-js">
@@ -14278,7 +14282,7 @@ html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
 
     root.style.setProperty('--sc-n', N);
     root.innerHTML =
-      '<div class="sc-scene" data-praf>' +
+      '<div class="sc-scene">' +
         '<div class="sc-map">' +
           '<svg class="sc-svg" role="img" aria-labelledby="sc-svg-t" preserveAspectRatio="xMidYMid slice">' +
             '<title id="sc-svg-t">Harta Europei cu drumul hunilor între 370 și 476, de la Marea Azov la Ravenna</title>' +
@@ -14402,6 +14406,9 @@ html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
     var thr = ANCHOR + (1 - ANCHOR) * 0.55, act = (i < N - 1 && u > thr) ? i + 1 : i;
     if (this.active >= 0 && act !== this.active && Math.abs(u - thr) < HYST && Math.abs(act - this.active) === 1) act = this.active;
 
+    // textul etapei se schimbă înaintea poziționării, ca eticheta locului să fie măsurată cu textul nou
+    if (act !== this.active || force) this.stage(act, force);
+
     // 1. traseul
     var drawn;
     if (reduce) drawn = this.total;
@@ -14458,7 +14465,6 @@ html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
     // axa anilor
     this.prog.style.transform = 'scaleX(' + t.toFixed(4) + ')';
 
-    if (act !== this.active || force) this.stage(act, force);
   };
 
   Scrolly.prototype.stage = function (i, force) {

@@ -1,5 +1,5 @@
 // Runda 5 (27.11): „Praf de stepă” (design/praf.*), finalul jocului Attila cu profil și cronică (design/joc-cronica.*),
-// scrollytelling-ul „Drumul hunilor” (design/scrolly.*), inserat înaintea capitolului Cronologie.
+// scrollytelling-ul „Drumul hunilor” (design/scrolly.*), inserat imediat după copertă, înaintea capitolului Origini.
 // Rulează după patch-runda4, înainte de build-web. Se poate rula de mai multe ori.
 const fs = require('fs');
 const path = require('path');
@@ -13,8 +13,9 @@ const prev = html.indexOf(start);
 if (prev !== -1) html = html.slice(0, prev) + html.slice(html.indexOf(end, prev) + end.length);
 // secțiunea goală; scrolly.js o construiește
 html = html.replace(/<section id="sec-drum"[^>]*><\/section>\n?/g, '');
-const anchor = '<section id="sec-cronologie">';
-if (!html.includes(anchor)) throw new Error('Lipsește capitolul Cronologie.');
+// imediat după copertă: primul scroll în jos intră direct în prima etapă a drumului, apoi urmează capitolele
+const anchor = '<section id="sec-origini">';
+if (!html.includes(anchor)) throw new Error('Lipsește capitolul Origini.');
 html = html.replace(anchor, '<section id="sec-drum" class="sc" aria-label="Drumul hunilor, 370–476"></section>\n' + anchor);
 const css = ['praf.css', 'joc-cronica.css', 'scrolly.css'].map(read).join('\n');
 const js = ['praf.js', 'joc-cronica.js', 'scrolly.js'].map(read).join('\n');
