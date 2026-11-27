@@ -19,7 +19,7 @@
 html body #page-acasa .r2-head {
   box-shadow: none !important; clip-path: none !important; background: none !important; border-image: none !important;
   color: #221911 !important; padding: 56px 0 8px !important; margin: 24px 0 40px !important;
-  border-top: 1px solid rgba(133, 104, 31, .35) !important;
+  border-top: 0 !important;
 }
 html body #page-acasa .r2-head .chapter-num { color: #a07c22 !important; opacity: 1 !important; }
 html body #page-acasa .r2-head :is(.sec-title, .sec-title .fw) { color: #221911 !important; }
@@ -168,11 +168,86 @@ html body #site-nav :is(.st-brand, .toc-link, .st-pages a, .about-trigger, .st-m
 }
 
 /* chemarea spre joc: pe pergament, ca restul paginii (fără bandă neagră) */
-html body .cta-card { background: #ece4d3 !important; color: #221911 !important; box-shadow: inset 0 0 0 1px rgba(52, 40, 29, .14) !important; }
-html body .cta-card h3 { color: #221911 !important; }
-html body .cta-card p { color: #4a3c30 !important; }
-html body .cta-card .kicker { color: #9a3f24 !important; }
-html body .cta-card .cta-btn { background: #221911 !important; color: #f6ecd8 !important; }
-html body .cta-card .cta-btn:hover { background: #3a2a1e !important; }
-html body .cta-card > .pr-dust { display: none !important; }
+html body #page-acasa .cta-card { background: #ece4d3 !important; color: #221911 !important; box-shadow: inset 0 0 0 1px rgba(52, 40, 29, .14) !important; }
+html body #page-acasa .cta-card h3 { color: #221911 !important; }
+html body #page-acasa .cta-card p { color: #4a3c30 !important; }
+html body #page-acasa .cta-card .kicker { color: #9a3f24 !important; }
+html body #page-acasa .cta-card .cta-btn { background: #221911 !important; color: #f6ecd8 !important; }
+html body #page-acasa .cta-card .cta-btn:hover { background: #3a2a1e !important; }
+html body #page-acasa .cta-card > .pr-dust { display: none !important; }
 @media (max-width: 860px) { html body #page-acasa .r6-span { flex-direction: column; gap: 2px; } html body #page-acasa .r6-span i { padding-left: 0; box-shadow: none; } }
+
+/* ---------- 6. carduri editoriale: aceeași suprafață, aceeași ramă, același buton ---------- */
+/* sub copertă: fără margini vizibile (coperta ia tonul paginii, Drumul hunilor nu are linie deasupra) */
+html body #page-acasa #acasa.hero { background: transparent !important; }
+html body #page-acasa #sec-drum.sc { border-top: 0 !important; }
+
+:root {
+  --ed-paper: linear-gradient(180deg, #f9f4e9 0%, #f1e8d6 100%);
+  --ed-mat: #e8dfca;
+  --ed-rule: rgba(133, 104, 31, .42);
+  --ed-gilt: #a88a3c;
+  --ed-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 2px 5px -3px rgba(43, 30, 22, .22), 0 14px 30px -20px rgba(43, 30, 22, .5);
+}
+/* suprafața comună: pergament cu o ramă fină de bronz și umbră caldă, joasă */
+html body #page-acasa .fc.r2-card :is(.fc-front, .fc-back),
+html body #page-acasa .si-wrap .si.si,
+html body #page-acasa .duel.dk .duel-card.dk-card,
+html body #page-acasa .cta-card {
+  background: var(--ed-paper) !important; border: 1px solid var(--ed-rule) !important; border-radius: 3px !important;
+  box-shadow: var(--ed-shadow) !important; color: #221911 !important;
+}
+/* mituri: imaginea pe un passe-partout de aceeași înălțime, linie de aur la îmbinarea cu textul */
+html body #page-acasa .fc.r2-card .fc-fig { background: var(--ed-mat) !important; border-radius: 2px 2px 0 0; }
+html body #page-acasa .fc.r2-card .fc-fig img { height: 232px !important; background: var(--ed-mat) !important; padding: 14px !important; border-bottom: 1px solid var(--ed-gilt) !important; box-shadow: 0 1px 0 rgba(168, 138, 60, .35) !important; }
+html body #page-acasa .fc.r2-card .fc-fig figcaption { background: transparent !important; padding: 10px 26px 0 !important; color: #55463a !important; font-size: .82rem !important; letter-spacing: .01em; }
+html body #page-acasa .fc.r2-card .fc-fig { background: linear-gradient(var(--ed-mat), var(--ed-mat)) top / 100% 232px no-repeat !important; }
+html body #page-acasa .fc.r2-card .fc-front .fc-body { padding: 18px 26px 26px !important; gap: 10px !important; }
+html body #page-acasa .fc.r2-card .fc-back { box-shadow: inset 0 3px 0 var(--r6-rust), var(--ed-shadow) !important; }
+html body #page-acasa .fc.r2-card .fc-back .fc-body { padding: 26px 26px 26px !important; }
+/* fișele de izvor: aceeași fișă, culoarea tipului de izvor devine o bandă sus, unde se prinde firul */
+html body #page-acasa .si-wrap .si.si { padding: 22px 18px 22px !important; gap: 14px !important; }
+html body #page-acasa .si-wrap .si.si::before { left: -1px !important; right: -1px !important; top: -1px !important; bottom: auto !important; width: auto !important; height: 3px !important; opacity: .85 !important; border-radius: 3px 3px 0 0; }
+html body #page-acasa .si-wrap .si.si.si-on::before { opacity: 1 !important; width: auto !important; height: 4px !important; }
+/* Attila și Aetius: portretul pe passe-partout, aceeași proporție la amândoi */
+html body #page-acasa .duel.dk .duel-card.dk-card { padding: 22px !important; }
+html body #page-acasa .duel.dk .duel-card.dk-card .dc-img img {
+  width: 100% !important; height: auto !important; aspect-ratio: 1 / 1; object-fit: contain !important; object-position: 50% 50% !important;
+  padding: 10px !important; background: var(--ed-mat) !important; border: 1px solid var(--ed-gilt) !important; box-sizing: border-box !important;
+}
+html body #page-acasa .duel.dk .duel-card.dk-card .dc-img figcaption { color: #55463a !important; font-size: .82rem !important; line-height: 1.45 !important; }
+/* chemarea spre joc: aceeași fișă, cu filet de aur sus */
+html body #page-acasa .cta-card { box-shadow: inset 0 3px 0 var(--ed-gilt), var(--ed-shadow) !important; }
+
+/* butoanele de pe carduri: de epocă — antracit, filet interior de aur, majuscule mici; același hover peste tot */
+html body #page-acasa .fc .fc-front .fc-btn, html body #page-acasa .cta-card .cta-btn {
+  background: #2b1d12 !important; color: #f6ecd8 !important; border: 1px solid #2b1d12 !important; border-radius: 2px !important;
+  box-shadow: inset 0 0 0 3px #2b1d12, inset 0 0 0 4px rgba(214, 178, 94, .55) !important;
+  min-height: 44px; padding: 0 22px !important; font: 600 14px/1 'Source Sans 3', system-ui, sans-serif !important;
+  letter-spacing: .08em !important; text-transform: uppercase !important; text-decoration: none !important;
+  display: inline-flex !important; align-items: center; gap: 8px;
+}
+html body #page-acasa .fc .fc-btn-back {
+  background: transparent !important; color: #7a2e1a !important; border: 1px solid var(--ed-rule) !important; border-radius: 2px !important;
+  min-height: 44px; padding: 0 18px !important; font: 600 14px/1 'Source Sans 3', system-ui, sans-serif !important;
+  letter-spacing: .08em !important; text-transform: uppercase !important; text-decoration: none !important;
+}
+html body #page-acasa :is(.fc .fc-btn, .cta-card .cta-btn), html body #page-acasa .cta-card .cta-btn {
+  transition: scale var(--r6-dur) var(--r6-ease), background-color var(--r6-dur) var(--r6-ease), color var(--r6-dur) var(--r6-ease) !important;
+}
+html body #page-acasa .fc .fc-front .fc-btn:hover, html body #page-acasa .cta-card .cta-btn:hover { background: #3a2a1e !important; }
+html body #page-acasa .fc .fc-btn-back:hover { background: rgba(133, 104, 31, .1) !important; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .fc .fc-btn:is(:hover, :focus-visible), html body #page-acasa .cta-card .cta-btn:is(:hover, :focus-visible) { scale: var(--r6-hover); transform: none !important; }
+}
+html body #page-acasa .fc .fc-btn:focus-visible, html body #page-acasa .cta-card .cta-btn:focus-visible { outline: 2px solid var(--r6-rust) !important; outline-offset: 3px !important; }
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa .fc .fc-btn, html body #page-acasa .cta-card .cta-btn { transition: none !important; scale: none !important; }
+}
+@media (max-width: 520px) {
+  html body #page-acasa .duel.dk .duel-card.dk-card { padding: 16px !important; }
+  html body #page-acasa .duel.dk .duel-card.dk-card .dc-img { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
+  html body #page-acasa .fc.r2-card .fc-fig img { height: 210px !important; }
+  html body #page-acasa .fc.r2-card .fc-fig { background-size: 100% 210px !important; }
+  html body #page-acasa .fc.r2-card :is(.fc-front, .fc-back) .fc-body { padding-inline: 20px !important; }
+}
