@@ -15024,5 +15024,348 @@ html body #page-acasa #sec-cronologie .section-sources sup { line-height: 0; }
 })();
 </script>
 <!-- runda9:end -->
+<!-- runda10:start -->
+<style id="runda10-css">
+/* Runda 10: pagina fără linii despărțitoare, bara în trei zone, atlas lat, tranziții între capitole, curiozități pe orbită. Prefix: r10-. */
+:root { --r10-ease: cubic-bezier(.22, 1, .36, 1); }
+
+/* ---------- 1. fără linii despărțitoare și fără rândul „Cuprins / Următorul” ---------- */
+html body #page-acasa :is(.ch-orn, .ch-next) { display: none !important; }
+html body #page-acasa :is(section[id], #biblio, .hx-main, .duel-context, .dx-axis-in, .further-reading, .fc-evidence, .dk-label) { border-top: 0 !important; }
+html body #page-acasa :is(.hx-yr, .gs-nav, .gl-row, #biblio li) { border-bottom: 0 !important; }
+html body #page-acasa .si :is(.si-learn, .si-limit, .si-block) { border-top: 0 !important; }
+html body .site-final-footer { border-top: 0 !important; }
+html body #page-acasa .page-shell .pq::after { display: none !important; }
+
+/* ---------- 2. bara de navigație: trei zone, „Imperiul Hunilor” în centru ---------- */
+html body #site-nav .st-brand .r10-brand {
+  font: 600 15px/1 'EB Garamond', Georgia, serif; letter-spacing: .22em; text-transform: uppercase; color: #221911; white-space: nowrap;
+}
+html body #site-nav .r10-l, html body #site-nav .r10-r { display: none; }
+@media (min-width: 1100px) {
+  html body #site-nav.site-nav {
+    display: grid !important; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; column-gap: 28px;
+    border-bottom: 1px solid rgba(133, 104, 31, .38) !important; box-shadow: none !important;
+  }
+  html body #site-nav > .st-links, html body #site-nav > .st-menu { display: none !important; }
+  html body #site-nav .r10-l, html body #site-nav .r10-r { display: flex !important; align-items: center; gap: 4px; min-width: 0; height: 44px; }
+  html body #site-nav .r10-l { grid-column: 1; justify-content: flex-end; }
+  html body #site-nav > .st-brand { grid-column: 2; grid-row: 1; justify-self: center; padding: 0 6px !important; }
+  html body #site-nav .r10-r { grid-column: 3; justify-content: flex-start; }
+  html body #site-nav .r10-sep { width: 1px; height: 16px; margin: 0 8px; background: rgba(133, 104, 31, .45); flex: none; }
+  html body #site-nav :is(.r10-l, .r10-r) a, html body #site-nav .r10-r .about-trigger { font-size: 14px !important; padding: 0 9px !important; }
+}
+/* același hover pentru tot ce e în bară */
+html body #site-nav :is(.r10-l a, .r10-r a, .r10-r .about-trigger, .st-brand) {
+  transition: scale var(--r6-dur, 220ms) var(--r6-ease, ease), color var(--r6-dur, 220ms) ease !important;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html body #site-nav :is(.r10-l a, .r10-r a, .r10-r .about-trigger, .st-brand):is(:hover, :focus-visible) { scale: 1.03; }
+}
+html body #site-nav :is(.r10-l a, .r10-r a, .r10-r .about-trigger, .st-brand):focus-visible { outline: 2px solid #9a3f24 !important; outline-offset: 3px !important; }
+@media (prefers-reduced-motion: reduce) {
+  html body #site-nav :is(.r10-l a, .r10-r a, .r10-r .about-trigger, .st-brand) { transition: none !important; scale: none !important; }
+}
+
+/* firul anului: nu mai e un rând separat; e chiar linia de jos a barei, cu anul agățat discret dedesubt */
+html body .ef-ride { height: 0 !important; background: none !important; overflow: visible !important; }
+html body .ef-ride .ef-rtrack { top: -1px !important; }
+html body .ef-ride .ef-rfill { height: 1px !important; top: 0 !important; }
+html body .ef-ride .ef-rider svg, html body .ef-ride .ef-rtick b, html body .ef-ride .ef-rtick.last::after, html body .ef-ride .ef-rtick.last i { display: none !important; }
+html body .ef-ride .ef-rtick::before { width: 5px !important; height: 5px !important; left: -3px !important; top: -3px !important; }
+html body .ef-ride .ef-ryr {
+  bottom: auto !important; top: 4px !important; left: 0 !important; right: auto !important; transform: translateX(-50%);
+  padding: 1px 7px 2px !important; font-size: 11px !important; border-color: rgba(133, 104, 31, .45) !important;
+  background: rgba(243, 238, 227, .96) !important; box-shadow: 0 4px 10px -6px rgba(43, 30, 22, .35);
+}
+html body .ef-ride.lft .ef-ryr { left: 0 !important; right: auto !important; }
+
+/* ---------- 3. atlasul: mai lat, harta mai mare, legenda alături ---------- */
+@media (min-width: 1100px) {
+  html body #page-acasa #sec-atlas > .wrap {
+    width: min(1360px, calc(100vw - 112px)) !important; max-width: none !important;
+    margin-left: calc(50% - min(1360px, calc(100vw - 112px)) / 2) !important; margin-right: 0 !important;
+  }
+  html body #page-acasa #sec-atlas .stage { grid-template-columns: 244px minmax(0, 1fr) !important; gap: 28px !important; }
+  html body #page-acasa #sec-atlas .map-area { max-height: 66vh; }
+  html body #page-acasa #sec-atlas .map-area .map-svg { max-height: 66vh; }
+  html body #page-acasa #sec-atlas .sidebar { position: sticky; top: 72px; align-self: start; }
+}
+
+/* ---------- 4. tranziții între capitole: fiecare capitol intră în felul lui, scurt ---------- */
+@keyframes r10-rise { from { opacity: 0; transform: translateY(28px); } }
+@keyframes r10-unroll { from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(14px); } }
+@keyframes r10-sweep { from { opacity: 0; transform: translateX(-56px) scale(.985); } }
+@keyframes r10-unfold { from { opacity: 0; clip-path: inset(0 50% 0 50%); transform: scale(.97); } }
+@keyframes r10-edit { from { opacity: 0; transform: translateX(48px); } }
+@keyframes r10-fade { from { opacity: 0; } }
+@media (prefers-reduced-motion: no-preference) {
+  html.r10-arm body #page-acasa section.r10-sec:not(.r10-in) > :is(.r2-head, .r2-head + *) { opacity: 0; }
+  html.r10-arm body #page-acasa section.r10-sec.r10-in > :is(.r2-head, .r2-head + *) {
+    animation: var(--r10-anim, r10-rise) 640ms var(--r10-ease) backwards;
+  }
+  html.r10-arm body #page-acasa section.r10-sec.r10-in > .r2-head + * { animation-delay: 90ms; }
+  html body #page-acasa #sec-origini { --r10-anim: r10-rise; }
+  html body #page-acasa #sec-cronologie { --r10-anim: r10-unroll; }
+  html body #page-acasa #sec-migratie { --r10-anim: r10-sweep; }
+  html body #page-acasa #sec-atlas { --r10-anim: r10-unfold; }
+  html body #page-acasa #sec-personalitati { --r10-anim: r10-edit; }
+  html body #page-acasa #biblio { --r10-anim: r10-fade; }
+}
+
+/* ---------- 5. curiozitățile pe orbită ---------- */
+@property --r10-spin { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+@property --r10-k { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --r10-er { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+@keyframes r10-spin { to { --r10-spin: 360deg; } }
+
+html body #page-acasa .r10-orb-sec { margin: 96px 0 0; overflow-x: clip; }
+html body #page-acasa .r10-orb-head { text-align: center; margin: 0 auto 8px; max-width: 46ch; }
+html body #page-acasa .r10-kick { margin: 0 0 8px; font: 600 12px/1.3 'Source Sans 3', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #9a3f24; }
+html body #page-acasa .r10-orb-title { margin: 0; font: 600 clamp(28px, 3.4vw, 40px)/1.1 'EB Garamond', Georgia, serif; color: #221911; }
+
+html body #page-acasa .r10-orb {
+  --n: 6; --R: calc(50cqw - 66px);
+  position: relative; width: 100%; aspect-ratio: 1;
+}
+/* scena: orbita + centrul; centrul e frate cu orbita, ca pe telefon să poată sta sub ea */
+html body #page-acasa .r10-stage { container-type: inline-size; position: relative; width: min(700px, 100%); margin: 24px auto 0; }
+html body #page-acasa .r10-orb.is-spinning { animation: r10-spin 90s linear infinite; }
+html body #page-acasa .r10-orb:is(:hover, :focus-within, .is-open), html body #page-acasa .r10-stage:has(.r10-center:is(:hover, :focus-within)) .r10-orb { animation-play-state: paused; }
+html body #page-acasa .r10-ring { position: absolute; inset: 66px; border-radius: 50%; border: 1px solid rgba(133, 104, 31, .4); pointer-events: none; }
+html body #page-acasa .r10-items { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
+html body #page-acasa .r10-items > li {
+  --a: calc(var(--i) * 360deg / var(--n) + var(--r10-spin) + var(--r10-er));
+  position: absolute; left: 50%; top: 50%; width: 0; height: 0;
+  transform: rotate(var(--a)) translateY(calc(var(--R) * -1 * var(--r10-k))) rotate(calc(var(--a) * -1));
+  --r10-k: .25; --r10-er: -80deg; opacity: 0;
+  transition: --r10-k 900ms var(--r10-ease), --r10-er 900ms var(--r10-ease), opacity 500ms ease;
+  transition-delay: calc(var(--i) * 70ms);
+}
+html body #page-acasa .r10-orb.is-in .r10-items > li { --r10-k: 1; --r10-er: 0deg; opacity: 1; }
+html body #page-acasa .r10-it {
+  position: absolute; left: -59px; top: -59px; width: 118px; height: 118px; border-radius: 50%; padding: 12px; cursor: pointer;
+  display: grid; place-content: center; gap: 4px; text-align: center;
+  background: linear-gradient(180deg, #f9f4e9, #efe5d1); color: #221911;
+  border: 1px solid rgba(133, 104, 31, .5); box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 10px 22px -14px rgba(43, 30, 22, .55);
+  transition: scale var(--r6-dur, 220ms) var(--r6-ease, ease), background-color var(--r6-dur, 220ms) ease, border-color var(--r6-dur, 220ms) ease;
+}
+html body #page-acasa .r10-it .r10-no { font: 600 12px/1 'Source Sans 3', system-ui, sans-serif; letter-spacing: .12em; color: #9a3f24; }
+html body #page-acasa .r10-it .r10-t { font: 600 15px/1.15 'EB Garamond', Georgia, serif; }
+html body #page-acasa .r10-it[aria-expanded="true"] { background: #2b1d12; color: #f6ecd8; border-color: #2b1d12; box-shadow: inset 0 0 0 3px #2b1d12, inset 0 0 0 4px rgba(214, 178, 94, .6); }
+html body #page-acasa .r10-it[aria-expanded="true"] .r10-no { color: #e0bd6a; }
+html body #page-acasa .r10-it:focus-visible, html body #page-acasa .r10-center button:focus-visible { outline: 2px solid #9a3f24; outline-offset: 3px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .r10-it:is(:hover, :focus-visible), html body #page-acasa .r10-center button:is(:hover, :focus-visible) { scale: var(--r6-hover, 1.025); }
+}
+
+/* centrul: întrebarea; la clic, curiozitatea aleasă */
+html body #page-acasa .r10-center {
+  position: absolute; left: 50%; top: 50cqw; width: calc(100cqw - 2 * 66px - 2 * 74px); aspect-ratio: 1; transform: translate(-50%, -50%);
+  border-radius: 50%; display: grid; place-content: center; text-align: center; padding: 0 clamp(28px, 6%, 56px);
+  background: radial-gradient(circle at 50% 35%, #fbf7ee, #efe6d3 70%); border: 1px solid rgba(133, 104, 31, .35);
+  box-shadow: 0 18px 40px -26px rgba(43, 30, 22, .55);
+}
+html body #page-acasa .r10-center > * { transition: opacity 260ms ease, transform 260ms var(--r10-ease); }
+html body #page-acasa .r10-center.is-swap > * { opacity: 0; transform: translateY(6px); }
+html body #page-acasa .r10-q { margin: 0; font: italic 600 clamp(22px, 2.4vw, 28px)/1.2 'EB Garamond', Georgia, serif; color: #221911; }
+html body #page-acasa .r10-hint { margin: 10px 0 0; font: 400 14px/1.4 'Source Sans 3', system-ui, sans-serif; color: #65564a; }
+html body #page-acasa .r10-center h3 { margin: 0 0 8px; font: 600 24px/1.15 'EB Garamond', Georgia, serif; color: #221911; }
+html body #page-acasa .r10-center .r10-txt { margin: 0; font: 400 15px/1.5 'Source Sans 3', system-ui, sans-serif; color: #2b1d12; }
+html body #page-acasa .r10-center .r10-src { margin: 10px 0 0; font: 400 12.5px/1.4 'Source Sans 3', system-ui, sans-serif; color: #65564a; }
+html body #page-acasa .r10-nav { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+html body #page-acasa .r10-nav button {
+  min-width: 44px; min-height: 40px; padding: 0 12px; cursor: pointer; border-radius: 2px;
+  background: #2b1d12; color: #f6ecd8; border: 1px solid #2b1d12; box-shadow: inset 0 0 0 3px #2b1d12, inset 0 0 0 4px rgba(214, 178, 94, .55);
+  font: 600 12px/1 'Source Sans 3', system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+  transition: scale var(--r6-dur, 220ms) var(--r6-ease, ease), background-color var(--r6-dur, 220ms) ease;
+}
+html body #page-acasa .r10-nav .r10-close { background: transparent; color: #7a2e1a; border-color: rgba(133, 104, 31, .45); box-shadow: none; }
+
+/* telefon: orbita mai mică; curiozitatea deschisă se citește sub ea */
+@media (max-width: 699px) {
+  html body #page-acasa .r10-stage { width: min(340px, 100%); }
+  html body #page-acasa .r10-orb { --R: calc(50cqw - 46px); }
+  html body #page-acasa .r10-ring { inset: 46px; }
+  html body #page-acasa .r10-it { left: -42px; top: -42px; width: 84px; height: 84px; padding: 6px; }
+  html body #page-acasa .r10-it .r10-t { font-size: 12.5px; }
+  html body #page-acasa .r10-it .r10-no { font-size: 11px; }
+  html body #page-acasa .r10-emblem { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 46%; text-align: center; margin: 0;
+    font: italic 600 17px/1.2 'EB Garamond', Georgia, serif; color: #221911; }
+  html body #page-acasa .r10-center {
+    position: static; transform: none; width: auto; aspect-ratio: auto; border-radius: 3px; margin: 20px 0 0; padding: 20px;
+    border-left: 3px solid #9a3f24;
+  }
+}
+@media (min-width: 700px) { html body #page-acasa .r10-emblem { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa .r10-orb { animation: none !important; }
+  html body #page-acasa .r10-items > li { transition: none !important; --r10-k: 1; --r10-er: 0deg; opacity: 1; }
+  html body #page-acasa :is(.r10-it, .r10-center > *, .r10-nav button) { transition: none !important; scale: none !important; }
+}
+
+/* bara: aceeași culoare și greutate pe ambele părți; fără bara verticală moștenită de la vechiul grup de pagini */
+@media (min-width: 1100px) {
+  html body #site-nav .r10-r.st-pages { padding-left: 0 !important; margin-left: 0 !important; border: 0 !important; }
+  html body #site-nav .r10-r.st-pages::before { display: none !important; }
+  html body #site-nav :is(.r10-l, .r10-r) a, html body #site-nav .r10-r .about-trigger { color: #4a3c30 !important; font-weight: 500 !important; }
+  html body #site-nav :is(.r10-l, .r10-r) a:is(.active, [aria-current]) { color: #221911 !important; }
+}
+</style>
+<script id="runda10-js">
+/* Runda 10: bara în trei zone, tranziții între capitole, curiozitățile pe orbită. Prefix: r10-. */
+(function () {
+  function reduce() { return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); }
+
+  /* ---------- bara: „Imperiul Hunilor” în centru, capitolele împărțite stânga / dreapta ----------
+     Pe ecrane late arătăm copii ale legăturilor; originalele rămân pentru sertarul de pe telefon.
+     Clicul pe o copie îl declanșează pe original, iar starea activă se copiază de la original. */
+  function nav() {
+    var n = document.getElementById('site-nav'); if (!n || n.querySelector('.r10-l')) return;
+    var brand = n.querySelector('.st-brand');
+    if (brand && !brand.querySelector('.r10-brand')) {
+      brand.setAttribute('aria-label', 'Imperiul Hunilor: începutul paginii');
+      Array.prototype.forEach.call(brand.childNodes, function (c) { if (c.nodeType === 3) c.textContent = ''; });
+      Array.prototype.forEach.call(brand.children, function (c) { if (!c.classList.contains('st-mark')) c.hidden = true; });
+      var t = document.createElement('span'); t.className = 'r10-brand'; t.textContent = 'Imperiul Hunilor'; brand.appendChild(t);
+    }
+    var toc = Array.prototype.slice.call(n.querySelectorAll('#toc-row .toc-link'));
+    var pages = Array.prototype.slice.call(n.querySelectorAll('.st-pages > a, .st-pages > .about-trigger'));
+    if (!toc.length) return;
+    var L = document.createElement('div'), R = document.createElement('div');
+    L.className = 'r10-l'; R.className = 'r10-r st-pages';
+    L.setAttribute('aria-label', 'Capitole'); R.setAttribute('aria-label', 'Capitole și pagini');
+    var half = Math.ceil(toc.length * 2 / 3);               // 6 capitole: 4 în stânga, 2 + paginile în dreapta
+    function copy(orig) {
+      var c = orig.cloneNode(true);
+      c.removeAttribute('id'); c.removeAttribute('aria-controls');
+      Array.prototype.forEach.call(c.querySelectorAll('[id]'), function (x) { x.removeAttribute('id'); });
+      c.addEventListener('click', function (e) { e.preventDefault(); orig.click(); });
+      var sync = function () {
+        c.classList.toggle('active', orig.classList.contains('active'));
+        var cur = orig.getAttribute('aria-current'); if (cur) c.setAttribute('aria-current', cur); else c.removeAttribute('aria-current');
+        if (orig.hasAttribute('aria-expanded')) c.setAttribute('aria-expanded', orig.getAttribute('aria-expanded'));
+      };
+      sync(); new MutationObserver(sync).observe(orig, { attributes: true, attributeFilter: ['class', 'aria-current', 'aria-expanded'] });
+      return c;
+    }
+    toc.forEach(function (a, k) { (k < half ? L : R).appendChild(copy(a)); });
+    var sep = document.createElement('span'); sep.className = 'r10-sep'; sep.setAttribute('aria-hidden', 'true'); R.appendChild(sep);
+    pages.forEach(function (a) { R.appendChild(copy(a)); });
+    n.insertBefore(L, n.firstChild);
+    n.appendChild(R);
+  }
+
+  /* ---------- tranziții între capitole ----------
+     Capitolul primește r10-in când intră în ecran; la derulare rapidă, tot ce e deja deasupra marginii de jos e marcat
+     imediat, deci niciun bloc nu rămâne invizibil. */
+  function chapters() {
+    if (reduce()) return;
+    var secs = Array.prototype.slice.call(document.querySelectorAll('#page-acasa :is(#sec-origini, #sec-cronologie, #sec-migratie, #sec-atlas, #sec-personalitati, #biblio)'));
+    if (!secs.length) return;
+    secs.forEach(function (s) { s.classList.add('r10-sec'); });
+    var mark = function () {
+      var vh = innerHeight;
+      secs.forEach(function (s) { if (!s.classList.contains('r10-in') && s.getBoundingClientRect().top < vh * 0.92) s.classList.add('r10-in'); });
+    };
+    mark();
+    document.documentElement.classList.add('r10-arm');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('r10-in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+      secs.forEach(function (s) { io.observe(s); });
+    }
+    // direct în evenimentul de derulare (nu prin requestAnimationFrame, care stă pe loc în filele ascunse): 6 măsurători, ieftin
+    var last = 0;
+    addEventListener('scroll', function () { var t = Date.now(); if (t - last > 80) { last = t; mark(); } else setTimeout(mark, 100); }, { passive: true });
+    addEventListener('scrollend', mark);
+    addEventListener('hashchange', mark);
+    addEventListener('resize', mark);
+  }
+
+  /* ---------- curiozitățile „Știai că…?” pe orbită ---------- */
+  function orbit() {
+    if (document.getElementById('sec-curiozitati')) return;
+    var notes = Array.prototype.slice.call(document.querySelectorAll('#page-acasa .r9-note'));
+    var items = notes.map(function (n) {
+      var t = n.querySelector('.r9n-title, .r9n-num'), x = n.querySelector('.r9n-text'), s = n.querySelector('.r9n-src');
+      var u = n.querySelector('.r9n-unit');                 // „1/72” + „de livră”: titlul se citește întreg
+      var title = t ? t.textContent.trim() + (u && t.classList.contains('r9n-num') ? ' ' + u.textContent.trim() : '') : '';
+      return t && x ? { t: title, x: x.innerHTML, s: s ? s.innerHTML : '' } : null;
+    }).filter(Boolean);
+    if (items.length < 3) return;
+    var anchor = document.querySelector('#page-acasa .main-col > .cta-card') || document.getElementById('biblio');
+    if (!anchor) return;
+    var N = items.length;
+    var sec = document.createElement('section');
+    sec.id = 'sec-curiozitati'; sec.className = 'r10-orb-sec'; sec.setAttribute('aria-labelledby', 'r10-orb-h');
+    sec.innerHTML =
+      '<div class="r10-orb-head"><p class="r10-kick">Știai că…?</p><h2 id="r10-orb-h" class="r10-orb-title">Curiozități despre huni</h2></div>' +
+      '<div class="r10-stage"><div class="r10-orb" style="--n:' + N + '">' +
+        '<span class="r10-ring" aria-hidden="true"></span>' +
+        '<p class="r10-emblem" aria-hidden="true">Alege o curiozitate</p>' +
+        '<ul class="r10-items">' + items.map(function (it, k) {
+          return '<li style="--i:' + k + '"><button type="button" class="r10-it" aria-expanded="false" aria-controls="r10-center">' +
+            '<span class="r10-no">' + (k < 9 ? '0' : '') + (k + 1) + '</span><span class="r10-t">' + it.t + '</span></button></li>';
+        }).join('') + '</ul></div>' +
+        '<div class="r10-center" id="r10-center" role="region" aria-live="polite" aria-label="Curiozitatea aleasă"></div>' +
+      '</div>';
+    anchor.parentNode.insertBefore(sec, anchor);
+
+    var orb = sec.querySelector('.r10-orb'), center = sec.querySelector('.r10-center');
+    var btns = Array.prototype.slice.call(sec.querySelectorAll('.r10-it'));
+    var cur = -1;
+    function idle() {
+      return '<p class="r10-q">Ce i-a uimit pe romani la huni?</p><p class="r10-hint">Alege o curiozitate de pe cerc.</p>';
+    }
+    function card(k) {
+      var it = items[k];
+      return '<p class="r10-kick">Știai că…? · ' + (k + 1) + ' din ' + N + '</p><h3>' + it.t + '</h3><p class="r10-txt">' + it.x + '</p>' +
+        (it.s ? '<p class="r10-src">' + it.s + '</p>' : '') +
+        '<div class="r10-nav"><button type="button" class="r10-prev" aria-label="Curiozitatea anterioară">←</button>' +
+        '<button type="button" class="r10-close">Închide</button>' +
+        '<button type="button" class="r10-next" aria-label="Curiozitatea următoare">→</button></div>';
+    }
+    function show(k, focusCenter) {
+      var html = k < 0 ? idle() : card(k);
+      var swap = function () {
+        center.innerHTML = html; center.classList.remove('is-swap');
+        if (focusCenter && k >= 0) { var b = center.querySelector('.r10-close'); if (b) b.focus({ preventScroll: true }); }
+      };
+      cur = k;
+      orb.classList.toggle('is-open', k >= 0);
+      btns.forEach(function (b, i) { b.setAttribute('aria-expanded', i === k ? 'true' : 'false'); });
+      if (reduce()) swap(); else { center.classList.add('is-swap'); setTimeout(swap, 180); }
+    }
+    btns.forEach(function (b, k) { b.addEventListener('click', function () { show(cur === k ? -1 : k, false); }); });
+    center.addEventListener('click', function (e) {
+      if (e.target.closest('.r10-close')) { var k = cur; show(-1); if (btns[k]) btns[k].focus({ preventScroll: true }); }
+      else if (e.target.closest('.r10-prev')) show((cur - 1 + N) % N, true);
+      else if (e.target.closest('.r10-next')) show((cur + 1) % N, true);
+    });
+    sec.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && cur >= 0) { var k = cur; show(-1); if (btns[k]) btns[k].focus({ preventScroll: true }); }
+    });
+    center.innerHTML = idle();
+
+    // intrare: elementele vin pe orbită rotindu-se; ieșire: se retrag spre centru. Rotația lentă doar cât secțiunea e în ecran.
+    if (reduce()) { orb.classList.add('is-in'); return; }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          orb.classList.toggle('is-in', e.isIntersecting);
+          orb.classList.toggle('is-spinning', e.isIntersecting);
+        });
+      }, { threshold: 0.18 }).observe(orb);
+    } else orb.classList.add('is-in');
+  }
+
+  function run() {
+    [nav, orbit, chapters].forEach(function (f) { try { f(); } catch (e) { if (window.console) console.warn('runda10', e); } });
+  }
+  if (document.readyState === 'complete') setTimeout(run, 200); else addEventListener('load', function () { setTimeout(run, 200); });
+})();
+</script>
+<!-- runda10:end -->
 </body>
 </html>
