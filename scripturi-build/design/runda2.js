@@ -10,37 +10,13 @@
   function safe(f) { try { f(); } catch (e) { if (window.console) console.warn('runda2', e); } }
 
   /* ---------- 1. cărțile ---------- */
-  // fiecare carte are o culoare și un desen cu linii pe fundal, după tema mitului (ca o carte poștală de muzeu)
-  var ART = {
-    crown: '<ellipse cx="100" cy="190" rx="70" ry="22"/><ellipse cx="100" cy="172" rx="58" ry="17"/><ellipse cx="100" cy="155" rx="46" ry="13"/><path d="M60 190c0-40 80-40 80 0"/><path d="M100 140c-6-30 14-46 34-44-8 10-12 22-34 44z"/><path d="M100 140c-14-22-34-24-46-18 14 2 26 8 46 18z"/><circle cx="124" cy="104" r="3"/>',
-    rider: '<path d="M40 200c10-36 34-56 66-58l34-4c14-2 24-14 30-28l8 6c-4 18-14 30-30 38l2 46"/><path d="M60 196l-6 34M150 196l6 34M88 200l-4 30"/><path d="M106 142c-2-22 8-40 24-48l10 26"/><path d="M128 70a10 10 0 1 1 0 .1"/><path d="M118 96l-34-46M84 50l-6-10"/>',
-    skull: '<path d="M60 120c0-46 30-70 64-70s56 26 56 64c0 22-10 36-22 44v26H86v-26c-16-8-26-20-26-38z"/><circle cx="104" cy="118" r="13"/><circle cx="146" cy="118" r="13"/><path d="M124 136l-6 14h14z"/><path d="M96 168v16M112 168v16M128 168v16M144 168v16"/><path d="M78 74c10-14 26-22 44-24"/>',
-    page: '<path d="M50 30h90l24 24v186H50z"/><path d="M140 30v24h24"/><path d="M66 74h80M66 90h84M66 106h70M66 122h84M66 138h76M66 154h84M66 170h60M66 186h80M66 202h70"/>',
-    diadem: '<path d="M30 150c30-20 110-20 140 0v40c-30-20-110-20-140 0z"/><path d="M44 146l10-22 10 20M74 140l10-24 10 22M106 138l10-24 10 22M138 142l10-22 10 22"/><circle cx="60" cy="168" r="5"/><circle cx="100" cy="164" r="6"/><circle cx="140" cy="168" r="5"/>',
-    meet: '<path d="M40 230V120a60 60 0 0 1 120 0v110"/><path d="M70 230V140M130 230V140"/><path d="M100 60v-26M88 44h24"/><path d="M60 230h80"/><path d="M84 180c6-14 26-14 32 0"/>',
-    mound: '<path d="M20 210c30-60 130-60 160 0z"/><path d="M100 152V96M84 112h32"/><path d="M50 60l4 8 8 1-6 6 2 8-8-4-8 4 2-8-6-6 8-1zM150 44l3 6 6 1-4 4 1 6-6-3-6 3 1-6-4-4 6-1z"/>'
-  };
-  var TONES = ['#a9c2a4', '#e3a585', '#aeb7d6', '#ddb06a', '#d7a3a3', '#9cc2b8', '#d9c48f'];
-  function artFor(t, k) {
-    if (/Xiongnu/i.test(t)) return 'crown';
-    if (/armata|luptau|călăre/i.test(t)) return 'rider';
-    if (/crani/i.test(t)) return 'skull';
-    if (/Ammianus|Res Gestae|izvoar.*scris|monstru/i.test(t)) return 'page';
-    if (/femei|diadem/i.test(t)) return 'diadem';
-    if (/Leon|Romei|Papa/i.test(t)) return 'meet';
-    if (/înmormânt|mormânt/i.test(t)) return 'mound';
-    return ['crown', 'rider', 'skull', 'page', 'diadem', 'meet', 'mound'][k % 7];
-  }
+  // cărțile: doar clasa r2-card; aspectul (pergament + fotografia reală) e în runda6.css
   function paint() {
     $$('.fc').forEach(function (c, k) {
       if (c.dataset.r2art) return;
       var front = c.querySelector('.fc-front'); if (!front) return;
-      var key = artFor(c.textContent, k);
-      var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity=".8">' + ART[key] + '</svg>';
-      c.dataset.r2art = key;
+      c.dataset.r2art = '1';
       c.classList.add('r2-card');
-      c.style.setProperty('--r2-c', TONES[k % TONES.length]);
-      c.style.setProperty('--r2-art', 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")');
     });
   }
   function cards() {
