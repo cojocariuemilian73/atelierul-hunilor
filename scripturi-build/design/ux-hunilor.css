@@ -1,0 +1,148 @@
+/* Runda de design și UX din 27.11: legenda hărții, cartonașul la hover pe puncte, cartușul anului,
+   graficul Aetius–Attila, Pietroasa întreagă și coloana lui Delacroix. Rulează după celelalte stiluri. */
+
+/* ---------- legendele imaginilor: direct pe pergament, italic, maro mediu ---------- */
+html body #page-acasa figure:not(.dmn) > figcaption { margin-top: 8px; }
+
+/* ---------- 2. legenda hărții ---------- */
+html body #page-acasa #sec-atlas .legend-box { min-width: 236px; }
+html body #page-acasa #sec-atlas .legend-box .panel-label {
+  margin: 0 0 16px; font-size: 20px !important; letter-spacing: .14em; color: #7a1c1c;
+}
+html body #page-acasa #sec-atlas .legend-list { gap: 14px; }
+html body #page-acasa #sec-atlas .legend-item { gap: 12px; font-size: 16px !important; line-height: 1.35; color: #3a2a1d; }
+html body #page-acasa #sec-atlas .legend-swatch { width: 34px; height: 6px; border-radius: 3px; }
+html body #page-acasa #sec-atlas .legend-swatch.zone { height: 18px; border-radius: 3px; }
+html body #page-acasa #sec-atlas .legend-dot { width: 18px; height: 18px; border-width: 2.5px; margin: 0 8px; }
+@media (max-width: 900px) {
+  /* pe ecrane mici legenda trece pe două coloane, cu aceleași mărimi lizibile */
+  html body #page-acasa #sec-atlas .legend-box { min-width: 0; }
+  html body #page-acasa #sec-atlas .legend-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 20px; }
+}
+@media (max-width: 480px) {
+  html body #page-acasa #sec-atlas .legend-box .panel-label { font-size: 18px !important; margin-bottom: 12px; }
+  html body #page-acasa #sec-atlas .legend-list { grid-template-columns: 1fr; gap: 12px; }
+  html body #page-acasa #sec-atlas .legend-item { font-size: 15px !important; }
+}
+
+/* ---------- 3. cartonașul de pe hartă, la hover ---------- */
+.ux-tip {
+  position: fixed; z-index: 9000; left: 0; top: 0; width: min(320px, calc(100vw - 24px)); box-sizing: border-box;
+  padding: 14px 16px 12px; border: 1px solid #c9b48c; border-radius: 6px; pointer-events: none;
+  background: #fbf6ea; color: #2b1e16; text-align: left;
+  box-shadow: 0 2px 4px rgba(43,30,22,.10), 0 14px 32px rgba(43,30,22,.18);
+  opacity: 0; visibility: hidden; transform: translate3d(var(--x, 0), calc(var(--y, 0px) + 6px), 0);
+  transition: opacity 160ms ease-out, transform 200ms cubic-bezier(.2,.7,.2,1), visibility 0s linear 200ms;
+}
+.ux-tip.is-below { transform: translate3d(var(--x, 0), calc(var(--y, 0px) - 6px), 0); }
+.ux-tip.is-on { opacity: 1; visibility: visible; transform: translate3d(var(--x, 0), var(--y, 0px), 0); transition: opacity 160ms ease-out, transform 200ms cubic-bezier(.2,.7,.2,1), visibility 0s; }
+.ux-tip-tag { margin: 0 0 4px; font: 600 11.5px/1.35 'Source Serif 4', Georgia, serif; letter-spacing: .08em; text-transform: uppercase; color: #7a1c1c; }
+.ux-tip-title { margin: 0 0 6px; font: 600 21px/1.2 'EB Garamond', Georgia, serif; color: #2b1e16; }
+.ux-tip-desc { margin: 0; font: 15px/1.5 'Source Serif 4', Georgia, serif; color: #3a2a1d; }
+.ux-tip-more { margin: 10px 0 0; padding-top: 8px; border-top: 1px solid #e2d2b0; font: italic 13px/1.4 'Source Serif 4', Georgia, serif; color: #6b5640; }
+@media (prefers-reduced-motion: reduce) {
+  .ux-tip, .ux-tip.is-below, .ux-tip.is-on { transform: translate3d(var(--x, 0), var(--y, 0px), 0); transition: opacity 120ms linear, visibility 0s linear 120ms; }
+  .ux-tip.is-on { transition: opacity 120ms linear, visibility 0s; }
+}
+
+/* ---------- 4. cartușul anului ---------- */
+html body #page-acasa #sec-atlas .timebar { border-top: 0 !important; padding-top: 8px; }
+html body #page-acasa #sec-atlas .timebar-heading { display: flex; align-items: center; gap: 24px; margin: 0 0 20px; }
+html body #page-acasa #sec-atlas .ux-cart {
+  position: relative; flex: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+  min-width: 220px; padding: 12px 34px 10px; box-sizing: border-box; text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(255,250,236,.9), rgba(243,231,206,.0) 70%),
+    linear-gradient(180deg, #f8efda, #efe0bf);
+  border: 1px solid #8a6a3a; border-radius: 3px;
+  box-shadow: inset 0 0 0 4px #f7eedb, inset 0 0 0 5px #b89242, 0 2px 3px rgba(43,30,22,.12), 0 8px 18px rgba(43,30,22,.10);
+}
+/* volutele cartușului, stânga și dreapta */
+html body #page-acasa #sec-atlas .ux-cart::before, html body #page-acasa #sec-atlas .ux-cart::after {
+  content: ""; position: absolute; top: 50%; width: 16px; height: 34px; margin-top: -17px;
+  border: 1.5px solid #8a6a3a; background: #f3e6c9;
+}
+html body #page-acasa #sec-atlas .ux-cart::before { left: -9px; border-radius: 50% 0 0 50% / 50% 0 0 50%; border-right: 0; }
+html body #page-acasa #sec-atlas .ux-cart::after { right: -9px; border-radius: 0 50% 50% 0 / 0 50% 50% 0; border-left: 0; }
+html body #page-acasa #sec-atlas .ux-cart .timebar-label {
+  margin: 0; font: 600 12px/1.2 'Source Serif 4', Georgia, serif !important; letter-spacing: .16em; text-transform: uppercase; color: #7a1c1c;
+}
+html body #page-acasa #sec-atlas .ux-cart #year-badge {
+  display: inline-flex; align-items: baseline; gap: 8px; margin: 2px 0 0; padding: 0; border: 0; background: none;
+  font-family: 'EB Garamond', Georgia, serif !important; font-size: 58px !important; line-height: 1; font-weight: 600; color: #2b1e16;
+  font-variant-numeric: lining-nums tabular-nums; letter-spacing: .01em;
+}
+html body #page-acasa #sec-atlas .ux-yr { display: inline-flex; }
+html body #page-acasa #sec-atlas .ux-d { display: inline-block; overflow: hidden; height: 1.08em; line-height: 1.08; vertical-align: bottom; }
+html body #page-acasa #sec-atlas .ux-d > span { display: block; }
+html body #page-acasa #sec-atlas .ux-d.up > span { animation: ux-roll-up 260ms cubic-bezier(.2,.7,.2,1); }
+html body #page-acasa #sec-atlas .ux-d.down > span { animation: ux-roll-down 260ms cubic-bezier(.2,.7,.2,1); }
+@keyframes ux-roll-up { from { transform: translateY(70%); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes ux-roll-down { from { transform: translateY(-70%); opacity: 0; } to { transform: none; opacity: 1; } }
+html body #page-acasa #sec-atlas .ux-era { font-size: 22px; font-weight: 500; font-style: italic; color: #7a1c1c; }
+html body #page-acasa #sec-atlas .timebar-heading .era-label { flex: 1; min-width: 0; margin: 0; padding-left: 0; border-left: 0; font-size: 17px; line-height: 1.5; color: #3a2a1d; }
+@media (max-width: 640px) {
+  html body #page-acasa #sec-atlas .timebar-heading { flex-direction: column; align-items: stretch; gap: 12px; }
+  html body #page-acasa #sec-atlas .ux-cart { align-self: center; min-width: 200px; padding: 10px 28px 8px; }
+  html body #page-acasa #sec-atlas .ux-cart #year-badge { font-size: 46px !important; }
+  html body #page-acasa #sec-atlas .ux-era { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa #sec-atlas .ux-d.up > span, html body #page-acasa #sec-atlas .ux-d.down > span { animation: ux-fade 200ms linear; }
+  @keyframes ux-fade { from { opacity: .2; } to { opacity: 1; } }
+}
+
+/* ---------- 7. graficul Aetius – Attila ---------- */
+html body #page-acasa .duel-lives.dx { padding: 8px 0 0; }
+html body #page-acasa .dx-plot { position: relative; margin: 36px 0 0; padding: 4px 0; }
+html body #page-acasa .dx-gridline { position: absolute; top: -6px; bottom: -6px; width: 1px; background: rgba(122,96,60,.16); }
+html body #page-acasa .dx-row { position: relative; height: 34px; margin: 0 0 12px; }
+html body #page-acasa .dx-row:last-of-type { margin-bottom: 0; }
+html body #page-acasa .dx-bar {
+  position: absolute; top: 0; bottom: 0; display: flex; align-items: center; gap: 8px; min-width: 0; overflow: hidden;
+  padding: 0 14px; box-sizing: border-box; border-radius: 17px; white-space: nowrap;
+  font: 600 15px/1 'Source Serif 4', Georgia, serif; box-shadow: inset 0 -2px 0 rgba(0,0,0,.08), 0 1px 2px rgba(43,30,22,.15);
+}
+html body #page-acasa .dx-bar b { font: 600 18px/1 'EB Garamond', Georgia, serif; }
+html body #page-acasa .dx-bar em { font-style: normal; font-weight: 500; font-size: 14px; opacity: .9; }
+html body #page-acasa .dx-aetius { background: #d9b45a; color: #2b1e16; }
+html body #page-acasa .dx-attila { background: #e8bfb2; color: #5f1414; padding-right: 0; }
+html body #page-acasa .dx-reign {
+  position: absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center; justify-content: center;
+  background: #8a2a1f; color: #fbf3e4; border-radius: 0 17px 17px 0; box-shadow: -2px 0 0 rgba(251,243,228,.5);
+}
+html body #page-acasa .dx-reign em { font-size: 13.5px; color: #fbf3e4; opacity: 1; }
+html body #page-acasa .dx-451 { position: absolute; top: -30px; bottom: -10px; width: 0; border-left: 2px solid #7a1c1c; z-index: 1; }
+html body #page-acasa .dx-451 span {
+  position: absolute; top: 0; right: 6px; padding: 3px 10px; border-radius: 3px; white-space: nowrap;
+  background: #7a1c1c; color: #fbf3e4; font: 600 13px/1.3 'Source Serif 4', Georgia, serif; letter-spacing: .02em;
+}
+html body #page-acasa .dx-451::after { content: ""; position: absolute; bottom: -4px; left: -5px; width: 8px; height: 8px; border-radius: 50%; background: #7a1c1c; }
+html body #page-acasa .dx-axis { position: relative; height: 30px; margin: 10px 0 0; border-top: 1.5px solid #8a7454; }
+html body #page-acasa .dx-axis span { position: absolute; top: 0; width: 1.5px; height: 7px; background: #8a7454; }
+html body #page-acasa .dx-axis small { position: absolute; top: 10px; left: 0; transform: translateX(-50%); font: 600 14px/1 'Source Serif 4', Georgia, serif; color: #4a3a2b; font-variant-numeric: tabular-nums; }
+html body #page-acasa .dx-axis .dx-unit { right: 0; left: auto; transform: none; font-weight: 400; font-style: italic; color: #6b5640; }
+html body #page-acasa .dx-short { display: none; }
+@media (max-width: 640px) {
+  html body #page-acasa .dx-bar { padding: 0 10px; gap: 6px; font-size: 13px; }
+  html body #page-acasa .dx-bar b { font-size: 16px; }
+  html body #page-acasa .dx-bar em { font-size: 12px; }
+  html body #page-acasa .dx-long { display: none; }
+  html body #page-acasa .dx-short { display: inline; }
+  html body #page-acasa .dx-axis small { font-size: 12px; }
+  html body #page-acasa .dx-axis small.dx-odd { display: none; }
+  html body #page-acasa .dx-451 span { font-size: 12px; padding: 2px 8px; }
+}
+
+/* ---------- 8. Pietroasa: planșa întreagă ---------- */
+html body #page-acasa #img-pietroasa {
+  display: block; width: 100%; max-width: 460px; height: auto !important; max-height: none !important;
+  aspect-ratio: 520 / 713; object-fit: contain !important; object-position: 50% 0 !important; margin-inline: auto;
+}
+
+/* ---------- 9. Delacroix: imaginea rămâne în vedere cât se citește cronologia, cu o notă sub ea ---------- */
+html body #page-acasa .ux-legacy { margin: 24px 0 0; float: none; width: auto; max-width: none; }
+@media (min-width: 900px) {
+  html body #page-acasa .sr-row.ux-sticky-row { align-items: start; }
+  html body #page-acasa .sr-media.ux-sticky { position: sticky; top: 132px; align-self: start; }
+}

@@ -1,0 +1,143 @@
+/* Stratul de mișcare (28.11): animații și detalii discrete, toate cu prefixul mv-.
+   Mișcarea e scurtă (180–600 ms), cu ieșire exponențială, pornește dintr-o stare deja lizibilă
+   și se oprește complet la prefers-reduced-motion. */
+:root { --mv-ease: cubic-bezier(.16, 1, .3, 1); --mv-ease-io: cubic-bezier(.4, 0, .2, 1); }
+
+/* ---------- 1. fundalul de relief: linii de stepă doar pe margini, numai în articol ---------- */
+html body #page-acasa { isolation: isolate; }
+html body #page-acasa > .mv-relief {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='360' viewBox='0 0 480 360'%3E%3Cg fill='none' stroke='%237a6243' stroke-width='.8' stroke-opacity='.22'%3E%3Cpath d='M0 40c60-18 110 14 170 2s110-30 170-8 100 20 140 6'/%3E%3Cpath d='M0 92c50-10 100 22 160 10s120-34 180-10 90 18 140 4'/%3E%3Cpath d='M0 150c70-20 120 16 180 4s100-26 160-6 100 22 140 8'/%3E%3Cpath d='M0 206c55-14 105 18 165 8s115-32 175-10 95 20 140 6'/%3E%3Cpath d='M0 262c65-16 115 14 175 2s105-28 165-8 95 18 140 6'/%3E%3Cpath d='M0 318c50-12 110 20 170 8s110-30 170-10 100 22 140 8'/%3E%3C/g%3E%3Cg fill='none' stroke='%239a7a2a' stroke-width='.6' stroke-opacity='.16'%3E%3Cpath d='M30 120c20-8 40-8 60 0M300 230c24-9 48-9 72 0M380 60c14-6 30-6 44 0'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 480px 360px;
+  background-position: 0 calc(var(--mv-drift, 0) * 1px);
+  -webkit-mask-image: linear-gradient(90deg, #000 0, rgba(0,0,0,.6) 9%, transparent 19%, transparent 81%, rgba(0,0,0,.6) 91%, #000 100%);
+          mask-image: linear-gradient(90deg, #000 0, rgba(0,0,0,.6) 9%, transparent 19%, transparent 81%, rgba(0,0,0,.6) 91%, #000 100%);
+}
+@media (max-width: 1100px) { html body #page-acasa > .mv-relief { display: none; } }
+
+/* ---------- 1. notele marginale (desktop larg) ---------- */
+.mv-margin { display: none; }
+@media (min-width: 1360px) {
+  html body #page-acasa .mv-host { position: relative; }
+  html body #page-acasa .mv-margin {
+    display: block; position: absolute; top: 0; bottom: 0; right: calc(100% + 24px);
+    width: var(--mv-w, 140px); pointer-events: none;
+  }
+  html body #page-acasa .mv-margin.mv-narrow { display: none; }
+  html body #page-acasa .mv-margin ol {
+    position: sticky; top: 150px; margin: 0; padding: 0 0 0 14px; list-style: none;
+    border-left: 1px solid rgba(52, 40, 29, .18); transition: border-color 400ms var(--mv-ease-io);
+  }
+  html body #page-acasa .mv-margin li {
+    margin: 0 0 18px; font-family: var(--font-body, 'Source Sans 3', sans-serif); font-size: 13px; line-height: 1.35;
+    color: var(--text-muted, #65564a); opacity: .42; transform: translateX(-4px);
+    transition: opacity 420ms var(--mv-ease), transform 420ms var(--mv-ease), color 420ms var(--mv-ease);
+    transition-delay: calc(var(--k, 0) * 70ms);
+  }
+  html body #page-acasa .mv-margin li b {
+    display: block; margin-bottom: 2px; font-family: var(--font-display, 'EB Garamond', serif); font-size: 17px; font-weight: 600;
+    color: var(--accent-gold, #85681f); font-variant-numeric: lining-nums tabular-nums; letter-spacing: .01em;
+  }
+  html body #page-acasa .mv-margin.is-active ol { border-left-color: var(--accent-rust, #9a3f24); }
+  html body #page-acasa .mv-margin.is-active li { opacity: 1; transform: none; color: var(--text-body, #34281d); }
+  /* pe fundalul închis al Atlasului */
+  html body #page-acasa #sec-atlas .mv-margin ol { border-left-color: rgba(236, 228, 210, .2); }
+  html body #page-acasa #sec-atlas .mv-margin li { color: var(--muted-on-dark, #b9ae98) !important; }
+  html body #page-acasa #sec-atlas .mv-margin li b { color: var(--accent-gold-bright, #d6b25e); }
+  html body #page-acasa #sec-atlas .mv-margin.is-active li { color: var(--text-on-dark, #ece4d2) !important; }
+  html body #page-acasa #sec-atlas .mv-margin.is-active ol { border-left-color: var(--accent-gold-bright, #d6b25e); }
+}
+
+/* ---------- 2. aparițiile la scroll: scurte, 10 px, o singură dată ---------- */
+html.mv-js body #page-acasa .mv-rv { opacity: 0; transform: translate3d(0, 10px, 0); }
+html.mv-js body #page-acasa .mv-rv.mv-in {
+  opacity: 1; transform: none;
+  transition: opacity 520ms var(--mv-ease), transform 620ms var(--mv-ease); transition-delay: var(--mv-d, 0ms);
+}
+/* aparițiile vechi coboară la aceeași distanță mică */
+html body #page-acasa .sr-reveal:not(.sr-in) { transform: translate3d(0, 12px, 0) !important; }
+html body #page-acasa .sr-reveal { transition: opacity 520ms var(--mv-ease), transform 620ms var(--mv-ease) !important; }
+html body #page-acasa .sr-reveal:not(.sr-in) .sr-media { transform: translate3d(-12px, 0, 0) !important; }
+html body #page-acasa .sr-reveal .sr-media { transition: opacity 560ms var(--mv-ease) 80ms, transform 640ms var(--mv-ease) 80ms !important; }
+
+/* ---------- 3. jocul Attila: indicatori și straturi ---------- */
+html body #mig-root .jg-meter .jg-bar i { transition: width 700ms var(--mv-ease), background-color 400ms var(--mv-ease-io) !important; }
+html body #mig-root .jg-meter label b { display: inline-block; font-variant-numeric: lining-nums tabular-nums; }
+html body #mig-root .jg-meter.mv-up label b { color: #4f6b55; }
+html body #mig-root .jg-meter.mv-down label b { color: #9a3f24; }
+html body #mig-root .jg-meter.mv-up label b, html body #mig-root .jg-meter.mv-down label b { transition: color 900ms var(--mv-ease-io); }
+/* la schimbare, bara strălucește scurt în culoarea indicatorului */
+html body #mig-root .jg-meter.chg .jg-bar { animation: mv-bar-glow 900ms var(--mv-ease-io); }
+@keyframes mv-bar-glow {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c, #d6b25e) 0%, transparent); }
+  30% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, #d6b25e) 35%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c, #d6b25e) 0%, transparent); }
+}
+html body #mig-root .jg-delta {
+  padding: 1px 7px; border-radius: 999px; font-family: var(--font-body, 'Source Sans 3', sans-serif) !important; font-weight: 700;
+  background: rgba(28, 30, 27, .82); font-variant-numeric: lining-nums tabular-nums;
+}
+html body #mig-root .jg-delta.up { color: #a9c99a !important; }
+html body #mig-root .jg-delta.down { color: #f0a48a !important; }
+html body #mig-root .jg-delta.show { animation: mv-delta 1600ms var(--mv-ease) forwards !important; }
+@keyframes mv-delta {
+  0% { opacity: 0; transform: translate3d(0, 8px, 0) scale(.96); }
+  14% { opacity: 1; transform: none; }
+  78% { opacity: 1; transform: translate3d(0, -4px, 0); }
+  100% { opacity: 0; transform: translate3d(0, -10px, 0); }
+}
+/* trecerea între straturi: copia vechii hărți se estompează peste cea nouă */
+.mv-layer-ghost { position: fixed; z-index: 5; pointer-events: none; opacity: 1; transition: opacity 340ms var(--mv-ease-io); }
+.mv-layer-ghost.mv-out { opacity: 0; }
+html body #mig-root .mig-layers label { transition: background-color 200ms var(--mv-ease-io), color 200ms var(--mv-ease-io); }
+html body #mig-root .mig-layers label.mv-flash { background: rgba(214, 178, 94, .22); }
+
+/* ---------- 4. evidențieri: note, puncte de pe piese, cronologie, Jocul izvoarelor ---------- */
+html body .fn-tip.show, html body .gl-tip.show, html body .gl-tip[style*="block"] { animation: mv-pop 220ms var(--mv-ease); }
+@keyframes mv-pop { from { opacity: 0; transform: translate3d(0, 6px, 0); } to { opacity: 1; transform: none; } }
+/* trimiterea la notă rămâne marcată cât e deschisă */
+html body .mv-ref-on { background: rgba(214, 178, 94, .32); border-radius: 2px; box-shadow: 0 0 0 2px rgba(214, 178, 94, .32); transition: background-color 200ms var(--mv-ease-io); }
+/* nota de subsol spre care sari se aprinde scurt */
+html body #page-acasa .biblio li:target, html body #page-acasa [id^="note-"]:target { animation: mv-target 1800ms var(--mv-ease-io); }
+@keyframes mv-target { 0%, 30% { background-color: rgba(214, 178, 94, .30); } 100% { background-color: transparent; } }
+
+/* punctele de pe fotografii: inel care se lărgește o dată la deschidere */
+html body .photo-point { transition: transform 200ms var(--mv-ease); }
+html body .photo-point:hover { transform: scale(1.12); }
+html body .photo-point.mv-picked::after {
+  content: ""; position: absolute; inset: -4px; border-radius: 50%; pointer-events: none;
+  border: 2px solid var(--accent-gold-bright, #d6b25e); animation: mv-ring 700ms var(--mv-ease) forwards;
+}
+@keyframes mv-ring { from { opacity: 1; transform: scale(.8); } to { opacity: 0; transform: scale(2); } }
+html body #photo-detail[open] { animation: mv-dialog 260ms var(--mv-ease); }
+@keyframes mv-dialog { from { opacity: 0; transform: translate3d(0, 10px, 0) scale(.985); } to { opacity: 1; transform: none; } }
+
+/* reperul curent din cronologie */
+html body #page-acasa .hx-mk.cur::after {
+  content: ""; position: absolute; inset: -3px; border-radius: 50%; pointer-events: none;
+  border: 1.5px solid currentColor; animation: mv-ring 800ms var(--mv-ease) forwards;
+}
+html body #page-acasa .hx-mk { transition: transform 260ms var(--mv-ease), box-shadow 260ms var(--mv-ease); }
+
+/* Jocul izvoarelor: sursa aleasă și pinul selectat */
+html body #mod-atelier .md-card { transition: transform 280ms var(--mv-ease), opacity 200ms var(--mv-ease-io), outline-color 200ms var(--mv-ease-io) !important; }
+html body #mod-atelier .md-pin.sel::after {
+  content: ""; position: absolute; inset: -6px; border-radius: 50%; pointer-events: none;
+  border: 2px solid var(--accent-rust, #9a3f24); animation: mv-ring 700ms var(--mv-ease) forwards;
+}
+html body #mod-atelier .md-era { transition: background-color 240ms var(--mv-ease-io), color 240ms var(--mv-ease-io); }
+
+/* ---------- mișcare redusă: totul oprit sau la minim ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa > .mv-relief { background-position: 0 0 !important; }
+  html.mv-js body #page-acasa .mv-rv, html.mv-js body #page-acasa .mv-rv.mv-in { opacity: 1 !important; transform: none !important; transition: none !important; }
+  html body #page-acasa .mv-margin li { transform: none !important; transition: opacity 120ms linear !important; }
+  html body #mig-root .jg-meter .jg-bar i { transition: none !important; }
+  html body #mig-root .jg-meter.chg .jg-bar { animation: none !important; }
+  html body #mig-root .jg-delta.show { animation: mv-delta-fade 1600ms linear forwards !important; }
+  @keyframes mv-delta-fade { 0%, 80% { opacity: 1; } 100% { opacity: 0; } }
+  html body .fn-tip.show, html body .gl-tip.show, html body #photo-detail[open], html body #page-acasa .biblio li:target { animation: none !important; }
+  html body .photo-point.mv-picked::after, html body #page-acasa .hx-mk.cur::after, html body #mod-atelier .md-pin.sel::after { animation: none !important; opacity: 0; }
+  html body .photo-point:hover { transform: none; }
+  .mv-layer-ghost { display: none !important; }
+}

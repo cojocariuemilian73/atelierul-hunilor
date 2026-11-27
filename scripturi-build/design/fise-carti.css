@@ -4,10 +4,11 @@ html body #page-acasa .fc-head { margin: 0 0 4px; font-size: 26px; line-height: 
 html body #page-acasa .fc-hint { margin: 0 0 24px; font-size: 15px; line-height: 1.5; color: #5c4a38; }
 html body #page-acasa .fc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: stretch; }
 
-html body #page-acasa .fc { perspective: 1400px; margin: 0; min-width: 0; }
+html body #page-acasa .fc { perspective: 1800px; margin: 0; min-width: 0; }
+/* întoarcere lentă și blândă; cele două fețe stau în aceeași celulă de grilă, deci au aceeași înălțime */
 html body #page-acasa .fc-inner {
   display: grid; height: 100%; transform-style: preserve-3d;
-  transition: transform 560ms cubic-bezier(.2,.7,.2,1);
+  transition: transform 800ms cubic-bezier(.4,0,.2,1);
 }
 html body #page-acasa .fc.is-flipped .fc-inner { transform: rotateY(180deg); }
 html body #page-acasa .fc-face {
@@ -18,10 +19,15 @@ html body #page-acasa .fc-face {
 }
 html body #page-acasa .fc-back { transform: rotateY(180deg); background: #f2e7cf; border-color: #c9b48c; }
 
-html body #page-acasa .fc-fig { margin: 0; border: 0; padding: 0; background: #2b1e16; }
+html body #page-acasa .fc-fig { margin: 0; border: 0; padding: 0; background: none; }
 html body #page-acasa .fc-fig img { display: block; width: 100%; height: 200px; object-fit: cover; border: 0; padding: 0; margin: 0; }
-html body #page-acasa .fc-fig figcaption { margin: 0; padding: 8px 16px; font-size: 13px; line-height: 1.4; color: #e9dcc2; background: #2b1e16; font-style: normal; text-align: left; }
-html body #page-acasa .fc-fig figcaption a, html body #page-acasa .fc-fig figcaption .cap-i { color: #f2d9a6; }
+/* legenda stă direct pe pergament, sub imagine: italic, maro mediu (contrast ~6:1) */
+html body #page-acasa .fc-fig figcaption {
+  margin: 0 !important; padding: 10px 20px 0 !important; font-size: 14px; line-height: 1.45; color: #6b5640 !important;
+  background: none !important; font-style: italic; text-align: left;
+}
+html body #page-acasa .fc-fig figcaption a { color: #6f281c; }
+html body #page-acasa .fc-fig figcaption .cap-i { color: #7a1c1c; border-color: #c9b48c; }
 
 html body #page-acasa .fc-body { display: flex; flex-direction: column; gap: 8px; flex: 1; padding: 20px 20px 16px; }
 html body #page-acasa .fc-question { margin: 0 0 4px; font-size: 22px !important; line-height: 1.25; font-weight: 600; color: #2b1e16; }
@@ -63,10 +69,13 @@ html body #page-acasa .fc-front .fc-myth + .fc-btn { margin-top: auto; }
   html body #page-acasa .fc-fig img { height: 180px; }
   html body #page-acasa .fc-myth { font-size: 20px; }
 }
+/* mișcare redusă: fără răsucire, fețele se schimbă printr-o estompare scurtă */
 @media (prefers-reduced-motion: reduce) {
   html body #page-acasa .fc-inner { transition: none; transform: none !important; }
-  html body #page-acasa .fc-face { backface-visibility: visible; transform: none; }
-  html body #page-acasa .fc:not(.is-flipped) .fc-back, html body #page-acasa .fc.is-flipped .fc-front { visibility: hidden; }
+  html body #page-acasa .fc-face { backface-visibility: visible; transform: none; transition: opacity 240ms ease-out, visibility 0s linear 0s; }
+  html body #page-acasa .fc:not(.is-flipped) .fc-back, html body #page-acasa .fc.is-flipped .fc-front {
+    opacity: 0; visibility: hidden; transition: opacity 240ms ease-out, visibility 0s linear 240ms;
+  }
 }
 @media print {
   html body #page-acasa .fc-inner { transform: none !important; display: block; }
