@@ -848,8 +848,10 @@
     if (txtScale < 2.2)
     GROUPS.forEach(function(gr, k){
       var m = cents[k]; if (m[0] < 0 || m[0] > CW || m[1] < 0 || m[1] > CH) return;
-      var sp = labelSprite(SHORT[gr.id], gr.color, 11, 2);
-      tags.push({ s: sp, ax: m[0], ay: m[1], x: m[0] - sp.w / 2, y: m[1] - sp.h - 6 * txtScale, c: gr.color });
+      // etichetele sunt lizibile (15 px) și rămân întregi în cadru, chiar dacă grupul e lângă margine (ca hunii, la est)
+      var sp = labelSprite(SHORT[gr.id], gr.color, 15, 1.2);
+      var tx = Math.max(4, Math.min(CW - sp.w - 4, m[0] - sp.w / 2));
+      tags.push({ s: sp, ax: m[0], ay: m[1], x: tx, y: m[1] - sp.h - 6 * txtScale, c: gr.color });
     });
     tags.sort(function(a, b){ return b.ay - a.ay; });
     for (var ti = 0; ti < tags.length; ti++) {
@@ -871,6 +873,7 @@
       ctx.drawImage(sp3.c, Math.round(x), Math.round(y));
     });
     tags.forEach(function(tg){
+      tg.y = Math.max(4, tg.y);
       var ly = tg.y + tg.s.h * 0.62;
       if (tg.ay - ly > 14 * txtScale) { ctx.strokeStyle = tg.c; ctx.globalAlpha = 0.55; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(tg.ax, tg.ay - 3); ctx.lineTo(tg.ax, ly); ctx.stroke(); ctx.globalAlpha = 1; }
       ctx.drawImage(tg.s.c, Math.round(tg.x), Math.round(tg.y));
