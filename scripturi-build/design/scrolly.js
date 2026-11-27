@@ -72,7 +72,7 @@
 
     root.style.setProperty('--sc-n', N);
     root.innerHTML =
-      '<div class="sc-scene" data-praf>' +
+      '<div class="sc-scene">' +
         '<div class="sc-map">' +
           '<svg class="sc-svg" role="img" aria-labelledby="sc-svg-t" preserveAspectRatio="xMidYMid slice">' +
             '<title id="sc-svg-t">Harta Europei cu drumul hunilor între 370 și 476, de la Marea Azov la Ravenna</title>' +
@@ -196,6 +196,9 @@
     var thr = ANCHOR + (1 - ANCHOR) * 0.55, act = (i < N - 1 && u > thr) ? i + 1 : i;
     if (this.active >= 0 && act !== this.active && Math.abs(u - thr) < HYST && Math.abs(act - this.active) === 1) act = this.active;
 
+    // textul etapei se schimbă înaintea poziționării, ca eticheta locului să fie măsurată cu textul nou
+    if (act !== this.active || force) this.stage(act, force);
+
     // 1. traseul
     var drawn;
     if (reduce) drawn = this.total;
@@ -252,7 +255,6 @@
     // axa anilor
     this.prog.style.transform = 'scaleX(' + t.toFixed(4) + ')';
 
-    if (act !== this.active || force) this.stage(act, force);
   };
 
   Scrolly.prototype.stage = function (i, force) {
