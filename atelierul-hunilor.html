@@ -11117,6 +11117,18 @@ html body #page-acasa .si-block { margin: 0; padding-top: 12px; border-top: 1px 
 @media (prefers-reduced-motion: reduce) {
   html body #page-acasa .si, html body #page-acasa .si::before, html body #page-acasa .si-node-dot { transition: none; }
 }
+
+/* firele care leagă fiecare nod de pe axă de fișa lui */
+html body #page-acasa .si-wrap { position: relative; }
+html body #page-acasa .si-ax { margin-bottom: 56px; }
+html body #page-acasa .si-hang { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 0; }
+html body #page-acasa .si-hang path { fill: none; stroke: var(--st); stroke-width: 1.2; opacity: .45; transition: opacity .25s ease-out, stroke-width .25s ease-out; }
+html body #page-acasa .si-hang path.si-on { opacity: 1; stroke-width: 2; }
+html body #page-acasa .si-wrap.si-focus .si-hang path:not(.si-on) { opacity: .15; }
+@media (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .si-wait .si-hang { opacity: 0; }
+  html body #page-acasa .si-in .si-hang { animation: si-fade .6s ease-out .35s both; }
+}
 </style>
 <script id="fise-carti-js">
 /* Fișele „Ce se spune…” devin cărți care se întorc: în față mitul (cu imaginea), pe spate verdictul, dovada și sursa.
@@ -11349,6 +11361,8 @@ html body #page-acasa .si-block { margin: 0; padding-top: 12px; border-top: 1px 
       node.appendChild(el('span', 'si-node-lab', nm.split(/[\s,]+/)[0]));
       track.appendChild(node);
       nodes.push(node); cards.push(card);
+      card.dataset.pos = modern ? 101 : pos;
+      card.dataset.st = status;
 
       function enter() { if (pinned === -1) select(k, true, false); }
       function leave() { if (pinned === -1) select(k, false, false); }
@@ -11365,10 +11379,37 @@ html body #page-acasa .si-block { margin: 0; padding-top: 12px; border-top: 1px 
       });
       grid.appendChild(card);
     });
+    // fișele stau în ordinea distanței, ca fiecare să „atârne” sub nodul ei de pe axă
+    cards.slice().sort(function (a, b) { return a.dataset.pos - b.dataset.pos; }).forEach(function (c) { grid.appendChild(c); });
+    var hang = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    hang.setAttribute('class', 'si-hang'); hang.setAttribute('aria-hidden', 'true');
     box.appendChild(axisBox);
+    box.appendChild(hang);
     box.appendChild(grid);
     wrap.after(box);
     wrap.hidden = true;
+    // firele: din fiecare nod coboară o linie fină până la începutul fișei lui
+    function hangs() {
+      var br = box.getBoundingClientRect(), gr = grid.getBoundingClientRect();
+      var one = getComputedStyle(grid).gridTemplateColumns.split(' ').length < 2;
+      hang.style.display = one ? 'none' : '';
+      if (one) return;
+      hang.setAttribute('width', br.width); hang.setAttribute('height', br.height);
+      hang.innerHTML = '';
+      cards.forEach(function (c, i) {
+        var d = nodes[i].querySelector('.si-node-dot').getBoundingClientRect(), cr = c.getBoundingClientRect();
+        var x1 = d.left + d.width / 2 - br.left, y1 = d.bottom - br.top + 2;
+        var x2 = cr.left + 1 - br.left, y2 = gr.top - br.top - 2;
+        var mid = y2 - 18;
+        var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p.setAttribute('d', 'M' + x1 + ' ' + y1 + ' V' + mid + ' H' + x2 + ' V' + y2);
+        p.setAttribute('class', 'si-st-' + c.dataset.st + (c.classList.contains('si-on') ? ' si-on' : ''));
+        p.dataset.k = i;
+        hang.appendChild(p);
+      });
+    }
+    var _sel = select;
+    select = function (k, on, sticky) { _sel(k, on, sticky); Array.prototype.forEach.call(hang.childNodes, function (p) { p.classList.toggle('si-on', on && +p.dataset.k === k); }); box.classList.toggle('si-focus', !!on); };
     // rândurile nodurilor se aleg după lățimea reală a etichetelor: două noduri nu se suprapun niciodată
     function lanes() {
       nodes.forEach(function (n) { n.style.setProperty('--lane', 0); });
@@ -11383,9 +11424,12 @@ html body #page-acasa .si-block { margin: 0; padding-top: 12px; border-top: 1px 
         });
       track.style.setProperty('--lanes', Math.max(1, ends.length));
     }
-    lanes();
-    addEventListener('resize', lanes);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(lanes);
+    function layout() { lanes(); hangs(); }
+    layout();
+    addEventListener('resize', layout);
+    addEventListener('load', layout);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+    if ('ResizeObserver' in window) new ResizeObserver(function () { hangs(); }).observe(grid);
     // apariția în cascadă când secțiunea intră în ecran
     if ('IntersectionObserver' in window) {
       box.classList.add('si-wait');
@@ -12524,7 +12568,6 @@ html body #mod-atelier .md-era { transition: background-color 240ms var(--mv-eas
 
 /* ---------- o singură bară fixă: meniul, opac, cu firul de progres pe marginea lui de jos ---------- */
 html body .site-nav{ background: var(--bg-page, #f3eee3) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-html body .ef-ride{ display: none !important; }
 html body .ah-r-progress{ position: fixed; left: 0; top: 54px; height: 2px; width: 100%; z-index: 261; pointer-events: none;
   background: var(--accent-gold, #85681f); transform-origin: 0 50%; transform: scaleX(var(--ah-p, 0)); }
 body:has(#page-acasa:not(.active)) .ah-r-progress{ display: none; }
@@ -12879,7 +12922,7 @@ html body .ah-r-key b{ display: block; margin-bottom: 6px; font: 600 14px/1.2 va
   }
 
   function run() {
-    [progress, navTools, pages, heroPad, photoPoints, keyPoints, scoreBump, mobileMap].forEach(safe);
+    [navTools, pages, heroPad, photoPoints, keyPoints, scoreBump, mobileMap].forEach(safe);
   }
   function start() { run(); setTimeout(function () { safe(countUps); }, 120); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 30); });
@@ -12927,17 +12970,39 @@ html body .hx-nav a, html body .hx-nav button{ min-height: 64px; padding: 8px 18
 html body .hx-nav :is(a, button) small{ font-weight: 500; letter-spacing: .04em; color: var(--text-muted, #65564a); }
 
 /* ---------- cărțile: poza se vede întreagă, iar toată cartea e clicabilă ---------- */
-html body .fc .fc-fig{ background: #2a241d; }
-html body .fc .fc-fig img{ object-fit: contain !important; object-position: 50% 50% !important; background: #2a241d; }
 html body .fc .fc-face{ cursor: pointer; }
 html body .fc .fc-face :is(a, sup.fn, .gl){ cursor: pointer; }
+
+/* cărți colorate, cu un desen din linii pe fundal (ca o carte poștală de muzeu); poza devine o miniatură în colț */
+html body #page-acasa .fc.r2-card{ border: 0 !important; box-shadow: none !important; background: none !important; }
+html body #page-acasa .fc.r2-card .fc-front{ position: relative; display: flex; flex-direction: column; overflow: hidden; border: 0 !important; border-radius: 6px !important; box-shadow: none !important;
+  background: var(--r2-art) right -24px bottom -18px / 62% auto no-repeat, var(--r2-c) !important; color: #221911 !important; padding: 28px 28px 24px !important; }
+html body #page-acasa .fc.r2-card .fc-front .fc-body{ position: relative; z-index: 1; padding: 0 !important; background: none !important; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+html body #page-acasa .fc.r2-card .fc-question{ font: 600 26px/1.15 var(--font-display, 'EB Garamond', serif) !important; color: #221911 !important; margin: 0 0 6px !important; max-width: 16ch; }
+html body #page-acasa .fc.r2-card .fc-k{ color: #5a1f10 !important; margin: 0 !important; }
+html body #page-acasa .fc.r2-card .fc-myth{ font-size: 21px !important; line-height: 1.4 !important; color: #2b1d12 !important; margin: 0 !important; max-width: 24ch; }
+html body #page-acasa .fc.r2-card .fc-front .fc-btn{ margin-top: auto !important; align-self: flex-start; background: #221911 !important; color: #f6ecd8 !important; border: 0 !important; box-shadow: none !important; }
+html body #page-acasa .fc.r2-card .fc-front .fc-btn:hover{ background: #3a2a1e !important; }
+/* poza: miniatură cu ramă albă în colțul din dreapta jos, întreagă; legenda dedesubt, mică */
+html body #page-acasa .fc.r2-card .fc-fig{ position: absolute !important; right: 24px; top: 24px; z-index: 2; width: 92px !important; margin: 0 !important; background: none !important; transform: rotate(3deg); }
+html body #page-acasa .fc.r2-card .fc-fig img{ display: block; width: 92px !important; height: 92px !important; object-fit: cover !important; border-radius: 2px; border: 3px solid #fbf6ec; background: #fbf6ec; box-shadow: 0 6px 14px -8px rgba(0,0,0,.45); }
+html body #page-acasa .fc.r2-card .fc-fig figcaption{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+html body #page-acasa .fc.r2-card .fc-question{ padding-right: 104px; max-width: none; }
+html body #page-acasa .fc.r2-card .fc-front .fc-btn{ margin-top: 18px !important; }
+html body #page-acasa .fc.r2-card .fc-back{ border: 0 !important; border-radius: 6px !important; box-shadow: inset 0 6px 0 var(--r2-c) !important; }
+@media (hover: hover){ html body #page-acasa .fc.r2-card:hover .fc-front{ filter: saturate(1.08) brightness(1.02); } }
+html body #page-acasa .fc.r2-card .fc-front{ transition: filter .2s ease-out; }
 
 /* ---------- punctele de pe fotografii: descrierea lângă punct ---------- */
 html body .r2-tip{ position: fixed; z-index: 400; max-width: min(320px, calc(100vw - 24px)); padding: 14px 16px; border-radius: 6px;
   background: rgba(30, 26, 21, .94); color: #f1e7d2; box-shadow: 0 14px 34px -12px rgba(0, 0, 0, .55); pointer-events: auto; }
 html body .r2-tip b{ display: block; margin: 0 0 4px; font: 600 16px/1.3 var(--font-display, 'EB Garamond', serif); color: #e7c879; }
 html body .r2-tip p{ margin: 0; font: 400 15px/1.5 var(--font-body, 'Source Sans 3', sans-serif); color: #efe5d0; }
-html body .photo-point.r2-on{ transform: scale(1.18); box-shadow: 0 0 0 4px rgba(231, 200, 121, .55) !important; }
+html body .photo-point.r2-on{ transform: scale(1.15); }
+/* inelul auriu, rotund, în jurul punctului activ */
+html body .photo-point::before{ content: ""; position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+  box-shadow: 0 0 0 2px #e7c879, 0 0 14px 2px rgba(231, 200, 121, .55); opacity: 0; transform: scale(.6); transition: opacity .2s ease-out, transform .25s cubic-bezier(.22,1,.36,1); pointer-events: none; }
+html body .photo-point.r2-on::before, html body .photo-point:focus-visible::before{ opacity: 1; transform: none; }
 html body .photo-point{ transition: transform .18s cubic-bezier(.22,1,.36,1), box-shadow .18s ease-out; }
 @media (prefers-reduced-motion: no-preference){
   html body .r2-tip.r2-in{ animation: r2-tip .2s cubic-bezier(.22,1,.36,1) both; }
@@ -12949,18 +13014,19 @@ html body #page-acasa img.r2-blend{ mix-blend-mode: multiply; background: transp
 html body #page-acasa .photo-evidence:has(img.r2-blend), html body #page-acasa .photo-evidence:has(img.r2-blend) .photo-points{ background: transparent !important; box-shadow: none !important; }
 
 /* ---------- blocurile cu date stau pe pergament curat: liniile de hartă și traseul nu le mai traversează ---------- */
-html body #page-acasa :is(.gs, .duel, .duel-context, .r10-band, .si-wrap, .hx, .dmn, .gold-context, .ptol-map, .margus-context){
+html body #page-acasa :is(.gs, .duel, .duel-context, .r10-band, .si-wrap, .hx, .dmn, .gold-context, .ptol-map, .margus-context, #biblio, #sec-glosar, .site-final-footer .journey-caption){
   position: relative; z-index: 2; background: var(--bg-page, #f3eee3); box-shadow: 0 0 0 28px var(--bg-page, #f3eee3); }
 
 /* ---------- Ptolemeu: textul are înălțimea hărții ---------- */
 @media (min-width: 900px){
-  html body #page-acasa .ptol-map{ display: grid !important; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; column-gap: 40px; align-items: start; }
-  html body #page-acasa .ptol-map > svg{ grid-row: 1 / 4; width: 100% !important; height: auto !important; }
-  html body #page-acasa .ptol-map > :not(svg){ grid-column: 2; }
-  html body #page-acasa .ptol-map .ptol-legend{ align-self: start; margin-top: 8px !important; }
+  html body #page-acasa .ptol-map{ display: grid !important; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); column-gap: 44px; align-items: center !important; }
+  html body #page-acasa .ptol-map > svg{ width: 100% !important; height: auto !important; }
+  html body #page-acasa .ptol-map .r2-ptol-side{ display: flex; flex-direction: column; gap: 14px; }
+  html body #page-acasa .ptol-map .r2-ptol-side > *{ margin: 0 !important; }
+  html body #page-acasa .ptol-map .ptol-legend{ padding-top: 14px !important; border-top: 1px solid rgba(34,25,17,.14); }
 }
 html body #page-acasa .ptol-map .ptol-kicker{ font-size: 16px !important; }
-html body #page-acasa .ptol-map > figcaption{ font-size: 18px !important; line-height: 1.6 !important; }
+html body #page-acasa .ptol-map figcaption{ font-size: 18px !important; line-height: 1.6 !important; }
 html body #page-acasa .ptol-map .ptol-legend li{ font-size: 18px !important; line-height: 1.5 !important; padding: 4px 0 !important; }
 
 /* ---------- cronologia: harta umple înălțimea fișei ---------- */
@@ -13101,6 +13167,43 @@ html body #page-acasa .r2-band{ display: grid; grid-template-columns: minmax(0, 
 html body #page-acasa .r2-band > figure{ margin: 0 !important; }
 html body #page-acasa .r2-band > p{ margin: 0 !important; }
 @media (max-width: 767px){ html body #page-acasa .r2-band{ grid-template-columns: 1fr; gap: 20px; } }
+
+/* ---------- antetul capitolelor: titlul în stânga, „Ce trebuie să reții” în dreapta ---------- */
+@media (min-width: 900px){
+  html body #page-acasa .r2-head{ display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px; align-items: end; margin: 0 0 48px; }
+  html body #page-acasa .r2-head .ah-r-key{ margin: 0 !important; max-width: none !important; }
+  html body #page-acasa .r2-head-l > :last-child{ margin-bottom: 0 !important; }
+}
+html body #page-acasa .r2-head-l .sec-sub{ max-width: none !important; }
+
+/* ---------- Izvoarele, față în față: toate cele cinci pe același rând ---------- */
+@media (min-width: 1100px){
+  html body #page-acasa .si-grid{ grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 32px 24px !important; }
+  html body #page-acasa .si-name{ font-size: 21px !important; }
+  html body #page-acasa .si-type-t, html body #page-acasa .si-text{ font-size: 16px !important; line-height: 1.5 !important; }
+}
+
+/* ---------- Atlasul: centrat în coloană ---------- */
+html body #page-acasa #sec-atlas .wrap{ display: flex; flex-direction: column; align-items: center; }
+html body #page-acasa #sec-atlas .stage{ margin-inline: auto !important; width: 100%; }
+
+/* ---------- invitația la joc: card plin, lizibil ---------- */
+html body #page-acasa .cta-card{ display: grid !important; grid-template-columns: minmax(0, 1.5fr) auto !important; gap: 24px 56px !important; align-items: center !important;
+  padding: 56px 64px !important; margin: 96px 0 0 !important; border: 0 !important; border-radius: 6px !important;
+  background: radial-gradient(120% 140% at 85% 0%, rgba(214,178,94,.16), transparent 55%), #1f1b16 !important; color: #efe6d3 !important; opacity: 1 !important; }
+html body #page-acasa .cta-card *{ opacity: 1 !important; filter: none !important; }
+html body #page-acasa .cta-card .kicker{ font: 600 14px/1.2 var(--font-body, 'Source Sans 3', sans-serif) !important; letter-spacing: .14em !important; color: #e0bd6a !important; margin: 0 0 12px !important; }
+html body #page-acasa .cta-card h3{ font: 600 44px/1.1 var(--font-display, 'EB Garamond', serif) !important; color: #f6eedd !important; margin: 0 0 16px !important; }
+html body #page-acasa .cta-card h3 *{ color: inherit !important; }
+html body #page-acasa .cta-card p{ font: 400 18px/1.6 var(--font-body, 'Source Sans 3', sans-serif) !important; color: #d9cdb4 !important; max-width: 60ch; }
+html body #page-acasa .cta-card .cta-btn{ justify-self: end; width: auto !important; min-height: 48px; height: auto !important; padding: 0 26px !important; border-radius: 4px !important; display: inline-flex !important; align-items: center;
+  font: 700 16px/1 var(--font-body, "Source Sans 3", sans-serif) !important; letter-spacing: .02em; white-space: nowrap; box-shadow: none !important; transition: background-color .18s ease-out, transform .18s ease-out; }
+html body #page-acasa .cta-card .cta-btn:active{ transform: scale(.97); }
+@media (max-width: 767px){
+  html body #page-acasa .cta-card{ grid-template-columns: 1fr !important; padding: 36px 24px !important; }
+  html body #page-acasa .cta-card h3{ font-size: 34px !important; }
+  html body #page-acasa .cta-card .cta-btn{ justify-self: start; }
+}
 </style>
 <script id="runda2-js">
 /* Runda 2 (cererile utilizatorului din 27.11), stilurile în runda2.css:
@@ -13115,7 +13218,41 @@ html body #page-acasa .r2-band > p{ margin: 0 !important; }
   function safe(f) { try { f(); } catch (e) { if (window.console) console.warn('runda2', e); } }
 
   /* ---------- 1. cărțile ---------- */
+  // fiecare carte are o culoare și un desen cu linii pe fundal, după tema mitului (ca o carte poștală de muzeu)
+  var ART = {
+    crown: '<ellipse cx="100" cy="190" rx="70" ry="22"/><ellipse cx="100" cy="172" rx="58" ry="17"/><ellipse cx="100" cy="155" rx="46" ry="13"/><path d="M60 190c0-40 80-40 80 0"/><path d="M100 140c-6-30 14-46 34-44-8 10-12 22-34 44z"/><path d="M100 140c-14-22-34-24-46-18 14 2 26 8 46 18z"/><circle cx="124" cy="104" r="3"/>',
+    rider: '<path d="M40 200c10-36 34-56 66-58l34-4c14-2 24-14 30-28l8 6c-4 18-14 30-30 38l2 46"/><path d="M60 196l-6 34M150 196l6 34M88 200l-4 30"/><path d="M106 142c-2-22 8-40 24-48l10 26"/><path d="M128 70a10 10 0 1 1 0 .1"/><path d="M118 96l-34-46M84 50l-6-10"/>',
+    skull: '<path d="M60 120c0-46 30-70 64-70s56 26 56 64c0 22-10 36-22 44v26H86v-26c-16-8-26-20-26-38z"/><circle cx="104" cy="118" r="13"/><circle cx="146" cy="118" r="13"/><path d="M124 136l-6 14h14z"/><path d="M96 168v16M112 168v16M128 168v16M144 168v16"/><path d="M78 74c10-14 26-22 44-24"/>',
+    page: '<path d="M50 30h90l24 24v186H50z"/><path d="M140 30v24h24"/><path d="M66 74h80M66 90h84M66 106h70M66 122h84M66 138h76M66 154h84M66 170h60M66 186h80M66 202h70"/>',
+    diadem: '<path d="M30 150c30-20 110-20 140 0v40c-30-20-110-20-140 0z"/><path d="M44 146l10-22 10 20M74 140l10-24 10 22M106 138l10-24 10 22M138 142l10-22 10 22"/><circle cx="60" cy="168" r="5"/><circle cx="100" cy="164" r="6"/><circle cx="140" cy="168" r="5"/>',
+    meet: '<path d="M40 230V120a60 60 0 0 1 120 0v110"/><path d="M70 230V140M130 230V140"/><path d="M100 60v-26M88 44h24"/><path d="M60 230h80"/><path d="M84 180c6-14 26-14 32 0"/>',
+    mound: '<path d="M20 210c30-60 130-60 160 0z"/><path d="M100 152V96M84 112h32"/><path d="M50 60l4 8 8 1-6 6 2 8-8-4-8 4 2-8-6-6 8-1zM150 44l3 6 6 1-4 4 1 6-6-3-6 3 1-6-4-4 6-1z"/>'
+  };
+  var TONES = ['#a9c2a4', '#e3a585', '#aeb7d6', '#ddb06a', '#d7a3a3', '#9cc2b8', '#d9c48f'];
+  function artFor(t, k) {
+    if (/Xiongnu/i.test(t)) return 'crown';
+    if (/armata|luptau|călăre/i.test(t)) return 'rider';
+    if (/crani/i.test(t)) return 'skull';
+    if (/Ammianus|Res Gestae|izvoar.*scris|monstru/i.test(t)) return 'page';
+    if (/femei|diadem/i.test(t)) return 'diadem';
+    if (/Leon|Romei|Papa/i.test(t)) return 'meet';
+    if (/înmormânt|mormânt/i.test(t)) return 'mound';
+    return ['crown', 'rider', 'skull', 'page', 'diadem', 'meet', 'mound'][k % 7];
+  }
+  function paint() {
+    $$('.fc').forEach(function (c, k) {
+      if (c.dataset.r2art) return;
+      var front = c.querySelector('.fc-front'); if (!front) return;
+      var key = artFor(c.textContent, k);
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity=".8">' + ART[key] + '</svg>';
+      c.dataset.r2art = key;
+      c.classList.add('r2-card');
+      c.style.setProperty('--r2-c', TONES[k % TONES.length]);
+      c.style.setProperty('--r2-art', 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")');
+    });
+  }
   function cards() {
+    paint();
     if (document.body.dataset.r2cards) return;
     document.body.dataset.r2cards = '1';
     document.addEventListener('click', function (e) {
@@ -13258,12 +13395,192 @@ html body #page-acasa .r2-band > p{ margin: 0 !important; }
     f(); addEventListener('resize', f);
   }
 
-  function run() { [navEdge, cards, photoTips, domino, chrono, blends, diadem, atlas].forEach(safe); }
+  // antetul capitolului: titlul și subtitlul în stânga, „Ce trebuie să reții” în dreapta (fără gol pe dreapta)
+  function heads() {
+    $$('#page-acasa section[id^="sec-"]').forEach(function (sec) {
+      var key = sec.querySelector(':scope > .ah-r-key'), mark = sec.querySelector(':scope > .chapter-mark');
+      if (!key || !mark || sec.querySelector(':scope > .r2-head')) return;
+      var head = document.createElement('div'); head.className = 'r2-head';
+      var left = document.createElement('div'); left.className = 'r2-head-l';
+      mark.before(head);
+      left.appendChild(mark);
+      var sub = sec.querySelector(':scope > .sec-sub'); if (sub) left.appendChild(sub);
+      head.appendChild(left); head.appendChild(key);
+    });
+  }
+  // Ptolemeu: textul și legenda într-o singură coloană lângă hartă, centrată pe înălțimea ei
+  function ptol() {
+    var box = $('#page-acasa .ptol-map');
+    if (!box || box.querySelector('.r2-ptol-side')) return;
+    var side = document.createElement('div'); side.className = 'r2-ptol-side';
+    Array.prototype.slice.call(box.children).forEach(function (c) { if (c.tagName.toLowerCase() !== 'svg') side.appendChild(c); });
+    box.appendChild(side);
+  }
+
+  function run() { [navEdge, heads, ptol, cards, photoTips, domino, chrono, blends, diadem, atlas].forEach(safe); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(run, 60); });
   else setTimeout(run, 60);
-  addEventListener('load', function () { [domino, atlas, blends].forEach(safe); });
+  addEventListener('load', function () { [paint, domino, atlas, blends].forEach(safe); });
 })();
 </script>
 <!-- runda2:end -->
+<!-- runda3:start -->
+<style id="runda3-css">
+/* Runda 3 (27.11): compoziție asimetrică. Rândurile imagine + text alternează stânga/dreapta pe înălțimi diferite,
+   citatele se decalează, cărțile stau în zigzag, capitolele se deschid pe o bandă de antracit.
+   Totul sub html body #page-acasa; sub 861 px rămâne o singură coloană. */
+
+/* ---------- 1. Deschiderea capitolelor: bandă de antracit, cifră mare de aur ---------- */
+html body #page-acasa .r2-head{
+  position: relative; z-index: 2; padding: 72px 0 64px; margin: 0 0 64px !important;
+  background: #1b1712; box-shadow: 0 0 0 100vmax #1b1712; clip-path: inset(0 -100vmax);
+  color: #ece3d2;
+}
+html body #page-acasa .r2-head .chapter-mark{ display: grid !important; grid-template-columns: auto minmax(0, 1fr); align-items: end; column-gap: 24px; margin: 0 !important; }
+html body #page-acasa .r2-head .chapter-num{
+  display: block !important;
+  font: 500 clamp(88px, 11vw, 152px)/.78 var(--font-display, 'EB Garamond', serif) !important;
+  font-variant-numeric: lining-nums tabular-nums; letter-spacing: -.04em; color: #c9a13a !important; opacity: .92;
+}
+html body #page-acasa .r2-head .sec-title, html body #page-acasa .r2-head .sec-title .fw{
+  margin: 0 !important; color: #f6eddc !important; font-size: clamp(34px, 4.4vw, 56px) !important; line-height: 1.02 !important; letter-spacing: -.015em;
+}
+html body #page-acasa .r2-head .sec-sub{ margin: 20px 0 0 !important; color: #c9bba3 !important; font-size: 18px !important; line-height: 1.5; }
+html body #page-acasa .r2-head .ah-r-key{ align-self: end; border-left-color: rgba(201,161,58,.55); }
+html body #page-acasa .r2-head .ah-r-key p{ color: #ddd2bf !important; }
+html body #page-acasa .r2-head .ah-r-key b{ color: #d9b45a !important; }
+html body #page-acasa .r2-head a{ color: #e8c877 !important; }
+/* capitolele pare își pun cheia în stânga: deschiderile alternează și ele */
+@media (min-width: 900px){
+  html body #page-acasa .r2-head.r3-alt{ grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) !important; }
+  html body #page-acasa .r2-head.r3-alt .r2-head-l{ order: 2; }
+  html body #page-acasa .r2-head.r3-alt .ah-r-key{ order: 1; }
+}
+@media (max-width: 899px){
+  html body #page-acasa .r2-head{ padding: 48px 0 40px; margin: 40px 0 !important; }
+  html body #page-acasa .r2-head .ah-r-key{ margin-top: 28px !important; }
+  html body #page-acasa .r2-head .chapter-mark{ column-gap: 16px; }
+}
+
+/* ---------- 2. Rânduri imagine + text: alternanță stânga/dreapta, pe înălțimi diferite ---------- */
+@media (min-width: 861px){
+  html body #page-acasa .sr-row{ column-gap: 56px; margin: 72px 0 !important; }
+  html body #page-acasa .sr-row:not(.r3-flip) > .sr-media{ margin-left: -24px; }
+  html body #page-acasa .sr-row.r3-flip > .sr-media{ grid-column: 8 / span 5 !important; margin-top: 88px; margin-right: -24px; }
+  html body #page-acasa .sr-row.r3-flip > .sr-text{ grid-column: 1 / span 7 !important; }
+  /* legenda din dreapta se aliniază la marginea imaginii */
+  html body #page-acasa .sr-row.r3-flip .sr-fig figcaption{ text-align: left; }
+}
+
+/* ---------- 3. Citate decalate, fără chenar: o singură linie fină de aur ---------- */
+html body #page-acasa .page-shell .pq{ border: 0 !important; background: none !important; padding: 28px 0 8px 72px !important; }
+html body #page-acasa .page-shell .pq::after{ content: ""; position: absolute; left: 72px; top: 0; width: 96px; height: 1px; background: #a07c22; }
+html body #page-acasa .page-shell .pq::before{ left: 0 !important; top: 8px !important; font-size: 112px !important; line-height: .8 !important; }
+html body #page-acasa .page-shell .pq blockquote p, html body #page-acasa .page-shell .pq blockquote p .fw{
+  font: italic 400 clamp(26px, 2.6vw, 34px)/1.28 var(--font-display, 'EB Garamond', serif) !important; letter-spacing: -.005em;
+}
+@media (min-width: 900px){
+  html body #page-acasa .page-shell .pq.r3-left{ max-width: 720px !important; margin: 72px auto 72px -24px !important; }
+  html body #page-acasa .page-shell .pq.r3-right{ max-width: 720px !important; margin: 72px -24px 72px auto !important; }
+}
+@media (max-width: 620px){
+  html body #page-acasa .page-shell .pq{ padding: 24px 0 8px 44px !important; }
+  html body #page-acasa .page-shell .pq::after{ left: 44px; }
+  html body #page-acasa .page-shell .pq::before{ font-size: 80px !important; }
+}
+
+/* ---------- 4. Cărțile cu mituri în zigzag ---------- */
+@media (min-width: 900px){
+  html body #page-acasa .fc-grid{ align-items: start !important; row-gap: 40px !important; padding-bottom: 56px; }
+  html body #page-acasa .fc-grid > .fc:nth-child(even){ margin-top: 56px; }
+}
+
+/* ---------- 5. Coperta: anii mari în stânga, rezumatul spre dreapta ---------- */
+@media (min-width: 900px){
+  html body #page-acasa #acasa .hero-end{ display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: end; column-gap: 48px; margin-top: -8px !important; }
+  html body #page-acasa #acasa .hero-years{
+    margin: 0 !important; font: 500 44px/1 var(--font-display, 'EB Garamond', serif) !important; letter-spacing: -.01em;
+    font-variant-numeric: lining-nums tabular-nums; color: #85681f !important;
+  }
+  html body #page-acasa #acasa .dek{ justify-self: end; max-width: 44ch !important; text-align: right; font-size: 21px !important; line-height: 1.4 !important; }
+}
+
+/* ---------- 6. Blocurile de context alternează retragerea ---------- */
+@media (min-width: 1100px){
+  html body #page-acasa :is(.margus-context, .gold-context, .r2-band).r3-in-r{ margin-left: 64px !important; }
+  html body #page-acasa :is(.margus-context, .gold-context, .r2-band).r3-in-l{ margin-right: 64px !important; }
+}
+
+/* ---------- 7. Mișcare: intrare din partea fiecărui element, hover discret ---------- */
+@media (prefers-reduced-motion: no-preference){
+  html body .js-sr #page-acasa .sr-row.sr-reveal:not(.sr-in) .sr-media,
+  html.js-sr body #page-acasa .sr-row.sr-reveal:not(.sr-in) .sr-media{ transform: translateX(-16px); }
+  html body .js-sr #page-acasa .sr-row.r3-flip.sr-reveal:not(.sr-in) .sr-media,
+  html.js-sr body #page-acasa .sr-row.r3-flip.sr-reveal:not(.sr-in) .sr-media{ transform: translateX(16px); }
+  html body #page-acasa .sr-row .sr-media{ transition: opacity .6s ease-out .1s, transform .6s cubic-bezier(.22,1,.36,1) .1s !important; }
+
+  html body #page-acasa .r3-wait .chapter-num{ opacity: 0; transform: translateY(12px); }
+  html body #page-acasa .r3-wait .ah-r-key{ opacity: 0; transform: translateX(12px); }
+  html body #page-acasa .r3-alt.r3-wait .ah-r-key{ transform: translateX(-12px); }
+  html body #page-acasa .r2-head .chapter-num, html body #page-acasa .r2-head .ah-r-key{ transition: opacity .6s ease-out, transform .6s cubic-bezier(.22,1,.36,1); }
+  html body #page-acasa .r2-head .ah-r-key{ transition-delay: .18s; }
+
+  html body #page-acasa .pq.r3-wait{ opacity: 0; transform: translateX(-12px); }
+  html body #page-acasa .pq.r3-right.r3-wait{ transform: translateX(12px); }
+  html body #page-acasa .pq{ transition: opacity .6s ease-out, transform .6s cubic-bezier(.22,1,.36,1); }
+  html body #page-acasa .page-shell .pq::after{ transform-origin: 0 50%; transition: transform .7s cubic-bezier(.22,1,.36,1) .2s; }
+  html body #page-acasa .page-shell .pq.r3-wait::after{ transform: scaleX(0); }
+
+  html body #page-acasa .sr-fig img{ transition: transform .25s ease-out; }
+  @media (hover: hover){
+    html body #page-acasa .sr-fig img:hover{ transform: translateY(-3px); }
+  }
+  html body #page-acasa .sr-fig img:focus-visible{ transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce){
+  html body #page-acasa .sr-row .sr-media, html body #page-acasa .pq, html body #page-acasa .r2-head *{ transition: none !important; transform: none !important; }
+}
+</style>
+<script id="runda3-js">
+/* Runda 3: marchează alternanța (stânga/dreapta) și intrările la derulare. Fără JS, pagina rămâne în ordinea de bază. */
+(function () {
+  function run() {
+    var root = document.getElementById('page-acasa'); if (!root) return;
+    // rândurile imagine + text: unul da, unul nu; rândul lipit (Delacroix) își păstrează așezarea
+    function flips() {
+      var n = 0;
+      root.querySelectorAll('.sr-row').forEach(function (r) {
+        r.classList.remove('r3-flip');
+        if (r.classList.contains('ux-sticky-row')) return;
+        if (n++ % 2 === 1) r.classList.add('r3-flip');
+      });
+    }
+    flips();
+    root.querySelectorAll('.r2-head').forEach(function (h, i) { if (i % 2 === 1) h.classList.add('r3-alt'); });
+    var free = Array.prototype.filter.call(root.querySelectorAll('.page-shell .pq'), function (q) { return !q.closest('.margus-context, .duel-context, .gold-context, .r10-band, .r2-band'); });
+    free.forEach(function (q, i) { q.classList.add(i % 2 ? 'r3-right' : 'r3-left'); });
+    root.querySelectorAll('.margus-context, .gold-context, .r2-band').forEach(function (b, i) { b.classList.add(i % 2 ? 'r3-in-l' : 'r3-in-r'); });
+
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = Array.prototype.slice.call(root.querySelectorAll('.r2-head')).concat(free);
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('r3-wait'); io.unobserve(e.target); } });
+    }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (e) {
+      var r = e.getBoundingClientRect();
+      if (r.top < innerHeight && r.bottom > 0) return; // deja în ecran: fără ascundere
+      e.classList.add('r3-wait'); io.observe(e);
+    });
+    // plasă: nimic nu rămâne ascuns dacă observatorul nu se declanșează (ex. salt cu ancoră)
+    addEventListener('hashchange', function () { els.forEach(function (e) { e.classList.remove('r3-wait'); }); });
+  }
+  // antetele .r2-head și rândul lipit se definitivează abia la încărcare (runda2, ux-hunilor): rulăm după ele
+  // runda2 își construiește antetele cu 60 ms după DOMContentLoaded; așteptăm și antetele, și încărcarea
+  var tries = 0;
+  function later() { if ((document.querySelector('#page-acasa .r2-head') && document.querySelector('#page-acasa .r2-band')) || ++tries > 20) run(); else setTimeout(later, 100); }
+  if (document.readyState === 'complete') setTimeout(later, 100); else addEventListener('load', function () { setTimeout(later, 100); });
+})();
+</script>
+<!-- runda3:end -->
 </body>
 </html>

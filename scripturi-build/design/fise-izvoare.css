@@ -73,3 +73,15 @@ html body #page-acasa .si-block { margin: 0; padding-top: 12px; border-top: 1px 
 @media (prefers-reduced-motion: reduce) {
   html body #page-acasa .si, html body #page-acasa .si::before, html body #page-acasa .si-node-dot { transition: none; }
 }
+
+/* firele care leagă fiecare nod de pe axă de fișa lui */
+html body #page-acasa .si-wrap { position: relative; }
+html body #page-acasa .si-ax { margin-bottom: 56px; }
+html body #page-acasa .si-hang { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 0; }
+html body #page-acasa .si-hang path { fill: none; stroke: var(--st); stroke-width: 1.2; opacity: .45; transition: opacity .25s ease-out, stroke-width .25s ease-out; }
+html body #page-acasa .si-hang path.si-on { opacity: 1; stroke-width: 2; }
+html body #page-acasa .si-wrap.si-focus .si-hang path:not(.si-on) { opacity: .15; }
+@media (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .si-wait .si-hang { opacity: 0; }
+  html body #page-acasa .si-in .si-hang { animation: si-fade .6s ease-out .35s both; }
+}

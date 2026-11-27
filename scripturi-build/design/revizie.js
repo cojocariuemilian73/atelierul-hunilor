@@ -235,7 +235,7 @@
   }
 
   function run() {
-    [progress, navTools, pages, heroPad, photoPoints, keyPoints, scoreBump, mobileMap].forEach(safe);
+    [navTools, pages, heroPad, photoPoints, keyPoints, scoreBump, mobileMap].forEach(safe);
   }
   function start() { run(); setTimeout(function () { safe(countUps); }, 120); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 30); });
