@@ -1,0 +1,138 @@
+/* Runda 9: bară suplă, note unificate, izvoarele în carusel vertical, cronologia fără text tăiat. Prefix: r9-. */
+
+/* ---------- 1. bara de sus: 44 px, iar firul cu călărețul e o linie fină, nu un al doilea rând ---------- */
+html body #site-nav.site-nav { height: 44px !important; }
+html body #site-nav.site-nav :is(a, .st-brand, .toc-link) { height: 44px !important; }
+html body #site-nav .about-trigger { height: 32px !important; }
+@media (max-width: 767px) {
+  html body #site-nav.site-nav { height: 44px !important; }
+  html body #site-nav.open .st-links { max-height: calc(100vh - 44px) !important; }
+  html body #site-nav.open .st-links a { height: auto !important; }
+}
+/* firul: fără fundal opac, doar o estompare scurtă care lasă textul lizibil dedesubt */
+html body .ef-ride {
+  height: 30px !important;
+  background: linear-gradient(180deg, rgba(243, 238, 227, .92) 0%, rgba(243, 238, 227, .6) 60%, rgba(243, 238, 227, 0) 100%) !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important; box-shadow: none !important;
+}
+html body .ef-ride .ef-rtrack { top: 22px !important; }
+html body .ef-ride .ef-rider svg { width: 26px !important; height: 19px !important; left: -14px !important; }
+html body .ef-ride .ef-ryr { bottom: 5px !important; padding: 0 6px 1px !important; font-size: 11.5px !important; background: rgba(243, 238, 227, .96) !important; }
+html body .ef-ride .ef-rtick b { top: 3px !important; font-size: 11px !important; }
+
+/* ---------- 2. notele secundare: un singur limbaj („Atenție la sursă”, „Știai că…?”, sursele bizantine) ---------- */
+html body #page-acasa :is(.source-caution, .callout, .r9-note) {
+  float: none !important; position: relative;
+  background: linear-gradient(180deg, #f1e8d6, #ebe1cc) !important; color: #221911 !important;
+  border: 1px solid rgba(133, 104, 31, .32) !important; border-left: 3px solid #9a3f24 !important; border-radius: 0 3px 3px 0 !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset, 0 8px 20px -16px rgba(43, 30, 22, .45) !important;
+  padding: 18px 22px 18px 20px !important; font-size: 16px !important; line-height: 1.6 !important;
+}
+/* eticheta: aceeași peste tot, mică, cu majuscule, în teracotă */
+html body #page-acasa :is(.r9-note .r9n-tag, .callout .cal-label, .source-caution .cal-label, .source-caution > b:first-child, .source-caution > strong:first-child) {
+  display: block !important; margin: 0 0 8px !important; padding: 0 !important; background: none !important;
+  font: 600 12px/1.3 'Source Sans 3', system-ui, sans-serif !important; letter-spacing: .14em !important; text-transform: uppercase !important; color: #9a3f24 !important;
+}
+html body #page-acasa .r9-note .r9n-title { font: 600 22px/1.2 'EB Garamond', Georgia, serif !important; color: #221911 !important; margin: 0 0 6px !important; }
+html body #page-acasa .r9-note .r9n-text { font-size: 16px !important; line-height: 1.55 !important; margin: 0 !important; }
+html body #page-acasa .r9-note .r9n-src { font-size: 13px !important; color: #65564a !important; margin: 10px 0 0 !important; }
+/* în coloana de text: nota stă pe rândul ei, nu mai înghesuie paragraful într-o coloană îngustă */
+html body #page-acasa :is(.sr-text, .page-shell section) > .r9-note,
+html body #page-acasa .sr-text > :is(.source-caution, .callout) {
+  width: auto !important; max-width: 68ch !important; margin: 32px 0 !important;
+}
+html body #page-acasa .sr-text > p { margin-bottom: 20px; }
+html body #page-acasa .sr-text > :is(h3, .sub-title) { margin-bottom: 16px !important; }
+@media (min-width: 861px) {
+  html body #page-acasa .sr-row { column-gap: clamp(44px, 5vw, 72px) !important; }
+}
+
+/* ---------- 3. izvoarele: carusel vertical, trei fișe la vedere ---------- */
+/* axa: „azi” are loc separat după 100 de ani; genetica stă pe el, nu peste Iordanes */
+html body #page-acasa .r9-car .si-ax-track { margin-right: 104px !important; }
+html body #page-acasa .r9-car .si-ax-line { right: -88px !important; }
+html body #page-acasa .r9-car .si-ax-azi { right: -88px !important; }
+html body #page-acasa .r9-car .si-node-azi { left: auto !important; right: -95px !important; margin: 0 !important; transform: none !important; }
+html body #page-acasa .r9-car .si-node { transition: opacity var(--r6-dur, 220ms) ease; }
+html body #page-acasa .r9-car .si-node.r9-dim { opacity: .42; }
+html body #page-acasa .r9-car .si-hang { display: none !important; }
+html body #page-acasa .r9-car .si-ax { margin-bottom: 20px !important; }
+
+/* comenzile: sus / poziția / jos */
+html body #page-acasa .r9-ctl { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 0 12px; }
+html body #page-acasa .r9-mid { display: flex; align-items: center; gap: 14px; min-width: 0; }
+html body #page-acasa .r9-pos { margin: 0; font: 600 13px/1.3 'Source Sans 3', system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #65564a; white-space: nowrap; }
+html body #page-acasa .r9-dots { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
+html body #page-acasa .r9-dots li { width: 8px; height: 8px; border-radius: 50%; border: 1px solid #85681f; background: transparent; transition: background-color var(--r6-dur, 220ms) ease; }
+html body #page-acasa .r9-dots li.on { background: #85681f; }
+html body #page-acasa .r9-btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; cursor: pointer;
+  background: #2b1d12; color: #f6ecd8; border: 1px solid #2b1d12; border-radius: 2px;
+  box-shadow: inset 0 0 0 3px #2b1d12, inset 0 0 0 4px rgba(214, 178, 94, .55);
+  font: 600 13px/1 'Source Sans 3', system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+  transition: scale var(--r6-dur, 220ms) var(--r6-ease, ease), background-color var(--r6-dur, 220ms) ease, opacity var(--r6-dur, 220ms) ease;
+}
+html body #page-acasa .r9-btn svg { width: 14px; height: 14px; flex: none; }
+html body #page-acasa .r9-btn:hover:not(:disabled) { background: #3a2a1e; }
+html body #page-acasa .r9-btn:disabled { opacity: .35; cursor: default; }
+html body #page-acasa .r9-btn:focus-visible { outline: 2px solid #9a3f24; outline-offset: 3px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .r9-btn:is(:hover, :focus-visible):not(:disabled) { scale: var(--r6-hover, 1.025); }
+}
+
+/* fereastra: arată exact trei fișe; marginea interioară lasă loc umbrei și creșterii la hover */
+html body #page-acasa .r9-win { position: relative; overflow: hidden; margin: 0 -14px; padding: 14px; transition: height 320ms var(--r6-ease, ease); }
+html body #page-acasa .r9-car .si-grid {
+  display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 16px !important;
+  transition: transform 320ms var(--r6-ease, ease); will-change: transform;
+}
+html body #page-acasa .r9-car .si-grid > .si { transition: scale var(--r6-dur, 220ms) var(--r6-ease, ease), opacity 260ms ease !important; }
+html body #page-acasa .r9-car .si-grid > .si:not(.r9-vis) { opacity: 0; }
+/* desktop: fiecare fișă e un rând, cu aceleași patru câmpuri aliniate în coloane */
+@media (min-width: 900px) {
+  html body #page-acasa .r9-car .si-grid { grid-auto-rows: auto; }
+  html body #page-acasa .r9-car .si-wrap .si.si,
+  html body #page-acasa .r9-car .si.si {
+    display: grid !important; align-content: start;
+    grid-template-columns: minmax(0, 1fr) minmax(0, .9fr) minmax(0, 1.3fr) minmax(0, 1.3fr);
+    grid-template-areas: "head dist learn limit" "head type learn limit";
+    grid-template-rows: auto 1fr; column-gap: 32px; row-gap: 10px; padding: 22px 28px !important;
+  }
+  html body #page-acasa .r9-car .si > .si-head { grid-area: head; }
+  html body #page-acasa .r9-car .si > .si-dist-v { grid-area: dist; margin: 0; }
+  html body #page-acasa .r9-car .si > .si-type { grid-area: type; }
+  html body #page-acasa .r9-car .si > .si-learn { grid-area: learn; }
+  html body #page-acasa .r9-car .si > .si-limit { grid-area: limit; }
+  html body #page-acasa .r9-car .si :is(.si-learn, .si-limit) { margin: 0 !important; padding: 0 !important; border: 0 !important; }
+  /* culoarea tipului de izvor: banda trece pe marginea din stânga a rândului */
+  html body #page-acasa .r9-car .si.si::before { inset: -1px auto -1px -1px !important; width: 4px !important; height: auto !important; border-radius: 3px 0 0 3px !important; }
+  html body #page-acasa .r9-car .si.si.si-on::before { width: 5px !important; height: auto !important; }
+}
+@media (max-width: 899px) {
+  html body #page-acasa .r9-ctl { gap: 10px; }
+  html body #page-acasa .r9-mid { flex-direction: column; gap: 6px; }
+  html body #page-acasa .r9-pos { font-size: 12px; letter-spacing: .06em; }
+  html body #page-acasa .r9-btn span { display: none; }
+  html body #page-acasa .r9-btn { padding: 0 14px; }
+  html body #page-acasa .r9-car .si-ax-track { margin-right: 64px !important; }
+  html body #page-acasa .r9-car .si-ax-line, html body #page-acasa .r9-car .si-ax-azi { right: -52px !important; }
+  html body #page-acasa .r9-car .si-node-azi { right: -59px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa :is(.r9-win, .r9-car .si-grid, .r9-car .si-grid > .si, .r9-btn, .r9-dots li, .r9-car .si-node) { transition: none !important; scale: none !important; }
+}
+
+/* ---------- 4. cronologia: rândul cu surse nu mai e acoperit de haloul fișei; fără gol sub hartă ---------- */
+html body #page-acasa #sec-cronologie .section-sources {
+  position: relative; z-index: 3; margin: 56px 0 0 !important; padding: 18px 0 0 !important;
+  max-width: 78ch; font-size: 15px !important; line-height: 1.7 !important; color: #4a3c30 !important;
+}
+html body #page-acasa #sec-cronologie .section-sources sup { line-height: 0; }
+@media (min-width: 861px) {
+  html body #page-acasa #sec-cronologie .hx-main { align-items: center !important; }
+  /* rama hărții nu se mai întinde după fișă (min-height: 100%); are înălțimea hărții */
+  html body #page-acasa #sec-cronologie .hx-main > .hx-map { min-height: 0 !important; align-self: center !important; }
+  /* fișa e cel puțin cât harta, dar nu mai rămâne la înălțimea celei mai lungi fișe văzute vreodată */
+  html body #page-acasa #hx-folio { min-height: var(--r9-map-h, auto) !important; }
+  html body #page-acasa #hx-folio .hx-img img { max-height: 150px; width: 100%; object-fit: contain; background: #e8dfca; }
+}
