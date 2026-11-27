@@ -67,79 +67,126 @@
     addEventListener('resize', mark);
   }
 
-  /* ---------- curiozitățile „Știai că…?” pe orbită ---------- */
+  /* ---------- „Ce se spune, ce se știe”: miturile și curiozitățile pe o orbită cu imagini ----------
+     Miturile (cărțile .fc) se mută aici; notele „Știai că…?” rămân și în text. Fiecare element are imaginea lui;
+     clicul pe imagine o deschide mare, în centru, cu explicația și sursa (ca în caruselul Kairos: alegi, vine în față). */
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+  function credit(img) {
+    var f = img && img.closest('figure'); if (!f) return '';
+    var cr = f.querySelector('.cap-cr'), cap = f.querySelector('figcaption');
+    var t = (cr && cr.textContent.trim()) || (cap && cap.textContent.replace(/\s+/g, ' ').trim()) || '';
+    return t.replace(/\s*\bi\s*$/, '');
+  }
+  function imageFor(n) {
+    var ctx = n.closest('.sr-row, .duel-context, .gold-context, .margus-context, .sr-media');
+    var img = ctx && ctx.querySelector('img');
+    if (img) return img;
+    var t = n.textContent, all = Array.prototype.slice.call(document.querySelectorAll('#page-acasa img[alt]'));
+    var want = /solid|monede de aur/i.test(t) ? /solid/i : /călare/i.test(t) ? /călăreți|călare/i : null;
+    return want ? all.filter(function (i) { return want.test(i.alt); })[0] || null : null;
+  }
   function orbit() {
     if (document.getElementById('sec-curiozitati')) return;
-    var notes = Array.prototype.slice.call(document.querySelectorAll('#page-acasa .r9-note'));
-    var items = notes.map(function (n) {
-      var t = n.querySelector('.r9n-title, .r9n-num'), x = n.querySelector('.r9n-text'), s = n.querySelector('.r9n-src');
-      var u = n.querySelector('.r9n-unit');                 // „1/72” + „de livră”: titlul se citește întreg
-      var title = t ? t.textContent.trim() + (u && t.classList.contains('r9n-num') ? ' ' + u.textContent.trim() : '') : '';
-      return t && x ? { t: title, x: x.innerHTML, s: s ? s.innerHTML : '' } : null;
-    }).filter(Boolean);
+    var items = [];
+    // miturile: imaginea, întrebarea, ce se spune, ce arată izvoarele
+    var groups = Array.prototype.slice.call(document.querySelectorAll('#page-acasa .vd-group')).filter(function (g) { return g.querySelector('.fc-grid'); });
+    groups.forEach(function (g) {
+      Array.prototype.forEach.call(g.querySelectorAll('.fc'), function (c) {
+        var img = c.querySelector('.fc-fig img'), cap = c.querySelector('.fc-fig figcaption');
+        var q = c.querySelector('.fc-question'), my = c.querySelector('.fc-myth'), ans = c.querySelector('.fc-answer'), ev = c.querySelector('.fc-evidence'), src = c.querySelector('.fc-src');
+        if (!img || !(q || my)) return;
+        // fără întrebare: titlul e chiar mitul, fără ghilimele
+        var title = q ? q.textContent.trim() : my.textContent.trim().replace(/^[„"«]+|[”"»]+$/g, '');
+        var evHtml = '';
+        if (ev) { var e2 = ev.cloneNode(true); var lab = e2.querySelector('.fc-label'); if (lab) lab.remove(); evHtml = e2.innerHTML; }
+        items.push({ kind: 'mit', src: img.currentSrc || img.src, alt: img.alt, cr: cap ? cap.textContent.trim() : '', t: title,
+          body: (my && q ? '<p class="r10-myth"><span>Se spune că</span>' + my.innerHTML + '</p>' : '') +
+                (ans ? '<p class="r10-txt">' + ans.innerHTML + '</p>' : '') +
+                (evHtml ? '<div class="r10-ev">' + evHtml + '</div>' : '') +
+                (src ? '<p class="r10-src">' + src.innerHTML + '</p>' : '') });
+      });
+    });
+    var myths = items.length;
+    Array.prototype.forEach.call(document.querySelectorAll('#page-acasa .r9-note'), function (n) {
+      var t = n.querySelector('.r9n-title, .r9n-num'), x = n.querySelector('.r9n-text'), s2 = n.querySelector('.r9n-src'), u = n.querySelector('.r9n-unit');
+      if (!t || !x) return;
+      var img = imageFor(n);
+      items.push({ kind: 'stiai', src: img ? (img.currentSrc || img.src) : '', alt: img ? img.alt : '', cr: credit(img),
+        t: t.textContent.trim() + (u && t.classList.contains('r9n-num') ? ' ' + u.textContent.trim() : ''),
+        body: '<p class="r10-txt">' + x.innerHTML + '</p>' + (s2 ? '<p class="r10-src">' + s2.innerHTML + '</p>' : '') });
+    });
     if (items.length < 3) return;
-    var anchor = document.querySelector('#page-acasa .main-col > .cta-card') || document.getElementById('biblio');
+    var anchor = document.getElementById('sec-migratie');
     if (!anchor) return;
     var N = items.length;
     var sec = document.createElement('section');
     sec.id = 'sec-curiozitati'; sec.className = 'r10-orb-sec'; sec.setAttribute('aria-labelledby', 'r10-orb-h');
     sec.innerHTML =
-      '<div class="r10-orb-head"><p class="r10-kick">Știai că…?</p><h2 id="r10-orb-h" class="r10-orb-title">Curiozități despre huni</h2></div>' +
+      '<div class="r10-orb-head"><p class="r10-kick">Mituri și curiozități</p><h2 id="r10-orb-h" class="r10-orb-title">Ce se spune, ce se știe</h2>' +
+      '<p class="r10-lead">' + myths + ' mituri verificate cu izvoarele și ' + (N - myths) + ' lucruri pe care poate nu le știai. Apasă pe o imagine de pe cerc.</p></div>' +
       '<div class="r10-stage"><div class="r10-orb" style="--n:' + N + '">' +
         '<span class="r10-ring" aria-hidden="true"></span>' +
-        '<p class="r10-emblem" aria-hidden="true">Alege o curiozitate</p>' +
+        '<div class="r10-hub" aria-hidden="true"><p class="r10-q">Mit sau adevăr?</p><p class="r10-hint">Apasă pe o imagine.</p></div>' +
         '<ul class="r10-items">' + items.map(function (it, k) {
-          return '<li style="--i:' + k + '"><button type="button" class="r10-it" aria-expanded="false" aria-controls="r10-center">' +
-            '<span class="r10-no">' + (k < 9 ? '0' : '') + (k + 1) + '</span><span class="r10-t">' + it.t + '</span></button></li>';
+          return '<li style="--i:' + k + '"><button type="button" class="r10-it r10-' + it.kind + '" aria-expanded="false" aria-controls="r10-card" aria-label="' +
+            (it.kind === 'mit' ? 'Mit: ' : 'Știai că: ') + esc(it.t) + '" title="' + esc(it.t) + '">' +
+            (it.src ? '<img src="' + esc(it.src) + '" alt="" loading="lazy" decoding="async">' : '') +
+            '<span class="r10-badge" aria-hidden="true">' + (it.kind === 'mit' ? 'Mit' : 'Știai?') + '</span></button></li>';
         }).join('') + '</ul></div>' +
-        '<div class="r10-center" id="r10-center" role="region" aria-live="polite" aria-label="Curiozitatea aleasă"></div>' +
+        '<article class="r10-card" id="r10-card" aria-live="polite" hidden></article>' +
       '</div>';
     anchor.parentNode.insertBefore(sec, anchor);
+    // miturile s-au mutat pe orbită: grupurile vechi nu se mai afișează
+    groups.forEach(function (g) {
+      g.hidden = true; g.classList.add('r10-moved');
+      var p = g.previousElementSibling;
+      if (p && /^H[2-4]$/.test(p.tagName) && /ce se (spune|știe)/i.test(p.textContent)) { p.hidden = true; p.classList.add('r10-moved'); }
+    });
 
-    var orb = sec.querySelector('.r10-orb'), center = sec.querySelector('.r10-center');
+    var orb = sec.querySelector('.r10-orb'), card = sec.querySelector('.r10-card');
     var btns = Array.prototype.slice.call(sec.querySelectorAll('.r10-it'));
     var cur = -1;
-    function idle() {
-      return '<p class="r10-q">Ce i-a uimit pe romani la huni?</p><p class="r10-hint">Alege o curiozitate de pe cerc.</p>';
-    }
-    function card(k) {
+    function html(k) {
       var it = items[k];
-      return '<p class="r10-kick">Știai că…? · ' + (k + 1) + ' din ' + N + '</p><h3>' + it.t + '</h3><p class="r10-txt">' + it.x + '</p>' +
-        (it.s ? '<p class="r10-src">' + it.s + '</p>' : '') +
-        '<div class="r10-nav"><button type="button" class="r10-prev" aria-label="Curiozitatea anterioară">←</button>' +
+      return (it.src ? '<figure class="r10-fig"><img src="' + esc(it.src) + '" alt="' + esc(it.alt) + '">' +
+          (it.cr ? '<figcaption>' + esc(it.cr) + '</figcaption>' : '') + '</figure>' : '') +
+        '<div class="r10-body"><p class="r10-kick">' + (it.kind === 'mit' ? 'Mitul, verificat' : 'Știai că…?') + ' · ' + (k + 1) + ' din ' + N + '</p>' +
+        '<h3>' + esc(it.t) + '</h3>' + it.body + '</div>' +
+        '<div class="r10-nav"><button type="button" class="r10-prev" aria-label="Elementul anterior">←</button>' +
         '<button type="button" class="r10-close">Închide</button>' +
-        '<button type="button" class="r10-next" aria-label="Curiozitatea următoare">→</button></div>';
+        '<button type="button" class="r10-next" aria-label="Elementul următor">→</button></div>';
     }
-    function show(k, focusCenter) {
-      var html = k < 0 ? idle() : card(k);
-      var swap = function () {
-        center.innerHTML = html; center.classList.remove('is-swap');
-        if (focusCenter && k >= 0) { var b = center.querySelector('.r10-close'); if (b) b.focus({ preventScroll: true }); }
-      };
+    function show(k, focus) {
       cur = k;
       orb.classList.toggle('is-open', k >= 0);
+      sec.classList.toggle('r10-open', k >= 0);
       btns.forEach(function (b, i) { b.setAttribute('aria-expanded', i === k ? 'true' : 'false'); });
-      if (reduce()) swap(); else { center.classList.add('is-swap'); setTimeout(swap, 180); }
+      if (k < 0) { card.hidden = true; card.innerHTML = ''; return; }
+      card.innerHTML = html(k); card.hidden = false;
+      card.classList.remove('r10-pop'); void card.offsetWidth; if (!reduce()) card.classList.add('r10-pop');
+      card.scrollTop = 0;
+      if (focus) { var c = card.querySelector('.r10-close'); if (c) c.focus({ preventScroll: true }); }
+      if (matchMedia('(max-width: 699px)').matches) card.scrollIntoView({ block: 'nearest', behavior: reduce() ? 'auto' : 'smooth' });
     }
-    btns.forEach(function (b, k) { b.addEventListener('click', function () { show(cur === k ? -1 : k, false); }); });
-    center.addEventListener('click', function (e) {
-      if (e.target.closest('.r10-close')) { var k = cur; show(-1); if (btns[k]) btns[k].focus({ preventScroll: true }); }
+    function close() { var k = cur; show(-1); if (btns[k]) btns[k].focus({ preventScroll: true }); }
+    btns.forEach(function (b, k) { b.addEventListener('click', function () { if (cur === k) close(); else show(k, true); }); });
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('.r10-close')) close();
       else if (e.target.closest('.r10-prev')) show((cur - 1 + N) % N, true);
       else if (e.target.closest('.r10-next')) show((cur + 1) % N, true);
     });
     sec.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && cur >= 0) { var k = cur; show(-1); if (btns[k]) btns[k].focus({ preventScroll: true }); }
+      if (cur < 0) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight' && card.contains(document.activeElement)) show((cur + 1) % N, true);
+      else if (e.key === 'ArrowLeft' && card.contains(document.activeElement)) show((cur - 1 + N) % N, true);
     });
-    center.innerHTML = idle();
 
-    // intrare: elementele vin pe orbită rotindu-se; ieșire: se retrag spre centru. Rotația lentă doar cât secțiunea e în ecran.
+    // intrare: imaginile vin pe orbită rotindu-se; ieșire: se retrag spre centru. Rotația lentă doar cât secțiunea e în ecran.
     if (reduce()) { orb.classList.add('is-in'); return; }
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-          orb.classList.toggle('is-in', e.isIntersecting);
-          orb.classList.toggle('is-spinning', e.isIntersecting);
-        });
+        es.forEach(function (e) { orb.classList.toggle('is-in', e.isIntersecting); orb.classList.toggle('is-spinning', e.isIntersecting); });
       }, { threshold: 0.18 }).observe(orb);
     } else orb.classList.add('is-in');
   }

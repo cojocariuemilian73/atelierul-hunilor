@@ -184,3 +184,70 @@ html body #page-acasa .r10-nav .r10-close { background: transparent; color: #7a2
   html body #site-nav :is(.r10-l, .r10-r) a, html body #site-nav .r10-r .about-trigger { color: #4a3c30 !important; font-weight: 500 !important; }
   html body #site-nav :is(.r10-l, .r10-r) a:is(.active, [aria-current]) { color: #221911 !important; }
 }
+
+/* ---------- 5b. orbita cu imagini (mituri + „Știai că…?”), între capitolele 2 și 3 ---------- */
+html body #page-acasa .r10-orb-sec { margin: 72px 0 96px !important; }
+html body #page-acasa .r10-lead { margin: 12px auto 0; max-width: 52ch; font: 400 17px/1.55 'Source Sans 3', system-ui, sans-serif; color: #4a3c30; }
+html body #page-acasa .r10-stage { width: min(760px, 100%) !important; }
+html body #page-acasa .r10-orb { --R: calc(50cqw - 56px) !important; }
+html body #page-acasa .r10-ring { inset: 56px !important; }
+html body #page-acasa .r10-it {
+  left: -48px !important; top: -48px !important; width: 96px !important; height: 96px !important; padding: 0 !important;
+  overflow: hidden; display: block !important; border: 2px solid #f6efe0 !important;
+  box-shadow: 0 0 0 1px rgba(133, 104, 31, .55), 0 12px 24px -14px rgba(43, 30, 22, .6) !important; background: #e8dfca !important;
+}
+html body #page-acasa .r10-it img { width: 100%; height: 100%; object-fit: cover; display: block; filter: sepia(.12) saturate(.92); }
+html body #page-acasa .r10-badge {
+  position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%); padding: 2px 7px; border-radius: 999px; white-space: nowrap;
+  font: 600 10px/1.3 'Source Sans 3', system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+  background: rgba(243, 238, 227, .94); color: #7a2e1a;
+}
+html body #page-acasa .r10-it.r10-stiai .r10-badge { color: #6b5418; }
+html body #page-acasa .r10-it[aria-expanded="true"] { box-shadow: 0 0 0 3px #9a3f24, 0 12px 24px -14px rgba(43, 30, 22, .6) !important; }
+html body #page-acasa .r10-orb.is-open .r10-it:not([aria-expanded="true"]) { opacity: .5; }
+html body #page-acasa .r10-hub {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: calc(100cqw - 2 * 56px - 2 * 66px); aspect-ratio: 1; border-radius: 50%;
+  display: grid; place-content: center; text-align: center;
+  background: radial-gradient(circle at 50% 35%, #fbf7ee, #efe6d3 70%); border: 1px solid rgba(133, 104, 31, .35); box-shadow: 0 18px 40px -26px rgba(43, 30, 22, .55);
+}
+html body #page-acasa .r10-hub .r10-q { font-size: clamp(26px, 3vw, 34px) !important; }
+
+/* fișa deschisă: în centrul orbitei, mare, cu imaginea întreagă și creditul */
+html body #page-acasa .r10-card {
+  position: absolute; left: 50%; top: 50cqw; transform: translate(-50%, -50%); z-index: 5;
+  width: min(600px, 90%); max-height: calc(100cqw - 24px); overflow: auto; overscroll-behavior: contain;
+  background: linear-gradient(180deg, #fbf7ee, #f1e8d6); color: #221911; border: 1px solid rgba(133, 104, 31, .45); border-radius: 6px;
+  box-shadow: 0 30px 60px -30px rgba(43, 30, 22, .65), 0 2px 6px -3px rgba(43, 30, 22, .25);
+}
+html body #page-acasa .r10-card[hidden] { display: none; }
+html body #page-acasa .r10-card.r10-pop { animation: r10-pop 360ms var(--r10-ease) both; }
+@keyframes r10-pop { from { opacity: 0; transform: translate(-50%, -50%) scale(.92); } }
+html body #page-acasa .r10-fig { margin: 0; background: #e8dfca; border-bottom: 1px solid #a88a3c; }
+html body #page-acasa .r10-fig img { display: block; width: 100%; height: 260px; object-fit: contain; padding: 14px; box-sizing: border-box; }
+html body #page-acasa .r10-fig figcaption { padding: 0 20px 12px; font: italic 13px/1.4 'Source Sans 3', system-ui, sans-serif; color: #55463a; }
+html body #page-acasa .r10-body { padding: 20px 28px 4px; }
+html body #page-acasa .r10-body h3 { margin: 0 0 12px; font: 600 26px/1.15 'EB Garamond', Georgia, serif; color: #221911; }
+html body #page-acasa .r10-myth { margin: 0 0 12px; font: italic 19px/1.4 'EB Garamond', Georgia, serif; color: #4a3c30; }
+html body #page-acasa .r10-myth span { display: block; margin-bottom: 4px; font: 600 12px/1.3 'Source Sans 3', system-ui, sans-serif; font-style: normal; letter-spacing: .14em; text-transform: uppercase; color: #9a3f24; }
+html body #page-acasa .r10-card .r10-txt { margin: 0 0 12px; font: 400 16px/1.6 'Source Sans 3', system-ui, sans-serif; color: #2b1d12; }
+html body #page-acasa .r10-ev { font: 400 14.5px/1.55 'Source Sans 3', system-ui, sans-serif; color: #4a3c30; }
+html body #page-acasa .r10-ev p { margin: 0 0 8px; }
+html body #page-acasa .r10-card .r10-src { margin: 0 0 8px; font-size: 13px; color: #65564a; }
+html body #page-acasa .r10-card .r10-nav { position: sticky; bottom: 0; margin: 0; padding: 14px 20px 18px; background: linear-gradient(180deg, rgba(241, 232, 214, 0), #f1e8d6 40%); }
+
+@media (max-width: 699px) {
+  html body #page-acasa .r10-stage { width: min(360px, 100%) !important; }
+  html body #page-acasa .r10-orb { --R: calc(50cqw - 32px) !important; }
+  html body #page-acasa .r10-ring { inset: 32px !important; }
+  html body #page-acasa .r10-it { left: -27px !important; top: -27px !important; width: 54px !important; height: 54px !important; }
+  html body #page-acasa .r10-badge { display: none; }
+  html body #page-acasa .r10-hub { width: calc(100cqw - 2 * 32px - 2 * 40px); }
+  html body #page-acasa .r10-hub .r10-q { font-size: 22px !important; }
+  html body #page-acasa .r10-hint { font-size: 13px; }
+  html body #page-acasa .r10-card { position: relative; left: auto; top: auto; transform: none; width: auto; max-height: none; margin-top: 20px; }
+  html body #page-acasa .r10-card.r10-pop { animation-name: r10-pop-m; }
+  @keyframes r10-pop-m { from { opacity: 0; transform: translateY(10px); } }
+  html body #page-acasa .r10-fig img { height: 200px; }
+  html body #page-acasa .r10-body { padding: 18px 20px 4px; }
+}
+@media (prefers-reduced-motion: reduce) { html body #page-acasa .r10-card.r10-pop { animation: none !important; } }
