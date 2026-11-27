@@ -51,17 +51,12 @@ html body .fc.ah-r-noimg .fc-front::before{ content: attr(data-ah-n); display: b
 html body .fc .fc-fig img{ object-position: 50% 22% !important; }
 
 /* ---------- Atlas: trecere în degrade spre fundalul închis, aer sub titlu ---------- */
-html body #sec-atlas::before{
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 140px, #000 calc(100% - 140px), transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0, #000 140px, #000 calc(100% - 140px), transparent 100%); }
-html body #page-acasa section#sec-atlas#sec-atlas{ padding-top: 168px !important; padding-bottom: 150px !important; }
 html body #sec-atlas .chapter-mark.sec-head{ margin-bottom: 22px !important; }
 html body #sec-atlas .sec-sub{ margin-top: 0 !important; margin-bottom: 28px !important; }
 
 /* ---------- legende: minim 14 px, gri mai închis ---------- */
 html body #page-acasa figcaption, html body #page-acasa .gs-src, html body #page-acasa .img-credit, html body #page-acasa .fc-fig figcaption{
   font-size: 14px !important; color: var(--text-muted, #65564a) !important; }
-html body #sec-atlas figcaption{ color: var(--muted-on-dark, #b9ae98) !important; }
 
 /* ---------- notele de subsol: lipite de cuvânt, zona de atingere rămâne mare ---------- */
 html body sup.fn{ position: relative; display: inline !important; min-width: 0 !important; min-height: 0 !important; padding: 0 1px !important; margin: 0 0 0 1px !important; }
@@ -76,17 +71,11 @@ html body .ch-next a{ font: 500 21px/1.3 var(--font-display, 'EB Garamond', seri
 html body .ch-next a:hover{ text-decoration-thickness: 2px; }
 html body .ch-next .ch-up{ font: 600 16px/1 var(--font-body, 'Source Sans 3', sans-serif) !important; min-height: 44px; padding: 0 16px !important;
   border: 1px solid rgba(34,25,17,.22) !important; border-radius: 22px !important; background: transparent !important; color: var(--text-strong, #221911) !important; }
-html body #sec-atlas .ch-next{ border-top-color: rgba(236,228,210,.2); }
-html body #sec-atlas .ch-next a{ color: var(--accent-gold-bright, #d6b25e) !important; }
-html body #sec-atlas .ch-next .ch-up{ color: var(--text-on-dark, #ece4d2) !important; border-color: rgba(236,228,210,.3) !important; }
 
 /* ---------- „Ce trebuie să reții” ---------- */
 html body .ah-r-key{ margin: 0 0 36px; padding: 0 0 0 20px; max-width: 64ch; border-left: 1px solid var(--accent-gold, #85681f); }
 html body .ah-r-key p{ margin: 0; font-size: 18px; line-height: 1.55; color: var(--text-body, #34281d); }
 html body .ah-r-key b{ display: block; margin-bottom: 6px; font: 600 14px/1.2 var(--font-body, 'Source Sans 3', sans-serif); letter-spacing: .08em; text-transform: uppercase; color: var(--accent-gold, #85681f); }
-html body #sec-atlas .ah-r-key{ border-left-color: var(--accent-gold-bright, #d6b25e); }
-html body #sec-atlas .ah-r-key p{ color: var(--text-on-dark, #ece4d2); }
-html body #sec-atlas .ah-r-key b{ color: var(--accent-gold-bright, #d6b25e); }
 
 /* ---------- Jocul izvoarelor: grila mai mare, fără gol dedesubt ---------- */
 @media (min-width: 1024px){

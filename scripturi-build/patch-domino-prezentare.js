@@ -31,9 +31,7 @@ html = html.slice(0, at) + '      <!-- domino:start -->\n' + read('domino.html')
 strip('<!-- domino-prezentare:start -->\n', '<!-- domino-prezentare:end -->\n');
 const block = '<!-- domino-prezentare:start -->\n' +
   '<style id="domino-css">\n' + read('domino.css') + '\n</style>\n' +
-  '<style id="prezentare-css">\n' + read('prezentare.css') + '\n</style>\n' +
   '<script id="domino-js">\n' + read('domino.js') + '\n</script>\n' +
-  '<script id="prezentare-js">\n' + read('prezentare.js') + '\n</script>\n' +
   '<!-- domino-prezentare:end -->\n';
 const bodyEnd = html.lastIndexOf('</body>');
 if (bodyEnd === -1) throw new Error('Lipsește </body>.');

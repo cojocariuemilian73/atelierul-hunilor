@@ -113,24 +113,44 @@
   function duelChart() {
     var box = document.querySelector('.duel-lives');
     if (!box || box.classList.contains('dx')) return;
+    // linii subțiri pe o axă 390–455; numele și anii stau în stânga, nu în bare; 451 e o linie fină cu eticheta sus
     var Y0 = 388, Y1 = 456;
     function pct(y) { return ((y - Y0) / (Y1 - Y0) * 100).toFixed(2) + '%'; }
     function span(a, b) { return 'left:' + pct(a) + ';width:calc(' + pct(b) + ' - ' + pct(a) + ')'; }
-    var reignW = ((453 - 434) / (453 - 406) * 100).toFixed(2) + '%';
-    var grid = '', axis = '';
-    for (var y = 390; y <= 450; y += 10) {
-      grid += '<span class="dx-gridline" style="left:' + pct(y) + '"></span>';
-      axis += '<span style="left:' + pct(y) + '"></span><small class="' + ((y / 10) % 2 ? 'dx-odd' : '') + '" style="left:' + pct(y) + '">' + y + '</small>';
+    var axis = '';
+    for (var y = 390; y <= 450; y += 10) axis += '<span class="dx-t" style="left:' + pct(y) + '"><small' + ((y / 10) % 2 ? ' class="dx-odd"' : '') + '>' + y + '</small></span>';
+    function row(id, name, years, life, extra) {
+      return '<div class="dx-row" data-dx="' + id + '"><button type="button" class="dx-who" aria-pressed="false"><b>' + name + '</b><em>' + years + '</em></button>' +
+        '<div class="dx-track"><span class="dx-life dx-' + id + '" style="' + span(life[0], life[1]) + '"></span>' + (extra || '') + '</div></div>';
     }
-    box.classList.add('dx');
+    box.classList.add('dx', 'dx2');
     box.innerHTML =
-      '<div class="dx-plot">' + grid +
-        '<div class="dx-451" style="left:' + pct(451) + '"><span>451 · Câmpiile Catalaunice</span></div>' +
-        '<div class="dx-row"><span class="dx-bar dx-aetius" style="' + span(391, 454) + '"><b>Aetius</b><em>c. 391–454</em></span></div>' +
-        '<div class="dx-row"><span class="dx-bar dx-attila" style="' + span(406, 453) + '"><b>Attila</b><em>c. 406–453</em>' +
-          '<span class="dx-reign" style="width:' + reignW + '"><em><span class="dx-long">domnia </span>434–453</em></span></span></div>' +
-      '</div>' +
-      '<div class="dx-axis">' + axis + '<small class="dx-unit">d.Hr.</small></div>';
+      '<div class="dx-grid">' +
+        '<div class="dx-mark"><div class="dx-451" style="left:' + pct(451) + '"><span>451 · Câmpiile Catalaunice</span></div></div>' +
+        row('aetius', 'Aetius', 'c. 391–454', [391, 454]) +
+        row('attila', 'Attila', 'c. 406–453 · domnia 434–453', [406, 453], '<span class="dx-reign" style="' + span(434, 453) + '"></span>') +
+        '<div class="dx-axis"><div class="dx-axis-in">' + axis + '<small class="dx-unit">d.Hr.</small></div></div>' +
+      '</div>';
+    var rows = box.querySelectorAll('.dx-row');
+    function pick(r, on) { Array.prototype.forEach.call(rows, function (x) { x.classList.toggle('dx-on', on && x === r); }); box.classList.toggle('dx-focus', !!on); }
+    Array.prototype.forEach.call(rows, function (r) {
+      var b = r.querySelector('.dx-who');
+      r.addEventListener('pointerenter', function () { if (!box.dataset.pin) pick(r, true); });
+      r.addEventListener('pointerleave', function () { if (!box.dataset.pin) pick(r, false); });
+      b.addEventListener('focus', function () { if (!box.dataset.pin) pick(r, true); });
+      b.addEventListener('blur', function () { if (!box.dataset.pin) pick(r, false); });
+      b.addEventListener('click', function () {
+        var same = box.dataset.pin === r.dataset.dx;
+        if (same) delete box.dataset.pin; else box.dataset.pin = r.dataset.dx;
+        Array.prototype.forEach.call(box.querySelectorAll('.dx-who'), function (x) { x.setAttribute('aria-pressed', !same && x === b ? 'true' : 'false'); });
+        pick(r, !same);
+      });
+    });
+    if ('IntersectionObserver' in window) {
+      box.classList.add('dx-wait');
+      var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { box.classList.remove('dx-wait'); box.classList.add('dx-in'); io.disconnect(); } }, { threshold: 0.3 });
+      io.observe(box);
+    }
   }
 
   /* ---------- 9. Delacroix ---------- */

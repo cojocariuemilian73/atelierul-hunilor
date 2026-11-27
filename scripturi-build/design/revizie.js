@@ -235,10 +235,10 @@
   }
 
   function run() {
-    [progress, navTools, pages, heroPad, photoPoints, cardImages, keyPoints, scoreBump, mobileMap].forEach(safe);
+    [progress, navTools, pages, heroPad, photoPoints, keyPoints, scoreBump, mobileMap].forEach(safe);
   }
   function start() { run(); setTimeout(function () { safe(countUps); }, 120); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 30); });
   else setTimeout(start, 30);
-  addEventListener('load', function () { [cardImages, scoreBump, mobileMap].forEach(safe); });
+  addEventListener('load', function () { [scoreBump, mobileMap].forEach(safe); });
 })();
