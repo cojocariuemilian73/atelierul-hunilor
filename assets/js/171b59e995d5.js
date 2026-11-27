@@ -108,6 +108,8 @@
       node.appendChild(el('span', 'si-node-lab', nm.split(/[\s,]+/)[0]));
       track.appendChild(node);
       nodes.push(node); cards.push(card);
+      card.dataset.pos = modern ? 101 : pos;
+      card.dataset.st = status;
 
       function enter() { if (pinned === -1) select(k, true, false); }
       function leave() { if (pinned === -1) select(k, false, false); }
@@ -124,10 +126,37 @@
       });
       grid.appendChild(card);
     });
+    // fișele stau în ordinea distanței, ca fiecare să „atârne” sub nodul ei de pe axă
+    cards.slice().sort(function (a, b) { return a.dataset.pos - b.dataset.pos; }).forEach(function (c) { grid.appendChild(c); });
+    var hang = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    hang.setAttribute('class', 'si-hang'); hang.setAttribute('aria-hidden', 'true');
     box.appendChild(axisBox);
+    box.appendChild(hang);
     box.appendChild(grid);
     wrap.after(box);
     wrap.hidden = true;
+    // firele: din fiecare nod coboară o linie fină până la începutul fișei lui
+    function hangs() {
+      var br = box.getBoundingClientRect(), gr = grid.getBoundingClientRect();
+      var one = getComputedStyle(grid).gridTemplateColumns.split(' ').length < 2;
+      hang.style.display = one ? 'none' : '';
+      if (one) return;
+      hang.setAttribute('width', br.width); hang.setAttribute('height', br.height);
+      hang.innerHTML = '';
+      cards.forEach(function (c, i) {
+        var d = nodes[i].querySelector('.si-node-dot').getBoundingClientRect(), cr = c.getBoundingClientRect();
+        var x1 = d.left + d.width / 2 - br.left, y1 = d.bottom - br.top + 2;
+        var x2 = cr.left + 1 - br.left, y2 = gr.top - br.top - 2;
+        var mid = y2 - 18;
+        var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p.setAttribute('d', 'M' + x1 + ' ' + y1 + ' V' + mid + ' H' + x2 + ' V' + y2);
+        p.setAttribute('class', 'si-st-' + c.dataset.st + (c.classList.contains('si-on') ? ' si-on' : ''));
+        p.dataset.k = i;
+        hang.appendChild(p);
+      });
+    }
+    var _sel = select;
+    select = function (k, on, sticky) { _sel(k, on, sticky); Array.prototype.forEach.call(hang.childNodes, function (p) { p.classList.toggle('si-on', on && +p.dataset.k === k); }); box.classList.toggle('si-focus', !!on); };
     // rândurile nodurilor se aleg după lățimea reală a etichetelor: două noduri nu se suprapun niciodată
     function lanes() {
       nodes.forEach(function (n) { n.style.setProperty('--lane', 0); });
@@ -142,9 +171,12 @@
         });
       track.style.setProperty('--lanes', Math.max(1, ends.length));
     }
-    lanes();
-    addEventListener('resize', lanes);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(lanes);
+    function layout() { lanes(); hangs(); }
+    layout();
+    addEventListener('resize', layout);
+    addEventListener('load', layout);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+    if ('ResizeObserver' in window) new ResizeObserver(function () { hangs(); }).observe(grid);
     // apariția în cascadă când secțiunea intră în ecran
     if ('IntersectionObserver' in window) {
       box.classList.add('si-wait');

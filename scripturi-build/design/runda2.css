@@ -35,17 +35,39 @@ html body .hx-nav a, html body .hx-nav button{ min-height: 64px; padding: 8px 18
 html body .hx-nav :is(a, button) small{ font-weight: 500; letter-spacing: .04em; color: var(--text-muted, #65564a); }
 
 /* ---------- cărțile: poza se vede întreagă, iar toată cartea e clicabilă ---------- */
-html body .fc .fc-fig{ background: #2a241d; }
-html body .fc .fc-fig img{ object-fit: contain !important; object-position: 50% 50% !important; background: #2a241d; }
 html body .fc .fc-face{ cursor: pointer; }
 html body .fc .fc-face :is(a, sup.fn, .gl){ cursor: pointer; }
+
+/* cărți colorate, cu un desen din linii pe fundal (ca o carte poștală de muzeu); poza devine o miniatură în colț */
+html body #page-acasa .fc.r2-card{ border: 0 !important; box-shadow: none !important; background: none !important; }
+html body #page-acasa .fc.r2-card .fc-front{ position: relative; display: flex; flex-direction: column; overflow: hidden; border: 0 !important; border-radius: 6px !important; box-shadow: none !important;
+  background: var(--r2-art) right -24px bottom -18px / 62% auto no-repeat, var(--r2-c) !important; color: #221911 !important; padding: 28px 28px 24px !important; }
+html body #page-acasa .fc.r2-card .fc-front .fc-body{ position: relative; z-index: 1; padding: 0 !important; background: none !important; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+html body #page-acasa .fc.r2-card .fc-question{ font: 600 26px/1.15 var(--font-display, 'EB Garamond', serif) !important; color: #221911 !important; margin: 0 0 6px !important; max-width: 16ch; }
+html body #page-acasa .fc.r2-card .fc-k{ color: #5a1f10 !important; margin: 0 !important; }
+html body #page-acasa .fc.r2-card .fc-myth{ font-size: 21px !important; line-height: 1.4 !important; color: #2b1d12 !important; margin: 0 !important; max-width: 24ch; }
+html body #page-acasa .fc.r2-card .fc-front .fc-btn{ margin-top: auto !important; align-self: flex-start; background: #221911 !important; color: #f6ecd8 !important; border: 0 !important; box-shadow: none !important; }
+html body #page-acasa .fc.r2-card .fc-front .fc-btn:hover{ background: #3a2a1e !important; }
+/* poza: miniatură cu ramă albă în colțul din dreapta jos, întreagă; legenda dedesubt, mică */
+html body #page-acasa .fc.r2-card .fc-fig{ position: absolute !important; right: 24px; top: 24px; z-index: 2; width: 92px !important; margin: 0 !important; background: none !important; transform: rotate(3deg); }
+html body #page-acasa .fc.r2-card .fc-fig img{ display: block; width: 92px !important; height: 92px !important; object-fit: cover !important; border-radius: 2px; border: 3px solid #fbf6ec; background: #fbf6ec; box-shadow: 0 6px 14px -8px rgba(0,0,0,.45); }
+html body #page-acasa .fc.r2-card .fc-fig figcaption{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+html body #page-acasa .fc.r2-card .fc-question{ padding-right: 104px; max-width: none; }
+html body #page-acasa .fc.r2-card .fc-front .fc-btn{ margin-top: 18px !important; }
+html body #page-acasa .fc.r2-card .fc-back{ border: 0 !important; border-radius: 6px !important; box-shadow: inset 0 6px 0 var(--r2-c) !important; }
+@media (hover: hover){ html body #page-acasa .fc.r2-card:hover .fc-front{ filter: saturate(1.08) brightness(1.02); } }
+html body #page-acasa .fc.r2-card .fc-front{ transition: filter .2s ease-out; }
 
 /* ---------- punctele de pe fotografii: descrierea lângă punct ---------- */
 html body .r2-tip{ position: fixed; z-index: 400; max-width: min(320px, calc(100vw - 24px)); padding: 14px 16px; border-radius: 6px;
   background: rgba(30, 26, 21, .94); color: #f1e7d2; box-shadow: 0 14px 34px -12px rgba(0, 0, 0, .55); pointer-events: auto; }
 html body .r2-tip b{ display: block; margin: 0 0 4px; font: 600 16px/1.3 var(--font-display, 'EB Garamond', serif); color: #e7c879; }
 html body .r2-tip p{ margin: 0; font: 400 15px/1.5 var(--font-body, 'Source Sans 3', sans-serif); color: #efe5d0; }
-html body .photo-point.r2-on{ transform: scale(1.18); box-shadow: 0 0 0 4px rgba(231, 200, 121, .55) !important; }
+html body .photo-point.r2-on{ transform: scale(1.15); }
+/* inelul auriu, rotund, în jurul punctului activ */
+html body .photo-point::before{ content: ""; position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+  box-shadow: 0 0 0 2px #e7c879, 0 0 14px 2px rgba(231, 200, 121, .55); opacity: 0; transform: scale(.6); transition: opacity .2s ease-out, transform .25s cubic-bezier(.22,1,.36,1); pointer-events: none; }
+html body .photo-point.r2-on::before, html body .photo-point:focus-visible::before{ opacity: 1; transform: none; }
 html body .photo-point{ transition: transform .18s cubic-bezier(.22,1,.36,1), box-shadow .18s ease-out; }
 @media (prefers-reduced-motion: no-preference){
   html body .r2-tip.r2-in{ animation: r2-tip .2s cubic-bezier(.22,1,.36,1) both; }
@@ -57,18 +79,19 @@ html body #page-acasa img.r2-blend{ mix-blend-mode: multiply; background: transp
 html body #page-acasa .photo-evidence:has(img.r2-blend), html body #page-acasa .photo-evidence:has(img.r2-blend) .photo-points{ background: transparent !important; box-shadow: none !important; }
 
 /* ---------- blocurile cu date stau pe pergament curat: liniile de hartă și traseul nu le mai traversează ---------- */
-html body #page-acasa :is(.gs, .duel, .duel-context, .r10-band, .si-wrap, .hx, .dmn, .gold-context, .ptol-map, .margus-context){
+html body #page-acasa :is(.gs, .duel, .duel-context, .r10-band, .si-wrap, .hx, .dmn, .gold-context, .ptol-map, .margus-context, #biblio, #sec-glosar, .site-final-footer .journey-caption){
   position: relative; z-index: 2; background: var(--bg-page, #f3eee3); box-shadow: 0 0 0 28px var(--bg-page, #f3eee3); }
 
 /* ---------- Ptolemeu: textul are înălțimea hărții ---------- */
 @media (min-width: 900px){
-  html body #page-acasa .ptol-map{ display: grid !important; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; column-gap: 40px; align-items: start; }
-  html body #page-acasa .ptol-map > svg{ grid-row: 1 / 4; width: 100% !important; height: auto !important; }
-  html body #page-acasa .ptol-map > :not(svg){ grid-column: 2; }
-  html body #page-acasa .ptol-map .ptol-legend{ align-self: start; margin-top: 8px !important; }
+  html body #page-acasa .ptol-map{ display: grid !important; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); column-gap: 44px; align-items: center !important; }
+  html body #page-acasa .ptol-map > svg{ width: 100% !important; height: auto !important; }
+  html body #page-acasa .ptol-map .r2-ptol-side{ display: flex; flex-direction: column; gap: 14px; }
+  html body #page-acasa .ptol-map .r2-ptol-side > *{ margin: 0 !important; }
+  html body #page-acasa .ptol-map .ptol-legend{ padding-top: 14px !important; border-top: 1px solid rgba(34,25,17,.14); }
 }
 html body #page-acasa .ptol-map .ptol-kicker{ font-size: 16px !important; }
-html body #page-acasa .ptol-map > figcaption{ font-size: 18px !important; line-height: 1.6 !important; }
+html body #page-acasa .ptol-map figcaption{ font-size: 18px !important; line-height: 1.6 !important; }
 html body #page-acasa .ptol-map .ptol-legend li{ font-size: 18px !important; line-height: 1.5 !important; padding: 4px 0 !important; }
 
 /* ---------- cronologia: harta umple înălțimea fișei ---------- */
@@ -209,3 +232,40 @@ html body #page-acasa .r2-band{ display: grid; grid-template-columns: minmax(0, 
 html body #page-acasa .r2-band > figure{ margin: 0 !important; }
 html body #page-acasa .r2-band > p{ margin: 0 !important; }
 @media (max-width: 767px){ html body #page-acasa .r2-band{ grid-template-columns: 1fr; gap: 20px; } }
+
+/* ---------- antetul capitolelor: titlul în stânga, „Ce trebuie să reții” în dreapta ---------- */
+@media (min-width: 900px){
+  html body #page-acasa .r2-head{ display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px; align-items: end; margin: 0 0 48px; }
+  html body #page-acasa .r2-head .ah-r-key{ margin: 0 !important; max-width: none !important; }
+  html body #page-acasa .r2-head-l > :last-child{ margin-bottom: 0 !important; }
+}
+html body #page-acasa .r2-head-l .sec-sub{ max-width: none !important; }
+
+/* ---------- Izvoarele, față în față: toate cele cinci pe același rând ---------- */
+@media (min-width: 1100px){
+  html body #page-acasa .si-grid{ grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 32px 24px !important; }
+  html body #page-acasa .si-name{ font-size: 21px !important; }
+  html body #page-acasa .si-type-t, html body #page-acasa .si-text{ font-size: 16px !important; line-height: 1.5 !important; }
+}
+
+/* ---------- Atlasul: centrat în coloană ---------- */
+html body #page-acasa #sec-atlas .wrap{ display: flex; flex-direction: column; align-items: center; }
+html body #page-acasa #sec-atlas .stage{ margin-inline: auto !important; width: 100%; }
+
+/* ---------- invitația la joc: card plin, lizibil ---------- */
+html body #page-acasa .cta-card{ display: grid !important; grid-template-columns: minmax(0, 1.5fr) auto !important; gap: 24px 56px !important; align-items: center !important;
+  padding: 56px 64px !important; margin: 96px 0 0 !important; border: 0 !important; border-radius: 6px !important;
+  background: radial-gradient(120% 140% at 85% 0%, rgba(214,178,94,.16), transparent 55%), #1f1b16 !important; color: #efe6d3 !important; opacity: 1 !important; }
+html body #page-acasa .cta-card *{ opacity: 1 !important; filter: none !important; }
+html body #page-acasa .cta-card .kicker{ font: 600 14px/1.2 var(--font-body, 'Source Sans 3', sans-serif) !important; letter-spacing: .14em !important; color: #e0bd6a !important; margin: 0 0 12px !important; }
+html body #page-acasa .cta-card h3{ font: 600 44px/1.1 var(--font-display, 'EB Garamond', serif) !important; color: #f6eedd !important; margin: 0 0 16px !important; }
+html body #page-acasa .cta-card h3 *{ color: inherit !important; }
+html body #page-acasa .cta-card p{ font: 400 18px/1.6 var(--font-body, 'Source Sans 3', sans-serif) !important; color: #d9cdb4 !important; max-width: 60ch; }
+html body #page-acasa .cta-card .cta-btn{ justify-self: end; width: auto !important; min-height: 48px; height: auto !important; padding: 0 26px !important; border-radius: 4px !important; display: inline-flex !important; align-items: center;
+  font: 700 16px/1 var(--font-body, "Source Sans 3", sans-serif) !important; letter-spacing: .02em; white-space: nowrap; box-shadow: none !important; transition: background-color .18s ease-out, transform .18s ease-out; }
+html body #page-acasa .cta-card .cta-btn:active{ transform: scale(.97); }
+@media (max-width: 767px){
+  html body #page-acasa .cta-card{ grid-template-columns: 1fr !important; padding: 36px 24px !important; }
+  html body #page-acasa .cta-card h3{ font-size: 34px !important; }
+  html body #page-acasa .cta-card .cta-btn{ justify-self: start; }
+}

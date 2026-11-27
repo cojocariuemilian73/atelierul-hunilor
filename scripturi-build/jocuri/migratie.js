@@ -1379,7 +1379,7 @@
       attPicks.push({ d: d, o: o });
       if (o.sim && o.sim.stab) setStab(stab + o.sim.stab);
       buildPlans();
-      log.push({ y: d.yl, title: d.title, t: o.t, real: !!o.real, att: true });
+      log.push({ y: d.yl, title: d.title, t: o.t, real: !!o.real, att: true, id: d.id, ix: d.opts.indexOf(o) });
       renderLog(); markTimeline(d, o.real); updateAtt(delta);
       if (revolted) toast('Neamurile supuse se răscoală: domnia lui Attila se încheie mai devreme (scenariu ipotetic)');
       return { delta: delta, poor: poor };
@@ -1387,7 +1387,7 @@
     Object.keys(o.set).forEach(function(k){ choice[k] = o.set[k]; });
     if (o.fx && o.fx.stab) setStab(stab + o.fx.stab);
     buildPlans();
-    log.push({ y: Math.floor(d.year), title: d.title, t: o.t, real: !!o.real, note: o.note });
+    log.push({ y: Math.floor(d.year), title: d.title, t: o.t, real: !!o.real, note: o.note, id: d.id, ix: d.opts.indexOf(o) });
     renderLog(); markTimeline(d, o.real);
   }
   function renderLog(){
@@ -1571,6 +1571,8 @@
       if (hid) { replayShow(true); replayGo(T0); replayPlay(true); } else { replayShow(false); replayGo(T1); }
     });
     document.getElementById('mig-card').addEventListener('click', function(){ showCard(ttl, v); });
+    // cronica deciziilor (design/joc-cronica.js) se așază în fereastra de final
+    try { document.dispatchEvent(new CustomEvent('ah-mig-end', { detail: { box: over.querySelector('.mig-end'), log: log.slice(), att: Object.assign({}, att), revolted: revolted, verdict: v, title: ttl[0], decisions: DECISIONS } })); } catch (e) {}
   }
   // două imagini ale hărții din 476: popoarele unde au ajuns în joc și aceleași popoare strânse în locurile reale
   function worldShots(){

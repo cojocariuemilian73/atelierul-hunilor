@@ -2,7 +2,6 @@
 
 /* ---------- o singură bară fixă: meniul, opac, cu firul de progres pe marginea lui de jos ---------- */
 html body .site-nav{ background: var(--bg-page, #f3eee3) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-html body .ef-ride{ display: none !important; }
 html body .ah-r-progress{ position: fixed; left: 0; top: 54px; height: 2px; width: 100%; z-index: 261; pointer-events: none;
   background: var(--accent-gold, #85681f); transform-origin: 0 50%; transform: scaleX(var(--ah-p, 0)); }
 body:has(#page-acasa:not(.active)) .ah-r-progress{ display: none; }

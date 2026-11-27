@@ -1,0 +1,12 @@
+/* „Praf de stepă”: ceață caldă sub conținut, pe antracit. Prefix: pr-. */
+.pr-host { isolation: isolate; }
+.pr-dust { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+#page-acasa .r2-head > .pr-dust { left: -100vmax; right: -100vmax; } /* banda capitolului se întinde pe toată lățimea */
+.pr-blob {
+  position: absolute; left: -260px; top: -260px; width: 520px; height: 520px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(214, 178, 94, .30) 0%, rgba(176, 108, 64, .15) 40%, rgba(154, 63, 36, 0) 70%);
+  filter: blur(40px); opacity: 0; will-change: transform, opacity;
+  transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pr-dust.pr-on .pr-blob { opacity: 1; }
+@media (prefers-reduced-motion: reduce), (pointer: coarse) { .pr-dust { display: none; } }

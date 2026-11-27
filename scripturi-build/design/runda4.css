@@ -1,0 +1,116 @@
+/* Runda 4 (27.11): tranziții de stare, trasare progresivă, accente la hover/focus, numere stabile.
+   Limbajul e al epocii: antracit, aur stins, teracotă. Prefixul r4- pentru tot ce e nou. */
+:root {
+  --r4-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --r4-dur: 220ms;
+  --r4-dur-fast: 180ms;
+  --r4-dur-trace: 420ms;            /* trasarea unei linii cere puțin mai mult ca să fie citită */
+  --r4-shift: 8px;
+  --r4-gold: #a88a3c;               /* aur stins, pe piatră */
+  --r4-gold-dark: #d6b25e;          /* aur pe antracit */
+  --r4-rust: #9a3f24;               /* teracotă */
+}
+
+/* ---------- 1. intrarea conținutului nou: crossfade + micro-deplasare ---------- */
+@keyframes r4-in { from { opacity: 0; transform: translate3d(var(--r4-dx, 0px), var(--r4-dy, var(--r4-shift)), 0); } }
+html body .r4-swap { animation: r4-in var(--r4-dur) var(--r4-ease) both; }
+
+/* fișa cronologiei: înainte intră din dreapta, înapoi din stânga; înălțimea zonei rămâne fixă */
+html body #page-acasa .hx-folio.in > * { animation: r4-in var(--r4-dur) var(--r4-ease) both !important; --r4-dx: var(--r4-shift); --r4-dy: 0px; }
+html body #page-acasa .hx-folio.in.back > * { --r4-dx: calc(var(--r4-shift) * -1); }
+html body #page-acasa .hx-folio.in > .hx-body { animation-delay: 30ms !important; }
+html body #page-acasa .hx-folio.in > :is(.hx-img, .hx-nav) { animation-delay: 60ms !important; }
+
+/* pașii graficului de aur */
+html body #page-acasa .gs-step.on { animation: r4-in var(--r4-dur) var(--r4-ease) both !important; }
+
+/* Atlas: textul epocii și traseele urmează glisorul fără întârziere vizibilă */
+html body .m-atlas .era-label.r4-swap { --r4-dy: 6px; }
+html body .m-atlas .route { transition: stroke-dashoffset var(--r4-dur-trace) var(--r4-ease), opacity var(--r4-dur) var(--r4-ease) !important; }
+
+/* jocul Attila: straturile se schimbă la fel de repede ca restul site-ului */
+.mv-layer-ghost { transition-duration: var(--r4-dur) !important; transition-timing-function: var(--r4-ease) !important; }
+
+/* ---------- numere stabile în timpul tranzițiilor ---------- */
+html body :is(.hx-big, .hx-date, .hx-count, .hx-era small, .year-badge, .ux-yr, .time-tick, .time-ticks,
+  .dx-who em, .dx-451, .dx-axis, .si-ax-tick, .si-node-lab, .gs-nav button, .gs-chart, .gs-step,
+  .mv-count, .jg-meter, .jg-delta, .r2-num, .r2-head-n) { font-variant-numeric: lining-nums tabular-nums; }
+html body #mig-root, html body #mod-atelier :is([class*="score"], [class*="pts"], [class*="points"]) { font-variant-numeric: lining-nums tabular-nums; }
+
+/* ---------- 2. trasee și axe: evidențiere progresivă ---------- */
+/* cronologia: firul de aur care a fost deja parcurs, peste traseul punctat */
+html body #page-acasa .hx-line { position: relative; }
+html body #page-acasa .r4-hx-prog {
+  position: absolute; left: 0; top: -1px; height: 2px; width: 100%; pointer-events: none;
+  background: linear-gradient(90deg, rgba(168, 138, 60, .25), var(--r4-gold));
+  transform-origin: 0 50%; transform: scaleX(var(--r4-p, 0));
+  transition: transform var(--r4-dur-trace) var(--r4-ease);
+}
+html body #page-acasa .r4-trace { fill: none; stroke: var(--r4-gold-dark); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .9; pointer-events: none; }
+html body #page-acasa .r4-trace.r4-go { transition: stroke-dashoffset var(--r4-dur-trace) var(--r4-ease); }
+
+/* izvoarele: firul fișei alese se trasează de la axă în jos */
+html body #page-acasa .si-hang path.r4-draw { animation: r4-draw var(--r4-dur-trace) var(--r4-ease) both; }
+@keyframes r4-draw { from { stroke-dashoffset: var(--r4-len, 0); } to { stroke-dashoffset: 0; } }
+
+/* Aetius–Attila: viața aleasă se retrasează de la naștere spre moarte */
+html body #page-acasa .dx2 .dx-row.dx-on .dx-life { animation: r4-x var(--r4-dur-trace) var(--r4-ease) both; }
+@keyframes r4-x { from { transform: scaleX(0); } }
+
+/* cronologia: epocile au o linie fină, nu o bară groasă */
+html body #page-acasa .hx .hx-eras button.hx-era {
+  background: transparent !important; border-radius: 0 !important; border: 0 !important;
+  box-shadow: inset 0 1px 0 rgba(52, 40, 29, .22) !important; padding: 10px 12px !important;
+  color: var(--text-muted, #65564a) !important;
+  transition: color var(--r4-dur-fast) var(--r4-ease), box-shadow var(--r4-dur-fast) var(--r4-ease) !important;
+}
+html body #page-acasa .hx .hx-eras button.hx-era:hover { color: var(--text-strong, #221911) !important; box-shadow: inset 0 2px 0 rgba(168, 138, 60, .7) !important; }
+html body #page-acasa .hx .hx-eras button.hx-era.on { color: var(--r4-rust) !important; box-shadow: inset 0 2px 0 var(--r4-rust) !important; }
+html body #page-acasa .hx-mk { transition-duration: var(--r4-dur) !important; transition-timing-function: var(--r4-ease) !important; }
+
+/* ---------- 3. pașii aurului: șină cu indicator, nu pilule ---------- */
+html body #page-acasa .gs-nav { position: relative; display: flex; flex-wrap: wrap; gap: 0 4px; border-bottom: 1px solid rgba(52, 40, 29, .2); }
+html body #page-acasa .gs-nav button {
+  border-radius: 0 !important; box-shadow: none !important; background: transparent !important;
+  color: var(--text-muted, #65564a) !important; padding: 10px 12px !important; min-height: 44px;
+  transition: color var(--r4-dur-fast) var(--r4-ease), opacity var(--r4-dur-fast) var(--r4-ease);
+}
+html body #page-acasa .gs-nav button:hover { color: var(--text-strong, #221911) !important; }
+html body #page-acasa .gs-nav button.on { color: var(--r4-rust) !important; font-weight: 600; }
+html body #page-acasa .r4-gs-bar {
+  position: absolute; left: 0; bottom: -1px; height: 2px; width: 1px; background: var(--r4-rust); pointer-events: none;
+  transform-origin: 0 50%; transform: translateX(var(--r4-x, 0px)) scaleX(var(--r4-w, 0));
+  transition: transform var(--r4-dur) var(--r4-ease);
+}
+
+/* ---------- hover / focus: accent lateral, opacitate ---------- */
+html body #page-acasa .dx2 .dx-row { transition: box-shadow var(--r4-dur-fast) var(--r4-ease); }
+html body #page-acasa .dx2 .dx-row:is(:hover, :focus-within, .dx-on) { box-shadow: inset 2px 0 0 var(--r4-gold); }
+html body #page-acasa .dx2 .dx-row :is(.dx-who, .dx-track) { transition: opacity var(--r4-dur) var(--r4-ease); }
+html body #page-acasa .si-wrap :is(.si, .si-hang path) { transition: opacity var(--r4-dur) var(--r4-ease), stroke-width var(--r4-dur) var(--r4-ease) !important; }
+html body #page-acasa .si-node .si-node-dot { transition: transform var(--r4-dur-fast) var(--r4-ease), background-color var(--r4-dur-fast) var(--r4-ease); }
+html body #page-acasa .si-node:is(:hover, :focus-visible) .si-node-dot { transform: scale(1.2); }
+html body #page-acasa .m-atlas .time-tick { transition: color var(--r4-dur-fast) var(--r4-ease), opacity var(--r4-dur-fast) var(--r4-ease); }
+
+/* focus vizibil, același peste tot în modulele atinse */
+html body #page-acasa :is(.gs-nav button, .dx-who, .si-node, .hx-era, .hx-step, .hx-rib, .time-tick):focus-visible {
+  outline: 2px solid var(--r4-rust) !important; outline-offset: 3px !important;
+}
+
+/* ---------- 4. șablon editorial: hartă principală + fișă decalată ---------- */
+@media (min-width: 900px) {
+  html body #page-acasa .hx-main { column-gap: clamp(24px, 3vw, 48px); }
+  html body #page-acasa .hx-folio { padding-top: 28px; border-left: 1px solid rgba(52, 40, 29, .16); padding-left: clamp(18px, 2vw, 28px); }
+}
+html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
+
+/* ---------- mișcare redusă: fără deplasări și fără trasare ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html body .r4-swap,
+  html body #page-acasa .hx-folio.in > *,
+  html body #page-acasa .gs-step.on,
+  html body #page-acasa .si-hang path.r4-draw,
+  html body #page-acasa .dx2 .dx-row.dx-on .dx-life { animation: none !important; }
+  html body #page-acasa :is(.r4-hx-prog, .r4-gs-bar, .r4-trace.r4-go, .hx-era, .dx-row, .si-node-dot),
+  html body .m-atlas .route, .mv-layer-ghost { transition: none !important; }
+}
