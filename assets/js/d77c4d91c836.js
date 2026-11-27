@@ -2,7 +2,7 @@
 /* „Praf de stepă”: pe suprafețele de antracit, o ceață caldă (aur stins + teracotă) urmărește cursorul cu întârziere.
    Doar cu mouse (pointer: fine) și fără „mișcare redusă”. Stratul e sub conținut și nu primește clicuri. Prefix: pr-. */
 (function () {
-  var HOSTS = '#page-acasa .r2-head, .cta-card, #mod-migratie.site-page, [data-praf]';
+  var HOSTS = '#mod-migratie.site-page, [data-praf]';   // doar pe antracit real: pagina jocului și scena hărții
   var LERP = 0.12;
   var mqFine = window.matchMedia ? matchMedia('(pointer: fine)') : null;
   var mqReduce = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;

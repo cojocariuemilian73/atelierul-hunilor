@@ -6678,26 +6678,30 @@ html body #page-acasa .hx-folio { min-height: var(--r4-folio-h, auto); }
 }
 
 /* ---------- 1. flux continuu: banda capitolului intră și iese prin estompare ---------- */
-/* fundalul benzii e un gradient întins doar pe orizontală (border-image), cu estomparea în propriul padding:
-   nu acoperă nimic din jur, iar textul stă mereu pe antracit plin */
+/* deschiderea capitolului stă pe pergament, ca restul paginii: fără bandă neagră-maro și fără estompări;
+   o linie fină de bronz deasupra și cifra mare de bronz păstrează ritmul */
 html body #page-acasa .r2-head {
-  --r6-fade-t: 104px; --r6-fade-b: 88px;
-  box-shadow: none !important; clip-path: none !important; background: none !important;
-  border-image: linear-gradient(180deg, rgba(27, 23, 18, 0) 0, var(--r6-band) var(--r6-fade-t), var(--r6-band) calc(100% - var(--r6-fade-b)), rgba(27, 23, 18, 0) 100%) fill 0 / / 0 100vmax !important;
-  padding-top: calc(var(--r6-fade-t) + 40px) !important; padding-bottom: calc(var(--r6-fade-b) + 32px) !important;
-  margin-bottom: 24px !important;
+  box-shadow: none !important; clip-path: none !important; background: none !important; border-image: none !important;
+  color: #221911 !important; padding: 56px 0 8px !important; margin: 24px 0 40px !important;
+  border-top: 1px solid rgba(133, 104, 31, .35) !important;
 }
-@media (max-width: 860px) {
-  html body #page-acasa .r2-head { --r6-fade-t: 72px; --r6-fade-b: 56px; padding-top: calc(var(--r6-fade-t) + 28px) !important; padding-bottom: calc(var(--r6-fade-b) + 24px) !important; }
-}
+html body #page-acasa .r2-head .chapter-num { color: #a07c22 !important; opacity: 1 !important; }
+html body #page-acasa .r2-head :is(.sec-title, .sec-title .fw) { color: #221911 !important; }
+html body #page-acasa .r2-head .sec-sub { color: #65564a !important; }
+html body #page-acasa .r2-head .ah-r-key { border-left-color: rgba(133, 104, 31, .45) !important; }
+html body #page-acasa .r2-head .ah-r-key p { color: #34281d !important; }
+html body #page-acasa .r2-head .ah-r-key b { color: #9a3f24 !important; }
+html body #page-acasa .r2-head a { color: #9a3f24 !important; }
+html body #page-acasa .r2-head > .pr-dust { display: none !important; }
+@media (max-width: 860px) { html body #page-acasa .r2-head { padding: 36px 0 4px !important; margin: 16px 0 28px !important; } }
 
 /* anii fiecărui capitol, sub titlu */
 html body #page-acasa .r6-span {
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 14px 0 0 !important;
-  font: 500 1rem/1.4 'Source Sans 3', system-ui, sans-serif; color: #b9ae98; font-variant-numeric: lining-nums tabular-nums;
+  font: 500 1rem/1.4 'Source Sans 3', system-ui, sans-serif; color: #65564a; font-variant-numeric: lining-nums tabular-nums;
 }
-html body #page-acasa .r6-span b { font: 500 1.35rem/1.2 'EB Garamond', Georgia, serif; color: #d6b25e; letter-spacing: .01em; }
-html body #page-acasa .r6-span i { font-style: normal; padding-left: 14px; box-shadow: inset 1px 0 0 rgba(236, 228, 210, .25); }
+html body #page-acasa .r6-span b { font: 500 1.35rem/1.2 'EB Garamond', Georgia, serif; color: #85681f; letter-spacing: .01em; }
+html body #page-acasa .r6-span i { font-style: normal; padding-left: 14px; box-shadow: inset 1px 0 0 rgba(52, 40, 29, .22); }
 
 /* ---------- 2. cărțile cu mituri: pergament, fotografie reală, fără desene ---------- */
 html body #page-acasa .fc.r2-card .fc-front {
@@ -6706,16 +6710,18 @@ html body #page-acasa .fc.r2-card .fc-front {
 }
 html body #page-acasa .fc.r2-card .fc-fig {
   position: relative !important; order: -1; right: auto; top: auto; width: auto !important; margin: 0 !important; transform: none !important;
-  background: var(--r6-band) !important;
+  background: #e6dcc6 !important;
 }
 html body #page-acasa .fc.r2-card .fc-fig img {
-  width: 100% !important; height: 190px !important; object-fit: cover !important; border: 0 !important; border-radius: 0 !important;
-  box-shadow: none !important; background: var(--r6-band) !important;
+  /* imaginea se vede întreagă și centrată (nu decupată), pe un pergament mai închis */
+  width: 100% !important; height: 220px !important; object-fit: contain !important; object-position: 50% 50% !important;
+  border: 0 !important; border-radius: 0 !important; box-shadow: none !important; background: #e6dcc6 !important; padding: 10px !important; box-sizing: border-box;
 }
 html body #page-acasa .fc.r2-card .fc-fig figcaption {
   position: static !important; width: auto !important; height: auto !important; overflow: visible !important; clip: auto !important; white-space: normal !important;
-  margin: 0 !important; padding: 8px 24px 0 !important; background: var(--r6-paper);
-  font: italic .8rem/1.4 'Source Sans 3', system-ui, sans-serif !important; color: #65564a !important;
+  inset: auto !important; transform: none !important; opacity: 1 !important;
+  margin: 0 !important; padding: 10px 24px 0 !important; background: var(--r6-paper) !important; text-shadow: none !important;
+  font: italic .85rem/1.45 'Source Sans 3', system-ui, sans-serif !important; color: #5a4b3e !important;
 }
 html body #page-acasa .fc.r2-card .fc-front .fc-body { padding: 16px 24px 22px !important; gap: 8px; }
 html body #page-acasa .fc.r2-card .fc-question { padding-right: 0 !important; max-width: 22ch !important; font-size: 24px !important; }
@@ -6723,6 +6729,13 @@ html body #page-acasa .fc.r2-card .fc-k { color: var(--r6-rust) !important; }
 html body #page-acasa .fc.r2-card .fc-myth { font-size: 19px !important; }
 html body #page-acasa .fc.r2-card .fc-back { box-shadow: inset 0 3px 0 var(--r6-rust), inset 0 0 0 1px rgba(52, 40, 29, .14) !important; border-radius: 4px !important; }
 html body #page-acasa .fc.r2-card:hover .fc-front { filter: none !important; }
+/* întoarcerea: fața nevăzută dispare complet la jumătatea rotirii, ca textul ei să nu se vadă în oglindă prin cealaltă */
+html body #page-acasa .fc .fc-face, html body #page-acasa .fc .fc-face * { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+html body #page-acasa .fc .fc-front { visibility: visible; transition: visibility 0s linear 400ms !important; }
+html body #page-acasa .fc.is-flipped .fc-front { visibility: hidden; }
+html body #page-acasa .fc .fc-back { visibility: hidden; transition: visibility 0s linear 400ms !important; }
+html body #page-acasa .fc.is-flipped .fc-back { visibility: visible; }
+@media (prefers-reduced-motion: reduce) { html body #page-acasa .fc :is(.fc-front, .fc-back) { transition: none !important; } }
 /* rândurile aliniate: fără zigzag și fără goluri sub grilă */
 html body #page-acasa .fc-grid { align-items: stretch !important; row-gap: 24px !important; padding-bottom: 0 !important; }
 html body #page-acasa .fc-grid > .fc:nth-child(n) { margin-top: 0 !important; }
@@ -6747,7 +6760,10 @@ html body #page-acasa :is(.fc, .si, .duel-card):hover { z-index: 2; }
 /* spațiile goale: rândurile imagine + text nu mai coboară imaginea, citatele nu mai au margini duble */
 @media (min-width: 861px) {
   html body #page-acasa .sr-row.r3-flip > .sr-media { margin-top: 24px !important; }
-  html body #page-acasa .page-shell .pq:is(.r3-left, .r3-right) { margin-top: 48px !important; margin-bottom: 48px !important; }
+  /* citatele: centrate și late, nu decalate pe o parte (golul de lângă ele dispare) */
+  html body #page-acasa .page-shell .pq:is(.r3-left, .r3-right) { max-width: 980px !important; margin: 48px auto !important; }
+  /* imaginea însoțește textul lung la derulare, în loc să lase coloana goală sub ea */
+  html body #page-acasa .sr-row > .sr-media { position: sticky !important; top: 120px; align-self: start !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -6814,3 +6830,13 @@ html body #site-nav :is(.st-brand, .toc-link, .st-pages a, .about-trigger, .st-m
 @media (max-width: 767px) {
   html body #site-nav .about-trigger { width: 100% !important; justify-content: flex-start !important; text-align: left !important; padding: 12px !important; min-height: 44px; }
 }
+
+/* chemarea spre joc: pe pergament, ca restul paginii (fără bandă neagră) */
+html body .cta-card { background: #ece4d3 !important; color: #221911 !important; box-shadow: inset 0 0 0 1px rgba(52, 40, 29, .14) !important; }
+html body .cta-card h3 { color: #221911 !important; }
+html body .cta-card p { color: #4a3c30 !important; }
+html body .cta-card .kicker { color: #9a3f24 !important; }
+html body .cta-card .cta-btn { background: #221911 !important; color: #f6ecd8 !important; }
+html body .cta-card .cta-btn:hover { background: #3a2a1e !important; }
+html body .cta-card > .pr-dust { display: none !important; }
+@media (max-width: 860px) { html body #page-acasa .r6-span { flex-direction: column; gap: 2px; } html body #page-acasa .r6-span i { padding-left: 0; box-shadow: none; } }
