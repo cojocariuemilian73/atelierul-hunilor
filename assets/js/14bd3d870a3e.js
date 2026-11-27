@@ -77,7 +77,7 @@
 
   /* ---------- 2. apariții la scroll ---------- */
   var REVEAL = [
-    '.sec-title', '.sec-sub', '.fc-head', '.fc-hint', '.fc', '.si', '.r9-note', '.pq', '.src-compare > h3',
+    '.sec-title', '.sec-sub', '.fc-head', '.fc', '.r9-note', '.pq', '.src-compare > h3',
     '.duel-lives', '.cta-card', '.dmn-head', '.hx', '.biblio'
   ].join(',');
   function reveals() {
@@ -199,7 +199,7 @@
   }
 
   function run() {
-    [marginNotes, relief, highlights, meters, layers].forEach(function (f) { try { f(); } catch (e) { if (window.console) console.warn('miscare', e); } });
+    [relief, highlights, meters, layers].forEach(function (f) { try { f(); } catch (e) { if (window.console) console.warn('miscare', e); } });
   }
   function start() {
     run();
