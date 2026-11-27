@@ -6755,7 +6755,12 @@ html body #page-acasa :is(.fc, .si, .duel-card):hover { z-index: 2; }
 }
 
 /* Ptolemeu: harta urcă lângă titlul ei, fără gol deasupra */
-@media (min-width: 861px) { html body #page-acasa .ptol-map { align-items: start !important; } }
+@media (min-width: 861px) {
+  /* un strat vechi întindea harta pe 5 rânduri de grilă și o centra: grila ajungea dublă, cu un gol mare deasupra hărții */
+  html body #page-acasa .ptol-map { align-items: start !important; grid-template-rows: auto !important; }
+  html body #page-acasa .ptol-map > svg { grid-row: 1 !important; grid-column: 1 !important; align-self: start !important; margin-top: 8px !important; }
+  html body #page-acasa .ptol-map > .r2-ptol-side { grid-row: 1 !important; grid-column: 2 !important; }
+}
 /* fișele de izvor: aceeași tranziție ca toate cardurile (regula din runda4 avea prioritate) */
 html body #page-acasa .si-wrap .si.si { transition: scale var(--r6-dur) var(--r6-ease), opacity var(--r6-dur) var(--r6-ease) !important; }
 @media (prefers-reduced-motion: reduce) { html body #page-acasa .si-wrap .si.si { transition: none !important; } }
