@@ -15950,7 +15950,8 @@ html body #page-acasa figcaption:not(.r2-ptol-side figcaption) { font-family: 'S
    Paginile doar grupează copiii direcți ai capitolului; textul și ordinea rămân aceleași. */
 (function () {
   var reduce = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
-  var SECS = '#sec-drum, #sec-origini, #sec-cronologie, #sec-curiozitati, #sec-migratie, #sec-atlas, #sec-personalitati, #sec-glosar, #biblio';
+  // #sec-drum rămâne întreg: harta e lipită (sticky) pe toată înălțimea capitolului
+  var SECS = '#sec-origini, #sec-cronologie, #sec-curiozitati, #sec-migratie, #sec-atlas, #sec-personalitati, #sec-glosar, #biblio';
   // blocurile care merită o pagină a lor (dacă pagina curentă e deja destul de plină)
   var MAJOR = '.r2-head, .sr-row, .duel, .duel-context, .dmn, .gs, .hx, .si-wrap, .ptol-map, .r10-band, .gold-context, .r10-stage, .wrap, figure.pq, .r2-band';
   // aici textul are deja mișcarea lui (hărți, jocuri, carusele): nu se mai animă nimic peste
@@ -16058,21 +16059,21 @@ html body #page-acasa figcaption:not(.r2-ptol-side figcaption) { font-family: 'S
 html body #page-acasa .r10-ring { display: none !important; }
 html body #page-acasa .r10-stage { width: min(1180px, 100%) !important; }
 html body #page-acasa .r10-orb {
-  --S: clamp(112px, 11.2cqw, 146px);
-  --Rx: calc(50cqw - var(--S) * .64); --Ry: calc(28.125cqw - var(--S) * .56);
-  aspect-ratio: 16 / 9 !important; animation: none !important;
+  --S: clamp(120px, 12.2cqw, 158px);
+  --Rx: calc(50cqw - var(--S) * .64); --Ry: calc(31.25cqw - var(--S) * .56);
+  aspect-ratio: 16 / 10 !important;
 }
 /* nu un cerc perfect: o elipsă largă, fiecare imagine ușor deplasată, puțin mai mare sau mai mică */
 html body #page-acasa .r10-items > li {
   /* pe o elipsă lată, unghiurile egale îngrămădesc imaginile la capete; le răsfirăm după lungimea conturului */
-  --u: calc(var(--i) * 360deg / var(--n) - 90deg);
+  --u: calc(var(--i) * 360deg / var(--n) - 90deg + var(--r10-spin, 0deg));
   --t: calc(var(--u) + sin(calc(var(--u) * 2)) * 7deg);
-  --jx: calc(sin(calc(var(--i) * 2.7rad)) * 1.6cqw);
-  --jy: calc(cos(calc(var(--i) * 1.9rad)) * 1.4cqw);
+  --jx: calc(sin(calc(var(--i) * 2.7rad)) * .8cqw);
+  --jy: calc(cos(calc(var(--i) * 1.9rad)) * .8cqw);
   transform: translate(calc((cos(var(--t)) * var(--Rx) + var(--jx)) * var(--r10-k)), calc((sin(var(--t)) * var(--Ry) + var(--jy)) * var(--r10-k))) !important;
 }
 html body #page-acasa .r10-it {
-  --s: calc(var(--S) * (1 + sin(calc(var(--i) * 1.3rad)) * .1));
+  --s: calc(var(--S) * (1 + sin(calc(var(--i) * 1.3rad)) * .04));
   left: calc(var(--s) / -2) !important; top: calc(var(--s) / -2) !important; width: var(--s) !important; height: var(--s) !important;
   border: 0 !important; background: #e8dfca !important;
   box-shadow: 0 22px 34px -22px rgba(43, 30, 22, .6) !important;
@@ -16123,11 +16124,11 @@ html body #page-acasa .r10-fig figcaption { padding: 8px 28px 0 !important; }
 
 /* ---------- 3. fără chenare în jurul textului: fără margini, umbre sau fundal de casetă ---------- */
 html body #page-acasa :is(.r9-note, .callout, .source-caution, .margus-context, .gold-context, .duel-context, .gs, .hx, .si-wrap,
-  .si-wrap .si.si, .ux-cart, .duel.dk, .duel.dk .duel-card.dk-card, .cta-card, .journey-caption, .dx-451, #sec-glosar, #biblio, .r10-sec, .ah-r-key, .cs-step) {
+  .duel.dk, .duel.dk .duel-card.dk-card, .cta-card, .journey-caption, .dx-451, #sec-glosar, #biblio, .r10-sec, .ah-r-key, .cs-step) {
   border: 0 !important; box-shadow: none !important; border-radius: 0 !important;
 }
 html body #page-acasa :is(.r9-note, .callout, .source-caution, .margus-context, .gold-context, .duel-context, .gs, .hx, .si-wrap,
-  .si-wrap .si.si, .ux-cart, .cta-card, .journey-caption, .dx-451, #sec-glosar, #biblio, .r10-sec) {
+  .cta-card, .journey-caption, .dx-451, #sec-glosar, #biblio, .r10-sec) {
   background: transparent !important; background-image: none !important;
 }
 /* Aetius: fără panou; Attila își păstrează cele două tonuri (fondul compoziției), dar fără umbră */
@@ -16136,8 +16137,6 @@ html body #page-acasa #sec-personalitati .duel.dk.r12 .r12-b .dc-epithet { borde
 /* notele: textul rămâne cu eticheta lui, fără bara din stânga; spațiul interior nu mai e nevoie */
 html body #page-acasa :is(.r9-note, .callout, .source-caution) { padding: 0 !important; }
 html body #page-acasa .r2-head .ah-r-key { padding-left: 0 !important; }
-/* fișele izvoarelor: fără banda colorată de sus */
-html body #page-acasa .si-wrap .si.si::before { display: none !important; }
 /* panoul lui Ptolemeu își păstrează fondul (compoziția de muzeu), dar fără ramă și umbră */
 html body #page-acasa .ptol-map.diagram { border: 0 !important; box-shadow: none !important; }
 html body #page-acasa .dmn { background: transparent !important; border: 0 !important; box-shadow: none !important; }
@@ -16146,5 +16145,86 @@ html body #page-acasa .dmn { background: transparent !important; border: 0 !impo
 /* Runda 15: doar stiluri. */
 </script>
 <!-- runda15:end -->
+<!-- runda16:start -->
+<style id="runda16-css">
+/* Runda 16: corecturi cerute pe capturi. Prefix: r16-. */
+
+/* ---------- Drumul hunilor: capitolul rămâne întreg (harta lipită pe toată înălțimea), pași mai lungi, intrări mai blânde ---------- */
+html body #page-acasa #sec-drum { scroll-snap-align: start; scroll-margin-top: 44px; }
+html body #page-acasa #sec-drum.sc { height: calc((var(--sc-n, 10) + .6) * 96vh) !important; }
+@supports (height: 1dvh) { html body #page-acasa #sec-drum.sc { height: calc((var(--sc-n, 10) + .6) * 96dvh) !important; } }
+html body #page-acasa #sec-drum .sc-panel.sc-in > * { animation-duration: 700ms !important; animation-timing-function: cubic-bezier(.22, 1, .36, 1) !important; }
+html body #page-acasa #sec-drum .sc-panel.sc-in > :nth-child(n+3) { animation-delay: 90ms !important; }
+html body #page-acasa #sec-drum .sc-panel.sc-in > :nth-child(n+4) { animation-delay: 180ms !important; }
+html body #page-acasa #sec-drum :is(.sc-mk, .sc-label) { transition-duration: 480ms !important; }
+
+/* ---------- Ptolemeu: fără panoul întunecat; aceeași compoziție, pe pergament ---------- */
+html body #page-acasa .ptol-map.diagram { background: transparent !important; color: #221911 !important; border: 0 !important; box-shadow: none !important; padding-inline: 0 !important; }
+html body #page-acasa .ptol-map .ptol-kicker { color: #221911 !important; }
+html body #page-acasa .ptol-map .r2-ptol-side figcaption { color: #4a3c30 !important; }
+html body #page-acasa .ptol-map .r2-ptol-side figcaption :is(b, strong) { color: #9a3f24 !important; }
+html body #page-acasa .ptol-map .ptol-legend li { color: #4a3c30 !important; }
+html body #page-acasa .ptol-map .ptol-legend :is(b, strong) { color: #221911 !important; }
+html body #page-acasa .ptol-map.diagram > svg { filter: sepia(.2) drop-shadow(0 24px 30px rgba(43, 30, 22, .35)) !important; }
+html body #page-acasa .ptol-map .r2-ptol-side::before { background: linear-gradient(90deg, rgba(160, 124, 34, 0), #a07c22) !important; }
+html body #page-acasa .ptol-map .r2-ptol-side::after { background: #a07c22 !important; }
+html body #page-acasa .ptol-map .r11-btn {
+  background: #2b1d12 !important; color: #f6ecd8 !important;
+  box-shadow: inset 0 0 0 3px #2b1d12, inset 0 0 0 4px rgba(214, 178, 94, .55);
+}
+html body #page-acasa .ptol-map .r11-btn:hover { background: #3a2a1e !important; }
+html body #page-acasa .ptol-map .r11-btn:focus-visible { outline-color: #9a3f24 !important; }
+
+/* ---------- orbita: fără nimic scris pe imagini ---------- */
+html body #page-acasa .r10-badge { display: none !important; }
+
+/* ---------- atlasul: legenda coboară până jos, cât harta ---------- */
+@media (min-width: 1100px) {
+  html body #page-acasa #sec-atlas .sidebar { position: static !important; align-self: stretch !important; height: auto !important; }
+  html body #page-acasa #sec-atlas .legend-box { display: flex !important; flex-direction: column; height: 100% !important; box-sizing: border-box; }
+  html body #page-acasa #sec-atlas .legend-list { flex: 1 1 auto; display: flex !important; flex-direction: column !important; justify-content: space-between !important; gap: 12px; }
+}
+
+/* ---------- Personalități: fără bara cu viețile lui Aetius și Attila ---------- */
+html body #page-acasa .duel-context > .duel-lives { display: none !important; }
+
+/* ---------- „Moartea lui Attila”: imaginea merge până la marginea dreaptă a ecranului ---------- */
+@media (min-width: 861px) {
+  html body #page-acasa .sr-row.r16-bleed > .sr-media { margin-right: calc(-1 * var(--r16-bleed, 0px)) !important; position: relative; z-index: 2; }
+  html body #page-acasa .sr-row.r16-bleed .sr-fig img { width: 100% !important; max-width: none !important; border-radius: 0 !important; }
+  html body #page-acasa .sr-row.r16-bleed .sr-fig figcaption { padding-right: var(--r16-bleed, 0px); }
+}
+
+/* ---------- bara de sus: fără despărțitor; linia aurie apare sub toate linkurile ---------- */
+html body #site-nav .r10-sep { display: none !important; }
+@media (min-width: 1100px) {
+  html body #site-nav :is(.r10-l, .r10-r) :is(a, .about-trigger)::after { display: block !important; visibility: visible !important; }
+}
+
+/* Ptolemeu: fără panou nu mai are de ce să iasă din coloana textului (altfel firul de pe margine îi trece peste buton) */
+@media (min-width: 1100px) {
+  html body #page-acasa .ptol-map.diagram { width: auto !important; margin-left: 0 !important; column-gap: 72px !important; }
+}
+</style>
+<script id="runda16-js">
+/* Runda 16: imaginea „Moartea lui Attila” până la marginea dreaptă a ecranului. Prefix: r16-. */
+(function () {
+  function run() {
+    var img = Array.prototype.filter.call(document.querySelectorAll('#page-acasa .sr-row .sr-fig img'), function (i) { return /Attila zace mort/i.test(i.alt || ''); })[0];
+    var row = img && img.closest('.sr-row');
+    if (!row) return;
+    row.classList.add('r16-bleed');
+    function fit() {
+      row.style.setProperty('--r16-bleed', '0px');
+      var gap = document.documentElement.clientWidth - row.getBoundingClientRect().right;
+      row.style.setProperty('--r16-bleed', Math.max(0, Math.round(gap)) + 'px');
+    }
+    fit();
+    addEventListener('resize', fit);
+  }
+  if (document.readyState === 'complete') setTimeout(run, 300); else addEventListener('load', function () { setTimeout(run, 300); });
+})();
+</script>
+<!-- runda16:end -->
 </body>
 </html>

@@ -4,7 +4,8 @@
    Paginile doar grupează copiii direcți ai capitolului; textul și ordinea rămân aceleași. */
 (function () {
   var reduce = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
-  var SECS = '#sec-drum, #sec-origini, #sec-cronologie, #sec-curiozitati, #sec-migratie, #sec-atlas, #sec-personalitati, #sec-glosar, #biblio';
+  // #sec-drum rămâne întreg: harta e lipită (sticky) pe toată înălțimea capitolului
+  var SECS = '#sec-origini, #sec-cronologie, #sec-curiozitati, #sec-migratie, #sec-atlas, #sec-personalitati, #sec-glosar, #biblio';
   // blocurile care merită o pagină a lor (dacă pagina curentă e deja destul de plină)
   var MAJOR = '.r2-head, .sr-row, .duel, .duel-context, .dmn, .gs, .hx, .si-wrap, .ptol-map, .r10-band, .gold-context, .r10-stage, .wrap, figure.pq, .r2-band';
   // aici textul are deja mișcarea lui (hărți, jocuri, carusele): nu se mai animă nimic peste
