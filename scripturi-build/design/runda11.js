@@ -17,5 +17,13 @@
       }
     }
   }
+  // Ptolemeu: un buton spre atlas, ca în compoziția de muzeu
+  function ptol() {
+    var side = document.querySelector('#page-acasa .ptol-map .r2-ptol-side');
+    if (!side || side.querySelector('.r11-btn') || !document.getElementById('sec-atlas')) return;
+    var a = document.createElement('a'); a.className = 'r11-btn'; a.href = '#sec-atlas'; a.textContent = 'Vezi drumurile în atlas →';
+    side.appendChild(a);
+  }
+  var _run = run; run = function () { _run(); try { ptol(); } catch (e) {} };
   if (document.readyState === 'complete') setTimeout(run, 100); else addEventListener('load', function () { setTimeout(run, 100); });
 })();
