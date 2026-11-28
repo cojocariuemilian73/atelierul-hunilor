@@ -66,7 +66,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Rafael, Întâlnirea lui Leon cel Mare cu Attila (1514), detaliu">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="stil-e61f76a3225f.css">
+<link rel="stylesheet" href="stil-7386cc969437.css">
 <script id="r9-notes">
 window.R9_NOTES = {"Solidul lui Teodosie al II-lea":"<aside class=\"r9-note r9-in\" aria-label=\"Știai că…? 1.439 de solizi\"><p class=\"r9n-tag\">Știai că…?<\/p><p class=\"r9n-num\">1.439<\/p><p class=\"r9n-unit\">de solizi<\/p><p class=\"r9n-text\">Descoperirile arheologice arată o circulație mai largă a aurului în societatea hunică: tezaurul de la Szikáncs, lângă Tisa, cuprinde 1.439 de solizi, dintre care 1.405 ai lui Teodosie al II-lea. Asta înseamnă aproape exact 20 de livre romane (72 de solizi la livră), probabil o plată rotundă ajunsă din tribut în mâinile unui membru al elitei, nu în vistieria lui Attila.<\/p><p class=\"r9n-src\">Sursa: Bíró-Sey 1976 (tezaurul de la Szikáncs)<\/p><\/aside>","Spatha hunică":"<aside class=\"r9-note r9-in\" aria-label=\"Știai că…? Puține armuri\"><p class=\"r9n-tag\">Știai că…?<\/p><p class=\"r9n-title\">Puține armuri<\/p><p class=\"r9n-text\">Izvoarele îi descriu mai ales ca arcași călare, care atacau de la distanță, iar în mormintele hunice s-au găsit puține piese de armură. Zalele și coifurile apar totuși la elite, adesea luate de la romani. Cât de des purtau hunii armură e încă discutat de istorici.<\/p><p class=\"r9n-src\">Sursa: Maenchen-Helfen 1973, capitolul despre război<\/p><\/aside>"};
 </script>
@@ -1133,7 +1133,7 @@ window.R9_NOTES = {"Solidul lui Teodosie al II-lea":"<aside class=\"r9-note r9-i
 <!-- runda9:end -->
 <!-- runda10:start -->
 
-<script id="runda10-js" src="assets/js/496e21f9ab2b.js"></script>
+<script id="runda10-js" src="assets/js/e2bf67d59092.js"></script>
 <!-- runda10:end -->
 <!-- runda11:start -->
 
@@ -1257,5 +1257,58 @@ window.R9_NOTES = {"Solidul lui Teodosie al II-lea":"<aside class=\"r9-note r9-i
 })();
 </script>
 <!-- runda16:end -->
+<!-- runda17:start -->
+
+<script id="runda17-js">
+/* Runda 17: capul capitolului „Marea Migrație” după șablonul RenArt (imagine în arcadă, monedă rotundă, anul mare)
+   și „Mecanismul efectului de domino” după șablonul Stone Groove (poză mare la mijloc, titlu mare, listă numerotată).
+   Rulează înaintea literelor scrise din runda 14, ca titlurile să fie deja în forma finală. Prefix: r17-. */
+(function () {
+  function migratie() {
+    var head = document.querySelector('#page-acasa #sec-migratie .r2-head');
+    var aq = document.getElementById('img-aquileia');
+    if (!head || !aq || head.classList.contains('r17-ren')) return;
+    var fig = aq.closest('.sr-fig'), row = aq.closest('.sr-row');
+    if (!fig || !row) return;
+    head.classList.add('r17-ren');
+    var arch = document.createElement('div'); arch.className = 'r17-arch';
+    arch.appendChild(fig);
+    var coin = document.getElementById('img-solidus');
+    if (coin) {
+      var c = coin.cloneNode(false);
+      c.removeAttribute('id'); c.alt = ''; c.setAttribute('aria-hidden', 'true'); c.removeAttribute('tabindex'); c.removeAttribute('role');
+      c.className = 'r17-coin'; c.loading = 'eager';
+      arch.appendChild(c);
+    }
+    head.appendChild(arch);
+    var y = document.createElement('p'); y.className = 'r17-year'; y.setAttribute('aria-hidden', 'true'); y.textContent = '—376';
+    head.appendChild(y);
+    row.classList.add('r17-solo');
+  }
+
+  function domino() {
+    var z = document.getElementById('img-ziduri');
+    var row = z && z.closest('.sr-row');
+    if (!row || row.classList.contains('r17-big')) return;
+    row.classList.add('r17-big');
+    var h = row.querySelector('.sr-text > h3');
+    if (h && !h.querySelector('.r17-acc')) {
+      var w = h.textContent.trim().split(/\s+/);
+      if (w.length > 2) {
+        var tail = w.splice(1).join(' ');
+        h.textContent = w.join(' ') + ' ';
+        var s = document.createElement('span'); s.className = 'r17-acc'; s.textContent = tail; h.appendChild(s);
+      }
+    }
+  }
+
+  function run() {
+    try { migratie(); } catch (e) { if (window.console) console.warn('runda17', e); }
+    try { domino(); } catch (e) { if (window.console) console.warn('runda17', e); }
+  }
+  if (document.readyState === 'complete') setTimeout(run, 200); else addEventListener('load', function () { setTimeout(run, 200); });
+})();
+</script>
+<!-- runda17:end -->
 </body>
 </html>

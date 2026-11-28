@@ -175,6 +175,11 @@
       else if (e.target.closest('.r10-prev')) show((cur - 1 + N) % N, true);
       else if (e.target.closest('.r10-next')) show((cur + 1) % N, true);
     });
+    // clic în afara fișei (dar nu pe o imagine de pe orbită): fișa se închide
+    document.addEventListener('click', function (e) {
+      if (cur < 0 || card.contains(e.target) || e.target.closest('.r10-it')) return;
+      show(-1);
+    });
     sec.addEventListener('keydown', function (e) {
       if (cur < 0) return;
       if (e.key === 'Escape') close();
