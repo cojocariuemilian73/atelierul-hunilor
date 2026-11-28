@@ -1,54 +1,6 @@
 /* Runda 12: Personalități în două compoziții (Attila iese din panou; Aetius cu numele mare în două culori)
    și titlul uriaș al Marii Migrații, pus în spatele imaginii. Prefix: r12-. */
 
-/* ---------- 1. Marea Migrație: titlul mare, imaginea îl acoperă doar la bază ---------- */
-html body #page-acasa #sec-migratie .r2-head.r12-big {
-  --r12-t: clamp(56px, 11.2vw, 176px);
-  display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 560px) minmax(0, 1fr) !important;
-  grid-template-rows: auto auto auto auto 1fr; column-gap: 44px !important; row-gap: 0 !important;
-  align-items: start !important; margin: 0 0 72px !important; opacity: 1 !important; transform: none !important;
-}
-html body #page-acasa .r12-big > .r2-head-l, html body #page-acasa .r12-big .chapter-mark { display: contents !important; }
-html body #page-acasa .r12-big .sec-title {
-  grid-column: 1 / -1; grid-row: 1; position: relative; z-index: 0; margin: 0 !important; text-align: center;
-  font: 600 var(--r12-t)/.84 'EB Garamond', Georgia, serif !important; letter-spacing: .015em !important; text-transform: uppercase !important;
-  white-space: nowrap;
-}
-html body #page-acasa .r12-big .sec-title .fw {
-  display: inline-block; opacity: 1 !important; font: inherit !important; letter-spacing: inherit !important; transform: none !important;
-  background: linear-gradient(180deg, #221911 35%, #6e5a44 100%); -webkit-background-clip: text; background-clip: text; color: transparent !important;
-}
-/* „Marea”: rând mic, rar, deasupra cuvântului mare */
-html body #page-acasa .r12-big .sec-title .fw:first-child {
-  display: block; font-size: calc(var(--r12-t) * .2) !important; letter-spacing: .5em !important; margin: 0 0 .3em .5em; color: #9a3f24 !important; background: none; -webkit-text-fill-color: #9a3f24;
-}
-html body #page-acasa .r12-big .r12-hero { grid-column: 2; grid-row: 2 / span 4; position: relative; z-index: 1; margin-top: calc(var(--r12-t) * -.16); }
-html body #page-acasa .r12-big .r12-hero .sr-fig { margin: 0 !important; }
-html body #page-acasa .r12-big .r12-hero .ef-parch { display: block !important; background: none !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; }
-html body #page-acasa .r12-big .r12-hero img {
-  display: block; width: 100% !important; height: auto !important; max-height: none !important; padding: 0 !important; border: 6px solid #f6efe2 !important; border-radius: 2px !important;
-  box-sizing: border-box; box-shadow: 0 34px 60px -30px rgba(43, 30, 22, .75) !important; background: #e8dfca;
-}
-html body #page-acasa .r12-big .r12-hero figcaption { text-align: center; max-width: 52ch; margin: 14px auto 0 !important; font-size: 14px !important; line-height: 1.5 !important; color: #55463a !important; }
-html body #page-acasa .r12-big .chapter-num { grid-column: 1; grid-row: 2; margin: 36px 0 6px !important; font-size: 64px !important; line-height: 1 !important; }
-html body #page-acasa .r12-big .r6-span { grid-column: 1; grid-row: 3; margin: 0 0 12px !important; }
-html body #page-acasa .r12-big .sec-sub { grid-column: 1; grid-row: 4; margin: 0 !important; max-width: 26ch !important; }
-html body #page-acasa .r12-big .ah-r-key { grid-column: 3; grid-row: 2 / span 3; margin: 44px 0 0 !important; }
-/* rândul de unde a plecat imaginea: textul rămâne singur, pe o coloană de citit */
-html body #page-acasa .sr-row.r12-solo > .sr-media { display: none !important; }
-html body #page-acasa .sr-row.r12-solo > .sr-text { grid-column: 1 / -1 !important; max-width: 760px; margin-inline: auto !important; }
-
-@media (max-width: 860px) {
-  html body #page-acasa #sec-migratie .r2-head.r12-big { --r12-t: 15vw; grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: none; margin-bottom: 48px !important; }
-  html body #page-acasa .r12-big > * , html body #page-acasa .r12-big :is(.sec-title, .chapter-num, .r6-span, .sec-sub, .ah-r-key, .r12-hero) { grid-column: 1 !important; grid-row: auto !important; }
-  html body #page-acasa .r12-big .sec-title { order: 0; }
-  html body #page-acasa .r12-big .r12-hero { order: 1; margin-top: calc(var(--r12-t) * -.08); }
-  html body #page-acasa .r12-big .chapter-num { order: 2; margin-top: 28px !important; font-size: 48px !important; }
-  html body #page-acasa .r12-big .r6-span { order: 3; }
-  html body #page-acasa .r12-big .sec-sub { order: 4; max-width: none !important; }
-  html body #page-acasa .r12-big .ah-r-key { order: 5; margin-top: 24px !important; }
-}
-
 /* ---------- 2. Personalități: două compoziții una sub alta ---------- */
 html body #page-acasa #sec-personalitati .duel.dk.r12 { grid-template-columns: minmax(0, 1fr) !important; gap: 120px !important; }
 html body #page-acasa #sec-personalitati .duel.dk.r12 .duel-card.dk-card { scale: none !important; transition: none !important; }
