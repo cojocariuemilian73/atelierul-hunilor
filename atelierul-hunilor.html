@@ -15840,5 +15840,181 @@ html body #page-acasa #acasa .title .hero-title-prefix { margin-right: .42em; }
 (function () {})();
 </script>
 <!-- runda13:end -->
+<!-- runda14:start -->
+<style id="runda14-css">
+/* Runda 14: pagini cât ecranul, derulare care se oprește pe pagină, titluri scrise literă cu literă,
+   două familii de litere și puține mărimi. Prefix: r14-. */
+
+/* ---------- 1. paginile ---------- */
+html body #page-acasa .r14-page {
+  min-height: calc(100svh - 44px); box-sizing: border-box;
+  display: flex; flex-direction: column; justify-content: center;
+  padding-block: clamp(28px, 6svh, 72px);
+  scroll-snap-align: start; scroll-margin-top: 44px;
+}
+html body #page-acasa .r14-page > :first-child { margin-top: 0 !important; }
+html body #page-acasa .r14-page > :last-child { margin-bottom: 0 !important; }
+html body #page-acasa #acasa.hero { scroll-snap-align: start; scroll-margin-top: 44px; }
+html body .site-final-footer { scroll-snap-align: end; }
+/* citatele mari și paragrafele scurte își păstrează forma și în pagini */
+html body #page-acasa .r14-page > figure.pq { margin: 40px auto !important; }
+html body #page-acasa .r14-page > p { max-width: 68ch !important; }
+
+/* derularea se oprește pe pagină doar pe pagina principală; pe ecran mare cu mouse e „lipicioasă”, pe telefon doar ajută */
+@media (prefers-reduced-motion: no-preference) {
+  html.r14-on:has(#page-acasa.active) { scroll-snap-type: y proximity; }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  html.r14-on:has(#page-acasa.active) { scroll-snap-type: y mandatory; }
+}
+
+/* ---------- 2. intrarea: litere, apoi textul, imaginile din centru ---------- */
+html body #page-acasa .r14-w { display: inline-block; white-space: nowrap; }
+html body #page-acasa .r14-wait .r14-c { opacity: 0; }
+html body #page-acasa .r14-go .r14-c { animation: r14-key 1ms linear calc(var(--r14-i, 0) * var(--r14-step, 26ms)) backwards; }
+@keyframes r14-key { from { opacity: 0; } }
+
+html body #page-acasa .r14-wait .r14-txt { opacity: 0; }
+html body #page-acasa .r14-go .r14-txt { animation: r14-rise 620ms cubic-bezier(.22, 1, .36, 1) calc(260ms + var(--r14-k, 0) * 70ms) backwards; }
+@keyframes r14-rise { from { opacity: 0; translate: 0 10px; } }
+
+html body #page-acasa .r14-wait .r14-img { opacity: 0; }
+html body #page-acasa .r14-go .r14-img { animation: r14-open 900ms cubic-bezier(.22, 1, .36, 1) 120ms backwards; }
+@keyframes r14-open { from { opacity: 0; clip-path: inset(12% 12% 12% 12%); scale: 1.04; } }
+
+/* ---------- 3. litere: EB Garamond pentru titluri, Source Sans 3 pentru rest; patru mărimi ---------- */
+/* titlul de capitol: unul singur, mare, și numărul la aceeași mărime */
+html body #page-acasa .r2-head :is(.sec-title, .sec-title .fw) {
+  font: 600 clamp(48px, 6vw, 96px)/1 'EB Garamond', Georgia, serif !important; letter-spacing: -.012em !important;
+}
+html body #page-acasa .r2-head .chapter-num { font: 500 clamp(48px, 6vw, 96px)/1 'EB Garamond', Georgia, serif !important; }
+/* subtitlul capitolului: text obișnuit, nu încă un stil italic */
+html body #page-acasa .r2-head .sec-sub { font: 400 18px/1.6 'Source Sans 3', system-ui, sans-serif !important; font-style: normal !important; }
+/* subtitlurile din interior: aceeași mărime peste tot */
+html body #page-acasa :is(.sr-text, .duel-context, .gold-context, .r10-band, .r9-note) h3:not(.r11-tour h3),
+html body #page-acasa .sr-text > .sub-title {
+  font: 600 clamp(30px, 2.8vw, 42px)/1.12 'EB Garamond', Georgia, serif !important; letter-spacing: -.005em !important;
+}
+/* textul de citit: 18 px, același rând */
+html body #page-acasa :is(.sr-text > p, .sr-text li, .lede, .ah-r-key p, .duel-context p, .gold-context p, .r2-ptol-side figcaption, .dk-facts li, .r10-band p) {
+  font-family: 'Source Sans 3', system-ui, sans-serif !important; font-size: 18px !important; line-height: 1.7 !important;
+}
+html body #page-acasa .duel.dk.r12 .dk-facts li { font-size: 16px !important; line-height: 1.6 !important; }
+/* legendele imaginilor: mici, aceeași mărime */
+html body #page-acasa figcaption:not(.r2-ptol-side figcaption) { font-family: 'Source Sans 3', system-ui, sans-serif !important; font-size: 14px !important; line-height: 1.5 !important; }
+
+@media (max-width: 860px) {
+  html body #page-acasa .r14-page { min-height: 0; padding-block: 40px; }
+  html body #page-acasa :is(.sr-text > p, .sr-text li, .lede, .ah-r-key p, .duel-context p, .gold-context p, .r2-ptol-side figcaption, .dk-facts li, .r10-band p) { font-size: 17px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa :is(.r14-c, .r14-txt, .r14-img) { animation: none !important; opacity: 1 !important; }
+}
+</style>
+<script id="runda14-js">
+/* Runda 14: capitolele împărțite în pagini cât ecranul (derularea se oprește pe fiecare pagină), titlurile se scriu
+   literă cu literă, textul intră ușor, imaginile se deschid din centru. Prefix: r14-.
+   Paginile doar grupează copiii direcți ai capitolului; textul și ordinea rămân aceleași. */
+(function () {
+  var reduce = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var SECS = '#sec-drum, #sec-origini, #sec-cronologie, #sec-curiozitati, #sec-migratie, #sec-atlas, #sec-personalitati, #sec-glosar, #biblio';
+  // blocurile care merită o pagină a lor (dacă pagina curentă e deja destul de plină)
+  var MAJOR = '.r2-head, .sr-row, .duel, .duel-context, .dmn, .gs, .hx, .si-wrap, .ptol-map, .r10-band, .gold-context, .r10-stage, .wrap, figure.pq, .r2-band';
+  // aici textul are deja mișcarea lui (hărți, jocuri, carusele): nu se mai animă nimic peste
+  var OWN = '.si-wrap, .hx, .r10-stage, .dmn, .gs, #sec-atlas, .ptol-map svg, .r2-band, .mv-margin';
+
+  function el(tag, cls) { var e = document.createElement(tag); e.className = cls; return e; }
+  function shown(e) {
+    if (!e.getClientRects().length) return false;
+    var p = getComputedStyle(e).position;
+    return p !== 'absolute' && p !== 'fixed';
+  }
+
+  function paginate() {
+    var vh = window.innerHeight || 800, pages = [];
+    Array.prototype.forEach.call(document.querySelectorAll('#page-acasa :is(' + SECS + ')'), function (sec) {
+      if (sec.querySelector(':scope > .r14-page')) return;
+      var kids = Array.prototype.filter.call(sec.children, shown), groups = [], cur = null, h = 0;
+      kids.forEach(function (k) {
+        var kh = k.getBoundingClientRect().height;
+        var start = !cur || k.classList.contains('r2-head') || (h >= vh * 0.5 && (kh >= vh * 0.3 || k.matches(MAJOR)));
+        if (start) { cur = []; groups.push(cur); h = 0; }
+        cur.push(k); h += kh;
+      });
+      groups.forEach(function (g) {
+        var p = el('div', 'r14-page');
+        g[0].parentNode.insertBefore(p, g[0]);
+        g.forEach(function (k) { p.appendChild(k); });
+        pages.push(p);
+      });
+    });
+    return pages;
+  }
+
+  // titlurile: fiecare literă își are rândul; cuvintele nu se rup la capăt de rând; cititoarele de ecran citesc titlul întreg
+  function typeset(h) {
+    if (h.dataset.r14) return;
+    h.dataset.r14 = '1';
+    if (h.querySelector('a, button, input, [tabindex]')) return;
+    var label = h.textContent.replace(/\s+/g, ' ').trim();
+    if (!label) return;
+    var walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT), nodes = [], n, i = 0;
+    while ((n = walker.nextNode())) nodes.push(n);
+    var total = label.replace(/\s/g, '').length, step = Math.max(14, Math.min(34, Math.round(1100 / Math.max(1, total))));
+    nodes.forEach(function (t) {
+      var frag = document.createDocumentFragment();
+      t.nodeValue.split(/(\s+)/).forEach(function (w) {
+        if (!w) return;
+        if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(w)); return; }
+        var word = el('span', 'r14-w'); word.setAttribute('aria-hidden', 'true');
+        Array.prototype.forEach.call(w, function (ch) { var c = el('span', 'r14-c'); c.textContent = ch; c.style.setProperty('--r14-i', i++); word.appendChild(c); });
+        frag.appendChild(word);
+      });
+      t.parentNode.replaceChild(frag, t);
+    });
+    h.setAttribute('aria-label', label);
+    h.style.setProperty('--r14-step', step + 'ms');
+    h.classList.add('r14-type');
+  }
+
+  function prepare(p) {
+    Array.prototype.forEach.call(p.querySelectorAll('h2.sec-title, h3, .ptol-kicker'), function (h) { if (!h.closest(OWN)) typeset(h); });
+    var k = 0;
+    Array.prototype.forEach.call(p.querySelectorAll('p, li, figcaption, blockquote'), function (t) {
+      if (t.closest(OWN) || t.closest('.r14-type') || t.closest('.r14-txt')) return;
+      if (t.parentElement && t.parentElement.closest('p, li, figcaption, blockquote')) return;
+      t.classList.add('r14-txt'); t.style.setProperty('--r14-k', Math.min(k++, 9));
+    });
+    Array.prototype.forEach.call(p.querySelectorAll('img'), function (im) { if (!im.closest(OWN)) im.classList.add('r14-img'); });
+    p.classList.add('r14-wait');
+  }
+
+  function run() {
+    var pages = paginate();
+    document.documentElement.classList.add('r14-on');
+    if (reduce) return;                              // fără mișcare: paginile rămân, nimic nu se ascunde
+    pages.forEach(prepare);
+    var left = pages.slice();
+    function check() {
+      var vh = window.innerHeight;
+      left = left.filter(function (p) {
+        var r = p.getBoundingClientRect();
+        if (r.top < vh * 0.72 && r.bottom > vh * 0.2) { p.classList.remove('r14-wait'); p.classList.add('r14-go'); return false; }
+        return true;
+      });
+    }
+    // direct pe derulare (nu prin rAF: într-un tab ascuns rAF stă și paginile ar rămâne ascunse)
+    addEventListener('scroll', check, { passive: true });
+    addEventListener('scrollend', check);
+    addEventListener('resize', check);
+    addEventListener('hashchange', function () { setTimeout(check, 60); });
+    check();
+    // plasă de siguranță: nimic nu rămâne ascuns mai mult de câteva secunde după ce a ajuns pe ecran
+    setInterval(check, 1200);
+  }
+  if (document.readyState === 'complete') setTimeout(run, 500); else addEventListener('load', function () { setTimeout(run, 500); });
+})();
+</script>
+<!-- runda14:end -->
 </body>
 </html>

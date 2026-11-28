@@ -1,0 +1,68 @@
+/* Runda 14: pagini cât ecranul, derulare care se oprește pe pagină, titluri scrise literă cu literă,
+   două familii de litere și puține mărimi. Prefix: r14-. */
+
+/* ---------- 1. paginile ---------- */
+html body #page-acasa .r14-page {
+  min-height: calc(100svh - 44px); box-sizing: border-box;
+  display: flex; flex-direction: column; justify-content: center;
+  padding-block: clamp(28px, 6svh, 72px);
+  scroll-snap-align: start; scroll-margin-top: 44px;
+}
+html body #page-acasa .r14-page > :first-child { margin-top: 0 !important; }
+html body #page-acasa .r14-page > :last-child { margin-bottom: 0 !important; }
+html body #page-acasa #acasa.hero { scroll-snap-align: start; scroll-margin-top: 44px; }
+html body .site-final-footer { scroll-snap-align: end; }
+/* citatele mari și paragrafele scurte își păstrează forma și în pagini */
+html body #page-acasa .r14-page > figure.pq { margin: 40px auto !important; }
+html body #page-acasa .r14-page > p { max-width: 68ch !important; }
+
+/* derularea se oprește pe pagină doar pe pagina principală; pe ecran mare cu mouse e „lipicioasă”, pe telefon doar ajută */
+@media (prefers-reduced-motion: no-preference) {
+  html.r14-on:has(#page-acasa.active) { scroll-snap-type: y proximity; }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  html.r14-on:has(#page-acasa.active) { scroll-snap-type: y mandatory; }
+}
+
+/* ---------- 2. intrarea: litere, apoi textul, imaginile din centru ---------- */
+html body #page-acasa .r14-w { display: inline-block; white-space: nowrap; }
+html body #page-acasa .r14-wait .r14-c { opacity: 0; }
+html body #page-acasa .r14-go .r14-c { animation: r14-key 1ms linear calc(var(--r14-i, 0) * var(--r14-step, 26ms)) backwards; }
+@keyframes r14-key { from { opacity: 0; } }
+
+html body #page-acasa .r14-wait .r14-txt { opacity: 0; }
+html body #page-acasa .r14-go .r14-txt { animation: r14-rise 620ms cubic-bezier(.22, 1, .36, 1) calc(260ms + var(--r14-k, 0) * 70ms) backwards; }
+@keyframes r14-rise { from { opacity: 0; translate: 0 10px; } }
+
+html body #page-acasa .r14-wait .r14-img { opacity: 0; }
+html body #page-acasa .r14-go .r14-img { animation: r14-open 900ms cubic-bezier(.22, 1, .36, 1) 120ms backwards; }
+@keyframes r14-open { from { opacity: 0; clip-path: inset(12% 12% 12% 12%); scale: 1.04; } }
+
+/* ---------- 3. litere: EB Garamond pentru titluri, Source Sans 3 pentru rest; patru mărimi ---------- */
+/* titlul de capitol: unul singur, mare, și numărul la aceeași mărime */
+html body #page-acasa .r2-head :is(.sec-title, .sec-title .fw) {
+  font: 600 clamp(48px, 6vw, 96px)/1 'EB Garamond', Georgia, serif !important; letter-spacing: -.012em !important;
+}
+html body #page-acasa .r2-head .chapter-num { font: 500 clamp(48px, 6vw, 96px)/1 'EB Garamond', Georgia, serif !important; }
+/* subtitlul capitolului: text obișnuit, nu încă un stil italic */
+html body #page-acasa .r2-head .sec-sub { font: 400 18px/1.6 'Source Sans 3', system-ui, sans-serif !important; font-style: normal !important; }
+/* subtitlurile din interior: aceeași mărime peste tot */
+html body #page-acasa :is(.sr-text, .duel-context, .gold-context, .r10-band, .r9-note) h3:not(.r11-tour h3),
+html body #page-acasa .sr-text > .sub-title {
+  font: 600 clamp(30px, 2.8vw, 42px)/1.12 'EB Garamond', Georgia, serif !important; letter-spacing: -.005em !important;
+}
+/* textul de citit: 18 px, același rând */
+html body #page-acasa :is(.sr-text > p, .sr-text li, .lede, .ah-r-key p, .duel-context p, .gold-context p, .r2-ptol-side figcaption, .dk-facts li, .r10-band p) {
+  font-family: 'Source Sans 3', system-ui, sans-serif !important; font-size: 18px !important; line-height: 1.7 !important;
+}
+html body #page-acasa .duel.dk.r12 .dk-facts li { font-size: 16px !important; line-height: 1.6 !important; }
+/* legendele imaginilor: mici, aceeași mărime */
+html body #page-acasa figcaption:not(.r2-ptol-side figcaption) { font-family: 'Source Sans 3', system-ui, sans-serif !important; font-size: 14px !important; line-height: 1.5 !important; }
+
+@media (max-width: 860px) {
+  html body #page-acasa .r14-page { min-height: 0; padding-block: 40px; }
+  html body #page-acasa :is(.sr-text > p, .sr-text li, .lede, .ah-r-key p, .duel-context p, .gold-context p, .r2-ptol-side figcaption, .dk-facts li, .r10-band p) { font-size: 17px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa :is(.r14-c, .r14-txt, .r14-img) { animation: none !important; opacity: 1 !important; }
+}
