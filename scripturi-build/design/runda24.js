@@ -41,7 +41,7 @@
   }
   function run() {
     var tries = 0;
-    (function again() { var a = scrolls(), b = hub(); if (!(a && b) && ++tries < 20) setTimeout(again, 250); })();
+    (function again() { var a = scrolls(), b = true; /* centrul orbitei: doar întrebarea (runda 27) */ if (!(a && b) && ++tries < 20) setTimeout(again, 250); })();
   }
   if (document.readyState === 'complete') setTimeout(run, 500); else addEventListener('load', function () { setTimeout(run, 500); });
 })();

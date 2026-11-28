@@ -1,0 +1,44 @@
+/* Runda 27. Prefix: r27-.
+   1. Sulurile: la trecere nu se mai văd două texte suprapuse. Sulurile laterale arată doar hârtia, tijele și numele;
+      textul sulului din față se stinge repede, sulurile se mută, apoi textul noului sul apare după ce a ajuns în față.
+   2. Centrul orbitei: doar „Mit sau adevăr?”, mare, fără medalion sau fundal.
+   3. Praful de stepă pe pergament: mai cald și mai vizibil decât pe antracit. */
+
+/* ---------- 1. sulurile ---------- */
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:is([data-pos="-1"], [data-pos="1"]) { opacity: 1 !important; filter: none !important; }
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si > :not(.r24-paper) { -webkit-mask-image: none !important; mask-image: none !important; }
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:not([data-pos="0"]) > :not(.r24-paper, .si-head) { opacity: 0 !important; }
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:not([data-pos="0"]) > .si-head { opacity: .55 !important; }
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si[data-pos="0"] > :not(.r24-paper) { opacity: 1 !important; }
+@media (prefers-reduced-motion: no-preference) {
+  /* ieșirea din față: textul dispare în 200 ms, înainte ca sulurile să se încrucișeze */
+  html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:not([data-pos="0"]) > :not(.r24-paper) { transition: opacity 200ms ease !important; }
+  /* intrarea în față: textul apare abia după ce sulul s-a așezat */
+  html body #page-acasa .si-wrap.r9-car .si-grid > .si.si[data-pos="0"] > :not(.r24-paper) { transition: opacity 450ms ease 600ms !important; }
+  html body #page-acasa .si-wrap.r9-car .si-grid > .si.si {
+    transition: transform 900ms cubic-bezier(.65, 0, .35, 1), opacity 600ms ease, z-index 0s linear 450ms, visibility 0s linear 0s !important;
+  }
+}
+@media (pointer: fine) {
+  html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:not([data-pos="0"]):hover > .si-head { opacity: .85 !important; }
+}
+
+/* ---------- 2. centrul orbitei ---------- */
+html body #page-acasa .r10-hub.r10-hub {
+  background: none !important; box-shadow: none !important; border: 0 !important; padding: 0 !important; width: auto !important; aspect-ratio: auto !important;
+}
+html body #page-acasa .r10-hub :is(.r10-hint, .r24-kick, .r24-dare, .r24-go, .r24-tip) { display: none !important; }
+html body #page-acasa .r10-hub .r10-q.r10-q {
+  font: italic 600 clamp(44px, 5.2vw, 80px)/1 'EB Garamond', Georgia, serif !important; color: #221911 !important; white-space: nowrap;
+  text-shadow: 0 2px 24px rgba(243, 234, 219, .9);
+}
+@media (max-width: 699px) {
+  html body #page-acasa .r10-hub .r10-q.r10-q { font-size: 30px !important; white-space: normal; text-align: center; }
+}
+
+/* ---------- 3. praful pe orbită ---------- */
+html body #page-acasa #sec-curiozitati > .pr-dust { inset: -40px 0; }
+html body #page-acasa #sec-curiozitati .pr-blob {
+  width: 620px; height: 620px; left: -310px; top: -310px; filter: blur(46px);
+  background: radial-gradient(circle, rgba(196, 150, 62, .42) 0%, rgba(176, 108, 64, .22) 38%, rgba(154, 63, 36, 0) 70%);
+}

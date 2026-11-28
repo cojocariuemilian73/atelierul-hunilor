@@ -116,6 +116,9 @@
         t: t.textContent.trim() + (u && t.classList.contains('r9n-num') ? ' ' + u.textContent.trim() : ''),
         body: '<p class="r10-txt">' + x.innerHTML + '</p>' + (s2 ? '<p class="r10-src">' + s2.innerHTML + '</p>' : '') });
     });
+    // aceeași imagine de două ori pe cerc (notele fără imagine proprie primesc solidul): păstrăm doar prima piesă
+    var seen = {};
+    items = items.filter(function (it) { if (!it.src) return true; if (seen[it.src]) return false; seen[it.src] = 1; return true; });
     if (items.length < 3) return;
     var anchor = document.getElementById('sec-migratie');
     if (!anchor) return;
