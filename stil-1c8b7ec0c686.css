@@ -8211,3 +8211,131 @@ html body #page-acasa .ptol-map .r11-btn { margin-top: 20px !important; align-se
 @media (min-width: 1024px) {
   html body #page-acasa .r14-page:has(> .sr-row.r11-tour) { padding-block: 20px !important; }
 }
+
+
+/* Runda 24. Prefix: r24-.
+   1. Izvoarele: sulurile sunt desenate (hârtie cu margini rupte, tije de lemn cu capete de bronz strunjite),
+      trecerea de la un sul la altul e lină și coordonată, iar jos e o șină fină cu repere în loc de pastilă + puncte.
+   2. Capul „Cronologie 02 interactivă”: titlul în stânga, restul strâns în dreapta, fără gol mare.
+   3. Centrul orbitei: medalion de pergament cu o provocare scurtă și un buton „piesă la întâmplare”. */
+
+/* ---------- 1a. hârtia: un strat propriu, cu marginile de sus și de jos rupte; tijele rămân întregi deasupra ---------- */
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si { background: none !important; box-shadow: none !important; isolation: isolate; }
+html body #page-acasa .si-wrap.r9-car .r24-paper {
+  position: absolute; inset: -4px 4px; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60% 45% at 30% 30%, rgba(255, 250, 235, .55), transparent 70%),
+    radial-gradient(30% 20% at 78% 72%, rgba(150, 105, 50, .12), transparent 70%),
+    radial-gradient(18% 14% at 18% 82%, rgba(150, 105, 50, .10), transparent 70%),
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(140, 95, 45, .28) 100%),
+    linear-gradient(180deg, #f3e4c3, #ead6ab 60%, #e3cb9c);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 400' preserveAspectRatio='none'%3E%3Cpath d='M0,7.3 L0.0,7.3 L21.7,3.1 L43.5,6.6 L65.2,5.5 L87.0,5.8 L108.7,4.6 L130.4,5.4 L152.2,5.6 L173.9,2.3 L195.7,8.0 L217.4,2.5 L239.1,2.6 L260.9,8.0 L282.6,7.8 L304.3,2.9 L326.1,6.6 L347.8,6.4 L369.6,8.6 L391.3,9.0 L413.0,4.8 L434.8,8.8 L456.5,5.3 L478.3,8.0 L500.0,4.0 L521.7,6.0 L543.5,2.8 L565.2,4.2 L587.0,10.7 L608.7,3.3 L630.4,6.1 L652.2,9.5 L673.9,4.6 L695.7,5.8 L717.4,5.4 L739.1,2.4 L760.9,3.4 L782.6,9.8 L804.3,5.0 L826.1,4.2 L847.8,9.1 L869.6,5.2 L891.3,4.1 L913.0,10.6 L934.8,6.9 L956.5,3.7 L978.3,9.0 L1000.0,5.7 L1000,392.0 L1000.0,392.0 L978.3,389.3 L956.5,391.8 L934.8,394.2 L913.0,391.9 L891.3,397.4 L869.6,391.9 L847.8,392.3 L826.1,396.3 L804.3,397.1 L782.6,389.6 L760.9,397.6 L739.1,397.2 L717.4,393.8 L695.7,394.8 L673.9,397.8 L652.2,390.3 L630.4,395.3 L608.7,396.0 L587.0,389.2 L565.2,391.0 L543.5,393.5 L521.7,390.1 L500.0,397.6 L478.3,393.4 L456.5,391.7 L434.8,391.4 L413.0,392.1 L391.3,391.8 L369.6,393.9 L347.8,393.8 L326.1,390.1 L304.3,395.8 L282.6,391.9 L260.9,391.0 L239.1,392.6 L217.4,393.3 L195.7,394.7 L173.9,394.6 L152.2,396.9 L130.4,389.7 L108.7,395.1 L87.0,397.2 L65.2,388.1 L43.5,396.0 L21.7,392.9 L0.0,388.9 Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 400' preserveAspectRatio='none'%3E%3Cpath d='M0,7.3 L0.0,7.3 L21.7,3.1 L43.5,6.6 L65.2,5.5 L87.0,5.8 L108.7,4.6 L130.4,5.4 L152.2,5.6 L173.9,2.3 L195.7,8.0 L217.4,2.5 L239.1,2.6 L260.9,8.0 L282.6,7.8 L304.3,2.9 L326.1,6.6 L347.8,6.4 L369.6,8.6 L391.3,9.0 L413.0,4.8 L434.8,8.8 L456.5,5.3 L478.3,8.0 L500.0,4.0 L521.7,6.0 L543.5,2.8 L565.2,4.2 L587.0,10.7 L608.7,3.3 L630.4,6.1 L652.2,9.5 L673.9,4.6 L695.7,5.8 L717.4,5.4 L739.1,2.4 L760.9,3.4 L782.6,9.8 L804.3,5.0 L826.1,4.2 L847.8,9.1 L869.6,5.2 L891.3,4.1 L913.0,10.6 L934.8,6.9 L956.5,3.7 L978.3,9.0 L1000.0,5.7 L1000,392.0 L1000.0,392.0 L978.3,389.3 L956.5,391.8 L934.8,394.2 L913.0,391.9 L891.3,397.4 L869.6,391.9 L847.8,392.3 L826.1,396.3 L804.3,397.1 L782.6,389.6 L760.9,397.6 L739.1,397.2 L717.4,393.8 L695.7,394.8 L673.9,397.8 L652.2,390.3 L630.4,395.3 L608.7,396.0 L587.0,389.2 L565.2,391.0 L543.5,393.5 L521.7,390.1 L500.0,397.6 L478.3,393.4 L456.5,391.7 L434.8,391.4 L413.0,392.1 L391.3,391.8 L369.6,393.9 L347.8,393.8 L326.1,390.1 L304.3,395.8 L282.6,391.9 L260.9,391.0 L239.1,392.6 L217.4,393.3 L195.7,394.7 L173.9,394.6 L152.2,396.9 L130.4,389.7 L108.7,395.1 L87.0,397.2 L65.2,388.1 L43.5,396.0 L21.7,392.9 L0.0,388.9 Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+html body #page-acasa .si-wrap.r9-car .si-grid > .si > .r24-paper {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 400' preserveAspectRatio='none'%3E%3Cpath d='M0,7.3 L0.0,7.3 L21.7,3.1 L43.5,6.6 L65.2,5.5 L87.0,5.8 L108.7,4.6 L130.4,5.4 L152.2,5.6 L173.9,2.3 L195.7,8.0 L217.4,2.5 L239.1,2.6 L260.9,8.0 L282.6,7.8 L304.3,2.9 L326.1,6.6 L347.8,6.4 L369.6,8.6 L391.3,9.0 L413.0,4.8 L434.8,8.8 L456.5,5.3 L478.3,8.0 L500.0,4.0 L521.7,6.0 L543.5,2.8 L565.2,4.2 L587.0,10.7 L608.7,3.3 L630.4,6.1 L652.2,9.5 L673.9,4.6 L695.7,5.8 L717.4,5.4 L739.1,2.4 L760.9,3.4 L782.6,9.8 L804.3,5.0 L826.1,4.2 L847.8,9.1 L869.6,5.2 L891.3,4.1 L913.0,10.6 L934.8,6.9 L956.5,3.7 L978.3,9.0 L1000.0,5.7 L1000,392.0 L1000.0,392.0 L978.3,389.3 L956.5,391.8 L934.8,394.2 L913.0,391.9 L891.3,397.4 L869.6,391.9 L847.8,392.3 L826.1,396.3 L804.3,397.1 L782.6,389.6 L760.9,397.6 L739.1,397.2 L717.4,393.8 L695.7,394.8 L673.9,397.8 L652.2,390.3 L630.4,395.3 L608.7,396.0 L587.0,389.2 L565.2,391.0 L543.5,393.5 L521.7,390.1 L500.0,397.6 L478.3,393.4 L456.5,391.7 L434.8,391.4 L413.0,392.1 L391.3,391.8 L369.6,393.9 L347.8,393.8 L326.1,390.1 L304.3,395.8 L282.6,391.9 L260.9,391.0 L239.1,392.6 L217.4,393.3 L195.7,394.7 L173.9,394.6 L152.2,396.9 L130.4,389.7 L108.7,395.1 L87.0,397.2 L65.2,388.1 L43.5,396.0 L21.7,392.9 L0.0,388.9 Z'/%3E%3C/svg%3E") !important; mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 400' preserveAspectRatio='none'%3E%3Cpath d='M0,7.3 L0.0,7.3 L21.7,3.1 L43.5,6.6 L65.2,5.5 L87.0,5.8 L108.7,4.6 L130.4,5.4 L152.2,5.6 L173.9,2.3 L195.7,8.0 L217.4,2.5 L239.1,2.6 L260.9,8.0 L282.6,7.8 L304.3,2.9 L326.1,6.6 L347.8,6.4 L369.6,8.6 L391.3,9.0 L413.0,4.8 L434.8,8.8 L456.5,5.3 L478.3,8.0 L500.0,4.0 L521.7,6.0 L543.5,2.8 L565.2,4.2 L587.0,10.7 L608.7,3.3 L630.4,6.1 L652.2,9.5 L673.9,4.6 L695.7,5.8 L717.4,5.4 L739.1,2.4 L760.9,3.4 L782.6,9.8 L804.3,5.0 L826.1,4.2 L847.8,9.1 L869.6,5.2 L891.3,4.1 L913.0,10.6 L934.8,6.9 L956.5,3.7 L978.3,9.0 L1000.0,5.7 L1000,392.0 L1000.0,392.0 L978.3,389.3 L956.5,391.8 L934.8,394.2 L913.0,391.9 L891.3,397.4 L869.6,391.9 L847.8,392.3 L826.1,396.3 L804.3,397.1 L782.6,389.6 L760.9,397.6 L739.1,397.2 L717.4,393.8 L695.7,394.8 L673.9,397.8 L652.2,390.3 L630.4,395.3 L608.7,396.0 L587.0,389.2 L565.2,391.0 L543.5,393.5 L521.7,390.1 L500.0,397.6 L478.3,393.4 L456.5,391.7 L434.8,391.4 L413.0,392.1 L391.3,391.8 L369.6,393.9 L347.8,393.8 L326.1,390.1 L304.3,395.8 L282.6,391.9 L260.9,391.0 L239.1,392.6 L217.4,393.3 L195.7,394.7 L173.9,394.6 L152.2,396.9 L130.4,389.7 L108.7,395.1 L87.0,397.2 L65.2,388.1 L43.5,396.0 L21.7,392.9 L0.0,388.9 Z'/%3E%3C/svg%3E") !important; opacity: 1 !important;
+  -webkit-mask-size: 100% 100% !important; mask-size: 100% 100% !important;
+}
+/* umbra hârtiei, pe sul (masca ar tăia-o de pe hârtie) */
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si { filter: drop-shadow(0 18px 16px rgba(60, 35, 15, .25)); }
+/* tijele: cilindru de hârtie rulată + capete de bronz sus și jos */
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:is(.si-on, :not(.si-on))::before,
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:is(.si-on, :not(.si-on))::after {
+  top: -30px !important; bottom: -30px !important; width: 28px !important; border-radius: 0 !important; z-index: 2;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 34'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%234a2e12'/%3E%3Cstop offset='.42' stop-color='%23b8873f'/%3E%3Cstop offset='.58' stop-color='%23e6c37a'/%3E%3Cstop offset='1' stop-color='%233e260e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='14' cy='6' r='5' fill='url(%23g)'/%3E%3Crect x='10' y='10' width='8' height='4' rx='1' fill='url(%23g)'/%3E%3Crect x='3' y='14' width='22' height='6' rx='3' fill='url(%23g)'/%3E%3Crect x='6' y='20' width='16' height='5' rx='1' fill='url(%23g)'/%3E%3Crect x='8' y='25' width='12' height='9' fill='url(%23g)'/%3E%3C/svg%3E") top center / 28px 34px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 34'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%234a2e12'/%3E%3Cstop offset='.42' stop-color='%23b8873f'/%3E%3Cstop offset='.58' stop-color='%23e6c37a'/%3E%3Cstop offset='1' stop-color='%233e260e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform='translate(0 34) scale(1 -1)'%3E%3Ccircle cx='14' cy='6' r='5' fill='url(%23g)'/%3E%3Crect x='10' y='10' width='8' height='4' rx='1' fill='url(%23g)'/%3E%3Crect x='3' y='14' width='22' height='6' rx='3' fill='url(%23g)'/%3E%3Crect x='6' y='20' width='16' height='5' rx='1' fill='url(%23g)'/%3E%3Crect x='8' y='25' width='12' height='9' fill='url(%23g)'/%3E%3C/g%3E%3C/svg%3E") bottom center / 28px 34px no-repeat,
+    linear-gradient(90deg, #9c7443, #dcc292 30%, #f4e6c6 48%, #d7b985 70%, #8a6234) center / 18px calc(100% - 64px) no-repeat !important;
+  box-shadow: none !important;
+}
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:is(.si-on, :not(.si-on))::before { left: -14px !important; }
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:is(.si-on, :not(.si-on))::after { right: -14px !important; }
+html body #page-acasa .si-wrap.r9-car .si-grid { margin-block: 34px !important; }
+
+/* ---------- 1b. trecerea: aceeași curbă lină pentru poziție, scară și estompare; adâncimea se schimbă la jumătate ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .si-wrap.r9-car .si-grid > .si.si {
+    transition:
+      transform 950ms cubic-bezier(.45, .05, .2, 1),
+      opacity 800ms cubic-bezier(.45, .05, .2, 1),
+      z-index 0s linear 380ms,
+      visibility 0s linear 0s !important;
+  }
+  html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:is([data-pos="far-l"], [data-pos="far-r"]) {
+    transition: transform 950ms cubic-bezier(.45, .05, .2, 1), opacity 600ms ease, z-index 0s linear 380ms, visibility 0s linear 600ms !important;
+  }
+  html body #page-acasa .si-wrap.r9-car .si-grid > .si > :not(.r24-paper) { transition: opacity 800ms ease !important; }
+  html body #page-acasa .si-wrap.r9-car .si-grid { transition: height 600ms cubic-bezier(.45, .05, .2, 1) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa .si-wrap.r9-car .si-grid > .si.si, html body #page-acasa .si-wrap.r9-car .si-grid > .si > *, html body #page-acasa .si-wrap.r9-car .si-grid { transition: none !important; }
+}
+
+/* ---------- 1c. indicatorul: o șină fină de bronz, cu câte un reper egal pentru fiecare izvor ---------- */
+html body #page-acasa .r9-ctl { gap: 28px !important; }
+html body #page-acasa .r9-dots { gap: 6px !important; align-items: center; }
+html body #page-acasa .r9-dot.r9-dot {
+  width: 34px !important; height: 2px !important; border-radius: 2px !important; background: rgba(133, 104, 31, .32) !important;
+  transition: background-color 500ms ease, height 300ms ease, scale var(--r6-dur, 220ms) var(--r6-ease, ease) !important;
+}
+html body #page-acasa .r9-dot.r9-dot[data-on] { width: 34px !important; height: 4px !important; background: #a07c22 !important; }
+html body #page-acasa .r9-dot.r9-dot::before { inset: -20px -3px !important; }
+html body #page-acasa .r24-count {
+  min-width: 64px; margin: 0; text-align: center; font: 500 20px/1 'EB Garamond', Georgia, serif; color: #221911; font-variant-numeric: lining-nums tabular-nums; letter-spacing: .04em;
+}
+html body #page-acasa .r24-count span { color: #a07c22; font-size: 14px; margin-left: 4px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .r9-dot.r9-dot:is(:hover, :focus-visible) { scale: var(--r6-hover, 1.025); background: #85681f !important; }
+}
+@media (max-width: 760px) {
+  html body #page-acasa .r9-ctl { gap: 14px !important; }
+  html body #page-acasa .r9-dot.r9-dot, html body #page-acasa .r9-dot.r9-dot[data-on] { width: 22px !important; }
+  html body #page-acasa .r24-count { display: none; }
+  html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:is(.si-on, :not(.si-on))::before { left: -8px !important; }
+  html body #page-acasa .si-wrap.r9-car .si-grid > .si.si:is(.si-on, :not(.si-on))::after { right: -8px !important; }
+}
+
+/* ---------- 2. capul cronologiei ---------- */
+@media (min-width: 1024px) {
+  html body #page-acasa #sec-cronologie .r2-head.r3-alt {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; grid-template-rows: auto auto auto !important;
+    column-gap: 64px !important; row-gap: 0 !important; align-items: start !important; padding-top: 24px !important;
+  }
+  html body #page-acasa #sec-cronologie .r2-head.r3-alt > .r2-head-l { display: contents !important; }
+  html body #page-acasa #sec-cronologie .r2-head.r3-alt .chapter-mark { grid-column: 1; grid-row: 1 / span 3; align-self: center; }
+  html body #page-acasa #sec-cronologie .r2-head.r3-alt .r6-span { grid-column: 2; grid-row: 1; margin: 6px 0 0 !important; }
+  html body #page-acasa #sec-cronologie .r2-head.r3-alt .sec-sub { grid-column: 2; grid-row: 2; margin: 14px 0 0 !important; }
+  html body #page-acasa #sec-cronologie .r2-head.r3-alt > .ah-r-key { grid-column: 2; grid-row: 3; order: 0 !important; margin: 22px 0 0 !important; transform: none !important; }
+  html body #page-acasa #sec-cronologie .r2-head.r3-alt > .ah-r-key p { margin: 0 !important; }
+  html body #page-acasa #sec-cronologie > .r14-page:first-child { padding-top: 32px !important; padding-bottom: 16px !important; }
+}
+
+/* ---------- 3. centrul orbitei ---------- */
+html body #page-acasa .r10-hub.r10-hub {
+  width: min(560px, 44cqw) !important; aspect-ratio: auto !important; border-radius: 50% / 50% !important; padding: 48px 64px !important; gap: 10px;
+  background: radial-gradient(70% 70% at 50% 35%, #fbf6ea, #f0e3c6 75%, #e8d6b0) !important; border: 0 !important;
+  box-shadow: 0 0 0 6px #f3eadb, 0 0 0 7px rgba(160, 124, 34, .7), 0 30px 40px -30px rgba(60, 35, 15, .55) !important;
+}
+html body #page-acasa .r24-kick { margin: 0; font: 600 12px/1 'Source Sans 3', system-ui, sans-serif; letter-spacing: .22em; text-transform: uppercase; color: #9a3f24; }
+html body #page-acasa .r24-dare { margin: 0 auto; max-width: 30ch; font: 400 16px/1.5 'Source Sans 3', system-ui, sans-serif; color: #4a3c30; }
+html body #page-acasa .r24-go {
+  justify-self: center; margin-top: 6px; min-height: 44px; padding: 0 22px; border: 0; border-radius: 999px; cursor: pointer;
+  background: #2b1d12; color: #f6ecd8; font: 600 13px/1 'Source Sans 3', system-ui, sans-serif; letter-spacing: .06em;
+  transition: scale var(--r6-dur, 220ms) var(--r6-ease, ease), background-color 200ms ease;
+}
+html body #page-acasa .r24-go:hover { background: #3a2a1e; }
+html body #page-acasa .r24-go:focus-visible { outline: 2px solid #9a3f24; outline-offset: 3px; }
+html body #page-acasa .r24-tip { margin: 0; font: italic 400 14px/1.4 'EB Garamond', Georgia, serif; color: #7a6650; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .r24-go:is(:hover, :focus-visible) { scale: var(--r6-hover, 1.025); }
+}
+html body #page-acasa .r10-orb.is-open .r10-hub { visibility: hidden; }
+@media (max-width: 699px) {
+  html body #page-acasa .r10-hub.r10-hub { width: min(230px, 64cqw) !important; padding: 22px 16px !important; gap: 6px; }
+  html body #page-acasa .r24-dare, html body #page-acasa .r24-tip { display: none; }
+  html body #page-acasa .r24-go { padding: 0 16px; font-size: 12px; }
+  html body #page-acasa .r10-orb.is-open .r10-hub { visibility: visible; }
+}
+
+/* tija dinspre centru a sulurilor laterale stă ascunsă după sulul din față: n-o mai lăsăm să iasă pe sub el */
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si[data-pos="-1"]:is(.si-on, :not(.si-on))::after,
+html body #page-acasa .si-wrap.r9-car .si-grid > .si.si[data-pos="1"]:is(.si-on, :not(.si-on))::before { opacity: 0 !important; }
