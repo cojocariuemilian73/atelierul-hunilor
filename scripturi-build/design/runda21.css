@@ -1,0 +1,77 @@
+/* Runda 21. Prefix: r21-.
+   1. fără axa „Distanța față de evenimentele descrise”;  2. caruselul de izvoare: fișele sunt pergamente rulate;
+   3. „Moartea lui Attila”: două coloane echilibrate, piese încadrate ca la expoziție;  4. nav: fără fundal la hover. */
+
+/* ---------- 1. axa distanței dispare ---------- */
+html body #page-acasa .si-wrap .si-ax { display: none !important; }
+
+/* ---------- 2. fișa ca pergament rulat: hârtie caldă, margini neregulate, câte un sul la stânga și la dreapta ---------- */
+html body #page-acasa .r9-car .si-grid > .si.si {
+  border: 0 !important; border-radius: 2px !important; overflow: visible !important;
+  padding: 30px 40px 32px !important;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(255, 250, 236, .7), transparent 60%),
+    radial-gradient(90% 120% at 0% 50%, rgba(150, 110, 55, .16), transparent 45%),
+    radial-gradient(90% 120% at 100% 50%, rgba(150, 110, 55, .16), transparent 45%),
+    linear-gradient(180deg, #f6ebd2, #efdfbd 55%, #ead6af) !important;
+  box-shadow: 0 30px 40px -30px rgba(60, 35, 15, .55), 0 10px 16px -12px rgba(60, 35, 15, .3) !important;
+}
+html body #page-acasa .r9-car .si.si::before,
+html body #page-acasa .r9-car .si.si::after {
+  content: "" !important; display: block !important; position: absolute !important; top: -12px !important; bottom: -12px !important;
+  width: 18px !important; height: auto !important; inset-inline: auto !important; border: 0 !important; border-radius: 9px !important; z-index: 1;
+  background:
+    linear-gradient(180deg, #5a3a1c 0 10px, transparent 10px calc(100% - 10px), #5a3a1c calc(100% - 10px)),
+    linear-gradient(90deg, #b48a52, #ecd6a6 38%, #f5e6c4 50%, #c9a26a 78%, #9c7442) !important;
+  box-shadow: 0 8px 12px -6px rgba(60, 35, 15, .45) !important; opacity: 1 !important; transform: none !important;
+}
+html body #page-acasa .r9-car .si.si::before { left: -9px !important; }
+html body #page-acasa .r9-car .si.si::after { right: -9px !important; }
+
+/* ---------- 3. „Moartea lui Attila”: stânga textul + vulturul, dreapta tabloul ---------- */
+html body #page-acasa .sr-row .sr-text > p.r21-year {
+  margin: 0 0 18px !important; font: 500 clamp(40px, 3.6vw, 54px)/1 'EB Garamond', Georgia, serif !important; color: #221911 !important; font-variant-numeric: lining-nums;
+}
+html body #page-acasa .r21-year em { font-size: .42em; font-style: italic; color: #a07c22; margin-left: 6px; }
+html body #page-acasa .sr-row .sr-text > p.r21-year .r21-k {
+  display: block; margin: 0 0 8px; font: 600 13px/1 'Source Sans 3', system-ui, sans-serif !important; letter-spacing: .2em; text-transform: uppercase; color: #9a3f24 !important;
+}
+/* reperul care plutea sub bară dispare: anul stă acum în secțiune */
+html body .ef-rtrack .ef-ryr { display: none !important; }
+
+/* rama de expoziție (doar pe imagini): inel de pergament, fir de bronz, umbră caldă */
+html body #page-acasa .sr-row.r16-bleed :is(.sr-fig img, .photo-points) {
+  box-shadow: 0 0 0 6px #f3eadb, 0 0 0 7px rgba(160, 124, 34, .75), 0 34px 44px -30px rgba(60, 35, 15, .6) !important;
+  border-radius: 2px !important;
+}
+html body #page-acasa .sr-row.r16-bleed .photo-points { background: #f3eadb !important; padding: 14px !important; box-sizing: border-box; }
+html body #page-acasa .sr-row.r16-bleed .photo-points img { box-shadow: none !important; width: 100% !important; height: auto !important; max-height: 300px; object-fit: contain; }
+html body #page-acasa .sr-row.r16-bleed .photo-evidence { margin: 26px 0 0 !important; gap: 28px !important; align-items: center !important; }
+html body #page-acasa .sr-row.r16-bleed .photo-evidence figcaption { font-size: 14.5px !important; line-height: 1.55 !important; margin: 0 !important; }
+html body #page-acasa .sr-row.r16-bleed .sr-text > p.r14-txt:not(.r21-year) { margin: 0 !important; }
+
+@media (min-width: 1024px) {
+  html body #page-acasa .sr-row.r16-bleed.r16-bleed {
+    display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; column-gap: 64px !important; row-gap: 0 !important;
+    align-items: center !important; padding-block: 8px !important;
+  }
+  html body #page-acasa .sr-row.r16-bleed > .sr-text { grid-column: 1 !important; grid-row: 1 !important; }
+  html body #page-acasa .sr-row.r16-bleed > .sr-media {
+    grid-column: 2 !important; grid-row: 1 !important; position: static !important; margin: 0 !important; top: auto !important; align-self: center !important;
+  }
+  html body #page-acasa .sr-row.r16-bleed .photo-evidence { grid-template-columns: 170px minmax(0, 1fr) !important; }
+}
+html body #page-acasa .sr-row.r16-bleed .sr-fig { margin: 0 !important; }
+html body #page-acasa .sr-row.r16-bleed .sr-fig img { width: 100% !important; aspect-ratio: 5 / 4 !important; height: auto !important; object-fit: cover !important; object-position: 60% 50% !important; }
+html body #page-acasa .sr-row.r16-bleed .sr-fig figcaption { padding: 0 !important; margin: 20px 0 0 !important; font-size: 14.5px !important; }
+@media (max-width: 1023px) {
+  html body #page-acasa .sr-row.r16-bleed > .sr-media { margin: 28px 8px 0 !important; position: static !important; }
+  html body #page-acasa .sr-row.r16-bleed .photo-evidence { grid-template-columns: 120px minmax(0, 1fr) !important; gap: 22px !important; margin-inline: 8px !important; }
+}
+
+/* ---------- 4. nav: la hover doar linia de dedesubt și mărirea comună, fără fundal ---------- */
+html body #site-nav :is(.toc-link, .st-pages > a, .about-trigger, .st-brand, .pz-open):is(:hover, :focus-visible, .active) { background: transparent !important; }
+html body .pz-open.ah-r-innav:hover { background: transparent !important; }
+@media (max-width: 760px) {
+  html body #page-acasa .r9-car .si-grid > .si.si { padding: 24px 26px 26px !important; }
+}

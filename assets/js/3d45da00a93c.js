@@ -42,11 +42,11 @@
     var focusables = cards.map(function (c) { return Array.prototype.slice.call(c.querySelectorAll('a, button, [tabindex]')); });
 
     var at = 0;
-    function offset(j) { var d = j - at; return d; }               // fără buclă: capetele rămân capete
+    function offset(j) { var d = ((j - at) % N + N) % N; return d > N / 2 ? d - N : d; }   // în buclă: mereu o fișă în stânga și una în dreapta
     // scena are înălțimea fișei din centru (vecinele, micșorate, încap în ea), deci nu rămâne gol sub o fișă scurtă
     function height() {
       var h = cards[at].offsetHeight;
-      [at - 1, at + 1].forEach(function (j) { if (cards[j]) h = Math.max(h, cards[j].offsetHeight * 0.82); });
+      [(at + N - 1) % N, (at + 1) % N].forEach(function (j) { if (cards[j]) h = Math.max(h, cards[j].offsetHeight * 0.82); });
       grid.style.height = Math.ceil(h) + 'px';
     }
     function layout() {
@@ -61,9 +61,9 @@
       });
       var nm = cards[at].querySelector('.si-name');
       pos.textContent = 'Izvorul ' + (at + 1) + ' din ' + N + (nm ? ': ' + nm.textContent.trim() : '');
-      prev.disabled = at === 0; next.disabled = at === N - 1;
+      prev.disabled = false; next.disabled = false;
     }
-    function go(k) { at = Math.max(0, Math.min(N - 1, k)); layout(); height(); }
+    function go(k) { at = ((k % N) + N) % N; layout(); height(); }
     prev.addEventListener('click', function () { go(at - 1); });
     next.addEventListener('click', function () { go(at + 1); });
     dots.forEach(function (d, k) { d.addEventListener('click', function () { go(k); }); });
