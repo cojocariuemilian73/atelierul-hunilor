@@ -1,0 +1,72 @@
+/* Runda 19: orbita „Mit sau adevăr?” mai bogată — piese mai mari pe o scenă mai lată, mișcare organică (rotire foarte lentă
+   + o derivă mică, diferită la fiecare piesă), umbră caldă pe „pământ” sub fiecare piesă și o ramă fină de bronz. Prefix: r19-. */
+
+/* ---------- scena: iese din coloana textului, cât permite ecranul ---------- */
+html body #page-acasa .r10-orb-sec { overflow-x: visible !important; }
+html body #page-acasa .r10-stage {
+  --W: min(1300px, calc(100vw - 80px));
+  width: var(--W) !important; max-width: none !important; margin-left: calc(50% - var(--W) / 2) !important; margin-right: 0 !important;
+}
+html body #page-acasa .r10-orb {
+  --S: clamp(120px, 12cqw, 156px);
+  --Rx: calc(50cqw - var(--S) * .66); --Ry: calc(31.875cqw - var(--S) * .6);
+  aspect-ratio: 16 / 10.2 !important;
+}
+/* fără abateri fixe: viața o dă deriva de mai jos; răsfirarea pe contur e calibrată ca distanța dintre piese să rămână ≥ 26 px la orice unghi */
+html body #page-acasa .r10-items > li { --jx: 0px !important; --jy: 0px !important; --t: calc(var(--u) + sin(calc(var(--u) * 2)) * 8deg) !important; }
+/* rotire mult mai lentă: aproape nu o vezi, o simți */
+html body #page-acasa .r10-orb.is-spinning { animation-duration: 160s !important; }
+
+/* ---------- piesa: ramă fină de bronz pe un inel de pergament, umbră caldă în două straturi ---------- */
+html body #page-acasa .r10-items > li { --s: calc(var(--S) * (1 + sin(calc(var(--i) * 1.3rad)) * .04)); }
+html body #page-acasa .r10-it {
+  box-shadow:
+    0 0 0 3px #f3eadb,
+    0 0 0 4px rgba(160, 124, 34, .7),
+    0 26px 34px -18px rgba(60, 35, 15, .5),
+    0 8px 12px -8px rgba(60, 35, 15, .35) !important;
+}
+html body #page-acasa .r10-it[aria-expanded="true"] {
+  box-shadow: 0 0 0 3px #f3eadb, 0 0 0 5px #9a3f24, 0 26px 34px -18px rgba(60, 35, 15, .5) !important;
+}
+/* umbra pe „pământ”: stă pe loc cât piesa plutește, deci se vede că piesa e în aer */
+html body #page-acasa .r10-items > li::before {
+  content: ""; position: absolute; pointer-events: none;
+  left: calc(var(--s) * -.36); top: calc(var(--s) * .44); width: calc(var(--s) * .72); height: calc(var(--s) * .16);
+  border-radius: 50%; background: radial-gradient(closest-side, rgba(60, 35, 15, .26), rgba(60, 35, 15, 0));
+  filter: blur(3px);
+}
+
+/* ---------- deriva: fiecare piesă își face bucla ei mică, în alt ritm (cel mult ~7 px) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .r10-it {
+    animation: r19-drift calc(8s + var(--i) * .61s) ease-in-out calc(var(--i) * -1.37s) infinite !important;
+  }
+}
+@keyframes r19-drift {
+  0%, 100% { translate: 0 0; }
+  25% { translate: 4px -5px; }
+  50% { translate: -2px -7px; }
+  75% { translate: -5px -2px; }
+}
+
+/* ---------- centrul: doar întrebarea, mai amplă ---------- */
+html body #page-acasa .r10-hub .r10-hint { display: none !important; }
+html body #page-acasa .r10-hub .r10-q { font-size: clamp(30px, 3.4vw, 48px) !important; line-height: 1.05 !important; margin: 0 !important; }
+
+/* ---------- telefon: scena pe toată lățimea, elipsa înaltă ---------- */
+@media (max-width: 699px) {
+  html body #page-acasa .r10-stage { --W: calc(100vw - 24px); }
+  html body #page-acasa .r10-orb { --S: 54px; --Rx: calc(50cqw - var(--S) * .58); --Ry: calc(85cqw - var(--S) * .58); aspect-ratio: 1 / 1.7 !important; }
+  /* pe ecranul mic nu e loc de derivă: piesele doar se rotesc lent; rama e mai subțire */
+  html body #page-acasa .r10-it { animation: none !important; box-shadow: 0 0 0 2px #f3eadb, 0 0 0 3px rgba(160, 124, 34, .7), 0 14px 20px -12px rgba(60, 35, 15, .5) !important; }
+  html body #page-acasa .r10-items > li { --t: var(--u) !important; }
+  html body #page-acasa .r10-hub .r10-q { font-size: 26px !important; }
+  html body #page-acasa .r10-items > li::before { filter: blur(2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa .r10-it { animation: none !important; translate: none !important; }
+}
+
+/* ---------- creditul hărții de bază: mai mic ---------- */
+html body #page-acasa .map-credit { font-size: 13.5px !important; line-height: 1.5 !important; }
