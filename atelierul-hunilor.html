@@ -15844,6 +15844,29 @@ html body #page-acasa #acasa .title .hero-title-main .fw:last-child {
   html body #page-acasa #acasa .title :is(.hero-title-prefix, .hero-title-main .fw:first-child) { font-size: 15px !important; letter-spacing: .3em !important; }
 }
 html body #page-acasa #acasa .title .hero-title-prefix { margin-right: .42em; }
+
+/* coperta pe tot ecranul: fără anii și fraza de sub frescă; fresca umple pagina, creditul stă discret în colțul ei */
+html body #page-acasa #acasa.hero {
+  --fresca-row: calc(100svh - 44px); --fresca-edge: clamp(10px, 1.2vw, 20px);
+  width: 100% !important; max-width: none !important; min-height: calc(100svh - 44px) !important; height: auto !important;
+  grid-template-rows: var(--fresca-row) !important; padding-bottom: 0 !important;
+}
+html body #page-acasa #acasa .hero-end { display: none !important; }
+html body #page-acasa #acasa :is(.hero-bg, .hero-foreground) { max-height: none !important; }
+html body #page-acasa #acasa :is(.hero-bg, .hero-scrim, .hero-foreground) {
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent, #000 var(--fresca-edge), #000 calc(100% - var(--fresca-edge)), transparent),
+    linear-gradient(180deg, #000 0, #000 92%, transparent) !important;
+  mask-image:
+    linear-gradient(90deg, transparent, #000 var(--fresca-edge), #000 calc(100% - var(--fresca-edge)), transparent),
+    linear-gradient(180deg, #000 0, #000 92%, transparent) !important;
+}
+html body #page-acasa #acasa + .hero-credit {
+  position: relative; z-index: 5; margin: -36px auto 0 !important; padding: 0 clamp(16px, 3vw, 48px) 10px !important;
+  width: 100% !important; text-align: right; font-size: 12px !important; color: rgba(255, 244, 222, .82) !important;
+  text-shadow: 0 1px 6px rgba(20, 12, 6, .8);
+}
+html body #page-acasa #acasa + .hero-credit :is(i, em, a) { color: inherit !important; }
 </style>
 <script id="runda13-js">
 /* Runda 13: deocamdată doar stiluri (coperta). Prefix: r13-. */
