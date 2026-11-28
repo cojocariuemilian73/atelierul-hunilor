@@ -66,7 +66,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Rafael, Întâlnirea lui Leon cel Mare cu Attila (1514), detaliu">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="stil-7ad1a83bdecd.css">
+<link rel="stylesheet" href="stil-036616fc9841.css">
 <script id="r9-notes">
 window.R9_NOTES = {"Solidul lui Teodosie al II-lea":"<aside class=\"r9-note r9-in\" aria-label=\"Știai că…? 1.439 de solizi\"><p class=\"r9n-tag\">Știai că…?<\/p><p class=\"r9n-num\">1.439<\/p><p class=\"r9n-unit\">de solizi<\/p><p class=\"r9n-text\">Descoperirile arheologice arată o circulație mai largă a aurului în societatea hunică: tezaurul de la Szikáncs, lângă Tisa, cuprinde 1.439 de solizi, dintre care 1.405 ai lui Teodosie al II-lea. Asta înseamnă aproape exact 20 de livre romane (72 de solizi la livră), probabil o plată rotundă ajunsă din tribut în mâinile unui membru al elitei, nu în vistieria lui Attila.<\/p><p class=\"r9n-src\">Sursa: Bíró-Sey 1976 (tezaurul de la Szikáncs)<\/p><\/aside>","Spatha hunică":"<aside class=\"r9-note r9-in\" aria-label=\"Știai că…? Puține armuri\"><p class=\"r9n-tag\">Știai că…?<\/p><p class=\"r9n-title\">Puține armuri<\/p><p class=\"r9n-text\">Izvoarele îi descriu mai ales ca arcași călare, care atacau de la distanță, iar în mormintele hunice s-au găsit puține piese de armură. Zalele și coifurile apar totuși la elite, adesea luate de la romani. Cât de des purtau hunii armură e încă discutat de istorici.<\/p><p class=\"r9n-src\">Sursa: Maenchen-Helfen 1973, capitolul despre război<\/p><\/aside>"};
 </script>
@@ -1133,7 +1133,7 @@ window.R9_NOTES = {"Solidul lui Teodosie al II-lea":"<aside class=\"r9-note r9-i
 <!-- runda9:end -->
 <!-- runda10:start -->
 
-<script id="runda10-js" src="assets/js/e2bf67d59092.js"></script>
+<script id="runda10-js" src="assets/js/927e588df28d.js"></script>
 <!-- runda10:end -->
 <!-- runda11:start -->
 
@@ -1394,7 +1394,7 @@ html body #page-acasa #biblio > .r14-page:last-child { animation: none !importan
 <!-- runda23:end -->
 <!-- runda24:start -->
 
-<script id="runda24-js" src="assets/js/8c74cee8bc12.js"></script>
+<script id="runda24-js" src="assets/js/498865266f51.js"></script>
 <!-- runda24:end -->
 <!-- runda25:start -->
 
@@ -1447,5 +1447,31 @@ html body #page-acasa #biblio > .r14-page:last-child { animation: none !importan
 })();
 </script>
 <!-- runda26:end -->
+<!-- runda27:start -->
+
+<script id="runda27-js">
+/* Runda 27. Prefix: r27-.
+   1. „Drumul hunilor” (#sec-drum) se mută chiar înainte de „Personalități”.
+   2. Orbita „Mit sau adevăr?” primește praful de stepă care urmărește cursorul (praf.js lucrează pe orice [data-praf]). */
+(function () {
+  function drum() {
+    var d = document.getElementById('sec-drum'), p = document.getElementById('sec-personalitati');
+    if (!d || !p || d.nextElementSibling === p) return;
+    p.parentNode.insertBefore(d, p);
+  }
+  function praf() {
+    var s = document.getElementById('sec-curiozitati');
+    if (!s) return false;
+    s.setAttribute('data-praf', '');
+    return true;
+  }
+  drum();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', drum);
+  var tries = 0;
+  function again() { if (!praf() && ++tries < 40) setTimeout(again, 250); }
+  if (document.readyState === 'complete') again(); else addEventListener('load', again);
+})();
+</script>
+<!-- runda27:end -->
 </body>
 </html>
