@@ -86,7 +86,8 @@
       var vh = window.innerHeight;
       left = left.filter(function (p) {
         var r = p.getBoundingClientRect();
-        if (r.top < vh * 0.72 && r.bottom > vh * 0.2) { p.classList.remove('r14-wait'); p.classList.add('r14-go'); return false; }
+        if (r.top < vh * 0.72) {   // și paginile deja trecute (salt prin cuprins): nimic nu rămâne ascuns în urmă
+          p.classList.remove('r14-wait'); p.classList.add('r14-go'); return false; }
         return true;
       });
     }

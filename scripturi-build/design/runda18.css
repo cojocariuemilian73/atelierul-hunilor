@@ -1,0 +1,34 @@
+/* Runda 18: povestea continuă — paginile se leagă cap la cap, fără goluri între ele. Prefix: r18-.
+   1. Capitolele nu mai au margini sau spațiere proprie: ritmul îl dă pagina, aceeași peste tot.
+   2. Pagina are înălțimea conținutului ei (nu un ecran întreg cu gol deasupra și dedesubt); tot ea e punctul de oprire la derulare.
+   3. La ieșire pagina se estompează puțin, la intrare revine — legat direct de poziția derulării, deci nu rămâne nimic ascuns. */
+
+/* ---------- 1. capitolele se ating ---------- */
+html body #page-acasa :is(#sec-drum, #sec-origini, #sec-cronologie, #sec-curiozitati, #sec-migratie, #sec-atlas, #sec-personalitati, #sec-glosar, #biblio) {
+  margin-top: 0 !important; margin-bottom: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important;
+}
+html body #page-acasa .r10-orb-sec.r10-orb-sec { margin: 0 !important; }
+html body #page-acasa .main-col > .cta-card { margin: 24px auto !important; scroll-snap-align: start; scroll-margin-top: 68px; }
+html body .site-final-footer { margin-top: 0 !important; }
+
+/* ---------- 2. pagina: cât conținutul, cu același ritm sus și jos ---------- */
+html body #page-acasa .r14-page { min-height: 0 !important; padding-block: clamp(28px, 4.5svh, 48px) !important; justify-content: flex-start !important; }
+/* pagina care deschide un capitol primește puțin mai mult aer deasupra titlului, ca un început de pagină de carte */
+html body #page-acasa .r14-page:has(> .r2-head) { padding-top: clamp(40px, 7svh, 72px) !important; }
+/* oprirea la derulare cade puțin sub bară, ca titlul să nu stea lipit de ea */
+html body #page-acasa .r14-page { scroll-margin-top: 44px; }
+
+/* ---------- 3. trecerea de la o pagină la alta, legată de derulare ---------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html body #page-acasa .r14-page {
+      animation: r18-turn linear both; animation-timeline: view(); animation-range: exit 60% exit 100%;
+    }
+    @keyframes r18-turn { to { opacity: .55; } }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #page-acasa .r14-page { animation: none !important; }
+}
+/* ultima pagină nu are după ea altă pagină care s-o înlocuiască: rămâne mereu deplin vizibilă */
+html body #page-acasa #biblio > .r14-page:last-child { animation: none !important; }

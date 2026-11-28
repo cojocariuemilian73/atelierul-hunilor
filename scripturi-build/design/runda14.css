@@ -21,7 +21,7 @@ html body #page-acasa .r14-page > p { max-width: 68ch !important; }
   html.r14-on:has(#page-acasa.active) { scroll-snap-type: y proximity; }
 }
 @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-  html.r14-on:has(#page-acasa.active) { scroll-snap-type: y mandatory; }
+  html.r14-on:has(#page-acasa.active) { scroll-snap-type: y proximity; }
 }
 
 /* ---------- 2. intrarea: litere, apoi textul, imaginile din centru ---------- */
