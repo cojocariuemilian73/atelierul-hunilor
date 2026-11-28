@@ -17129,6 +17129,19 @@ html body #page-acasa #acasa .title { margin-top: calc(44px + var(--fresca-heigh
 }
 /* acum titlul e sus și mic dedesubt: trebuie să stea deasupra siluetelor din prim-plan, nu în spatele lor */
 html body #page-acasa #acasa .title { z-index: 4 !important; }
+
+/* ---------- runda 26b: „MIGRAȚIE” în același font și aproape aceeași mărime, mai jos, între călăreți ----------
+   titlul coboară din nou sub prim-plan (z 2 < 3): coifurile călăreților din față trec ușor peste baza literelor,
+   dar literele rămân întregi la vedere cât să se citească */
+html body #page-acasa #acasa .title { z-index: 2 !important; }
+html body #page-acasa #acasa .title .hero-title-main .fw:last-child {
+  margin-top: .06em !important; font-size: calc(var(--r13-t) * .72) !important; letter-spacing: .1em !important; padding-left: .1em !important;
+  line-height: .9 !important; color: #fff4de !important;
+}
+html body #page-acasa #acasa .title::before { top: 58%; height: 150%; }
+@media (max-width: 540px) {
+  html body #page-acasa #acasa .title .hero-title-main .fw:last-child { font-size: 12.5vw !important; letter-spacing: .08em !important; padding-left: .08em !important; margin-top: .25em !important; }
+}
 </style>
 <script id="runda26-js">
 /* Runda 26: bara de sus devine transparentă cât timp stă peste copertă. Prefix: r26-. */
