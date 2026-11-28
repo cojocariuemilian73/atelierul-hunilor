@@ -5044,7 +5044,7 @@ html body #page-acasa .time-tick::after { content: ""; position: absolute; inset
     <li class="dmn-step" style="--i:5"><span class="dmn-year">406</span><b class="dmn-who">Vandalii și alanii</b><span class="dmn-what">trec Rinul în Galia</span></li>
     <li class="dmn-step dmn-roma" style="--i:6"><span class="dmn-year">410</span><b class="dmn-who">Roma</b><span class="dmn-what">jefuită de vizigoții lui Alaric</span></li>
   </ol>
-  <p class="dmn-foot"><span>Surse: Ammianus Marcellinus 31.2–31.13 (<a href="#note-8">nota 8</a>), moartea lui Ermanaric (<a href="#note-9">nota 9</a>), Prosper (<a href="#note-14">nota 14</a>). Schemă simplificată: lanțul arată ordinea presiunilor, nu o migrație unică și planificată.</span><button type="button" class="dmn-replay" aria-label="Reia căderea pieselor"><span aria-hidden="true">↺</span> Reia</button></p>
+  <p class="dmn-foot"><span>Surse: Ammianus Marcellinus 31.2–31.13 (<a href="#note-8">nota 8</a>), moartea lui Ermanaric (<a href="#note-9">nota 9</a>), Prosper (<a href="#note-14">nota 14</a>). Schemă simplificată: lanțul arată ordinea presiunilor, nu o migrație unică și planificată.</span></p>
 </figure>
 <!-- domino:end -->
       <!-- pq:start --><figure class="pq"><blockquote><p>Orașul care a cucerit lumea întreagă a fost cucerit el însuși.</p></blockquote><figcaption><b>Ieronim</b>, Scrisoarea 127, despre jefuirea Romei (410) · traducere adaptată</figcaption></figure><!-- pq:end -->
@@ -10786,7 +10786,7 @@ html body #page-acasa .dmn-replay:focus-visible { outline: 2px solid #8a3520; ou
 /* Efectul de domino: piesele cad în lanț o singură dată, când pista ajunge în ecran, și rămân culcate.
    Unghiul final al fiecărei piese se calculează din geometrie: ultima stă pe pământ (90°), iar fiecare piesă de dinainte
    se sprijină de cea care urmează. Căderea se calculează cadru cu cadru: fiecare piesă cade liber, dar nu trece de vecina ei.
-   „Reia” le ridică și le lasă din nou. */
+   La derularea în jos cad de la capăt de fiecare dată; la derularea în sus se ridică ușor. */
 (function () {
   var STEP = 260; // ms între piese
 
@@ -10867,11 +10867,33 @@ html body #page-acasa .dmn-replay:focus-visible { outline: 2px solid #8a3520; ou
       })(performance.now());
     }
 
+    // ridicarea: același calcul, rulat înapoi și ceva mai încet; la final piesele stau drepte
+    function rise() {
+      if (!fallen) return;
+      fallen = false;
+      fig.classList.remove('is-fallen');
+      stop();
+      if (reduce || !window.requestAnimationFrame) { place(null); return; }
+      var t0 = null, end = (n - 1) * STEP + fallMs + 400, slow = 1.35;
+      (function frame(now) {
+        if (t0 === null) t0 = now;
+        var t = end - (now - t0) / slow;
+        if (t > 0) { place(angles(g, n, t, fallMs)); raf = requestAnimationFrame(frame); } else { raf = 0; place(null); }
+      })(performance.now());
+    }
+
     if (reduce || !('IntersectionObserver' in window)) fall(true);
     else {
-      // urmărește chiar pista, nu toată figura, ca piesele să cadă când se văd
+      // în jos: de fiecare dată când pista intră pe ecran, piesele pornesc de la capăt și cad;
+      // în sus: când pista iese pe la marginea de jos, piesele se ridică ușor
+      var lastY = window.scrollY, down = true;
+      addEventListener('scroll', function () { var y = window.scrollY; if (y !== lastY) down = y > lastY; lastY = y; }, { passive: true });
       var io = new IntersectionObserver(function (en) {
-        en.forEach(function (e) { if (e.isIntersecting) { fall(); io.disconnect(); } });
+        en.forEach(function (e) {
+          if (e.isIntersecting) { if (down || !fallen) { if (fallen) { stop(); place(null); fallen = false; } fall(); } }
+          else if (!down && e.boundingClientRect.top > 0) rise();
+          else if (down && e.boundingClientRect.top > 0 && fallen) { stop(); place(null); fallen = false; fig.classList.remove('is-fallen'); }
+        });
       }, { threshold: 0.6 });
       io.observe(track);
     }
@@ -10881,18 +10903,6 @@ html body #page-acasa .dmn-replay:focus-visible { outline: 2px solid #8a3520; ou
     function refit() { g = geometry(track); fallMs = STEP / Math.sqrt(g.hit / 90); if (fallen) { stop(); place(rest()); } }
     if (mq) { if (mq.addEventListener) mq.addEventListener('change', refit); else if (mq.addListener) mq.addListener(refit); }
 
-    var btn = fig.querySelector('.dmn-replay');
-    if (btn) btn.addEventListener('click', function () {
-      stop();
-      fig.classList.remove('is-fallen');
-      // ridică piesele și stinge cartonașele fără tranziție, apoi le lasă să cadă din nou
-      var steps = fig.querySelectorAll('.dmn-step');
-      Array.prototype.forEach.call(steps, function (s) { s.style.transition = 'none'; });
-      place(null);
-      void fig.offsetWidth;
-      Array.prototype.forEach.call(steps, function (s) { s.style.transition = ''; });
-      setTimeout(function () { fall(); }, 120);
-    });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
@@ -16016,5 +16026,102 @@ html body #page-acasa figcaption:not(.r2-ptol-side figcaption) { font-family: 'S
 })();
 </script>
 <!-- runda14:end -->
+<!-- runda15:start -->
+<style id="runda15-css">
+/* Runda 15: fără chenare în jurul textului, orbita fără linii (imaginile mari plutesc liber în jurul unui centru mic),
+   fișa deschisă cu poza fără ramă, bara de sus cu aceeași animație în stânga și în dreapta. Prefix: r15-. */
+
+/* ---------- 1. orbita „Mit sau adevăr?” ---------- */
+html body #page-acasa .r10-ring { display: none !important; }
+html body #page-acasa .r10-stage { width: min(1180px, 100%) !important; }
+html body #page-acasa .r10-orb {
+  --S: clamp(112px, 11.2cqw, 146px);
+  --Rx: calc(50cqw - var(--S) * .64); --Ry: calc(28.125cqw - var(--S) * .56);
+  aspect-ratio: 16 / 9 !important; animation: none !important;
+}
+/* nu un cerc perfect: o elipsă largă, fiecare imagine ușor deplasată, puțin mai mare sau mai mică */
+html body #page-acasa .r10-items > li {
+  /* pe o elipsă lată, unghiurile egale îngrămădesc imaginile la capete; le răsfirăm după lungimea conturului */
+  --u: calc(var(--i) * 360deg / var(--n) - 90deg);
+  --t: calc(var(--u) + sin(calc(var(--u) * 2)) * 7deg);
+  --jx: calc(sin(calc(var(--i) * 2.7rad)) * 1.6cqw);
+  --jy: calc(cos(calc(var(--i) * 1.9rad)) * 1.4cqw);
+  transform: translate(calc((cos(var(--t)) * var(--Rx) + var(--jx)) * var(--r10-k)), calc((sin(var(--t)) * var(--Ry) + var(--jy)) * var(--r10-k))) !important;
+}
+html body #page-acasa .r10-it {
+  --s: calc(var(--S) * (1 + sin(calc(var(--i) * 1.3rad)) * .1));
+  left: calc(var(--s) / -2) !important; top: calc(var(--s) / -2) !important; width: var(--s) !important; height: var(--s) !important;
+  border: 0 !important; background: #e8dfca !important;
+  box-shadow: 0 22px 34px -22px rgba(43, 30, 22, .6) !important;
+}
+html body #page-acasa .r10-it img { filter: none; }
+html body #page-acasa .r10-it[aria-expanded="true"] { box-shadow: 0 0 0 3px #9a3f24, 0 22px 34px -22px rgba(43, 30, 22, .6) !important; }
+/* plutesc: fiecare în ritmul lui, câțiva pixeli în sus și în jos */
+@media (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .r10-it { animation: r15-float calc(5.5s + var(--i) * .37s) ease-in-out calc(var(--i) * -.9s) infinite alternate; }
+}
+@keyframes r15-float { from { translate: 0 6px; } to { translate: 0 -8px; } }
+/* centrul: mic, fără cerc și fără umbră */
+html body #page-acasa .r10-hub { width: min(300px, 28cqw) !important; background: none !important; border: 0 !important; box-shadow: none !important; }
+
+/* fișa deschisă: fără ramă, poza ocupă toată lățimea, la fel la toate */
+html body #page-acasa .r10-card { top: 50% !important; max-height: min(86svh, 760px) !important; border: 0 !important; }
+html body #page-acasa .r10-fig { background: none !important; border: 0 !important; }
+html body #page-acasa .r10-fig img { width: 100% !important; height: 280px !important; padding: 0 !important; object-fit: cover !important; object-position: 50% 40%; border: 0 !important; }
+html body #page-acasa .r10-fig figcaption { padding: 8px 28px 0 !important; }
+
+@media (max-width: 699px) {
+  html body #page-acasa .r10-stage { width: 100% !important; }
+  html body #page-acasa .r10-orb { --S: 64px; --Rx: calc(50cqw - var(--S) * .58); --Ry: calc(80cqw - var(--S) * .58); aspect-ratio: 1 / 1.6 !important; }
+  html body #page-acasa .r10-items > li { --jx: 0px; --jy: 0px; --t: var(--u); }
+  html body #page-acasa .r10-hub { width: 36cqw !important; }
+  html body #page-acasa .r10-card { top: auto !important; max-height: none !important; }
+  html body #page-acasa .r10-fig img { height: 220px !important; }
+}
+
+/* ---------- 2. bara de sus: dreapta primește aceeași animație ca stânga (o linie aurie care crește de la stânga) ---------- */
+@media (min-width: 1100px) {
+  html body #site-nav .r10-r :is(a, .about-trigger) {
+    position: relative; border-radius: 0 !important; background: transparent !important; box-shadow: none !important;
+  }
+  html body #site-nav .r10-r a::before { display: none !important; }
+  html body #site-nav :is(.r10-l, .r10-r) :is(a, .about-trigger)::after {
+    content: "" !important; position: absolute !important; left: 9px !important; right: 9px !important; bottom: 10px !important; top: auto !important;
+    width: auto !important; height: 1.5px !important; background: #a88a3c !important; border: 0 !important;
+    transform: scaleX(0) !important; transform-origin: left center !important; opacity: 1 !important;
+    transition: transform 320ms cubic-bezier(.22, 1, .36, 1) !important;
+  }
+  html body #site-nav :is(.r10-l, .r10-r) :is(a, .about-trigger):is(:hover, :focus-visible, .active, [aria-current])::after { transform: scaleX(1) !important; }
+  html body #site-nav .r10-r a:is(.active, .current, [aria-current]) { box-shadow: none !important; background: transparent !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #site-nav :is(.r10-l, .r10-r) :is(a, .about-trigger)::after { transition: none !important; }
+}
+
+/* ---------- 3. fără chenare în jurul textului: fără margini, umbre sau fundal de casetă ---------- */
+html body #page-acasa :is(.r9-note, .callout, .source-caution, .margus-context, .gold-context, .duel-context, .gs, .hx, .si-wrap,
+  .si-wrap .si.si, .ux-cart, .duel.dk, .duel.dk .duel-card.dk-card, .cta-card, .journey-caption, .dx-451, #sec-glosar, #biblio, .r10-sec, .ah-r-key, .cs-step) {
+  border: 0 !important; box-shadow: none !important; border-radius: 0 !important;
+}
+html body #page-acasa :is(.r9-note, .callout, .source-caution, .margus-context, .gold-context, .duel-context, .gs, .hx, .si-wrap,
+  .si-wrap .si.si, .ux-cart, .cta-card, .journey-caption, .dx-451, #sec-glosar, #biblio, .r10-sec) {
+  background: transparent !important; background-image: none !important;
+}
+/* Aetius: fără panou; Attila își păstrează cele două tonuri (fondul compoziției), dar fără umbră */
+html body #page-acasa #sec-personalitati .duel.dk.r12 .duel-card.r12-b { background: transparent !important; }
+html body #page-acasa #sec-personalitati .duel.dk.r12 .r12-b .dc-epithet { border: 0 !important; padding-left: 0 !important; }
+/* notele: textul rămâne cu eticheta lui, fără bara din stânga; spațiul interior nu mai e nevoie */
+html body #page-acasa :is(.r9-note, .callout, .source-caution) { padding: 0 !important; }
+html body #page-acasa .r2-head .ah-r-key { padding-left: 0 !important; }
+/* fișele izvoarelor: fără banda colorată de sus */
+html body #page-acasa .si-wrap .si.si::before { display: none !important; }
+/* panoul lui Ptolemeu își păstrează fondul (compoziția de muzeu), dar fără ramă și umbră */
+html body #page-acasa .ptol-map.diagram { border: 0 !important; box-shadow: none !important; }
+html body #page-acasa .dmn { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+</style>
+<script id="runda15-js">
+/* Runda 15: doar stiluri. */
+</script>
+<!-- runda15:end -->
 </body>
 </html>
