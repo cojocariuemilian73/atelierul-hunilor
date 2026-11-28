@@ -1,0 +1,103 @@
+/* Runda 25. Prefix: r25-.
+   1. fără butonul „Reia animația”;  2. domino: poza mare în stânga cu titlul peste ea, etapele în dreapta;
+   3. „500 de solizi” + Atlas + surse pe două zone;  4. Personalități: panoul lui Attila fără margini tăiate, cap strâns;
+   5. trecerea Attila → Aetius mai legată, „453” în bronz;  6. „Sabia lui Marte” echilibrată cu fotografia. */
+
+/* ---------- 1 ---------- */
+html body #page-acasa .gs-replay { display: none !important; }
+
+/* ---------- 2. domino ---------- */
+@media (min-width: 1024px) {
+  html body #page-acasa #sec-migratie .sr-row.r17-big.r17-big {
+    /* se lărgește doar spre stânga: marginea dreaptă rămâne a coloanei, ca firul drumului din fundal să nu treacă prin etape */
+    --X: calc((100vw - 100%) / 2 - 40px);
+    width: calc(100% + var(--X)) !important; max-width: none !important; margin-left: calc(-1 * var(--X)) !important; margin-right: 0 !important;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr) !important; grid-template-rows: auto auto 1fr !important;
+    column-gap: 64px !important; row-gap: 0 !important; align-items: start !important;
+  }
+  html body #page-acasa #sec-migratie .r17-big > .sr-media { grid-column: 1 !important; grid-row: 1 / span 3 !important; margin: 0 !important; }
+  html body #page-acasa #sec-migratie .r17-big .sr-text > h3.sub-title {
+    grid-column: 1 !important; grid-row: 1 !important; position: relative; z-index: 2; align-self: start !important;
+    margin: 44px 48px 12px !important; max-width: 14ch; color: #f6ecd8 !important; text-shadow: 0 2px 18px rgba(20, 12, 6, .45);
+  }
+  html body #page-acasa #sec-migratie .r17-big .r17-acc { color: #e0bd6a !important; }
+  html body #page-acasa #sec-migratie .r17-big .sr-text > p {
+    grid-column: 1 !important; grid-row: 2 !important; position: relative; z-index: 2; margin: 0 48px !important; max-width: 36ch;
+    color: #f1e6cf !important; font-size: 17px !important; text-shadow: 0 1px 10px rgba(20, 12, 6, .5);
+  }
+  html body #page-acasa #sec-migratie .r17-big .domino-list { grid-column: 2 !important; grid-row: 1 / span 3 !important; align-self: center !important; gap: 28px !important; }
+  html body #page-acasa #sec-migratie .r17-big .sr-fig { position: relative; margin: 0 !important; }
+  /* umbra caldă doar în partea de sus a fotografiei, cât să se citească titlul; restul imaginii rămâne curat */
+  html body #page-acasa #sec-migratie .r17-big .sr-fig::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 56%; z-index: 1; pointer-events: none; border-radius: 2px 2px 0 0;
+    background: linear-gradient(180deg, rgba(30, 19, 10, .82) 0, rgba(30, 19, 10, .55) 40%, rgba(30, 19, 10, 0) 100%);
+  }
+  html body #page-acasa #sec-migratie .r17-big .sr-fig img { aspect-ratio: 6 / 5 !important; max-height: none !important; object-position: 50% 60% !important; }
+}
+
+/* ---------- 3. „500 de solizi”, trimiterea spre Atlas, sursele ---------- */
+html body #page-acasa .r25-after { display: grid; gap: 28px; margin: 8px 0 0; }
+html body #page-acasa .r25-after > aside.r9-note { max-width: none !important; margin: 0 !important; }
+html body #page-acasa .r25-after .r9n-num { font-size: clamp(56px, 5vw, 76px) !important; line-height: 1 !important; }
+html body #page-acasa .r25-side { display: flex; flex-direction: column; gap: 18px; justify-content: center; }
+html body #page-acasa .r25-side .to-atlas { max-width: none !important; margin: 0 !important; }
+html body #page-acasa .r25-side .section-sources { max-width: none !important; margin: 0 !important; font-size: 14px !important; line-height: 1.6 !important; }
+/* trimiterea spre Atlas: o placă de pergament cu ramă fină de bronz; tot rândul e legătura */
+html body #page-acasa .r25-side .to-atlas {
+  padding: 22px 26px !important; border: 0 !important; border-radius: 4px !important; font-size: 17px !important; line-height: 1.5 !important;
+  background: linear-gradient(180deg, #f6ecd6, #eedfbf) !important;
+  box-shadow: 0 0 0 1px rgba(160, 124, 34, .55), 0 22px 30px -24px rgba(60, 35, 15, .5) !important;
+}
+html body #page-acasa .r25-side .to-atlas a {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 10px 18px; border-radius: 999px; border: 0 !important;
+  background: #2b1d12 !important; color: #f6ecd8 !important; text-decoration: none !important; font-weight: 600; font-size: 14px;
+  transition: scale var(--r6-dur, 220ms) var(--r6-ease, ease), background-color 200ms ease;
+}
+html body #page-acasa .r25-side .to-atlas a:hover { background: #3a2a1e !important; }
+html body #page-acasa .r25-side .to-atlas a:focus-visible { outline: 2px solid #9a3f24; outline-offset: 3px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .r25-side .to-atlas a:is(:hover, :focus-visible) { scale: var(--r6-hover, 1.025); }
+}
+@media (min-width: 1024px) {
+  html body #page-acasa .r25-after { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); column-gap: 64px; align-items: center; }
+  html body #page-acasa .r25-after .r9n-text { font-size: 17px !important; line-height: 1.6 !important; }
+}
+html body #page-acasa .r14-page:has(> .r25-after) .gs { margin-bottom: 16px !important; }
+
+/* ---------- 4. Personalități: capul mai strâns, panoul lui Attila fără margini dure ---------- */
+html body #page-acasa #sec-personalitati > .r14-page:first-child { padding-bottom: 0 !important; }
+html body #page-acasa #sec-personalitati .duel.dk.r12 .duel-card.r12-a.r12-a { background: none !important; margin-top: 170px; }
+html body #page-acasa #sec-personalitati .duel.dk.r12 .duel-card.r12-a::before {
+  content: "" !important; display: block !important; position: absolute !important; inset: 0 !important; z-index: -2 !important;
+  border: 0 !important; width: auto !important; height: auto !important; opacity: 1 !important; transform: none !important;
+  background: radial-gradient(56% 60% at 50% 38%, rgba(232, 218, 176, .95), rgba(232, 218, 176, .55) 50%, rgba(232, 218, 176, 0) 100%) !important;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 110px, #000 70%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 110px, #000 70%, transparent 100%);
+}
+@media (max-width: 1023px) {
+  html body #page-acasa #sec-personalitati .duel.dk.r12 .duel-card.r12-a.r12-a { margin-top: 110px; }
+}
+
+/* ---------- 5. Attila → Aetius: mai aproape, „453” în bronz ---------- */
+html body #page-acasa #sec-personalitati .duel.dk.r12 { gap: 40px !important; row-gap: 40px !important; }
+html body #page-acasa #sec-personalitati .duel.dk.r12 .duel-card.r12-b { padding-top: 24px !important; }
+html body #page-acasa #sec-personalitati .duel.dk.r12 .r12-a .r12-ghost { -webkit-text-stroke: 1.4px rgba(160, 124, 34, .55) !important; bottom: 6px !important; }
+
+/* ---------- 6. „Sabia lui Marte” ---------- */
+@media (min-width: 1024px) {
+  html body #page-acasa #sec-personalitati .duel-context {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) !important; column-gap: 64px !important; align-items: center !important;
+  }
+  html body #page-acasa #sec-personalitati .duel-context > .r9-side { align-self: center !important; }
+  html body #page-acasa #sec-personalitati .duel-context > .r9-side .r9n-title { font-size: clamp(28px, 2.6vw, 38px) !important; line-height: 1.1 !important; margin-bottom: 14px !important; }
+  html body #page-acasa #sec-personalitati .duel-context > .r9-side .r9n-text { font-size: 18px !important; line-height: 1.65 !important; }
+}
+html body #page-acasa #sec-personalitati .duel-context figcaption { margin-top: 12px !important; font-size: 14.5px !important; line-height: 1.5 !important; }
+
+/* nota „500 de solizi” ia toată lățimea zonei ei (o regulă veche o ținea la 260 px) */
+html body #page-acasa .r14-page .r25-after > aside.r9-note.r9-note { width: auto !important; max-width: 520px !important; float: none !important; justify-self: end; }
+html body #page-acasa .r14-page .r25-after > aside.r9-note.r9-note > * { max-width: none !important; }
+html body #page-acasa .r25-side .to-atlas::before {
+  content: "Atlasul migrației"; display: block; margin: 0 0 4px; font: 600 12px/1 'Source Sans 3', system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; color: #9a3f24;
+}
+html body #page-acasa .r25-side .to-atlas a { white-space: normal; line-height: 1.4; }
