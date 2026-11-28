@@ -8444,3 +8444,61 @@ html body #page-acasa .r25-side .to-atlas::before {
   content: "Atlasul migrației"; display: block; margin: 0 0 4px; font: 600 12px/1 'Source Sans 3', system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; color: #9a3f24;
 }
 html body #page-acasa .r25-side .to-atlas a { white-space: normal; line-height: 1.4; }
+
+
+/* Runda 26: coperta. Prefix: r26-.
+   1. Titlul inversat: „HUNII ȘI MAREA” mare, „MIGRAȚIE” mic, rar, dedesubt; o umbră caldă doar în spatele literelor.
+   2. Bara de sus stă peste frescă, transparentă, cât timp ești pe copertă; după aceea revine la pergament. */
+
+/* ---------- 1. titlul ---------- */
+html body #page-acasa #acasa .title { position: relative; isolation: isolate; text-align: center; }
+html body #page-acasa #acasa .title :is(.hero-title-prefix, .hero-title-main .fw:first-child) {
+  font-size: calc(var(--r13-t) * .6) !important; letter-spacing: .02em !important; line-height: .95 !important; white-space: nowrap !important;
+}
+html body #page-acasa #acasa .title .hero-title-prefix { margin-right: .22em !important; }
+html body #page-acasa #acasa .title .hero-title-main .fw:last-child {
+  display: block; margin-top: .55em !important; font-size: calc(var(--r13-t) * .2) !important; line-height: 1 !important; letter-spacing: .62em !important;
+  padding-left: .62em; /* compensează spațierea de după ultima literă, ca rândul să stea pe centru */
+  color: #e9c98a !important;
+}
+/* umbra caldă, localizată: o elipsă estompată în spatele literelor, nu peste toată pictura */
+html body #page-acasa #acasa .title::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; top: 46%; width: 118%; height: 190%; translate: -50% -50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(28, 17, 9, .55), rgba(28, 17, 9, .28) 55%, rgba(28, 17, 9, 0));
+}
+html body #page-acasa #acasa .title { text-shadow: 0 2px 4px rgba(20, 12, 6, .55), 0 6px 30px rgba(20, 12, 6, .55) !important; }
+@media (max-width: 540px) {
+  html body #page-acasa #acasa .title :is(.hero-title-prefix, .hero-title-main .fw:first-child) { font-size: 9.4vw !important; letter-spacing: .01em !important; }
+  html body #page-acasa #acasa .title .hero-title-main .fw:last-child { font-size: 15px !important; letter-spacing: .5em !important; padding-left: .5em; }
+}
+
+/* ---------- 2. bara de sus peste copertă ---------- */
+/* coperta urcă sub bară, ca bara să stea pe frescă, nu pe o bandă deschisă */
+html body #page-acasa.active #acasa { margin-top: -44px !important; --fresca-row: 100svh !important; }
+html body #site-nav {
+  transition: background-color 360ms ease, border-color 360ms ease, box-shadow 360ms ease, backdrop-filter 360ms ease;
+}
+html body #site-nav.r26-over {
+  background: linear-gradient(180deg, rgba(24, 15, 8, .55), rgba(24, 15, 8, 0)) !important;
+  border-bottom-color: transparent !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+html body #site-nav.r26-over :is(.st-brand, .toc-link, .st-pages a, .about-trigger, .st-menu, .st-brand *) {
+  color: #f6ecd8 !important; text-shadow: 0 1px 8px rgba(20, 12, 6, .6);
+}
+html body #site-nav.r26-over :is(.toc-link, .st-pages a, .about-trigger)::after { background: #e0bd6a !important; }
+html body #site-nav.r26-over :is(.toc-link.active, .toc-link[aria-current]) { color: #fff4de !important; }
+html body #site-nav.r26-over :focus-visible { outline-color: #e0bd6a !important; }
+@media (min-width: 1100px) {
+  html body #site-nav { column-gap: 56px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #site-nav { transition: none !important; }
+}
+
+/* coperta a urcat 44 px sub bară: titlul coboară cu tot atât, plus puțin aer */
+html body #page-acasa #acasa .title { margin-top: calc(44px + var(--fresca-height, 100svh) * .045) !important; }
+@media (max-width: 540px) {
+  html body #page-acasa #acasa .title { margin-top: calc(44px + 18px) !important; }
+}
+/* acum titlul e sus și mic dedesubt: trebuie să stea deasupra siluetelor din prim-plan, nu în spatele lor */
+html body #page-acasa #acasa .title { z-index: 4 !important; }
