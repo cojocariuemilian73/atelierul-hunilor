@@ -7813,3 +7813,126 @@ html body #site-nav .r10-sep { display: none !important; }
 @media (min-width: 1100px) {
   html body #page-acasa .ptol-map.diagram { width: auto !important; margin-left: 0 !important; column-gap: 72px !important; }
 }
+
+
+/* Runda 17. Prefix: r17-. */
+
+/* ---------- 1. fișa deschisă din orbită: imaginea întreagă, fără bară de derulare, butoane rotunde care se ridică ---------- */
+html body #page-acasa .r10-card { scrollbar-width: none; }
+html body #page-acasa .r10-card::-webkit-scrollbar { display: none; }
+html body #page-acasa .r10-fig img { object-fit: contain !important; height: 320px !important; background: transparent !important; }
+html body #page-acasa .r10-card .r10-nav { gap: 12px; }
+html body #page-acasa .r10-nav button {
+  width: 48px; height: 48px; min-height: 48px; padding: 0 !important; border-radius: 999px !important; border: 0 !important;
+  box-shadow: 0 8px 16px -12px rgba(43, 30, 22, .6) !important; background: #2b1d12 !important; color: #f6ecd8 !important;
+  font-size: 18px !important; letter-spacing: 0 !important; scale: none !important;
+  transition: translate 260ms cubic-bezier(.22, 1, .36, 1), box-shadow 260ms ease, background-color 200ms ease !important;
+}
+html body #page-acasa .r10-nav .r10-close {
+  width: auto; padding: 0 22px !important; background: #e9dfc9 !important; color: #7a2e1a !important;
+  font: 600 13px/1 'Source Sans 3', system-ui, sans-serif !important; letter-spacing: .06em !important;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .r10-nav button:is(:hover, :focus-visible) { translate: 0 -3px; box-shadow: 0 14px 22px -12px rgba(43, 30, 22, .55) !important; }
+}
+html body #page-acasa .r10-nav button:hover { background: #3a2a1e !important; }
+html body #page-acasa .r10-nav .r10-close:hover { background: #e2d5ba !important; }
+
+/* ---------- 2. Marea Migrație după RenArt: titlul cu „Migrație” în cursiv auriu, imaginea în arcadă, moneda rotundă, anul mare ---------- */
+@media (min-width: 1024px) {
+  html body #page-acasa #sec-migratie .r2-head.r17-ren {
+    display: grid !important; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr) minmax(0, .8fr) !important;
+    grid-template-rows: auto auto; column-gap: 56px !important; row-gap: 24px !important; align-items: center !important;
+  }
+  html body #page-acasa .r17-ren > .r2-head-l { grid-column: 1; grid-row: 1 / span 2; }
+  html body #page-acasa .r17-ren > .r17-arch { grid-column: 2; grid-row: 1 / span 2; }
+  html body #page-acasa .r17-ren > .r17-year { grid-column: 3; grid-row: 1; align-self: end; }
+  html body #page-acasa .r17-ren > .ah-r-key { grid-column: 3; grid-row: 2; align-self: start; }
+}
+html body #page-acasa .r17-ren .sec-title .fw:last-child { display: block; font-style: italic !important; color: #a07c22 !important; }
+html body #page-acasa .r17-arch { position: relative; }
+html body #page-acasa .r17-arch .sr-fig { margin: 0 !important; }
+html body #page-acasa .r17-arch .ef-parch { display: block !important; background: none !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; }
+html body #page-acasa .r17-arch .sr-fig img {
+  display: block; width: 100% !important; height: auto !important; aspect-ratio: 1 / 1.08 !important; max-height: none !important;
+  object-fit: cover !important; object-position: 62% 50% !important; padding: 0 !important; border: 0 !important;
+  border-radius: 999px 999px 4px 4px !important; box-shadow: 0 30px 50px -30px rgba(43, 30, 22, .7) !important;
+}
+html body #page-acasa .r17-arch figcaption { margin: 14px 0 0 !important; font-size: 14px !important; }
+html body #page-acasa .r17-coin {
+  position: absolute; left: -44px; bottom: 96px; width: clamp(96px, 9vw, 132px); height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover;
+  box-shadow: 0 18px 30px -16px rgba(43, 30, 22, .7); z-index: 2;
+}
+html body #page-acasa .r17-year {
+  margin: 0 !important; font: 500 clamp(52px, 5.4vw, 88px)/1 'EB Garamond', Georgia, serif; letter-spacing: .02em; color: #221911;
+  font-variant-numeric: lining-nums;
+}
+html body #page-acasa .r17-ren .ah-r-key { border: 0 !important; padding: 0 !important; }
+/* rândul de unde a plecat imaginea: textul rămâne singur, pe o coloană de citit */
+html body #page-acasa .sr-row.r17-solo > .sr-media { display: none !important; }
+html body #page-acasa .sr-row.r17-solo > .sr-text { grid-column: 1 / -1 !important; max-width: 760px; margin-inline: auto !important; }
+@media (max-width: 1023px) {
+  html body #page-acasa #sec-migratie .r2-head.r17-ren { display: flex !important; flex-direction: column; gap: 24px; }
+  html body #page-acasa .r17-arch { width: min(420px, 86%); margin: 8px auto 0; }
+  html body #page-acasa .r17-coin { left: -24px; bottom: 80px; width: 84px; }
+  html body #page-acasa .r17-year { font-size: 56px; }
+}
+
+/* ---------- 3. Mecanismul efectului de domino după Stone Groove: titlu mare în două culori, poza mare la mijloc, lista numerotată ---------- */
+html body #page-acasa .r17-big .sr-text > h3 {
+  font: 600 clamp(40px, 4.4vw, 70px)/.98 'EB Garamond', Georgia, serif !important; letter-spacing: -.005em !important; text-transform: uppercase;
+  color: #221911 !important; margin: 0 0 22px !important;
+}
+html body #page-acasa .r17-big .sr-text > h3::before, html body #page-acasa .r17-big .sr-text > h3::after { display: none !important; }
+html body #page-acasa .r17-big .r17-acc { color: #9a3f24; }
+html body #page-acasa .r17-big .domino-list { list-style: none !important; counter-reset: r17; margin: 0 !important; padding: 0 !important; display: grid; gap: 22px; }
+html body #page-acasa .r17-big .domino-list > li { counter-increment: r17; padding: 0 !important; margin: 0 !important; font-size: 16px !important; line-height: 1.6 !important; }
+html body #page-acasa .r17-big .domino-list > li::before {
+  content: counter(r17, decimal-leading-zero); display: block; margin: 0 0 4px; font: 600 26px/1 'EB Garamond', Georgia, serif; color: #9a3f24;
+}
+html body #page-acasa .r17-big .domino-list > li::marker { content: none; }
+html body #page-acasa .r17-big .sr-fig img {
+  width: 100% !important; height: auto !important; aspect-ratio: 3 / 4 !important; max-height: 680px !important; object-fit: cover !important; object-position: 50% 55% !important;
+  padding: 0 !important; border: 0 !important; border-radius: 2px !important; box-shadow: 0 40px 60px -36px rgba(43, 30, 22, .75) !important;
+}
+@media (min-width: 1024px) {
+  html body #page-acasa .sr-row.r17-big {
+    display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) minmax(0, 1fr) !important; grid-template-rows: auto auto;
+    column-gap: 52px !important; align-items: center !important;
+  }
+  html body #page-acasa .r17-big > .sr-text { display: contents !important; }
+  html body #page-acasa .r17-big > .sr-media { grid-column: 2 !important; grid-row: 1 / span 2 !important; position: relative !important; top: auto !important; }
+  html body #page-acasa .r17-big .sr-text > h3 { grid-column: 1; grid-row: 1; align-self: end; }
+  html body #page-acasa .r17-big .sr-text > p { grid-column: 1; grid-row: 2; align-self: start; margin: 0 !important; }
+  html body #page-acasa .r17-big .domino-list { grid-column: 3; grid-row: 1 / span 2; }
+}
+@media (max-width: 1023px) {
+  html body #page-acasa .r17-big .sr-fig img { aspect-ratio: 4 / 3 !important; }
+}
+
+/* „03” mic, deasupra titlului; moneda în dreapta arcadei, ca titlul să nu intre peste imagine */
+html body #page-acasa .r17-ren .chapter-mark { display: block !important; }
+html body #page-acasa .r17-ren .chapter-num { display: block !important; margin: 0 0 10px !important; font: 600 14px/1 'Source Sans 3', system-ui, sans-serif !important; letter-spacing: .2em !important; color: #9a3f24 !important; }
+html body #page-acasa .r17-ren .chapter-num::before { content: "Capitolul "; }
+html body #page-acasa .r17-coin { left: auto; right: -44px; bottom: 110px; }
+@media (min-width: 1024px) {
+  html body #page-acasa #sec-migratie .r2-head.r17-ren { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) minmax(0, .8fr) !important; }
+}
+@media (max-width: 1023px) { html body #page-acasa .r17-coin { right: -22px; bottom: 84px; } }
+
+/* titlul mare câștigă în fața mărimii comune a subtitlurilor; poza ia mai mult loc */
+html body #page-acasa #sec-migratie .sr-row.r17-big .sr-text > h3.sub-title {
+  font: 600 clamp(40px, 3.7vw, 56px)/.98 'EB Garamond', Georgia, serif !important; text-transform: uppercase !important; letter-spacing: -.005em !important;
+}
+@media (min-width: 1024px) {
+  html body #page-acasa #sec-migratie .sr-row.r17-big { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.2fr) minmax(0, .95fr) !important; column-gap: 44px !important; }
+}
+@media (max-width: 860px) {
+  html body #page-acasa #sec-migratie .sr-row.r17-big .sr-text > h3.sub-title { font-size: 42px !important; }
+}
+@media (max-width: 1023px) {
+  html body #page-acasa .r17-ren > .r2-head-l { order: 0; }
+  html body #page-acasa .r17-ren > .r17-arch { order: 1; }
+  html body #page-acasa .r17-ren > .r17-year { order: 2; }
+  html body #page-acasa .r17-ren > .ah-r-key { order: 3; }
+}
