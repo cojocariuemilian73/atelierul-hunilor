@@ -7640,3 +7640,95 @@ html body #page-acasa figcaption:not(.r2-ptol-side figcaption) { font-family: 'S
 @media (prefers-reduced-motion: reduce) {
   html body #page-acasa :is(.r14-c, .r14-txt, .r14-img) { animation: none !important; opacity: 1 !important; }
 }
+
+
+/* Runda 15: fără chenare în jurul textului, orbita fără linii (imaginile mari plutesc liber în jurul unui centru mic),
+   fișa deschisă cu poza fără ramă, bara de sus cu aceeași animație în stânga și în dreapta. Prefix: r15-. */
+
+/* ---------- 1. orbita „Mit sau adevăr?” ---------- */
+html body #page-acasa .r10-ring { display: none !important; }
+html body #page-acasa .r10-stage { width: min(1180px, 100%) !important; }
+html body #page-acasa .r10-orb {
+  --S: clamp(112px, 11.2cqw, 146px);
+  --Rx: calc(50cqw - var(--S) * .64); --Ry: calc(28.125cqw - var(--S) * .56);
+  aspect-ratio: 16 / 9 !important; animation: none !important;
+}
+/* nu un cerc perfect: o elipsă largă, fiecare imagine ușor deplasată, puțin mai mare sau mai mică */
+html body #page-acasa .r10-items > li {
+  /* pe o elipsă lată, unghiurile egale îngrămădesc imaginile la capete; le răsfirăm după lungimea conturului */
+  --u: calc(var(--i) * 360deg / var(--n) - 90deg);
+  --t: calc(var(--u) + sin(calc(var(--u) * 2)) * 7deg);
+  --jx: calc(sin(calc(var(--i) * 2.7rad)) * 1.6cqw);
+  --jy: calc(cos(calc(var(--i) * 1.9rad)) * 1.4cqw);
+  transform: translate(calc((cos(var(--t)) * var(--Rx) + var(--jx)) * var(--r10-k)), calc((sin(var(--t)) * var(--Ry) + var(--jy)) * var(--r10-k))) !important;
+}
+html body #page-acasa .r10-it {
+  --s: calc(var(--S) * (1 + sin(calc(var(--i) * 1.3rad)) * .1));
+  left: calc(var(--s) / -2) !important; top: calc(var(--s) / -2) !important; width: var(--s) !important; height: var(--s) !important;
+  border: 0 !important; background: #e8dfca !important;
+  box-shadow: 0 22px 34px -22px rgba(43, 30, 22, .6) !important;
+}
+html body #page-acasa .r10-it img { filter: none; }
+html body #page-acasa .r10-it[aria-expanded="true"] { box-shadow: 0 0 0 3px #9a3f24, 0 22px 34px -22px rgba(43, 30, 22, .6) !important; }
+/* plutesc: fiecare în ritmul lui, câțiva pixeli în sus și în jos */
+@media (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .r10-it { animation: r15-float calc(5.5s + var(--i) * .37s) ease-in-out calc(var(--i) * -.9s) infinite alternate; }
+}
+@keyframes r15-float { from { translate: 0 6px; } to { translate: 0 -8px; } }
+/* centrul: mic, fără cerc și fără umbră */
+html body #page-acasa .r10-hub { width: min(300px, 28cqw) !important; background: none !important; border: 0 !important; box-shadow: none !important; }
+
+/* fișa deschisă: fără ramă, poza ocupă toată lățimea, la fel la toate */
+html body #page-acasa .r10-card { top: 50% !important; max-height: min(86svh, 760px) !important; border: 0 !important; }
+html body #page-acasa .r10-fig { background: none !important; border: 0 !important; }
+html body #page-acasa .r10-fig img { width: 100% !important; height: 280px !important; padding: 0 !important; object-fit: cover !important; object-position: 50% 40%; border: 0 !important; }
+html body #page-acasa .r10-fig figcaption { padding: 8px 28px 0 !important; }
+
+@media (max-width: 699px) {
+  html body #page-acasa .r10-stage { width: 100% !important; }
+  html body #page-acasa .r10-orb { --S: 64px; --Rx: calc(50cqw - var(--S) * .58); --Ry: calc(80cqw - var(--S) * .58); aspect-ratio: 1 / 1.6 !important; }
+  html body #page-acasa .r10-items > li { --jx: 0px; --jy: 0px; --t: var(--u); }
+  html body #page-acasa .r10-hub { width: 36cqw !important; }
+  html body #page-acasa .r10-card { top: auto !important; max-height: none !important; }
+  html body #page-acasa .r10-fig img { height: 220px !important; }
+}
+
+/* ---------- 2. bara de sus: dreapta primește aceeași animație ca stânga (o linie aurie care crește de la stânga) ---------- */
+@media (min-width: 1100px) {
+  html body #site-nav .r10-r :is(a, .about-trigger) {
+    position: relative; border-radius: 0 !important; background: transparent !important; box-shadow: none !important;
+  }
+  html body #site-nav .r10-r a::before { display: none !important; }
+  html body #site-nav :is(.r10-l, .r10-r) :is(a, .about-trigger)::after {
+    content: "" !important; position: absolute !important; left: 9px !important; right: 9px !important; bottom: 10px !important; top: auto !important;
+    width: auto !important; height: 1.5px !important; background: #a88a3c !important; border: 0 !important;
+    transform: scaleX(0) !important; transform-origin: left center !important; opacity: 1 !important;
+    transition: transform 320ms cubic-bezier(.22, 1, .36, 1) !important;
+  }
+  html body #site-nav :is(.r10-l, .r10-r) :is(a, .about-trigger):is(:hover, :focus-visible, .active, [aria-current])::after { transform: scaleX(1) !important; }
+  html body #site-nav .r10-r a:is(.active, .current, [aria-current]) { box-shadow: none !important; background: transparent !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #site-nav :is(.r10-l, .r10-r) :is(a, .about-trigger)::after { transition: none !important; }
+}
+
+/* ---------- 3. fără chenare în jurul textului: fără margini, umbre sau fundal de casetă ---------- */
+html body #page-acasa :is(.r9-note, .callout, .source-caution, .margus-context, .gold-context, .duel-context, .gs, .hx, .si-wrap,
+  .si-wrap .si.si, .ux-cart, .duel.dk, .duel.dk .duel-card.dk-card, .cta-card, .journey-caption, .dx-451, #sec-glosar, #biblio, .r10-sec, .ah-r-key, .cs-step) {
+  border: 0 !important; box-shadow: none !important; border-radius: 0 !important;
+}
+html body #page-acasa :is(.r9-note, .callout, .source-caution, .margus-context, .gold-context, .duel-context, .gs, .hx, .si-wrap,
+  .si-wrap .si.si, .ux-cart, .cta-card, .journey-caption, .dx-451, #sec-glosar, #biblio, .r10-sec) {
+  background: transparent !important; background-image: none !important;
+}
+/* Aetius: fără panou; Attila își păstrează cele două tonuri (fondul compoziției), dar fără umbră */
+html body #page-acasa #sec-personalitati .duel.dk.r12 .duel-card.r12-b { background: transparent !important; }
+html body #page-acasa #sec-personalitati .duel.dk.r12 .r12-b .dc-epithet { border: 0 !important; padding-left: 0 !important; }
+/* notele: textul rămâne cu eticheta lui, fără bara din stânga; spațiul interior nu mai e nevoie */
+html body #page-acasa :is(.r9-note, .callout, .source-caution) { padding: 0 !important; }
+html body #page-acasa .r2-head .ah-r-key { padding-left: 0 !important; }
+/* fișele izvoarelor: fără banda colorată de sus */
+html body #page-acasa .si-wrap .si.si::before { display: none !important; }
+/* panoul lui Ptolemeu își păstrează fondul (compoziția de muzeu), dar fără ramă și umbră */
+html body #page-acasa .ptol-map.diagram { border: 0 !important; box-shadow: none !important; }
+html body #page-acasa .dmn { background: transparent !important; border: 0 !important; box-shadow: none !important; }

@@ -2,7 +2,7 @@
 /* Efectul de domino: piesele cad în lanț o singură dată, când pista ajunge în ecran, și rămân culcate.
    Unghiul final al fiecărei piese se calculează din geometrie: ultima stă pe pământ (90°), iar fiecare piesă de dinainte
    se sprijină de cea care urmează. Căderea se calculează cadru cu cadru: fiecare piesă cade liber, dar nu trece de vecina ei.
-   „Reia” le ridică și le lasă din nou. */
+   La derularea în jos cad de la capăt de fiecare dată; la derularea în sus se ridică ușor. */
 (function () {
   var STEP = 260; // ms între piese
 
@@ -83,11 +83,33 @@
       })(performance.now());
     }
 
+    // ridicarea: același calcul, rulat înapoi și ceva mai încet; la final piesele stau drepte
+    function rise() {
+      if (!fallen) return;
+      fallen = false;
+      fig.classList.remove('is-fallen');
+      stop();
+      if (reduce || !window.requestAnimationFrame) { place(null); return; }
+      var t0 = null, end = (n - 1) * STEP + fallMs + 400, slow = 1.35;
+      (function frame(now) {
+        if (t0 === null) t0 = now;
+        var t = end - (now - t0) / slow;
+        if (t > 0) { place(angles(g, n, t, fallMs)); raf = requestAnimationFrame(frame); } else { raf = 0; place(null); }
+      })(performance.now());
+    }
+
     if (reduce || !('IntersectionObserver' in window)) fall(true);
     else {
-      // urmărește chiar pista, nu toată figura, ca piesele să cadă când se văd
+      // în jos: de fiecare dată când pista intră pe ecran, piesele pornesc de la capăt și cad;
+      // în sus: când pista iese pe la marginea de jos, piesele se ridică ușor
+      var lastY = window.scrollY, down = true;
+      addEventListener('scroll', function () { var y = window.scrollY; if (y !== lastY) down = y > lastY; lastY = y; }, { passive: true });
       var io = new IntersectionObserver(function (en) {
-        en.forEach(function (e) { if (e.isIntersecting) { fall(); io.disconnect(); } });
+        en.forEach(function (e) {
+          if (e.isIntersecting) { if (down || !fallen) { if (fallen) { stop(); place(null); fallen = false; } fall(); } }
+          else if (!down && e.boundingClientRect.top > 0) rise();
+          else if (down && e.boundingClientRect.top > 0 && fallen) { stop(); place(null); fallen = false; fig.classList.remove('is-fallen'); }
+        });
       }, { threshold: 0.6 });
       io.observe(track);
     }
@@ -97,18 +119,6 @@
     function refit() { g = geometry(track); fallMs = STEP / Math.sqrt(g.hit / 90); if (fallen) { stop(); place(rest()); } }
     if (mq) { if (mq.addEventListener) mq.addEventListener('change', refit); else if (mq.addListener) mq.addListener(refit); }
 
-    var btn = fig.querySelector('.dmn-replay');
-    if (btn) btn.addEventListener('click', function () {
-      stop();
-      fig.classList.remove('is-fallen');
-      // ridică piesele și stinge cartonașele fără tranziție, apoi le lasă să cadă din nou
-      var steps = fig.querySelectorAll('.dmn-step');
-      Array.prototype.forEach.call(steps, function (s) { s.style.transition = 'none'; });
-      place(null);
-      void fig.offsetWidth;
-      Array.prototype.forEach.call(steps, function (s) { s.style.transition = ''; });
-      setTimeout(function () { fall(); }, 120);
-    });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
