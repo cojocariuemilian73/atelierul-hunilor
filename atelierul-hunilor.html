@@ -15565,6 +15565,61 @@ html body #page-acasa .r11-tour .sr-text > h3 + p { font-size: 18px !important; 
   html body #page-acasa .r11-tour > .sr-media::before { left: 22%; top: 24px; width: 70%; }
   html body #page-acasa .r11-tour .sr-text > h3 { font-size: 38px !important; margin-top: 28px !important; }
 }
+
+/* ---------- 3. „Unde îi așază Ptolemeu?”: compoziție de muzeu — panou de antracit, titlu amplu, harta „plutind”, fir de aur spre text ---------- */
+html body #page-acasa .ptol-map.diagram {
+  position: relative; isolation: isolate; border-radius: 4px !important; overflow: hidden;
+  background:
+    radial-gradient(70% 90% at 22% 40%, rgba(214, 178, 94, .16), transparent 60%),
+    radial-gradient(60% 80% at 90% 10%, rgba(154, 63, 36, .18), transparent 60%),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, .018) 0 2px, transparent 2px 7px),
+    #1d1611 !important;
+  color: #efe6d3 !important; padding: clamp(28px, 5vw, 72px) clamp(20px, 4.5vw, 64px) !important;
+  box-shadow: 0 40px 80px -50px rgba(20, 14, 10, .9) !important; border: 1px solid rgba(214, 178, 94, .25) !important;
+}
+@media (min-width: 1100px) {
+  html body #page-acasa .ptol-map.diagram {
+    width: min(1360px, calc(100vw - 112px)) !important; max-width: none !important;
+    margin-left: calc(50% - min(1360px, calc(100vw - 112px)) / 2) !important; margin-right: 0 !important;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) !important; column-gap: 96px !important; align-items: center !important;
+  }
+}
+html body #page-acasa .ptol-map.diagram > svg {
+  filter: sepia(.35) contrast(1.05) drop-shadow(0 30px 40px rgba(0, 0, 0, .55)); border-radius: 2px;
+  align-self: center !important; margin-top: 0 !important;
+}
+html body #page-acasa .ptol-map .r2-ptol-side { position: relative; }
+/* firul de aur dinspre hartă, cu o stea mică în capăt (nu trece peste text) */
+@media (min-width: 1100px) {
+  html body #page-acasa .ptol-map .r2-ptol-side::before {
+    content: ""; position: absolute; left: -84px; top: 22px; width: 68px; height: 1px;
+    background: linear-gradient(90deg, rgba(224, 189, 106, 0), #e0bd6a);
+  }
+  html body #page-acasa .ptol-map .r2-ptol-side::after {
+    content: ""; position: absolute; left: -22px; top: 15px; width: 15px; height: 15px; background: #e0bd6a;
+    clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  }
+}
+html body #page-acasa .ptol-map .ptol-kicker {
+  margin: 0 0 22px !important; font: 500 clamp(30px, 3.2vw, 46px)/1.12 'EB Garamond', Georgia, serif !important;
+  letter-spacing: .06em !important; text-transform: uppercase !important; color: #f3ead7 !important;
+}
+html body #page-acasa .ptol-map .r2-ptol-side figcaption { color: #cdbfa4 !important; font-size: 17px !important; line-height: 1.7 !important; }
+html body #page-acasa .ptol-map .r2-ptol-side figcaption :is(b, strong) { color: #e0bd6a !important; }
+html body #page-acasa .ptol-map .ptol-legend { border: 0 !important; margin-top: 22px !important; padding-top: 0 !important; }
+html body #page-acasa .ptol-map .ptol-legend li { color: #cdbfa4 !important; border: 0 !important; }
+html body #page-acasa .ptol-map .ptol-legend :is(b, strong) { color: #f3ead7 !important; }
+html body #page-acasa .ptol-map .r11-btn {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 48px; margin-top: 26px; padding: 0 24px; border-radius: 2px;
+  background: #efe6d3; color: #1d1611 !important; text-decoration: none !important; font: 600 14px/1 'Source Sans 3', system-ui, sans-serif; letter-spacing: .06em;
+  transition: scale var(--r6-dur, 220ms) var(--r6-ease, ease), background-color var(--r6-dur, 220ms) ease;
+}
+html body #page-acasa .ptol-map .r11-btn:hover { background: #f8f1e2; }
+html body #page-acasa .ptol-map .r11-btn:focus-visible { outline: 2px solid #e0bd6a; outline-offset: 3px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html body #page-acasa .ptol-map .r11-btn:is(:hover, :focus-visible) { scale: var(--r6-hover, 1.025); }
+}
+@media (prefers-reduced-motion: reduce) { html body #page-acasa .ptol-map .r11-btn { transition: none; scale: none; } }
 </style>
 <script id="runda11-js">
 /* Runda 11: marchează cele două rânduri care primesc compoziții după șabloane și adaugă anul mare (decorativ). Prefix: r11-. */
@@ -15586,6 +15641,14 @@ html body #page-acasa .r11-tour .sr-text > h3 + p { font-size: 18px !important; 
       }
     }
   }
+  // Ptolemeu: un buton spre atlas, ca în compoziția de muzeu
+  function ptol() {
+    var side = document.querySelector('#page-acasa .ptol-map .r2-ptol-side');
+    if (!side || side.querySelector('.r11-btn') || !document.getElementById('sec-atlas')) return;
+    var a = document.createElement('a'); a.className = 'r11-btn'; a.href = '#sec-atlas'; a.textContent = 'Vezi drumurile în atlas →';
+    side.appendChild(a);
+  }
+  var _run = run; run = function () { _run(); try { ptol(); } catch (e) {} };
   if (document.readyState === 'complete') setTimeout(run, 100); else addEventListener('load', function () { setTimeout(run, 100); });
 })();
 </script>
